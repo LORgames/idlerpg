@@ -545,7 +545,7 @@
             this.txtMapSizeX.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtMapSizeX.Name = "txtMapSizeX";
             this.txtMapSizeX.Size = new System.Drawing.Size(100, 23);
-            this.txtMapSizeX.Text = "20";
+            this.txtMapSizeX.Text = "100";
             // 
             // toolStripMenuItem2
             // 
@@ -558,7 +558,7 @@
             this.txtMapSizeY.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtMapSizeY.Name = "txtMapSizeY";
             this.txtMapSizeY.Size = new System.Drawing.Size(100, 23);
-            this.txtMapSizeY.Text = "20";
+            this.txtMapSizeY.Text = "100";
             // 
             // toolStripSeparator2
             // 

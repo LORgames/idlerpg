@@ -25,7 +25,7 @@ namespace CityTools.MapPieces {
 
             foreach (String file in files) {
                 MapPiece mp = new MapPiece(file);
-                mp.Load();
+                mp.Load(false);
 
                 Pieces.Add(mp);
             }
@@ -79,7 +79,7 @@ namespace CityTools.MapPieces {
             if (CurrentPiece.isEdited && MessageBox.Show("Do you want to save your current changes?", "Save?", MessageBoxButtons.YesNo) == DialogResult.Yes) {
                 CurrentPiece.Save();
             } else if(CurrentPiece.isLoaded) {
-                CurrentPiece.Load();
+                CurrentPiece.Load(true);
             }
         }
 
@@ -113,7 +113,7 @@ namespace CityTools.MapPieces {
             Camera.FixViewArea(MainWindow.instance.mapViewPanel.DisplayRectangle);
 
             Box2D.B2System.Initialize();
-            newPiece.Load();
+            newPiece.Load(true);
 
             _cp = newPiece;
 

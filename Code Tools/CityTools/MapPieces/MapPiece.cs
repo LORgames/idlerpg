@@ -39,7 +39,7 @@ namespace CityTools.MapPieces {
 
         public void Edited() { _iE = true; }
 
-        public void Load() {
+        public void Load(Boolean loadingForUse) {
             if (!File.Exists(Filename)) return;
 
             Scenary = new List<ScenicObject>();
@@ -50,6 +50,8 @@ namespace CityTools.MapPieces {
             BinaryIO f = new BinaryIO(File.ReadAllBytes(Filename));
 
             Name = f.GetString();
+
+            if (!loadingForUse) return;
 
             //First load the scenary
             int totalShapes = f.GetInt();
