@@ -28,6 +28,8 @@ namespace ArenaTest {
 
                 output.AppendText(a.Process(b));
                 output.AppendText(b.Process(a));
+
+                if (time > 120) break;
             }
 
             AddRegion(output);

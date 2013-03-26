@@ -47,11 +47,11 @@ namespace ArenaTest {
             MaxHP = (int)(Level * Math.Pow(1.0001, RawVit));
             AttackPower = RawStr;//STR (str + str bonus) + Mastery (e.g. sword mastery +40 Attack) + Weapon's Damage + Weapons Refine Bonus
             
-            HitChance = Level + RawDex;
+            HitChance = Level + RawDex*2;
             CriticalHitChance = RawLuk * 0.3f + 1;
             DodgeChance = Level + RawAgi;
 
-            AttackSpeed = RawAgi * 0.1f;
+            AttackSpeed = 1 + (float)Math.Sqrt(RawAgi/100.0f);
         }
 
         //////////////////////////////////////////////////////////////
@@ -70,21 +70,29 @@ namespace ArenaTest {
             string retVal = "";
 
             float _HitChance = 80 + HitChance - other.DodgeChance;
-            int AttackDamage = AttackPower - AttackPower / (100 / other.Defence) - other.RawVit;
+            int totalAttacks = (int)Math.Ceiling(r.NextDouble() * AttackSpeed);
 
-            if (r.NextDouble() * 100 < _HitChance) {
-                if (AttackDamage < 1) AttackDamage = 1;
+            retVal = this.Name + " attacking " + other.Name + " " + totalAttacks + " times.\n";
 
-                if (r.NextDouble() * 100 < CriticalHitChance) {
-                    retVal += "CRITICAL! ";
-                    AttackDamage = AttackPower - other.RawVit/2;
+            for (int i = 0; i < totalAttacks; i++) {
+                int AttackDamage = AttackPower - AttackPower / (100 / other.Defence) - other.RawVit;
+
+                retVal += "\tATK" + i + " ";
+
+                if (r.NextDouble() * 100 < _HitChance) {
+                    if (AttackDamage < 1) AttackDamage = 1;
+
+                    if (r.NextDouble() * 100 < CriticalHitChance) {
+                        retVal += "CRITICAL! ";
+                        AttackDamage = AttackPower - other.RawVit / 2;
+                    }
+
+                    other.sim_CurrentHP -= AttackDamage;
+
+                    retVal += "hit for " + (int)AttackDamage + " damage. " + other.sim_CurrentHP + "hp remains.\n";
+                } else {
+                    retVal += this.Name + " missed.\n";
                 }
-
-                other.sim_CurrentHP -= AttackDamage;
-
-                retVal += this.Name + " hit " + other.Name + " for " + (int)AttackDamage + " damage. " + other.sim_CurrentHP + "hp remains.\n";
-            } else {
-                retVal += this.Name + " missed.\n";
             }
 
             return retVal;

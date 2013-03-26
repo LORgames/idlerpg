@@ -25,8 +25,8 @@
         private void InitializeComponent() {
             this.btnFight = new System.Windows.Forms.Button();
             this.txtOutcome = new System.Windows.Forms.RichTextBox();
-            this.entityEditor1 = new EntityEditor(true);
-            this.entityEditor2 = new EntityEditor(false);
+            entityEditor1 = new EntityEditor(true);
+            entityEditor2 = new EntityEditor(false);
             this.SuspendLayout();
             // 
             // btnFight
@@ -38,7 +38,7 @@
             this.btnFight.TabIndex = 3;
             this.btnFight.Text = "Fight!";
             this.btnFight.UseVisualStyleBackColor = true;
-            this.btnFight.Click += new System.EventHandler(this.btnFight_Click);
+            this.btnFight.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnFight_MouseUp);
             // 
             // txtOutcome
             // 
@@ -49,6 +49,15 @@
             this.txtOutcome.TabIndex = 4;
             this.txtOutcome.Text = "Set Stats and Choose Fight Below To See Combat Log";
             // 
+            // entityEditor1
+            // 
+            this.entityEditor1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.entityEditor1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.entityEditor1.Location = new System.Drawing.Point(0, 0);
+            this.entityEditor1.Name = "entityEditor1";
+            this.entityEditor1.Size = new System.Drawing.Size(211, 595);
+            this.entityEditor1.TabIndex = 0;
+            // 
             // entityEditor2
             // 
             this.entityEditor2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -58,15 +67,6 @@
             this.entityEditor2.Size = new System.Drawing.Size(211, 595);
             this.entityEditor2.TabIndex = 1;
             this.entityEditor2.Load += new System.EventHandler(this.entityEditor2_Load);
-            // 
-            // entityEditor1
-            // 
-            this.entityEditor1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.entityEditor1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.entityEditor1.Location = new System.Drawing.Point(0, 0);
-            this.entityEditor1.Name = "entityEditor1";
-            this.entityEditor1.Size = new System.Drawing.Size(211, 595);
-            this.entityEditor1.TabIndex = 0;
             // 
             // Form1
             // 
