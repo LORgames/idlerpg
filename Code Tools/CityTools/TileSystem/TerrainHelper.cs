@@ -87,24 +87,28 @@ namespace CityTools.Terrain {
                 for (int j = TopEdge; j < BottomEdge; j++) {
                     short f = MapCache.tiles[i, j];
 
-                    if(f != 0){
-                        buffer.gfx.DrawImage(ImageCache.RequestImage(MapCache.tileTable[f]), new Rectangle((int)Math.Floor((i * MapCache.TILE_SIZE_X - Camera.Offset.X) * Camera.ZoomLevel), (int)Math.Floor((j * MapCache.TILE_SIZE_Y - Camera.Offset.Y) * Camera.ZoomLevel), (int)Math.Ceiling(MapCache.TILE_SIZE_X * Camera.ZoomLevel), (int)Math.Ceiling(MapCache.TILE_SIZE_Y * Camera.ZoomLevel)));
-                    }
+                    //TODO: Animate here
+                    buffer.gfx.DrawImage(ImageCache.RequestImage(MapCache.tileTable[f].TilesImages[0]), new Rectangle((int)Math.Floor((i * MapCache.TILE_SIZE_X - Camera.Offset.X) * Camera.ZoomLevel), (int)Math.Floor((j * MapCache.TILE_SIZE_Y - Camera.Offset.Y) * Camera.ZoomLevel), (int)Math.Ceiling(MapCache.TILE_SIZE_X * Camera.ZoomLevel), (int)Math.Ceiling(MapCache.TILE_SIZE_Y * Camera.ZoomLevel)));
                 }
             }
         }
 
         public static void SetCurrentTile(short newTile) {
             currentTile = newTile;
-            currentTileIm = ImageCache.RequestImage(MapCache.tileTable[newTile]);
+            currentTileIm = ImageCache.RequestImage(MapCache.tileTable[newTile].TilesImages[0]);
         }
 
-        internal static byte StripTileIDFromPath(string pathName) {
+        internal static short StripTileIDFromPath(string pathName) {
             int i1 = pathName.LastIndexOf('\\');
             int i2 = pathName.LastIndexOf('.');
 
             string ttt = pathName.Substring(i1 + 1, i2 - i1 - 1);
-            return byte.Parse(ttt);
+
+            if (ttt.Split('_').Length > 1) {
+                ttt = ttt.Split('_')[0];
+            }
+
+            return short.Parse(ttt);
         }
     }
 }

@@ -19,19 +19,24 @@ namespace CityTools.Terrain {
         public static int TILE_TOTAL_X = 1; //How many image blocks across
         public static int TILE_TOTAL_Y = 1; //How many image blocks down
 
-        public static Dictionary<short, string> tileTable = new Dictionary<short, string>();
+        public static Dictionary<short, Tile> tileTable = new Dictionary<short, Tile>();
 
         public static short[,] tiles;
 
         public static void VerifyCacheFiles() {
             // Create the map thing
             foreach (string file in Directory.GetFiles(TILE_DIRECTORY, "*.png", SearchOption.AllDirectories)) {
-                byte tileIndex = TerrainHelper.StripTileIDFromPath(file);
+                short tileIndex = TerrainHelper.StripTileIDFromPath(file);
 
                 if (tileTable.ContainsKey(tileIndex)) {
-                    MessageBox.Show("Both " + tileTable[tileIndex] + " and " + file + " are tile #" + tileIndex + "\n\nIgnoring: " + file);
+                    tileTable[tileIndex].isAnimated = true;
+                    tileTable[tileIndex].TilesImages.Add(file);
                 } else {
-                    tileTable.Add(tileIndex, file);
+                    Tile newTile = new Tile();
+                    newTile.TileID = tileIndex;
+                    newTile.TilesImages.Add(file);
+
+                    tileTable.Add(tileIndex, newTile);
                 }
             }
 
@@ -48,7 +53,7 @@ namespace CityTools.Terrain {
 
             for (int i = 0; i < TILE_TOTAL_X; i++) {
                 for (int j = 0; j < TILE_TOTAL_Y; j++) {
-                    tiles[i, j] = 1;
+                    tiles[i, j] = 0;
                 }
             }
         }
@@ -114,6 +119,12 @@ namespace CityTools.Terrain {
             }
 
             tiles = newTiles;
+        }
+
+        public class Tile {
+            public short TileID = 0;
+            public List<String> TilesImages = new List<string>();
+            public bool isAnimated = false;
         }
     }
 }

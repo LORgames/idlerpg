@@ -95,8 +95,8 @@ namespace CityTools.Components {
             if (cm.SourceControl is CachedObject) {
                 CachedObject co = cm.SourceControl as CachedObject;
 
-                ObjectCreatorTool oct = new ObjectCreatorTool(ScenicObjectCache.s_StringToInt[co.img_addr]);
-                oct.Show();
+                //ObjectCreatorTool oct = new ObjectCreatorTool(ScenicObjectCache.s_StringToInt[co.img_addr]);
+                //oct.Show();
             }
         }
 
