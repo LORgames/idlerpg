@@ -75,8 +75,7 @@ namespace ArenaTest {
             retVal = this.Name + " attacking " + other.Name + " " + totalAttacks + " times.\n";
 
             for (int i = 0; i < totalAttacks; i++) {
-                int AttackDamage = AttackPower - AttackPower / (100 / other.Defence) - other.RawVit;
-
+                int AttackDamage = AttackPower - AttackPower / (10000 / other.Defence) - other.RawVit;
                 retVal += "\tATK" + i + " ";
 
                 if (r.NextDouble() * 100 < _HitChance) {

@@ -42,10 +42,6 @@
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.txtPieceName = new System.Windows.Forms.ToolStripTextBox();
             this.lblFilename = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
-            this.mapTileWidth = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
-            this.mapHeight = new System.Windows.Forms.ToolStripTextBox();
             this.mapViewPanel = new System.Windows.Forms.PictureBox();
             this.toolpanel_splitter = new System.Windows.Forms.SplitContainer();
             this.first_level_tabControl = new System.Windows.Forms.TabControl();
@@ -73,6 +69,15 @@
             this.tsmBringForward = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmSendToBack = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmBringToFront = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuMapSizing = new System.Windows.Forms.ToolStripDropDownButton();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.txtMapSizeX = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.txtMapSizeY = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.cbMapExtendX = new System.Windows.Forms.ToolStripComboBox();
+            this.cbMapExtendY = new System.Windows.Forms.ToolStripComboBox();
+            this.btnMapSizeChange = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.main_splitter)).BeginInit();
             this.main_splitter.Panel1.SuspendLayout();
             this.main_splitter.Panel2.SuspendLayout();
@@ -112,8 +117,8 @@
             // main_splitter.Panel2
             // 
             this.main_splitter.Panel2.Controls.Add(this.toolpanel_splitter);
-            this.main_splitter.Size = new System.Drawing.Size(853, 461);
-            this.main_splitter.SplitterDistance = 618;
+            this.main_splitter.Size = new System.Drawing.Size(897, 461);
+            this.main_splitter.SplitterDistance = 662;
             this.main_splitter.TabIndex = 0;
             // 
             // mapViewPanel_c
@@ -123,7 +128,7 @@
             this.mapViewPanel_c.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mapViewPanel_c.Location = new System.Drawing.Point(0, 0);
             this.mapViewPanel_c.Name = "mapViewPanel_c";
-            this.mapViewPanel_c.Size = new System.Drawing.Size(618, 461);
+            this.mapViewPanel_c.Size = new System.Drawing.Size(662, 461);
             this.mapViewPanel_c.TabIndex = 0;
             // 
             // toolStrip1
@@ -138,13 +143,10 @@
             this.toolStripLabel1,
             this.txtPieceName,
             this.lblFilename,
-            this.toolStripLabel3,
-            this.mapTileWidth,
-            this.toolStripLabel2,
-            this.mapHeight});
+            this.menuMapSizing});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(618, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(662, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -201,7 +203,7 @@
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(66, 22);
+            this.toolStripLabel1.Size = new System.Drawing.Size(73, 22);
             this.toolStripLabel1.Text = "Piece Name:";
             // 
             // txtPieceName
@@ -212,38 +214,15 @@
             // lblFilename
             // 
             this.lblFilename.Name = "lblFilename";
-            this.lblFilename.Size = new System.Drawing.Size(53, 22);
+            this.lblFilename.Size = new System.Drawing.Size(57, 22);
             this.lblFilename.Text = "<Empty>";
-            // 
-            // toolStripLabel3
-            // 
-            this.toolStripLabel3.Name = "toolStripLabel3";
-            this.toolStripLabel3.Size = new System.Drawing.Size(30, 22);
-            this.toolStripLabel3.Text = "Size:";
-            // 
-            // mapTileWidth
-            // 
-            this.mapTileWidth.MaxLength = 6;
-            this.mapTileWidth.Name = "mapTileWidth";
-            this.mapTileWidth.Size = new System.Drawing.Size(30, 25);
-            // 
-            // toolStripLabel2
-            // 
-            this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(13, 22);
-            this.toolStripLabel2.Text = "x";
-            // 
-            // mapHeight
-            // 
-            this.mapHeight.Name = "mapHeight";
-            this.mapHeight.Size = new System.Drawing.Size(30, 25);
             // 
             // mapViewPanel
             // 
             this.mapViewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mapViewPanel.Location = new System.Drawing.Point(0, 0);
             this.mapViewPanel.Name = "mapViewPanel";
-            this.mapViewPanel.Size = new System.Drawing.Size(618, 461);
+            this.mapViewPanel.Size = new System.Drawing.Size(662, 461);
             this.mapViewPanel.TabIndex = 0;
             this.mapViewPanel.TabStop = false;
             this.mapViewPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.mapViewPanel_Paint);
@@ -506,41 +485,117 @@
             this.tsmSendToBack,
             this.tsmBringToFront});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 92);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(149, 92);
             // 
             // tsmSendBack
             // 
             this.tsmSendBack.Name = "tsmSendBack";
-            this.tsmSendBack.Size = new System.Drawing.Size(152, 22);
+            this.tsmSendBack.Size = new System.Drawing.Size(148, 22);
             this.tsmSendBack.Text = "Send Back";
             this.tsmSendBack.Click += new System.EventHandler(this.tsmSendBack_Click);
             // 
             // tsmBringForward
             // 
             this.tsmBringForward.Name = "tsmBringForward";
-            this.tsmBringForward.Size = new System.Drawing.Size(152, 22);
+            this.tsmBringForward.Size = new System.Drawing.Size(148, 22);
             this.tsmBringForward.Text = "Bring Forward";
             this.tsmBringForward.Click += new System.EventHandler(this.tsmBringForward_Click);
             // 
             // tsmSendToBack
             // 
             this.tsmSendToBack.Name = "tsmSendToBack";
-            this.tsmSendToBack.Size = new System.Drawing.Size(152, 22);
+            this.tsmSendToBack.Size = new System.Drawing.Size(148, 22);
             this.tsmSendToBack.Text = "Send to Back";
             this.tsmSendToBack.Click += new System.EventHandler(this.tsmSendToBack_Click);
             // 
             // tsmBringToFront
             // 
             this.tsmBringToFront.Name = "tsmBringToFront";
-            this.tsmBringToFront.Size = new System.Drawing.Size(152, 22);
+            this.tsmBringToFront.Size = new System.Drawing.Size(148, 22);
             this.tsmBringToFront.Text = "Bring to Front";
             this.tsmBringToFront.Click += new System.EventHandler(this.tsmBringToFront_Click);
+            // 
+            // menuMapSizing
+            // 
+            this.menuMapSizing.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.menuMapSizing.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1,
+            this.txtMapSizeX,
+            this.toolStripMenuItem2,
+            this.txtMapSizeY,
+            this.toolStripSeparator2,
+            this.cbMapExtendX,
+            this.cbMapExtendY,
+            this.btnMapSizeChange});
+            this.menuMapSizing.Image = ((System.Drawing.Image)(resources.GetObject("menuMapSizing.Image")));
+            this.menuMapSizing.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.menuMapSizing.Name = "menuMapSizing";
+            this.menuMapSizing.Size = new System.Drawing.Size(42, 22);
+            this.menuMapSizing.Text = "SIZE";
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Enabled = false;
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(181, 22);
+            this.toolStripMenuItem1.Text = "Width";
+            // 
+            // txtMapSizeX
+            // 
+            this.txtMapSizeX.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtMapSizeX.Name = "txtMapSizeX";
+            this.txtMapSizeX.Size = new System.Drawing.Size(100, 23);
+            this.txtMapSizeX.Text = "20";
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(181, 22);
+            this.toolStripMenuItem2.Text = "Height";
+            // 
+            // txtMapSizeY
+            // 
+            this.txtMapSizeY.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtMapSizeY.Name = "txtMapSizeY";
+            this.txtMapSizeY.Size = new System.Drawing.Size(100, 23);
+            this.txtMapSizeY.Text = "20";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(178, 6);
+            // 
+            // cbMapExtendX
+            // 
+            this.cbMapExtendX.Items.AddRange(new object[] {
+            "Anchor Left",
+            "Anchor Center",
+            "Anchor Right"});
+            this.cbMapExtendX.Name = "cbMapExtendX";
+            this.cbMapExtendX.Size = new System.Drawing.Size(121, 23);
+            this.cbMapExtendX.Text = "Anchor Center";
+            // 
+            // cbMapExtendY
+            // 
+            this.cbMapExtendY.Items.AddRange(new object[] {
+            "Anchor Top",
+            "Anchor Middle",
+            "Anchor Bottom"});
+            this.cbMapExtendY.Name = "cbMapExtendY";
+            this.cbMapExtendY.Size = new System.Drawing.Size(121, 23);
+            this.cbMapExtendY.Text = "Anchor Middle";
+            // 
+            // btnMapSizeChange
+            // 
+            this.btnMapSizeChange.Name = "btnMapSizeChange";
+            this.btnMapSizeChange.Size = new System.Drawing.Size(181, 22);
+            this.btnMapSizeChange.Text = "CLICK TO CHANGE";
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(853, 461);
+            this.ClientSize = new System.Drawing.Size(897, 461);
             this.Controls.Add(this.main_splitter);
             this.Name = "MainWindow";
             this.Text = "Runner Builder";
@@ -614,13 +669,18 @@
         private System.Windows.Forms.ToolStripButton deleteBtn;
         private System.Windows.Forms.ToolStripButton duplicateBtn;
         internal System.Windows.Forms.ToolStripLabel lblFilename;
-        private System.Windows.Forms.ToolStripTextBox mapTileWidth;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
-        private System.Windows.Forms.ToolStripTextBox mapHeight;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel3;
         private System.Windows.Forms.TabPage terrain_tab;
         private System.Windows.Forms.Panel tilesPanel;
         private System.Windows.Forms.ComboBox tilesCB;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        internal System.Windows.Forms.ToolStripTextBox txtMapSizeX;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        internal System.Windows.Forms.ToolStripTextBox txtMapSizeY;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        internal System.Windows.Forms.ToolStripComboBox cbMapExtendX;
+        internal System.Windows.Forms.ToolStripDropDownButton menuMapSizing;
+        internal System.Windows.Forms.ToolStripComboBox cbMapExtendY;
+        internal System.Windows.Forms.ToolStripMenuItem btnMapSizeChange;
     }
 }
 

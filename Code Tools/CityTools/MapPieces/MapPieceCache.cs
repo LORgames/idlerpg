@@ -35,7 +35,23 @@ namespace CityTools.MapPieces {
             MainWindow.instance.combo_mappieces.SelectedIndexChanged += new EventHandler(combo_mappieces_SelectedIndexChanged);
             MainWindow.instance.txtPieceName.TextChanged += new EventHandler(txtPieceName_TextChanged);
 
+            MainWindow.instance.btnMapSizeChange.Click += new EventHandler(mapSize_TextChanged);
+
             CreateNew();
+        }
+
+        static void mapSize_TextChanged(object sender, EventArgs e) {
+            int w = 0;
+            int h = 0;
+
+            int.TryParse(MainWindow.instance.txtMapSizeX.Text, out w);
+            int.TryParse(MainWindow.instance.txtMapSizeY.Text, out h);
+
+            if (w <= 0 || h <= 0) {
+                MessageBox.Show("Cannot have 0 for width or height.", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } else {
+                Terrain.MapCache.TerrainChangeSizeTo(w, h);
+            }
         }
 
         static void txtPieceName_TextChanged(object sender, EventArgs e) {

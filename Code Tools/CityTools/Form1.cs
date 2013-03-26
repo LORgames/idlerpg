@@ -26,7 +26,7 @@ namespace CityTools {
     }
 
     public partial class MainWindow : Form {
-        public Color BACKGROUND_COLOR = Color.CornflowerBlue;
+        public Color BACKGROUND_COLOR = Color.Beige;
 
         public static MainWindow instance;
         public bool REQUIRES_CLOSE = false;

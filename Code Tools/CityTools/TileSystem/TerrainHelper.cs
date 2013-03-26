@@ -11,7 +11,7 @@ using CityTools.Components;
 namespace CityTools.Terrain {
     public class TerrainHelper {
 
-        private static byte currentTile = 0;
+        private static short currentTile = 0;
         private static Image currentTileIm = null;
 
         private static int drawSize = 1;
@@ -45,7 +45,7 @@ namespace CityTools.Terrain {
                 for (int i = 0; i < drawSize; i++) {
                     for (int j = 0; j < drawSize; j++) {
                         try {
-                            byte ct = MapCache.tiles[tilePos.X + i, tilePos.Y + j];
+                            short ct = MapCache.tiles[tilePos.X + i, tilePos.Y + j];
 
                             if (ct != currentTile) {
                                 MapCache.tiles[tilePos.X + i, tilePos.Y + j] = currentTile;
@@ -60,7 +60,7 @@ namespace CityTools.Terrain {
                     return true;
                 }
             } else if (e.Button == MouseButtons.Middle) {
-                byte ct = MapCache.tiles[tilePos.X, tilePos.Y];
+                short ct = MapCache.tiles[tilePos.X, tilePos.Y];
                 SetCurrentTile(ct);
             }
 
@@ -76,12 +76,16 @@ namespace CityTools.Terrain {
             int RightEdge = (int)Math.Ceiling(Camera.ViewArea.Right / MapCache.TILE_SIZE_X);
             int BottomEdge = (int)Math.Ceiling(Camera.ViewArea.Bottom / MapCache.TILE_SIZE_Y);
 
+            if (LeftEdge < 0) LeftEdge = 0;
+            if (TopEdge < 0) TopEdge = 0;
+            if (RightEdge >= MapCache.TILE_TOTAL_X) RightEdge = MapCache.TILE_TOTAL_X;
+            if (BottomEdge >= MapCache.TILE_TOTAL_Y) BottomEdge = MapCache.TILE_TOTAL_Y;
+
+            buffer.gfx.FillRectangle(Brushes.CornflowerBlue, new Rectangle((int)Math.Floor((LeftEdge * MapCache.TILE_SIZE_X - Camera.Offset.X) * Camera.ZoomLevel), (int)Math.Floor((TopEdge * MapCache.TILE_SIZE_Y - Camera.Offset.Y) * Camera.ZoomLevel), (int)Math.Ceiling(MapCache.TILE_SIZE_X * Camera.ZoomLevel * (RightEdge - LeftEdge)), (int)Math.Ceiling(MapCache.TILE_SIZE_Y * Camera.ZoomLevel * (BottomEdge - TopEdge))));
+
             for (int i = LeftEdge; i < RightEdge; i++) {
                 for (int j = TopEdge; j < BottomEdge; j++) {
-                    if (i < 0 || i >= MapCache.TILE_TOTAL_X) continue;
-                    if (j < 0 || j >= MapCache.TILE_TOTAL_Y) continue;
-
-                    byte f = MapCache.tiles[i, j];
+                    short f = MapCache.tiles[i, j];
 
                     if(f != 0){
                         buffer.gfx.DrawImage(ImageCache.RequestImage(MapCache.tileTable[f]), new Rectangle((int)Math.Floor((i * MapCache.TILE_SIZE_X - Camera.Offset.X) * Camera.ZoomLevel), (int)Math.Floor((j * MapCache.TILE_SIZE_Y - Camera.Offset.Y) * Camera.ZoomLevel), (int)Math.Ceiling(MapCache.TILE_SIZE_X * Camera.ZoomLevel), (int)Math.Ceiling(MapCache.TILE_SIZE_Y * Camera.ZoomLevel)));
@@ -90,7 +94,7 @@ namespace CityTools.Terrain {
             }
         }
 
-        public static void SetCurrentTile(byte newTile) {
+        public static void SetCurrentTile(short newTile) {
             currentTile = newTile;
             currentTileIm = ImageCache.RequestImage(MapCache.tileTable[newTile]);
         }
