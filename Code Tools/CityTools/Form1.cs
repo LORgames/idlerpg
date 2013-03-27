@@ -50,17 +50,13 @@ namespace CityTools {
 
         public bool initialized = false;
 
-        // Places copying things
-        private int b_resources_copy = -1;
-        private short b_NPC_copy = -1;
-
         public MainWindow() {
             instance = this;
 
             InitializeComponent();
 
             CacheInterfaces.MapInterface.Initialize();
-            Terrain.TerrainHelper.InitializeTerrainSystem(tilesCB, panelTiles);
+            Terrain.TerrainHelper.InitializeTerrainSystem(cbTileGroups, panelTiles);
 
             pnlObjectScenicCache.Controls.Add(new ObjectCacheControl());
 
@@ -78,6 +74,8 @@ namespace CityTools {
 
             initialized = true;
             CreateBuffers();
+
+            timerRefresh.Start();
         }
 
         private void CreateBuffers() {
@@ -248,7 +246,12 @@ namespace CityTools {
         }
 
         private void cbTile_SelectedIndexChanged(object sender, EventArgs e) {
-            (panelTiles.Controls[0] as ObjectCacheControl).Activate(tilesCB.SelectedValue.ToString());
+            (panelTiles.Controls[0] as ObjectCacheControl).Activate(cbTileGroups.SelectedValue.ToString());
+        }
+
+        private void timerRefresh_Tick(object sender, EventArgs e) {
+            ToolCache.Animation.AnimatedObject.Update(0.1);
+            mapViewPanel.Invalidate();
         }
     }
 }

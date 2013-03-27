@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Windows.Forms;
+using ToolCache.Map.Tiles;
 
 namespace ToolCache.Map {
     public class MapPieceCache {
@@ -31,6 +32,8 @@ namespace ToolCache.Map {
 
                 _p.Add(mp);
             }
+
+            TileCache.Initialize();
 
             CreateNew();
         }

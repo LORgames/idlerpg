@@ -8,6 +8,9 @@ using System.Drawing;
 
 namespace ToolCache.Animation {
     public class AnimatedObject {
+        private static Random r = new Random();
+        private static double totalTime = 0.0;
+
         public byte TotalFrames = 0;
         public float PlaybackSpeed = 0.2f;
 
@@ -37,13 +40,17 @@ namespace ToolCache.Animation {
         }
 
         public void Draw(LBuffer buffer, int xPos, int yPos, float scale) {
-            Image im = ImageCache.RequestImage(Frames[0]);
-
+            int frameID = (int)(totalTime / PlaybackSpeed);
+            Image im = ImageCache.RequestImage(Frames[frameID % Frames.Count]);
             buffer.gfx.DrawImage(im, xPos, yPos, im.Width * scale, im.Height * scale);
         }
 
         public void Draw(LBuffer buffer, float xPos, float yPos, float scale) {
             Draw(buffer, (int)xPos, (int)yPos, scale);
+        }
+
+        public static void Update(double dt) {
+            totalTime += dt;
         }
     }
 }

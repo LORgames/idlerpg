@@ -28,15 +28,17 @@ namespace ToolCache.Map.Tiles {
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TileEditor));
             this.txtTileName = new System.Windows.Forms.TextBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cbTileGroup = new System.Windows.Forms.ComboBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
+            this.cbTileNames = new System.Windows.Forms.ToolStripComboBox();
             this.btnNewTile = new System.Windows.Forms.ToolStripButton();
             this.btnDeleteTile = new System.Windows.Forms.ToolStripButton();
+            this.btnSave = new System.Windows.Forms.ToolStripButton();
             this.lblTileName = new System.Windows.Forms.Label();
             this.lblGroup = new System.Windows.Forms.Label();
-            this.ccAnimation = new ToolCache.Animation.Form.AnimationList();
             this.lblAnimation = new System.Windows.Forms.Label();
+            this.ccAnimation = new ToolCache.Animation.Form.AnimationList();
+            this.lblTileID = new System.Windows.Forms.ToolStripLabel();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,30 +50,33 @@ namespace ToolCache.Map.Tiles {
             this.txtTileName.TabIndex = 2;
             this.txtTileName.Text = "<Unnamed>";
             // 
-            // comboBox1
+            // cbTileGroup
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(190, 49);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(169, 21);
-            this.comboBox1.TabIndex = 3;
+            this.cbTileGroup.FormattingEnabled = true;
+            this.cbTileGroup.Location = new System.Drawing.Point(190, 49);
+            this.cbTileGroup.Name = "cbTileGroup";
+            this.cbTileGroup.Size = new System.Drawing.Size(169, 21);
+            this.cbTileGroup.TabIndex = 3;
             // 
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripComboBox1,
+            this.cbTileNames,
             this.btnNewTile,
-            this.btnDeleteTile});
+            this.btnDeleteTile,
+            this.btnSave,
+            this.lblTileID});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(371, 25);
             this.toolStrip1.TabIndex = 4;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolStripComboBox1
+            // cbTileNames
             // 
-            this.toolStripComboBox1.Name = "toolStripComboBox1";
-            this.toolStripComboBox1.Size = new System.Drawing.Size(169, 25);
+            this.cbTileNames.Name = "cbTileNames";
+            this.cbTileNames.Size = new System.Drawing.Size(169, 25);
+            this.cbTileNames.SelectedIndexChanged += new System.EventHandler(this.cbTileNames_SelectedIndexChanged);
             // 
             // btnNewTile
             // 
@@ -81,6 +86,7 @@ namespace ToolCache.Map.Tiles {
             this.btnNewTile.Name = "btnNewTile";
             this.btnNewTile.Size = new System.Drawing.Size(23, 22);
             this.btnNewTile.Text = "toolStripButton1";
+            this.btnNewTile.Click += new System.EventHandler(this.btnNewTile_Click);
             // 
             // btnDeleteTile
             // 
@@ -90,6 +96,17 @@ namespace ToolCache.Map.Tiles {
             this.btnDeleteTile.Name = "btnDeleteTile";
             this.btnDeleteTile.Size = new System.Drawing.Size(23, 22);
             this.btnDeleteTile.Text = "toolStripButton2";
+            this.btnDeleteTile.Click += new System.EventHandler(this.btnDeleteTile_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnSave.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.Image")));
+            this.btnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(23, 22);
+            this.btnSave.Text = "toolStripButton1";
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // lblTileName
             // 
@@ -109,14 +126,6 @@ namespace ToolCache.Map.Tiles {
             this.lblGroup.TabIndex = 6;
             this.lblGroup.Text = "Tile Group:";
             // 
-            // ccAnimation
-            // 
-            this.ccAnimation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ccAnimation.Location = new System.Drawing.Point(15, 96);
-            this.ccAnimation.Name = "ccAnimation";
-            this.ccAnimation.Size = new System.Drawing.Size(344, 64);
-            this.ccAnimation.TabIndex = 1;
-            // 
             // lblAnimation
             // 
             this.lblAnimation.AutoSize = true;
@@ -126,20 +135,36 @@ namespace ToolCache.Map.Tiles {
             this.lblAnimation.TabIndex = 7;
             this.lblAnimation.Text = "Display:";
             // 
+            // ccAnimation
+            // 
+            this.ccAnimation.AllowDrop = true;
+            this.ccAnimation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ccAnimation.Location = new System.Drawing.Point(15, 96);
+            this.ccAnimation.Name = "ccAnimation";
+            this.ccAnimation.Size = new System.Drawing.Size(344, 100);
+            this.ccAnimation.TabIndex = 1;
+            // 
+            // lblTileID
+            // 
+            this.lblTileID.Name = "lblTileID";
+            this.lblTileID.Size = new System.Drawing.Size(41, 22);
+            this.lblTileID.Text = "<TID>";
+            // 
             // TileEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(371, 172);
+            this.ClientSize = new System.Drawing.Size(371, 205);
             this.Controls.Add(this.lblAnimation);
             this.Controls.Add(this.lblGroup);
             this.Controls.Add(this.lblTileName);
             this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.cbTileGroup);
             this.Controls.Add(this.txtTileName);
             this.Controls.Add(this.ccAnimation);
             this.Name = "TileEditor";
             this.Text = "Tile Editor";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TileEditor_FormClosing);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -151,13 +176,15 @@ namespace ToolCache.Map.Tiles {
 
         private AnimationList ccAnimation;
         private System.Windows.Forms.TextBox txtTileName;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cbTileGroup;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripComboBox toolStripComboBox1;
+        private System.Windows.Forms.ToolStripComboBox cbTileNames;
         private System.Windows.Forms.ToolStripButton btnNewTile;
         private System.Windows.Forms.ToolStripButton btnDeleteTile;
         private System.Windows.Forms.Label lblTileName;
         private System.Windows.Forms.Label lblGroup;
         private System.Windows.Forms.Label lblAnimation;
+        private System.Windows.Forms.ToolStripButton btnSave;
+        private System.Windows.Forms.ToolStripLabel lblTileID;
     }
 }

@@ -50,7 +50,9 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.AllowDrop = true;
+            this.splitContainer1.Panel2.AutoScroll = true;
             this.splitContainer1.Panel2.DragDrop += new System.Windows.Forms.DragEventHandler(this.splitContainer1_Panel2_DragDrop);
+            this.splitContainer1.Panel2.DragOver += new System.Windows.Forms.DragEventHandler(this.splitContainer1_Panel2_DragOver);
             this.splitContainer1.Size = new System.Drawing.Size(500, 100);
             this.splitContainer1.SplitterDistance = 55;
             this.splitContainer1.TabIndex = 2;
@@ -92,6 +94,7 @@
             0,
             0,
             65536});
+            this.numFramerate.ValueChanged += new System.EventHandler(this.numFramerate_ValueChanged);
             // 
             // lblAnimation
             // 

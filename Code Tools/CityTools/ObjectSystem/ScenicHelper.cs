@@ -39,9 +39,11 @@ namespace CityTools.ObjectSystem {
 
             selectedObjects.Sort();
 
-            // If p0 and p1 are the same or the event was triggered by right clicking, only select the top object
-            if (p0 == p1 || e.Button == MouseButtons.Right) {
-                selectedObjects.RemoveRange(0, selectedObjects.Count - 1);
+            if (selectedObjects.Count > 0) {
+                // If p0 and p1 are the same or the event was triggered by right clicking, only select the top object
+                if (p0 == p1 || e.Button == MouseButtons.Right) {
+                    selectedObjects.RemoveRange(0, selectedObjects.Count - 1);
+                }
             }
 
             p0 = Point.Empty;

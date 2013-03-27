@@ -19,6 +19,13 @@ namespace CityTools.Terrain {
 
         public static void InitializeTerrainSystem(ComboBox cb, Panel objPanel) {
             //TODO: Get groups 
+            cb.Items.Clear();
+
+            short id = TileCache.NextID();
+
+            foreach(string cache in TileCache.GetGroups()) {
+                cb.Items.Add(cache);
+            }
         }
 
         public static bool MouseMoveOrDown(MouseEventArgs e, LBuffer input_buffer) {

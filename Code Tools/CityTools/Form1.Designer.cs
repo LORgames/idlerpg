@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.main_splitter = new System.Windows.Forms.SplitContainer();
             this.mapViewPanel_c = new System.Windows.Forms.Panel();
@@ -55,7 +56,7 @@
             this.tabFirstLevel = new System.Windows.Forms.TabControl();
             this.tabTerrain = new System.Windows.Forms.TabPage();
             this.panelTiles = new System.Windows.Forms.Panel();
-            this.tilesCB = new System.Windows.Forms.ComboBox();
+            this.cbTileGroups = new System.Windows.Forms.ComboBox();
             this.tabPalette = new System.Windows.Forms.TabPage();
             this.tabObjectTools = new System.Windows.Forms.TabControl();
             this.tabObjects = new System.Windows.Forms.TabPage();
@@ -63,6 +64,7 @@
             this.btnObjectSelector = new System.Windows.Forms.Button();
             this.pnlObjectScenicCache = new System.Windows.Forms.Panel();
             this.cbScenicCacheSelector = new System.Windows.Forms.ComboBox();
+            this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.main_splitter)).BeginInit();
             this.main_splitter.Panel1.SuspendLayout();
             this.main_splitter.Panel2.SuspendLayout();
@@ -319,7 +321,7 @@
             // tabTerrain
             // 
             this.tabTerrain.Controls.Add(this.panelTiles);
-            this.tabTerrain.Controls.Add(this.tilesCB);
+            this.tabTerrain.Controls.Add(this.cbTileGroups);
             this.tabTerrain.Location = new System.Drawing.Point(4, 22);
             this.tabTerrain.Name = "tabTerrain";
             this.tabTerrain.Padding = new System.Windows.Forms.Padding(3);
@@ -336,15 +338,15 @@
             this.panelTiles.Size = new System.Drawing.Size(217, 408);
             this.panelTiles.TabIndex = 1;
             // 
-            // tilesCB
+            // cbTileGroups
             // 
-            this.tilesCB.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tilesCB.FormattingEnabled = true;
-            this.tilesCB.Location = new System.Drawing.Point(3, 3);
-            this.tilesCB.Name = "tilesCB";
-            this.tilesCB.Size = new System.Drawing.Size(217, 21);
-            this.tilesCB.TabIndex = 0;
-            this.tilesCB.SelectedIndexChanged += new System.EventHandler(this.cbTile_SelectedIndexChanged);
+            this.cbTileGroups.Dock = System.Windows.Forms.DockStyle.Top;
+            this.cbTileGroups.FormattingEnabled = true;
+            this.cbTileGroups.Location = new System.Drawing.Point(3, 3);
+            this.cbTileGroups.Name = "cbTileGroups";
+            this.cbTileGroups.Size = new System.Drawing.Size(217, 21);
+            this.cbTileGroups.TabIndex = 0;
+            this.cbTileGroups.SelectedIndexChanged += new System.EventHandler(this.cbTile_SelectedIndexChanged);
             // 
             // tabPalette
             // 
@@ -429,6 +431,10 @@
             this.cbScenicCacheSelector.TabIndex = 0;
             this.cbScenicCacheSelector.SelectedIndexChanged += new System.EventHandler(this.obj_scenary_cache_CB_SelectionChangeCommitted);
             // 
+            // timerRefresh
+            // 
+            this.timerRefresh.Tick += new System.EventHandler(this.timerRefresh_Tick);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -484,7 +490,6 @@
         internal System.Windows.Forms.ToolStripLabel lblFilename;
         private System.Windows.Forms.TabPage tabTerrain;
         private System.Windows.Forms.Panel panelTiles;
-        private System.Windows.Forms.ComboBox tilesCB;
         private System.Windows.Forms.ToolStripMenuItem lblMapWidth;
         internal System.Windows.Forms.ToolStripTextBox txtMapSizeX;
         private System.Windows.Forms.ToolStripMenuItem lblMapHeight;
@@ -500,6 +505,8 @@
         private System.Windows.Forms.Button btnObjectSelector;
         internal System.Windows.Forms.Panel pnlObjectScenicCache;
         private System.Windows.Forms.ComboBox cbScenicCacheSelector;
+        internal System.Windows.Forms.ComboBox cbTileGroups;
+        private System.Windows.Forms.Timer timerRefresh;
     }
 }
 

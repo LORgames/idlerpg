@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ToolCache.Animation;
+using ToolCache.General;
 
 namespace ToolCache.Map.Tiles {
     public class Tile {
@@ -49,6 +50,20 @@ namespace ToolCache.Map.Tiles {
             movementCost = f.GetFloat();
             directionalAccess = f.GetByte();
             slidingDirection = f.GetByte();
+        }
+
+        internal void SaveToFile(BinaryIO f) {
+            f.AddShort(TileID);
+            f.AddString(TileName);
+            f.AddString(TileGroup);
+
+            Animation.PackIntoBinaryIO(f);
+
+            f.AddByte(isWalkable ? (byte)1 : (byte)0);
+            f.AddByte(elementalDamage);
+            f.AddFloat(movementCost);
+            f.AddByte(directionalAccess);
+            f.AddByte(slidingDirection);
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using ToolCache.Map;
 using CityTools.Core;
 using System.Windows.Forms;
+using ToolCache.Map.Tiles;
 
 namespace CityTools.CacheInterfaces {
     public class MapInterface {
