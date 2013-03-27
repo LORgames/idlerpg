@@ -46,6 +46,12 @@ namespace ToolCache.Map.Tiles {
 
                     tiles.Add(t.TileID, t);
 
+                    if (!GroupsToTileUUIDS.ContainsKey(t.TileGroup)) {
+                        GroupsToTileUUIDS.Add(t.TileGroup, new List<short>());
+                    }
+
+                    GroupsToTileUUIDS[t.TileGroup].Add(t.TileID);
+
                     if (t.TileID >= nextTileID) {
                         nextTileID = t.TileID;
                         nextTileID++;
@@ -111,6 +117,18 @@ namespace ToolCache.Map.Tiles {
 
                 tiles.Remove(tileID);
             }
+        }
+
+        public static List<Tile> GetTilesInGroup(string p) {
+            List<Tile> retList = new List<Tile>();
+
+            if (GroupsToTileUUIDS.ContainsKey(p)) {
+                foreach (short id in GroupsToTileUUIDS[p]) {
+                    retList.Add(tiles[id]);
+                }
+            }
+
+            return retList;
         }
     }
 }

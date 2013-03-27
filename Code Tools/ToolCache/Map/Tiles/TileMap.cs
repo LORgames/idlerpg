@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using ToolCache.General;
 
-namespace ToolCache.Map {
+namespace ToolCache.Map.Tiles {
     public class TileMap {
         public int numTilesX;
         public int numTilesY;

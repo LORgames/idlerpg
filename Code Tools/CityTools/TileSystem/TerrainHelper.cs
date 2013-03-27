@@ -26,6 +26,8 @@ namespace CityTools.Terrain {
             foreach(string cache in TileCache.GetGroups()) {
                 cb.Items.Add(cache);
             }
+
+            objPanel.Controls.Add(new ObjectCacheControl("", false, true));
         }
 
         public static bool MouseMoveOrDown(MouseEventArgs e, LBuffer input_buffer) {

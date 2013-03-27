@@ -15,9 +15,11 @@ namespace CityTools.Components {
         public const string OBJECT_CACHE_FOLDER = ".\\objcache\\";
 
         public bool isCacheFolder = true;
+        public bool isManual = false;
+
         public string folder;
 
-        public ObjectCacheControl(string things = "", bool addObjectCache = true) {
+        public ObjectCacheControl(string things = "", bool addObjectCache = true, bool manual = false) {
             InitializeComponent();
 
             this.Dock = DockStyle.Fill;
@@ -29,6 +31,8 @@ namespace CityTools.Components {
         }
 
         public void Activate(string folder_b = "") {
+            if (isManual) return;
+
 			bool requiresReload = false;
 		
             if (folder_b != "") {
@@ -47,10 +51,10 @@ namespace CityTools.Components {
 
             string[] files = Directory.GetFiles(folder, "*.png");
 
-            if (files.Length != flowLayoutPanel1.Controls.Count || requiresReload) {
+            if (files.Length != pnlInternal.Controls.Count || requiresReload) {
                 Deactivate();
 
-                flowLayoutPanel1.SuspendLayout();
+                pnlInternal.SuspendLayout();
 
                 foreach (string s in files) {
                     CachedObject co;
@@ -70,12 +74,12 @@ namespace CityTools.Components {
                         co.ContextMenuStrip = objCache_contextMenu;
                     }
 
-                    flowLayoutPanel1.Controls.Add(co);
+                    pnlInternal.Controls.Add(co);
                 }
 
-                flowLayoutPanel1.ResumeLayout();
+                pnlInternal.ResumeLayout();
             } else if (folder_b == "" && isCacheFolder) {
-                foreach (Control c in flowLayoutPanel1.Controls) {
+                foreach (Control c in pnlInternal.Controls) {
                     if (c is CachedObject) {
                         //BaseObject st = ScenicObjectCache.s_objectTypes[ScenicObjectCache.s_StringToInt[(c as CachedObject).img_addr]];
                         //(c as CachedObject).label.Text = (st.layer == 1 ? "A" : "B") + (st.Physics.Count > 0 ? "P" : "");
@@ -86,9 +90,9 @@ namespace CityTools.Components {
         }
 
         public void Deactivate() {
-            flowLayoutPanel1.SuspendLayout();
-            flowLayoutPanel1.Controls.Clear();
-            flowLayoutPanel1.ResumeLayout();
+            pnlInternal.SuspendLayout();
+            pnlInternal.Controls.Clear();
+            pnlInternal.ResumeLayout();
         }
 
         private void editObjectDetailsToolStripMenuItem_Click(object sender, EventArgs e) {

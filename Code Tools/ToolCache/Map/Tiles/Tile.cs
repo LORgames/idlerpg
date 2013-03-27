@@ -32,11 +32,11 @@ namespace ToolCache.Map.Tiles {
         public AnimatedObject Animation;
 
         //Gameplay Information
-        Boolean isWalkable = true; //(1 bit)
-        byte elementalDamage = 0; // 0 = No damage, everything else is the ID of the damaging element (8 bits)
-        float movementCost = 1; // 1 = normal, 2 = twice as slow, 0.5 = twice as fast (32 bits)
-        byte directionalAccess = 15; //Which directions tile can be accessed from bitwise LRTB order (4bits)
-        byte slidingDirection = 0; //0=none, 1=left, 2=right, 3=top, 4=bottom, 5=direction of travel (3 bits)
+        public Boolean isWalkable = true; //(1 bit)
+        public byte elementalDamage = 0; // 0 = No damage, everything else is the ID of the damaging element (8 bits)
+        public float movementCost = 1; // 1 = normal, 2 = twice as slow, 0.5 = twice as fast (32 bits)
+        public byte directionalAccess = 15; //Which directions tile can be accessed from bitwise LRTB order (4bits)
+        public byte slidingDirection = 0; //0=none, 1=left, 2=right, 3=top, 4=bottom, 5=direction of travel (3 bits)
 
         internal void LoadFromFile(General.BinaryIO f) {
             TileID = f.GetShort();

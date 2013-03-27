@@ -10,12 +10,19 @@ using System.Windows.Forms;
 namespace CityTools.Components {
     public partial class CachedObject : UserControl {
         internal string img_addr = "";
+        internal string retVal = "";
 
-        public CachedObject(string image, string labelT = "") {
+        public CachedObject(string image, string labelT = "", string retVal = "") {
             InitializeComponent();
 
             img_addr = image;
             label.Text = labelT;
+
+            if (retVal == "") {
+                this.retVal = image;
+            } else {
+                this.retVal = retVal;
+            }
 
             pictureBox1.Load(image);
         }
@@ -25,7 +32,7 @@ namespace CityTools.Components {
         }
 
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e) {
-            MainWindow.instance.DrawWithObject(img_addr);
+            MainWindow.instance.DrawWithObject(retVal);
         }
     }
 }

@@ -56,7 +56,7 @@ namespace CityTools {
             InitializeComponent();
 
             CacheInterfaces.MapInterface.Initialize();
-            Terrain.TerrainHelper.InitializeTerrainSystem(cbTileGroups, panelTiles);
+            Terrain.TerrainHelper.InitializeTerrainSystem(cbTileGroups, pnlTiles);
 
             pnlObjectScenicCache.Controls.Add(new ObjectCacheControl());
 
@@ -205,7 +205,7 @@ namespace CityTools {
                 }
             } else if (tabFirstLevel.SelectedTab == tabTerrain) {
                 paintMode = PaintMode.Terrain;
-                Terrain.TerrainHelper.SetCurrentTile(Terrain.TerrainHelper.StripTileIDFromPath(objectName));
+                Terrain.TerrainHelper.SetCurrentTile(short.Parse(objectName));
             }
         }
 
@@ -246,7 +246,8 @@ namespace CityTools {
         }
 
         private void cbTile_SelectedIndexChanged(object sender, EventArgs e) {
-            (panelTiles.Controls[0] as ObjectCacheControl).Activate(cbTileGroups.SelectedValue.ToString());
+            (pnlTiles.Controls[0] as ObjectCacheControl).Deactivate();
+            CacheInterfaces.TileInterface.UpdateTilePage();
         }
 
         private void timerRefresh_Tick(object sender, EventArgs e) {

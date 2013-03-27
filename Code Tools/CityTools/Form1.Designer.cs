@@ -55,7 +55,7 @@
             this.toolpanel_splitter = new System.Windows.Forms.SplitContainer();
             this.tabFirstLevel = new System.Windows.Forms.TabControl();
             this.tabTerrain = new System.Windows.Forms.TabPage();
-            this.panelTiles = new System.Windows.Forms.Panel();
+            this.pnlTiles = new System.Windows.Forms.Panel();
             this.cbTileGroups = new System.Windows.Forms.ComboBox();
             this.tabPalette = new System.Windows.Forms.TabPage();
             this.tabObjectTools = new System.Windows.Forms.TabControl();
@@ -320,7 +320,7 @@
             // 
             // tabTerrain
             // 
-            this.tabTerrain.Controls.Add(this.panelTiles);
+            this.tabTerrain.Controls.Add(this.pnlTiles);
             this.tabTerrain.Controls.Add(this.cbTileGroups);
             this.tabTerrain.Location = new System.Drawing.Point(4, 22);
             this.tabTerrain.Name = "tabTerrain";
@@ -330,13 +330,13 @@
             this.tabTerrain.Text = "Terrain";
             this.tabTerrain.UseVisualStyleBackColor = true;
             // 
-            // panelTiles
+            // pnlTiles
             // 
-            this.panelTiles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelTiles.Location = new System.Drawing.Point(3, 24);
-            this.panelTiles.Name = "panelTiles";
-            this.panelTiles.Size = new System.Drawing.Size(217, 408);
-            this.panelTiles.TabIndex = 1;
+            this.pnlTiles.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlTiles.Location = new System.Drawing.Point(3, 24);
+            this.pnlTiles.Name = "pnlTiles";
+            this.pnlTiles.Size = new System.Drawing.Size(217, 408);
+            this.pnlTiles.TabIndex = 1;
             // 
             // cbTileGroups
             // 
@@ -489,7 +489,6 @@
         private System.Windows.Forms.ToolStripButton btnDuplicate;
         internal System.Windows.Forms.ToolStripLabel lblFilename;
         private System.Windows.Forms.TabPage tabTerrain;
-        private System.Windows.Forms.Panel panelTiles;
         private System.Windows.Forms.ToolStripMenuItem lblMapWidth;
         internal System.Windows.Forms.ToolStripTextBox txtMapSizeX;
         private System.Windows.Forms.ToolStripMenuItem lblMapHeight;
@@ -507,6 +506,7 @@
         private System.Windows.Forms.ComboBox cbScenicCacheSelector;
         internal System.Windows.Forms.ComboBox cbTileGroups;
         private System.Windows.Forms.Timer timerRefresh;
+        internal System.Windows.Forms.Panel pnlTiles;
     }
 }
 

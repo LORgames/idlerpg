@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using ToolCache.General;
 using ToolCache.Map.Objects;
+using ToolCache.Map.Tiles;
 
 namespace ToolCache.Map {
     public class MapPiece {

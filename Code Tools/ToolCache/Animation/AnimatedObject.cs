@@ -40,6 +40,8 @@ namespace ToolCache.Animation {
         }
 
         public void Draw(LBuffer buffer, int xPos, int yPos, float scale) {
+            if (Frames.Count == 0) return;
+
             int frameID = (int)(totalTime / PlaybackSpeed);
             Image im = ImageCache.RequestImage(Frames[frameID % Frames.Count]);
             buffer.gfx.DrawImage(im, xPos, yPos, im.Width * scale, im.Height * scale);
