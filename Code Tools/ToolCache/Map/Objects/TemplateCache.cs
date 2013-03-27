@@ -64,6 +64,11 @@ namespace ToolCache.Map.Objects {
                     }
 
                     GroupsToObjectUUIDS[ObjectGroup].Add(ObjectID);
+
+                    if (nextObjectID <= ObjectID) {
+                        nextObjectID = ObjectID;
+                        nextObjectID++;
+                    }
                 }
             }
         }
