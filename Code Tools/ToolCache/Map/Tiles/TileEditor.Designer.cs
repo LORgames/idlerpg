@@ -34,11 +34,11 @@ namespace ToolCache.Map.Tiles {
             this.btnNewTile = new System.Windows.Forms.ToolStripButton();
             this.btnDeleteTile = new System.Windows.Forms.ToolStripButton();
             this.btnSave = new System.Windows.Forms.ToolStripButton();
+            this.lblTileID = new System.Windows.Forms.ToolStripLabel();
             this.lblTileName = new System.Windows.Forms.Label();
             this.lblGroup = new System.Windows.Forms.Label();
             this.lblAnimation = new System.Windows.Forms.Label();
             this.ccAnimation = new ToolCache.Animation.Form.AnimationList();
-            this.lblTileID = new System.Windows.Forms.ToolStripLabel();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -108,6 +108,12 @@ namespace ToolCache.Map.Tiles {
             this.btnSave.Text = "toolStripButton1";
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // lblTileID
+            // 
+            this.lblTileID.Name = "lblTileID";
+            this.lblTileID.Size = new System.Drawing.Size(41, 22);
+            this.lblTileID.Text = "<TID>";
+            // 
             // lblTileName
             // 
             this.lblTileName.AutoSize = true;
@@ -143,12 +149,6 @@ namespace ToolCache.Map.Tiles {
             this.ccAnimation.Name = "ccAnimation";
             this.ccAnimation.Size = new System.Drawing.Size(344, 100);
             this.ccAnimation.TabIndex = 1;
-            // 
-            // lblTileID
-            // 
-            this.lblTileID.Name = "lblTileID";
-            this.lblTileID.Size = new System.Drawing.Size(41, 22);
-            this.lblTileID.Text = "<TID>";
             // 
             // TileEditor
             // 

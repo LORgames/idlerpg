@@ -67,11 +67,11 @@
     <Compile Include="Items\ItemDatabase.cs" />
     <Compile Include="Drawing\LBuffer.cs" />
     <Compile Include="Map\MapPieceCache.cs" />
-    <Compile Include="Map\Objects\ObjectTemplate.cs" />
+    <Compile Include="Map\Objects\Template.cs" />
     <Compile Include="Map\Tiles\TileMap.cs" />
     <Compile Include="Map\MapPiece.cs" />
     <Compile Include="Map\Objects\BaseObject.cs" />
-    <Compile Include="Map\Objects\ObjectCache.cs" />
+    <Compile Include="Map\Objects\TemplateCache.cs" />
     <Compile Include="Map\Tiles\Tile.cs" />
     <Compile Include="Map\Tiles\TileCache.cs" />
     <Compile Include="Map\Tiles\TileEditor.cs">
