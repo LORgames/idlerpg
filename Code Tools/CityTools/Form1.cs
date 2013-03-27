@@ -14,6 +14,9 @@ using ToolCache.Drawing;
 using ToolCache.General;
 using ToolCache.Map;
 using ToolCache.Map.Tiles;
+using ToolCache.Map.Objects.Tool;
+using ToolCache.Animation;
+using ToolCache.Map.Objects;
 
 namespace CityTools {
     public enum PaintMode {
@@ -44,8 +47,7 @@ namespace CityTools {
         public Brush terrainPaintBrush = new SolidBrush(Color.White);
 
         //Object painting things
-        public Bitmap obj_paint_image = null;
-        public String obj_paint_original = "";
+        public AnimatedObject paintingAnimation = null;
         public bool was_mouse_down = false;
 
         public bool initialized = false;
@@ -57,17 +59,7 @@ namespace CityTools {
 
             CacheInterfaces.MapInterface.Initialize();
             Terrain.TerrainHelper.InitializeTerrainSystem(cbTileGroups, pnlTiles);
-
-            pnlObjectScenicCache.Controls.Add(new ObjectCacheControl());
-
-            List<String> dark = new List<string>();
-            dark.InsertRange(0, Directory.GetDirectories("objcache"));
-
-            for(int i = 0; i < dark.Count; i++) {
-                dark[i] = dark[i].Split('\\')[1];
-            }
-
-            cbScenicCacheSelector.DataSource = dark;
+            CacheInterfaces.ObjectInterface.Initialize();
 
             drawArea = mapViewPanel.DisplayRectangle;
             Camera.FixViewArea(drawArea);
@@ -109,8 +101,8 @@ namespace CityTools {
                 int viewW;
 
                 if (int.TryParse(txtViewportWidth.Text, out viewW) && int.TryParse(txtViewportHeight.Text, out viewH)) {
-                    int panelH = (mapViewPanel.Height - viewH) / 2;
-                    int panelW = (mapViewPanel.Width - viewW) / 2;
+                    int panelH = (mapViewPanel.Height - (int)(viewH*Camera.ZoomLevel)) / 2;
+                    int panelW = (mapViewPanel.Width - (int)(viewW*Camera.ZoomLevel)) / 2;
                     
                     Rectangle[] rects = new Rectangle[4];
 
@@ -213,24 +205,16 @@ namespace CityTools {
 
         public void DrawWithObject(String objectName) {
             if (tabFirstLevel.SelectedTab == tabPalette) {
-                obj_paint_original = objectName;
-                obj_paint_image = (Bitmap)ImageCache.RequestImage(objectName);
+                short objectID = short.Parse(objectName);
+                paintingAnimation = TemplateCache.G(objectID).Animation;
 
                 if (tabObjectTools.SelectedTab == tabObjects) {
-                    //TODO: Reimplement this;
-                    //ScenicPlacementHelper.object_index = ScenicObjectCache.s_StringToInt[objectName];//objectName;
+                    ScenicPlacementHelper.object_index = objectID;
                     paintMode = PaintMode.Objects;
                 }
             } else if (tabFirstLevel.SelectedTab == tabTerrain) {
                 paintMode = PaintMode.Terrain;
                 Terrain.TerrainHelper.SetCurrentTile(short.Parse(objectName));
-            }
-        }
-
-        private void obj_settings_ValueChanged(object sender, EventArgs e) {
-            if (obj_paint_original != null && obj_paint_original.Length > 3) {
-                obj_paint_image = (Bitmap)ImageCache.RequestImage(obj_paint_original);
-                drawPanel_ME_move(null, new MouseEventArgs(System.Windows.Forms.MouseButtons.None, 0, 0, 0, 0));
             }
         }
 
@@ -243,7 +227,7 @@ namespace CityTools {
         }
 
         private void obj_scenary_cache_CB_SelectionChangeCommitted(object sender, EventArgs e) {
-            MessageBox.Show("This box isn't reimplemented again yet.");
+            CacheInterfaces.ObjectInterface.UpdateObjectPage();
         }
 
         private void newPieceBtn_Click(object sender, EventArgs e) {
@@ -282,8 +266,22 @@ namespace CityTools {
             t.FormClosing += new FormClosingEventHandler(TileEditor_Closing);
         }
 
+        private void OpenTemplateEditor() {
+            TemplateEditor t = new TemplateEditor();
+            t.ShowDialog(this);
+            t.FormClosing += new FormClosingEventHandler(TemplateEditor_Closing);
+        }
+
         private void TileEditor_Closing(object sender, FormClosingEventArgs e) {
             CacheInterfaces.TileInterface.ReloadAll();
+        }
+
+        private void TemplateEditor_Closing(object sender, FormClosingEventArgs e) {
+            CacheInterfaces.ObjectInterface.ReloadAll();
+        }
+
+        private void btnObjectEditor_Click(object sender, EventArgs e) {
+            OpenTemplateEditor();
         }
     }
 }

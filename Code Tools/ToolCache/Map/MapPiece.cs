@@ -71,7 +71,7 @@ namespace ToolCache.Map {
             f.AddInt(Objects.Count);
 
             foreach (BaseObject ps in Objects) {
-                f.AddInt(ps.ObjectType);
+                f.AddShort(ps.ObjectType);
                 f.AddInt(ps.Location.X);
                 f.AddInt(ps.Location.Y);
             }

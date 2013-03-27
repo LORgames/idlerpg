@@ -68,6 +68,12 @@
     <Compile Include="Drawing\LBuffer.cs" />
     <Compile Include="Map\MapPieceCache.cs" />
     <Compile Include="Map\Objects\Template.cs" />
+    <Compile Include="Map\Objects\Tool\TemplateEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Map\Objects\Tool\TemplateEditor.Designer.cs">
+      <DependentUpon>TemplateEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Map\Tiles\TileMap.cs" />
     <Compile Include="Map\MapPiece.cs" />
     <Compile Include="Map\Objects\BaseObject.cs" />
@@ -94,6 +100,9 @@
     <EmbeddedResource Include="Animation\Form\AnimationList.resx">
       <DependentUpon>AnimationList.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Map\Objects\Tool\TemplateEditor.resx">
+      <DependentUpon>TemplateEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Map\Tiles\TileEditor.resx">
       <DependentUpon>TileEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -105,9 +114,7 @@
   <ItemGroup>
     <None Include="Resources\delete.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Map\Objects\Tool\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

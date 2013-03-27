@@ -39,16 +39,16 @@ namespace ToolCache.Animation {
             return animation;
         }
 
-        public void Draw(LBuffer buffer, int xPos, int yPos, float scale) {
+        public void Draw(Graphics gfx, int xPos, int yPos, float scale) {
             if (Frames.Count == 0) return;
 
             int frameID = (int)(totalTime / PlaybackSpeed);
             Image im = ImageCache.RequestImage(Frames[frameID % Frames.Count]);
-            buffer.gfx.DrawImage(im, xPos, yPos, im.Width * scale, im.Height * scale);
+            gfx.DrawImage(im, xPos, yPos, im.Width * scale, im.Height * scale);
         }
 
-        public void Draw(LBuffer buffer, float xPos, float yPos, float scale) {
-            Draw(buffer, (int)xPos, (int)yPos, scale);
+        public void Draw(Graphics gfx, float xPos, float yPos, float scale) {
+            Draw(gfx, (int)xPos, (int)yPos, scale);
         }
 
         public static void Update(double dt) {

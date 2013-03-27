@@ -17,10 +17,10 @@ namespace ToolCache.Animation.Form {
             InitializeComponent();
 
             splitContainer1.Panel2.AutoScroll = false;
-            splitContainer1.HorizontalScroll.Enabled = false;
-            splitContainer1.HorizontalScroll.Visible = false;
-            splitContainer1.VerticalScroll.Enabled = true;
-            splitContainer1.VerticalScroll.Visible = true;
+            splitContainer1.Panel2.HorizontalScroll.Enabled = true;
+            splitContainer1.Panel2.HorizontalScroll.Visible = true;
+            splitContainer1.Panel2.VerticalScroll.Enabled = false;
+            splitContainer1.Panel2.VerticalScroll.Visible = false;
         }
 
         public void SetSaveLocation(string directory) {
@@ -38,6 +38,8 @@ namespace ToolCache.Animation.Form {
         }
 
         private void splitContainer1_Panel2_DragDrop(object sender, DragEventArgs e) {
+            if (!Directory.Exists(location)) Directory.CreateDirectory(location);
+
             if ((e.AllowedEffect & DragDropEffects.Copy) == DragDropEffects.Copy) {
                 string[] data = (string[])e.Data.GetData(DataFormats.FileDrop);
                 if (data != null) {
@@ -51,7 +53,9 @@ namespace ToolCache.Animation.Form {
 
                                 bool copied = false;
 
-                                if (!File.Exists(nFilename)) {
+                                if (Path.GetFullPath(nFilename) == Path.GetFullPath(filename)) {
+                                    copied = true;
+                                } else if (!File.Exists(nFilename)) {
                                     File.Copy(filename, nFilename);
                                     copied = true;
                                 } else if(MessageBox.Show("Overwrite " + nFilename + "?", "Overwrite?", MessageBoxButtons.YesNo) == DialogResult.Yes) {

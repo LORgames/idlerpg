@@ -11,7 +11,7 @@ namespace ToolCache.Map.Objects {
     public class TemplateCache {
         public const string RESOLVED_DATABASE_FILENAME = Settings.CACHE + "db_objects.bin";
 
-        public static Dictionary<short, Template> ObjectTypes = new Dictionary<short, Template>();
+        internal static Dictionary<short, Template> ObjectTypes = new Dictionary<short, Template>();
         private static Dictionary<string, List<short>> GroupsToObjectUUIDS = new Dictionary<string, List<short>>();
 
         private static short nextObjectID = 0;
@@ -23,6 +23,14 @@ namespace ToolCache.Map.Objects {
             nextObjectID = 0;
 
             ReadDatabase();
+        }
+
+        public static Template G(short id) {
+            if (ObjectTypes.ContainsKey(id)) {
+                return ObjectTypes[id];
+            }
+
+            return null;
         }
 
         private static void ReadDatabase() {
@@ -37,6 +45,7 @@ namespace ToolCache.Map.Objects {
                     short ObjectID = f.GetShort();
                     AnimatedObject animation = AnimatedObject.UnpackFromBinaryIO(f);
 
+                    string ObjectName = f.GetString();
                     string ObjectGroup = f.GetString();
 
                     int BaseLeft = f.GetInt();
@@ -48,7 +57,13 @@ namespace ToolCache.Map.Objects {
 
                     bool isSolid = f.GetByte() == 1;
 
-                    ObjectTypes.Add(ObjectID, new Template(ObjectID, ObjectGroup, animation, _base, isSolid));
+                    ObjectTypes.Add(ObjectID, new Template(ObjectID, ObjectName, ObjectGroup, animation, _base, isSolid));
+
+                    if (!GroupsToObjectUUIDS.ContainsKey(ObjectGroup)) {
+                        GroupsToObjectUUIDS.Add(ObjectGroup, new List<short>());
+                    }
+
+                    GroupsToObjectUUIDS[ObjectGroup].Add(ObjectID);
                 }
             }
         }
@@ -59,7 +74,11 @@ namespace ToolCache.Map.Objects {
 
             foreach (KeyValuePair<short, Template> kvp in ObjectTypes) {
                 f.AddShort(kvp.Key);
+
                 kvp.Value.Animation.PackIntoBinaryIO(f);
+
+                f.AddString(kvp.Value.ObjectName);
+                f.AddString(kvp.Value.ObjectGroup);
 
                 f.AddInt(kvp.Value.Base.Left);
                 f.AddInt(kvp.Value.Base.Top);
@@ -123,6 +142,10 @@ namespace ToolCache.Map.Objects {
             }
 
             return retList;
+        }
+
+        internal static short NextID() {
+            return nextObjectID;
         }
     }
 }

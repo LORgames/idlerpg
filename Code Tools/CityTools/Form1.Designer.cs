@@ -42,6 +42,7 @@
             this.lblPieceName = new System.Windows.Forms.ToolStripLabel();
             this.txtPieceName = new System.Windows.Forms.ToolStripTextBox();
             this.lblFilename = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.menuMapSizing = new System.Windows.Forms.ToolStripDropDownButton();
             this.lblMapWidth = new System.Windows.Forms.ToolStripMenuItem();
             this.txtMapSizeX = new System.Windows.Forms.ToolStripTextBox();
@@ -51,6 +52,14 @@
             this.cbMapExtendX = new System.Windows.Forms.ToolStripComboBox();
             this.cbMapExtendY = new System.Windows.Forms.ToolStripComboBox();
             this.btnMapSizeChange = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.ckbShowTileGrid = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ckbViewportEnabled = new System.Windows.Forms.ToolStripMenuItem();
+            this.txtViewportWidth = new System.Windows.Forms.ToolStripTextBox();
+            this.txtViewportHeight = new System.Windows.Forms.ToolStripTextBox();
+            this.otherToolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnTileEditorTool = new System.Windows.Forms.ToolStripMenuItem();
             this.mapViewPanel = new System.Windows.Forms.PictureBox();
             this.toolpanel_splitter = new System.Windows.Forms.SplitContainer();
             this.tabFirstLevel = new System.Windows.Forms.TabControl();
@@ -65,15 +74,7 @@
             this.pnlObjectScenicCache = new System.Windows.Forms.Panel();
             this.cbScenicCacheSelector = new System.Windows.Forms.ComboBox();
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
-            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.ckbShowTileGrid = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ckbViewportEnabled = new System.Windows.Forms.ToolStripMenuItem();
-            this.txtViewportWidth = new System.Windows.Forms.ToolStripTextBox();
-            this.txtViewportHeight = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.otherToolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnTileEditorTool = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnObjectEditor = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.main_splitter)).BeginInit();
             this.main_splitter.Panel1.SuspendLayout();
             this.main_splitter.Panel2.SuspendLayout();
@@ -211,6 +212,11 @@
             this.lblFilename.Size = new System.Drawing.Size(57, 22);
             this.lblFilename.Text = "<Empty>";
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
             // menuMapSizing
             // 
             this.menuMapSizing.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -286,6 +292,74 @@
             this.btnMapSizeChange.Name = "btnMapSizeChange";
             this.btnMapSizeChange.Size = new System.Drawing.Size(181, 22);
             this.btnMapSizeChange.Text = "CLICK TO CHANGE";
+            // 
+            // toolStripDropDownButton1
+            // 
+            this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ckbShowTileGrid,
+            this.viewportToolStripMenuItem,
+            this.otherToolsToolStripMenuItem});
+            this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
+            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(45, 22);
+            this.toolStripDropDownButton1.Text = "View";
+            // 
+            // ckbShowTileGrid
+            // 
+            this.ckbShowTileGrid.CheckOnClick = true;
+            this.ckbShowTileGrid.Name = "ckbShowTileGrid";
+            this.ckbShowTileGrid.Size = new System.Drawing.Size(152, 22);
+            this.ckbShowTileGrid.Text = "Show Tile Grid";
+            // 
+            // viewportToolStripMenuItem
+            // 
+            this.viewportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ckbViewportEnabled,
+            this.txtViewportWidth,
+            this.txtViewportHeight});
+            this.viewportToolStripMenuItem.Name = "viewportToolStripMenuItem";
+            this.viewportToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.viewportToolStripMenuItem.Text = "Viewport";
+            // 
+            // ckbViewportEnabled
+            // 
+            this.ckbViewportEnabled.CheckOnClick = true;
+            this.ckbViewportEnabled.Name = "ckbViewportEnabled";
+            this.ckbViewportEnabled.Size = new System.Drawing.Size(160, 22);
+            this.ckbViewportEnabled.Text = "Enabled";
+            // 
+            // txtViewportWidth
+            // 
+            this.txtViewportWidth.AutoToolTip = true;
+            this.txtViewportWidth.Name = "txtViewportWidth";
+            this.txtViewportWidth.Size = new System.Drawing.Size(100, 23);
+            this.txtViewportWidth.Text = "800";
+            this.txtViewportWidth.ToolTipText = "Viewport Width";
+            // 
+            // txtViewportHeight
+            // 
+            this.txtViewportHeight.Name = "txtViewportHeight";
+            this.txtViewportHeight.Size = new System.Drawing.Size(100, 23);
+            this.txtViewportHeight.Text = "600";
+            this.txtViewportHeight.ToolTipText = "Viewport Height";
+            // 
+            // otherToolsToolStripMenuItem
+            // 
+            this.otherToolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnTileEditorTool,
+            this.btnObjectEditor});
+            this.otherToolsToolStripMenuItem.Name = "otherToolsToolStripMenuItem";
+            this.otherToolsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.otherToolsToolStripMenuItem.Text = "Other Tools";
+            // 
+            // btnTileEditorTool
+            // 
+            this.btnTileEditorTool.Name = "btnTileEditorTool";
+            this.btnTileEditorTool.Size = new System.Drawing.Size(196, 22);
+            this.btnTileEditorTool.Text = "Tile Editor";
+            this.btnTileEditorTool.Click += new System.EventHandler(this.btnTileEditorTool_Click);
             // 
             // mapViewPanel
             // 
@@ -446,77 +520,12 @@
             // 
             this.timerRefresh.Tick += new System.EventHandler(this.timerRefresh_Tick);
             // 
-            // toolStripDropDownButton1
+            // btnObjectEditor
             // 
-            this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ckbShowTileGrid,
-            this.viewportToolStripMenuItem,
-            this.otherToolsToolStripMenuItem});
-            this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
-            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(45, 22);
-            this.toolStripDropDownButton1.Text = "View";
-            // 
-            // ckbShowTileGrid
-            // 
-            this.ckbShowTileGrid.CheckOnClick = true;
-            this.ckbShowTileGrid.Name = "ckbShowTileGrid";
-            this.ckbShowTileGrid.Size = new System.Drawing.Size(152, 22);
-            this.ckbShowTileGrid.Text = "Show Tile Grid";
-            // 
-            // viewportToolStripMenuItem
-            // 
-            this.viewportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ckbViewportEnabled,
-            this.txtViewportWidth,
-            this.txtViewportHeight});
-            this.viewportToolStripMenuItem.Name = "viewportToolStripMenuItem";
-            this.viewportToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.viewportToolStripMenuItem.Text = "Viewport";
-            // 
-            // ckbViewportEnabled
-            // 
-            this.ckbViewportEnabled.CheckOnClick = true;
-            this.ckbViewportEnabled.Name = "ckbViewportEnabled";
-            this.ckbViewportEnabled.Size = new System.Drawing.Size(160, 22);
-            this.ckbViewportEnabled.Text = "Enabled";
-            // 
-            // txtViewportWidth
-            // 
-            this.txtViewportWidth.AutoToolTip = true;
-            this.txtViewportWidth.Name = "txtViewportWidth";
-            this.txtViewportWidth.Size = new System.Drawing.Size(100, 23);
-            this.txtViewportWidth.Text = "800";
-            this.txtViewportWidth.ToolTipText = "Viewport Width";
-            // 
-            // txtViewportHeight
-            // 
-            this.txtViewportHeight.Name = "txtViewportHeight";
-            this.txtViewportHeight.Size = new System.Drawing.Size(100, 23);
-            this.txtViewportHeight.Text = "600";
-            this.txtViewportHeight.ToolTipText = "Viewport Height";
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
-            // 
-            // otherToolsToolStripMenuItem
-            // 
-            this.otherToolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnTileEditorTool});
-            this.otherToolsToolStripMenuItem.Name = "otherToolsToolStripMenuItem";
-            this.otherToolsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.otherToolsToolStripMenuItem.Text = "Other Tools";
-            // 
-            // btnTileEditorTool
-            // 
-            this.btnTileEditorTool.Name = "btnTileEditorTool";
-            this.btnTileEditorTool.Size = new System.Drawing.Size(152, 22);
-            this.btnTileEditorTool.Text = "Tile Editor";
-            this.btnTileEditorTool.Click += new System.EventHandler(this.btnTileEditorTool_Click);
+            this.btnObjectEditor.Name = "btnObjectEditor";
+            this.btnObjectEditor.Size = new System.Drawing.Size(196, 22);
+            this.btnObjectEditor.Text = "Object Template Editor";
+            this.btnObjectEditor.Click += new System.EventHandler(this.btnObjectEditor_Click);
             // 
             // MainWindow
             // 
@@ -586,7 +595,6 @@
         private System.Windows.Forms.SplitContainer obj_splitter;
         private System.Windows.Forms.Button btnObjectSelector;
         internal System.Windows.Forms.Panel pnlObjectScenicCache;
-        private System.Windows.Forms.ComboBox cbScenicCacheSelector;
         internal System.Windows.Forms.ComboBox cbTileGroups;
         private System.Windows.Forms.Timer timerRefresh;
         internal System.Windows.Forms.Panel pnlTiles;
@@ -599,6 +607,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem otherToolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem btnTileEditorTool;
+        private System.Windows.Forms.ToolStripMenuItem btnObjectEditor;
+        internal System.Windows.Forms.ComboBox cbScenicCacheSelector;
     }
 }
 

@@ -13,7 +13,6 @@ namespace CityTools.CacheInterfaces {
             List<String> groups = TileCache.GetGroups();
         }
 
-
         internal static void UpdateTilePage() {
             (MainWindow.instance.pnlTiles.Controls[0] as ObjectCacheControl).Deactivate();
 

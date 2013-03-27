@@ -38,7 +38,7 @@ namespace CityTools.Terrain {
             tilePos.X = (int)((Camera.Offset.X + m.X / Camera.ZoomLevel) / Tile.PIXELS_X);
             tilePos.Y = (int)((Camera.Offset.Y + m.Y / Camera.ZoomLevel) / Tile.PIXELS_Y);
 
-            TileCache.G(currentTile).Animation.Draw(input_buffer, (tilePos.X * Tile.PIXELS_X - Camera.Offset.X) * Camera.ZoomLevel, (tilePos.Y * Tile.PIXELS_X - Camera.Offset.Y) * Camera.ZoomLevel, Camera.ZoomLevel);
+            TileCache.G(currentTile).Animation.Draw(input_buffer.gfx, (tilePos.X * Tile.PIXELS_X - Camera.Offset.X) * Camera.ZoomLevel, (tilePos.Y * Tile.PIXELS_X - Camera.Offset.Y) * Camera.ZoomLevel, Camera.ZoomLevel);
 
             if (e.Button == MouseButtons.Left) {
                 bool updated = false;
@@ -88,7 +88,7 @@ namespace CityTools.Terrain {
                     short f = MapPieceCache.CurrentPiece.Tiles.Data[i, j];
 
                     if(TileCache.G(f) != null)
-                        TileCache.G(f).Animation.Draw(buffer, (int)Math.Floor((i * Tile.PIXELS_X - Camera.Offset.X) * Camera.ZoomLevel), (int)Math.Floor((j * Tile.PIXELS_Y - Camera.Offset.Y) * Camera.ZoomLevel), Camera.ZoomLevel);
+                        TileCache.G(f).Animation.Draw(buffer.gfx, (int)Math.Floor((i * Tile.PIXELS_X - Camera.Offset.X) * Camera.ZoomLevel), (int)Math.Floor((j * Tile.PIXELS_Y - Camera.Offset.Y) * Camera.ZoomLevel), Camera.ZoomLevel);
                 }
             }
 
