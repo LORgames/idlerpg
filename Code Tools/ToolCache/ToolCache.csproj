@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Box2CS">
+      <HintPath>..\CityTools\Box2CS.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -50,17 +54,46 @@
       <DependentUpon>AnimationList.cs</DependentUpon>
     </Compile>
     <Compile Include="Critters\ICritter.cs" />
+    <Compile Include="General\BinaryIO.cs" />
+    <Compile Include="General\ImageCache.cs" />
+    <Compile Include="General\Settings.cs" />
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\ItemDatabase.cs" />
-    <Compile Include="Map\Map.cs" />
-    <Compile Include="Map\MapCache.cs" />
+    <Compile Include="Drawing\LBuffer.cs" />
+    <Compile Include="Map\MapPieceCache.cs" />
+    <Compile Include="Map\Objects\ObjectTemplate.cs" />
+    <Compile Include="Map\TileMap.cs" />
+    <Compile Include="Map\MapPiece.cs" />
+    <Compile Include="Map\Objects\BaseObject.cs" />
+    <Compile Include="Map\Objects\ObjectCache.cs" />
+    <Compile Include="Map\Tiles\Tile.cs" />
+    <Compile Include="Map\Tiles\TileCache.cs" />
+    <Compile Include="Map\Tiles\TileEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Map\Tiles\TileEditor.Designer.cs">
+      <DependentUpon>TileEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Animation\Form\AnimationList.resx">
       <DependentUpon>AnimationList.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Map\Tiles\TileEditor.resx">
+      <DependentUpon>TileEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

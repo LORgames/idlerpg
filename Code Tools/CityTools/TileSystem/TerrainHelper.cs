@@ -7,26 +7,18 @@ using CityTools.Core;
 using System.Drawing;
 using System.IO;
 using CityTools.Components;
+using ToolCache.Drawing;
+using ToolCache.Map.Tiles;
+using ToolCache.Map;
+using ToolCache.General;
 
 namespace CityTools.Terrain {
     public class TerrainHelper {
-
         private static short currentTile = 0;
-        private static Image currentTileIm = null;
-
         private static int drawSize = 1;
 
         public static void InitializeTerrainSystem(ComboBox cb, Panel objPanel) {
-            if (!Directory.Exists(MapCache.TILE_DIRECTORY)) Directory.CreateDirectory(MapCache.TILE_DIRECTORY);
-
-            List<String> dark = new List<string>();
-            dark.InsertRange(0, Directory.GetDirectories(MapCache.TILE_DIRECTORY));
-
-            if (dark.Count > 0) {
-                objPanel.Controls.Add(new ObjectCacheControl(dark[0], false));
-            }
-
-            cb.DataSource = dark;
+            //TODO: Get groups 
         }
 
         public static bool MouseMoveOrDown(MouseEventArgs e, LBuffer input_buffer) {
@@ -35,20 +27,20 @@ namespace CityTools.Terrain {
             Point m = e.Location;
 
             Point tilePos = Point.Empty;
-            tilePos.X = (int)((Camera.Offset.X + m.X / Camera.ZoomLevel) / MapCache.TILE_SIZE_X);
-            tilePos.Y = (int)((Camera.Offset.Y + m.Y / Camera.ZoomLevel) / MapCache.TILE_SIZE_Y);
+            tilePos.X = (int)((Camera.Offset.X + m.X / Camera.ZoomLevel) / Tile.PIXELS_X);
+            tilePos.Y = (int)((Camera.Offset.Y + m.Y / Camera.ZoomLevel) / Tile.PIXELS_Y);
 
-            input_buffer.gfx.DrawImage(currentTileIm, new RectangleF((tilePos.X * MapCache.TILE_SIZE_X - Camera.Offset.X) * Camera.ZoomLevel, (tilePos.Y * MapCache.TILE_SIZE_Y - Camera.Offset.Y) * Camera.ZoomLevel, MapCache.TILE_SIZE_X * Camera.ZoomLevel, MapCache.TILE_SIZE_Y * Camera.ZoomLevel));
+            TileCache.G(currentTile).Animation.Draw(input_buffer, (tilePos.X * Tile.PIXELS_X - Camera.Offset.X) * Camera.ZoomLevel, (tilePos.Y * Tile.PIXELS_X - Camera.Offset.Y) * Camera.ZoomLevel, Camera.ZoomLevel);
 
             if (e.Button == MouseButtons.Left) {
                 bool updated = false;
                 for (int i = 0; i < drawSize; i++) {
                     for (int j = 0; j < drawSize; j++) {
                         try {
-                            short ct = MapCache.tiles[tilePos.X + i, tilePos.Y + j];
+                            short ct = MapPieceCache.CurrentPiece.Tiles.Data[tilePos.X + i, tilePos.Y + j];
 
                             if (ct != currentTile) {
-                                MapCache.tiles[tilePos.X + i, tilePos.Y + j] = currentTile;
+                                MapPieceCache.CurrentPiece.Tiles.Data[tilePos.X + i, tilePos.Y + j] = currentTile;
                                 updated = true;
                             }
                         } catch { }
@@ -56,11 +48,11 @@ namespace CityTools.Terrain {
                 }
 
                 if (updated) {
-                    MapPieces.MapPieceCache.CurrentPiece.Edited();
+                    MapPieceCache.CurrentPiece.Edited();
                     return true;
                 }
             } else if (e.Button == MouseButtons.Middle) {
-                short ct = MapCache.tiles[tilePos.X, tilePos.Y];
+                short ct = MapPieceCache.CurrentPiece.Tiles.Data[tilePos.X, tilePos.Y];
                 SetCurrentTile(ct);
             }
 
@@ -68,34 +60,33 @@ namespace CityTools.Terrain {
         }
 
         public static void DrawTerrain(LBuffer buffer) {
-            if (MapCache.tiles == null) return;
+            if (MapPieceCache.CurrentPiece.Tiles == null) return;
 
-            int LeftEdge = (int)(Camera.Offset.X / MapCache.TILE_SIZE_X);
-            int TopEdge = (int)(Camera.Offset.Y / MapCache.TILE_SIZE_Y);
+            int LeftEdge = (int)(Camera.Offset.X / Tile.PIXELS_X);
+            int TopEdge = (int)(Camera.Offset.Y / Tile.PIXELS_Y);
 
-            int RightEdge = (int)Math.Ceiling(Camera.ViewArea.Right / MapCache.TILE_SIZE_X);
-            int BottomEdge = (int)Math.Ceiling(Camera.ViewArea.Bottom / MapCache.TILE_SIZE_Y);
+            int RightEdge = (int)Math.Ceiling(Camera.ViewArea.Right / Tile.PIXELS_X);
+            int BottomEdge = (int)Math.Ceiling(Camera.ViewArea.Bottom / Tile.PIXELS_Y);
 
             if (LeftEdge < 0) LeftEdge = 0;
             if (TopEdge < 0) TopEdge = 0;
-            if (RightEdge >= MapCache.TILE_TOTAL_X) RightEdge = MapCache.TILE_TOTAL_X;
-            if (BottomEdge >= MapCache.TILE_TOTAL_Y) BottomEdge = MapCache.TILE_TOTAL_Y;
+            if (RightEdge >= MapPieceCache.CurrentPiece.Tiles.numTilesX) RightEdge = MapPieceCache.CurrentPiece.Tiles.numTilesX;
+            if (BottomEdge >= MapPieceCache.CurrentPiece.Tiles.numTilesY) BottomEdge = MapPieceCache.CurrentPiece.Tiles.numTilesY;
 
-            buffer.gfx.FillRectangle(Brushes.CornflowerBlue, new Rectangle((int)Math.Floor((LeftEdge * MapCache.TILE_SIZE_X - Camera.Offset.X) * Camera.ZoomLevel), (int)Math.Floor((TopEdge * MapCache.TILE_SIZE_Y - Camera.Offset.Y) * Camera.ZoomLevel), (int)Math.Ceiling(MapCache.TILE_SIZE_X * Camera.ZoomLevel * (RightEdge - LeftEdge)), (int)Math.Ceiling(MapCache.TILE_SIZE_Y * Camera.ZoomLevel * (BottomEdge - TopEdge))));
+            buffer.gfx.FillRectangle(Brushes.CornflowerBlue, new Rectangle((int)Math.Floor((LeftEdge * Tile.PIXELS_X - Camera.Offset.X) * Camera.ZoomLevel), (int)Math.Floor((TopEdge * Tile.PIXELS_Y - Camera.Offset.Y) * Camera.ZoomLevel), (int)Math.Ceiling(Tile.PIXELS_X * Camera.ZoomLevel * (RightEdge - LeftEdge)), (int)Math.Ceiling(Tile.PIXELS_Y * Camera.ZoomLevel * (BottomEdge - TopEdge))));
 
             for (int i = LeftEdge; i < RightEdge; i++) {
                 for (int j = TopEdge; j < BottomEdge; j++) {
-                    short f = MapCache.tiles[i, j];
+                    short f = MapPieceCache.CurrentPiece.Tiles.Data[i, j];
 
-                    //TODO: Animate here
-                    buffer.gfx.DrawImage(ImageCache.RequestImage(MapCache.tileTable[f].TilesImages[0]), new Rectangle((int)Math.Floor((i * MapCache.TILE_SIZE_X - Camera.Offset.X) * Camera.ZoomLevel), (int)Math.Floor((j * MapCache.TILE_SIZE_Y - Camera.Offset.Y) * Camera.ZoomLevel), (int)Math.Ceiling(MapCache.TILE_SIZE_X * Camera.ZoomLevel), (int)Math.Ceiling(MapCache.TILE_SIZE_Y * Camera.ZoomLevel)));
+                    if(TileCache.G(f) != null)
+                        TileCache.G(f).Animation.Draw(buffer, (int)Math.Floor((i * Tile.PIXELS_X - Camera.Offset.X) * Camera.ZoomLevel), (int)Math.Floor((j * Tile.PIXELS_Y - Camera.Offset.Y) * Camera.ZoomLevel), Camera.ZoomLevel);
                 }
             }
         }
 
         public static void SetCurrentTile(short newTile) {
             currentTile = newTile;
-            currentTileIm = ImageCache.RequestImage(MapCache.tileTable[newTile].TilesImages[0]);
         }
 
         internal static short StripTileIDFromPath(string pathName) {

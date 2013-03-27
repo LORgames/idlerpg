@@ -7,33 +7,32 @@ using System.IO;
 using System.Drawing;
 using System.Net.Sockets;
 
-namespace CityTools.Physics {
-    public class BinaryReader {
+namespace ToolCache.General {
+    public class BinaryIO {
 
         private List<Byte> out_data;
         private Byte[] in_data;
         private int seemlessReadIndex = 0;
 
-        internal BinaryReader(Byte[] received) {
+        public BinaryIO(Byte[] received) {
             in_data = received;
             seemlessReadIndex = 0;
         }
 
-        public BinaryReader(string filename) {
-            File.OpenRead(filename);
+        public BinaryIO() {
             out_data = new List<byte>();
         }
 
-        internal void Encode(out Byte[] outBytes, out int length) {
+        internal void Encode(string filename) {
             if (out_data != null) {
-                length = out_data.Count;
-
-                out_data.InsertRange(0, BitConverter.GetBytes(IPAddress.HostToNetworkOrder(length)));
-                length += 4;
-                outBytes = out_data.ToArray();
+                File.WriteAllBytes(filename, out_data.ToArray());
             } else {
                 throw new Exception("MISSING OUTDATA!");
             }
+        }
+
+        public byte[] EncodedBytes() {
+            return out_data.ToArray();
         }
 
         public void AddInt(int number) {
@@ -47,6 +46,32 @@ namespace CityTools.Physics {
 
         public int GetInt() {
             return GetInt(seemlessReadIndex);
+        }
+
+        public void AddShort(short number) {
+            out_data.AddRange(BitConverter.GetBytes(IPAddress.HostToNetworkOrder(number)));
+        }
+
+        public short GetShort(int index) {
+            seemlessReadIndex += 2;
+            return IPAddress.NetworkToHostOrder(BitConverter.ToInt16(in_data, index));
+        }
+
+        public short GetShort() {
+            return GetShort(seemlessReadIndex);
+        }
+
+        public void AddByte(byte number) {
+            out_data.Add(number);
+        }
+
+        public byte GetByte(int index) {
+            seemlessReadIndex++;
+            return in_data[index];
+        }
+
+        public byte GetByte() {
+            return GetByte(seemlessReadIndex);
         }
 
         public void AddLong(long number) {
@@ -63,12 +88,26 @@ namespace CityTools.Physics {
         }
 
         public void AddFloat(float number) {
-            out_data.AddRange(BitConverter.GetBytes(number));
+            byte[] floatBytes = BitConverter.GetBytes(number);
+
+            if (BitConverter.IsLittleEndian) {
+                Array.Reverse(floatBytes);
+            }
+
+            out_data.AddRange(floatBytes);
         }
 
         public float GetFloat(int index) {
             seemlessReadIndex += 4;
-            return BitConverter.ToSingle(in_data, index);
+
+            byte[] floatBytes = new byte[4];
+            Array.Copy(in_data, index, floatBytes, 0, 4);
+
+            if (BitConverter.IsLittleEndian) {
+                Array.Reverse(floatBytes);
+            }
+
+            return BitConverter.ToSingle(floatBytes, 0);
         }
 
         public float GetFloat() {

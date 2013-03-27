@@ -4,20 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 
-namespace CityTools.Core {
+namespace ToolCache.Drawing {
     public class LBuffer {
         public Bitmap bmp;
         public Graphics gfx;
 
-        public LBuffer(object _s = null) {
-            Rectangle size;
-
-            if (_s == null || !(_s is Rectangle)) {
-                size = MainWindow.instance.drawArea;
-            } else {
-                size = (Rectangle)_s;
-            }
-
+        public LBuffer(Rectangle size) {
             bmp = new Bitmap(size.Width, size.Height, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
             gfx = Graphics.FromImage(bmp);
 

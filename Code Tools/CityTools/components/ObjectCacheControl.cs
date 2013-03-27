@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using CityTools.ObjectSystem;
+using ToolCache.Map.Objects;
 
 namespace CityTools.Components {
     public partial class ObjectCacheControl : UserControl {
@@ -54,12 +55,16 @@ namespace CityTools.Components {
                 foreach (string s in files) {
                     CachedObject co;
 
-                    if (isCacheFolder) {
-                        ScenicType st = ScenicObjectCache.s_objectTypes[ScenicObjectCache.s_StringToInt[s]];
-                        co = new CachedObject(s, (st.layer==1?"A":"B")+(st.Physics.Count>0?"P":""));
-                    } else {
-                        co = new CachedObject(s);
-                    }
+                    //if (isCacheFolder) {
+                        //BaseObject st = ObjectCache.ObjectTypes[ObjectCache..s_StringToInt[s]];
+                        //co = new CachedObject(s, (st.layer==1?"A":"B")+(st.Physics.Count>0?"P":""));
+                    //} else {
+                    //    co = new CachedObject(s);
+                    //}
+
+                    //TODO: Labelling
+
+                    co = new CachedObject(s);
 
                     if (isCacheFolder) {
                         co.ContextMenuStrip = objCache_contextMenu;
@@ -72,8 +77,9 @@ namespace CityTools.Components {
             } else if (folder_b == "" && isCacheFolder) {
                 foreach (Control c in flowLayoutPanel1.Controls) {
                     if (c is CachedObject) {
-                        ScenicType st = ScenicObjectCache.s_objectTypes[ScenicObjectCache.s_StringToInt[(c as CachedObject).img_addr]];
-                        (c as CachedObject).label.Text = (st.layer == 1 ? "A" : "B") + (st.Physics.Count > 0 ? "P" : "");
+                        //BaseObject st = ScenicObjectCache.s_objectTypes[ScenicObjectCache.s_StringToInt[(c as CachedObject).img_addr]];
+                        //(c as CachedObject).label.Text = (st.layer == 1 ? "A" : "B") + (st.Physics.Count > 0 ? "P" : "");
+                        //TODO: Fix this.
                     }
                 }
             }
@@ -110,10 +116,12 @@ namespace CityTools.Components {
             if (cm.SourceControl is CachedObject) {
                 CachedObject co = cm.SourceControl as CachedObject;
 
-                ScenicObjectCache.s_objectTypes[ScenicObjectCache.s_StringToInt[co.img_addr]].layer = (byte)(t.Text == "Below Traffic" ? 0 : 1);
+                //TODO: Fix this as well
+
+                //ScenicObjectCache.s_objectTypes[ScenicObjectCache.s_StringToInt[co.img_addr]].layer = (byte)(t.Text == "Below Traffic" ? 0 : 1);
                 
-                ScenicType st = ScenicObjectCache.s_objectTypes[ScenicObjectCache.s_StringToInt[co.img_addr]];
-                co.label.Text = (st.layer == 1 ? "A" : "B") + (st.Physics.Count > 0 ? "P" : "");
+                //ScenicType st = ScenicObjectCache.s_objectTypes[ScenicObjectCache.s_StringToInt[co.img_addr]];
+                //co.label.Text = (st.layer == 1 ? "A" : "B") + (st.Physics.Count > 0 ? "P" : "");
             }
         }
     }

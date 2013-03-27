@@ -5,8 +5,6 @@ using System.Windows.Forms;
 
 namespace CityTools {
     static class Program {
-        public const string CACHE = ".\\cache\\";
-
         /// <summary>
         /// The main entry point for the application.
         /// </summary>

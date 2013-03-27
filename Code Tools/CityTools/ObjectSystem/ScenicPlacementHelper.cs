@@ -5,13 +5,15 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 using CityTools.Core;
-using CityTools.MapPieces;
+using ToolCache.Drawing;
+using ToolCache.Map;
+using ToolCache.Map.Objects;
 
 namespace CityTools.ObjectSystem {
     class ScenicPlacementHelper {
         private static Point mousePos = Point.Empty;
 
-        public static int object_index = 0;
+        public static short object_index = 0;
 
         internal static bool UpdateMouse(MouseEventArgs e, LBuffer inputBuffer) {
             mousePos = e.Location;
@@ -37,9 +39,9 @@ namespace CityTools.ObjectSystem {
             p1.X = MainWindow.instance.obj_paint_image.Width * Camera.ZoomLevel;
             p1.Y = MainWindow.instance.obj_paint_image.Height * Camera.ZoomLevel;
 
-            RectangleF eA = new RectangleF(p0.X, p0.Y, p1.X, p1.Y);
+            Rectangle eA = new Rectangle((int)p0.X, (int)p0.Y, (int)p1.X, (int)p1.Y);
 
-            MapPieceCache.CurrentPiece.Scenary.Add(new ScenicObject(object_index, new PointF(eA.Left, eA.Top), (int)MainWindow.instance.obj_rot.Value));
+            MapPieceCache.CurrentPiece.Objects.Add(new BaseObject(object_index, new Point(eA.Left, eA.Top)));
             MapPieceCache.CurrentPiece.Edited();
 
             return true;

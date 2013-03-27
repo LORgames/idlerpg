@@ -80,9 +80,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CityTools\CityToolsClient.csproj">
-      <Project>{6FB6115F-C115-4779-82B4-5FDDE7CEDE0B}</Project>
-      <Name>CityToolsClient</Name>
+    <ProjectReference Include="..\ToolCache\ToolCache.csproj">
+      <Project>{A685AA27-BC93-44F9-9A10-8196B32DADB0}</Project>
+      <Name>ToolCache</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
