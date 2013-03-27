@@ -102,8 +102,39 @@ namespace ToolCache.Animation.Form {
                 if (splitContainer1.Panel2.Controls[i] == animationFrame) {
                     splitContainer1.Panel2.Controls.RemoveAt(i);
                     _anim.Frames.RemoveAt(i);
+                    break;
                 }
             }
+        }
+
+        internal void ShiftLeft(AnimationFrame animationFrame) {
+            for (int i = 0; i < splitContainer1.Panel2.Controls.Count; i++) {
+                if (splitContainer1.Panel2.Controls[i] == animationFrame) {
+                    if (i > 0) {
+                        String _t = _anim.Frames[i - 1];
+                        _anim.Frames[i - 1] = _anim.Frames[i];
+                        _anim.Frames[i] = _t;
+                        break;
+                    }
+                }
+            }
+
+            UpdateBoxes();
+        }
+
+        internal void ShiftRight(AnimationFrame animationFrame) {
+            for (int i = 0; i < splitContainer1.Panel2.Controls.Count; i++) {
+                if (splitContainer1.Panel2.Controls[i] == animationFrame) {
+                    if (i < _anim.Frames.Count-1) {
+                        String _t = _anim.Frames[i + 1];
+                        _anim.Frames[i + 1] = _anim.Frames[i];
+                        _anim.Frames[i] = _t;
+                        break;
+                    }
+                }
+            }
+
+            UpdateBoxes();
         }
 
         private void numFramerate_ValueChanged(object sender, EventArgs e) {

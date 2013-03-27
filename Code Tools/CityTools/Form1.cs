@@ -103,6 +103,25 @@ namespace CityTools {
             e.Graphics.DrawImage(objects_buffer.bmp, Point.Empty);
 
             if (paintMode != PaintMode.Off) e.Graphics.DrawImage(input_buffer.bmp, Point.Empty);
+
+            if (ckbViewportEnabled.Checked) {
+                int viewH;
+                int viewW;
+
+                if (int.TryParse(txtViewportWidth.Text, out viewW) && int.TryParse(txtViewportHeight.Text, out viewH)) {
+                    int panelH = (mapViewPanel.Height - viewH) / 2;
+                    int panelW = (mapViewPanel.Width - viewW) / 2;
+                    
+                    Rectangle[] rects = new Rectangle[4];
+
+                    rects[0] = new Rectangle(0, 0, mapViewPanel.Width, panelH);
+                    rects[1] = new Rectangle(0, panelH, panelW, mapViewPanel.Height - panelH);
+                    rects[2] = new Rectangle(mapViewPanel.Width-panelW, panelH, panelW, mapViewPanel.Height - panelH);
+                    rects[3] = new Rectangle(panelW, mapViewPanel.Height-panelH, mapViewPanel.Width-(panelW*2), panelH);
+
+                    e.Graphics.FillRectangles(new SolidBrush(Color.FromArgb(128, Color.Black)), rects);
+                }
+            }
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
@@ -121,8 +140,7 @@ namespace CityTools {
                 ScenicHelper.ProcessCmdKey(ref msg, keyData);
                 mapViewPanel.Invalidate();
             } else if (keyData == Keys.T) {
-                TileEditor t = new TileEditor();
-                t.ShowDialog(this);
+                OpenTileEditor();
             }
 
             return base.ProcessCmdKey(ref msg, keyData);
@@ -221,12 +239,11 @@ namespace CityTools {
         }
 
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e) {
-            //TODO: Save caches here probably
             MapPieceCache.SaveIfRequired();
         }
 
         private void obj_scenary_cache_CB_SelectionChangeCommitted(object sender, EventArgs e) {
-            (pnlObjectScenicCache.Controls[0] as ObjectCacheControl).Activate(cbScenicCacheSelector.SelectedValue.ToString());
+            MessageBox.Show("This box isn't reimplemented again yet.");
         }
 
         private void newPieceBtn_Click(object sender, EventArgs e) {
@@ -253,6 +270,20 @@ namespace CityTools {
         private void timerRefresh_Tick(object sender, EventArgs e) {
             ToolCache.Animation.AnimatedObject.Update(0.1);
             mapViewPanel.Invalidate();
+        }
+
+        private void btnTileEditorTool_Click(object sender, EventArgs e) {
+            OpenTileEditor();
+        }
+
+        private void OpenTileEditor() {
+            TileEditor t = new TileEditor();
+            t.ShowDialog(this);
+            t.FormClosing += new FormClosingEventHandler(TileEditor_Closing);
+        }
+
+        private void TileEditor_Closing(object sender, FormClosingEventArgs e) {
+            CacheInterfaces.TileInterface.ReloadAll();
         }
     }
 }

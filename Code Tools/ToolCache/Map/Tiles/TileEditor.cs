@@ -67,9 +67,14 @@ namespace ToolCache.Map.Tiles {
 
         private void UpdateTileNames() {
             cbTileNames.Items.Clear();
+            cbTileGroup.Items.Clear();
 
             foreach (KeyValuePair<short, Tile> kvp in TileCache.Tiles) {
                 cbTileNames.Items.Add(kvp.Key + "| " + kvp.Value.TileName);
+            }
+
+            foreach (String groupName in TileCache.GetGroups()) {
+                cbTileGroup.Items.Add(groupName);
             }
         }
 

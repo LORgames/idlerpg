@@ -11,21 +11,33 @@ namespace ToolCache.Map.Objects {
     public class ObjectCache {
         public const string RESOLVED_DATABASE_FILENAME = Settings.CACHE + "db_objects.bin";
 
-        private static int _highestTypeIndex = 0;
         public static Dictionary<short, ObjectTemplate> ObjectTypes = new Dictionary<short, ObjectTemplate>();
+        private static Dictionary<string, List<short>> GroupsToObjectUUIDS = new Dictionary<string, List<short>>();
 
-        public static void InitializeCache() {
+        private static short nextObjectID = 0;
+
+        public static void Initialize() {
+            ObjectTypes.Clear();
+            GroupsToObjectUUIDS.Clear();
+
+            nextObjectID = 0;
+
+            ReadDatabase();
+        }
+
+        private static void ReadDatabase() {
             // Load object types from file
             if (File.Exists(RESOLVED_DATABASE_FILENAME)) {
                 BinaryIO f = new BinaryIO(File.ReadAllBytes(RESOLVED_DATABASE_FILENAME));
 
-                int totalShapes = f.GetInt();
-                _highestTypeIndex = f.GetInt();
+                int totalObjects = f.GetInt();
 
                 //This is where we load the BASIC information
-                for (int i = 0; i < totalShapes; i++) {
-                    short type_id = f.GetShort();
+                for (int i = 0; i < totalObjects; i++) {
+                    short ObjectID = f.GetShort();
                     AnimatedObject animation = AnimatedObject.UnpackFromBinaryIO(f);
+
+                    string ObjectGroup = f.GetString();
 
                     int BaseLeft = f.GetInt();
                     int BaseTop = f.GetInt();
@@ -34,15 +46,14 @@ namespace ToolCache.Map.Objects {
 
                     Rectangle _base = new Rectangle(BaseLeft, BaseTop, BaseWidth, BaseHeight);
 
-                    ObjectTypes.Add(type_id, new ObjectTemplate(type_id, animation, _base));
+                    ObjectTypes.Add(ObjectID, new ObjectTemplate(ObjectID, ObjectGroup, animation, _base));
                 }
             }
         }
 
-        public static void SaveTypes() {
+        internal static void WriteDatabase() {
             BinaryIO f = new BinaryIO();
             f.AddInt(ObjectTypes.Count);
-            f.AddInt(_highestTypeIndex);
 
             foreach (KeyValuePair<short, ObjectTemplate> kvp in ObjectTypes) {
                 f.AddShort(kvp.Key);
@@ -55,6 +66,59 @@ namespace ToolCache.Map.Objects {
             }
 
             f.Encode(RESOLVED_DATABASE_FILENAME);
+        }
+
+        internal static void AddObject(ObjectTemplate t) {
+            if (ObjectTypes.ContainsKey(t.ObjectID)) {
+                GroupsToObjectUUIDS[ObjectTypes[t.ObjectID].ObjectGroup].Remove(t.ObjectID);
+
+                if (GroupsToObjectUUIDS[ObjectTypes[t.ObjectID].ObjectGroup].Count == 0) {
+                    GroupsToObjectUUIDS.Remove(ObjectTypes[t.ObjectID].ObjectGroup);
+                }
+            }
+
+            ObjectTypes.Add(t.ObjectID, t);
+
+            if (!GroupsToObjectUUIDS.ContainsKey(t.ObjectGroup)) {
+                GroupsToObjectUUIDS.Add(t.ObjectGroup, new List<short>());
+            }
+
+            GroupsToObjectUUIDS[t.ObjectGroup].Add(t.ObjectID);
+
+            if (t.ObjectID >= nextObjectID) {
+                nextObjectID = t.ObjectID;
+                nextObjectID++;
+            }
+        }
+
+        public static List<string> GetGroups() {
+            return GroupsToObjectUUIDS.Keys.ToList<String>();
+        }
+
+        internal static void Delete(short objectID) {
+            if (ObjectTypes.ContainsKey(objectID)) {
+                if (GroupsToObjectUUIDS.ContainsKey(ObjectTypes[objectID].ObjectGroup)) {
+                    GroupsToObjectUUIDS[ObjectTypes[objectID].ObjectGroup].Remove(objectID);
+
+                    if (GroupsToObjectUUIDS[ObjectTypes[objectID].ObjectGroup].Count == 0) {
+                        GroupsToObjectUUIDS.Remove(ObjectTypes[objectID].ObjectGroup);
+                    }
+                }
+
+                ObjectTypes.Remove(objectID);
+            }
+        }
+
+        public static List<ObjectTemplate> GetObjectsInGroup(string p) {
+            List<ObjectTemplate> retList = new List<ObjectTemplate>();
+
+            if (GroupsToObjectUUIDS.ContainsKey(p)) {
+                foreach (short id in GroupsToObjectUUIDS[p]) {
+                    retList.Add(ObjectTypes[id]);
+                }
+            }
+
+            return retList;
         }
     }
 }

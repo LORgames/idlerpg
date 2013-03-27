@@ -24,5 +24,13 @@ namespace ToolCache.Animation.Form {
         private void btnDeleteFrame_Click(object sender, EventArgs e) {
             parent.DeleteFrame(this);
         }
+
+        private void btnShiftFrameLeft_Click(object sender, EventArgs e) {
+            parent.ShiftLeft(this);
+        }
+
+        private void btnShiftFrameRight_Click(object sender, EventArgs e) {
+            parent.ShiftRight(this);
+        }
     }
 }

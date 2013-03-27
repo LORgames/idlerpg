@@ -18,7 +18,6 @@ namespace CityTools.Terrain {
         private static int drawSize = 1;
 
         public static void InitializeTerrainSystem(ComboBox cb, Panel objPanel) {
-            //TODO: Get groups 
             cb.Items.Clear();
 
             short id = TileCache.NextID();
@@ -27,7 +26,7 @@ namespace CityTools.Terrain {
                 cb.Items.Add(cache);
             }
 
-            objPanel.Controls.Add(new ObjectCacheControl("", false, true));
+            objPanel.Controls.Add(new ObjectCacheControl());
         }
 
         public static bool MouseMoveOrDown(MouseEventArgs e, LBuffer input_buffer) {
@@ -90,6 +89,18 @@ namespace CityTools.Terrain {
 
                     if(TileCache.G(f) != null)
                         TileCache.G(f).Animation.Draw(buffer, (int)Math.Floor((i * Tile.PIXELS_X - Camera.Offset.X) * Camera.ZoomLevel), (int)Math.Floor((j * Tile.PIXELS_Y - Camera.Offset.Y) * Camera.ZoomLevel), Camera.ZoomLevel);
+                }
+            }
+
+            if (MainWindow.instance.ckbShowTileGrid.Checked) {
+                for (int i = LeftEdge; i < RightEdge; i++) {
+                    int xPos = (int)Math.Floor((i * Tile.PIXELS_X - Camera.Offset.X) * Camera.ZoomLevel);
+                    buffer.gfx.DrawLine(Pens.Beige, xPos, 0, xPos, buffer.bmp.Height);
+                }
+
+                for (int j = TopEdge; j < BottomEdge; j++) {
+                    int yPos = (int)Math.Floor((j * Tile.PIXELS_Y - Camera.Offset.Y) * Camera.ZoomLevel);
+                    buffer.gfx.DrawLine(Pens.Beige, 0, yPos, buffer.bmp.Width, yPos);
                 }
             }
         }

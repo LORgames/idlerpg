@@ -21,6 +21,10 @@ namespace ToolCache.Map.Tiles {
 
         public static void Initialize() {
             tiles.Clear();
+            GroupsToTileUUIDS.Clear();
+
+            nextTileID = 0;
+
             ReadDatabase();
         }
 
