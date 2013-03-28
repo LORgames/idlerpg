@@ -42,12 +42,18 @@ namespace ToolCache.Map.Tiles {
 
         internal void AddObject(BaseObject obj) {
             Objects.Add(obj);
-            //RecalculateWalkable();
+
+            if (Walkable) {
+                RecalculateWalkable();
+            }
         }
 
         internal void RemoveObject(BaseObject obj) {
             Objects.Remove(obj);
-            //RecalculateWalkable();
+
+            if (!Walkable) {
+                RecalculateWalkable();
+            }
         }
     }
 }
