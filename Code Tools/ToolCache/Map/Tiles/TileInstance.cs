@@ -11,13 +11,13 @@ namespace ToolCache.Map.Tiles {
         public Boolean Walkable;
         public byte AccessDirections = TileTemplate.ACCESS_ALL;
 
-        public List<BaseObject> Objects = new List<BaseObject>();
+        private List<BaseObject> Objects = new List<BaseObject>();
 
-        public TileInstance(short id) {
+        internal TileInstance(short id) {
             ChangeTile(id);
         }
 
-        public void ChangeTile(short newid) {
+        internal void ChangeTile(short newid) {
             TileID = newid;
             RecalculateWalkable();
         }
@@ -42,10 +42,12 @@ namespace ToolCache.Map.Tiles {
 
         internal void AddObject(BaseObject obj) {
             Objects.Add(obj);
+            //RecalculateWalkable();
+        }
 
-            if (Walkable && TemplateCache.G(obj.ObjectType).isSolid) {
-                Walkable = false;
-            }
+        internal void RemoveObject(BaseObject obj) {
+            Objects.Remove(obj);
+            //RecalculateWalkable();
         }
     }
 }

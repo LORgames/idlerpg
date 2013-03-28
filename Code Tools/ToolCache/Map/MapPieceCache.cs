@@ -57,15 +57,15 @@ namespace ToolCache.Map {
             }
         }
 
-        public static void CreateNew(short fillTileID) {
+        public static void CreateNew (short fillTileID) {
             SaveIfRequired();
             ChangeCurrentPiece(new MapPiece(GetNextFilename(), fillTileID));
         }
 
         public static void ChangeCurrentPiece(MapPiece newPiece) {
             SaveIfRequired();
-            newPiece.Load(true);
             _cp = newPiece;
+            newPiece.Load(true);
         }
 
         public static void Duplicate() {

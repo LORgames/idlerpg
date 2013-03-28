@@ -69,6 +69,8 @@ namespace CityTools.CacheInterfaces {
             MapPieceCache.ChangeCurrentPiece(newPiece);
 
             UpdateGUI();
+
+            MapPieceCache.CurrentPiece.RecalculateWalkable();
         }
 
         internal static void NewPiece() {

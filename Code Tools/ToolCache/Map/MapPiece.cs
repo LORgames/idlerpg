@@ -34,7 +34,7 @@ namespace ToolCache.Map {
 
         public void Edited() { _iE = true; }
 
-        public void Load(Boolean loadingForUse) {
+        internal void Load(Boolean loadingForUse) {
             if (!File.Exists(Filename)) return;
             
             BinaryIO f = new BinaryIO(File.ReadAllBytes(Filename));
@@ -96,7 +96,7 @@ namespace ToolCache.Map {
             Edited();
         }
 
-        internal void RecalculateWalkable() {
+        public void RecalculateWalkable() {
             Tiles.RecalculateWalkable();
         }
     }
