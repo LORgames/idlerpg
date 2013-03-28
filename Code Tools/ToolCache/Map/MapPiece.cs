@@ -95,5 +95,9 @@ namespace ToolCache.Map {
             Name = p;
             Edited();
         }
+
+        internal void RecalculateWalkable() {
+            Tiles.RecalculateWalkable();
+        }
     }
 }

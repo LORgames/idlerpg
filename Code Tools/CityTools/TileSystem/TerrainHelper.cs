@@ -17,6 +17,9 @@ namespace CityTools.Terrain {
         private static short currentTile = 0;
         private static int drawSize = 1;
 
+        private static Brush NotWalkable = new SolidBrush(Color.FromArgb(128, Color.Red));
+        private static Brush Walkable = new SolidBrush(Color.FromArgb(128, Color.LimeGreen));
+
         public static bool MouseMoveOrDown(MouseEventArgs e, LBuffer input_buffer) {
             input_buffer.gfx.Clear(Color.Transparent);
 
@@ -75,8 +78,20 @@ namespace CityTools.Terrain {
                 for (int j = TopEdge; j < BottomEdge; j++) {
                     short f = MapPieceCache.CurrentPiece.Tiles.Data[i, j];
 
-                    if(TileCache.G(f) != null)
-                        TileCache.G(f).Animation.Draw(buffer.gfx, (int)Math.Floor((i * Tile.PIXELS_X - Camera.Offset.X) * Camera.ZoomLevel), (int)Math.Floor((j * Tile.PIXELS_Y - Camera.Offset.Y) * Camera.ZoomLevel), Camera.ZoomLevel);
+                    if (TileCache.G(f) != null) {
+                        int x = (int)Math.Floor((i * Tile.PIXELS_X - Camera.Offset.X) * Camera.ZoomLevel);
+                        int y = (int)Math.Floor((j * Tile.PIXELS_Y - Camera.Offset.Y) * Camera.ZoomLevel);
+
+                        TileCache.G(f).Animation.Draw(buffer.gfx, x, y, Camera.ZoomLevel);
+
+                        if (MainWindow.instance.ckbShowWalkableGrid.Checked) {
+                            if (MapPieceCache.CurrentPiece.Tiles.Walkable[i, j]) {
+                                buffer.gfx.FillRectangle(Walkable, x, y, Tile.PIXELS_X * Camera.ZoomLevel, Tile.PIXELS_Y * Camera.ZoomLevel);
+                            } else {
+                                buffer.gfx.FillRectangle(NotWalkable, x, y, Tile.PIXELS_X * Camera.ZoomLevel, Tile.PIXELS_Y * Camera.ZoomLevel);
+                            }
+                        }
+                    }
                 }
             }
 

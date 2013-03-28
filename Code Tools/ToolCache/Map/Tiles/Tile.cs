@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ToolCache.Animation;
 using ToolCache.General;
+using ToolCache.Map.Objects;
 
 namespace ToolCache.Map.Tiles {
     public class Tile {

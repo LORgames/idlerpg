@@ -25,12 +25,14 @@ namespace ToolCache.Map.Tiles {
                 ccAnimation.ChangeToAnimation(Tiles.TileCache.G(tileID).Animation);
                 cbTileGroup.Text = Tiles.TileCache.G(tileID).TileGroup;
                 txtTileName.Text = Tiles.TileCache.G(tileID).TileName;
+                ckbIsWalkable.Checked = Tiles.TileCache.G(tileID).isWalkable;
                 this.tileID = tileID;
             } else {
                 this.tileID = TileCache.NextID();
                 ccAnimation.ClearAnimation();
                 cbTileGroup.Text = "Unknown";
                 txtTileName.Text = "<Unknown>";
+                ckbIsWalkable.Checked = true;
             }
 
             lblTileID.Text = "N:" + this.tileID;
@@ -41,12 +43,14 @@ namespace ToolCache.Map.Tiles {
                 Tiles.TileCache.G(tileID).Animation = ccAnimation.GetAnimation();
                 Tiles.TileCache.G(tileID).TileGroup = cbTileGroup.Text;
                 Tiles.TileCache.G(tileID).TileName = txtTileName.Text;
+                Tiles.TileCache.G(tileID).isWalkable = ckbIsWalkable.Checked;
             } else {
                 Tile t = new Tile();
                 t.TileID = tileID;
                 t.Animation = ccAnimation.GetAnimation();
                 t.TileGroup = cbTileGroup.Text;
                 t.TileName = txtTileName.Text;
+                t.isWalkable = ckbIsWalkable.Checked;
                 TileCache.AddTile(t);
             }
         }
@@ -63,6 +67,7 @@ namespace ToolCache.Map.Tiles {
 
         private void TileEditor_FormClosing(object sender, FormClosingEventArgs e) {
             TileCache.SaveDatabase();
+            MapPieceCache.CurrentPiece.RecalculateWalkable();
         }
 
         private void UpdateTileNames() {

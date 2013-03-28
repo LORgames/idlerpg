@@ -60,6 +60,12 @@
       <DependentUpon>AnimationList.cs</DependentUpon>
     </Compile>
     <Compile Include="Combat\Elements\Element.cs" />
+    <Compile Include="Combat\Elements\ElementEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Combat\Elements\ElementEditor.Designer.cs">
+      <DependentUpon>ElementEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Combat\Elements\ElementManager.cs" />
     <Compile Include="Critters\ICritter.cs" />
     <Compile Include="General\BinaryIO.cs" />
@@ -101,6 +107,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Animation\Form\AnimationList.resx">
       <DependentUpon>AnimationList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Combat\Elements\ElementEditor.resx">
+      <DependentUpon>ElementEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Map\Objects\Tool\TemplateEditor.resx">
       <DependentUpon>TemplateEditor.cs</DependentUpon>

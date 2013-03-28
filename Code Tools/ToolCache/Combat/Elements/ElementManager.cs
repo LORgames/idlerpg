@@ -53,5 +53,24 @@ namespace ToolCache.Combat.Elements {
             f.Encode(RESOLVED_DATABASE_FILENAME);
         }
 
+
+        internal static String[] ElementNames() {
+            List<String> retVal = new List<string>();
+            
+            foreach (KeyValuePair<short, Element> kvp in Elements) {
+                retVal.Add(kvp.Value.ElementName);
+            }
+
+            return retVal.ToArray();
+        }
+
+        internal static void AddNew(string ElementName) {
+            Element e = new Element();
+            e.ElementID = NextElementID;
+            e.ElementName = ElementName;
+            NextElementID++;
+
+            Elements.Add(e.ElementID, e);
+        }
     }
 }

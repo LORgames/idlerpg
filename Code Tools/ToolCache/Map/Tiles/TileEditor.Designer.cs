@@ -40,10 +40,7 @@ namespace ToolCache.Map.Tiles {
             this.lblAnimation = new System.Windows.Forms.Label();
             this.ccAnimation = new ToolCache.Animation.Form.AnimationList();
             this.ckbIsWalkable = new System.Windows.Forms.CheckBox();
-            this.pnlDamage = new System.Windows.Forms.Panel();
-            this.lblDamage = new System.Windows.Forms.Label();
             this.toolStrip1.SuspendLayout();
-            this.pnlDamage.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtTileName
@@ -166,29 +163,11 @@ namespace ToolCache.Map.Tiles {
             this.ckbIsWalkable.Text = "Walkable";
             this.ckbIsWalkable.UseVisualStyleBackColor = true;
             // 
-            // pnlDamage
-            // 
-            this.pnlDamage.Controls.Add(this.lblDamage);
-            this.pnlDamage.Location = new System.Drawing.Point(190, 77);
-            this.pnlDamage.Name = "pnlDamage";
-            this.pnlDamage.Size = new System.Drawing.Size(169, 66);
-            this.pnlDamage.TabIndex = 9;
-            // 
-            // lblDamage
-            // 
-            this.lblDamage.AutoSize = true;
-            this.lblDamage.Location = new System.Drawing.Point(4, 4);
-            this.lblDamage.Name = "lblDamage";
-            this.lblDamage.Size = new System.Drawing.Size(50, 13);
-            this.lblDamage.TabIndex = 0;
-            this.lblDamage.Text = "Damage:";
-            // 
             // TileEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(371, 342);
-            this.Controls.Add(this.pnlDamage);
             this.Controls.Add(this.ckbIsWalkable);
             this.Controls.Add(this.lblAnimation);
             this.Controls.Add(this.lblGroup);
@@ -202,8 +181,6 @@ namespace ToolCache.Map.Tiles {
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TileEditor_FormClosing);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.pnlDamage.ResumeLayout(false);
-            this.pnlDamage.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -224,7 +201,5 @@ namespace ToolCache.Map.Tiles {
         private System.Windows.Forms.ToolStripButton btnSave;
         private System.Windows.Forms.ToolStripLabel lblTileID;
         private System.Windows.Forms.CheckBox ckbIsWalkable;
-        private System.Windows.Forms.Panel pnlDamage;
-        private System.Windows.Forms.Label lblDamage;
     }
 }

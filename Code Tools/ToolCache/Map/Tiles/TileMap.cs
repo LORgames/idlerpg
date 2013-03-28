@@ -95,5 +95,13 @@ namespace ToolCache.Map.Tiles {
 
             Data = newTiles;
         }
+
+        internal void RecalculateWalkable() {
+            for (int i = 0; i < numTilesX; i++) {
+                for (int j = 0; j < numTilesY; j++) {
+                    Walkable[i, j] = TileCache.Tiles[Data[i, j]].isWalkable;
+                }
+            }
+        }
     }
 }

@@ -17,6 +17,7 @@ using ToolCache.Map.Tiles;
 using ToolCache.Map.Objects.Tool;
 using ToolCache.Animation;
 using ToolCache.Map.Objects;
+using ToolCache.Combat.Elements;
 
 namespace CityTools {
     public enum PaintMode {
@@ -135,6 +136,8 @@ namespace CityTools {
                 OpenTileEditor();
             } else if (keyData == Keys.O) {
                 OpenTemplateEditor();
+            } else if (keyData == Keys.R) {
+                OpenElementEditor();
             }
 
             return base.ProcessCmdKey(ref msg, keyData);
@@ -258,10 +261,6 @@ namespace CityTools {
             mapViewPanel.Invalidate();
         }
 
-        private void btnTileEditorTool_Click(object sender, EventArgs e) {
-            OpenTileEditor();
-        }
-
         private void OpenTileEditor() {
             TileEditor t = new TileEditor();
             t.ShowDialog(this);
@@ -274,6 +273,11 @@ namespace CityTools {
             t.FormClosing += new FormClosingEventHandler(TemplateEditor_Closing);
         }
 
+        private void OpenElementEditor() {
+            ElementEditor t = new ElementEditor();
+            t.ShowDialog(this);
+        }
+
         private void TileEditor_Closing(object sender, FormClosingEventArgs e) {
             CacheInterfaces.TileInterface.ReloadAll();
         }
@@ -282,8 +286,16 @@ namespace CityTools {
             CacheInterfaces.ObjectInterface.ReloadAll();
         }
 
+        private void btnTileEditorTool_Click(object sender, EventArgs e) {
+            OpenTileEditor();
+        }
+
         private void btnObjectEditor_Click(object sender, EventArgs e) {
             OpenTemplateEditor();
+        }
+
+        private void elementalEditorToolStripMenuItem_Click(object sender, EventArgs e) {
+            OpenElementEditor();
         }
     }
 }
