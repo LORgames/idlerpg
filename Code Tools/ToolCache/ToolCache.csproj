@@ -82,11 +82,12 @@
     <Compile Include="Map\Objects\Tool\TemplateEditor.Designer.cs">
       <DependentUpon>TemplateEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Map\Tiles\TileInstance.cs" />
     <Compile Include="Map\Tiles\TileMap.cs" />
     <Compile Include="Map\MapPiece.cs" />
     <Compile Include="Map\Objects\BaseObject.cs" />
     <Compile Include="Map\Objects\TemplateCache.cs" />
-    <Compile Include="Map\Tiles\Tile.cs" />
+    <Compile Include="Map\Tiles\TileTemplate.cs" />
     <Compile Include="Map\Tiles\TileCache.cs" />
     <Compile Include="Map\Tiles\TileEditor.cs">
       <SubType>Form</SubType>

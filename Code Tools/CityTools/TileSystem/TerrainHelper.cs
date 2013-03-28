@@ -26,20 +26,20 @@ namespace CityTools.Terrain {
             Point m = e.Location;
 
             Point tilePos = Point.Empty;
-            tilePos.X = (int)((Camera.Offset.X + m.X / Camera.ZoomLevel) / Tile.PIXELS_X);
-            tilePos.Y = (int)((Camera.Offset.Y + m.Y / Camera.ZoomLevel) / Tile.PIXELS_Y);
+            tilePos.X = (int)((Camera.Offset.X + m.X / Camera.ZoomLevel) / TileTemplate.PIXELS_X);
+            tilePos.Y = (int)((Camera.Offset.Y + m.Y / Camera.ZoomLevel) / TileTemplate.PIXELS_Y);
 
-            TileCache.G(currentTile).Animation.Draw(input_buffer.gfx, (tilePos.X * Tile.PIXELS_X - Camera.Offset.X) * Camera.ZoomLevel, (tilePos.Y * Tile.PIXELS_X - Camera.Offset.Y) * Camera.ZoomLevel, Camera.ZoomLevel);
+            TileCache.G(currentTile).Animation.Draw(input_buffer.gfx, (tilePos.X * TileTemplate.PIXELS_X - Camera.Offset.X) * Camera.ZoomLevel, (tilePos.Y * TileTemplate.PIXELS_X - Camera.Offset.Y) * Camera.ZoomLevel, Camera.ZoomLevel);
 
             if (e.Button == MouseButtons.Left) {
                 bool updated = false;
                 for (int i = 0; i < drawSize; i++) {
                     for (int j = 0; j < drawSize; j++) {
                         try {
-                            short ct = MapPieceCache.CurrentPiece.Tiles.Data[tilePos.X + i, tilePos.Y + j];
+                            short ct = MapPieceCache.CurrentPiece.Tiles[tilePos.X + i, tilePos.Y + j];
 
                             if (ct != currentTile) {
-                                MapPieceCache.CurrentPiece.Tiles.Data[tilePos.X + i, tilePos.Y + j] = currentTile;
+                                MapPieceCache.CurrentPiece.Tiles[tilePos.X + i, tilePos.Y + j] = currentTile;
                                 updated = true;
                             }
                         } catch { }
@@ -51,7 +51,7 @@ namespace CityTools.Terrain {
                     return true;
                 }
             } else if (e.Button == MouseButtons.Middle) {
-                short ct = MapPieceCache.CurrentPiece.Tiles.Data[tilePos.X, tilePos.Y];
+                short ct = MapPieceCache.CurrentPiece.Tiles[tilePos.X, tilePos.Y];
                 SetCurrentTile(ct);
             }
 
@@ -61,34 +61,34 @@ namespace CityTools.Terrain {
         public static void DrawTerrain(LBuffer buffer) {
             if (MapPieceCache.CurrentPiece.Tiles == null) return;
 
-            int LeftEdge = (int)(Camera.Offset.X / Tile.PIXELS_X);
-            int TopEdge = (int)(Camera.Offset.Y / Tile.PIXELS_Y);
+            int LeftEdge = (int)(Camera.Offset.X / TileTemplate.PIXELS_X);
+            int TopEdge = (int)(Camera.Offset.Y / TileTemplate.PIXELS_Y);
 
-            int RightEdge = (int)Math.Ceiling(Camera.ViewArea.Right / Tile.PIXELS_X);
-            int BottomEdge = (int)Math.Ceiling(Camera.ViewArea.Bottom / Tile.PIXELS_Y);
+            int RightEdge = (int)Math.Ceiling(Camera.ViewArea.Right / TileTemplate.PIXELS_X);
+            int BottomEdge = (int)Math.Ceiling(Camera.ViewArea.Bottom / TileTemplate.PIXELS_Y);
 
             if (LeftEdge < 0) LeftEdge = 0;
             if (TopEdge < 0) TopEdge = 0;
             if (RightEdge >= MapPieceCache.CurrentPiece.Tiles.numTilesX) RightEdge = MapPieceCache.CurrentPiece.Tiles.numTilesX;
             if (BottomEdge >= MapPieceCache.CurrentPiece.Tiles.numTilesY) BottomEdge = MapPieceCache.CurrentPiece.Tiles.numTilesY;
 
-            buffer.gfx.FillRectangle(Brushes.CornflowerBlue, new Rectangle((int)Math.Floor((LeftEdge * Tile.PIXELS_X - Camera.Offset.X) * Camera.ZoomLevel), (int)Math.Floor((TopEdge * Tile.PIXELS_Y - Camera.Offset.Y) * Camera.ZoomLevel), (int)Math.Ceiling(Tile.PIXELS_X * Camera.ZoomLevel * (RightEdge - LeftEdge)), (int)Math.Ceiling(Tile.PIXELS_Y * Camera.ZoomLevel * (BottomEdge - TopEdge))));
+            buffer.gfx.FillRectangle(Brushes.CornflowerBlue, new Rectangle((int)Math.Floor((LeftEdge * TileTemplate.PIXELS_X - Camera.Offset.X) * Camera.ZoomLevel), (int)Math.Floor((TopEdge * TileTemplate.PIXELS_Y - Camera.Offset.Y) * Camera.ZoomLevel), (int)Math.Ceiling(TileTemplate.PIXELS_X * Camera.ZoomLevel * (RightEdge - LeftEdge)), (int)Math.Ceiling(TileTemplate.PIXELS_Y * Camera.ZoomLevel * (BottomEdge - TopEdge))));
 
             for (int i = LeftEdge; i < RightEdge; i++) {
                 for (int j = TopEdge; j < BottomEdge; j++) {
-                    short f = MapPieceCache.CurrentPiece.Tiles.Data[i, j];
+                    short f = MapPieceCache.CurrentPiece.Tiles[i, j];
 
                     if (TileCache.G(f) != null) {
-                        int x = (int)Math.Floor((i * Tile.PIXELS_X - Camera.Offset.X) * Camera.ZoomLevel);
-                        int y = (int)Math.Floor((j * Tile.PIXELS_Y - Camera.Offset.Y) * Camera.ZoomLevel);
+                        int x = (int)Math.Floor((i * TileTemplate.PIXELS_X - Camera.Offset.X) * Camera.ZoomLevel);
+                        int y = (int)Math.Floor((j * TileTemplate.PIXELS_Y - Camera.Offset.Y) * Camera.ZoomLevel);
 
                         TileCache.G(f).Animation.Draw(buffer.gfx, x, y, Camera.ZoomLevel);
 
                         if (MainWindow.instance.ckbShowWalkableGrid.Checked) {
-                            if (MapPieceCache.CurrentPiece.Tiles.Walkable[i, j]) {
-                                buffer.gfx.FillRectangle(Walkable, x, y, Tile.PIXELS_X * Camera.ZoomLevel, Tile.PIXELS_Y * Camera.ZoomLevel);
+                            if (MapPieceCache.CurrentPiece.Tiles.Data[i, j].Walkable) {
+                                buffer.gfx.FillRectangle(Walkable, x, y, TileTemplate.PIXELS_X * Camera.ZoomLevel, TileTemplate.PIXELS_Y * Camera.ZoomLevel);
                             } else {
-                                buffer.gfx.FillRectangle(NotWalkable, x, y, Tile.PIXELS_X * Camera.ZoomLevel, Tile.PIXELS_Y * Camera.ZoomLevel);
+                                buffer.gfx.FillRectangle(NotWalkable, x, y, TileTemplate.PIXELS_X * Camera.ZoomLevel, TileTemplate.PIXELS_Y * Camera.ZoomLevel);
                             }
                         }
                     }
@@ -97,12 +97,12 @@ namespace CityTools.Terrain {
 
             if (MainWindow.instance.ckbShowTileGrid.Checked) {
                 for (int i = LeftEdge; i < RightEdge; i++) {
-                    int xPos = (int)Math.Floor((i * Tile.PIXELS_X - Camera.Offset.X) * Camera.ZoomLevel);
+                    int xPos = (int)Math.Floor((i * TileTemplate.PIXELS_X - Camera.Offset.X) * Camera.ZoomLevel);
                     buffer.gfx.DrawLine(Pens.Beige, xPos, 0, xPos, buffer.bmp.Height);
                 }
 
                 for (int j = TopEdge; j < BottomEdge; j++) {
-                    int yPos = (int)Math.Floor((j * Tile.PIXELS_Y - Camera.Offset.Y) * Camera.ZoomLevel);
+                    int yPos = (int)Math.Floor((j * TileTemplate.PIXELS_Y - Camera.Offset.Y) * Camera.ZoomLevel);
                     buffer.gfx.DrawLine(Pens.Beige, 0, yPos, buffer.bmp.Width, yPos);
                 }
             }

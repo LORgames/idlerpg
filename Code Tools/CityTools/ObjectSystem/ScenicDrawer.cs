@@ -24,7 +24,27 @@ namespace CityTools.ObjectSystem {
 
             foreach (BaseObject obj in drawList) {
                 //obj.Draw(buffer);
-                ToolCache.Map.Objects.TemplateCache.G(obj.ObjectType).Animation.Draw(buffer.gfx, (obj.Location.X - Camera.Offset.X) * Camera.ZoomLevel, (obj.Location.Y - Camera.Offset.Y) * Camera.ZoomLevel, Camera.ZoomLevel);
+                float x = (obj.Location.X - Camera.Offset.X) * Camera.ZoomLevel;
+                float y = (obj.Location.Y - Camera.Offset.Y) * Camera.ZoomLevel;
+
+                if (MainWindow.instance.chkShowObjectBases.Checked) {
+                    Rectangle b = TemplateCache.G(obj.ObjectType).Base;
+
+                    Rectangle r = new Rectangle();
+
+                    r.X = (int)(x + b.X * Camera.ZoomLevel);
+                    r.Y = (int)(y + b.Y * Camera.ZoomLevel);
+                    r.Width = (int)(b.Width * Camera.ZoomLevel);
+                    r.Height = (int)(b.Height * Camera.ZoomLevel);
+
+                    buffer.gfx.FillRectangle(Brushes.Magenta, r);
+
+                    TemplateCache.G(obj.ObjectType).Animation.Draw(buffer.gfx, x, y, Camera.ZoomLevel, 0.33f);
+                } else {
+                    TemplateCache.G(obj.ObjectType).Animation.Draw(buffer.gfx, x, y, Camera.ZoomLevel);
+                }
+
+                
             }
         }
     }

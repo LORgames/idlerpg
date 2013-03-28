@@ -6,6 +6,7 @@ using Box2CS;
 using System.Drawing;
 using ToolCache.Drawing;
 using ToolCache.Animation;
+using ToolCache.Map.Tiles;
 
 namespace ToolCache.Map.Objects {
     public class BaseObject : IComparable<BaseObject> {
@@ -30,7 +31,16 @@ namespace ToolCache.Map.Objects {
             ActualY = Location.Y + ObjectTemplate.Base.Top;
 
             //Figure out what tiles I'm touching and mark them unwalkable
+            int LX = ActualX / TileTemplate.PIXELS_X;
+            int LY = ActualY / TileTemplate.PIXELS_Y;
+            int UX = (ActualX+ObjectTemplate.Base.Width) / TileTemplate.PIXELS_X;
+            int UY = (ActualY+ObjectTemplate.Base.Height) / TileTemplate.PIXELS_Y;
 
+            for (int i = LX; i <= UX; i++) {
+                for (int j = LY; j <= UY; j++) {
+                    MapPieceCache.CurrentPiece.Tiles.Data[i, j].AddObject(this);
+                }
+            }
         }
 
         // Move function

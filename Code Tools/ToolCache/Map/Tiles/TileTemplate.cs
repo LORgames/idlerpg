@@ -7,12 +7,13 @@ using ToolCache.General;
 using ToolCache.Map.Objects;
 
 namespace ToolCache.Map.Tiles {
-    public class Tile {
+    public class TileTemplate {
         //Some constants
         public const byte ACCESS_LEFT = 1;
         public const byte ACCESS_RIGHT = 2;
         public const byte ACCESS_TOP = 4;
         public const byte ACCESS_BOTTOM = 8;
+        public const byte ACCESS_ALL = ACCESS_LEFT | ACCESS_RIGHT | ACCESS_TOP | ACCESS_BOTTOM;
 
         public const byte SLIDING_NONE = 0;
         public const byte SLIDING_LEFT = 1;
@@ -36,8 +37,8 @@ namespace ToolCache.Map.Tiles {
         public Boolean isWalkable = true; //(1 bit)
         public byte elementalDamage = 0; // 0 = No damage, everything else is the ID of the damaging element (8 bits)
         public float movementCost = 1; // 1 = normal, 2 = twice as slow, 0.5 = twice as fast (32 bits)
-        public byte directionalAccess = 15; //Which directions tile can be accessed from bitwise LRTB order (4bits)
-        public byte slidingDirection = 0; //0=none, 1=left, 2=right, 3=top, 4=bottom, 5=direction of travel (3 bits)
+        public byte directionalAccess = ACCESS_ALL; //Which directions tile can be accessed from bitwise LRTB order (4bits)
+        public byte slidingDirection = SLIDING_NONE; //0=none, 1=left, 2=right, 3=top, 4=bottom, 5=direction of travel (3 bits)
 
         internal void LoadFromFile(General.BinaryIO f) {
             TileID = f.GetShort();

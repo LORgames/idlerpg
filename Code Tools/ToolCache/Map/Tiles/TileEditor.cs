@@ -45,7 +45,7 @@ namespace ToolCache.Map.Tiles {
                 Tiles.TileCache.G(tileID).TileName = txtTileName.Text;
                 Tiles.TileCache.G(tileID).isWalkable = ckbIsWalkable.Checked;
             } else {
-                Tile t = new Tile();
+                TileTemplate t = new TileTemplate();
                 t.TileID = tileID;
                 t.Animation = ccAnimation.GetAnimation();
                 t.TileGroup = cbTileGroup.Text;
@@ -74,7 +74,7 @@ namespace ToolCache.Map.Tiles {
             cbTileNames.Items.Clear();
             cbTileGroup.Items.Clear();
 
-            foreach (KeyValuePair<short, Tile> kvp in TileCache.Tiles) {
+            foreach (KeyValuePair<short, TileTemplate> kvp in TileCache.Tiles) {
                 cbTileNames.Items.Add(kvp.Key + "| " + kvp.Value.TileName);
             }
 

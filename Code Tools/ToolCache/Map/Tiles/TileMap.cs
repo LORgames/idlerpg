@@ -9,8 +9,16 @@ namespace ToolCache.Map.Tiles {
         public int numTilesX;
         public int numTilesY;
 
-        public short[,] Data;
-        public bool[,] Walkable;
+        public short this[int i, int j] {
+            get {
+                return Data[i,j].TileID;
+            }
+            set {
+                Data[i, j].ChangeTile(value);
+            }
+        }
+
+        public TileInstance[,] Data;
 
         public TileMap() {
             
@@ -20,18 +28,11 @@ namespace ToolCache.Map.Tiles {
             numTilesX = 50;
             numTilesY = 50;
 
-            Data = new short[numTilesX, numTilesY];
-            Walkable = new bool[numTilesX, numTilesY];
+            Data = new TileInstance[numTilesX, numTilesY];
 
             for (int i = 0; i < numTilesX; i++) {
                 for (int j = 0; j < numTilesY; j++) {
-                    Data[i, j] = fillTileID;
-
-                    if(TileCache.Tiles.ContainsKey(Data[i, j])) {
-                        Walkable[i, j] = TileCache.Tiles[Data[i, j]].isWalkable;
-                    } else {
-                        Walkable[i, j] = false;
-                    }
+                    Data[i, j] = new TileInstance(fillTileID);
                 }
             }
         }
@@ -40,13 +41,11 @@ namespace ToolCache.Map.Tiles {
             numTilesX = mapFile.GetInt();
             numTilesY = mapFile.GetInt();
 
-            Data = new short[numTilesX, numTilesY];
-            Walkable = new bool[numTilesX, numTilesY];
+            Data = new TileInstance[numTilesX, numTilesY];
 
             for (int i = 0; i < numTilesX; i++) {
                 for (int j = 0; j < numTilesY; j++) {
-                    Data[i, j] = mapFile.GetShort();
-                    Walkable[i, j] = TileCache.Tiles[Data[i, j]].isWalkable;
+                    Data[i, j] = new TileInstance(mapFile.GetShort());
                 }
             }
         }
@@ -57,13 +56,13 @@ namespace ToolCache.Map.Tiles {
 
             for (int i = 0; i < numTilesX; i++) {
                 for (int j = 0; j < numTilesY; j++) {
-                    mapFile.AddShort(Data[i, j]);
+                    mapFile.AddShort(Data[i, j].TileID);
                 }
             }
         }
 
         public void ChangeSizeTo(short fillTileID, int newSizeW, int newSizeH, int extendMethodX, int extendMethodY) {
-            short[,] newTiles = new short[newSizeW, newSizeH];
+            TileInstance[,] newTiles = new TileInstance[newSizeW, newSizeH];
 
             int oldTotalTilesX = numTilesX;
             int oldTotalTilesY = numTilesY;
@@ -86,9 +85,9 @@ namespace ToolCache.Map.Tiles {
                     effectiveY = (extendY == 0) ? j : (extendY == 2 ? j - (oldTotalTilesY - 1) : j - sizeDifY / 2);
 
                     if (effectiveX >= 0 && effectiveX < oldTotalTilesX && effectiveY >= 0 && effectiveY < oldTotalTilesY) {
-                        newTiles[i, j] = Data[effectiveX, effectiveY];
+                        newTiles[i, j] = new TileInstance(Data[effectiveX, effectiveY].TileID);
                     } else {
-                        newTiles[i, j] = fillTileID;
+                        newTiles[i, j] = new TileInstance(fillTileID);
                     }
                 }
             }
@@ -99,7 +98,7 @@ namespace ToolCache.Map.Tiles {
         internal void RecalculateWalkable() {
             for (int i = 0; i < numTilesX; i++) {
                 for (int j = 0; j < numTilesY; j++) {
-                    Walkable[i, j] = TileCache.Tiles[Data[i, j]].isWalkable;
+                    Data[i, j].RecalculateWalkable();
                 }
             }
         }

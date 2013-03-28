@@ -10,12 +10,12 @@ namespace ToolCache.Map.Tiles {
         private const string DATABASE_NAME = "db_tiles.bin";
         private const string RESOLVED_NAME = Settings.CACHE + DATABASE_NAME;
 
-        private static Dictionary<short, Tile> tiles = new Dictionary<short, Tile>();
+        private static Dictionary<short, TileTemplate> tiles = new Dictionary<short, TileTemplate>();
         private static Dictionary<string, List<short>> GroupsToTileUUIDS = new Dictionary<string, List<short>>();
 
         private static short nextTileID = 0;
 
-        internal static Dictionary<short, Tile> Tiles {
+        internal static Dictionary<short, TileTemplate> Tiles {
             get { return tiles; }
         }
 
@@ -28,7 +28,7 @@ namespace ToolCache.Map.Tiles {
             ReadDatabase();
         }
 
-        public static Tile G(short id) {
+        public static TileTemplate G(short id) {
             if (tiles.ContainsKey(id)) {
                 return tiles[id];
             }
@@ -45,7 +45,7 @@ namespace ToolCache.Map.Tiles {
 
                 //This is where we load the BASIC information
                 for (int i = 0; i < totalTilesInFile; i++) {
-                    Tile t = new Tile();
+                    TileTemplate t = new TileTemplate();
                     t.LoadFromFile(f);
 
                     tiles.Add(t.TileID, t);
@@ -71,14 +71,14 @@ namespace ToolCache.Map.Tiles {
             f.AddShort((short)tiles.Count);
 
             //This is where we load the BASIC information
-            foreach(KeyValuePair<short, Tile> kvp in tiles) {
+            foreach(KeyValuePair<short, TileTemplate> kvp in tiles) {
                 kvp.Value.SaveToFile(f);
             }
 
             f.Encode(RESOLVED_NAME);
         }
 
-        internal static void AddTile(Tile t) {
+        internal static void AddTile(TileTemplate t) {
             if (tiles.ContainsKey(t.TileID)) {
                 GroupsToTileUUIDS[tiles[t.TileID].TileGroup].Remove(t.TileID);
 
@@ -123,8 +123,8 @@ namespace ToolCache.Map.Tiles {
             }
         }
 
-        public static List<Tile> GetTilesInGroup(string p) {
-            List<Tile> retList = new List<Tile>();
+        public static List<TileTemplate> GetTilesInGroup(string p) {
+            List<TileTemplate> retList = new List<TileTemplate>();
 
             if (GroupsToTileUUIDS.ContainsKey(p)) {
                 foreach (short id in GroupsToTileUUIDS[p]) {
