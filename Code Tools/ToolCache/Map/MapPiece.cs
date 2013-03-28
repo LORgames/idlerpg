@@ -46,7 +46,10 @@ namespace ToolCache.Map {
             isLoaded = true;
             Objects = new List<BaseObject>();
 
-            //First load the scenary
+            //First load the terrain
+            Tiles.LoadMapFromFile(f);
+
+            //then load the scenary
             int totalShapes = f.GetInt();
 
             for (int i = 0; i < totalShapes; i++) {
@@ -57,9 +60,6 @@ namespace ToolCache.Map {
                 Objects.Add(new BaseObject(sourceID, new Point(locationX, locationY)));
             }
 
-            //And terrain last
-            Tiles.LoadMapFromFile(f);
-
             f.Dispose();
         }
 
@@ -68,7 +68,10 @@ namespace ToolCache.Map {
 
             f.AddString(Name);
 
-            //First save the scenary
+            //Save terrain
+            Tiles.SaveMap(f);
+
+            //finally save the scenary
             f.AddInt(Objects.Count);
 
             foreach (BaseObject ps in Objects) {
@@ -76,9 +79,6 @@ namespace ToolCache.Map {
                 f.AddInt(ps.Location.X);
                 f.AddInt(ps.Location.Y);
             }
-
-            //And finally terrain
-            Tiles.SaveMap(f);
 
             f.Encode(Filename);
 
