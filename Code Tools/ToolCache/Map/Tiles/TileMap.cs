@@ -10,6 +10,7 @@ namespace ToolCache.Map.Tiles {
         public int numTilesY;
 
         public short[,] Data;
+        public bool[,] Walkable;
 
         public TileMap() {
             CreateMapFromNothing();
@@ -20,10 +21,17 @@ namespace ToolCache.Map.Tiles {
             numTilesY = 50;
 
             Data = new short[numTilesX, numTilesY];
+            Walkable = new bool[numTilesX, numTilesY];
 
             for (int i = 0; i < numTilesX; i++) {
                 for (int j = 0; j < numTilesY; j++) {
                     Data[i, j] = 0;
+
+                    if(TileCache.Tiles.ContainsKey(Data[i, j])) {
+                        Walkable[i, j] = TileCache.Tiles[Data[i, j]].isWalkable;
+                    } else {
+                        Walkable[i, j] = false;
+                    }
                 }
             }
         }
@@ -33,15 +41,14 @@ namespace ToolCache.Map.Tiles {
             numTilesY = mapFile.GetInt();
 
             Data = new short[numTilesX, numTilesY];
+            Walkable = new bool[numTilesX, numTilesY];
 
             for (int i = 0; i < numTilesX; i++) {
                 for (int j = 0; j < numTilesY; j++) {
                     Data[i, j] = mapFile.GetShort();
+                    Walkable[i, j] = TileCache.Tiles[Data[i, j]].isWalkable;
                 }
             }
-
-            //MainWindow.instance.txtMapSizeX.Text = numTilesX.ToString();
-            //MainWindow.instance.txtMapSizeY.Text = numTilesY.ToString();
         }
 
         public void SaveMap(BinaryIO mapFile) {

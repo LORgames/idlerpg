@@ -60,6 +60,7 @@
             this.txtViewportHeight = new System.Windows.Forms.ToolStripTextBox();
             this.otherToolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnTileEditorTool = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnObjectEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.mapViewPanel = new System.Windows.Forms.PictureBox();
             this.toolpanel_splitter = new System.Windows.Forms.SplitContainer();
             this.tabFirstLevel = new System.Windows.Forms.TabControl();
@@ -74,7 +75,6 @@
             this.pnlObjectScenicCache = new System.Windows.Forms.Panel();
             this.cbScenicCacheSelector = new System.Windows.Forms.ComboBox();
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
-            this.btnObjectEditor = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.main_splitter)).BeginInit();
             this.main_splitter.Panel1.SuspendLayout();
             this.main_splitter.Panel2.SuspendLayout();
@@ -295,6 +295,7 @@
             // 
             // toolStripDropDownButton1
             // 
+            this.toolStripDropDownButton1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ckbShowTileGrid,
@@ -357,9 +358,16 @@
             // btnTileEditorTool
             // 
             this.btnTileEditorTool.Name = "btnTileEditorTool";
-            this.btnTileEditorTool.Size = new System.Drawing.Size(196, 22);
-            this.btnTileEditorTool.Text = "Tile Editor";
+            this.btnTileEditorTool.Size = new System.Drawing.Size(216, 22);
+            this.btnTileEditorTool.Text = "Tile Editor (T)";
             this.btnTileEditorTool.Click += new System.EventHandler(this.btnTileEditorTool_Click);
+            // 
+            // btnObjectEditor
+            // 
+            this.btnObjectEditor.Name = "btnObjectEditor";
+            this.btnObjectEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnObjectEditor.Text = "Object Template Editor (O)";
+            this.btnObjectEditor.Click += new System.EventHandler(this.btnObjectEditor_Click);
             // 
             // mapViewPanel
             // 
@@ -520,13 +528,6 @@
             // 
             this.timerRefresh.Tick += new System.EventHandler(this.timerRefresh_Tick);
             // 
-            // btnObjectEditor
-            // 
-            this.btnObjectEditor.Name = "btnObjectEditor";
-            this.btnObjectEditor.Size = new System.Drawing.Size(196, 22);
-            this.btnObjectEditor.Text = "Object Template Editor";
-            this.btnObjectEditor.Click += new System.EventHandler(this.btnObjectEditor_Click);
-            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -534,7 +535,7 @@
             this.ClientSize = new System.Drawing.Size(897, 461);
             this.Controls.Add(this.main_splitter);
             this.Name = "MainWindow";
-            this.Text = "Runner Builder";
+            this.Text = "RED: Rpg EDitor";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
             this.main_splitter.Panel1.ResumeLayout(false);

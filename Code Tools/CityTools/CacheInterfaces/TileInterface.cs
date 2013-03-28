@@ -8,9 +8,19 @@ using CityTools.Components;
 namespace CityTools.CacheInterfaces {
     public class TileInterface {
 
+        public static void Initialize() {
+            MainWindow.instance.pnlTiles.Controls.Add(new ObjectCacheControl());
+            ReloadAll();
+        }
+
         public static void UpdateTileTab() {
-            MainWindow.instance.cbTileGroups.Controls.Clear();
-            List<String> groups = TileCache.GetGroups();
+            MainWindow.instance.cbTileGroups.Items.Clear();
+
+            short id = TileCache.NextID();
+
+            foreach (string cache in TileCache.GetGroups()) {
+                MainWindow.instance.cbTileGroups.Items.Add(cache);
+            }
         }
 
         internal static void UpdateTilePage() {

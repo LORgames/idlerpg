@@ -31,14 +31,14 @@ namespace ToolCache.Map.Tiles {
             this.cbTileGroup = new System.Windows.Forms.ComboBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.cbTileNames = new System.Windows.Forms.ToolStripComboBox();
+            this.btnNewTile = new System.Windows.Forms.ToolStripButton();
+            this.btnDeleteTile = new System.Windows.Forms.ToolStripButton();
+            this.btnSave = new System.Windows.Forms.ToolStripButton();
             this.lblTileID = new System.Windows.Forms.ToolStripLabel();
             this.lblTileName = new System.Windows.Forms.Label();
             this.lblGroup = new System.Windows.Forms.Label();
             this.lblAnimation = new System.Windows.Forms.Label();
             this.ccAnimation = new ToolCache.Animation.Form.AnimationList();
-            this.btnNewTile = new System.Windows.Forms.ToolStripButton();
-            this.btnDeleteTile = new System.Windows.Forms.ToolStripButton();
-            this.btnSave = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -77,6 +77,36 @@ namespace ToolCache.Map.Tiles {
             this.cbTileNames.Name = "cbTileNames";
             this.cbTileNames.Size = new System.Drawing.Size(169, 25);
             this.cbTileNames.SelectedIndexChanged += new System.EventHandler(this.cbTileNames_SelectedIndexChanged);
+            // 
+            // btnNewTile
+            // 
+            this.btnNewTile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnNewTile.Image = ((System.Drawing.Image)(resources.GetObject("btnNewTile.Image")));
+            this.btnNewTile.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnNewTile.Name = "btnNewTile";
+            this.btnNewTile.Size = new System.Drawing.Size(23, 22);
+            this.btnNewTile.Text = "toolStripButton1";
+            this.btnNewTile.Click += new System.EventHandler(this.btnNewTile_Click);
+            // 
+            // btnDeleteTile
+            // 
+            this.btnDeleteTile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnDeleteTile.Image = ((System.Drawing.Image)(resources.GetObject("btnDeleteTile.Image")));
+            this.btnDeleteTile.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnDeleteTile.Name = "btnDeleteTile";
+            this.btnDeleteTile.Size = new System.Drawing.Size(23, 22);
+            this.btnDeleteTile.Text = "toolStripButton2";
+            this.btnDeleteTile.Click += new System.EventHandler(this.btnDeleteTile_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnSave.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.Image")));
+            this.btnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(23, 22);
+            this.btnSave.Text = "toolStripButton1";
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // lblTileID
             // 
@@ -120,36 +150,6 @@ namespace ToolCache.Map.Tiles {
             this.ccAnimation.Size = new System.Drawing.Size(344, 100);
             this.ccAnimation.TabIndex = 1;
             // 
-            // btnNewTile
-            // 
-            this.btnNewTile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnNewTile.Image = ((System.Drawing.Image)(resources.GetObject("btnNewTile.Image")));
-            this.btnNewTile.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnNewTile.Name = "btnNewTile";
-            this.btnNewTile.Size = new System.Drawing.Size(23, 22);
-            this.btnNewTile.Text = "toolStripButton1";
-            this.btnNewTile.Click += new System.EventHandler(this.btnNewTile_Click);
-            // 
-            // btnDeleteTile
-            // 
-            this.btnDeleteTile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnDeleteTile.Image = ((System.Drawing.Image)(resources.GetObject("btnDeleteTile.Image")));
-            this.btnDeleteTile.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnDeleteTile.Name = "btnDeleteTile";
-            this.btnDeleteTile.Size = new System.Drawing.Size(23, 22);
-            this.btnDeleteTile.Text = "toolStripButton2";
-            this.btnDeleteTile.Click += new System.EventHandler(this.btnDeleteTile_Click);
-            // 
-            // btnSave
-            // 
-            this.btnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnSave.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.Image")));
-            this.btnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(23, 22);
-            this.btnSave.Text = "toolStripButton1";
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
             // TileEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -163,7 +163,7 @@ namespace ToolCache.Map.Tiles {
             this.Controls.Add(this.txtTileName);
             this.Controls.Add(this.ccAnimation);
             this.Name = "TileEditor";
-            this.Text = "Tile Editor";
+            this.Text = "TED: Tile EDitor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TileEditor_FormClosing);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();

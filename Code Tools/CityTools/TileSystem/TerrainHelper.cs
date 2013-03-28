@@ -17,18 +17,6 @@ namespace CityTools.Terrain {
         private static short currentTile = 0;
         private static int drawSize = 1;
 
-        public static void InitializeTerrainSystem(ComboBox cb, Panel objPanel) {
-            cb.Items.Clear();
-
-            short id = TileCache.NextID();
-
-            foreach(string cache in TileCache.GetGroups()) {
-                cb.Items.Add(cache);
-            }
-
-            objPanel.Controls.Add(new ObjectCacheControl());
-        }
-
         public static bool MouseMoveOrDown(MouseEventArgs e, LBuffer input_buffer) {
             input_buffer.gfx.Clear(Color.Transparent);
 

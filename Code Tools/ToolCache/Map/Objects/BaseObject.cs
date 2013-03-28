@@ -15,10 +15,22 @@ namespace ToolCache.Map.Objects {
         public Point Location;
         public short ObjectType;
 
+        public Template ObjectTemplate;
+        public int ActualY;
+        public int ActualX;
+
         // Constructor for indexing and sorting
         public BaseObject(short ObjectType, Point initialLocation) {
             this.ObjectType = ObjectType;
             Location = initialLocation;
+
+            ObjectTemplate = TemplateCache.G(ObjectType);
+
+            ActualX = Location.X + ObjectTemplate.Base.Left;
+            ActualY = Location.Y + ObjectTemplate.Base.Top;
+
+            //Figure out what tiles I'm touching and mark them unwalkable
+
         }
 
         // Move function
@@ -28,8 +40,15 @@ namespace ToolCache.Map.Objects {
         }
 
         public int CompareTo(BaseObject other) {
-            //Compare Y positions for sorting.
-            return Location.Y.CompareTo(other.Location.Y);
+            if (ActualY < other.ActualY) {
+                return -1;
+            } else if (ActualY > other.ActualY) {
+                return 1;
+            } else if (ActualX < other.ActualX) {
+                return -1;
+            }
+
+            return 1;
         }
 
         public void Delete() {

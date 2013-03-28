@@ -58,7 +58,7 @@ namespace CityTools {
             InitializeComponent();
 
             CacheInterfaces.MapInterface.Initialize();
-            Terrain.TerrainHelper.InitializeTerrainSystem(cbTileGroups, pnlTiles);
+            CacheInterfaces.TileInterface.Initialize();
             CacheInterfaces.ObjectInterface.Initialize();
 
             drawArea = mapViewPanel.DisplayRectangle;
@@ -133,6 +133,8 @@ namespace CityTools {
                 mapViewPanel.Invalidate();
             } else if (keyData == Keys.T) {
                 OpenTileEditor();
+            } else if (keyData == Keys.O) {
+                OpenTemplateEditor();
             }
 
             return base.ProcessCmdKey(ref msg, keyData);
