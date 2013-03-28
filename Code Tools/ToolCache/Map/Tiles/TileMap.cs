@@ -13,10 +13,10 @@ namespace ToolCache.Map.Tiles {
         public bool[,] Walkable;
 
         public TileMap() {
-            CreateMapFromNothing();
+            
         }
 
-        public void CreateMapFromNothing() {
+        public void CreateMapFromNothing(short fillTileID) {
             numTilesX = 50;
             numTilesY = 50;
 
@@ -25,7 +25,7 @@ namespace ToolCache.Map.Tiles {
 
             for (int i = 0; i < numTilesX; i++) {
                 for (int j = 0; j < numTilesY; j++) {
-                    Data[i, j] = 0;
+                    Data[i, j] = fillTileID;
 
                     if(TileCache.Tiles.ContainsKey(Data[i, j])) {
                         Walkable[i, j] = TileCache.Tiles[Data[i, j]].isWalkable;
@@ -62,7 +62,7 @@ namespace ToolCache.Map.Tiles {
             }
         }
 
-        public void ChangeSizeTo(int newSizeW, int newSizeH, int extendMethodX, int extendMethodY) {
+        public void ChangeSizeTo(short fillTileID, int newSizeW, int newSizeH, int extendMethodX, int extendMethodY) {
             short[,] newTiles = new short[newSizeW, newSizeH];
 
             int oldTotalTilesX = numTilesX;
@@ -88,7 +88,7 @@ namespace ToolCache.Map.Tiles {
                     if (effectiveX >= 0 && effectiveX < oldTotalTilesX && effectiveY >= 0 && effectiveY < oldTotalTilesY) {
                         newTiles[i, j] = Data[effectiveX, effectiveY];
                     } else {
-                        newTiles[i, j] = 0;
+                        newTiles[i, j] = fillTileID;
                     }
                 }
             }

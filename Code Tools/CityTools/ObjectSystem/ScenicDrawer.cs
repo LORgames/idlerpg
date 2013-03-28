@@ -24,7 +24,7 @@ namespace CityTools.ObjectSystem {
 
             foreach (BaseObject obj in drawList) {
                 //obj.Draw(buffer);
-                ToolCache.Map.Objects.TemplateCache.G(obj.ObjectType).Animation.Draw(buffer.gfx, obj.Location.X * Camera.ZoomLevel - Camera.Offset.X, obj.Location.Y * Camera.ZoomLevel - Camera.Offset.Y, Camera.ZoomLevel);
+                ToolCache.Map.Objects.TemplateCache.G(obj.ObjectType).Animation.Draw(buffer.gfx, (obj.Location.X - Camera.Offset.X) * Camera.ZoomLevel, (obj.Location.Y - Camera.Offset.Y) * Camera.ZoomLevel, Camera.ZoomLevel);
             }
         }
     }

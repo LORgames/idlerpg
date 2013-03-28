@@ -97,6 +97,10 @@ namespace CityTools.Terrain {
             currentTile = newTile;
         }
 
+        internal static short GetCurrentTile() {
+            return currentTile;
+        }
+
         internal static short StripTileIDFromPath(string pathName) {
             int i1 = pathName.LastIndexOf('\\');
             int i2 = pathName.LastIndexOf('.');

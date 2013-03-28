@@ -27,23 +27,24 @@ namespace ToolCache.Map {
         public List<BaseObject> Objects = new List<BaseObject>();
         public TileMap Tiles = new TileMap();
         
-        public MapPiece(string filename) {
+        public MapPiece(string filename, short fillTileID) {
             Filename = filename;
+            Tiles.CreateMapFromNothing(fillTileID);
         }
 
         public void Edited() { _iE = true; }
 
         public void Load(Boolean loadingForUse) {
             if (!File.Exists(Filename)) return;
-
-            Objects = new List<BaseObject>();
             
-            isLoaded = true;
             BinaryIO f = new BinaryIO(File.ReadAllBytes(Filename));
-
             Name = f.GetString();
 
+            //Exit Early
             if (!loadingForUse) return;
+
+            isLoaded = true;
+            Objects = new List<BaseObject>();
 
             //First load the scenary
             int totalShapes = f.GetInt();

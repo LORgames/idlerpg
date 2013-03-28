@@ -30,6 +30,9 @@ namespace CityTools.CacheInterfaces {
 
             MainWindow.instance.txtPieceName.Text = MapPieceCache.CurrentPiece.Name;
             MainWindow.instance.lblFilename.Text = MapPieceCache.CurrentPiece.Filename;
+
+            MainWindow.instance.txtMapSizeX.Text = MapPieceCache.CurrentPiece.Tiles.numTilesX.ToString();
+            MainWindow.instance.txtMapSizeY.Text = MapPieceCache.CurrentPiece.Tiles.numTilesY.ToString();
         }
 
         private static void mapSize_TextChanged(object sender, EventArgs e) {
@@ -42,7 +45,7 @@ namespace CityTools.CacheInterfaces {
             if (w <= 0 || h <= 0) {
                 MessageBox.Show("Cannot have 0 for width or height.", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             } else {
-                MapPieceCache.CurrentPiece.Tiles.ChangeSizeTo(w, h, MainWindow.instance.cbMapExtendX.SelectedIndex, MainWindow.instance.cbMapExtendY.SelectedIndex);
+                MapPieceCache.CurrentPiece.Tiles.ChangeSizeTo(Terrain.TerrainHelper.GetCurrentTile(), w, h, MainWindow.instance.cbMapExtendX.SelectedIndex, MainWindow.instance.cbMapExtendY.SelectedIndex);
             }
         }
 
@@ -69,7 +72,7 @@ namespace CityTools.CacheInterfaces {
         }
 
         internal static void NewPiece() {
-            MapPieceCache.CreateNew();
+            MapPieceCache.CreateNew(34); //Blank tile
             UpdateGUI();
         }
 

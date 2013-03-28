@@ -59,6 +59,8 @@
     <Compile Include="Animation\Form\AnimationList.Designer.cs">
       <DependentUpon>AnimationList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Combat\Elements\Element.cs" />
+    <Compile Include="Combat\Elements\ElementManager.cs" />
     <Compile Include="Critters\ICritter.cs" />
     <Compile Include="General\BinaryIO.cs" />
     <Compile Include="General\ImageCache.cs" />
@@ -114,7 +116,9 @@
   <ItemGroup>
     <None Include="Resources\delete.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Combat\Effects\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

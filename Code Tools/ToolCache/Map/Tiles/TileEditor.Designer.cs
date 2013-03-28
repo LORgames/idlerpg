@@ -39,7 +39,11 @@ namespace ToolCache.Map.Tiles {
             this.lblGroup = new System.Windows.Forms.Label();
             this.lblAnimation = new System.Windows.Forms.Label();
             this.ccAnimation = new ToolCache.Animation.Form.AnimationList();
+            this.ckbIsWalkable = new System.Windows.Forms.CheckBox();
+            this.pnlDamage = new System.Windows.Forms.Panel();
+            this.lblDamage = new System.Windows.Forms.Label();
             this.toolStrip1.SuspendLayout();
+            this.pnlDamage.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtTileName
@@ -135,7 +139,7 @@ namespace ToolCache.Map.Tiles {
             // lblAnimation
             // 
             this.lblAnimation.AutoSize = true;
-            this.lblAnimation.Location = new System.Drawing.Point(15, 77);
+            this.lblAnimation.Location = new System.Drawing.Point(15, 211);
             this.lblAnimation.Name = "lblAnimation";
             this.lblAnimation.Size = new System.Drawing.Size(44, 13);
             this.lblAnimation.TabIndex = 7;
@@ -145,16 +149,47 @@ namespace ToolCache.Map.Tiles {
             // 
             this.ccAnimation.AllowDrop = true;
             this.ccAnimation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ccAnimation.Location = new System.Drawing.Point(15, 96);
+            this.ccAnimation.Location = new System.Drawing.Point(15, 230);
             this.ccAnimation.Name = "ccAnimation";
             this.ccAnimation.Size = new System.Drawing.Size(344, 100);
             this.ccAnimation.TabIndex = 1;
+            // 
+            // ckbIsWalkable
+            // 
+            this.ckbIsWalkable.AutoSize = true;
+            this.ckbIsWalkable.Checked = true;
+            this.ckbIsWalkable.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ckbIsWalkable.Location = new System.Drawing.Point(15, 77);
+            this.ckbIsWalkable.Name = "ckbIsWalkable";
+            this.ckbIsWalkable.Size = new System.Drawing.Size(71, 17);
+            this.ckbIsWalkable.TabIndex = 8;
+            this.ckbIsWalkable.Text = "Walkable";
+            this.ckbIsWalkable.UseVisualStyleBackColor = true;
+            // 
+            // pnlDamage
+            // 
+            this.pnlDamage.Controls.Add(this.lblDamage);
+            this.pnlDamage.Location = new System.Drawing.Point(190, 77);
+            this.pnlDamage.Name = "pnlDamage";
+            this.pnlDamage.Size = new System.Drawing.Size(169, 66);
+            this.pnlDamage.TabIndex = 9;
+            // 
+            // lblDamage
+            // 
+            this.lblDamage.AutoSize = true;
+            this.lblDamage.Location = new System.Drawing.Point(4, 4);
+            this.lblDamage.Name = "lblDamage";
+            this.lblDamage.Size = new System.Drawing.Size(50, 13);
+            this.lblDamage.TabIndex = 0;
+            this.lblDamage.Text = "Damage:";
             // 
             // TileEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(371, 205);
+            this.ClientSize = new System.Drawing.Size(371, 342);
+            this.Controls.Add(this.pnlDamage);
+            this.Controls.Add(this.ckbIsWalkable);
             this.Controls.Add(this.lblAnimation);
             this.Controls.Add(this.lblGroup);
             this.Controls.Add(this.lblTileName);
@@ -167,6 +202,8 @@ namespace ToolCache.Map.Tiles {
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TileEditor_FormClosing);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.pnlDamage.ResumeLayout(false);
+            this.pnlDamage.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -186,5 +223,8 @@ namespace ToolCache.Map.Tiles {
         private System.Windows.Forms.Label lblAnimation;
         private System.Windows.Forms.ToolStripButton btnSave;
         private System.Windows.Forms.ToolStripLabel lblTileID;
+        private System.Windows.Forms.CheckBox ckbIsWalkable;
+        private System.Windows.Forms.Panel pnlDamage;
+        private System.Windows.Forms.Label lblDamage;
     }
 }

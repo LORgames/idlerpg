@@ -9,6 +9,7 @@ using ToolCache.Map.Tiles;
 namespace ToolCache.Map {
     public class MapPieceCache {
         private static MapPiece _cp = null;
+        private const short DefaultTileID = 34;
 
         public static MapPiece CurrentPiece {
             get { return _cp; }
@@ -23,24 +24,27 @@ namespace ToolCache.Map {
 
         public static void Initialize() {
             if (!Directory.Exists(PIECES_DIRECTORY)) Directory.CreateDirectory(PIECES_DIRECTORY);
-            
+
+            //Initialize child systems
+            TileCache.Initialize();
+
+            //Load all the files in (get the map names especially)
             String[] files = Directory.GetFiles(PIECES_DIRECTORY);
 
             foreach (String file in files) {
-                MapPiece mp = new MapPiece(file);
+                MapPiece mp = new MapPiece(file, 0);
                 mp.Load(false);
 
                 _p.Add(mp);
             }
 
-            TileCache.Initialize();
-
-            CreateNew();
+            //Create a new map
+            CreateNew(DefaultTileID);
         }
 
         public static void DeleteCurrent() {
             CurrentPiece.DeleteFile();
-            CreateNew();
+            CreateNew(DefaultTileID);
         }
 
         public static void SaveIfRequired() {
@@ -53,9 +57,9 @@ namespace ToolCache.Map {
             }
         }
 
-        public static void CreateNew() {
+        public static void CreateNew(short fillTileID) {
             SaveIfRequired();
-            ChangeCurrentPiece(new MapPiece(GetNextFilename()));
+            ChangeCurrentPiece(new MapPiece(GetNextFilename(), fillTileID));
         }
 
         public static void ChangeCurrentPiece(MapPiece newPiece) {
