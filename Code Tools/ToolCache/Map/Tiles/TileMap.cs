@@ -32,7 +32,7 @@ namespace ToolCache.Map.Tiles {
 
             for (int i = 0; i < numTilesX; i++) {
                 for (int j = 0; j < numTilesY; j++) {
-                    Data[i, j] = new TileInstance(fillTileID);
+                    Data[i, j] = new TileInstance(fillTileID, i, j);
                 }
             }
         }
@@ -45,7 +45,7 @@ namespace ToolCache.Map.Tiles {
 
             for (int i = 0; i < numTilesX; i++) {
                 for (int j = 0; j < numTilesY; j++) {
-                    Data[i, j] = new TileInstance(mapFile.GetShort());
+                    Data[i, j] = new TileInstance(mapFile.GetShort(), i, j);
                 }
             }
         }
@@ -85,9 +85,9 @@ namespace ToolCache.Map.Tiles {
                     effectiveY = (extendY == 0) ? j : (extendY == 2 ? j - (oldTotalTilesY - 1) : j - sizeDifY / 2);
 
                     if (effectiveX >= 0 && effectiveX < oldTotalTilesX && effectiveY >= 0 && effectiveY < oldTotalTilesY) {
-                        newTiles[i, j] = new TileInstance(Data[effectiveX, effectiveY].TileID);
+                        newTiles[i, j] = new TileInstance(Data[effectiveX, effectiveY].TileID, i, j);
                     } else {
-                        newTiles[i, j] = new TileInstance(fillTileID);
+                        newTiles[i, j] = new TileInstance(fillTileID, i, j);
                     }
                 }
             }
@@ -101,6 +101,28 @@ namespace ToolCache.Map.Tiles {
                     Data[i, j].RecalculateWalkable();
                 }
             }
+        }
+
+        public List<TileInstance> GetTilesFromWorldRectangle(int x, int y, int w, int h) {
+            List<TileInstance> retList = new List<TileInstance>();
+
+            int LX = x / TileTemplate.PIXELS_X;
+            int LY = y / TileTemplate.PIXELS_Y;
+            int UX = (x + w) / TileTemplate.PIXELS_X;
+            int UY = (y + h) / TileTemplate.PIXELS_Y;
+
+            if (LX < 0) LX = 0;
+            if (LY < 0) LY = 0;
+            if (UX >= numTilesX) UX = numTilesX - 1;
+            if (UY >= numTilesY) UY = numTilesY - 1;
+
+            for (int i = LX; i <= UX; i++) {
+                for (int j = LY; j <= UY; j++) {
+                    retList.Add(Data[i, j]);
+                }
+            }
+
+            return retList;
         }
     }
 }

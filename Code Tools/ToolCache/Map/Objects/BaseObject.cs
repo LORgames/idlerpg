@@ -31,15 +31,10 @@ namespace ToolCache.Map.Objects {
             ActualY = Location.Y + ObjectTemplate.Base.Top;
 
             //Figure out what tiles I'm touching and mark them unwalkable
-            int LX = ActualX / TileTemplate.PIXELS_X;
-            int LY = ActualY / TileTemplate.PIXELS_Y;
-            int UX = (ActualX+ObjectTemplate.Base.Width) / TileTemplate.PIXELS_X;
-            int UY = (ActualY+ObjectTemplate.Base.Height) / TileTemplate.PIXELS_Y;
+            List<TileInstance> tiles = MapPieceCache.CurrentPiece.Tiles.GetTilesFromWorldRectangle(ActualX, ActualY, ObjectTemplate.Base.Width, ObjectTemplate.Base.Height);
 
-            for (int i = LX; i <= UX; i++) {
-                for (int j = LY; j <= UY; j++) {
-                    MapPieceCache.CurrentPiece.Tiles.Data[i, j].AddObject(this);
-                }
+            foreach (TileInstance tile in tiles) {
+                tile.AddObject(this);
             }
         }
 
@@ -62,7 +57,14 @@ namespace ToolCache.Map.Objects {
         }
 
         public void Delete() {
-            //TODO: Implement this
+            MapPieceCache.CurrentPiece.Objects.Remove(this);
+
+            //Figure out what tiles I'm touching and mark them unwalkable
+            List<TileInstance> tiles = MapPieceCache.CurrentPiece.Tiles.GetTilesFromWorldRectangle(ActualX, ActualY, ObjectTemplate.Base.Width, ObjectTemplate.Base.Height);
+
+            foreach (TileInstance tile in tiles) {
+                tile.RemoveObject(this);
+            }
         }
     }
 }

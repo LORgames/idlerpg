@@ -9,13 +9,14 @@ using CityTools.Core;
 using ToolCache.Map.Objects;
 using ToolCache.Drawing;
 using ToolCache.Map;
+using ToolCache.Map.Tiles;
 
 namespace CityTools.ObjectSystem {
     public class ScenicHelper {
         private static List<BaseObject> selectedObjects = new List<BaseObject>();
 
-        private static PointF p0 = Point.Empty;
-        private static PointF p1 = Point.Empty;
+        private static Point p0 = Point.Empty;
+        private static Point p1 = Point.Empty;
 
         private static int BASIC_MOVE = 1;
         private static int SHIFT_MOVE = 5;
@@ -32,10 +33,29 @@ namespace CityTools.ObjectSystem {
 
             selectedObjects.Clear();
 
-            PointF p0a = new PointF(Math.Min(p0.X, p1.X) / Camera.ZoomLevel + Camera.ViewArea.Left, Math.Min(p0.Y, p1.Y) / Camera.ZoomLevel + Camera.ViewArea.Top);
-            PointF p1a = new PointF(Math.Max(p0.X, p1.X) / Camera.ZoomLevel + Camera.ViewArea.Left, Math.Max(p0.Y, p1.Y) / Camera.ZoomLevel + Camera.ViewArea.Top);
+            Point p0a = new Point((int)(Math.Min(p0.X, p1.X) / Camera.ZoomLevel + Camera.ViewArea.Left), (int)(Math.Min(p0.Y, p1.Y) / Camera.ZoomLevel + Camera.ViewArea.Top));
+            Point p1a = new Point((int)(Math.Max(p0.X, p1.X) / Camera.ZoomLevel + Camera.ViewArea.Left), (int)(Math.Max(p0.Y, p1.Y) / Camera.ZoomLevel + Camera.ViewArea.Top));
 
-            //TODO: Figure out which objects MIGHT have been selected
+            //Figure out which objects MIGHT have been selected
+            Point tilePosL = Point.Empty;
+            Point tilePosU = Point.Empty;
+
+            tilePosL.X = (int)p0a.X / TileTemplate.PIXELS_X;
+            tilePosL.Y = (int)p0a.X / TileTemplate.PIXELS_Y;
+
+            tilePosU.X = (int)p1a.X / TileTemplate.PIXELS_X;
+            tilePosU.Y = (int)p1a.X / TileTemplate.PIXELS_Y;
+
+            List<TileInstance> tiles = MapPieceCache.CurrentPiece.Tiles.GetTilesFromWorldRectangle(p0a.X, p0a.Y, p1a.X - p0a.X, p1a.Y - p0a.Y);
+
+            foreach (TileInstance tile in tiles) {
+                List<BaseObject> objects = tile.EXOB;
+                for (int k = 0; k < objects.Count; k++) {
+                    if (!selectedObjects.Contains(objects[k])) {
+                        selectedObjects.Add(objects[k]);
+                    }
+                }
+            }
 
             selectedObjects.Sort();
 

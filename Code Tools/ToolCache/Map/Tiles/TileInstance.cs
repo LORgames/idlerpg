@@ -13,7 +13,11 @@ namespace ToolCache.Map.Tiles {
 
         private List<BaseObject> Objects = new List<BaseObject>();
 
-        internal TileInstance(short id) {
+        public List<BaseObject> EXOB {
+            get { return Objects; }
+        }
+
+        internal TileInstance(short id, int x, int y) {
             ChangeTile(id);
         }
 
