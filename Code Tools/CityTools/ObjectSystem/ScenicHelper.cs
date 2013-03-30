@@ -14,6 +14,7 @@ using ToolCache.Map.Tiles;
 namespace CityTools.ObjectSystem {
     public class ScenicHelper {
         private static List<BaseObject> selectedObjects = new List<BaseObject>();
+        public static List<BaseObject> drawList = new List<BaseObject>();
 
         private static Point p0 = Point.Empty;
         private static Point p1 = Point.Empty;
@@ -36,15 +37,8 @@ namespace CityTools.ObjectSystem {
             Point p0a = new Point((int)(Math.Min(p0.X, p1.X) / Camera.ZoomLevel + Camera.ViewArea.Left), (int)(Math.Min(p0.Y, p1.Y) / Camera.ZoomLevel + Camera.ViewArea.Top));
             Point p1a = new Point((int)(Math.Max(p0.X, p1.X) / Camera.ZoomLevel + Camera.ViewArea.Left), (int)(Math.Max(p0.Y, p1.Y) / Camera.ZoomLevel + Camera.ViewArea.Top));
 
-            //Figure out which objects MIGHT have been selected
-            Point tilePosL = Point.Empty;
-            Point tilePosU = Point.Empty;
-
-            tilePosL.X = (int)p0a.X / TileTemplate.PIXELS_X;
-            tilePosL.Y = (int)p0a.X / TileTemplate.PIXELS_Y;
-
-            tilePosU.X = (int)p1a.X / TileTemplate.PIXELS_X;
-            tilePosU.Y = (int)p1a.X / TileTemplate.PIXELS_Y;
+            //Figure out which objects are in that bounding box
+            Rectangle selectBox = new Rectangle(p0a.X, p0a.Y, p1a.X - p0a.X, p1a.Y - p0a.Y);
 
             List<TileInstance> tiles = MapPieceCache.CurrentPiece.Tiles.GetTilesFromWorldRectangle(p0a.X, p0a.Y, p1a.X - p0a.X, p1a.Y - p0a.Y);
 
@@ -52,7 +46,9 @@ namespace CityTools.ObjectSystem {
                 List<BaseObject> objects = tile.EXOB;
                 for (int k = 0; k < objects.Count; k++) {
                     if (!selectedObjects.Contains(objects[k])) {
-                        selectedObjects.Add(objects[k]);
+                        if (selectBox.IntersectsWith(objects[k].ActualBase)) {
+                            selectedObjects.Add(objects[k]);
+                        }
                     }
                 }
             }
@@ -90,6 +86,8 @@ namespace CityTools.ObjectSystem {
             for (int i = 0; i < selectedObjects.Count; i++) {
                 selectedObjects[i].Move(x, y);
             }
+
+            if (selectedObjects.Count > 0) MapPieceCache.CurrentPiece.Edited();
         }
 
         internal static void DeleteSelectedObjects() {
@@ -99,6 +97,8 @@ namespace CityTools.ObjectSystem {
             for (int i = 0; i < selectedObjects.Count; i++) {
                 selectedObjects[i].Delete();
             }
+
+            if (selectedObjects.Count > 0) MapPieceCache.CurrentPiece.Edited();
 
             // Clear the list of selected objects, they should all be deleted now.
             selectedObjects.Clear();
@@ -134,6 +134,44 @@ namespace CityTools.ObjectSystem {
 
 
             return true;
+        }
+
+        public static void DrawObjects(LBuffer buffer) {
+            //drawList.Clear();
+
+            //TODO: Figure out what to draw again
+
+            drawList = MapPieceCache.CurrentPiece.Objects;
+            drawList.Sort();
+
+            foreach (BaseObject obj in drawList) {
+                //obj.Draw(buffer);
+                float x = (obj.Location.X - Camera.Offset.X) * Camera.ZoomLevel;
+                float y = (obj.Location.Y - Camera.Offset.Y) * Camera.ZoomLevel;
+
+                if (MainWindow.instance.ckbShowObjectBases.Checked) {
+                    Rectangle b = TemplateCache.G(obj.ObjectType).Base;
+
+                    Rectangle r = new Rectangle();
+
+                    r.X = (int)(x + b.X * Camera.ZoomLevel);
+                    r.Y = (int)(y + b.Y * Camera.ZoomLevel);
+                    r.Width = (int)(b.Width * Camera.ZoomLevel);
+                    r.Height = (int)(b.Height * Camera.ZoomLevel);
+
+                    if (!selectedObjects.Contains(obj)) {
+                        buffer.gfx.FillRectangle(Brushes.Magenta, r);
+                    } else {
+                        buffer.gfx.FillRectangle(Brushes.Yellow, r);
+                    }
+
+                    TemplateCache.G(obj.ObjectType).Animation.Draw(buffer.gfx, x, y, Camera.ZoomLevel, 0.33f);
+                } else {
+                    TemplateCache.G(obj.ObjectType).Animation.Draw(buffer.gfx, x, y, Camera.ZoomLevel);
+                }
+
+                
+            }
         }
     }
 }

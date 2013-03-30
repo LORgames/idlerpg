@@ -118,6 +118,7 @@ namespace ToolCache.Map.Tiles {
 
             for (int i = LX; i <= UX; i++) {
                 for (int j = LY; j <= UY; j++) {
+                    //Calculate if the object is somewhere useful or not
                     retList.Add(Data[i, j]);
                 }
             }

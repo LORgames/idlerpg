@@ -74,7 +74,6 @@
     </Compile>
     <Compile Include="ObjectSystem\ScenicPlacementHelper.cs" />
     <Compile Include="ObjectSystem\ScenicHelper.cs" />
-    <Compile Include="ObjectSystem\ScenicDrawer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TileSystem\TerrainHelper.cs" />

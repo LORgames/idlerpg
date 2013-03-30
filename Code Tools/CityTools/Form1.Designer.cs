@@ -56,6 +56,7 @@
             this.mnuShowGrids = new System.Windows.Forms.ToolStripMenuItem();
             this.ckbShowTileGrid = new System.Windows.Forms.ToolStripMenuItem();
             this.ckbShowWalkableGrid = new System.Windows.Forms.ToolStripMenuItem();
+            this.ckbShowObjectBases = new System.Windows.Forms.ToolStripMenuItem();
             this.viewportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ckbViewportEnabled = new System.Windows.Forms.ToolStripMenuItem();
             this.txtViewportWidth = new System.Windows.Forms.ToolStripTextBox();
@@ -78,7 +79,6 @@
             this.pnlObjectScenicCache = new System.Windows.Forms.Panel();
             this.cbScenicCacheSelector = new System.Windows.Forms.ComboBox();
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
-            this.chkShowObjectBases = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.main_splitter)).BeginInit();
             this.main_splitter.Panel1.SuspendLayout();
             this.main_splitter.Panel2.SuspendLayout();
@@ -316,7 +316,7 @@
             this.mnuShowGrids.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ckbShowTileGrid,
             this.ckbShowWalkableGrid,
-            this.chkShowObjectBases});
+            this.ckbShowObjectBases});
             this.mnuShowGrids.Name = "mnuShowGrids";
             this.mnuShowGrids.Size = new System.Drawing.Size(152, 22);
             this.mnuShowGrids.Text = "Grids";
@@ -325,15 +325,22 @@
             // 
             this.ckbShowTileGrid.CheckOnClick = true;
             this.ckbShowTileGrid.Name = "ckbShowTileGrid";
-            this.ckbShowTileGrid.Size = new System.Drawing.Size(173, 22);
-            this.ckbShowTileGrid.Text = "Show Outlines";
+            this.ckbShowTileGrid.Size = new System.Drawing.Size(190, 22);
+            this.ckbShowTileGrid.Text = "Show Outlines (1)";
             // 
             // ckbShowWalkableGrid
             // 
             this.ckbShowWalkableGrid.CheckOnClick = true;
             this.ckbShowWalkableGrid.Name = "ckbShowWalkableGrid";
-            this.ckbShowWalkableGrid.Size = new System.Drawing.Size(173, 22);
-            this.ckbShowWalkableGrid.Text = "Show Walkable";
+            this.ckbShowWalkableGrid.Size = new System.Drawing.Size(190, 22);
+            this.ckbShowWalkableGrid.Text = "Show Walkable (2)";
+            // 
+            // ckbShowObjectBases
+            // 
+            this.ckbShowObjectBases.CheckOnClick = true;
+            this.ckbShowObjectBases.Name = "ckbShowObjectBases";
+            this.ckbShowObjectBases.Size = new System.Drawing.Size(190, 22);
+            this.ckbShowObjectBases.Text = "Show Object Bases (3)";
             // 
             // viewportToolStripMenuItem
             // 
@@ -557,13 +564,6 @@
             // 
             this.timerRefresh.Tick += new System.EventHandler(this.timerRefresh_Tick);
             // 
-            // chkShowObjectBases
-            // 
-            this.chkShowObjectBases.CheckOnClick = true;
-            this.chkShowObjectBases.Name = "chkShowObjectBases";
-            this.chkShowObjectBases.Size = new System.Drawing.Size(173, 22);
-            this.chkShowObjectBases.Text = "Show Object Bases";
-            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -649,7 +649,7 @@
         private System.Windows.Forms.ToolStripMenuItem elementalEditorToolStripMenuItem;
         internal System.Windows.Forms.ToolStripMenuItem ckbShowWalkableGrid;
         internal System.Windows.Forms.ToolStripMenuItem ckbShowTileGrid;
-        internal System.Windows.Forms.ToolStripMenuItem chkShowObjectBases;
+        internal System.Windows.Forms.ToolStripMenuItem ckbShowObjectBases;
     }
 }
 

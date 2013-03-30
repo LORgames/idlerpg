@@ -14,6 +14,7 @@ namespace ToolCache.Map.Tiles {
         public const byte ACCESS_TOP = 4;
         public const byte ACCESS_BOTTOM = 8;
         public const byte ACCESS_ALL = ACCESS_LEFT | ACCESS_RIGHT | ACCESS_TOP | ACCESS_BOTTOM;
+        public const byte ACCESS_NONE = 0;
 
         public const byte SLIDING_NONE = 0;
         public const byte SLIDING_LEFT = 1;

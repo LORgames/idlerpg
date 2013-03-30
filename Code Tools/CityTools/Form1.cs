@@ -138,6 +138,12 @@ namespace CityTools {
                 OpenTemplateEditor();
             } else if (keyData == Keys.R) {
                 OpenElementEditor();
+            } else if (keyData == Keys.D1) {
+                ckbShowTileGrid.Checked = !ckbShowTileGrid.Checked;
+            } else if (keyData == Keys.D2) {
+                ckbShowWalkableGrid.Checked = !ckbShowWalkableGrid.Checked;
+            } else if (keyData == Keys.D3) {
+                ckbShowObjectBases.Checked = !ckbShowObjectBases.Checked;
             }
 
             return base.ProcessCmdKey(ref msg, keyData);
@@ -193,7 +199,7 @@ namespace CityTools {
             objects_buffer.gfx.Clear(Color.Transparent);
 
             Terrain.TerrainHelper.DrawTerrain(terrain_buffer);
-            BaseObjectDrawer.DrawObjects(objects_buffer);
+            ScenicHelper.DrawObjects(objects_buffer);
         }
 
         private void mapViewPanel_Resize(object sender, EventArgs e) {
@@ -203,7 +209,7 @@ namespace CityTools {
             Camera.FixViewArea(drawArea);
             CreateBuffers();
 
-            BaseObjectDrawer.DrawObjects(objects_buffer);
+            ScenicHelper.DrawObjects(objects_buffer);
 
             mapViewPanel.Invalidate();
         }
@@ -225,6 +231,7 @@ namespace CityTools {
 
         private void obj_select_btn_Click(object sender, EventArgs e) {
             paintMode = PaintMode.ObjectSelector;
+            ckbShowObjectBases.Checked = true;
         }
 
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e) {
