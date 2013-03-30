@@ -13,12 +13,13 @@ namespace CityTools {
 #if (!DEBUG)
             try {
 #endif
+                ToolCache.General.Startup.GoGoGadget();
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new MainWindow());
 #if (!DEBUG)
             } catch (Exception ex) {
-                MessageBox.Show(ex.Message + "\n\n" + ex.StackTrace);
+                MessageBox.Show("Message:\n" + ex.Message + "\n\nStack:\n" + ex.StackTrace);
             }
 #endif
         }

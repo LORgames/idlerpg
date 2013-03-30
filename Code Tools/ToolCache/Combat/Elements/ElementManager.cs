@@ -72,5 +72,24 @@ namespace ToolCache.Combat.Elements {
 
             Elements.Add(e.ElementID, e);
         }
+
+        internal static void Remove(string p) {
+            short internalID = -1;
+
+            foreach(KeyValuePair<short, Element> kvp in Elements) {
+                if (kvp.Value.ElementName == p) {
+                    internalID = kvp.Key;
+                    break;
+                }
+            }
+
+            if (internalID >= 0) {
+                foreach (KeyValuePair<short, Element> kvp in Elements) {
+                    kvp.Value.RemoveMultiplier(internalID);
+                }
+
+                Elements.Remove(internalID);
+            }
+        }
     }
 }

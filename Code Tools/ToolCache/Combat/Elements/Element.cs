@@ -11,8 +11,7 @@ namespace ToolCache.Combat.Elements {
 
         private Dictionary<short, float> Multipliers = new Dictionary<short, float>();
 
-
-        private void SetMultiplier(short elementID, float Multiplier) {
+        internal void SetMultiplier(short elementID, float Multiplier) {
             if(Multipliers.ContainsKey(elementID)) {
                 if (Multiplier == 1) {
                     Multipliers.Remove(elementID); //Save memory when not special
@@ -22,6 +21,10 @@ namespace ToolCache.Combat.Elements {
             } else if(Multiplier != 1) { //Only save it if its not special
                 Multipliers.Add(elementID, Multiplier);
             }
+        }
+
+        internal void RemoveMultiplier(short elementID) {
+            SetMultiplier(elementID, 1); //Removes the element from the database?
         }
 
         public float GetMultiplier(short elementID) {

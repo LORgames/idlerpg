@@ -71,6 +71,7 @@
     <Compile Include="General\BinaryIO.cs" />
     <Compile Include="General\ImageCache.cs" />
     <Compile Include="General\Settings.cs" />
+    <Compile Include="General\Startup.cs" />
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\ItemDatabase.cs" />
     <Compile Include="Drawing\LBuffer.cs" />
