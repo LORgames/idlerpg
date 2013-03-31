@@ -38,12 +38,19 @@ namespace ToolCache.Map.Tiles {
 
         internal void ChangeTile(short newid) {
             TileID = newid;
+
+            if (TileCache.G(newid) == null) TileID = 0;
+
             RecalculateWalkable();
         }
 
         private void UpdateFromTemplate() {
-            AccessDirections = TileCache.G(TileID).directionalAccess;
-            Walkable = TileCache.G(TileID).isWalkable;
+            try {
+                AccessDirections = TileCache.G(TileID).directionalAccess;
+                Walkable = TileCache.G(TileID).isWalkable;
+            } catch {
+                
+            }
         }
 
         internal void RecalculateWalkable() {
