@@ -101,5 +101,19 @@ namespace ToolCache.Combat.Elements {
 
             return -1;
         }
+
+        internal static int ElementIDToIndex(short p) {
+            int i = 0;
+
+            foreach (KeyValuePair<short, Element> kvp in Elements) {
+                if (kvp.Key == p) {
+                    return i;
+                }
+
+                i++;
+            }
+
+            return 0;
+        }
     }
 }

@@ -11,14 +11,27 @@ using ToolCache.Combat.Elements;
 namespace ToolCache.Map.Tiles {
     public partial class TileEditor : Form {
         private short tileID = 0;
+        private bool Edited = false;
 
         public TileEditor() {
             InitializeComponent();
             ccAnimation.SetSaveLocation("Tiles");
             ccAnimation.ClearAnimation();
 
+            UpdateElementNames();
+
             UpdateTileNames();
             ChangeTo(-1);
+        }
+
+        private void UpdateElementNames() {
+            string[] elements = ElementManager.ElementNames();
+
+            cbDamageElement.Items.Clear();
+
+            foreach (String s in elements) {
+                cbDamageElement.Items.Add(s);
+            }
         }
 
         private void ChangeTo(short tileID) {
@@ -34,6 +47,12 @@ namespace ToolCache.Map.Tiles {
                 ckbUp.Checked = (t.directionalAccess & TileTemplate.ACCESS_TOP) > 0 ? true : false;
                 ckbDown.Checked = (t.directionalAccess & TileTemplate.ACCESS_BOTTOM) > 0 ? true : false;
 
+                cbDamageElement.SelectedIndex = ElementManager.ElementIDToIndex(t.damageElement);
+                numDamagePerSecond.Value = t.damagePerSecond;
+
+                numMovementCost.Value = (Decimal)t.movementCost;
+                cbSlideDirection.SelectedIndex = t.slidingDirection;
+
                 this.tileID = tileID;
             } else {
                 this.tileID = TileCache.NextID();
@@ -46,9 +65,16 @@ namespace ToolCache.Map.Tiles {
                 ckbRight.Checked = true;
                 ckbUp.Checked = true;
                 ckbDown.Checked = true;
+
+                cbDamageElement.SelectedIndex = 0;
+                numDamagePerSecond.Value = 0;
+
+                numMovementCost.Value = 1.0M;
+                cbSlideDirection.SelectedIndex = 0;
             }
 
-            lblTileID.Text = "N:" + this.tileID;
+            Edited = false;
+            lblTileID.Text = "ID:" + this.tileID;
         }
 
         private void btnSave_Click(object sender, EventArgs e) {
@@ -72,12 +98,11 @@ namespace ToolCache.Map.Tiles {
             t.directionalAccess |= (ckbUp.Checked ? TileTemplate.ACCESS_TOP : (byte)0);
             t.directionalAccess |= (ckbDown.Checked ? TileTemplate.ACCESS_BOTTOM : (byte)0);
 
+            t.movementCost = (float)numMovementCost.Value;
+            t.slidingDirection = (byte)cbSlideDirection.SelectedIndex;
+            
             t.damageElement = ElementManager.GetElementIDFromName(cbDamageElement.Text);
-
-            short dps = 0;
-            if(short.TryParse(txtDamagePerSecond.Text, out dps)) {
-                t.damagePerSecond = dps;
-            }
+            t.damagePerSecond = (short)numDamagePerSecond.Value;
             
             if(addAsNew) {
                 TileCache.AddTile(t);
@@ -113,6 +138,12 @@ namespace ToolCache.Map.Tiles {
         }
 
         private void cbTileNames_SelectedIndexChanged(object sender, EventArgs e) {
+            if (Edited) {
+                if (MessageBox.Show("Do you want to save the current tile?", "Save?", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes) {
+                    btnSave_Click(null, null);
+                }
+            }
+
             if (cbTileNames.Text.IndexOf('|') > -1) {
                 string txt = cbTileNames.Text.Split('|')[0];
 
@@ -138,6 +169,12 @@ namespace ToolCache.Map.Tiles {
                 ckbUp.Enabled = true;
                 ckbDown.Enabled = true;
             }
+
+            Edited = true;
+        }
+
+        private void isEdited(object sender, EventArgs e) {
+            Edited = true;
         }
     }
 }
