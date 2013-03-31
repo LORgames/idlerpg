@@ -36,7 +36,10 @@ namespace ToolCache.Map.Tiles {
 
         //Gameplay Information
         public Boolean isWalkable = true; //(1 bit)
-        public byte elementalDamage = 0; // 0 = No damage, everything else is the ID of the damaging element (8 bits)
+        
+        public short damageElement = 0; // 0 = No damage, everything else is the ID of the damaging element (8 bits)
+        public short damagePerSecond = 0;
+
         public float movementCost = 1; // 1 = normal, 2 = twice as slow, 0.5 = twice as fast (32 bits)
         public byte directionalAccess = ACCESS_ALL; //Which directions tile can be accessed from bitwise LRTB order (4bits)
         public byte slidingDirection = SLIDING_NONE; //0=none, 1=left, 2=right, 3=top, 4=bottom, 5=direction of travel (3 bits)
@@ -49,10 +52,12 @@ namespace ToolCache.Map.Tiles {
             Animation = AnimatedObject.UnpackFromBinaryIO(f);
 
             isWalkable = f.GetByte() == 1;
-            elementalDamage = f.GetByte();
-            movementCost = f.GetFloat();
             directionalAccess = f.GetByte();
+            movementCost = f.GetFloat();
             slidingDirection = f.GetByte();
+            
+            damageElement = f.GetShort();
+            damagePerSecond = f.GetShort();
         }
 
         internal void SaveToFile(BinaryIO f) {
@@ -63,10 +68,12 @@ namespace ToolCache.Map.Tiles {
             Animation.PackIntoBinaryIO(f);
 
             f.AddByte(isWalkable ? (byte)1 : (byte)0);
-            f.AddByte(elementalDamage);
-            f.AddFloat(movementCost);
             f.AddByte(directionalAccess);
+            f.AddFloat(movementCost);
             f.AddByte(slidingDirection);
+
+            f.AddShort(damageElement);
+            f.AddShort(damagePerSecond);
         }
     }
 }

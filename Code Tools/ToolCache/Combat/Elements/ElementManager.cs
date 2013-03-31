@@ -91,5 +91,15 @@ namespace ToolCache.Combat.Elements {
                 Elements.Remove(internalID);
             }
         }
+
+        internal static short GetElementIDFromName(string p) {
+            foreach (KeyValuePair<short, Element> kvp in Elements) {
+                if (kvp.Value.ElementName == p) {
+                    return kvp.Key;
+                }
+            }
+
+            return -1;
+        }
     }
 }

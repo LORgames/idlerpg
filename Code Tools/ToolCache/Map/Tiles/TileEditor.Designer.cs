@@ -38,9 +38,22 @@ namespace ToolCache.Map.Tiles {
             this.lblTileName = new System.Windows.Forms.Label();
             this.lblGroup = new System.Windows.Forms.Label();
             this.lblAnimation = new System.Windows.Forms.Label();
-            this.ccAnimation = new ToolCache.Animation.Form.AnimationList();
             this.ckbIsWalkable = new System.Windows.Forms.CheckBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtDamagePerSecond = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cbDamageElement = new System.Windows.Forms.ComboBox();
+            this.lblDamage = new System.Windows.Forms.Label();
+            this.ckbDown = new System.Windows.Forms.CheckBox();
+            this.ckbUp = new System.Windows.Forms.CheckBox();
+            this.ckbRight = new System.Windows.Forms.CheckBox();
+            this.ckbLeft = new System.Windows.Forms.CheckBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.ccAnimation = new ToolCache.Animation.Form.AnimationList();
             this.toolStrip1.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtTileName
@@ -136,39 +149,157 @@ namespace ToolCache.Map.Tiles {
             // lblAnimation
             // 
             this.lblAnimation.AutoSize = true;
-            this.lblAnimation.Location = new System.Drawing.Point(15, 211);
+            this.lblAnimation.Location = new System.Drawing.Point(15, 249);
             this.lblAnimation.Name = "lblAnimation";
             this.lblAnimation.Size = new System.Drawing.Size(44, 13);
             this.lblAnimation.TabIndex = 7;
             this.lblAnimation.Text = "Display:";
-            // 
-            // ccAnimation
-            // 
-            this.ccAnimation.AllowDrop = true;
-            this.ccAnimation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ccAnimation.Location = new System.Drawing.Point(15, 230);
-            this.ccAnimation.Name = "ccAnimation";
-            this.ccAnimation.Size = new System.Drawing.Size(344, 100);
-            this.ccAnimation.TabIndex = 1;
             // 
             // ckbIsWalkable
             // 
             this.ckbIsWalkable.AutoSize = true;
             this.ckbIsWalkable.Checked = true;
             this.ckbIsWalkable.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ckbIsWalkable.Location = new System.Drawing.Point(15, 77);
+            this.ckbIsWalkable.Location = new System.Drawing.Point(4, 7);
             this.ckbIsWalkable.Name = "ckbIsWalkable";
             this.ckbIsWalkable.Size = new System.Drawing.Size(71, 17);
             this.ckbIsWalkable.TabIndex = 8;
             this.ckbIsWalkable.Text = "Walkable";
             this.ckbIsWalkable.UseVisualStyleBackColor = true;
+            this.ckbIsWalkable.CheckedChanged += new System.EventHandler(this.ckbIsWalkable_CheckedChanged);
+            // 
+            // panel1
+            // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.txtDamagePerSecond);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.cbDamageElement);
+            this.panel1.Controls.Add(this.lblDamage);
+            this.panel1.Location = new System.Drawing.Point(190, 77);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(169, 78);
+            this.panel1.TabIndex = 9;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(4, 52);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(32, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "DPS:";
+            // 
+            // txtDamagePerSecond
+            // 
+            this.txtDamagePerSecond.Location = new System.Drawing.Point(64, 49);
+            this.txtDamagePerSecond.Name = "txtDamagePerSecond";
+            this.txtDamagePerSecond.Size = new System.Drawing.Size(100, 20);
+            this.txtDamagePerSecond.TabIndex = 3;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(4, 24);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(48, 13);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Element:";
+            // 
+            // cbDamageElement
+            // 
+            this.cbDamageElement.FormattingEnabled = true;
+            this.cbDamageElement.Location = new System.Drawing.Point(64, 21);
+            this.cbDamageElement.Name = "cbDamageElement";
+            this.cbDamageElement.Size = new System.Drawing.Size(100, 21);
+            this.cbDamageElement.TabIndex = 1;
+            // 
+            // lblDamage
+            // 
+            this.lblDamage.AutoSize = true;
+            this.lblDamage.Location = new System.Drawing.Point(4, 4);
+            this.lblDamage.Name = "lblDamage";
+            this.lblDamage.Size = new System.Drawing.Size(55, 13);
+            this.lblDamage.TabIndex = 0;
+            this.lblDamage.Text = "Damaging";
+            // 
+            // ckbDown
+            // 
+            this.ckbDown.AutoSize = true;
+            this.ckbDown.Checked = true;
+            this.ckbDown.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ckbDown.Location = new System.Drawing.Point(84, 53);
+            this.ckbDown.Name = "ckbDown";
+            this.ckbDown.Size = new System.Drawing.Size(82, 17);
+            this.ckbDown.TabIndex = 10;
+            this.ckbDown.Text = "Walk Down";
+            this.ckbDown.UseVisualStyleBackColor = true;
+            // 
+            // ckbUp
+            // 
+            this.ckbUp.AutoSize = true;
+            this.ckbUp.Checked = true;
+            this.ckbUp.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ckbUp.Location = new System.Drawing.Point(5, 53);
+            this.ckbUp.Name = "ckbUp";
+            this.ckbUp.Size = new System.Drawing.Size(68, 17);
+            this.ckbUp.TabIndex = 11;
+            this.ckbUp.Text = "Walk Up";
+            this.ckbUp.UseVisualStyleBackColor = true;
+            // 
+            // ckbRight
+            // 
+            this.ckbRight.AutoSize = true;
+            this.ckbRight.Checked = true;
+            this.ckbRight.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ckbRight.Location = new System.Drawing.Point(84, 30);
+            this.ckbRight.Name = "ckbRight";
+            this.ckbRight.Size = new System.Drawing.Size(79, 17);
+            this.ckbRight.TabIndex = 12;
+            this.ckbRight.Text = "Walk Right";
+            this.ckbRight.UseVisualStyleBackColor = true;
+            // 
+            // ckbLeft
+            // 
+            this.ckbLeft.AutoSize = true;
+            this.ckbLeft.Checked = true;
+            this.ckbLeft.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ckbLeft.Location = new System.Drawing.Point(4, 30);
+            this.ckbLeft.Name = "ckbLeft";
+            this.ckbLeft.Size = new System.Drawing.Size(72, 17);
+            this.ckbLeft.TabIndex = 13;
+            this.ckbLeft.Text = "Walk Left";
+            this.ckbLeft.UseVisualStyleBackColor = true;
+            // 
+            // panel2
+            // 
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.ckbIsWalkable);
+            this.panel2.Controls.Add(this.ckbLeft);
+            this.panel2.Controls.Add(this.ckbDown);
+            this.panel2.Controls.Add(this.ckbRight);
+            this.panel2.Controls.Add(this.ckbUp);
+            this.panel2.Location = new System.Drawing.Point(15, 77);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(169, 78);
+            this.panel2.TabIndex = 14;
+            // 
+            // ccAnimation
+            // 
+            this.ccAnimation.AllowDrop = true;
+            this.ccAnimation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ccAnimation.Location = new System.Drawing.Point(15, 268);
+            this.ccAnimation.Name = "ccAnimation";
+            this.ccAnimation.Size = new System.Drawing.Size(344, 100);
+            this.ccAnimation.TabIndex = 1;
             // 
             // TileEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(371, 342);
-            this.Controls.Add(this.ckbIsWalkable);
+            this.ClientSize = new System.Drawing.Size(371, 380);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.lblAnimation);
             this.Controls.Add(this.lblGroup);
             this.Controls.Add(this.lblTileName);
@@ -181,6 +312,10 @@ namespace ToolCache.Map.Tiles {
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TileEditor_FormClosing);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -201,5 +336,16 @@ namespace ToolCache.Map.Tiles {
         private System.Windows.Forms.ToolStripButton btnSave;
         private System.Windows.Forms.ToolStripLabel lblTileID;
         private System.Windows.Forms.CheckBox ckbIsWalkable;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtDamagePerSecond;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cbDamageElement;
+        private System.Windows.Forms.Label lblDamage;
+        private System.Windows.Forms.CheckBox ckbDown;
+        private System.Windows.Forms.CheckBox ckbUp;
+        private System.Windows.Forms.CheckBox ckbRight;
+        private System.Windows.Forms.CheckBox ckbLeft;
+        private System.Windows.Forms.Panel panel2;
     }
 }
