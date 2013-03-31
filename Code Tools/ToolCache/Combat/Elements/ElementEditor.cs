@@ -42,6 +42,10 @@ namespace ToolCache.Combat.Elements {
 
             dgvElements.DataSource = dt;
 
+            for (int i = 0; i < dgvElements.ColumnCount; i++) {
+                dgvElements.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+
             Updating = false;
         }
 
