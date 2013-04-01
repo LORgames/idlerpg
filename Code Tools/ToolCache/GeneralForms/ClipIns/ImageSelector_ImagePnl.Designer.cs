@@ -1,0 +1,56 @@
+﻿namespace ToolCache.GeneralForms.ClipIns {
+    partial class ImageSelector_ImagePnl {
+        /// <summary> 
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing) {
+            if (disposing && (components != null)) {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Component Designer generated code
+
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent() {
+            this.pbInternal = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pbInternal)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // pbInternal
+            // 
+            this.pbInternal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pbInternal.Location = new System.Drawing.Point(0, 0);
+            this.pbInternal.Name = "pbInternal";
+            this.pbInternal.Size = new System.Drawing.Size(150, 150);
+            this.pbInternal.TabIndex = 0;
+            this.pbInternal.TabStop = false;
+            // 
+            // ImageSelector_ImagePnl
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.pbInternal);
+            this.Name = "ImageSelector_ImagePnl";
+            this.DoubleClick += new System.EventHandler(this.ImageSelector_ImagePnl_DoubleClick);
+            ((System.ComponentModel.ISupportInitialize)(this.pbInternal)).EndInit();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        internal System.Windows.Forms.PictureBox pbInternal;
+
+    }
+}

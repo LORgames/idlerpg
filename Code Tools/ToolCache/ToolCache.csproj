@@ -68,6 +68,18 @@
     </Compile>
     <Compile Include="Combat\Elements\ElementManager.cs" />
     <Compile Include="Critters\ICritter.cs" />
+    <Compile Include="GeneralForms\ClipIns\ImageSelector_ImagePnl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GeneralForms\ClipIns\ImageSelector_ImagePnl.Designer.cs">
+      <DependentUpon>ImageSelector_ImagePnl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GeneralForms\ImageSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GeneralForms\ImageSelector.Designer.cs">
+      <DependentUpon>ImageSelector.cs</DependentUpon>
+    </Compile>
     <Compile Include="General\BinaryIO.cs" />
     <Compile Include="General\ImageCache.cs" />
     <Compile Include="General\Settings.cs" />
@@ -75,6 +87,12 @@
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\ItemDatabase.cs" />
     <Compile Include="Drawing\LBuffer.cs" />
+    <Compile Include="Items\ItemEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Items\ItemEditor.Designer.cs">
+      <DependentUpon>ItemEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Map\MapPieceCache.cs" />
     <Compile Include="Map\Objects\Template.cs" />
     <Compile Include="Map\Objects\Tool\TemplateEditor.cs">
@@ -113,6 +131,15 @@
     <EmbeddedResource Include="Combat\Elements\ElementEditor.resx">
       <DependentUpon>ElementEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GeneralForms\ClipIns\ImageSelector_ImagePnl.resx">
+      <DependentUpon>ImageSelector_ImagePnl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GeneralForms\ImageSelector.resx">
+      <DependentUpon>ImageSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Items\ItemEditor.resx">
+      <DependentUpon>ItemEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Map\Objects\Tool\TemplateEditor.resx">
       <DependentUpon>TemplateEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -129,6 +156,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Combat\Effects\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
