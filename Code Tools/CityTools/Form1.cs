@@ -18,6 +18,7 @@ using ToolCache.Map.Objects.Tool;
 using ToolCache.Animation;
 using ToolCache.Map.Objects;
 using ToolCache.Combat.Elements;
+using ToolCache.Items;
 
 namespace CityTools {
     public enum PaintMode {
@@ -285,6 +286,11 @@ namespace CityTools {
             t.ShowDialog(this);
         }
 
+        private void OpenItemEditor() {
+            ItemEditor t = new ItemEditor();
+            t.ShowDialog(this);
+        }
+
         private void TileEditor_Closing(object sender, FormClosingEventArgs e) {
             CacheInterfaces.TileInterface.ReloadAll();
         }
@@ -301,8 +307,12 @@ namespace CityTools {
             OpenTemplateEditor();
         }
 
-        private void elementalEditorToolStripMenuItem_Click(object sender, EventArgs e) {
+        private void btnElementalEditor_Click(object sender, EventArgs e) {
             OpenElementEditor();
+        }
+
+        private void btnItemEditor_Click(object sender, EventArgs e) {
+            OpenItemEditor();
         }
     }
 }

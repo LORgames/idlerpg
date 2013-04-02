@@ -64,7 +64,8 @@
             this.otherToolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnTileEditorTool = new System.Windows.Forms.ToolStripMenuItem();
             this.btnObjectEditor = new System.Windows.Forms.ToolStripMenuItem();
-            this.elementalEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnElementalEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnItemEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.mapViewPanel = new System.Windows.Forms.PictureBox();
             this.toolpanel_splitter = new System.Windows.Forms.SplitContainer();
             this.tabFirstLevel = new System.Windows.Forms.TabControl();
@@ -379,7 +380,8 @@
             this.otherToolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnTileEditorTool,
             this.btnObjectEditor,
-            this.elementalEditorToolStripMenuItem});
+            this.btnElementalEditor,
+            this.btnItemEditor});
             this.otherToolsToolStripMenuItem.Name = "otherToolsToolStripMenuItem";
             this.otherToolsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.otherToolsToolStripMenuItem.Text = "Other Tools";
@@ -398,12 +400,19 @@
             this.btnObjectEditor.Text = "Object Template Editor (O)";
             this.btnObjectEditor.Click += new System.EventHandler(this.btnObjectEditor_Click);
             // 
-            // elementalEditorToolStripMenuItem
+            // btnElementalEditor
             // 
-            this.elementalEditorToolStripMenuItem.Name = "elementalEditorToolStripMenuItem";
-            this.elementalEditorToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
-            this.elementalEditorToolStripMenuItem.Text = "Elemental Editor (R)";
-            this.elementalEditorToolStripMenuItem.Click += new System.EventHandler(this.elementalEditorToolStripMenuItem_Click);
+            this.btnElementalEditor.Name = "btnElementalEditor";
+            this.btnElementalEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnElementalEditor.Text = "Elemental Editor (R)";
+            this.btnElementalEditor.Click += new System.EventHandler(this.btnElementalEditor_Click);
+            // 
+            // btnItemEditor
+            // 
+            this.btnItemEditor.Name = "btnItemEditor";
+            this.btnItemEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnItemEditor.Text = "Item Editor (I)";
+            this.btnItemEditor.Click += new System.EventHandler(this.btnItemEditor_Click);
             // 
             // mapViewPanel
             // 
@@ -646,10 +655,11 @@
         private System.Windows.Forms.ToolStripMenuItem btnTileEditorTool;
         private System.Windows.Forms.ToolStripMenuItem btnObjectEditor;
         internal System.Windows.Forms.ComboBox cbScenicCacheSelector;
-        private System.Windows.Forms.ToolStripMenuItem elementalEditorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem btnElementalEditor;
         internal System.Windows.Forms.ToolStripMenuItem ckbShowWalkableGrid;
         internal System.Windows.Forms.ToolStripMenuItem ckbShowTileGrid;
         internal System.Windows.Forms.ToolStripMenuItem ckbShowObjectBases;
+        private System.Windows.Forms.ToolStripMenuItem btnItemEditor;
     }
 }
 
