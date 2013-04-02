@@ -29,6 +29,8 @@
             this.btnAddItem = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.txtSearchBox = new System.Windows.Forms.ToolStripTextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.txtName = new System.Windows.Forms.TextBox();
             this.numEffectValue = new System.Windows.Forms.NumericUpDown();
             this.label15 = new System.Windows.Forms.Label();
             this.cbEffectID = new System.Windows.Forms.ComboBox();
@@ -57,8 +59,6 @@
             this.txtDescription = new System.Windows.Forms.TextBox();
             this.txtItemID = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtName = new System.Windows.Forms.TextBox();
-            this.label16 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -126,6 +126,7 @@
             this.treeItemHeirachy.Name = "treeItemHeirachy";
             this.treeItemHeirachy.Size = new System.Drawing.Size(179, 427);
             this.treeItemHeirachy.TabIndex = 1;
+            this.treeItemHeirachy.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeItemHeirachy_AfterSelect);
             // 
             // toolStrip1
             // 
@@ -159,6 +160,23 @@
             this.txtSearchBox.Name = "txtSearchBox";
             this.txtSearchBox.Size = new System.Drawing.Size(95, 25);
             // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(13, 48);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(38, 13);
+            this.label16.TabIndex = 31;
+            this.label16.Text = "Name:";
+            // 
+            // txtName
+            // 
+            this.txtName.Location = new System.Drawing.Point(57, 45);
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(121, 20);
+            this.txtName.TabIndex = 30;
+            this.txtName.TextChanged += new System.EventHandler(this.FormEdited);
+            // 
             // numEffectValue
             // 
             this.numEffectValue.Location = new System.Drawing.Point(13, 242);
@@ -170,6 +188,7 @@
             this.numEffectValue.Name = "numEffectValue";
             this.numEffectValue.Size = new System.Drawing.Size(151, 20);
             this.numEffectValue.TabIndex = 29;
+            this.numEffectValue.ValueChanged += new System.EventHandler(this.FormEdited);
             // 
             // label15
             // 
@@ -187,6 +206,7 @@
             this.cbEffectID.Size = new System.Drawing.Size(151, 21);
             this.cbEffectID.TabIndex = 27;
             this.cbEffectID.Text = "No Effect";
+            this.cbEffectID.TextUpdate += new System.EventHandler(this.FormEdited);
             // 
             // label14
             // 
@@ -237,6 +257,7 @@
             0,
             0,
             0});
+            this.numStackSize.ValueChanged += new System.EventHandler(this.FormEdited);
             // 
             // label11
             // 
@@ -266,10 +287,15 @@
             // numMonetarySell
             // 
             this.numMonetarySell.Location = new System.Drawing.Point(261, 110);
+            this.numMonetarySell.Maximum = new decimal(new int[] {
+            999999999,
+            0,
+            0,
+            0});
             this.numMonetarySell.Name = "numMonetarySell";
             this.numMonetarySell.Size = new System.Drawing.Size(70, 20);
             this.numMonetarySell.TabIndex = 18;
-            this.numMonetarySell.ValueChanged += new System.EventHandler(this.numValue2_ValueChanged);
+            this.numMonetarySell.KeyUp += new System.Windows.Forms.KeyEventHandler(this.numValue2_ValueChanged);
             // 
             // label8
             // 
@@ -283,10 +309,15 @@
             // numMonetaryBuy
             // 
             this.numMonetaryBuy.Location = new System.Drawing.Point(261, 84);
+            this.numMonetaryBuy.Maximum = new decimal(new int[] {
+            999999999,
+            0,
+            0,
+            0});
             this.numMonetaryBuy.Name = "numMonetaryBuy";
             this.numMonetaryBuy.Size = new System.Drawing.Size(70, 20);
             this.numMonetaryBuy.TabIndex = 16;
-            this.numMonetaryBuy.ValueChanged += new System.EventHandler(this.numValue2_ValueChanged);
+            this.numMonetaryBuy.KeyUp += new System.Windows.Forms.KeyEventHandler(this.numValue2_ValueChanged);
             // 
             // label7
             // 
@@ -309,10 +340,15 @@
             // numMonetaryValue
             // 
             this.numMonetaryValue.Location = new System.Drawing.Point(66, 96);
+            this.numMonetaryValue.Maximum = new decimal(new int[] {
+            999999999,
+            0,
+            0,
+            0});
             this.numMonetaryValue.Name = "numMonetaryValue";
             this.numMonetaryValue.Size = new System.Drawing.Size(70, 20);
             this.numMonetaryValue.TabIndex = 13;
-            this.numMonetaryValue.ValueChanged += new System.EventHandler(this.numMonetaryValue_ValueChanged);
+            this.numMonetaryValue.KeyUp += new System.Windows.Forms.KeyEventHandler(this.numMonetaryValue_KeyUp);
             // 
             // sepVOR
             // 
@@ -345,6 +381,7 @@
             this.cbRarity.Name = "cbRarity";
             this.cbRarity.Size = new System.Drawing.Size(93, 21);
             this.cbRarity.TabIndex = 10;
+            this.cbRarity.TextUpdate += new System.EventHandler(this.FormEdited);
             // 
             // label4
             // 
@@ -370,6 +407,7 @@
             this.cbCategory.Name = "cbCategory";
             this.cbCategory.Size = new System.Drawing.Size(93, 21);
             this.cbCategory.TabIndex = 7;
+            this.cbCategory.TextUpdate += new System.EventHandler(this.FormEdited);
             // 
             // label3
             // 
@@ -406,6 +444,7 @@
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(334, 129);
             this.txtDescription.TabIndex = 2;
+            this.txtDescription.TextChanged += new System.EventHandler(this.FormEdited);
             // 
             // txtItemID
             // 
@@ -423,22 +462,6 @@
             this.label1.Size = new System.Drawing.Size(41, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "ItemID:";
-            // 
-            // txtName
-            // 
-            this.txtName.Location = new System.Drawing.Point(57, 45);
-            this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(121, 20);
-            this.txtName.TabIndex = 30;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(13, 48);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(38, 13);
-            this.label16.TabIndex = 31;
-            this.label16.Text = "Name:";
             // 
             // ItemEditor
             // 

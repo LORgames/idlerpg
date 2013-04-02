@@ -7,9 +7,11 @@ using ToolCache.General;
 namespace ToolCache.Items {
     public class Item {
         public short ID = (short)-1;
-        public string Category = "Unknown";
         public string Name = "Unknown";
         public string IconName = "";
+
+        public string Category = "Unknown";
+        internal string OldCategory = "Unknown";
 
         public string Description = "";
 

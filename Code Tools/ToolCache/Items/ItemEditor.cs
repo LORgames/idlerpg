@@ -13,6 +13,7 @@ namespace ToolCache.Items {
     public partial class ItemEditor : Form {
         private bool _iE = false;
         private bool _new = false;
+        private bool _loading = true;
 
         private Item currentItem = null;
 
@@ -27,7 +28,10 @@ namespace ToolCache.Items {
             TreeNode node = treeItemHeirachy.Nodes.Add("TempAllItems");
 
             foreach (Item i in ItemDatabase.Items) {
-                treeItemHeirachy.Nodes.Add(i.ID + "| " + i.Name);
+                TreeNode n = new TreeNode(i.Name);
+                n.Tag = i.ID;
+
+                node.Nodes.Add(n);
             }
         }
 
@@ -72,10 +76,14 @@ namespace ToolCache.Items {
             if (_new) {
                 ItemDatabase.AddItem(currentItem);
                 _new = false;
+            } else {
+                ItemDatabase.UpdatedItem(currentItem);
             }
         }
 
         private void ResetForm() {
+            _loading = true;
+
             txtItemID.Text = currentItem.ID.ToString();
 
             if(File.Exists(currentItem.IconName)) {
@@ -99,6 +107,8 @@ namespace ToolCache.Items {
             //TODO: Implement effects
 
             txtDescription.Text = currentItem.Description;
+
+            _loading = false;
         }
 
         private void pbItemIcon_Click(object sender, EventArgs e) {
@@ -109,22 +119,17 @@ namespace ToolCache.Items {
         }
 
         internal int NewIconSelected(string iconname) {
-            return 0;
-        }
-
-        private void numMonetaryValue_ValueChanged(object sender, EventArgs e) {
-            numMonetaryBuy.Value = 1.50M * numMonetaryValue.Value;
-            numMonetaryBuy.Value = 0.75M * numMonetaryValue.Value;
             Edited();
+
+            if (File.Exists(iconname)) {
+                pbItemIcon.LoadAsync(iconname);
+            }
+
+            return 0;
         }
 
         private void Edited() {
             _iE = true;
-        }
-
-        private void numValue2_ValueChanged(object sender, EventArgs e) {
-            numMonetaryValue.Value = numMonetaryBuy.Value / 1.5M;
-            Edited();
         }
 
         private void ItemEditor_FormClosing(object sender, FormClosingEventArgs e) {
@@ -132,6 +137,41 @@ namespace ToolCache.Items {
                 Save();
                 ItemDatabase.SaveDatabase();
             }
+        }
+
+        private void FormEdited(object sender, EventArgs e) {
+            if (_loading) return;
+            Edited();
+        }
+
+        private void treeItemHeirachy_AfterSelect(object sender, TreeViewEventArgs e) {
+            if (treeItemHeirachy.SelectedNode.Parent != null) {
+                ShowItem(short.Parse(treeItemHeirachy.SelectedNode.Tag.ToString()));
+            }
+        }
+
+        private void numMonetaryValue_KeyUp(object sender, KeyEventArgs e) {
+            try {
+                numMonetaryBuy.Value = (Decimal)(int)(1.50M * numMonetaryValue.Value);
+            } catch {
+                numMonetaryBuy.Value = 1M;
+            }
+
+            try {
+                numMonetarySell.Value = (Decimal)(int)(0.75M * numMonetaryValue.Value);
+            } catch {
+                numMonetarySell.Value = 1M;
+            }
+
+            if (_loading) return;
+            Edited();
+        }
+
+        private void numValue2_ValueChanged(object sender, KeyEventArgs e) {
+            numMonetaryValue.Value = numMonetaryBuy.Value / 1.5M;
+
+            if (_loading) return;
+            Edited();
         }
     }
 }

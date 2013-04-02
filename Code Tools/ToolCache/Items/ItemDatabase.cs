@@ -11,6 +11,15 @@ namespace ToolCache.Items {
         private static Dictionary<string, List<Item>> itemsPerCategory = new Dictionary<string, List<Item>>();
 
         private static short NextID = 0;
+
+        public static List<Item> Items {
+            get { return items.Values.ToList<Item>(); }
+        }
+
+        public static List<String> Categories {
+            get { return itemsPerCategory.Keys.ToList<string>(); }
+        }
+
         internal static short NextItemID {
             get { return NextID; }
         }
@@ -44,6 +53,12 @@ namespace ToolCache.Items {
                 NextID = t.ID;
                 NextID++;
             }
+
+            if (!itemsPerCategory.ContainsKey(t.Category)) {
+                itemsPerCategory.Add(t.Category, new List<Item>());
+            }
+
+            itemsPerCategory[t.Category].Add(t);
         }
 
         internal static void SaveDatabase() {
@@ -69,8 +84,24 @@ namespace ToolCache.Items {
             return t;
         }
 
-        public static List<Item> Items {
-            get { return items.Values.ToList<Item>(); }
+        internal static void UpdatedItem(Item item) {
+            if (item.Category != item.OldCategory && itemsPerCategory.ContainsKey(item.OldCategory) && itemsPerCategory[item.OldCategory].Contains(item)) {
+                itemsPerCategory[item.OldCategory].Remove(item);
+
+                if (itemsPerCategory[item.OldCategory].Count == 0) {
+                    itemsPerCategory.Remove(item.OldCategory);
+                }
+
+                item.Category = item.OldCategory;
+            }
+
+            if (!itemsPerCategory.ContainsKey(item.Category)) {
+                itemsPerCategory.Add(item.Category, new List<Item>());
+            }
+
+            if (!itemsPerCategory[item.Category].Contains(item)) {
+                itemsPerCategory[item.Category].Add(item);
+            }
         }
     }
 }
