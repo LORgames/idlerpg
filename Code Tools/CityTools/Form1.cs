@@ -139,6 +139,8 @@ namespace CityTools {
                 OpenTemplateEditor();
             } else if (keyData == Keys.R) {
                 OpenElementEditor();
+            } else if (keyData == Keys.I) {
+                OpenItemEditor();
             } else if (keyData == Keys.D1) {
                 ckbShowTileGrid.Checked = !ckbShowTileGrid.Checked;
             } else if (keyData == Keys.D2) {

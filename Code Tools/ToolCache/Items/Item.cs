@@ -6,37 +6,42 @@ using ToolCache.General;
 
 namespace ToolCache.Items {
     public class Item {
-        short ID;
-        string Category;
-        string Name;
-        short IconID;
+        public short ID = (short)-1;
+        public string Category = "Unknown";
+        public string Name = "Unknown";
+        public string IconName = "";
 
-        short MaxInStack;
-        
-        byte Rarity;
-        int Value;
-        int SellPrice;
-        int BuyPrice;
+        public string Description = "";
 
-        short LinkedItem; //GETS SET BY EQUIPMENT SYSTEM
+        public short MaxInStack = 1000;
 
-        bool isQuestItem;
+        public byte Rarity = 0;
+        public int Value = 0;
+        public int SellPrice = 0;
+        public int BuyPrice = 0;
+
+        public short EffectID = 0;
+        public short EffectValue = 0;
+
+        public bool isQuestItem = false;
 
         internal void WriteToBinaryIO(BinaryIO f) {
             f.AddShort(ID);
             f.AddString(Category);
             f.AddString(Name);
-            f.AddShort(IconID);
+            f.AddString(IconName);
+            f.AddString(Description);
 
             f.AddShort(MaxInStack);
-
             f.AddByte(Rarity);
 
             f.AddInt(Value);
             f.AddInt(SellPrice);
             f.AddInt(BuyPrice);
 
-            f.AddShort(LinkedItem);
+            f.AddShort(EffectID);
+            f.AddShort(EffectValue);
+
             f.AddByte((byte)(isQuestItem ? 1 : 0));
         }
 
@@ -46,7 +51,8 @@ namespace ToolCache.Items {
             t.ID = f.GetShort();
             t.Category = f.GetString();
             t.Name = f.GetString();
-            t.IconID = f.GetShort();
+            t.IconName = f.GetString();
+            t.Description = f.GetString();
 
             t.MaxInStack = f.GetShort();
             t.Rarity = f.GetByte();
@@ -55,7 +61,9 @@ namespace ToolCache.Items {
             t.SellPrice = f.GetInt();
             t.BuyPrice = f.GetInt();
 
-            t.LinkedItem = f.GetShort();
+            t.EffectID = f.GetShort();
+            t.EffectValue = f.GetShort();
+
             t.isQuestItem = (f.GetByte() == 1);
 
             return t;

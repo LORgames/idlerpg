@@ -27,13 +27,15 @@
             this.treeItemHeirachy = new System.Windows.Forms.TreeView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnAddItem = new System.Windows.Forms.ToolStripButton();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.txtSearchBox = new System.Windows.Forms.ToolStripTextBox();
             this.numEffectValue = new System.Windows.Forms.NumericUpDown();
             this.label15 = new System.Windows.Forms.Label();
             this.cbEffectID = new System.Windows.Forms.ComboBox();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.numStackSize = new System.Windows.Forms.NumericUpDown();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -45,25 +47,25 @@
             this.numMonetaryValue = new System.Windows.Forms.NumericUpDown();
             this.sepVOR = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cbRarity = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.sepValue = new System.Windows.Forms.Label();
-            this.cbItemCategory = new System.Windows.Forms.ComboBox();
+            this.cbCategory = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.pbItemIcon = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtDescription = new System.Windows.Forms.TextBox();
             this.txtItemID = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.txtSearchBox = new System.Windows.Forms.ToolStripTextBox();
+            this.txtName = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numEffectValue)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numStackSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMonetarySell)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMonetaryBuy)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMonetaryValue)).BeginInit();
@@ -83,13 +85,15 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.label16);
+            this.splitContainer1.Panel2.Controls.Add(this.txtName);
             this.splitContainer1.Panel2.Controls.Add(this.numEffectValue);
             this.splitContainer1.Panel2.Controls.Add(this.label15);
             this.splitContainer1.Panel2.Controls.Add(this.cbEffectID);
             this.splitContainer1.Panel2.Controls.Add(this.label14);
             this.splitContainer1.Panel2.Controls.Add(this.label13);
             this.splitContainer1.Panel2.Controls.Add(this.label12);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown1);
+            this.splitContainer1.Panel2.Controls.Add(this.numStackSize);
             this.splitContainer1.Panel2.Controls.Add(this.label11);
             this.splitContainer1.Panel2.Controls.Add(this.label10);
             this.splitContainer1.Panel2.Controls.Add(this.label9);
@@ -101,14 +105,14 @@
             this.splitContainer1.Panel2.Controls.Add(this.numMonetaryValue);
             this.splitContainer1.Panel2.Controls.Add(this.sepVOR);
             this.splitContainer1.Panel2.Controls.Add(this.label5);
-            this.splitContainer1.Panel2.Controls.Add(this.comboBox1);
+            this.splitContainer1.Panel2.Controls.Add(this.cbRarity);
             this.splitContainer1.Panel2.Controls.Add(this.label4);
             this.splitContainer1.Panel2.Controls.Add(this.sepValue);
-            this.splitContainer1.Panel2.Controls.Add(this.cbItemCategory);
+            this.splitContainer1.Panel2.Controls.Add(this.cbCategory);
             this.splitContainer1.Panel2.Controls.Add(this.label3);
             this.splitContainer1.Panel2.Controls.Add(this.pbItemIcon);
             this.splitContainer1.Panel2.Controls.Add(this.label2);
-            this.splitContainer1.Panel2.Controls.Add(this.textBox1);
+            this.splitContainer1.Panel2.Controls.Add(this.txtDescription);
             this.splitContainer1.Panel2.Controls.Add(this.txtItemID);
             this.splitContainer1.Panel2.Controls.Add(this.label1);
             this.splitContainer1.Size = new System.Drawing.Size(539, 452);
@@ -143,6 +147,17 @@
             this.btnAddItem.Name = "btnAddItem";
             this.btnAddItem.Size = new System.Drawing.Size(23, 22);
             this.btnAddItem.Text = "Create a New Item";
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(31, 22);
+            this.toolStripLabel1.Text = "Find:";
+            // 
+            // txtSearchBox
+            // 
+            this.txtSearchBox.Name = "txtSearchBox";
+            this.txtSearchBox.Size = new System.Drawing.Size(95, 25);
             // 
             // numEffectValue
             // 
@@ -187,9 +202,9 @@
             this.label13.AutoSize = true;
             this.label13.Location = new System.Drawing.Point(7, 198);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(149, 13);
+            this.label13.Size = new System.Drawing.Size(155, 13);
             this.label13.TabIndex = 25;
-            this.label13.Text = "Use Effect (Not Implemented):";
+            this.label13.Text = "Use Effect (Not Implemented?):";
             // 
             // label12
             // 
@@ -201,23 +216,23 @@
             this.label12.Text = "Item Tags Here!\r\n(Just Not Yet!)";
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // numericUpDown1
+            // numStackSize
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(13, 157);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.numStackSize.Location = new System.Drawing.Point(13, 157);
+            this.numStackSize.Maximum = new decimal(new int[] {
             32767,
             0,
             0,
             0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
+            this.numStackSize.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(151, 20);
-            this.numericUpDown1.TabIndex = 22;
-            this.numericUpDown1.Value = new decimal(new int[] {
+            this.numStackSize.Name = "numStackSize";
+            this.numStackSize.Size = new System.Drawing.Size(151, 20);
+            this.numStackSize.TabIndex = 22;
+            this.numStackSize.Value = new decimal(new int[] {
             1000,
             0,
             0,
@@ -254,6 +269,7 @@
             this.numMonetarySell.Name = "numMonetarySell";
             this.numMonetarySell.Size = new System.Drawing.Size(70, 20);
             this.numMonetarySell.TabIndex = 18;
+            this.numMonetarySell.ValueChanged += new System.EventHandler(this.numValue2_ValueChanged);
             // 
             // label8
             // 
@@ -270,6 +286,7 @@
             this.numMonetaryBuy.Name = "numMonetaryBuy";
             this.numMonetaryBuy.Size = new System.Drawing.Size(70, 20);
             this.numMonetaryBuy.TabIndex = 16;
+            this.numMonetaryBuy.ValueChanged += new System.EventHandler(this.numValue2_ValueChanged);
             // 
             // label7
             // 
@@ -295,6 +312,7 @@
             this.numMonetaryValue.Name = "numMonetaryValue";
             this.numMonetaryValue.Size = new System.Drawing.Size(70, 20);
             this.numMonetaryValue.TabIndex = 13;
+            this.numMonetaryValue.ValueChanged += new System.EventHandler(this.numMonetaryValue_ValueChanged);
             // 
             // sepVOR
             // 
@@ -313,25 +331,25 @@
             this.label5.TabIndex = 11;
             this.label5.Text = "Value:";
             // 
-            // comboBox1
+            // cbRarity
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.cbRarity.FormattingEnabled = true;
+            this.cbRarity.Items.AddRange(new object[] {
             "Common",
             "Uncommon",
-            "Somewhat Rare",
+            "Superior",
             "Rare",
             "Ultra Rare",
             "Mythical"});
-            this.comboBox1.Location = new System.Drawing.Point(223, 45);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 10;
+            this.cbRarity.Location = new System.Drawing.Point(251, 45);
+            this.cbRarity.Name = "cbRarity";
+            this.cbRarity.Size = new System.Drawing.Size(93, 21);
+            this.cbRarity.TabIndex = 10;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(180, 48);
+            this.label4.Location = new System.Drawing.Point(208, 48);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(37, 13);
             this.label4.TabIndex = 9;
@@ -345,18 +363,18 @@
             this.sepValue.Size = new System.Drawing.Size(337, 2);
             this.sepValue.TabIndex = 8;
             // 
-            // cbItemCategory
+            // cbCategory
             // 
-            this.cbItemCategory.FormattingEnabled = true;
-            this.cbItemCategory.Location = new System.Drawing.Point(223, 12);
-            this.cbItemCategory.Name = "cbItemCategory";
-            this.cbItemCategory.Size = new System.Drawing.Size(121, 21);
-            this.cbItemCategory.TabIndex = 7;
+            this.cbCategory.FormattingEnabled = true;
+            this.cbCategory.Location = new System.Drawing.Point(251, 12);
+            this.cbCategory.Name = "cbCategory";
+            this.cbCategory.Size = new System.Drawing.Size(93, 21);
+            this.cbCategory.TabIndex = 7;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(165, 15);
+            this.label3.Location = new System.Drawing.Point(194, 15);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(52, 13);
             this.label3.TabIndex = 6;
@@ -364,7 +382,8 @@
             // 
             // pbItemIcon
             // 
-            this.pbItemIcon.Location = new System.Drawing.Point(69, 38);
+            this.pbItemIcon.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbItemIcon.Location = new System.Drawing.Point(146, 5);
             this.pbItemIcon.Name = "pbItemIcon";
             this.pbItemIcon.Size = new System.Drawing.Size(32, 32);
             this.pbItemIcon.TabIndex = 4;
@@ -374,47 +393,52 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(32, 48);
+            this.label2.Location = new System.Drawing.Point(109, 15);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(31, 13);
             this.label2.TabIndex = 3;
             this.label2.Text = "Icon:";
             // 
-            // textBox1
+            // txtDescription
             // 
-            this.textBox1.Location = new System.Drawing.Point(10, 311);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(334, 129);
-            this.textBox1.TabIndex = 2;
+            this.txtDescription.Location = new System.Drawing.Point(10, 311);
+            this.txtDescription.Multiline = true;
+            this.txtDescription.Name = "txtDescription";
+            this.txtDescription.Size = new System.Drawing.Size(334, 129);
+            this.txtDescription.TabIndex = 2;
             // 
             // txtItemID
             // 
-            this.txtItemID.Location = new System.Drawing.Point(66, 12);
+            this.txtItemID.Location = new System.Drawing.Point(57, 12);
             this.txtItemID.Name = "txtItemID";
             this.txtItemID.ReadOnly = true;
-            this.txtItemID.Size = new System.Drawing.Size(73, 20);
+            this.txtItemID.Size = new System.Drawing.Size(46, 20);
             this.txtItemID.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(19, 15);
+            this.label1.Location = new System.Drawing.Point(10, 15);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(41, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "ItemID:";
             // 
-            // toolStripLabel1
+            // txtName
             // 
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(33, 22);
-            this.toolStripLabel1.Text = "Find:";
+            this.txtName.Location = new System.Drawing.Point(57, 45);
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(121, 20);
+            this.txtName.TabIndex = 30;
             // 
-            // txtSearchBox
+            // label16
             // 
-            this.txtSearchBox.Name = "txtSearchBox";
-            this.txtSearchBox.Size = new System.Drawing.Size(80, 25);
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(13, 48);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(38, 13);
+            this.label16.TabIndex = 31;
+            this.label16.Text = "Name:";
             // 
             // ItemEditor
             // 
@@ -424,6 +448,7 @@
             this.Controls.Add(this.splitContainer1);
             this.Name = "ItemEditor";
             this.Text = "Item Database";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ItemEditor_FormClosing);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -433,7 +458,7 @@
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numEffectValue)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numStackSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMonetarySell)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMonetaryBuy)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMonetaryValue)).EndInit();
@@ -448,14 +473,14 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton btnAddItem;
         private System.Windows.Forms.TreeView treeItemHeirachy;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtDescription;
         private System.Windows.Forms.TextBox txtItemID;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pbItemIcon;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox cbItemCategory;
+        private System.Windows.Forms.ComboBox cbCategory;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cbRarity;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label sepValue;
         private System.Windows.Forms.Label label9;
@@ -467,7 +492,7 @@
         private System.Windows.Forms.NumericUpDown numMonetaryValue;
         private System.Windows.Forms.Label sepVOR;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown numStackSize;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label13;
@@ -478,5 +503,7 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripTextBox txtSearchBox;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.TextBox txtName;
     }
 }
