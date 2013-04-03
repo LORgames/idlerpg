@@ -34,6 +34,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
@@ -65,6 +66,15 @@
     </Compile>
     <Compile Include="Combat\Elements\ElementManager.cs" />
     <Compile Include="Critters\ICritter.cs" />
+    <Compile Include="Equipment\EquipmentAnimationSet.cs" />
+    <Compile Include="Equipment\EquipmentItem.cs" />
+    <Compile Include="Equipment\EquipmentEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Equipment\EquipmentEditor.Designer.cs">
+      <DependentUpon>EquipmentEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Equipment\EquipmentManager.cs" />
     <Compile Include="GeneralForms\ClipIns\ImageSelector_ImagePnl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -128,6 +138,9 @@
     <EmbeddedResource Include="Combat\Elements\ElementEditor.resx">
       <DependentUpon>ElementEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Equipment\EquipmentEditor.resx">
+      <DependentUpon>EquipmentEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GeneralForms\ClipIns\ImageSelector_ImagePnl.resx">
       <DependentUpon>ImageSelector_ImagePnl.cs</DependentUpon>
     </EmbeddedResource>
@@ -156,6 +169,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Grass.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\control_rewind_blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\control_fastforward_blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\control_play_blue.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

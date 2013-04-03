@@ -75,5 +75,9 @@ namespace ToolCache.Map.Tiles {
             f.AddShort(damageElement);
             f.AddShort(damagePerSecond);
         }
+
+        public override string ToString() {
+            return TileName;
+        }
     }
 }

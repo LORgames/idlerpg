@@ -19,6 +19,7 @@ using ToolCache.Animation;
 using ToolCache.Map.Objects;
 using ToolCache.Combat.Elements;
 using ToolCache.Items;
+using ToolCache.Equipment;
 
 namespace CityTools {
     public enum PaintMode {
@@ -141,6 +142,8 @@ namespace CityTools {
                 OpenElementEditor();
             } else if (keyData == Keys.I) {
                 OpenItemEditor();
+            } else if (keyData == Keys.U) {
+                OpenEquipmentEditor();
             } else if (keyData == Keys.D1) {
                 ckbShowTileGrid.Checked = !ckbShowTileGrid.Checked;
             } else if (keyData == Keys.D2) {
@@ -288,6 +291,11 @@ namespace CityTools {
             t.ShowDialog(this);
         }
 
+        private void OpenEquipmentEditor() {
+            EquipmentEditor t = new EquipmentEditor();
+            t.ShowDialog(this);
+        }
+
         private void OpenItemEditor() {
             ItemEditor t = new ItemEditor();
             t.ShowDialog(this);
@@ -315,6 +323,10 @@ namespace CityTools {
 
         private void btnItemEditor_Click(object sender, EventArgs e) {
             OpenItemEditor();
+        }
+
+        private void btnEquipmentEditor_Click(object sender, EventArgs e) {
+            OpenEquipmentEditor();
         }
     }
 }

@@ -40,6 +40,7 @@ namespace ToolCache.Map.Tiles {
             this.lblAnimation = new System.Windows.Forms.Label();
             this.ckbIsWalkable = new System.Windows.Forms.CheckBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.numDamagePerSecond = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.cbDamageElement = new System.Windows.Forms.ComboBox();
@@ -51,18 +52,17 @@ namespace ToolCache.Map.Tiles {
             this.panel2 = new System.Windows.Forms.Panel();
             this.ccAnimation = new ToolCache.Animation.Form.AnimationList();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.numMovementCost = new System.Windows.Forms.NumericUpDown();
+            this.cbSlideDirection = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.cbSlideDirection = new System.Windows.Forms.ComboBox();
-            this.numMovementCost = new System.Windows.Forms.NumericUpDown();
-            this.numDamagePerSecond = new System.Windows.Forms.NumericUpDown();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numDamagePerSecond)).BeginInit();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numMovementCost)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numDamagePerSecond)).BeginInit();
             this.SuspendLayout();
             // 
             // txtTileName
@@ -136,7 +136,7 @@ namespace ToolCache.Map.Tiles {
             // lblTileID
             // 
             this.lblTileID.Name = "lblTileID";
-            this.lblTileID.Size = new System.Drawing.Size(41, 22);
+            this.lblTileID.Size = new System.Drawing.Size(40, 22);
             this.lblTileID.Text = "<TID>";
             // 
             // lblTileName
@@ -191,6 +191,19 @@ namespace ToolCache.Map.Tiles {
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(169, 78);
             this.panel1.TabIndex = 9;
+            // 
+            // numDamagePerSecond
+            // 
+            this.numDamagePerSecond.Location = new System.Drawing.Point(64, 48);
+            this.numDamagePerSecond.Maximum = new decimal(new int[] {
+            50000,
+            0,
+            0,
+            0});
+            this.numDamagePerSecond.Name = "numDamagePerSecond";
+            this.numDamagePerSecond.Size = new System.Drawing.Size(100, 20);
+            this.numDamagePerSecond.TabIndex = 5;
+            this.numDamagePerSecond.ValueChanged += new System.EventHandler(this.isEdited);
             // 
             // label2
             // 
@@ -315,49 +328,6 @@ namespace ToolCache.Map.Tiles {
             this.panel3.Size = new System.Drawing.Size(169, 78);
             this.panel3.TabIndex = 10;
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(4, 52);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(41, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Sliding:";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(4, 24);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(31, 13);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "Cost:";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(4, 4);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(57, 13);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "Movement";
-            // 
-            // cbSlideDirection
-            // 
-            this.cbSlideDirection.FormattingEnabled = true;
-            this.cbSlideDirection.Items.AddRange(new object[] {
-            "No Sliding",
-            "Force Slide Left",
-            "Force Slide Right",
-            "Force Slide Up",
-            "Force Slide Down",
-            "Slide In Direction Of Travel"});
-            this.cbSlideDirection.Location = new System.Drawing.Point(64, 49);
-            this.cbSlideDirection.Name = "cbSlideDirection";
-            this.cbSlideDirection.Size = new System.Drawing.Size(100, 21);
-            this.cbSlideDirection.TabIndex = 5;
-            this.cbSlideDirection.SelectedIndexChanged += new System.EventHandler(this.isEdited);
-            // 
             // numMovementCost
             // 
             this.numMovementCost.DecimalPlaces = 2;
@@ -387,18 +357,48 @@ namespace ToolCache.Map.Tiles {
             0});
             this.numMovementCost.ValueChanged += new System.EventHandler(this.isEdited);
             // 
-            // numDamagePerSecond
+            // cbSlideDirection
             // 
-            this.numDamagePerSecond.Location = new System.Drawing.Point(64, 48);
-            this.numDamagePerSecond.Maximum = new decimal(new int[] {
-            50000,
-            0,
-            0,
-            0});
-            this.numDamagePerSecond.Name = "numDamagePerSecond";
-            this.numDamagePerSecond.Size = new System.Drawing.Size(100, 20);
-            this.numDamagePerSecond.TabIndex = 5;
-            this.numDamagePerSecond.ValueChanged += new System.EventHandler(this.isEdited);
+            this.cbSlideDirection.FormattingEnabled = true;
+            this.cbSlideDirection.Items.AddRange(new object[] {
+            "No Sliding",
+            "Force Slide Left",
+            "Force Slide Right",
+            "Force Slide Up",
+            "Force Slide Down",
+            "Slide In Direction Of Travel"});
+            this.cbSlideDirection.Location = new System.Drawing.Point(64, 49);
+            this.cbSlideDirection.Name = "cbSlideDirection";
+            this.cbSlideDirection.Size = new System.Drawing.Size(100, 21);
+            this.cbSlideDirection.TabIndex = 5;
+            this.cbSlideDirection.SelectedIndexChanged += new System.EventHandler(this.isEdited);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(4, 52);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(41, 13);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Sliding:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(4, 24);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(31, 13);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "Cost:";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(4, 4);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(57, 13);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Movement";
             // 
             // TileEditor
             // 
@@ -422,12 +422,12 @@ namespace ToolCache.Map.Tiles {
             this.toolStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numDamagePerSecond)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numMovementCost)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numDamagePerSecond)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
