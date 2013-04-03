@@ -92,7 +92,7 @@ namespace ToolCache.Items {
                     itemsPerCategory.Remove(item.OldCategory);
                 }
 
-                item.Category = item.OldCategory;
+                item.OldCategory = item.Category;
             }
 
             if (!itemsPerCategory.ContainsKey(item.Category)) {

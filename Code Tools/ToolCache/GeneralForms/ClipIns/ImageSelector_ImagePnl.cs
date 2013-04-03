@@ -18,12 +18,15 @@ namespace ToolCache.GeneralForms.ClipIns {
 
         public void LinkToSelector(ImageSelector _is, string imageToShow) {
             owner = _is;
-            displayedImage = "";
-            pbInternal.LoadAsync(imageToShow);
+            displayedImage = imageToShow;
+            pbInternal.Load(imageToShow);
+
+            this.Width = pbInternal.Image.Width;
+            this.Height = pbInternal.Image.Height;
         }
 
-        private void ImageSelector_ImagePnl_DoubleClick(object sender, EventArgs e) {
-            if(owner == null) {
+        private void ImageSelector_ImagePnl_Click(object sender, EventArgs e) {
+            if (owner != null) {
                 owner.Clicked(this);
             }
         }

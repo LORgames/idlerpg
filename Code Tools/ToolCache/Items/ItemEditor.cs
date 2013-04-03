@@ -17,22 +17,53 @@ namespace ToolCache.Items {
 
         private Item currentItem = null;
 
+        private Dictionary<string, TreeNode> categories = new Dictionary<string, TreeNode>();
+        private List<string> LoadedImageListIndices = new List<string>(); 
+
         public ItemEditor() {
             InitializeComponent();
-            CreateNew();
 
+            if (!Directory.Exists("Icons")) Directory.CreateDirectory("Icons");
+            
+            CreateNew();
             LoadItemList();
         }
 
         private void LoadItemList() {
-            TreeNode node = treeItemHeirachy.Nodes.Add("TempAllItems");
+            treeItemHeirachy.SuspendLayout();
+
+            treeItemHeirachy.ImageList = new ImageList();
+
+            foreach(String s in Directory.GetFiles("Icons", "*.png")) {
+                treeItemHeirachy.ImageList.Images.Add(Image.FromFile(s));
+                LoadedImageListIndices.Add(s);
+            }
+
+            foreach (String c in ItemDatabase.Categories) {
+                if (!categories.ContainsKey(c)) {
+                    categories.Add(c, new TreeNode(c));
+                    treeItemHeirachy.Nodes.Add(categories[c]);
+                }
+            }
 
             foreach (Item i in ItemDatabase.Items) {
-                TreeNode n = new TreeNode(i.Name);
-                n.Tag = i.ID;
+                if (File.Exists(i.IconName)) {
+                    TreeNode n = new TreeNode(i.Name);
+                    n.Tag = i.ID;
 
-                node.Nodes.Add(n);
+                    n.ImageIndex = LoadedImageListIndices.IndexOf(i.IconName);
+                    n.SelectedImageIndex = n.ImageIndex;
+
+                    if (!categories.ContainsKey(i.Category)) {
+                        categories.Add(i.Category, new TreeNode(i.Category));
+                        treeItemHeirachy.Nodes.Add(categories[i.Category]);
+                    }
+
+                    categories[i.Category].Nodes.Add(n);
+                }
             }
+
+            treeItemHeirachy.ResumeLayout();
         }
 
         private void CreateNew() {
@@ -84,8 +115,6 @@ namespace ToolCache.Items {
         private void ResetForm() {
             _loading = true;
 
-            txtItemID.Text = currentItem.ID.ToString();
-
             if(File.Exists(currentItem.IconName)) {
                 pbItemIcon.Image = null;
                 pbItemIcon.LoadAsync(currentItem.IconName);
@@ -112,9 +141,7 @@ namespace ToolCache.Items {
         }
 
         private void pbItemIcon_Click(object sender, EventArgs e) {
-            if (!Directory.Exists("Icons")) Directory.CreateDirectory("Icons");
-
-            ImageSelector _is = new ImageSelector(NewIconSelected, Directory.GetFiles("Icons", "*.png"));
+            ImageSelector _is = new ImageSelector(NewIconSelected, Directory.GetFiles("Icons", "*.png"), "Icons");
             _is.Show(this);
         }
 
@@ -123,6 +150,11 @@ namespace ToolCache.Items {
 
             if (File.Exists(iconname)) {
                 pbItemIcon.LoadAsync(iconname);
+
+                if (LoadedImageListIndices.Contains(iconname)) {
+                    treeItemHeirachy.ImageList.Images.Add(Image.FromFile(iconname));
+                    LoadedImageListIndices.Add(iconname);
+                }
             }
 
             return 0;

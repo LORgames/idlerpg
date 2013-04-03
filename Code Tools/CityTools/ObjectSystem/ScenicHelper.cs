@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
-using Box2CS;
 using CityTools.Core;
 using ToolCache.Map.Objects;
 using ToolCache.Drawing;

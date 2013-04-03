@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Box2CS;
 using System.Drawing;
 using ToolCache.Drawing;
 using ToolCache.Animation;

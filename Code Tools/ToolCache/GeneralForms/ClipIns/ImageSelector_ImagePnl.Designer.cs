@@ -35,6 +35,7 @@
             this.pbInternal.Size = new System.Drawing.Size(150, 150);
             this.pbInternal.TabIndex = 0;
             this.pbInternal.TabStop = false;
+            this.pbInternal.Click += new System.EventHandler(this.ImageSelector_ImagePnl_Click);
             // 
             // ImageSelector_ImagePnl
             // 
@@ -42,7 +43,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.pbInternal);
             this.Name = "ImageSelector_ImagePnl";
-            this.DoubleClick += new System.EventHandler(this.ImageSelector_ImagePnl_DoubleClick);
+            this.Click += new System.EventHandler(this.ImageSelector_ImagePnl_Click);
             ((System.ComponentModel.ISupportInitialize)(this.pbInternal)).EndInit();
             this.ResumeLayout(false);
 
