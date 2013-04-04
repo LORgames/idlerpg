@@ -45,10 +45,11 @@ namespace ToolCache.Equipment {
             this.btnRotLeft = new System.Windows.Forms.Button();
             this.pbSetupLinks = new System.Windows.Forms.PictureBox();
             this.pbEquipmentDisplay = new System.Windows.Forms.PictureBox();
-            this.lbl6 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.lblFrontAnimationName = new System.Windows.Forms.Label();
+            this.lblBackAnimationName = new System.Windows.Forms.Label();
             this.ccAnimationBack = new ToolCache.Animation.Form.AnimationList();
             this.ccAnimationFront = new ToolCache.Animation.Form.AnimationList();
+            this.lblDirection = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbSetupLinks)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbEquipmentDisplay)).BeginInit();
             this.SuspendLayout();
@@ -68,6 +69,7 @@ namespace ToolCache.Equipment {
             this.cbItemType.Size = new System.Drawing.Size(165, 21);
             this.cbItemType.TabIndex = 2;
             this.cbItemType.SelectedIndexChanged += new System.EventHandler(this.cbItemType_SelectedIndexChanged);
+            this.cbItemType.TextChanged += new System.EventHandler(this.cbItemType_SelectedIndexChanged);
             // 
             // cbTileList
             // 
@@ -103,12 +105,13 @@ namespace ToolCache.Equipment {
             this.cbAnimationState.Name = "cbAnimationState";
             this.cbAnimationState.Size = new System.Drawing.Size(108, 21);
             this.cbAnimationState.TabIndex = 9;
+            this.cbAnimationState.SelectedIndexChanged += new System.EventHandler(this.cbAnimationState_SelectedIndexChanged);
             // 
             // drpLeft
             // 
             this.drpLeft.AllowDrop = true;
             this.drpLeft.AutoSize = true;
-            this.drpLeft.Location = new System.Drawing.Point(437, 431);
+            this.drpLeft.Location = new System.Drawing.Point(371, 434);
             this.drpLeft.Name = "drpLeft";
             this.drpLeft.Size = new System.Drawing.Size(39, 13);
             this.drpLeft.TabIndex = 10;
@@ -120,7 +123,7 @@ namespace ToolCache.Equipment {
             // 
             this.drpRight.AllowDrop = true;
             this.drpRight.AutoSize = true;
-            this.drpRight.Location = new System.Drawing.Point(482, 431);
+            this.drpRight.Location = new System.Drawing.Point(416, 434);
             this.drpRight.Name = "drpRight";
             this.drpRight.Size = new System.Drawing.Size(47, 13);
             this.drpRight.TabIndex = 11;
@@ -132,7 +135,7 @@ namespace ToolCache.Equipment {
             // 
             this.drpUp.AllowDrop = true;
             this.drpUp.AutoSize = true;
-            this.drpUp.Location = new System.Drawing.Point(535, 431);
+            this.drpUp.Location = new System.Drawing.Point(469, 434);
             this.drpUp.Name = "drpUp";
             this.drpUp.Size = new System.Drawing.Size(28, 13);
             this.drpUp.TabIndex = 12;
@@ -144,7 +147,7 @@ namespace ToolCache.Equipment {
             // 
             this.drpDown.AllowDrop = true;
             this.drpDown.AutoSize = true;
-            this.drpDown.Location = new System.Drawing.Point(569, 431);
+            this.drpDown.Location = new System.Drawing.Point(503, 434);
             this.drpDown.Name = "drpDown";
             this.drpDown.Size = new System.Drawing.Size(48, 13);
             this.drpDown.TabIndex = 13;
@@ -155,11 +158,11 @@ namespace ToolCache.Equipment {
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(371, 431);
+            this.label3.Location = new System.Drawing.Point(371, 416);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(64, 13);
+            this.label3.Size = new System.Drawing.Size(176, 13);
             this.label3.TabIndex = 14;
-            this.label3.Text = "Quick Drop:";
+            this.label3.Text = "Quick Drop (hold shift for 2nd layer):";
             // 
             // label4
             // 
@@ -185,6 +188,7 @@ namespace ToolCache.Equipment {
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(165, 20);
             this.txtName.TabIndex = 17;
+            this.txtName.TextChanged += new System.EventHandler(this.ValueChanged);
             // 
             // ckbAvailableAtStart
             // 
@@ -195,6 +199,7 @@ namespace ToolCache.Equipment {
             this.ckbAvailableAtStart.TabIndex = 18;
             this.ckbAvailableAtStart.Text = "Available As Starting Item";
             this.ckbAvailableAtStart.UseVisualStyleBackColor = true;
+            this.ckbAvailableAtStart.CheckedChanged += new System.EventHandler(this.ValueChanged);
             // 
             // btnPlayAnimation
             // 
@@ -243,23 +248,23 @@ namespace ToolCache.Equipment {
             this.pbEquipmentDisplay.TabStop = false;
             this.pbEquipmentDisplay.Paint += new System.Windows.Forms.PaintEventHandler(this.pbEquipmentDisplay_Paint);
             // 
-            // lbl6
+            // lblFrontAnimationName
             // 
-            this.lbl6.AutoSize = true;
-            this.lbl6.Location = new System.Drawing.Point(222, 537);
-            this.lbl6.Name = "lbl6";
-            this.lbl6.Size = new System.Drawing.Size(44, 13);
-            this.lbl6.TabIndex = 22;
-            this.lbl6.Text = "FRONT";
+            this.lblFrontAnimationName.AutoSize = true;
+            this.lblFrontAnimationName.Location = new System.Drawing.Point(222, 537);
+            this.lblFrontAnimationName.Name = "lblFrontAnimationName";
+            this.lblFrontAnimationName.Size = new System.Drawing.Size(44, 13);
+            this.lblFrontAnimationName.TabIndex = 22;
+            this.lblFrontAnimationName.Text = "FRONT";
             // 
-            // label6
+            // lblBackAnimationName
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(423, 537);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(35, 13);
-            this.label6.TabIndex = 23;
-            this.label6.Text = "BACK";
+            this.lblBackAnimationName.AutoSize = true;
+            this.lblBackAnimationName.Location = new System.Drawing.Point(423, 537);
+            this.lblBackAnimationName.Name = "lblBackAnimationName";
+            this.lblBackAnimationName.Size = new System.Drawing.Size(35, 13);
+            this.lblBackAnimationName.TabIndex = 23;
+            this.lblBackAnimationName.Text = "BACK";
             // 
             // ccAnimationBack
             // 
@@ -277,13 +282,26 @@ namespace ToolCache.Equipment {
             this.ccAnimationFront.Size = new System.Drawing.Size(199, 100);
             this.ccAnimationFront.TabIndex = 6;
             // 
+            // lblDirection
+            // 
+            this.lblDirection.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblDirection.BackColor = System.Drawing.Color.Transparent;
+            this.lblDirection.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDirection.Location = new System.Drawing.Point(387, 372);
+            this.lblDirection.Name = "lblDirection";
+            this.lblDirection.Size = new System.Drawing.Size(229, 29);
+            this.lblDirection.TabIndex = 24;
+            this.lblDirection.Text = "Left";
+            this.lblDirection.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // EquipmentEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(628, 567);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.lbl6);
+            this.Controls.Add(this.lblDirection);
+            this.Controls.Add(this.lblBackAnimationName);
+            this.Controls.Add(this.lblFrontAnimationName);
             this.Controls.Add(this.ccAnimationBack);
             this.Controls.Add(this.btnPlayAnimation);
             this.Controls.Add(this.btnRotRight);
@@ -339,7 +357,8 @@ namespace ToolCache.Equipment {
         private System.Windows.Forms.Button btnRotRight;
         private System.Windows.Forms.Button btnPlayAnimation;
         private AnimationList ccAnimationBack;
-        private System.Windows.Forms.Label lbl6;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lblFrontAnimationName;
+        private System.Windows.Forms.Label lblBackAnimationName;
+        private System.Windows.Forms.Label lblDirection;
     }
 }
