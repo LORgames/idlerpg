@@ -43,5 +43,9 @@ namespace ToolCache.Equipment {
                 ei.PackIntoBinaryIO(f);
             }
         }
+
+        internal static void AddEquipment(EquipmentItem currentEquipment) {
+            Equipment.Add(currentEquipment.Name, currentEquipment);
+        }
     }
 }

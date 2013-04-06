@@ -17,6 +17,7 @@ namespace ToolCache.Equipment {
         private EquipmentItem currentEquipment = new EquipmentItem();
 
         private Boolean _iE = false; //Is Edited
+        private Boolean _new = false;
 
         public EquipmentEditor() {
             InitializeComponent();
@@ -53,6 +54,14 @@ namespace ToolCache.Equipment {
             //TODO: Add Roots to treeview.
             if (!Directory.Exists("Equipment")) Directory.CreateDirectory("Equipment");
 
+            CreateNew();
+        }
+
+        private void CreateNew() {
+            SaveIfRequired();
+
+            _new = true;
+            currentEquipment = new EquipmentItem();
             UpdateForm();
         }
 
@@ -254,6 +263,29 @@ namespace ToolCache.Equipment {
             } else {
                 cbAnimationState.Text = Enum.GetName(typeof(States), States.Default);
             }
+        }
+
+        private void EquipmentEditor_FormClosing(object sender, FormClosingEventArgs e) {
+            SaveIfRequired();
+
+            EquipmentManager.SaveDatabase();
+        }
+
+        private void SaveIfRequired() {
+            if (!_iE) return;
+
+            _iE = false;
+
+            currentEquipment.isAvailableAtStart = ckbAvailableAtStart.Checked;
+            currentEquipment.Name = txtName.Text;
+            currentEquipment.Type = (EquipmentTypes)Enum.Parse(typeof(EquipmentTypes), cbItemType.Text);
+
+            if (_new) EquipmentManager.AddEquipment(currentEquipment);
+            _new = false;
+        }
+
+        private void btnCreateNew_Click(object sender, EventArgs e) {
+            CreateNew();
         }
     }
 }

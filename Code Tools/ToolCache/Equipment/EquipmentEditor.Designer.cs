@@ -47,16 +47,17 @@ namespace ToolCache.Equipment {
             this.pbEquipmentDisplay = new System.Windows.Forms.PictureBox();
             this.lblFrontAnimationName = new System.Windows.Forms.Label();
             this.lblBackAnimationName = new System.Windows.Forms.Label();
+            this.lblDirection = new System.Windows.Forms.Label();
+            this.btnCreateNew = new System.Windows.Forms.Button();
             this.ccAnimationBack = new ToolCache.Animation.Form.AnimationList();
             this.ccAnimationFront = new ToolCache.Animation.Form.AnimationList();
-            this.lblDirection = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbSetupLinks)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbEquipmentDisplay)).BeginInit();
             this.SuspendLayout();
             // 
             // treeEquipmentList
             // 
-            this.treeEquipmentList.Location = new System.Drawing.Point(12, 173);
+            this.treeEquipmentList.Location = new System.Drawing.Point(12, 170);
             this.treeEquipmentList.Name = "treeEquipmentList";
             this.treeEquipmentList.Size = new System.Drawing.Size(198, 382);
             this.treeEquipmentList.TabIndex = 1;
@@ -64,7 +65,7 @@ namespace ToolCache.Equipment {
             // cbItemType
             // 
             this.cbItemType.FormattingEnabled = true;
-            this.cbItemType.Location = new System.Drawing.Point(216, 189);
+            this.cbItemType.Location = new System.Drawing.Point(216, 217);
             this.cbItemType.Name = "cbItemType";
             this.cbItemType.Size = new System.Drawing.Size(165, 21);
             this.cbItemType.TabIndex = 2;
@@ -74,7 +75,7 @@ namespace ToolCache.Equipment {
             // cbTileList
             // 
             this.cbTileList.FormattingEnabled = true;
-            this.cbTileList.Location = new System.Drawing.Point(22, 22);
+            this.cbTileList.Location = new System.Drawing.Point(22, 19);
             this.cbTileList.Name = "cbTileList";
             this.cbTileList.Size = new System.Drawing.Size(121, 21);
             this.cbTileList.TabIndex = 5;
@@ -83,7 +84,7 @@ namespace ToolCache.Equipment {
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(384, 349);
+            this.label1.Location = new System.Drawing.Point(384, 346);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(232, 13);
             this.label1.TabIndex = 7;
@@ -92,7 +93,7 @@ namespace ToolCache.Equipment {
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(216, 431);
+            this.label2.Location = new System.Drawing.Point(216, 428);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(40, 13);
             this.label2.TabIndex = 8;
@@ -101,7 +102,7 @@ namespace ToolCache.Equipment {
             // cbAnimationState
             // 
             this.cbAnimationState.FormattingEnabled = true;
-            this.cbAnimationState.Location = new System.Drawing.Point(257, 428);
+            this.cbAnimationState.Location = new System.Drawing.Point(257, 425);
             this.cbAnimationState.Name = "cbAnimationState";
             this.cbAnimationState.Size = new System.Drawing.Size(108, 21);
             this.cbAnimationState.TabIndex = 9;
@@ -111,7 +112,7 @@ namespace ToolCache.Equipment {
             // 
             this.drpLeft.AllowDrop = true;
             this.drpLeft.AutoSize = true;
-            this.drpLeft.Location = new System.Drawing.Point(371, 434);
+            this.drpLeft.Location = new System.Drawing.Point(371, 431);
             this.drpLeft.Name = "drpLeft";
             this.drpLeft.Size = new System.Drawing.Size(39, 13);
             this.drpLeft.TabIndex = 10;
@@ -123,7 +124,7 @@ namespace ToolCache.Equipment {
             // 
             this.drpRight.AllowDrop = true;
             this.drpRight.AutoSize = true;
-            this.drpRight.Location = new System.Drawing.Point(416, 434);
+            this.drpRight.Location = new System.Drawing.Point(416, 431);
             this.drpRight.Name = "drpRight";
             this.drpRight.Size = new System.Drawing.Size(47, 13);
             this.drpRight.TabIndex = 11;
@@ -135,7 +136,7 @@ namespace ToolCache.Equipment {
             // 
             this.drpUp.AllowDrop = true;
             this.drpUp.AutoSize = true;
-            this.drpUp.Location = new System.Drawing.Point(469, 434);
+            this.drpUp.Location = new System.Drawing.Point(469, 431);
             this.drpUp.Name = "drpUp";
             this.drpUp.Size = new System.Drawing.Size(28, 13);
             this.drpUp.TabIndex = 12;
@@ -147,7 +148,7 @@ namespace ToolCache.Equipment {
             // 
             this.drpDown.AllowDrop = true;
             this.drpDown.AutoSize = true;
-            this.drpDown.Location = new System.Drawing.Point(503, 434);
+            this.drpDown.Location = new System.Drawing.Point(503, 431);
             this.drpDown.Name = "drpDown";
             this.drpDown.Size = new System.Drawing.Size(48, 13);
             this.drpDown.TabIndex = 13;
@@ -158,7 +159,7 @@ namespace ToolCache.Equipment {
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(371, 416);
+            this.label3.Location = new System.Drawing.Point(371, 413);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(176, 13);
             this.label3.TabIndex = 14;
@@ -167,7 +168,7 @@ namespace ToolCache.Equipment {
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(216, 173);
+            this.label4.Location = new System.Drawing.Point(216, 201);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(84, 13);
             this.label4.TabIndex = 15;
@@ -176,7 +177,7 @@ namespace ToolCache.Equipment {
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(216, 213);
+            this.label5.Location = new System.Drawing.Point(216, 241);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(88, 13);
             this.label5.TabIndex = 16;
@@ -184,7 +185,7 @@ namespace ToolCache.Equipment {
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(216, 229);
+            this.txtName.Location = new System.Drawing.Point(216, 257);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(165, 20);
             this.txtName.TabIndex = 17;
@@ -193,7 +194,7 @@ namespace ToolCache.Equipment {
             // ckbAvailableAtStart
             // 
             this.ckbAvailableAtStart.AutoSize = true;
-            this.ckbAvailableAtStart.Location = new System.Drawing.Point(219, 255);
+            this.ckbAvailableAtStart.Location = new System.Drawing.Point(219, 283);
             this.ckbAvailableAtStart.Name = "ckbAvailableAtStart";
             this.ckbAvailableAtStart.Size = new System.Drawing.Size(146, 17);
             this.ckbAvailableAtStart.TabIndex = 18;
@@ -204,7 +205,7 @@ namespace ToolCache.Equipment {
             // btnPlayAnimation
             // 
             this.btnPlayAnimation.Image = global::ToolCache.Properties.Resources.control_play_blue;
-            this.btnPlayAnimation.Location = new System.Drawing.Point(493, 317);
+            this.btnPlayAnimation.Location = new System.Drawing.Point(493, 314);
             this.btnPlayAnimation.Name = "btnPlayAnimation";
             this.btnPlayAnimation.Size = new System.Drawing.Size(23, 22);
             this.btnPlayAnimation.TabIndex = 20;
@@ -213,7 +214,7 @@ namespace ToolCache.Equipment {
             // btnRotRight
             // 
             this.btnRotRight.Image = global::ToolCache.Properties.Resources.control_fastforward_blue;
-            this.btnRotRight.Location = new System.Drawing.Point(586, 317);
+            this.btnRotRight.Location = new System.Drawing.Point(586, 314);
             this.btnRotRight.Name = "btnRotRight";
             this.btnRotRight.Size = new System.Drawing.Size(23, 22);
             this.btnRotRight.TabIndex = 19;
@@ -223,7 +224,7 @@ namespace ToolCache.Equipment {
             // btnRotLeft
             // 
             this.btnRotLeft.Image = global::ToolCache.Properties.Resources.control_rewind_blue;
-            this.btnRotLeft.Location = new System.Drawing.Point(393, 317);
+            this.btnRotLeft.Location = new System.Drawing.Point(393, 314);
             this.btnRotLeft.Name = "btnRotLeft";
             this.btnRotLeft.Size = new System.Drawing.Size(23, 22);
             this.btnRotLeft.TabIndex = 19;
@@ -232,7 +233,7 @@ namespace ToolCache.Equipment {
             // 
             // pbSetupLinks
             // 
-            this.pbSetupLinks.Location = new System.Drawing.Point(387, 173);
+            this.pbSetupLinks.Location = new System.Drawing.Point(387, 170);
             this.pbSetupLinks.Name = "pbSetupLinks";
             this.pbSetupLinks.Size = new System.Drawing.Size(229, 173);
             this.pbSetupLinks.TabIndex = 4;
@@ -241,7 +242,7 @@ namespace ToolCache.Equipment {
             // 
             // pbEquipmentDisplay
             // 
-            this.pbEquipmentDisplay.Location = new System.Drawing.Point(12, 12);
+            this.pbEquipmentDisplay.Location = new System.Drawing.Point(12, 9);
             this.pbEquipmentDisplay.Name = "pbEquipmentDisplay";
             this.pbEquipmentDisplay.Size = new System.Drawing.Size(604, 155);
             this.pbEquipmentDisplay.TabIndex = 3;
@@ -251,7 +252,7 @@ namespace ToolCache.Equipment {
             // lblFrontAnimationName
             // 
             this.lblFrontAnimationName.AutoSize = true;
-            this.lblFrontAnimationName.Location = new System.Drawing.Point(222, 537);
+            this.lblFrontAnimationName.Location = new System.Drawing.Point(222, 534);
             this.lblFrontAnimationName.Name = "lblFrontAnimationName";
             this.lblFrontAnimationName.Size = new System.Drawing.Size(44, 13);
             this.lblFrontAnimationName.TabIndex = 22;
@@ -260,16 +261,38 @@ namespace ToolCache.Equipment {
             // lblBackAnimationName
             // 
             this.lblBackAnimationName.AutoSize = true;
-            this.lblBackAnimationName.Location = new System.Drawing.Point(423, 537);
+            this.lblBackAnimationName.Location = new System.Drawing.Point(423, 534);
             this.lblBackAnimationName.Name = "lblBackAnimationName";
             this.lblBackAnimationName.Size = new System.Drawing.Size(35, 13);
             this.lblBackAnimationName.TabIndex = 23;
             this.lblBackAnimationName.Text = "BACK";
             // 
+            // lblDirection
+            // 
+            this.lblDirection.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblDirection.BackColor = System.Drawing.Color.Transparent;
+            this.lblDirection.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDirection.Location = new System.Drawing.Point(387, 369);
+            this.lblDirection.Name = "lblDirection";
+            this.lblDirection.Size = new System.Drawing.Size(229, 29);
+            this.lblDirection.TabIndex = 24;
+            this.lblDirection.Text = "Left";
+            this.lblDirection.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // btnCreateNew
+            // 
+            this.btnCreateNew.Location = new System.Drawing.Point(217, 171);
+            this.btnCreateNew.Name = "btnCreateNew";
+            this.btnCreateNew.Size = new System.Drawing.Size(164, 23);
+            this.btnCreateNew.TabIndex = 25;
+            this.btnCreateNew.Text = "Create New";
+            this.btnCreateNew.UseVisualStyleBackColor = true;
+            this.btnCreateNew.Click += new System.EventHandler(this.btnCreateNew_Click);
+            // 
             // ccAnimationBack
             // 
             this.ccAnimationBack.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ccAnimationBack.Location = new System.Drawing.Point(418, 455);
+            this.ccAnimationBack.Location = new System.Drawing.Point(418, 452);
             this.ccAnimationBack.Name = "ccAnimationBack";
             this.ccAnimationBack.Size = new System.Drawing.Size(199, 100);
             this.ccAnimationBack.TabIndex = 21;
@@ -277,28 +300,17 @@ namespace ToolCache.Equipment {
             // ccAnimationFront
             // 
             this.ccAnimationFront.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ccAnimationFront.Location = new System.Drawing.Point(217, 455);
+            this.ccAnimationFront.Location = new System.Drawing.Point(217, 452);
             this.ccAnimationFront.Name = "ccAnimationFront";
             this.ccAnimationFront.Size = new System.Drawing.Size(199, 100);
             this.ccAnimationFront.TabIndex = 6;
-            // 
-            // lblDirection
-            // 
-            this.lblDirection.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblDirection.BackColor = System.Drawing.Color.Transparent;
-            this.lblDirection.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDirection.Location = new System.Drawing.Point(387, 372);
-            this.lblDirection.Name = "lblDirection";
-            this.lblDirection.Size = new System.Drawing.Size(229, 29);
-            this.lblDirection.TabIndex = 24;
-            this.lblDirection.Text = "Left";
-            this.lblDirection.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // EquipmentEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(628, 567);
+            this.ClientSize = new System.Drawing.Size(628, 559);
+            this.Controls.Add(this.btnCreateNew);
             this.Controls.Add(this.lblDirection);
             this.Controls.Add(this.lblBackAnimationName);
             this.Controls.Add(this.lblFrontAnimationName);
@@ -326,6 +338,7 @@ namespace ToolCache.Equipment {
             this.Controls.Add(this.treeEquipmentList);
             this.Name = "EquipmentEditor";
             this.Text = "Equipment Editor";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EquipmentEditor_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.pbSetupLinks)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbEquipmentDisplay)).EndInit();
             this.ResumeLayout(false);
@@ -360,5 +373,6 @@ namespace ToolCache.Equipment {
         private System.Windows.Forms.Label lblFrontAnimationName;
         private System.Windows.Forms.Label lblBackAnimationName;
         private System.Windows.Forms.Label lblDirection;
+        private System.Windows.Forms.Button btnCreateNew;
     }
 }

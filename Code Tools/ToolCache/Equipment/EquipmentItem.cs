@@ -13,12 +13,12 @@ namespace ToolCache.Equipment {
 
         public bool isAvailableAtStart = false;
 
-        public EquipmentItem() {
-            Animations.Add(States.Default, new EquipmentAnimationSet());
+        public EquipmentItem(bool initialize = true) {
+            if(initialize) VerifyAnimationSets();
         }
 
         public static EquipmentItem UnpackFromBinaryIO(BinaryIO f) {
-            EquipmentItem t = new EquipmentItem();
+            EquipmentItem t = new EquipmentItem(false);
 
             t.Name = f.GetString();
             t.Type = (EquipmentTypes)f.GetByte();
@@ -33,7 +33,17 @@ namespace ToolCache.Equipment {
                 t.Animations.Add(eas.State, eas);
             }
 
+            t.VerifyAnimationSets();
+
             return t;
+        }
+
+        private void VerifyAnimationSets() {
+            foreach (States s in Enum.GetValues(typeof(States))) {
+                if (!Animations.ContainsKey(s)) {
+                    Animations.Add(s, new EquipmentAnimationSet());
+                }
+            }
         }
 
         public void PackIntoBinaryIO(BinaryIO f) {
