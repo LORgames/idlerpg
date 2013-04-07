@@ -61,6 +61,7 @@ namespace ToolCache.Equipment {
             this.treeEquipmentList.Name = "treeEquipmentList";
             this.treeEquipmentList.Size = new System.Drawing.Size(198, 382);
             this.treeEquipmentList.TabIndex = 1;
+            this.treeEquipmentList.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeEquipmentList_AfterSelect);
             // 
             // cbItemType
             // 

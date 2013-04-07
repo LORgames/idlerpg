@@ -55,6 +55,8 @@ namespace ToolCache.Equipment {
             if (!Directory.Exists("Equipment")) Directory.CreateDirectory("Equipment");
 
             CreateNew();
+
+            RefreshTree();
         }
 
         private void CreateNew() {
@@ -65,6 +67,22 @@ namespace ToolCache.Equipment {
             UpdateForm();
         }
 
+        private void RefreshTree() {
+            treeEquipmentList.Nodes.Clear();
+
+            foreach (EquipmentTypes s in Enum.GetValues(typeof(EquipmentTypes))) {
+                TreeNode n = new TreeNode(Enum.GetName(typeof(EquipmentTypes), s));
+
+                foreach (EquipmentItem ei in EquipmentManager.TypeLists[s]) {
+                    TreeNode m = new TreeNode(ei.Name);
+                    m.Tag = ei;
+                    n.Nodes.Add(m);
+                }
+
+                treeEquipmentList.Nodes.Add(n);
+            }
+        }
+        
         private void UpdateForm() {
             cbItemType.SelectedValue = currentEquipment.Type;
             txtName.Text = currentEquipment.Name;
@@ -281,11 +299,26 @@ namespace ToolCache.Equipment {
             currentEquipment.Type = (EquipmentTypes)Enum.Parse(typeof(EquipmentTypes), cbItemType.Text);
 
             if (_new) EquipmentManager.AddEquipment(currentEquipment);
+            else EquipmentManager.Updated(currentEquipment);
             _new = false;
+
+            RefreshTree();
         }
 
         private void btnCreateNew_Click(object sender, EventArgs e) {
             CreateNew();
+        }
+
+        private void treeEquipmentList_AfterSelect(object sender, TreeViewEventArgs e) {
+            EquipmentItem ei = e.Node.Tag as EquipmentItem;
+
+            if (ei != null) {
+                if (ei != currentEquipment) {
+                    SaveIfRequired();
+                    currentEquipment = ei;
+                    UpdateForm();
+                }
+            }
         }
     }
 }

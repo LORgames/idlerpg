@@ -12,9 +12,16 @@ namespace ToolCache.Equipment {
 
     public class EquipmentManager {
         public static Dictionary<string, EquipmentItem> Equipment = new Dictionary<string, EquipmentItem>();
+        internal static Dictionary<EquipmentTypes, List<EquipmentItem>> TypeLists = new Dictionary<EquipmentTypes, List<EquipmentItem>>();
 
         public static void Initialize() {
             Equipment.Clear();
+
+            TypeLists.Clear();
+            foreach (EquipmentTypes s in Enum.GetValues(typeof(EquipmentTypes))) {
+                TypeLists.Add(s, new List<EquipmentItem>());
+            }
+
             LoadFromDatabase();
         }
 
@@ -45,7 +52,29 @@ namespace ToolCache.Equipment {
         }
 
         internal static void AddEquipment(EquipmentItem currentEquipment) {
+            string baseName = currentEquipment.Name;
+            int nextTry = 1;
+            
+            while (Equipment.ContainsKey(currentEquipment.Name)) {
+                currentEquipment.Name = baseName + "_" + nextTry;
+                nextTry++;
+            }
+
             Equipment.Add(currentEquipment.Name, currentEquipment);
+
+            TypeLists[currentEquipment.Type].Add(currentEquipment);
+            currentEquipment.OldType = currentEquipment.Type;
+        }
+
+        internal static void Updated(EquipmentItem currentEquipment) {
+            if (currentEquipment.OldType != currentEquipment.Type && TypeLists[currentEquipment.OldType].Contains(currentEquipment)) {
+                TypeLists[currentEquipment.OldType].Remove(currentEquipment);
+                currentEquipment.OldType = currentEquipment.Type;
+
+                if (!TypeLists[currentEquipment.Type].Contains(currentEquipment)) {
+                    TypeLists[currentEquipment.Type].Add(currentEquipment);
+                }
+            }
         }
     }
 }

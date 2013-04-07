@@ -9,6 +9,8 @@ namespace ToolCache.Equipment {
         public Dictionary<States, EquipmentAnimationSet> Animations = new Dictionary<States, EquipmentAnimationSet>();
 
         public EquipmentTypes Type = EquipmentTypes.Body;
+        public EquipmentTypes OldType = EquipmentTypes.Body;
+
         public string Name = "Unnamed";
 
         public bool isAvailableAtStart = false;
