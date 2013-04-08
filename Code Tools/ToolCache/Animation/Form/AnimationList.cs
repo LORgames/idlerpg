@@ -10,8 +10,11 @@ using System.IO;
 
 namespace ToolCache.Animation.Form {
     public partial class AnimationList : UserControl {
+
         internal AnimatedObject _anim;
         internal string location = "objcache";
+
+        internal string filenamePrefix = "";
 
         public AnimationList() {
             InitializeComponent();
@@ -27,14 +30,18 @@ namespace ToolCache.Animation.Form {
             location = directory;
         }
 
-        public void ClearAnimation() {
+        public void ClearAnimation(string prefix = "") {
             _anim = new AnimatedObject();
             UpdateBoxes();
+
+            filenamePrefix = prefix;
         }
 
-        public void ChangeToAnimation(AnimatedObject anim) {
+        public void ChangeToAnimation(AnimatedObject anim, string prefix = "") {
             _anim = anim;
             UpdateBoxes();
+
+            filenamePrefix = prefix;
         }
 
         private void splitContainer1_Panel2_DragDrop(object sender, DragEventArgs e) {
@@ -49,7 +56,7 @@ namespace ToolCache.Animation.Form {
                             string ext = Path.GetExtension(filename).ToLower();
                             if (ext == ".png") {
                                 //Add animation
-                                string nFilename = location + "/" + Path.GetFileNameWithoutExtension(filename) + ".png";
+                                string nFilename = location + "/" + filenamePrefix + Path.GetFileNameWithoutExtension(filename) + ".png";
 
                                 bool copied = false;
 
@@ -78,7 +85,7 @@ namespace ToolCache.Animation.Form {
             e.Effect = DragDropEffects.Copy;
         }
 
-        private void UpdateBoxes() {
+        public void UpdateBoxes() {
             splitContainer1.SuspendLayout();
 
             numFramerate.Value = (decimal)_anim.PlaybackSpeed;

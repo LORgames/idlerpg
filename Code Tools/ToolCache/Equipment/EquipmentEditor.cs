@@ -18,6 +18,7 @@ namespace ToolCache.Equipment {
 
         private Boolean _iE = false; //Is Edited
         private Boolean _new = false;
+        private Boolean _updatingForm = false;
 
         public EquipmentEditor() {
             InitializeComponent();
@@ -84,14 +85,18 @@ namespace ToolCache.Equipment {
         }
         
         private void UpdateForm() {
-            cbItemType.SelectedValue = currentEquipment.Type;
+            _updatingForm = true;
+
+            cbItemType.Text = Enum.GetName(typeof(EquipmentTypes), currentEquipment.Type);
             txtName.Text = currentEquipment.Name;
             ckbAvailableAtStart.Checked = currentEquipment.isAvailableAtStart;
 
-            cbAnimationState.SelectedItem = States.Default;
+            cbAnimationState.Text = Enum.GetName(typeof(States), States.Default);
 
             ccAnimationFront.ChangeToAnimation(currentEquipment.Animations[States.Default].GetAnimation(currentDirection, 0));
             ccAnimationFront.ChangeToAnimation(currentEquipment.Animations[States.Default].GetAnimation(currentDirection, 1));
+
+            _updatingForm = false;
         }
 
         private void UpdateDirection() {
@@ -104,8 +109,10 @@ namespace ToolCache.Equipment {
             }
 
             if (currentEquipment.Animations.ContainsKey(s)) {
-                ccAnimationFront.ChangeToAnimation(currentEquipment.Animations[s].GetAnimation(currentDirection, 0));
-                ccAnimationBack.ChangeToAnimation(currentEquipment.Animations[s].GetAnimation(currentDirection, 1));
+                ccAnimationFront.ChangeToAnimation(currentEquipment.Animations[s].GetAnimation(currentDirection, 0), FilenamePrefix(currentDirection));
+                ccAnimationBack.ChangeToAnimation(currentEquipment.Animations[s].GetAnimation(currentDirection, 1), FilenamePrefix(currentDirection));
+            } else {
+                MessageBox.Show("Critical Error 0x01 EquipmentEditor.cs:");
             }
         }
 
@@ -149,6 +156,12 @@ namespace ToolCache.Equipment {
                 layer2 = true;
             }
 
+            Direction x = Direction.Left;
+
+            if (sender == drpDown) x = Direction.Down;
+            else if (sender == drpRight) x = Direction.Right;
+            else if (sender == drpUp) x = Direction.Up;
+
             //First put the files in the cache list
             if ((e.AllowedEffect & DragDropEffects.Copy) == DragDropEffects.Copy) {
                 string[] data = (string[])e.Data.GetData(DataFormats.FileDrop);
@@ -159,7 +172,7 @@ namespace ToolCache.Equipment {
                             string ext = Path.GetExtension(filename).ToLower();
                             if (ext == ".png") {
                                 //Add animation
-                                string nFilename = "Equipment/" + Path.GetFileNameWithoutExtension(filename) + ".png";
+                                string nFilename = "Equipment/" + FilenamePrefix(x) + Path.GetFileNameWithoutExtension(filename) + ".png";
 
                                 bool copied = false;
 
@@ -174,10 +187,17 @@ namespace ToolCache.Equipment {
                                 }
 
                                 if (copied) {
+                                    States selectedState = (States)Enum.Parse(typeof(States), cbAnimationState.Text);
+
                                     if (layer2) {
-                                        ccAnimationBack.GetAnimation().Frames.Add(nFilename);
+                                        currentEquipment.Animations[selectedState].GetAnimation(x, 1).Frames.Add(nFilename);
                                     } else {
-                                        ccAnimationFront.GetAnimation().Frames.Add(nFilename);
+                                        currentEquipment.Animations[selectedState].GetAnimation(x, 0).Frames.Add(nFilename);
+                                    }
+
+                                    if (currentDirection == x) {
+                                        ccAnimationBack.UpdateBoxes();
+                                        ccAnimationFront.UpdateBoxes();
                                     }
                                 }
                             }
@@ -185,6 +205,20 @@ namespace ToolCache.Equipment {
                     }
                 }
             }
+        }
+
+        private string FilenamePrefix(Direction x) {
+            if (x == Direction.Left) {
+                return "L_";
+            } else if (x == Direction.Right) {
+                return "R_";
+            } else if (x == Direction.Up) {
+                return "U_";
+            } else if (x == Direction.Down) {
+                return "D_";
+            }
+
+            return "X_";
         }
 
         private void cbItemType_SelectedIndexChanged(object sender, EventArgs e) {
@@ -269,7 +303,7 @@ namespace ToolCache.Equipment {
         }
 
         private void ValueChanged(object sender, EventArgs e) {
-            _iE = true;
+            if(!_updatingForm) _iE = true;
         }
 
         private void cbAnimationState_SelectedIndexChanged(object sender, EventArgs e) {

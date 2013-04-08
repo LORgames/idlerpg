@@ -32,7 +32,11 @@ namespace ToolCache.Equipment {
             for (int i = 0; i < totalAnimationSets; i++) {
                 EquipmentAnimationSet eas = EquipmentAnimationSet.LoadFromBinaryIO(f);
 
-                t.Animations.Add(eas.State, eas);
+                if (t.Animations.ContainsKey(eas.State)) {
+                    t.Animations[eas.State] = eas;
+                } else {
+                    t.Animations.Add(eas.State, eas);
+                }
             }
 
             t.VerifyAnimationSets();

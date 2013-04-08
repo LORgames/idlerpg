@@ -33,10 +33,7 @@ namespace ToolCache.Equipment {
 
                 for (int i = 0; i < totalItems; i++) {
                     EquipmentItem ei = EquipmentItem.UnpackFromBinaryIO(f);
-
-                    if (!Equipment.ContainsKey(ei.Name)) { //Just throw it out if it already exists.
-                        Equipment.Add(ei.Name, ei);
-                    }
+                    AddEquipment(ei);
                 }
             }
         }
@@ -49,6 +46,8 @@ namespace ToolCache.Equipment {
             foreach (EquipmentItem ei in Equipment.Values) {
                 ei.PackIntoBinaryIO(f);
             }
+
+            f.Encode("cache/db_equipment.bin");
         }
 
         internal static void AddEquipment(EquipmentItem currentEquipment) {
