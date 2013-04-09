@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using ToolCache.Animation.Form;
 using ToolCache.Map.Tiles;
 using System.IO;
+using ToolCache.Drawing;
 
 namespace ToolCache.Equipment {
     public partial class EquipmentEditor : Form {
@@ -19,6 +20,12 @@ namespace ToolCache.Equipment {
         private Boolean _iE = false; //Is Edited
         private Boolean _new = false;
         private Boolean _updatingForm = false;
+
+        private EquipmentItem body = EquipmentManager.TypeLists[EquipmentTypes.Body].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Body][0] : null;
+        private EquipmentItem face = EquipmentManager.TypeLists[EquipmentTypes.Face].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Face][0] : null;
+        private EquipmentItem head = EquipmentManager.TypeLists[EquipmentTypes.Hat].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Hat][0] : null;
+        private EquipmentItem legs = EquipmentManager.TypeLists[EquipmentTypes.Legs].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Legs][0] : null;
+        private EquipmentItem weap = EquipmentManager.TypeLists[EquipmentTypes.Weapon].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Weapon][0] : null;
 
         public EquipmentEditor() {
             InitializeComponent();
@@ -58,6 +65,8 @@ namespace ToolCache.Equipment {
             CreateNew();
 
             RefreshTree();
+
+            timer1.Start();
         }
 
         private void CreateNew() {
@@ -82,6 +91,28 @@ namespace ToolCache.Equipment {
 
                 treeEquipmentList.Nodes.Add(n);
             }
+
+            treeEquipmentList.ExpandAll();
+
+            cbDispBody.Items.Clear();
+            cbDispFace.Items.Clear();
+            cbDispHeadgear.Items.Clear();
+            cbDispPants.Items.Clear();
+            cbDispWeapon.Items.Clear();
+
+            ComboBox relCB = cbDispBody;
+
+            foreach (KeyValuePair<EquipmentTypes, List<EquipmentItem>> kvp in EquipmentManager.TypeLists) {
+                if (kvp.Key == EquipmentTypes.Body) relCB = cbDispBody;
+                else if (kvp.Key == EquipmentTypes.Face) relCB = cbDispFace;
+                else if (kvp.Key == EquipmentTypes.Hat) relCB = cbDispHeadgear;
+                else if (kvp.Key == EquipmentTypes.Legs) relCB = cbDispPants;
+                else if (kvp.Key == EquipmentTypes.Weapon) relCB = cbDispWeapon;
+
+                foreach (EquipmentItem ei in kvp.Value) {
+                    relCB.Items.Add(ei.Name);
+                }
+            }
         }
         
         private void UpdateForm() {
@@ -94,8 +125,10 @@ namespace ToolCache.Equipment {
             cbAnimationState.Text = Enum.GetName(typeof(States), States.Default);
 
             ccAnimationFront.ChangeToAnimation(currentEquipment.Animations[States.Default].GetAnimation(currentDirection, 0));
-            ccAnimationFront.ChangeToAnimation(currentEquipment.Animations[States.Default].GetAnimation(currentDirection, 1));
+            ccAnimationBack.ChangeToAnimation(currentEquipment.Animations[States.Default].GetAnimation(currentDirection, 1));
 
+            pbSetupLinks.Invalidate();
+            
             _updatingForm = false;
         }
 
@@ -104,15 +137,13 @@ namespace ToolCache.Equipment {
 
             States s;
 
-            if (!Enum.TryParse<States>(cbAnimationState.SelectedText, out s)) {
+            if (!Enum.TryParse<States>(cbAnimationState.Text, out s)) {
                 s = States.Default;
             }
 
             if (currentEquipment.Animations.ContainsKey(s)) {
                 ccAnimationFront.ChangeToAnimation(currentEquipment.Animations[s].GetAnimation(currentDirection, 0), FilenamePrefix(currentDirection));
                 ccAnimationBack.ChangeToAnimation(currentEquipment.Animations[s].GetAnimation(currentDirection, 1), FilenamePrefix(currentDirection));
-            } else {
-                MessageBox.Show("Critical Error 0x01 EquipmentEditor.cs:");
             }
         }
 
@@ -126,6 +157,17 @@ namespace ToolCache.Equipment {
                     }
                 }
             }
+
+            States cState = (States)Enum.Parse(typeof(States), cbAnimationState.Text);
+
+            //Draw 5 people :) [different directions, same gear]
+            for (int i = 0; i < 4; i++) {
+                Point p = new Point();
+                p.X = pbEquipmentDisplay.Width / 5 * (i+1);
+                p.Y = pbEquipmentDisplay.Height - 20;
+
+                PersonDrawer.Draw(e.Graphics, p, (Direction)i, cState, head, face, body, legs, weap);
+            }
         }
 
         private void pbSetupLinks_Paint(object sender, PaintEventArgs e) {
@@ -138,6 +180,38 @@ namespace ToolCache.Equipment {
                     }
                 }
             }
+
+            States cState = (States)Enum.Parse(typeof(States), cbAnimationState.Text);
+            EquipmentTypes cType = (EquipmentTypes)Enum.Parse(typeof(EquipmentTypes), cbItemType.Text);
+
+            Point centerPoint = new Point(pbSetupLinks.DisplayRectangle.Width / 2, pbSetupLinks.DisplayRectangle.Height / 2);
+            
+            Point layer0_center = currentEquipment.Animations[cState].GetAnimation(currentDirection, 0).Center;
+            Point layer1_center = currentEquipment.Animations[cState].GetAnimation(currentDirection, 1).Center;
+
+            Point drawLayer0At = Point.Empty;
+            drawLayer0At.X = centerPoint.X - layer0_center.X;
+            drawLayer0At.Y = centerPoint.Y - layer0_center.Y;
+
+            Point drawLayer1At = Point.Empty;
+            drawLayer1At.X = centerPoint.X - layer1_center.X;
+            drawLayer1At.Y = centerPoint.Y - layer1_center.Y;
+
+            if (cType == EquipmentTypes.Legs) {
+                Point p = currentEquipment.GetLinkDown(currentDirection);
+
+                drawLayer1At.X += p.X - layer0_center.X;
+                drawLayer1At.Y += p.Y - layer0_center.Y;
+
+                currentEquipment.Animations[cState].GetAnimation(currentDirection, 1).Draw(e.Graphics, drawLayer1At.X, drawLayer1At.Y, 1);
+            } else {
+                currentEquipment.Animations[cState].GetAnimation(currentDirection, 1).Draw(e.Graphics, drawLayer1At.X, drawLayer1At.Y, 1);
+            }
+
+            currentEquipment.Animations[cState].GetAnimation(currentDirection, 0).Draw(e.Graphics, drawLayer0At.X, drawLayer0At.Y, 1);
+
+            e.Graphics.FillEllipse(Brushes.Yellow, new Rectangle(currentEquipment.GetLinkUp(currentDirection).X - 1 + drawLayer0At.X, currentEquipment.GetLinkUp(currentDirection).Y - 1 + drawLayer0At.Y, 3, 3));
+            e.Graphics.FillEllipse(Brushes.Blue, new Rectangle(currentEquipment.GetLinkDown(currentDirection).X - 1 + drawLayer0At.X, currentEquipment.GetLinkDown(currentDirection).Y - 1 + drawLayer0At.Y, 3, 3));
         }
 
         private void cbTileList_SelectedIndexChanged(object sender, EventArgs e) {
@@ -184,6 +258,8 @@ namespace ToolCache.Equipment {
                                 } else if (MessageBox.Show("Overwrite " + nFilename + "?", "Overwrite?", MessageBoxButtons.YesNo) == DialogResult.Yes) {
                                     File.Copy(filename, nFilename, true);
                                     copied = true;
+                                } else {
+                                    //find a new name?
                                 }
 
                                 if (copied) {
@@ -231,8 +307,8 @@ namespace ToolCache.Equipment {
                     case EquipmentTypes.Body:
                         ccAnimationBack.Enabled = true;
 
-                        lblFrontAnimationName.Text = "FRONT";
-                        lblBackAnimationName.Text = "BACK";
+                        lblFrontAnimationName.Text = "BACK";
+                        lblBackAnimationName.Text = "FRONT";
                         break;
                     case EquipmentTypes.Face:
                         ccAnimationBack.Enabled = false;
@@ -353,6 +429,70 @@ namespace ToolCache.Equipment {
                     UpdateForm();
                 }
             }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e) {
+            pbSetupLinks.Invalidate();
+            pbEquipmentDisplay.Invalidate();
+        }
+
+        private void pbSetupLinks_Click(object sender, EventArgs _e) {
+            MouseEventArgs e = (MouseEventArgs)_e;
+
+            States cState = (States)Enum.Parse(typeof(States), cbAnimationState.Text);
+
+            Point p;
+
+            if (e.Button == System.Windows.Forms.MouseButtons.Left) {
+                p = currentEquipment.GetLinkUp(currentDirection);
+            } else {
+                p = currentEquipment.GetLinkDown(currentDirection);
+            }
+
+            Point layer0_drawPoint = new Point(pbSetupLinks.DisplayRectangle.Width / 2, pbSetupLinks.DisplayRectangle.Height / 2);
+            Point layer0_center = currentEquipment.Animations[cState].GetAnimation(currentDirection, 0).Center;
+
+            Point m = Point.Empty;
+            m.X = e.X - layer0_drawPoint.X + layer0_center.X;
+            m.Y = e.Y - layer0_drawPoint.Y + layer0_center.Y;
+
+            if ((ModifierKeys & Keys.Control) == Keys.Control) {
+                int dX = Math.Abs(m.X - p.X);
+                int dY = Math.Abs(m.Y - p.Y);
+
+                if (dX > dY) {
+                    if (m.X < p.X) p.X--;
+                    if (m.X > p.X) p.X++;
+                } else {
+                    if (m.Y < p.Y) p.Y--;
+                    if (m.Y > p.Y) p.Y++;
+                }
+            } else {
+                p.X = m.X;
+                p.Y = m.Y;
+            }
+
+            if (e.Button == System.Windows.Forms.MouseButtons.Left) {
+                currentEquipment.SetLinkUp(currentDirection, p);
+            } else {
+                currentEquipment.SetLinkDown(currentDirection, p);
+            }
+        }
+
+        private void changeFullDisplay(object sender, EventArgs e) {
+            body = UpdateEquipmentDisplaySetsHelper(cbDispBody.Text);
+            face = UpdateEquipmentDisplaySetsHelper(cbDispFace.Text);
+            head = UpdateEquipmentDisplaySetsHelper(cbDispHeadgear.Text);
+            legs = UpdateEquipmentDisplaySetsHelper(cbDispPants.Text);
+            weap = UpdateEquipmentDisplaySetsHelper(cbDispWeapon.Text);
+        }
+
+        private EquipmentItem UpdateEquipmentDisplaySetsHelper(string itemname) {
+            if(EquipmentManager.Equipment.ContainsKey(itemname)) {
+                return EquipmentManager.Equipment[itemname];
+            }
+
+            return null;
         }
     }
 }

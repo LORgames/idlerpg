@@ -20,18 +20,10 @@ namespace ToolCache.Equipment {
         public AnimatedObject Up_1;
         public AnimatedObject Down_1;
 
-        public Point LinkTop_Left = Point.Empty;
-        public Point LinkTop_Right = Point.Empty;
-        public Point LinkTop_Up = Point.Empty;
-        public Point LinkTop_Down = Point.Empty;
-
-        public Point LinkBottom_Left = Point.Empty;
-        public Point LinkBottom_Right = Point.Empty;
-        public Point LinkBottom_Up = Point.Empty;
-        public Point LinkBottom_Down = Point.Empty;
-
-        public EquipmentAnimationSet(bool initialize = true) {
+        public EquipmentAnimationSet(bool initialize = true, States s = States.Default) {
             if (initialize) {
+                State = s;
+
                 Left_0 = new AnimatedObject();
                 Right_0 = new AnimatedObject();
                 Up_0 = new AnimatedObject();
@@ -74,32 +66,6 @@ namespace ToolCache.Equipment {
             eas.Up_1 = AnimatedObject.UnpackFromBinaryIO(f);
             eas.Down_1 = AnimatedObject.UnpackFromBinaryIO(f);
 
-            //LOAD TOP LINKS
-            eas.LinkTop_Left.X = f.GetShort();
-            eas.LinkTop_Left.Y = f.GetShort();
-
-            eas.LinkTop_Right.X = f.GetShort();
-            eas.LinkTop_Right.Y = f.GetShort();
-
-            eas.LinkTop_Up.X = f.GetShort();
-            eas.LinkTop_Up.Y = f.GetShort();
-
-            eas.LinkTop_Down.X = f.GetShort();
-            eas.LinkTop_Down.Y = f.GetShort();
-            
-            //LOAD BOTTOM LINKS
-            eas.LinkBottom_Left.X = f.GetShort();
-            eas.LinkBottom_Left.Y = f.GetShort();
-
-            eas.LinkBottom_Right.X = f.GetShort();
-            eas.LinkBottom_Right.Y = f.GetShort();
-
-            eas.LinkBottom_Up.X = f.GetShort();
-            eas.LinkBottom_Up.Y = f.GetShort();
-
-            eas.LinkBottom_Down.X = f.GetShort();
-            eas.LinkBottom_Down.Y = f.GetShort();
-
             return eas;
         }
 
@@ -117,33 +83,6 @@ namespace ToolCache.Equipment {
             Right_1.PackIntoBinaryIO(f);
             Up_1.PackIntoBinaryIO(f);
             Down_1.PackIntoBinaryIO(f);
-
-            //LOAD TOP LINKS
-            f.AddShort((short)LinkTop_Left.X);
-            f.AddShort((short)LinkTop_Left.Y);
-
-            f.AddShort((short)LinkTop_Right.X);
-            f.AddShort((short)LinkTop_Right.Y);
-
-            f.AddShort((short)LinkTop_Up.X);
-            f.AddShort((short)LinkTop_Up.Y);
-
-            f.AddShort((short)LinkTop_Down.X);
-            f.AddShort((short)LinkTop_Down.Y);
-
-            //LOAD BOTTOM LINKS
-            f.AddShort((short)LinkBottom_Left.X);
-            f.AddShort((short)LinkBottom_Left.Y);
-
-            f.AddShort((short)LinkBottom_Right.X);
-            f.AddShort((short)LinkBottom_Right.Y);
-
-            f.AddShort((short)LinkBottom_Up.X);
-            f.AddShort((short)LinkBottom_Up.Y);
-
-            f.AddShort((short)LinkBottom_Down.X);
-            f.AddShort((short)LinkBottom_Down.Y);
         }
-
     }
 }

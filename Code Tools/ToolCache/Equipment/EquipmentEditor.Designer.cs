@@ -25,6 +25,7 @@ namespace ToolCache.Equipment {
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             this.treeEquipmentList = new System.Windows.Forms.TreeView();
             this.cbItemType = new System.Windows.Forms.ComboBox();
             this.cbTileList = new System.Windows.Forms.ComboBox();
@@ -49,6 +50,17 @@ namespace ToolCache.Equipment {
             this.lblBackAnimationName = new System.Windows.Forms.Label();
             this.lblDirection = new System.Windows.Forms.Label();
             this.btnCreateNew = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.cbDispWeapon = new System.Windows.Forms.ComboBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.cbDispBody = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.cbDispFace = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cbDispPants = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.cbDispHeadgear = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.ccAnimationBack = new ToolCache.Animation.Form.AnimationList();
             this.ccAnimationFront = new ToolCache.Animation.Form.AnimationList();
             ((System.ComponentModel.ISupportInitialize)(this.pbSetupLinks)).BeginInit();
@@ -78,7 +90,7 @@ namespace ToolCache.Equipment {
             this.cbTileList.FormattingEnabled = true;
             this.cbTileList.Location = new System.Drawing.Point(22, 19);
             this.cbTileList.Name = "cbTileList";
-            this.cbTileList.Size = new System.Drawing.Size(121, 21);
+            this.cbTileList.Size = new System.Drawing.Size(87, 21);
             this.cbTileList.TabIndex = 5;
             this.cbTileList.SelectedIndexChanged += new System.EventHandler(this.cbTileList_SelectedIndexChanged);
             // 
@@ -239,6 +251,7 @@ namespace ToolCache.Equipment {
             this.pbSetupLinks.Size = new System.Drawing.Size(229, 173);
             this.pbSetupLinks.TabIndex = 4;
             this.pbSetupLinks.TabStop = false;
+            this.pbSetupLinks.Click += new System.EventHandler(this.pbSetupLinks_Click);
             this.pbSetupLinks.Paint += new System.Windows.Forms.PaintEventHandler(this.pbSetupLinks_Paint);
             // 
             // pbEquipmentDisplay
@@ -290,6 +303,100 @@ namespace ToolCache.Equipment {
             this.btnCreateNew.UseVisualStyleBackColor = true;
             this.btnCreateNew.Click += new System.EventHandler(this.btnCreateNew_Click);
             // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // cbDispWeapon
+            // 
+            this.cbDispWeapon.FormattingEnabled = true;
+            this.cbDispWeapon.Location = new System.Drawing.Point(516, 19);
+            this.cbDispWeapon.Name = "cbDispWeapon";
+            this.cbDispWeapon.Size = new System.Drawing.Size(94, 21);
+            this.cbDispWeapon.TabIndex = 33;
+            this.cbDispWeapon.SelectedIndexChanged += new System.EventHandler(this.changeFullDisplay);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(536, 3);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(48, 13);
+            this.label9.TabIndex = 32;
+            this.label9.Text = "Weapon";
+            // 
+            // cbDispBody
+            // 
+            this.cbDispBody.FormattingEnabled = true;
+            this.cbDispBody.Location = new System.Drawing.Point(116, 19);
+            this.cbDispBody.Name = "cbDispBody";
+            this.cbDispBody.Size = new System.Drawing.Size(94, 21);
+            this.cbDispBody.TabIndex = 35;
+            this.cbDispBody.SelectedIndexChanged += new System.EventHandler(this.changeFullDisplay);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(146, 3);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(31, 13);
+            this.label6.TabIndex = 34;
+            this.label6.Text = "Body";
+            // 
+            // cbDispFace
+            // 
+            this.cbDispFace.FormattingEnabled = true;
+            this.cbDispFace.Location = new System.Drawing.Point(216, 19);
+            this.cbDispFace.Name = "cbDispFace";
+            this.cbDispFace.Size = new System.Drawing.Size(94, 21);
+            this.cbDispFace.TabIndex = 37;
+            this.cbDispFace.SelectedIndexChanged += new System.EventHandler(this.changeFullDisplay);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(246, 3);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(31, 13);
+            this.label7.TabIndex = 36;
+            this.label7.Text = "Face";
+            // 
+            // cbDispPants
+            // 
+            this.cbDispPants.FormattingEnabled = true;
+            this.cbDispPants.Location = new System.Drawing.Point(316, 19);
+            this.cbDispPants.Name = "cbDispPants";
+            this.cbDispPants.Size = new System.Drawing.Size(94, 21);
+            this.cbDispPants.TabIndex = 39;
+            this.cbDispPants.SelectedIndexChanged += new System.EventHandler(this.changeFullDisplay);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(343, 3);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(34, 13);
+            this.label8.TabIndex = 38;
+            this.label8.Text = "Pants";
+            // 
+            // cbDispHeadgear
+            // 
+            this.cbDispHeadgear.FormattingEnabled = true;
+            this.cbDispHeadgear.Location = new System.Drawing.Point(416, 19);
+            this.cbDispHeadgear.Name = "cbDispHeadgear";
+            this.cbDispHeadgear.Size = new System.Drawing.Size(94, 21);
+            this.cbDispHeadgear.TabIndex = 41;
+            this.cbDispHeadgear.SelectedIndexChanged += new System.EventHandler(this.changeFullDisplay);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(433, 3);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(54, 13);
+            this.label10.TabIndex = 40;
+            this.label10.Text = "Headgear";
+            // 
             // ccAnimationBack
             // 
             this.ccAnimationBack.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -311,6 +418,16 @@ namespace ToolCache.Equipment {
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(628, 559);
+            this.Controls.Add(this.cbDispHeadgear);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.cbDispPants);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.cbDispFace);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.cbDispBody);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.cbDispWeapon);
+            this.Controls.Add(this.label9);
             this.Controls.Add(this.btnCreateNew);
             this.Controls.Add(this.lblDirection);
             this.Controls.Add(this.lblBackAnimationName);
@@ -375,5 +492,16 @@ namespace ToolCache.Equipment {
         private System.Windows.Forms.Label lblBackAnimationName;
         private System.Windows.Forms.Label lblDirection;
         private System.Windows.Forms.Button btnCreateNew;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.ComboBox cbDispWeapon;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ComboBox cbDispBody;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox cbDispFace;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox cbDispPants;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox cbDispHeadgear;
+        private System.Windows.Forms.Label label10;
     }
 }

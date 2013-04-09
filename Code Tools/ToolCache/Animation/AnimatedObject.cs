@@ -17,6 +17,24 @@ namespace ToolCache.Animation {
 
         public List<String> Frames = new List<string>();
 
+        public Point p = new Point(-1, -1); //Center point
+
+        public Point Center {
+            get {
+                if (Frames.Count == 0)
+                    return p;
+
+                if(p.X < 0 || p.Y < 0) {
+                    using(Image i = Image.FromFile(Frames[0])) {
+                        p.X = i.Width/2;
+                        p.Y = i.Height/2;
+                    }
+                }
+
+                return p;
+            }
+        }
+
         internal void PackIntoBinaryIO(BinaryIO f) {
             f.AddByte((byte)Frames.Count);
             f.AddFloat(PlaybackSpeed);

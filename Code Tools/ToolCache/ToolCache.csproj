@@ -66,6 +66,7 @@
     </Compile>
     <Compile Include="Combat\Elements\ElementManager.cs" />
     <Compile Include="Critters\ICritter.cs" />
+    <Compile Include="Drawing\PersonDrawer.cs" />
     <Compile Include="Equipment\EquipmentAnimationSet.cs" />
     <Compile Include="Equipment\EquipmentItem.cs" />
     <Compile Include="Equipment\EquipmentEditor.cs">
