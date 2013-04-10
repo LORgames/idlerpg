@@ -11,7 +11,6 @@ namespace CityTools.CacheInterfaces {
 
         internal static void Initialize() {
             MainWindow.instance.pnlObjectScenicCache.Controls.Add(new ObjectCacheControl());
-            TemplateCache.Initialize();
 
             UpdateObjectTab();
             UpdateObjectPage();

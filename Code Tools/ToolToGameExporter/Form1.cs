@@ -12,18 +12,10 @@ using ToolCache.General;
 
 namespace ToolToGameExporter {
     public partial class Form1 : Form {
-        public const float PHYSICS_SCALE = 10.0f;
-
-        Dictionary<int, int> remappedKeysForPlaces = new Dictionary<int, int>();  // <old, new>
-        Dictionary<int, int> remappedKeysForScenary = new Dictionary<int, int>();  // <old, new>
-
+        
         public Form1() {
             InitializeComponent();
-        }
-
-        private void tool_btn_Click(object sender, EventArgs e) {
-            folderBrowserDialog1.ShowDialog();
-            tool_loc_TB.Text = folderBrowserDialog1.SelectedPath;
+            ToolCache.General.Startup.GoGoGadget(); // Start the system
         }
 
         private void game_btn_Click(object sender, EventArgs e) {
@@ -32,7 +24,13 @@ namespace ToolToGameExporter {
         }
 
         private void convert_btn_Click(object sender, EventArgs e) {
-            MessageBox.Show("This tool is not yet implemented.");
+            if (Directory.Exists(Global.EXPORT_DIRECTORY)) {
+                Directory.Delete(Global.EXPORT_DIRECTORY, true);
+            }
+
+            Directory.CreateDirectory(Global.EXPORT_DIRECTORY);
+
+            TileCrusher.Go();
         }
     }
 }

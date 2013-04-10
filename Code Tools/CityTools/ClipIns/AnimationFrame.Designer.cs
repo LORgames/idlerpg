@@ -1,4 +1,4 @@
-﻿namespace ToolCache.Animation.Form {
+﻿namespace CityTools.ClipIns {
     partial class AnimationFrame {
         /// <summary> 
         /// Required designer variable.

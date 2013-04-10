@@ -7,8 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using ToolCache.Animation;
 
-namespace ToolCache.Animation.Form {
+namespace CityTools.ClipIns {
     public partial class AnimationList : UserControl {
 
         internal AnimatedObject _anim;

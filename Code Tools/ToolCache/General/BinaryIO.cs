@@ -23,7 +23,7 @@ namespace ToolCache.General {
             out_data = new List<byte>();
         }
 
-        internal void Encode(string filename) {
+        public void Encode(string filename) {
             if (out_data != null) {
                 File.WriteAllBytes(filename, out_data.ToArray());
             } else {

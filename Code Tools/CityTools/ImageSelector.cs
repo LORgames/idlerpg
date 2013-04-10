@@ -6,10 +6,10 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using ToolCache.GeneralForms.ClipIns;
 using System.IO;
+using CityTools.ClipIns;
 
-namespace ToolCache.GeneralForms {
+namespace CityTools {
     public partial class ImageSelector : Form {
         private Func<string, int> afterCompletion;
 

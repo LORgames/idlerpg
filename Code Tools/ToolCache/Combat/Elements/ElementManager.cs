@@ -41,7 +41,7 @@ namespace ToolCache.Combat.Elements {
             }
         }
 
-        internal static void WriteDatabase() {
+        public static void WriteDatabase() {
             BinaryIO f = new BinaryIO();
 
             f.AddInt(Elements.Count);
@@ -54,7 +54,7 @@ namespace ToolCache.Combat.Elements {
         }
 
 
-        internal static String[] ElementNames() {
+        public static String[] ElementNames() {
             List<String> retVal = new List<string>();
             
             foreach (KeyValuePair<short, Element> kvp in Elements) {
@@ -64,7 +64,7 @@ namespace ToolCache.Combat.Elements {
             return retVal.ToArray();
         }
 
-        internal static void AddNew(string ElementName) {
+        public static void AddNew(string ElementName) {
             Element e = new Element();
             e.ElementID = NextElementID;
             e.ElementName = ElementName;
@@ -73,7 +73,7 @@ namespace ToolCache.Combat.Elements {
             Elements.Add(e.ElementID, e);
         }
 
-        internal static void Remove(string p) {
+        public static void Remove(string p) {
             short internalID = -1;
 
             foreach(KeyValuePair<short, Element> kvp in Elements) {
@@ -92,7 +92,7 @@ namespace ToolCache.Combat.Elements {
             }
         }
 
-        internal static short GetElementIDFromName(string p) {
+        public static short GetElementIDFromName(string p) {
             foreach (KeyValuePair<short, Element> kvp in Elements) {
                 if (kvp.Value.ElementName == p) {
                     return kvp.Key;
@@ -102,7 +102,7 @@ namespace ToolCache.Combat.Elements {
             return -1;
         }
 
-        internal static int ElementIDToIndex(short p) {
+        public static int ElementIDToIndex(short p) {
             int i = 0;
 
             foreach (KeyValuePair<short, Element> kvp in Elements) {

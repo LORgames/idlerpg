@@ -6,8 +6,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using ToolCache.Map.Objects;
 
-namespace ToolCache.Map.Objects.Tool {
+namespace CityTools {
     public partial class TemplateEditor : Form {
         short objectID = 0;
 

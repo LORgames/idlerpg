@@ -15,7 +15,7 @@ namespace ToolCache.Map.Tiles {
 
         private static short nextTileID = 0;
 
-        internal static Dictionary<short, TileTemplate> Tiles {
+        public static Dictionary<short, TileTemplate> Tiles {
             get { return tiles; }
         }
 
@@ -64,7 +64,7 @@ namespace ToolCache.Map.Tiles {
             }
         }
 
-        internal static void SaveDatabase() {
+        public static void SaveDatabase() {
             // Load object types from file
             BinaryIO f = new BinaryIO();
 
@@ -78,7 +78,7 @@ namespace ToolCache.Map.Tiles {
             f.Encode(RESOLVED_NAME);
         }
 
-        internal static void AddTile(TileTemplate t) {
+        public static void AddTile(TileTemplate t) {
             if (tiles.ContainsKey(t.TileID)) {
                 GroupsToTileUUIDS[tiles[t.TileID].TileGroup].Remove(t.TileID);
 
@@ -109,7 +109,7 @@ namespace ToolCache.Map.Tiles {
             return nextTileID;
         }
 
-        internal static void Delete(short tileID) {
+        public static void Delete(short tileID) {
             if (tiles.ContainsKey(tileID)) {
                 if (GroupsToTileUUIDS.ContainsKey(tiles[tileID].TileGroup)) {
                     GroupsToTileUUIDS[tiles[tileID].TileGroup].Remove(tileID);

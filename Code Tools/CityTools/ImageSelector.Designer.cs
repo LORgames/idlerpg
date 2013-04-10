@@ -1,4 +1,4 @@
-﻿namespace ToolCache.GeneralForms {
+﻿namespace CityTools {
     partial class ImageSelector {
         /// <summary>
         /// Required designer variable.

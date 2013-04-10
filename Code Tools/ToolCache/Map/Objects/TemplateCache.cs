@@ -11,7 +11,7 @@ namespace ToolCache.Map.Objects {
     public class TemplateCache {
         public const string RESOLVED_DATABASE_FILENAME = Settings.CACHE + "db_objects.bin";
 
-        internal static Dictionary<short, Template> ObjectTypes = new Dictionary<short, Template>();
+        public static Dictionary<short, Template> ObjectTypes = new Dictionary<short, Template>();
         private static Dictionary<string, List<short>> GroupsToObjectUUIDS = new Dictionary<string, List<short>>();
 
         private static short nextObjectID = 0;
@@ -73,7 +73,7 @@ namespace ToolCache.Map.Objects {
             }
         }
 
-        internal static void WriteDatabase() {
+        public static void WriteDatabase() {
             BinaryIO f = new BinaryIO();
             f.AddInt(ObjectTypes.Count);
 
@@ -96,7 +96,7 @@ namespace ToolCache.Map.Objects {
             f.Encode(RESOLVED_DATABASE_FILENAME);
         }
 
-        internal static void AddObject(Template t) {
+        public static void AddObject(Template t) {
             if (ObjectTypes.ContainsKey(t.ObjectID)) {
                 GroupsToObjectUUIDS[ObjectTypes[t.ObjectID].ObjectGroup].Remove(t.ObjectID);
 
@@ -123,7 +123,7 @@ namespace ToolCache.Map.Objects {
             return GroupsToObjectUUIDS.Keys.ToList<String>();
         }
 
-        internal static void Delete(short objectID) {
+        public static void Delete(short objectID) {
             if (ObjectTypes.ContainsKey(objectID)) {
                 if (GroupsToObjectUUIDS.ContainsKey(ObjectTypes[objectID].ObjectGroup)) {
                     GroupsToObjectUUIDS[ObjectTypes[objectID].ObjectGroup].Remove(objectID);
@@ -149,7 +149,7 @@ namespace ToolCache.Map.Objects {
             return retList;
         }
 
-        internal static short NextID() {
+        public static short NextID() {
             return nextObjectID;
         }
     }

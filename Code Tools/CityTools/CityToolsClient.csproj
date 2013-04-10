@@ -49,6 +49,12 @@
     <Compile Include="CacheInterfaces\MapInterface.cs" />
     <Compile Include="CacheInterfaces\ObjectInterface.cs" />
     <Compile Include="CacheInterfaces\TileInterface.cs" />
+    <Compile Include="ClipIns\ImageSelector_ImagePnl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ClipIns\ImageSelector_ImagePnl.Designer.cs">
+      <DependentUpon>ImageSelector_ImagePnl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Components\CachedObject.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -63,25 +69,94 @@
     </Compile>
     <Compile Include="Core\Camera.cs" />
     <Compile Include="Core\DrawingHelper.cs" />
+    <Compile Include="ElementEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ElementEditor.Designer.cs">
+      <DependentUpon>ElementEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EquipmentEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EquipmentEditor.Designer.cs">
+      <DependentUpon>EquipmentEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="ClipIns\AnimationFrame.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ClipIns\AnimationFrame.Designer.cs">
+      <DependentUpon>AnimationFrame.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ClipIns\AnimationList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ClipIns\AnimationList.Designer.cs">
+      <DependentUpon>AnimationList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImageSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImageSelector.Designer.cs">
+      <DependentUpon>ImageSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ItemEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItemEditor.Designer.cs">
+      <DependentUpon>ItemEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="ObjectSystem\ScenicPlacementHelper.cs" />
     <Compile Include="ObjectSystem\ScenicHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TemplateEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TemplateEditor.Designer.cs">
+      <DependentUpon>TemplateEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TileEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TileEditor.Designer.cs">
+      <DependentUpon>TileEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="TileSystem\TerrainHelper.cs" />
+    <EmbeddedResource Include="ClipIns\ImageSelector_ImagePnl.resx">
+      <DependentUpon>ImageSelector_ImagePnl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Components\CachedObject.resx">
       <DependentUpon>CachedObject.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\ObjectCacheControl.resx">
       <DependentUpon>ObjectCacheControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ElementEditor.resx">
+      <DependentUpon>ElementEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EquipmentEditor.resx">
+      <DependentUpon>EquipmentEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClipIns\AnimationFrame.resx">
+      <DependentUpon>AnimationFrame.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClipIns\AnimationList.resx">
+      <DependentUpon>AnimationList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImageSelector.resx">
+      <DependentUpon>ImageSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItemEditor.resx">
+      <DependentUpon>ItemEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -92,6 +167,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="TemplateEditor.resx">
+      <DependentUpon>TemplateEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TileEditor.resx">
+      <DependentUpon>TileEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -108,6 +189,7 @@
       <Name>ToolCache</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

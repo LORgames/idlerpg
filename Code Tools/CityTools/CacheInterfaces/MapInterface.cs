@@ -10,8 +10,6 @@ using ToolCache.Map.Tiles;
 namespace CityTools.CacheInterfaces {
     public class MapInterface {
         internal static void Initialize() {
-            MapPieceCache.Initialize();
-
             UpdateGUI();
 
             MainWindow.instance.cbMapPieces.SelectedIndexChanged += new EventHandler(combo_mappieces_SelectedIndexChanged);

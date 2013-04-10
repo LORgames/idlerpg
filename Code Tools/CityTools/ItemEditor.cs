@@ -6,10 +6,10 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using ToolCache.GeneralForms;
 using System.IO;
+using ToolCache.Items;
 
-namespace ToolCache.Items {
+namespace CityTools {
     public partial class ItemEditor : Form {
         private bool _iE = false;
         private bool _new = false;

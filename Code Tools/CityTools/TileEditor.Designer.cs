@@ -1,7 +1,7 @@
 ﻿
-using ToolCache.Animation.Form;
+using CityTools.ClipIns;
 
-namespace ToolCache.Map.Tiles {
+namespace CityTools {
     partial class TileEditor {
         /// <summary>
         /// Required designer variable.
@@ -50,7 +50,7 @@ namespace ToolCache.Map.Tiles {
             this.ckbRight = new System.Windows.Forms.CheckBox();
             this.ckbLeft = new System.Windows.Forms.CheckBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.ccAnimation = new ToolCache.Animation.Form.AnimationList();
+            this.ccAnimation = new AnimationList();
             this.panel3 = new System.Windows.Forms.Panel();
             this.numMovementCost = new System.Windows.Forms.NumericUpDown();
             this.cbSlideDirection = new System.Windows.Forms.ComboBox();

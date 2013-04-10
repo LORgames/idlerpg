@@ -45,49 +45,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animation\AnimatedObject.cs" />
-    <Compile Include="Animation\Form\AnimationFrame.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Animation\Form\AnimationFrame.Designer.cs">
-      <DependentUpon>AnimationFrame.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Animation\Form\AnimationList.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Animation\Form\AnimationList.Designer.cs">
-      <DependentUpon>AnimationList.cs</DependentUpon>
-    </Compile>
     <Compile Include="Combat\Elements\Element.cs" />
-    <Compile Include="Combat\Elements\ElementEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Combat\Elements\ElementEditor.Designer.cs">
-      <DependentUpon>ElementEditor.cs</DependentUpon>
-    </Compile>
     <Compile Include="Combat\Elements\ElementManager.cs" />
     <Compile Include="Critters\ICritter.cs" />
     <Compile Include="Drawing\PersonDrawer.cs" />
     <Compile Include="Equipment\EquipmentAnimationSet.cs" />
     <Compile Include="Equipment\EquipmentItem.cs" />
-    <Compile Include="Equipment\EquipmentEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Equipment\EquipmentEditor.Designer.cs">
-      <DependentUpon>EquipmentEditor.cs</DependentUpon>
-    </Compile>
     <Compile Include="Equipment\EquipmentManager.cs" />
-    <Compile Include="GeneralForms\ClipIns\ImageSelector_ImagePnl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GeneralForms\ClipIns\ImageSelector_ImagePnl.Designer.cs">
-      <DependentUpon>ImageSelector_ImagePnl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GeneralForms\ImageSelector.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GeneralForms\ImageSelector.Designer.cs">
-      <DependentUpon>ImageSelector.cs</DependentUpon>
-    </Compile>
     <Compile Include="General\BinaryIO.cs" />
     <Compile Include="General\ImageCache.cs" />
     <Compile Include="General\Settings.cs" />
@@ -95,20 +59,8 @@
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\ItemDatabase.cs" />
     <Compile Include="Drawing\LBuffer.cs" />
-    <Compile Include="Items\ItemEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Items\ItemEditor.Designer.cs">
-      <DependentUpon>ItemEditor.cs</DependentUpon>
-    </Compile>
     <Compile Include="Map\MapPieceCache.cs" />
     <Compile Include="Map\Objects\Template.cs" />
-    <Compile Include="Map\Objects\Tool\TemplateEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Map\Objects\Tool\TemplateEditor.Designer.cs">
-      <DependentUpon>TemplateEditor.cs</DependentUpon>
-    </Compile>
     <Compile Include="Map\Tiles\TileInstance.cs" />
     <Compile Include="Map\Tiles\TileMap.cs" />
     <Compile Include="Map\MapPiece.cs" />
@@ -116,12 +68,6 @@
     <Compile Include="Map\Objects\TemplateCache.cs" />
     <Compile Include="Map\Tiles\TileTemplate.cs" />
     <Compile Include="Map\Tiles\TileCache.cs" />
-    <Compile Include="Map\Tiles\TileEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Map\Tiles\TileEditor.Designer.cs">
-      <DependentUpon>TileEditor.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -130,58 +76,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Animation\Form\AnimationFrame.resx">
-      <DependentUpon>AnimationFrame.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Animation\Form\AnimationList.resx">
-      <DependentUpon>AnimationList.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Combat\Elements\ElementEditor.resx">
-      <DependentUpon>ElementEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Equipment\EquipmentEditor.resx">
-      <DependentUpon>EquipmentEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GeneralForms\ClipIns\ImageSelector_ImagePnl.resx">
-      <DependentUpon>ImageSelector_ImagePnl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GeneralForms\ImageSelector.resx">
-      <DependentUpon>ImageSelector.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Items\ItemEditor.resx">
-      <DependentUpon>ItemEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Map\Objects\Tool\TemplateEditor.resx">
-      <DependentUpon>TemplateEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Map\Tiles\TileEditor.resx">
-      <DependentUpon>TileEditor.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\delete.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Combat\Effects\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\add.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Grass.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\control_rewind_blue.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\control_fastforward_blue.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\control_play_blue.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -7,8 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using ToolCache.Combat.Elements;
+using ToolCache.Map;
+using ToolCache.Map.Tiles;
 
-namespace ToolCache.Map.Tiles {
+namespace CityTools {
     public partial class TileEditor : Form {
         private short tileID = 0;
         private bool Edited = false;
@@ -35,8 +37,8 @@ namespace ToolCache.Map.Tiles {
         }
 
         private void ChangeTo(short tileID) {
-            if (Tiles.TileCache.G(tileID) != null) {
-                TileTemplate t = Tiles.TileCache.G(tileID);
+            if (ToolCache.Map.Tiles.TileCache.G(tileID) != null) {
+                TileTemplate t = ToolCache.Map.Tiles.TileCache.G(tileID);
                 ccAnimation.ChangeToAnimation(t.Animation);
                 cbTileGroup.Text = t.TileGroup;
                 txtTileName.Text = t.TileName;
@@ -78,7 +80,7 @@ namespace ToolCache.Map.Tiles {
         }
 
         private void btnSave_Click(object sender, EventArgs e) {
-            TileTemplate t = Tiles.TileCache.G(tileID);
+            TileTemplate t = ToolCache.Map.Tiles.TileCache.G(tileID);
             bool addAsNew = false;
 
             if (t == null) {

@@ -1,4 +1,4 @@
-﻿namespace ToolCache.Items {
+﻿namespace CityTools {
     partial class ItemEditor {
         /// <summary>
         /// Required designer variable.

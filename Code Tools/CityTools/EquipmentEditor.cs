@@ -7,12 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-using ToolCache.Animation.Form;
 using ToolCache.Map.Tiles;
 using System.IO;
 using ToolCache.Drawing;
+using ToolCache.Equipment;
 
-namespace ToolCache.Equipment {
+namespace CityTools {
     public partial class EquipmentEditor : Form {
         private Direction currentDirection = Direction.Left;
         private EquipmentItem currentEquipment = new EquipmentItem();

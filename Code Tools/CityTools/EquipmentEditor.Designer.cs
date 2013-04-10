@@ -1,6 +1,6 @@
-﻿using ToolCache.Animation.Form;
+﻿using CityTools.ClipIns;
 
-namespace ToolCache.Equipment {
+namespace CityTools {
     partial class EquipmentEditor {
         /// <summary>
         /// Required designer variable.
@@ -61,8 +61,8 @@ namespace ToolCache.Equipment {
             this.label8 = new System.Windows.Forms.Label();
             this.cbDispHeadgear = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.ccAnimationBack = new ToolCache.Animation.Form.AnimationList();
-            this.ccAnimationFront = new ToolCache.Animation.Form.AnimationList();
+            this.ccAnimationBack = new CityTools.ClipIns.AnimationList();
+            this.ccAnimationFront = new CityTools.ClipIns.AnimationList();
             ((System.ComponentModel.ISupportInitialize)(this.pbSetupLinks)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbEquipmentDisplay)).BeginInit();
             this.SuspendLayout();

@@ -1,4 +1,6 @@
-﻿namespace ToolCache.Map.Objects.Tool {
+﻿using CityTools.ClipIns;
+
+namespace CityTools {
     partial class TemplateEditor {
         /// <summary>
         /// Required designer variable.
@@ -36,7 +38,7 @@
             this.lblName = new System.Windows.Forms.Label();
             this.cbTemplateGroup = new System.Windows.Forms.ComboBox();
             this.txtTemplateName = new System.Windows.Forms.TextBox();
-            this.ccAnimation = new ToolCache.Animation.Form.AnimationList();
+            this.ccAnimation = new AnimationList();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pbExampleBase)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -194,7 +196,7 @@
         private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.ComboBox cbTemplateGroup;
         private System.Windows.Forms.TextBox txtTemplateName;
-        private Animation.Form.AnimationList ccAnimation;
+        private AnimationList ccAnimation;
         private System.Windows.Forms.Timer timer1;
     }
 }

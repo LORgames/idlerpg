@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace ToolCache.GeneralForms.ClipIns {
+namespace CityTools.ClipIns {
     public partial class ImageSelector_ImagePnl : UserControl {
         internal ImageSelector owner = null;
         internal string displayedImage = "";

@@ -1,4 +1,4 @@
-﻿namespace ToolCache.GeneralForms.ClipIns {
+﻿namespace CityTools.ClipIns {
     partial class ImageSelector_ImagePnl {
         /// <summary> 
         /// Required designer variable.

@@ -20,11 +20,11 @@ namespace ToolCache.Items {
             get { return itemsPerCategory.Keys.ToList<string>(); }
         }
 
-        internal static short NextItemID {
+        public static short NextItemID {
             get { return NextID; }
         }
 
-        internal static void Initialize() {
+        public static void Initialize() {
             itemsPerCategory.Clear();
             items.Clear();
             NextID = 0;
@@ -46,7 +46,7 @@ namespace ToolCache.Items {
             }
         }
 
-        internal static void AddItem(Item t) {
+        public static void AddItem(Item t) {
             items.Add(t.ID, t);
 
             if (NextID <= t.ID) {
@@ -61,7 +61,7 @@ namespace ToolCache.Items {
             itemsPerCategory[t.Category].Add(t);
         }
 
-        internal static void SaveDatabase() {
+        public static void SaveDatabase() {
             BinaryIO f = new BinaryIO();
 
             f.AddShort((short)items.Count);
@@ -74,7 +74,7 @@ namespace ToolCache.Items {
             f.Dispose();
         }
 
-        internal static Item Get(short itemID) {
+        public static Item Get(short itemID) {
             if (items.ContainsKey(itemID)) {
                 return items[itemID];
             }
@@ -84,7 +84,7 @@ namespace ToolCache.Items {
             return t;
         }
 
-        internal static void UpdatedItem(Item item) {
+        public static void UpdatedItem(Item item) {
             if (item.Category != item.OldCategory && itemsPerCategory.ContainsKey(item.OldCategory) && itemsPerCategory[item.OldCategory].Contains(item)) {
                 itemsPerCategory[item.OldCategory].Remove(item);
 

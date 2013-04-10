@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace ToolCache.Animation.Form {
+namespace CityTools.ClipIns {
     public partial class AnimationFrame : UserControl {
         AnimationList parent;
 

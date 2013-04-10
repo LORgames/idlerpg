@@ -12,7 +12,7 @@ namespace ToolCache.Equipment {
 
     public class EquipmentManager {
         public static Dictionary<string, EquipmentItem> Equipment = new Dictionary<string, EquipmentItem>();
-        internal static Dictionary<EquipmentTypes, List<EquipmentItem>> TypeLists = new Dictionary<EquipmentTypes, List<EquipmentItem>>();
+        public static Dictionary<EquipmentTypes, List<EquipmentItem>> TypeLists = new Dictionary<EquipmentTypes, List<EquipmentItem>>();
 
         public static void Initialize() {
             Equipment.Clear();
@@ -38,7 +38,7 @@ namespace ToolCache.Equipment {
             }
         }
 
-        internal static void SaveDatabase() {
+        public static void SaveDatabase() {
             BinaryIO f = new BinaryIO();
 
             f.AddInt(Equipment.Count);
@@ -50,7 +50,7 @@ namespace ToolCache.Equipment {
             f.Encode("cache/db_equipment.bin");
         }
 
-        internal static void AddEquipment(EquipmentItem currentEquipment) {
+        public static void AddEquipment(EquipmentItem currentEquipment) {
             string baseName = currentEquipment.Name;
             int nextTry = 1;
             
@@ -65,7 +65,7 @@ namespace ToolCache.Equipment {
             currentEquipment.OldType = currentEquipment.Type;
         }
 
-        internal static void Updated(EquipmentItem currentEquipment) {
+        public static void Updated(EquipmentItem currentEquipment) {
             if (currentEquipment.OldType != currentEquipment.Type && TypeLists[currentEquipment.OldType].Contains(currentEquipment)) {
                 TypeLists[currentEquipment.OldType].Remove(currentEquipment);
                 currentEquipment.OldType = currentEquipment.Type;

@@ -8,7 +8,7 @@ using ToolCache.Animation;
 
 namespace ToolCache.Equipment {
     public class EquipmentItem {
-        internal Dictionary<States, EquipmentAnimationSet> Animations = new Dictionary<States, EquipmentAnimationSet>();
+        public Dictionary<States, EquipmentAnimationSet> Animations = new Dictionary<States, EquipmentAnimationSet>();
 
         public EquipmentTypes Type = EquipmentTypes.Body;
         public EquipmentTypes OldType = EquipmentTypes.Body;
@@ -124,7 +124,7 @@ namespace ToolCache.Equipment {
             f.AddShort((short)LinkTop_Down.Y);
         }
 
-        internal Point GetLinkDown(Direction d) {
+        public Point GetLinkDown(Direction d) {
             if (d == Direction.Left) {
                 return LinkBottom_Left;
             } else if (d == Direction.Right) {
@@ -136,7 +136,7 @@ namespace ToolCache.Equipment {
             return LinkBottom_Down;
         }
 
-        internal Point GetLinkUp(Direction d) {
+        public Point GetLinkUp(Direction d) {
             if (d == Direction.Left) {
                 return LinkTop_Left;
             } else if (d == Direction.Right) {
@@ -148,7 +148,7 @@ namespace ToolCache.Equipment {
             return LinkTop_Down;
         }
 
-        internal void SetLinkDown(Direction d, Point p) {
+        public void SetLinkDown(Direction d, Point p) {
             if (d == Direction.Left) {
                 LinkBottom_Left.X = p.X;
                 LinkBottom_Left.Y = p.Y;
@@ -164,7 +164,7 @@ namespace ToolCache.Equipment {
             }
         }
 
-        internal void SetLinkUp(Direction d, Point p) {
+        public void SetLinkUp(Direction d, Point p) {
             if (d == Direction.Left) {
                 LinkTop_Left.X = p.X;
                 LinkTop_Left.Y = p.Y;
@@ -180,7 +180,7 @@ namespace ToolCache.Equipment {
             }
         }
 
-        internal AnimatedObject DisplayAnimation(States s, Direction d, int layer) {
+        public AnimatedObject DisplayAnimation(States s, Direction d, int layer) {
             AnimatedObject anim = Animations[s].GetAnimation(d, layer);
             
             if (anim.Frames.Count > 0) {
