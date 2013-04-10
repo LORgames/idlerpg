@@ -26,6 +26,8 @@ namespace ToolCache.Map {
 
         public List<BaseObject> Objects = new List<BaseObject>();
         public TileMap Tiles = new TileMap();
+
+        public Rectangle WorldRectangle;
         
         public MapPiece(string filename, short fillTileID) {
             Filename = filename;

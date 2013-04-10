@@ -41,13 +41,21 @@ namespace CityTools.ObjectSystem {
 
             List<TileInstance> tiles = MapPieceCache.CurrentPiece.Tiles.GetTilesFromWorldRectangle(p0a.X, p0a.Y, p1a.X - p0a.X, p1a.Y - p0a.Y);
 
-            foreach (TileInstance tile in tiles) {
-                List<BaseObject> objects = tile.EXOB;
-                for (int k = 0; k < objects.Count; k++) {
-                    if (!selectedObjects.Contains(objects[k])) {
-                        if (selectBox.IntersectsWith(objects[k].ActualBase)) {
-                            selectedObjects.Add(objects[k]);
+            if (MapPieceCache.CurrentPiece.WorldRectangle.Contains(selectBox)) {
+                foreach (TileInstance tile in tiles) {
+                    List<BaseObject> objects = tile.EXOB;
+                    for (int k = 0; k < objects.Count; k++) {
+                        if (!selectedObjects.Contains(objects[k])) {
+                            if (selectBox.IntersectsWith(objects[k].ActualBase)) {
+                                selectedObjects.Add(objects[k]);
+                            }
                         }
+                    }
+                }
+            } else {
+                foreach (BaseObject obj in MapPieceCache.CurrentPiece.Objects) {
+                    if (selectBox.IntersectsWith(obj.ActualBase)) {
+                        selectedObjects.Add(obj);
                     }
                 }
             }
