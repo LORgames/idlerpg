@@ -30,7 +30,6 @@ namespace CityTools {
             this.treeEquipmentList = new System.Windows.Forms.TreeView();
             this.cbItemType = new System.Windows.Forms.ComboBox();
             this.cbTileList = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.cbAnimationState = new System.Windows.Forms.ComboBox();
             this.drpLeft = new System.Windows.Forms.Label();
@@ -42,10 +41,8 @@ namespace CityTools {
             this.label5 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.ckbAvailableAtStart = new System.Windows.Forms.CheckBox();
-            this.btnPlayAnimation = new System.Windows.Forms.Button();
             this.btnRotRight = new System.Windows.Forms.Button();
             this.btnRotLeft = new System.Windows.Forms.Button();
-            this.pbSetupLinks = new System.Windows.Forms.PictureBox();
             this.pbEquipmentDisplay = new System.Windows.Forms.PictureBox();
             this.lblFrontAnimationName = new System.Windows.Forms.Label();
             this.lblBackAnimationName = new System.Windows.Forms.Label();
@@ -62,17 +59,23 @@ namespace CityTools {
             this.label8 = new System.Windows.Forms.Label();
             this.cbDispHeadgear = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.cbPreviewState = new System.Windows.Forms.ComboBox();
+            this.numOffsetX = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
             this.ccAnimationBack = new CityTools.ClipIns.AnimationList();
             this.ccAnimationFront = new CityTools.ClipIns.AnimationList();
-            ((System.ComponentModel.ISupportInitialize)(this.pbSetupLinks)).BeginInit();
+            this.label11 = new System.Windows.Forms.Label();
+            this.numOffsetY = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.pbEquipmentDisplay)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numOffsetX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numOffsetY)).BeginInit();
             this.SuspendLayout();
             // 
             // treeEquipmentList
             // 
             this.treeEquipmentList.Location = new System.Drawing.Point(12, 170);
             this.treeEquipmentList.Name = "treeEquipmentList";
-            this.treeEquipmentList.Size = new System.Drawing.Size(198, 382);
+            this.treeEquipmentList.Size = new System.Drawing.Size(198, 418);
             this.treeEquipmentList.TabIndex = 1;
             this.treeEquipmentList.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeEquipmentList_AfterSelect);
             // 
@@ -95,19 +98,10 @@ namespace CityTools {
             this.cbTileList.TabIndex = 5;
             this.cbTileList.SelectedIndexChanged += new System.EventHandler(this.cbTileList_SelectedIndexChanged);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(384, 346);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(232, 13);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "Left Click To Link Up | Right Click to Link Down";
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(216, 428);
+            this.label2.Location = new System.Drawing.Point(217, 297);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(40, 13);
             this.label2.TabIndex = 8;
@@ -116,7 +110,7 @@ namespace CityTools {
             // cbAnimationState
             // 
             this.cbAnimationState.FormattingEnabled = true;
-            this.cbAnimationState.Location = new System.Drawing.Point(257, 425);
+            this.cbAnimationState.Location = new System.Drawing.Point(258, 294);
             this.cbAnimationState.Name = "cbAnimationState";
             this.cbAnimationState.Size = new System.Drawing.Size(108, 21);
             this.cbAnimationState.TabIndex = 9;
@@ -125,59 +119,64 @@ namespace CityTools {
             // drpLeft
             // 
             this.drpLeft.AllowDrop = true;
-            this.drpLeft.AutoSize = true;
-            this.drpLeft.Location = new System.Drawing.Point(371, 431);
+            this.drpLeft.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.drpLeft.Location = new System.Drawing.Point(513, 217);
             this.drpLeft.Name = "drpLeft";
-            this.drpLeft.Size = new System.Drawing.Size(39, 13);
+            this.drpLeft.Size = new System.Drawing.Size(47, 43);
             this.drpLeft.TabIndex = 10;
             this.drpLeft.Text = "[LEFT]";
+            this.drpLeft.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.drpLeft.DragDrop += new System.Windows.Forms.DragEventHandler(this.quickDrop_DragDrop);
             this.drpLeft.DragOver += new System.Windows.Forms.DragEventHandler(this.quickDrop_DragOver);
             // 
             // drpRight
             // 
             this.drpRight.AllowDrop = true;
-            this.drpRight.AutoSize = true;
-            this.drpRight.Location = new System.Drawing.Point(416, 431);
+            this.drpRight.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.drpRight.Location = new System.Drawing.Point(513, 171);
             this.drpRight.Name = "drpRight";
-            this.drpRight.Size = new System.Drawing.Size(47, 13);
+            this.drpRight.Size = new System.Drawing.Size(47, 43);
             this.drpRight.TabIndex = 11;
             this.drpRight.Text = "[RIGHT]";
+            this.drpRight.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.drpRight.DragDrop += new System.Windows.Forms.DragEventHandler(this.quickDrop_DragDrop);
             this.drpRight.DragOver += new System.Windows.Forms.DragEventHandler(this.quickDrop_DragOver);
             // 
             // drpUp
             // 
             this.drpUp.AllowDrop = true;
-            this.drpUp.AutoSize = true;
-            this.drpUp.Location = new System.Drawing.Point(469, 431);
+            this.drpUp.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.drpUp.Location = new System.Drawing.Point(570, 217);
             this.drpUp.Name = "drpUp";
-            this.drpUp.Size = new System.Drawing.Size(28, 13);
+            this.drpUp.Size = new System.Drawing.Size(47, 43);
             this.drpUp.TabIndex = 12;
             this.drpUp.Text = "[UP]";
+            this.drpUp.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.drpUp.DragDrop += new System.Windows.Forms.DragEventHandler(this.quickDrop_DragDrop);
             this.drpUp.DragOver += new System.Windows.Forms.DragEventHandler(this.quickDrop_DragOver);
             // 
             // drpDown
             // 
             this.drpDown.AllowDrop = true;
-            this.drpDown.AutoSize = true;
-            this.drpDown.Location = new System.Drawing.Point(503, 431);
+            this.drpDown.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.drpDown.Location = new System.Drawing.Point(569, 171);
             this.drpDown.Name = "drpDown";
-            this.drpDown.Size = new System.Drawing.Size(48, 13);
+            this.drpDown.Size = new System.Drawing.Size(48, 43);
             this.drpDown.TabIndex = 13;
             this.drpDown.Text = "[DOWN]";
+            this.drpDown.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.drpDown.DragDrop += new System.Windows.Forms.DragEventHandler(this.quickDrop_DragDrop);
             this.drpDown.DragOver += new System.Windows.Forms.DragEventHandler(this.quickDrop_DragOver);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(371, 413);
+            this.label3.Location = new System.Drawing.Point(498, 264);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(176, 13);
+            this.label3.Size = new System.Drawing.Size(116, 26);
             this.label3.TabIndex = 14;
-            this.label3.Text = "Quick Drop (hold shift for 2nd layer):";
+            this.label3.Text = "Quick Drop\r\n(hold shift for 2nd layer)";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // label4
             // 
@@ -208,27 +207,18 @@ namespace CityTools {
             // ckbAvailableAtStart
             // 
             this.ckbAvailableAtStart.AutoSize = true;
-            this.ckbAvailableAtStart.Location = new System.Drawing.Point(219, 283);
+            this.ckbAvailableAtStart.Location = new System.Drawing.Point(405, 296);
             this.ckbAvailableAtStart.Name = "ckbAvailableAtStart";
-            this.ckbAvailableAtStart.Size = new System.Drawing.Size(146, 17);
+            this.ckbAvailableAtStart.Size = new System.Drawing.Size(85, 17);
             this.ckbAvailableAtStart.TabIndex = 18;
-            this.ckbAvailableAtStart.Text = "Available As Starting Item";
+            this.ckbAvailableAtStart.Text = "Starting Item";
             this.ckbAvailableAtStart.UseVisualStyleBackColor = true;
             this.ckbAvailableAtStart.CheckedChanged += new System.EventHandler(this.ValueChanged);
-            // 
-            // btnPlayAnimation
-            // 
-            this.btnPlayAnimation.Image = ((System.Drawing.Image)(resources.GetObject("btnPlayAnimation.Image")));
-            this.btnPlayAnimation.Location = new System.Drawing.Point(493, 314);
-            this.btnPlayAnimation.Name = "btnPlayAnimation";
-            this.btnPlayAnimation.Size = new System.Drawing.Size(23, 22);
-            this.btnPlayAnimation.TabIndex = 20;
-            this.btnPlayAnimation.UseVisualStyleBackColor = true;
             // 
             // btnRotRight
             // 
             this.btnRotRight.Image = ((System.Drawing.Image)(resources.GetObject("btnRotRight.Image")));
-            this.btnRotRight.Location = new System.Drawing.Point(586, 314);
+            this.btnRotRight.Location = new System.Drawing.Point(545, 293);
             this.btnRotRight.Name = "btnRotRight";
             this.btnRotRight.Size = new System.Drawing.Size(23, 22);
             this.btnRotRight.TabIndex = 19;
@@ -238,22 +228,12 @@ namespace CityTools {
             // btnRotLeft
             // 
             this.btnRotLeft.Image = ((System.Drawing.Image)(resources.GetObject("btnRotLeft.Image")));
-            this.btnRotLeft.Location = new System.Drawing.Point(393, 314);
+            this.btnRotLeft.Location = new System.Drawing.Point(519, 293);
             this.btnRotLeft.Name = "btnRotLeft";
             this.btnRotLeft.Size = new System.Drawing.Size(23, 22);
             this.btnRotLeft.TabIndex = 19;
             this.btnRotLeft.UseVisualStyleBackColor = true;
             this.btnRotLeft.Click += new System.EventHandler(this.btnRotLeft_Click);
-            // 
-            // pbSetupLinks
-            // 
-            this.pbSetupLinks.Location = new System.Drawing.Point(387, 170);
-            this.pbSetupLinks.Name = "pbSetupLinks";
-            this.pbSetupLinks.Size = new System.Drawing.Size(229, 173);
-            this.pbSetupLinks.TabIndex = 4;
-            this.pbSetupLinks.TabStop = false;
-            this.pbSetupLinks.Click += new System.EventHandler(this.pbSetupLinks_Click);
-            this.pbSetupLinks.Paint += new System.Windows.Forms.PaintEventHandler(this.pbSetupLinks_Paint);
             // 
             // pbEquipmentDisplay
             // 
@@ -267,7 +247,7 @@ namespace CityTools {
             // lblFrontAnimationName
             // 
             this.lblFrontAnimationName.AutoSize = true;
-            this.lblFrontAnimationName.Location = new System.Drawing.Point(222, 534);
+            this.lblFrontAnimationName.Location = new System.Drawing.Point(220, 404);
             this.lblFrontAnimationName.Name = "lblFrontAnimationName";
             this.lblFrontAnimationName.Size = new System.Drawing.Size(44, 13);
             this.lblFrontAnimationName.TabIndex = 22;
@@ -276,7 +256,7 @@ namespace CityTools {
             // lblBackAnimationName
             // 
             this.lblBackAnimationName.AutoSize = true;
-            this.lblBackAnimationName.Location = new System.Drawing.Point(423, 534);
+            this.lblBackAnimationName.Location = new System.Drawing.Point(421, 405);
             this.lblBackAnimationName.Name = "lblBackAnimationName";
             this.lblBackAnimationName.Size = new System.Drawing.Size(35, 13);
             this.lblBackAnimationName.TabIndex = 23;
@@ -286,10 +266,10 @@ namespace CityTools {
             // 
             this.lblDirection.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblDirection.BackColor = System.Drawing.Color.Transparent;
-            this.lblDirection.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDirection.Location = new System.Drawing.Point(387, 369);
+            this.lblDirection.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDirection.Location = new System.Drawing.Point(570, 297);
             this.lblDirection.Name = "lblDirection";
-            this.lblDirection.Size = new System.Drawing.Size(229, 29);
+            this.lblDirection.Size = new System.Drawing.Size(47, 18);
             this.lblDirection.TabIndex = 24;
             this.lblDirection.Text = "Left";
             this.lblDirection.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -298,7 +278,7 @@ namespace CityTools {
             // 
             this.btnCreateNew.Location = new System.Drawing.Point(217, 171);
             this.btnCreateNew.Name = "btnCreateNew";
-            this.btnCreateNew.Size = new System.Drawing.Size(164, 23);
+            this.btnCreateNew.Size = new System.Drawing.Size(290, 23);
             this.btnCreateNew.TabIndex = 25;
             this.btnCreateNew.Text = "Create New";
             this.btnCreateNew.UseVisualStyleBackColor = true;
@@ -403,10 +383,46 @@ namespace CityTools {
             this.label10.TabIndex = 40;
             this.label10.Text = "Headgear";
             // 
+            // cbPreviewState
+            // 
+            this.cbPreviewState.FormattingEnabled = true;
+            this.cbPreviewState.Location = new System.Drawing.Point(22, 46);
+            this.cbPreviewState.Name = "cbPreviewState";
+            this.cbPreviewState.Size = new System.Drawing.Size(87, 21);
+            this.cbPreviewState.TabIndex = 42;
+            this.cbPreviewState.SelectedIndexChanged += new System.EventHandler(this.cbPreviewState_SelectedIndexChanged);
+            // 
+            // numOffsetX
+            // 
+            this.numOffsetX.Location = new System.Drawing.Point(405, 217);
+            this.numOffsetX.Maximum = new decimal(new int[] {
+            250,
+            0,
+            0,
+            0});
+            this.numOffsetX.Minimum = new decimal(new int[] {
+            250,
+            0,
+            0,
+            -2147483648});
+            this.numOffsetX.Name = "numOffsetX";
+            this.numOffsetX.Size = new System.Drawing.Size(85, 20);
+            this.numOffsetX.TabIndex = 43;
+            this.numOffsetX.ValueChanged += new System.EventHandler(this.numOffset_ValueChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(405, 201);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(45, 13);
+            this.label1.TabIndex = 44;
+            this.label1.Text = "Offset X";
+            // 
             // ccAnimationBack
             // 
             this.ccAnimationBack.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ccAnimationBack.Location = new System.Drawing.Point(418, 452);
+            this.ccAnimationBack.Location = new System.Drawing.Point(419, 321);
             this.ccAnimationBack.Name = "ccAnimationBack";
             this.ccAnimationBack.Size = new System.Drawing.Size(199, 100);
             this.ccAnimationBack.TabIndex = 21;
@@ -414,16 +430,47 @@ namespace CityTools {
             // ccAnimationFront
             // 
             this.ccAnimationFront.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ccAnimationFront.Location = new System.Drawing.Point(217, 452);
+            this.ccAnimationFront.Location = new System.Drawing.Point(218, 321);
             this.ccAnimationFront.Name = "ccAnimationFront";
             this.ccAnimationFront.Size = new System.Drawing.Size(199, 100);
             this.ccAnimationFront.TabIndex = 6;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(405, 241);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(45, 13);
+            this.label11.TabIndex = 46;
+            this.label11.Text = "Offset Y";
+            // 
+            // numOffsetY
+            // 
+            this.numOffsetY.Location = new System.Drawing.Point(405, 257);
+            this.numOffsetY.Maximum = new decimal(new int[] {
+            250,
+            0,
+            0,
+            0});
+            this.numOffsetY.Minimum = new decimal(new int[] {
+            250,
+            0,
+            0,
+            -2147483648});
+            this.numOffsetY.Name = "numOffsetY";
+            this.numOffsetY.Size = new System.Drawing.Size(85, 20);
+            this.numOffsetY.TabIndex = 45;
             // 
             // EquipmentEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(628, 559);
+            this.ClientSize = new System.Drawing.Size(628, 600);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.numOffsetY);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.numOffsetX);
+            this.Controls.Add(this.cbPreviewState);
             this.Controls.Add(this.cbDispHeadgear);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.cbDispPants);
@@ -439,7 +486,6 @@ namespace CityTools {
             this.Controls.Add(this.lblBackAnimationName);
             this.Controls.Add(this.lblFrontAnimationName);
             this.Controls.Add(this.ccAnimationBack);
-            this.Controls.Add(this.btnPlayAnimation);
             this.Controls.Add(this.btnRotRight);
             this.Controls.Add(this.btnRotLeft);
             this.Controls.Add(this.ckbAvailableAtStart);
@@ -453,18 +499,17 @@ namespace CityTools {
             this.Controls.Add(this.drpLeft);
             this.Controls.Add(this.cbAnimationState);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.ccAnimationFront);
             this.Controls.Add(this.cbTileList);
-            this.Controls.Add(this.pbSetupLinks);
             this.Controls.Add(this.pbEquipmentDisplay);
             this.Controls.Add(this.cbItemType);
             this.Controls.Add(this.treeEquipmentList);
             this.Name = "EquipmentEditor";
             this.Text = "Equipment Editor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EquipmentEditor_FormClosing);
-            ((System.ComponentModel.ISupportInitialize)(this.pbSetupLinks)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbEquipmentDisplay)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numOffsetX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numOffsetY)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -475,10 +520,8 @@ namespace CityTools {
         private System.Windows.Forms.TreeView treeEquipmentList;
         private System.Windows.Forms.ComboBox cbItemType;
         private System.Windows.Forms.PictureBox pbEquipmentDisplay;
-        private System.Windows.Forms.PictureBox pbSetupLinks;
         private System.Windows.Forms.ComboBox cbTileList;
         private AnimationList ccAnimationFront;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cbAnimationState;
         private System.Windows.Forms.Label drpLeft;
@@ -492,7 +535,6 @@ namespace CityTools {
         private System.Windows.Forms.CheckBox ckbAvailableAtStart;
         private System.Windows.Forms.Button btnRotLeft;
         private System.Windows.Forms.Button btnRotRight;
-        private System.Windows.Forms.Button btnPlayAnimation;
         private AnimationList ccAnimationBack;
         private System.Windows.Forms.Label lblFrontAnimationName;
         private System.Windows.Forms.Label lblBackAnimationName;
@@ -509,5 +551,10 @@ namespace CityTools {
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox cbDispHeadgear;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ComboBox cbPreviewState;
+        private System.Windows.Forms.NumericUpDown numOffsetX;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.NumericUpDown numOffsetY;
     }
 }

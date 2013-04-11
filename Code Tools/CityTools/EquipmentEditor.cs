@@ -154,8 +154,8 @@ namespace CityTools {
             ccAnimationFront.ChangeToAnimation(currentEquipment.Animations[States.Default].GetAnimation(currentDirection, 0));
             ccAnimationBack.ChangeToAnimation(currentEquipment.Animations[States.Default].GetAnimation(currentDirection, 1));
 
-            pbSetupLinks.Invalidate();
-            
+            numOffsetX.Value = currentEquipment.LinkOffset;
+
             _updatingForm = false;
         }
 
@@ -197,54 +197,8 @@ namespace CityTools {
             }
         }
 
-        private void pbSetupLinks_Paint(object sender, PaintEventArgs e) {
-            TileTemplate tt = cbTileList.SelectedItem as TileTemplate;
-
-            if (tt != null) {
-                for (int x = 0; x < e.ClipRectangle.Width; x += TileTemplate.PIXELS_X) {
-                    for (int y = 0; y < e.ClipRectangle.Width; y += TileTemplate.PIXELS_Y) {
-                        tt.Animation.Draw(e.Graphics, x, y, 1);
-                    }
-                }
-            }
-
-            States cState = (States)Enum.Parse(typeof(States), cbAnimationState.Text);
-            EquipmentTypes cType = (EquipmentTypes)Enum.Parse(typeof(EquipmentTypes), cbItemType.Text);
-
-            Point centerPoint = new Point(pbSetupLinks.DisplayRectangle.Width / 2, pbSetupLinks.DisplayRectangle.Height / 2);
-            
-            Point layer0_center = currentEquipment.Animations[cState].GetAnimation(currentDirection, 0).Center;
-            Point layer1_center = currentEquipment.Animations[cState].GetAnimation(currentDirection, 1).Center;
-
-            Point drawLayer0At = Point.Empty;
-            drawLayer0At.X = centerPoint.X - layer0_center.X;
-            drawLayer0At.Y = centerPoint.Y - layer0_center.Y;
-
-            Point drawLayer1At = Point.Empty;
-            drawLayer1At.X = centerPoint.X - layer1_center.X;
-            drawLayer1At.Y = centerPoint.Y - layer1_center.Y;
-
-            if (cType == EquipmentTypes.Legs) {
-                Point p = currentEquipment.GetLinkDown(currentDirection);
-
-                drawLayer1At.X += p.X - layer0_center.X;
-                drawLayer1At.Y += p.Y - layer0_center.Y;
-
-                currentEquipment.Animations[cState].GetAnimation(currentDirection, 1).Draw(e.Graphics, drawLayer1At.X, drawLayer1At.Y, 1);
-            } else {
-                currentEquipment.Animations[cState].GetAnimation(currentDirection, 1).Draw(e.Graphics, drawLayer1At.X, drawLayer1At.Y, 1);
-            }
-
-            currentEquipment.Animations[cState].GetAnimation(currentDirection, 0).Draw(e.Graphics, drawLayer0At.X, drawLayer0At.Y, 1);
-
-            e.Graphics.FillEllipse(Brushes.Yellow, new Rectangle(currentEquipment.GetLinkUp(currentDirection).X - 1 + drawLayer0At.X, currentEquipment.GetLinkUp(currentDirection).Y - 1 + drawLayer0At.Y, 3, 3));
-            e.Graphics.FillEllipse(Brushes.Blue, new Rectangle(currentEquipment.GetLinkDown(currentDirection).X - 1 + drawLayer0At.X, currentEquipment.GetLinkDown(currentDirection).Y - 1 + drawLayer0At.Y, 3, 3));
-            e.Graphics.FillEllipse(Brushes.Red, new Rectangle(currentEquipment.GetLinkMiddle(currentDirection).X - 1 + drawLayer0At.X, currentEquipment.GetLinkMiddle(currentDirection).Y - 1 + drawLayer0At.Y, 3, 3));
-        }
-
         private void cbTileList_SelectedIndexChanged(object sender, EventArgs e) {
             pbEquipmentDisplay.Invalidate();
-            pbSetupLinks.Invalidate();
         }
 
         private void quickDrop_DragOver(object sender, DragEventArgs e) {
@@ -421,6 +375,16 @@ namespace CityTools {
             }
         }
 
+        private void cbPreviewState_SelectedIndexChanged(object sender, EventArgs e) {
+            States eType;
+
+            if (Enum.TryParse<States>(cbPreviewState.Text, out eType)) {
+                pbEquipmentDisplay.Invalidate();
+            } else {
+                cbPreviewState.Text = Enum.GetName(typeof(States), States.Default);
+            }
+        }
+
         private void EquipmentEditor_FormClosing(object sender, FormClosingEventArgs e) {
             SaveIfRequired();
 
@@ -457,59 +421,17 @@ namespace CityTools {
                     _new = false;
                     UpdateForm();
                 }
+
+                if (ei.Type == EquipmentTypes.Body) cbDispBody.Text = ei.Name;
+                if (ei.Type == EquipmentTypes.Face) cbDispFace.Text = ei.Name;
+                if (ei.Type == EquipmentTypes.Hat) cbDispHeadgear.Text = ei.Name;
+                if (ei.Type == EquipmentTypes.Legs) cbDispPants.Text = ei.Name;
+                if (ei.Type == EquipmentTypes.Weapon) cbDispWeapon.Text = ei.Name;
             }
         }
 
         private void timer1_Tick(object sender, EventArgs e) {
-            pbSetupLinks.Invalidate();
             pbEquipmentDisplay.Invalidate();
-        }
-
-        private void pbSetupLinks_Click(object sender, EventArgs _e) {
-            MouseEventArgs e = (MouseEventArgs)_e;
-
-            States cState = (States)Enum.Parse(typeof(States), cbAnimationState.Text);
-
-            Point p;
-
-            if (e.Button == MouseButtons.Left) {
-                p = currentEquipment.GetLinkUp(currentDirection);
-            } else if(e.Button == MouseButtons.Right) {
-                p = currentEquipment.GetLinkDown(currentDirection);
-            } else {
-                p = currentEquipment.GetLinkMiddle(currentDirection);
-            }
-
-            Point layer0_drawPoint = new Point(pbSetupLinks.DisplayRectangle.Width / 2, pbSetupLinks.DisplayRectangle.Height / 2);
-            Point layer0_center = currentEquipment.Animations[cState].GetAnimation(currentDirection, 0).Center;
-
-            Point m = Point.Empty;
-            m.X = e.X - layer0_drawPoint.X + layer0_center.X;
-            m.Y = e.Y - layer0_drawPoint.Y + layer0_center.Y;
-
-            if ((ModifierKeys & Keys.Control) == Keys.Control || (ModifierKeys & Keys.Shift) == Keys.Shift) {
-                int dX = Math.Abs(m.X - p.X);
-                int dY = Math.Abs(m.Y - p.Y);
-
-                if (dX > dY) {
-                    if (m.X < p.X) p.X--;
-                    if (m.X > p.X) p.X++;
-                } else {
-                    if (m.Y < p.Y) p.Y--;
-                    if (m.Y > p.Y) p.Y++;
-                }
-            } else {
-                p.X = m.X;
-                p.Y = m.Y;
-            }
-
-            if (e.Button == MouseButtons.Left) {
-                currentEquipment.SetLinkUp(currentDirection, p);
-            } else if(e.Button == MouseButtons.Right) {
-                currentEquipment.SetLinkDown(currentDirection, p);
-            } else {
-                currentEquipment.SetLinkMiddle(currentDirection, p);
-            }
         }
 
         private void changeFullDisplay(object sender, EventArgs e) {
@@ -526,6 +448,11 @@ namespace CityTools {
             }
 
             return null;
+        }
+
+        private void numOffset_ValueChanged(object sender, EventArgs e) {
+            currentEquipment.LinkOffset = (short)numOffsetX.Value;
+            _iE = true;
         }
     }
 }
