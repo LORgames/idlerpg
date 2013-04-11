@@ -26,6 +26,7 @@ namespace CityTools {
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EquipmentEditor));
             this.treeEquipmentList = new System.Windows.Forms.TreeView();
             this.cbItemType = new System.Windows.Forms.ComboBox();
             this.cbTileList = new System.Windows.Forms.ComboBox();
@@ -217,7 +218,7 @@ namespace CityTools {
             // 
             // btnPlayAnimation
             // 
-            this.btnPlayAnimation.Image = global::ToolCache.Properties.Resources.control_play_blue;
+            this.btnPlayAnimation.Image = ((System.Drawing.Image)(resources.GetObject("btnPlayAnimation.Image")));
             this.btnPlayAnimation.Location = new System.Drawing.Point(493, 314);
             this.btnPlayAnimation.Name = "btnPlayAnimation";
             this.btnPlayAnimation.Size = new System.Drawing.Size(23, 22);
@@ -226,7 +227,7 @@ namespace CityTools {
             // 
             // btnRotRight
             // 
-            this.btnRotRight.Image = global::ToolCache.Properties.Resources.control_fastforward_blue;
+            this.btnRotRight.Image = ((System.Drawing.Image)(resources.GetObject("btnRotRight.Image")));
             this.btnRotRight.Location = new System.Drawing.Point(586, 314);
             this.btnRotRight.Name = "btnRotRight";
             this.btnRotRight.Size = new System.Drawing.Size(23, 22);
@@ -236,7 +237,7 @@ namespace CityTools {
             // 
             // btnRotLeft
             // 
-            this.btnRotLeft.Image = global::ToolCache.Properties.Resources.control_rewind_blue;
+            this.btnRotLeft.Image = ((System.Drawing.Image)(resources.GetObject("btnRotLeft.Image")));
             this.btnRotLeft.Location = new System.Drawing.Point(393, 314);
             this.btnRotLeft.Name = "btnRotLeft";
             this.btnRotLeft.Size = new System.Drawing.Size(23, 22);
@@ -315,6 +316,7 @@ namespace CityTools {
             this.cbDispWeapon.Size = new System.Drawing.Size(94, 21);
             this.cbDispWeapon.TabIndex = 33;
             this.cbDispWeapon.SelectedIndexChanged += new System.EventHandler(this.changeFullDisplay);
+            this.cbDispWeapon.TextUpdate += new System.EventHandler(this.changeFullDisplay);
             // 
             // label9
             // 
@@ -333,6 +335,7 @@ namespace CityTools {
             this.cbDispBody.Size = new System.Drawing.Size(94, 21);
             this.cbDispBody.TabIndex = 35;
             this.cbDispBody.SelectedIndexChanged += new System.EventHandler(this.changeFullDisplay);
+            this.cbDispBody.TextUpdate += new System.EventHandler(this.changeFullDisplay);
             // 
             // label6
             // 
@@ -351,6 +354,7 @@ namespace CityTools {
             this.cbDispFace.Size = new System.Drawing.Size(94, 21);
             this.cbDispFace.TabIndex = 37;
             this.cbDispFace.SelectedIndexChanged += new System.EventHandler(this.changeFullDisplay);
+            this.cbDispFace.TextUpdate += new System.EventHandler(this.changeFullDisplay);
             // 
             // label7
             // 
@@ -369,6 +373,7 @@ namespace CityTools {
             this.cbDispPants.Size = new System.Drawing.Size(94, 21);
             this.cbDispPants.TabIndex = 39;
             this.cbDispPants.SelectedIndexChanged += new System.EventHandler(this.changeFullDisplay);
+            this.cbDispPants.TextUpdate += new System.EventHandler(this.changeFullDisplay);
             // 
             // label8
             // 
@@ -387,6 +392,7 @@ namespace CityTools {
             this.cbDispHeadgear.Size = new System.Drawing.Size(94, 21);
             this.cbDispHeadgear.TabIndex = 41;
             this.cbDispHeadgear.SelectedIndexChanged += new System.EventHandler(this.changeFullDisplay);
+            this.cbDispHeadgear.TextUpdate += new System.EventHandler(this.changeFullDisplay);
             // 
             // label10
             // 
