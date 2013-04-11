@@ -239,6 +239,7 @@ namespace CityTools {
 
             e.Graphics.FillEllipse(Brushes.Yellow, new Rectangle(currentEquipment.GetLinkUp(currentDirection).X - 1 + drawLayer0At.X, currentEquipment.GetLinkUp(currentDirection).Y - 1 + drawLayer0At.Y, 3, 3));
             e.Graphics.FillEllipse(Brushes.Blue, new Rectangle(currentEquipment.GetLinkDown(currentDirection).X - 1 + drawLayer0At.X, currentEquipment.GetLinkDown(currentDirection).Y - 1 + drawLayer0At.Y, 3, 3));
+            e.Graphics.FillEllipse(Brushes.Red, new Rectangle(currentEquipment.GetLinkMiddle(currentDirection).X - 1 + drawLayer0At.X, currentEquipment.GetLinkMiddle(currentDirection).Y - 1 + drawLayer0At.Y, 3, 3));
         }
 
         private void cbTileList_SelectedIndexChanged(object sender, EventArgs e) {
@@ -471,10 +472,12 @@ namespace CityTools {
 
             Point p;
 
-            if (e.Button == System.Windows.Forms.MouseButtons.Left) {
+            if (e.Button == MouseButtons.Left) {
                 p = currentEquipment.GetLinkUp(currentDirection);
-            } else {
+            } else if(e.Button == MouseButtons.Right) {
                 p = currentEquipment.GetLinkDown(currentDirection);
+            } else {
+                p = currentEquipment.GetLinkMiddle(currentDirection);
             }
 
             Point layer0_drawPoint = new Point(pbSetupLinks.DisplayRectangle.Width / 2, pbSetupLinks.DisplayRectangle.Height / 2);
@@ -500,10 +503,12 @@ namespace CityTools {
                 p.Y = m.Y;
             }
 
-            if (e.Button == System.Windows.Forms.MouseButtons.Left) {
+            if (e.Button == MouseButtons.Left) {
                 currentEquipment.SetLinkUp(currentDirection, p);
-            } else {
+            } else if(e.Button == MouseButtons.Right) {
                 currentEquipment.SetLinkDown(currentDirection, p);
+            } else {
+                currentEquipment.SetLinkMiddle(currentDirection, p);
             }
         }
 

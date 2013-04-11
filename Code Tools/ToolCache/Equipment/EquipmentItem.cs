@@ -27,6 +27,11 @@ namespace ToolCache.Equipment {
         public Point LinkBottom_Up = Point.Empty;
         public Point LinkBottom_Down = Point.Empty;
 
+        public Point LinkMiddle_Left = Point.Empty;
+        public Point LinkMiddle_Right = Point.Empty;
+        public Point LinkMiddle_Up = Point.Empty;
+        public Point LinkMiddle_Down = Point.Empty;
+
         public EquipmentItem(bool initialize = true) {
             if(initialize) VerifyAnimationSets();
         }
@@ -75,6 +80,18 @@ namespace ToolCache.Equipment {
             t.LinkTop_Down.X = f.GetShort();
             t.LinkTop_Down.Y = f.GetShort();
 
+            t.LinkMiddle_Left.X = f.GetShort();
+            t.LinkMiddle_Left.Y = f.GetShort();
+            
+            t.LinkMiddle_Right.X = f.GetShort();
+            t.LinkMiddle_Right.Y = f.GetShort();
+            
+            t.LinkMiddle_Up.X = f.GetShort();
+            t.LinkMiddle_Up.Y = f.GetShort();
+            
+            t.LinkMiddle_Down.X = f.GetShort();
+            t.LinkMiddle_Down.Y = f.GetShort();
+
             t.VerifyAnimationSets();
 
             return t;
@@ -122,6 +139,18 @@ namespace ToolCache.Equipment {
                                   
             f.AddShort((short)LinkTop_Down.X);
             f.AddShort((short)LinkTop_Down.Y);
+
+            f.AddShort((short)LinkMiddle_Left.X);
+            f.AddShort((short)LinkMiddle_Left.Y);
+            
+            f.AddShort((short)LinkMiddle_Right.X);
+            f.AddShort((short)LinkMiddle_Right.Y);
+            
+            f.AddShort((short)LinkMiddle_Up.X);
+            f.AddShort((short)LinkMiddle_Up.Y);
+            
+            f.AddShort((short)LinkMiddle_Down.X);
+            f.AddShort((short)LinkMiddle_Down.Y);
         }
 
         public Point GetLinkDown(Direction d) {
@@ -146,6 +175,18 @@ namespace ToolCache.Equipment {
             }
 
             return LinkTop_Down;
+        }
+
+        public Point GetLinkMiddle(Direction d) {
+            if (d == Direction.Left) {
+                return LinkMiddle_Left;
+            } else if (d == Direction.Right) {
+                return LinkMiddle_Right;
+            } else if (d == Direction.Up) {
+                return LinkMiddle_Up;
+            }
+
+            return LinkMiddle_Down;
         }
 
         public void SetLinkDown(Direction d, Point p) {
@@ -177,6 +218,22 @@ namespace ToolCache.Equipment {
             } else {
                 LinkTop_Down.X = p.X;
                 LinkTop_Down.Y = p.Y;
+            }
+        }
+
+        public void SetLinkMiddle(Direction d, Point p) {
+            if (d == Direction.Left) {
+                LinkMiddle_Left.X = p.X;
+                LinkMiddle_Left.Y = p.Y;
+            } else if (d == Direction.Right) {
+                LinkMiddle_Right.X = p.X;
+                LinkMiddle_Right.Y = p.Y;
+            } else if (d == Direction.Up) {
+                LinkMiddle_Up.X = p.X;
+                LinkMiddle_Up.Y = p.Y;
+            } else {
+                LinkMiddle_Down.X = p.X;
+                LinkMiddle_Down.Y = p.Y;
             }
         }
 

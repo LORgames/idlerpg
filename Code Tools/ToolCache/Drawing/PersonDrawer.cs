@@ -23,6 +23,7 @@ namespace ToolCache.Drawing {
             Point pu_offset = pants.GetLinkUp(d);
             Point bd_offset = body.GetLinkDown(d);
             Point bu_offset = body.GetLinkUp(d);
+            Point bm_offset = body.GetLinkMiddle(d);
             Point fd_offset = face.GetLinkDown(d);
             Point hd_offset = head == null ? Point.Empty : head.GetLinkDown(d);
             Point wd_offset = weapon == null ? Point.Empty : weapon.GetLinkDown(d);
@@ -59,8 +60,8 @@ namespace ToolCache.Drawing {
 
             //Solve weapon if possible
             Point weaponLink = Point.Empty;
-            weaponLink.X = p.X - pd_offset.X + pu_offset.X - bd_offset.X - wd_offset.X;
-            weaponLink.Y = p.Y - pd_offset.Y + pu_offset.Y - bd_offset.Y - wd_offset.Y;
+            weaponLink.X = p.X - pd_offset.X + pu_offset.X - bd_offset.X + bm_offset.X - wd_offset.X;
+            weaponLink.Y = p.Y - pd_offset.Y + pu_offset.Y - bd_offset.Y + bm_offset.Y - wd_offset.Y;
 
             ////////////////////////////////////////// DRAW STUFF
 
