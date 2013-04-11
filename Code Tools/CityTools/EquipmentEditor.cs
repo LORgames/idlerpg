@@ -102,17 +102,44 @@ namespace CityTools {
 
             ComboBox relCB = cbDispBody;
 
+            cbDispBody.SuspendLayout();
+            cbDispFace.SuspendLayout();
+            cbDispHeadgear.SuspendLayout();
+            cbDispPants.SuspendLayout();
+            cbDispWeapon.SuspendLayout();
+
             foreach (KeyValuePair<EquipmentTypes, List<EquipmentItem>> kvp in EquipmentManager.TypeLists) {
                 if (kvp.Key == EquipmentTypes.Body) relCB = cbDispBody;
                 else if (kvp.Key == EquipmentTypes.Face) relCB = cbDispFace;
                 else if (kvp.Key == EquipmentTypes.Hat) relCB = cbDispHeadgear;
                 else if (kvp.Key == EquipmentTypes.Legs) relCB = cbDispPants;
                 else if (kvp.Key == EquipmentTypes.Weapon) relCB = cbDispWeapon;
-
+                
                 foreach (EquipmentItem ei in kvp.Value) {
                     relCB.Items.Add(ei.Name);
                 }
             }
+
+            if (body == null) cbDispBody.Text = EquipmentManager.TypeLists[EquipmentTypes.Body].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Body][0].Name : "";
+            else cbDispBody.Text = body.Name;
+            
+            if (face == null) cbDispFace.Text = EquipmentManager.TypeLists[EquipmentTypes.Face].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Face][0].Name : "";
+            else cbDispFace.Text = face.Name;
+            
+            if (head == null) cbDispHeadgear.Text = EquipmentManager.TypeLists[EquipmentTypes.Hat].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Hat][0].Name : "";
+            else cbDispHeadgear.Text = head.Name;
+            
+            if (legs == null) cbDispPants.Text = EquipmentManager.TypeLists[EquipmentTypes.Legs].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Legs][0].Name : "";
+            else cbDispPants.Text = legs.Name;
+            
+            if (weap == null) cbDispWeapon.Text = EquipmentManager.TypeLists[EquipmentTypes.Weapon].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Weapon][0].Name : "";
+            else cbDispWeapon.Text = weap.Name;
+
+            cbDispBody.ResumeLayout();
+            cbDispFace.ResumeLayout();
+            cbDispHeadgear.ResumeLayout();
+            cbDispPants.ResumeLayout();
+            cbDispWeapon.ResumeLayout();
         }
         
         private void UpdateForm() {
@@ -457,7 +484,7 @@ namespace CityTools {
             m.X = e.X - layer0_drawPoint.X + layer0_center.X;
             m.Y = e.Y - layer0_drawPoint.Y + layer0_center.Y;
 
-            if ((ModifierKeys & Keys.Control) == Keys.Control) {
+            if ((ModifierKeys & Keys.Control) == Keys.Control || (ModifierKeys & Keys.Shift) == Keys.Shift) {
                 int dX = Math.Abs(m.X - p.X);
                 int dY = Math.Abs(m.Y - p.Y);
 
