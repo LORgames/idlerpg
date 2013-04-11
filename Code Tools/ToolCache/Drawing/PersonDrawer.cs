@@ -26,12 +26,12 @@ namespace ToolCache.Drawing {
             Point h_offset = head == null ? (short)0 : head.Offset;
 
             //The centers
-            Point pantsCenter = pants.DisplayAnimation(s, d, 0).Center;
-            Point shadowCenter = pants.DisplayAnimation(s, d, 1).Center;
-            Point bodyCenter = body.DisplayAnimation(s, d, 0).Center;
-            Point headCenter = head.DisplayAnimation(s, d, 0).Center;
-            Point faceCenter = face.DisplayAnimation(s, d, 0).Center;
-            Point weaponCenter = weapon.DisplayAnimation(s, d, 0).Center;
+            Point pantsCenter = pants.GetCenter(s, d);
+            Point shadowCenter = pants.GetCenter(s, d, 1);
+            Point bodyCenter = body.GetCenter(s, d);
+            Point headCenter = head.GetCenter(s, d);
+            Point faceCenter = face.GetCenter(s, d);
+            Point weaponCenter = weapon.GetCenter(s, d);
 
             //Calculate shadow position
             Point shadowPosition = Point.Empty;
@@ -40,8 +40,8 @@ namespace ToolCache.Drawing {
 
             //Calculate pants position
             Point legsPosition = Point.Empty;
-            legsPosition.X = p.X - pantsCenter.X;
-            legsPosition.Y = p.Y - p_offset;
+            legsPosition.X = p.X - pantsCenter.X + p_offset.X;
+            legsPosition.Y = p.Y + p_offset.Y;
 
             //Solve body position
             Point bodyLink = Point.Empty;
