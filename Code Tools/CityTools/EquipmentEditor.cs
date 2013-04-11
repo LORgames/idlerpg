@@ -426,6 +426,7 @@ namespace CityTools {
                 if (ei != currentEquipment) {
                     SaveIfRequired();
                     currentEquipment = ei;
+                    _new = false;
                     UpdateForm();
                 }
             }

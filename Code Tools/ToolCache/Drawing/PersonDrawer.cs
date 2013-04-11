@@ -25,6 +25,7 @@ namespace ToolCache.Drawing {
             Point bu_offset = body.GetLinkUp(d);
             Point fd_offset = face.GetLinkDown(d);
             Point hd_offset = head == null ? Point.Empty : head.GetLinkDown(d);
+            Point wd_offset = weapon == null ? Point.Empty : weapon.GetLinkDown(d);
 
             //The centers
             Point pantsCenter = pants.DisplayAnimation(s, d, 0).Center;
@@ -51,10 +52,15 @@ namespace ToolCache.Drawing {
             headLink.X = p.X - pd_offset.X + pu_offset.X - bd_offset.X + bu_offset.X - fd_offset.X;
             headLink.Y = p.Y - pd_offset.Y + pu_offset.Y - bd_offset.Y + bu_offset.Y - fd_offset.Y;
 
-            //Solve headgear is possible
+            //Solve headgear if possible
             Point headgearLink = Point.Empty;
             headgearLink.X = p.X - pd_offset.X + pu_offset.X - bd_offset.X + bu_offset.X - hd_offset.X;
             headgearLink.Y = p.Y - pd_offset.Y + pu_offset.Y - bd_offset.Y + bu_offset.Y - hd_offset.Y;
+
+            //Solve weapon if possible
+            Point weaponLink = Point.Empty;
+            weaponLink.X = p.X - pd_offset.X + pu_offset.X - bd_offset.X - wd_offset.X;
+            weaponLink.Y = p.Y - pd_offset.Y + pu_offset.Y - bd_offset.Y - wd_offset.Y;
 
             ////////////////////////////////////////// DRAW STUFF
 
@@ -63,7 +69,7 @@ namespace ToolCache.Drawing {
 
             //Draw Back Weapon
             if (weapon != null) {
-
+                weapon.DisplayAnimation(s, d, 1).Draw(g, weaponLink.X, weaponLink.Y, 1);
             }
 
             //Draw Legs
@@ -85,7 +91,7 @@ namespace ToolCache.Drawing {
 
             //Draw Weapon Front
             if (weapon != null) {
-
+                weapon.DisplayAnimation(s, d, 0).Draw(g, weaponLink.X, weaponLink.Y, 1);
             }
 
             return true;

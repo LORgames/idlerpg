@@ -81,11 +81,11 @@
     <Compile Include="EquipmentEditor.Designer.cs">
       <DependentUpon>EquipmentEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="MapEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="MapEditor.Designer.cs">
+      <DependentUpon>MapEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="ClipIns\AnimationFrame.cs">
       <SubType>UserControl</SubType>
@@ -143,8 +143,8 @@
     <EmbeddedResource Include="EquipmentEditor.resx">
       <DependentUpon>EquipmentEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="MapEditor.resx">
+      <DependentUpon>MapEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ClipIns\AnimationFrame.resx">
       <DependentUpon>AnimationFrame.cs</DependentUpon>

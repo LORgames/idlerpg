@@ -69,12 +69,11 @@ namespace CityTools {
                                 } else if (!File.Exists(nFilename)) {
                                     File.Copy(filename, nFilename);
                                     copied = true;
-                                } else if (MessageBox.Show("Overwrite " + nFilename + "?", "Overwrite?", MessageBoxButtons.YesNo) == DialogResult.Yes) {
-                                    File.Copy(filename, nFilename, true);
-                                    copied = true;
+                                } else {
+                                    MessageBox.Show("Cannot override " + nFilename + ", please find the image in the list.");
                                 }
 
-                                if (!copied) {
+                                if (copied) {
                                     if (!Files.Contains(nFilename)) {
                                         Files.Add(nFilename);
                                     }
