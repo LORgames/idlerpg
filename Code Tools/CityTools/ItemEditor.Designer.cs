@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ItemEditor));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.treeItemHeirachy = new System.Windows.Forms.TreeView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -135,22 +136,23 @@
             // btnAddItem
             // 
             this.btnAddItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnAddItem.Image = global::ToolCache.Properties.Resources.add;
+            this.btnAddItem.Image = ((System.Drawing.Image)(resources.GetObject("btnAddItem.Image")));
             this.btnAddItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnAddItem.Name = "btnAddItem";
             this.btnAddItem.Size = new System.Drawing.Size(23, 22);
             this.btnAddItem.Text = "Create a New Item";
+            this.btnAddItem.Click += new System.EventHandler(this.btnAddItem_Click);
             // 
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(31, 22);
+            this.toolStripLabel1.Size = new System.Drawing.Size(33, 22);
             this.toolStripLabel1.Text = "Find:";
             // 
             // txtSearchBox
             // 
             this.txtSearchBox.Name = "txtSearchBox";
-            this.txtSearchBox.Size = new System.Drawing.Size(95, 25);
+            this.txtSearchBox.Size = new System.Drawing.Size(95, 23);
             // 
             // txtName
             // 

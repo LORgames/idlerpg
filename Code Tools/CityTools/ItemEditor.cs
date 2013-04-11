@@ -205,5 +205,9 @@ namespace CityTools {
             if (_loading) return;
             Edited();
         }
+
+        private void btnAddItem_Click(object sender, EventArgs e) {
+            CreateNew();
+        }
     }
 }

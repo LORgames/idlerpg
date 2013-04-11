@@ -30,6 +30,7 @@ namespace ToolToGameExporter {
 
             Directory.CreateDirectory(Global.EXPORT_DIRECTORY);
 
+            ObjectCrusher.Go();
             TileCrusher.Go();
         }
     }

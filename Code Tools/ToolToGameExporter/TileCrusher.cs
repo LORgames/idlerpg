@@ -61,7 +61,7 @@ namespace ToolToGameExporter {
                 Image im = Image.FromFile(tiles[i]);
                 gfx.DrawImage(im, new Rectangle(p.X, p.Y, 48, 48));
 
-                bmp.SetResolution(im.HorizontalResolution, im.VerticalResolution);
+                //bmp.SetResolution(im.HorizontalResolution, im.VerticalResolution);
             }
 
             f.Encode(Global.EXPORT_DIRECTORY + "/TileInfo.bin");

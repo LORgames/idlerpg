@@ -11,15 +11,15 @@ namespace ToolToGameExporter {
         public int binHeight = 0;
         public bool allowRotations;
 
-        public List<Rectangle> usedRectangleangles = new List<Rectangle>();
-        public List<Rectangle> freeRectangleangles = new List<Rectangle>();
+        public List<Rectangle> usedRectangles = new List<Rectangle>();
+        public List<Rectangle> freeRectangles = new List<Rectangle>();
 
-        public enum FreeRectangleChoiceHeuristic {
-            RectangleBestShortSideFit, ///< -BSSF: Positions the Rectangleangle against the short side of a free Rectangleangle into which it fits the best.
-            RectangleBestLongSideFit, ///< -BLSF: Positions the Rectangleangle against the long side of a free Rectangleangle into which it fits the best.
-            RectangleBestAreaFit, ///< -BAF: Positions the Rectangleangle into the smallest free Rectangle into which it fits.
-            RectangleBottomLeftRule, ///< -BL: Does the Tetris placement.
-            RectangleContactPointRule ///< -CP: Choosest the placement where the Rectangleangle touches other Rectangles as much as possible.
+        public enum Heuristic {
+            BestShortSideFit, ///< -BSSF: Positions the Rectangle against the short side of a free Rectangle into which it fits the best.
+            BestLongSideFit, ///< -BLSF: Positions the Rectangle against the long side of a free Rectangle into which it fits the best.
+            BestAreaFit, ///< -BAF: Positions the Rectangle into the smallest free Rectangle into which it fits.
+            BottomLeftRule, ///< -BL: Does the Tetris placement.
+            ContactPointRule ///< -CP: Choosest the placement where the Rectangle touches other Rectangles as much as possible.
         };
 
         public MaxRectanglesBinPack(int width, int height, bool rotations = true) {
@@ -37,43 +37,43 @@ namespace ToolToGameExporter {
             n.Width = width;
             n.Height = height;
 
-            usedRectangleangles.Clear();
+            usedRectangles.Clear();
 
-            freeRectangleangles.Clear();
-            freeRectangleangles.Add(n);
+            freeRectangles.Clear();
+            freeRectangles.Add(n);
         }
 
-        public Rectangle Insert(int width, int height, FreeRectangleChoiceHeuristic method) {
+        public Rectangle Insert(int width, int height, Heuristic method) {
             Rectangle newNode = new Rectangle();
             int score1 = 0; // Unused in this function. We don't need to know the score after finding the position.
             int score2 = 0;
             switch (method) {
-                case FreeRectangleChoiceHeuristic.RectangleBestShortSideFit: newNode = FindPositionForNewNodeBestShortSideFit(width, height, ref score1, ref score2); break;
-                case FreeRectangleChoiceHeuristic.RectangleBottomLeftRule: newNode = FindPositionForNewNodeBottomLeft(width, height, ref score1, ref score2); break;
-                case FreeRectangleChoiceHeuristic.RectangleContactPointRule: newNode = FindPositionForNewNodeContactPoint(width, height, ref score1); break;
-                case FreeRectangleChoiceHeuristic.RectangleBestLongSideFit: newNode = FindPositionForNewNodeBestLongSideFit(width, height, ref score2, ref score1); break;
-                case FreeRectangleChoiceHeuristic.RectangleBestAreaFit: newNode = FindPositionForNewNodeBestAreaFit(width, height, ref score1, ref score2); break;
+                case Heuristic.BestShortSideFit: newNode = FindPositionForNewNodeBestShortSideFit(width, height, ref score1, ref score2); break;
+                case Heuristic.BottomLeftRule: newNode = FindPositionForNewNodeBottomLeft(width, height, ref score1, ref score2); break;
+                case Heuristic.ContactPointRule: newNode = FindPositionForNewNodeContactPoint(width, height, ref score1); break;
+                case Heuristic.BestLongSideFit: newNode = FindPositionForNewNodeBestLongSideFit(width, height, ref score2, ref score1); break;
+                case Heuristic.BestAreaFit: newNode = FindPositionForNewNodeBestAreaFit(width, height, ref score1, ref score2); break;
             }
 
             if (newNode.Height == 0)
                 return newNode;
 
-            int numRectangleanglesToProcess = freeRectangleangles.Count;
-            for (int i = 0; i < numRectangleanglesToProcess; ++i) {
-                if (SplitFreeNode(freeRectangleangles[i], ref newNode)) {
-                    freeRectangleangles.RemoveAt(i);
+            int numRectanglesToProcess = freeRectangles.Count;
+            for (int i = 0; i < numRectanglesToProcess; ++i) {
+                if (SplitFreeNode(freeRectangles[i], ref newNode)) {
+                    freeRectangles.RemoveAt(i);
                     --i;
-                    --numRectangleanglesToProcess;
+                    --numRectanglesToProcess;
                 }
             }
 
             PruneFreeList();
 
-            usedRectangleangles.Add(newNode);
+            usedRectangles.Add(newNode);
             return newNode;
         }
 
-        public void Insert(List<Rectangle> Rectangles, List<Rectangle> dst, FreeRectangleChoiceHeuristic method) {
+        public void Insert(List<Rectangle> Rectangles, List<Rectangle> dst, Heuristic method) {
             dst.Clear();
 
             while (Rectangles.Count > 0) {
@@ -104,35 +104,35 @@ namespace ToolToGameExporter {
         }
 
         void PlaceRectangle(Rectangle node) {
-            int numRectangleanglesToProcess = freeRectangleangles.Count;
-            for (int i = 0; i < numRectangleanglesToProcess; ++i) {
-                if (SplitFreeNode(freeRectangleangles[i], ref node)) {
-                    freeRectangleangles.RemoveAt(i);
+            int numRectanglesToProcess = freeRectangles.Count;
+            for (int i = 0; i < numRectanglesToProcess; ++i) {
+                if (SplitFreeNode(freeRectangles[i], ref node)) {
+                    freeRectangles.RemoveAt(i);
                     --i;
-                    --numRectangleanglesToProcess;
+                    --numRectanglesToProcess;
                 }
             }
 
             PruneFreeList();
 
-            usedRectangleangles.Add(node);
+            usedRectangles.Add(node);
         }
 
-        Rectangle ScoreRectangle(int width, int height, FreeRectangleChoiceHeuristic method, ref int score1, ref int score2) {
+        Rectangle ScoreRectangle(int width, int height, Heuristic method, ref int score1, ref int score2) {
             Rectangle newNode = new Rectangle();
             score1 = int.MaxValue;
             score2 = int.MaxValue;
             switch (method) {
-                case FreeRectangleChoiceHeuristic.RectangleBestShortSideFit: newNode = FindPositionForNewNodeBestShortSideFit(width, height, ref score1, ref score2); break;
-                case FreeRectangleChoiceHeuristic.RectangleBottomLeftRule: newNode = FindPositionForNewNodeBottomLeft(width, height, ref score1, ref score2); break;
-                case FreeRectangleChoiceHeuristic.RectangleContactPointRule: newNode = FindPositionForNewNodeContactPoint(width, height, ref score1);
+                case Heuristic.BestShortSideFit: newNode = FindPositionForNewNodeBestShortSideFit(width, height, ref score1, ref score2); break;
+                case Heuristic.BottomLeftRule: newNode = FindPositionForNewNodeBottomLeft(width, height, ref score1, ref score2); break;
+                case Heuristic.ContactPointRule: newNode = FindPositionForNewNodeContactPoint(width, height, ref score1);
                     score1 = -score1; // Reverse since we are minimizing, but for contact point score bigger is better.
                     break;
-                case FreeRectangleChoiceHeuristic.RectangleBestLongSideFit: newNode = FindPositionForNewNodeBestLongSideFit(width, height, ref score2, ref score1); break;
-                case FreeRectangleChoiceHeuristic.RectangleBestAreaFit: newNode = FindPositionForNewNodeBestAreaFit(width, height, ref score1, ref score2); break;
+                case Heuristic.BestLongSideFit: newNode = FindPositionForNewNodeBestLongSideFit(width, height, ref score2, ref score1); break;
+                case Heuristic.BestAreaFit: newNode = FindPositionForNewNodeBestAreaFit(width, height, ref score1, ref score2); break;
             }
 
-            // Cannot fit the current Rectangleangle.
+            // Cannot fit the current Rectangle.
             if (newNode.Height == 0) {
                 score1 = int.MaxValue;
                 score2 = int.MaxValue;
@@ -144,8 +144,8 @@ namespace ToolToGameExporter {
         /// Computes the ratio of used surface area.
         public float Occupancy() {
             ulong usedSurfaceArea = 0;
-            for (int i = 0; i < usedRectangleangles.Count; ++i)
-                usedSurfaceArea += (uint)usedRectangleangles[i].Width * (uint)usedRectangleangles[i].Height;
+            for (int i = 0; i < usedRectangles.Count; ++i)
+                usedSurfaceArea += (uint)usedRectangles[i].Width * (uint)usedRectangles[i].Height;
 
             return (float)usedSurfaceArea / (binWidth * binHeight);
         }
@@ -156,28 +156,28 @@ namespace ToolToGameExporter {
 
             bestY = int.MaxValue;
 
-            for (int i = 0; i < freeRectangleangles.Count; ++i) {
-                // Try to place the Rectangleangle in upright (non-flipped) orientation.
-                if (freeRectangleangles[i].Width >= width && freeRectangleangles[i].Height >= height) {
-                    int topSideY = (int)freeRectangleangles[i].Y + height;
-                    if (topSideY < bestY || (topSideY == bestY && freeRectangleangles[i].X < bestX)) {
-                        bestNode.X = freeRectangleangles[i].X;
-                        bestNode.Y = freeRectangleangles[i].Y;
+            for (int i = 0; i < freeRectangles.Count; ++i) {
+                // Try to place the Rectangle in upright (non-flipped) orientation.
+                if (freeRectangles[i].Width >= width && freeRectangles[i].Height >= height) {
+                    int topSideY = (int)freeRectangles[i].Y + height;
+                    if (topSideY < bestY || (topSideY == bestY && freeRectangles[i].X < bestX)) {
+                        bestNode.X = freeRectangles[i].X;
+                        bestNode.Y = freeRectangles[i].Y;
                         bestNode.Width = width;
                         bestNode.Height = height;
                         bestY = topSideY;
-                        bestX = (int)freeRectangleangles[i].X;
+                        bestX = (int)freeRectangles[i].X;
                     }
                 }
-                if (allowRotations && freeRectangleangles[i].Width >= height && freeRectangleangles[i].Height >= width) {
-                    int topSideY = (int)freeRectangleangles[i].Y + width;
-                    if (topSideY < bestY || (topSideY == bestY && freeRectangleangles[i].X < bestX)) {
-                        bestNode.X = freeRectangleangles[i].X;
-                        bestNode.Y = freeRectangleangles[i].Y;
+                if (allowRotations && freeRectangles[i].Width >= height && freeRectangles[i].Height >= width) {
+                    int topSideY = (int)freeRectangles[i].Y + width;
+                    if (topSideY < bestY || (topSideY == bestY && freeRectangles[i].X < bestX)) {
+                        bestNode.X = freeRectangles[i].X;
+                        bestNode.Y = freeRectangles[i].Y;
                         bestNode.Width = height;
                         bestNode.Height = width;
                         bestY = topSideY;
-                        bestX = (int)freeRectangleangles[i].X;
+                        bestX = (int)freeRectangles[i].X;
                     }
                 }
             }
@@ -190,17 +190,17 @@ namespace ToolToGameExporter {
 
             bestShortSideFit = int.MaxValue;
 
-            for (int i = 0; i < freeRectangleangles.Count; ++i) {
-                // Try to place the Rectangleangle in upright (non-flipped) orientation.
-                if (freeRectangleangles[i].Width >= width && freeRectangleangles[i].Height >= height) {
-                    int leftoverHoriz = Math.Abs((int)freeRectangleangles[i].Width - width);
-                    int leftoverVert = Math.Abs((int)freeRectangleangles[i].Height - height);
+            for (int i = 0; i < freeRectangles.Count; ++i) {
+                // Try to place the Rectangle in upright (non-flipped) orientation.
+                if (freeRectangles[i].Width >= width && freeRectangles[i].Height >= height) {
+                    int leftoverHoriz = Math.Abs((int)freeRectangles[i].Width - width);
+                    int leftoverVert = Math.Abs((int)freeRectangles[i].Height - height);
                     int shortSideFit = Math.Min(leftoverHoriz, leftoverVert);
                     int longSideFit = Math.Max(leftoverHoriz, leftoverVert);
 
                     if (shortSideFit < bestShortSideFit || (shortSideFit == bestShortSideFit && longSideFit < bestLongSideFit)) {
-                        bestNode.X = freeRectangleangles[i].X;
-                        bestNode.Y = freeRectangleangles[i].Y;
+                        bestNode.X = freeRectangles[i].X;
+                        bestNode.Y = freeRectangles[i].Y;
                         bestNode.Width = width;
                         bestNode.Height = height;
                         bestShortSideFit = shortSideFit;
@@ -208,15 +208,15 @@ namespace ToolToGameExporter {
                     }
                 }
 
-                if (allowRotations && freeRectangleangles[i].Width >= height && freeRectangleangles[i].Height >= width) {
-                    int flippedLeftoverHoriz = Math.Abs((int)freeRectangleangles[i].Width - height);
-                    int flippedLeftoverVert = Math.Abs((int)freeRectangleangles[i].Height - width);
+                if (allowRotations && freeRectangles[i].Width >= height && freeRectangles[i].Height >= width) {
+                    int flippedLeftoverHoriz = Math.Abs((int)freeRectangles[i].Width - height);
+                    int flippedLeftoverVert = Math.Abs((int)freeRectangles[i].Height - width);
                     int flippedShortSideFit = Math.Min(flippedLeftoverHoriz, flippedLeftoverVert);
                     int flippedLongSideFit = Math.Max(flippedLeftoverHoriz, flippedLeftoverVert);
 
                     if (flippedShortSideFit < bestShortSideFit || (flippedShortSideFit == bestShortSideFit && flippedLongSideFit < bestLongSideFit)) {
-                        bestNode.X = freeRectangleangles[i].X;
-                        bestNode.Y = freeRectangleangles[i].Y;
+                        bestNode.X = freeRectangles[i].X;
+                        bestNode.Y = freeRectangles[i].Y;
                         bestNode.Width = height;
                         bestNode.Height = width;
                         bestShortSideFit = flippedShortSideFit;
@@ -233,17 +233,17 @@ namespace ToolToGameExporter {
 
             bestLongSideFit = int.MaxValue;
 
-            for (int i = 0; i < freeRectangleangles.Count; ++i) {
-                // Try to place the Rectangleangle in upright (non-flipped) orientation.
-                if (freeRectangleangles[i].Width >= width && freeRectangleangles[i].Height >= height) {
-                    int leftoverHoriz = Math.Abs((int)freeRectangleangles[i].Width - width);
-                    int leftoverVert = Math.Abs((int)freeRectangleangles[i].Height - height);
+            for (int i = 0; i < freeRectangles.Count; ++i) {
+                // Try to place the Rectangle in upright (non-flipped) orientation.
+                if (freeRectangles[i].Width >= width && freeRectangles[i].Height >= height) {
+                    int leftoverHoriz = Math.Abs((int)freeRectangles[i].Width - width);
+                    int leftoverVert = Math.Abs((int)freeRectangles[i].Height - height);
                     int shortSideFit = Math.Min(leftoverHoriz, leftoverVert);
                     int longSideFit = Math.Max(leftoverHoriz, leftoverVert);
 
                     if (longSideFit < bestLongSideFit || (longSideFit == bestLongSideFit && shortSideFit < bestShortSideFit)) {
-                        bestNode.X = freeRectangleangles[i].X;
-                        bestNode.Y = freeRectangleangles[i].Y;
+                        bestNode.X = freeRectangles[i].X;
+                        bestNode.Y = freeRectangles[i].Y;
                         bestNode.Width = width;
                         bestNode.Height = height;
                         bestShortSideFit = shortSideFit;
@@ -251,15 +251,15 @@ namespace ToolToGameExporter {
                     }
                 }
 
-                if (allowRotations && freeRectangleangles[i].Width >= height && freeRectangleangles[i].Height >= width) {
-                    int leftoverHoriz = Math.Abs((int)freeRectangleangles[i].Width - height);
-                    int leftoverVert = Math.Abs((int)freeRectangleangles[i].Height - width);
+                if (allowRotations && freeRectangles[i].Width >= height && freeRectangles[i].Height >= width) {
+                    int leftoverHoriz = Math.Abs((int)freeRectangles[i].Width - height);
+                    int leftoverVert = Math.Abs((int)freeRectangles[i].Height - width);
                     int shortSideFit = Math.Min(leftoverHoriz, leftoverVert);
                     int longSideFit = Math.Max(leftoverHoriz, leftoverVert);
 
                     if (longSideFit < bestLongSideFit || (longSideFit == bestLongSideFit && shortSideFit < bestShortSideFit)) {
-                        bestNode.X = freeRectangleangles[i].X;
-                        bestNode.Y = freeRectangleangles[i].Y;
+                        bestNode.X = freeRectangles[i].X;
+                        bestNode.Y = freeRectangles[i].Y;
                         bestNode.Width = height;
                         bestNode.Height = width;
                         bestShortSideFit = shortSideFit;
@@ -276,18 +276,18 @@ namespace ToolToGameExporter {
 
             bestAreaFit = int.MaxValue;
 
-            for (int i = 0; i < freeRectangleangles.Count; ++i) {
-                int areaFit = (int)freeRectangleangles[i].Width * (int)freeRectangleangles[i].Height - width * height;
+            for (int i = 0; i < freeRectangles.Count; ++i) {
+                int areaFit = (int)freeRectangles[i].Width * (int)freeRectangles[i].Height - width * height;
 
-                // Try to place the Rectangleangle in upright (non-flipped) orientation.
-                if (freeRectangleangles[i].Width >= width && freeRectangleangles[i].Height >= height) {
-                    int leftoverHoriz = Math.Abs((int)freeRectangleangles[i].Width - width);
-                    int leftoverVert = Math.Abs((int)freeRectangleangles[i].Height - height);
+                // Try to place the Rectangle in upright (non-flipped) orientation.
+                if (freeRectangles[i].Width >= width && freeRectangles[i].Height >= height) {
+                    int leftoverHoriz = Math.Abs((int)freeRectangles[i].Width - width);
+                    int leftoverVert = Math.Abs((int)freeRectangles[i].Height - height);
                     int shortSideFit = Math.Min(leftoverHoriz, leftoverVert);
 
                     if (areaFit < bestAreaFit || (areaFit == bestAreaFit && shortSideFit < bestShortSideFit)) {
-                        bestNode.X = freeRectangleangles[i].X;
-                        bestNode.Y = freeRectangleangles[i].Y;
+                        bestNode.X = freeRectangles[i].X;
+                        bestNode.Y = freeRectangles[i].Y;
                         bestNode.Width = width;
                         bestNode.Height = height;
                         bestShortSideFit = shortSideFit;
@@ -295,14 +295,14 @@ namespace ToolToGameExporter {
                     }
                 }
 
-                if (allowRotations && freeRectangleangles[i].Width >= height && freeRectangleangles[i].Height >= width) {
-                    int leftoverHoriz = Math.Abs((int)freeRectangleangles[i].Width - height);
-                    int leftoverVert = Math.Abs((int)freeRectangleangles[i].Height - width);
+                if (allowRotations && freeRectangles[i].Width >= height && freeRectangles[i].Height >= width) {
+                    int leftoverHoriz = Math.Abs((int)freeRectangles[i].Width - height);
+                    int leftoverVert = Math.Abs((int)freeRectangles[i].Height - width);
                     int shortSideFit = Math.Min(leftoverHoriz, leftoverVert);
 
                     if (areaFit < bestAreaFit || (areaFit == bestAreaFit && shortSideFit < bestShortSideFit)) {
-                        bestNode.X = freeRectangleangles[i].X;
-                        bestNode.Y = freeRectangleangles[i].Y;
+                        bestNode.X = freeRectangles[i].X;
+                        bestNode.Y = freeRectangles[i].Y;
                         bestNode.Width = height;
                         bestNode.Height = width;
                         bestShortSideFit = shortSideFit;
@@ -328,11 +328,11 @@ namespace ToolToGameExporter {
             if (y == 0 || y + height == binHeight)
                 score += width;
 
-            for (int i = 0; i < usedRectangleangles.Count; ++i) {
-                if (usedRectangleangles[i].X == x + width || usedRectangleangles[i].X + usedRectangleangles[i].Width == x)
-                    score += CommonIntervalLength((int)usedRectangleangles[i].Y, (int)usedRectangleangles[i].Y + (int)usedRectangleangles[i].Height, y, y + height);
-                if (usedRectangleangles[i].Y == y + height || usedRectangleangles[i].Y + usedRectangleangles[i].Height == y)
-                    score += CommonIntervalLength((int)usedRectangleangles[i].X, (int)usedRectangleangles[i].X + (int)usedRectangleangles[i].Width, x, x + width);
+            for (int i = 0; i < usedRectangles.Count; ++i) {
+                if (usedRectangles[i].X == x + width || usedRectangles[i].X + usedRectangles[i].Width == x)
+                    score += CommonIntervalLength((int)usedRectangles[i].Y, (int)usedRectangles[i].Y + (int)usedRectangles[i].Height, y, y + height);
+                if (usedRectangles[i].Y == y + height || usedRectangles[i].Y + usedRectangles[i].Height == y)
+                    score += CommonIntervalLength((int)usedRectangles[i].X, (int)usedRectangles[i].X + (int)usedRectangles[i].Width, x, x + width);
             }
             return score;
         }
@@ -343,23 +343,23 @@ namespace ToolToGameExporter {
 
             bestContactScore = -1;
 
-            for (int i = 0; i < freeRectangleangles.Count; ++i) {
-                // Try to place the Rectangleangle in upright (non-flipped) orientation.
-                if (freeRectangleangles[i].Width >= width && freeRectangleangles[i].Height >= height) {
-                    int score = ContactPointScoreNode((int)freeRectangleangles[i].X, (int)freeRectangleangles[i].Y, width, height);
+            for (int i = 0; i < freeRectangles.Count; ++i) {
+                // Try to place the Rectangle in upright (non-flipped) orientation.
+                if (freeRectangles[i].Width >= width && freeRectangles[i].Height >= height) {
+                    int score = ContactPointScoreNode((int)freeRectangles[i].X, (int)freeRectangles[i].Y, width, height);
                     if (score > bestContactScore) {
-                        bestNode.X = (int)freeRectangleangles[i].X;
-                        bestNode.Y = (int)freeRectangleangles[i].Y;
+                        bestNode.X = (int)freeRectangles[i].X;
+                        bestNode.Y = (int)freeRectangles[i].Y;
                         bestNode.Width = width;
                         bestNode.Height = height;
                         bestContactScore = score;
                     }
                 }
-                if (allowRotations && freeRectangleangles[i].Width >= height && freeRectangleangles[i].Height >= width) {
-                    int score = ContactPointScoreNode((int)freeRectangleangles[i].X, (int)freeRectangleangles[i].Y, height, width);
+                if (allowRotations && freeRectangles[i].Width >= height && freeRectangles[i].Height >= width) {
+                    int score = ContactPointScoreNode((int)freeRectangles[i].X, (int)freeRectangles[i].Y, height, width);
                     if (score > bestContactScore) {
-                        bestNode.X = (int)freeRectangleangles[i].X;
-                        bestNode.Y = (int)freeRectangleangles[i].Y;
+                        bestNode.X = (int)freeRectangles[i].X;
+                        bestNode.Y = (int)freeRectangles[i].Y;
                         bestNode.Width = height;
                         bestNode.Height = width;
                         bestContactScore = score;
@@ -370,7 +370,7 @@ namespace ToolToGameExporter {
         }
 
         bool SplitFreeNode(Rectangle freeNode, ref Rectangle usedNode) {
-            // Test with SAT if the Rectangleangles even intersect.
+            // Test with SAT if the Rectangles even intersect.
             if (usedNode.X >= freeNode.X + freeNode.Width || usedNode.X + usedNode.Width <= freeNode.X ||
                 usedNode.Y >= freeNode.Y + freeNode.Height || usedNode.Y + usedNode.Height <= freeNode.Y)
                 return false;
@@ -380,7 +380,7 @@ namespace ToolToGameExporter {
                 if (usedNode.Y > freeNode.Y && usedNode.Y < freeNode.Y + freeNode.Height) {
                     Rectangle newNode = freeNode;
                     newNode.Height = usedNode.Y - newNode.Y;
-                    freeRectangleangles.Add(newNode);
+                    freeRectangles.Add(newNode);
                 }
 
                 // New node at the bottom side of the used node.
@@ -388,7 +388,7 @@ namespace ToolToGameExporter {
                     Rectangle newNode = freeNode;
                     newNode.Y = usedNode.Y + usedNode.Height;
                     newNode.Height = freeNode.Y + freeNode.Height - (usedNode.Y + usedNode.Height);
-                    freeRectangleangles.Add(newNode);
+                    freeRectangles.Add(newNode);
                 }
             }
 
@@ -397,7 +397,7 @@ namespace ToolToGameExporter {
                 if (usedNode.X > freeNode.X && usedNode.X < freeNode.X + freeNode.Width) {
                     Rectangle newNode = freeNode;
                     newNode.Width = usedNode.X - newNode.X;
-                    freeRectangleangles.Add(newNode);
+                    freeRectangles.Add(newNode);
                 }
 
                 // New node at the right side of the used node.
@@ -405,7 +405,7 @@ namespace ToolToGameExporter {
                     Rectangle newNode = freeNode;
                     newNode.X = usedNode.X + usedNode.Width;
                     newNode.Width = freeNode.X + freeNode.Width - (usedNode.X + usedNode.Width);
-                    freeRectangleangles.Add(newNode);
+                    freeRectangles.Add(newNode);
                 }
             }
 
@@ -413,15 +413,15 @@ namespace ToolToGameExporter {
         }
 
         void PruneFreeList() {
-            for (int i = 0; i < freeRectangleangles.Count; ++i)
-                for (int j = i + 1; j < freeRectangleangles.Count; ++j) {
-                    if (freeRectangleangles[i].Contains(freeRectangleangles[j])) {
-                        freeRectangleangles.RemoveAt(i);
+            for (int i = 0; i < freeRectangles.Count; ++i)
+                for (int j = i + 1; j < freeRectangles.Count; ++j) {
+                    if (freeRectangles[i].Contains(freeRectangles[j])) {
+                        freeRectangles.RemoveAt(i);
                         --i;
                         break;
                     }
-                    if (freeRectangleangles[j].Contains(freeRectangleangles[i])) {
-                        freeRectangleangles.RemoveAt(j);
+                    if (freeRectangles[j].Contains(freeRectangles[i])) {
+                        freeRectangles.RemoveAt(j);
                         --j;
                     }
                 }
