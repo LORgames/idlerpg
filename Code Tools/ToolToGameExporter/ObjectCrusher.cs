@@ -51,7 +51,7 @@ namespace ToolToGameExporter {
             }
 
 
-            f.Encode(Global.EXPORT_DIRECTORY + "/Objects.bin");
+            f.Encode(Global.EXPORT_DIRECTORY + "/ObjectInfo.bin");
         }
 
     }

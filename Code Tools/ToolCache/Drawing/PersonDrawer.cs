@@ -76,7 +76,7 @@ namespace ToolCache.Drawing {
             pants.DisplayAnimation(s, d, 0).Draw(g, legsPosition.X, legsPosition.Y, 1);
 
             //Draw Body Back
-            body.DisplayAnimation(s, d, 0).Draw(g, bodyLink.X, bodyLink.Y, 1);
+            body.DisplayAnimation(s, d, 1).Draw(g, bodyLink.X, bodyLink.Y, 1);
 
             //Draw Head
             face.DisplayAnimation(s, d, 0).Draw(g, headLink.X, headLink.Y, 1);
@@ -87,7 +87,7 @@ namespace ToolCache.Drawing {
             }
 
             //Draw Body Front
-            body.DisplayAnimation(s, d, 1).Draw(g, bodyLink.X, bodyLink.Y, 1);
+            body.DisplayAnimation(s, d, 0).Draw(g, bodyLink.X, bodyLink.Y, 1);
 
             //Draw Weapon Front
             if (weapon != null) {

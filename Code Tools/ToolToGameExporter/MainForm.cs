@@ -11,9 +11,9 @@ using System.IO;
 using ToolCache.General;
 
 namespace ToolToGameExporter {
-    public partial class Form1 : Form {
+    public partial class MainForm : Form {
         
-        public Form1() {
+        public MainForm() {
             InitializeComponent();
             ToolCache.General.Startup.GoGoGadget(); // Start the system
         }
@@ -30,8 +30,18 @@ namespace ToolToGameExporter {
 
             Directory.CreateDirectory(Global.EXPORT_DIRECTORY);
 
-            ObjectCrusher.Go();
-            TileCrusher.Go();
+            try {
+                ObjectCrusher.Go();
+                TileCrusher.Go();
+
+                MapCrusher.Go();
+            } catch {
+                MessageBox.Show("Please close the exporter and try again! (Some kind of caching issue occurred)");
+
+                try {
+                    Directory.Delete(Global.EXPORT_DIRECTORY, true);
+                } catch { }
+            }
         }
     }
 }

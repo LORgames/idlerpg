@@ -334,8 +334,8 @@ namespace CityTools {
                     case EquipmentTypes.Body:
                         ccAnimationBack.Enabled = true;
 
-                        lblFrontAnimationName.Text = "BACK";
-                        lblBackAnimationName.Text = "FRONT";
+                        lblFrontAnimationName.Text = "FRONT";
+                        lblBackAnimationName.Text = "BACK";
                         break;
                     case EquipmentTypes.Face:
                         ccAnimationBack.Enabled = false;
