@@ -154,7 +154,8 @@ namespace CityTools {
             ccAnimationFront.ChangeToAnimation(currentEquipment.Animations[States.Default].GetAnimation(currentDirection, 0));
             ccAnimationBack.ChangeToAnimation(currentEquipment.Animations[States.Default].GetAnimation(currentDirection, 1));
 
-            numOffsetX.Value = currentEquipment.LinkOffset;
+            numOffsetX.Value = currentEquipment.OffsetX;
+            numOffsetY.Value = currentEquipment.OffsetY;
 
             _updatingForm = false;
         }
@@ -451,7 +452,8 @@ namespace CityTools {
         }
 
         private void numOffset_ValueChanged(object sender, EventArgs e) {
-            currentEquipment.LinkOffset = (short)numOffsetX.Value;
+            currentEquipment.OffsetX = (short)numOffsetX.Value;
+            currentEquipment.OffsetY = (short)numOffsetY.Value;
             _iE = true;
         }
     }

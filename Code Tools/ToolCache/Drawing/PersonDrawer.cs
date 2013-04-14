@@ -20,10 +20,10 @@ namespace ToolCache.Drawing {
 
             //The linking offsets
             Point p_offset = pants.Offset;
-            Point b_offset = body==null? (short)0 : body.Offset;
-            Point w_offset = weapon == null ? (short)0 : weapon.Offset;
-            Point f_offset = face == null ? (short)0 : face.Offset;
-            Point h_offset = head == null ? (short)0 : head.Offset;
+            Point b_offset = body==null? Point.Empty : body.Offset;
+            Point w_offset = weapon == null ? Point.Empty : weapon.Offset;
+            Point f_offset = face == null ? Point.Empty : face.Offset;
+            Point h_offset = head == null ? Point.Empty : head.Offset;
 
             //The centers
             Point pantsCenter = pants.GetCenter(s, d);
@@ -45,23 +45,23 @@ namespace ToolCache.Drawing {
 
             //Solve body position
             Point bodyLink = Point.Empty;
-            bodyLink.X = p.X - bodyCenter.X;
-            bodyLink.Y = p.Y - b_offset;
+            bodyLink.X = p.X - b_offset.X - bodyCenter.X;
+            bodyLink.Y = p.Y - b_offset.Y;
 
             //Solve head position
             Point headLink = Point.Empty;
-            headLink.X = p.X - faceCenter.X;
-            headLink.Y = p.Y - f_offset;
+            headLink.X = p.X - f_offset.X - faceCenter.X;
+            headLink.Y = p.Y - f_offset.Y;
 
             //Solve headgear if possible
             Point headgearLink = Point.Empty;
-            headgearLink.X = p.X - headCenter.X;
-            headgearLink.Y = p.Y - h_offset;
+            headgearLink.X = p.X - h_offset.X - headCenter.X;
+            headgearLink.Y = p.Y - h_offset.Y;
 
             //Solve weapon if possible
             Point weaponLink = Point.Empty;
-            weaponLink.X = p.X - weaponCenter.X;
-            weaponLink.Y = p.Y - w_offset;
+            weaponLink.X = p.X - w_offset.X - weaponCenter.X;
+            weaponLink.Y = p.Y - w_offset.Y;
 
             ////////////////////////////////////////// DRAW STUFF
 

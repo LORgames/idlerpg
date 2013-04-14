@@ -6,8 +6,6 @@ package RenderSystem
 	 */
 	public class ImageRequest {
 		public imagename:String;
-		public 
-		
 	}
 
 }

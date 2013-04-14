@@ -460,6 +460,7 @@ namespace CityTools {
             this.numOffsetY.Name = "numOffsetY";
             this.numOffsetY.Size = new System.Drawing.Size(85, 20);
             this.numOffsetY.TabIndex = 45;
+            this.numOffsetY.ValueChanged += new System.EventHandler(this.numOffset_ValueChanged);
             // 
             // EquipmentEditor
             // 
