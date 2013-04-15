@@ -52,7 +52,6 @@ package Game.Map {
 		public function FailedLoad(s:String):void {
 			
 		}
-		
 	}
 
 }

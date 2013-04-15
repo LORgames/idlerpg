@@ -1,5 +1,10 @@
 package Game.General {
+	import flash.display.Bitmap;
 	import flash.display.Loader;
+	import flash.events.Event;
+	import flash.events.IOErrorEvent;
+	import flash.events.ProgressEvent;
+	import flash.events.SecurityErrorEvent;
 	import flash.net.URLRequest;
 	/**
 	 * ...
@@ -16,10 +21,10 @@ package Game.General {
 		
 		public static function Initialize():void {
 			//Add Event Listeners
-			loader.addEventListener(Event.COMPLETE, Event_LoadingCompleted);
-			loader.addEventListener(ProgressEvent.PROGRESS, Event_LoadProgress);
-			loader.addEventListener(IOErrorEvent.IO_ERROR, Event_IOError);
-			loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, Event_SecurityError);
+			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, Event_LoadingCompleted);
+			loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS, Event_LoadProgress);
+			loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, Event_IOError);
+			loader.contentLoaderInfo.addEventListener(SecurityErrorEvent.SECURITY_ERROR, Event_SecurityError);
 		}
 		
 		private static function ProcessNext():void {
@@ -32,12 +37,13 @@ package Game.General {
 		}
 		
 		private static function Event_LoadingCompleted(e:Event):void {
-			currentInfo.SuccessCallback(loader.data);
+			var image:Bitmap = Bitmap(loader.content); 
+			currentInfo.SuccessCallback(image.bitmapData);
+			
 			CurrentLoadingEnded();
 		}
 		
 		private static function Event_LoadProgress(e:ProgressEvent):void {
-			if(e.bytesTotal != e.bytesLoaded) trace("Progress: " + e.bytesLoaded + "/" + e.bytesTotal);
 			currentInfo.ProgressCallback(e);
 		}
 		

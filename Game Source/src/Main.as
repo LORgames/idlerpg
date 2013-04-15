@@ -2,6 +2,7 @@ package {
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import Game.General.BinaryLoader;
+	import Game.General.ImageLoader;
 	import Game.Map.WorldData;
 	import RenderSystem.Renderman;
 	
@@ -31,12 +32,12 @@ package {
 			this.addChild(Renderer.bitmap);
 			
 			BinaryLoader.Initialize();
+			ImageLoader.Initialize();
 			
 			WorldData.Initialize();
 			
 			stage.addEventListener(Event.RESIZE, Resized);
 			stage.addEventListener(Event.ENTER_FRAME, Cycle);
-			
 			
 			Resized();
 		}
