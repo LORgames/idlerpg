@@ -1,16 +1,18 @@
-package Game.Map 
-{
+package Game.Map {
 	import adobe.utils.CustomActions;
 	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;
 	import Game.General.BinaryLoader;
+	import RenderSystem.AnimatedCache;
+	import RenderSystem.Renderman;
 	/**
 	 * ...
-	 * @author ...
+	 * @author Paul
 	 */
-	public class TileTemplate {
-		public var Frames:Vector.<Rectangle>;
+	public class TileTemplate implements AnimatedCache {
+		public var Frame:Rectangle = new Rectangle(0, 0, 48, 48);
 		public var TotalFrames:int = 0;
+		public var StartingFrame:int = 0;
 		
 		public var isWalkable:Boolean = false;
 		public var movementCost:Number = 0;
@@ -20,6 +22,21 @@ package Game.Map
 		
 		public var DamageElement:int = 0;
 		public var DamagePerSecond:int = 0;
+		
+		private var timeout:Number = 0;
+		private var currentFrame:int = 0;
+		
+		public function UpdateAnimation(dt:Number):void {
+			timeout += dt;
+			if (timeout > 0.1) {
+				timeout -= dt;
+				currentFrame++;
+				if (currentFrame == StartingFrame+TotalFrames) currentFrame = StartingFrame;
+				
+				Frame.x = currentFrame % 21 * 48;
+				Frame.y = int(currentFrame / 21) * 48;
+			}
+		}
 		
 		//The Static Things (Including Loading)
 		public static var Tiles:Vector.<TileTemplate>;
@@ -49,13 +66,13 @@ package Game.Map
 				tt.DamageElement = e.readShort();
 				tt.DamagePerSecond = e.readShort();
 				
-				tt.Frames = new Vector.<Rectangle>(tt.TotalFrames, true);
 				var j:int = tt.TotalFrames;
+				tt.Frame.x = runningTileCount % 21 * 48;
+				tt.Frame.y = int(runningTileCount / 21) * 48;
 				
-				while (--j > -1) {
-					var tID:int = j+runningTileCount;
-					tt.Frames[j] = new Rectangle(tID % 21 * 48, int(tID / 21) * 48, 48, 48);
-				}
+				tt.StartingFrame = runningTileCount;
+				
+				if (tt.TotalFrames > 1) Renderman.AnimatedObjects.push(tt);
 				
 				Tiles[i] = tt;
 				runningTileCount += tt.TotalFrames;

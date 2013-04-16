@@ -39,7 +39,7 @@ package Game.Map
             }
 			
 			if (totalMaps > 0) {
-				CurrentMap = new MapData(Maps[1]);
+				CurrentMap = new MapData(Maps[4]);
 			}
 			
 			Global.LoadingTotal--;
