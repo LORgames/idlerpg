@@ -1,4 +1,5 @@
 package {
+	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
@@ -15,6 +16,7 @@ package {
 	public class Main extends Sprite {
 		//So can link back to this
 		public static var I:Main;
+		public static var OrderedLayer:Sprite = new Sprite();
 		
 		//Some other important things
 		public var Renderer:Renderman;

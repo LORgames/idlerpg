@@ -30,7 +30,7 @@ package Game.Map
 			Global.LoadingTotal++;
 		}
 		
-		public static function LoadedTiles(e:ByteArray):void {
+		private static function LoadedTiles(e:ByteArray):void {
 			TotalTiles = e.readShort();
 			Tiles = new Vector.<TileTemplate>(TotalTiles, true);
 			

@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CityToolsClient", "CityToolsClient.csproj", "{6FB6115F-C115-4779-82B4-5FDDE7CEDE0B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CityToolsClient", "CityTools\CityToolsClient.csproj", "{6FB6115F-C115-4779-82B4-5FDDE7CEDE0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolToGameExporter", "..\ToolToGameExporter\ToolToGameExporter.csproj", "{45509774-3534-4FDB-8783-1A1DFB5BD058}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolToGameExporter", "ToolToGameExporter\ToolToGameExporter.csproj", "{45509774-3534-4FDB-8783-1A1DFB5BD058}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArenaTest", "..\ArenaTest\ArenaTest.csproj", "{44B046FA-07BF-4829-BA50-7A9FBB89559E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArenaTest", "ArenaTest\ArenaTest.csproj", "{44B046FA-07BF-4829-BA50-7A9FBB89559E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolCache", "..\ToolCache\ToolCache.csproj", "{A685AA27-BC93-44F9-9A10-8196B32DADB0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolCache", "ToolCache\ToolCache.csproj", "{A685AA27-BC93-44F9-9A10-8196B32DADB0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

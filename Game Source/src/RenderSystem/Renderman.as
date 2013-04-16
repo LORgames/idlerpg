@@ -14,6 +14,7 @@ package RenderSystem {
 			map = new MapRenderer();
 			
 			Main.I.addChild(map);
+			Main.I.addChild(Main.OrderedLayer);
 		}
 		
 		public function Resized():void {

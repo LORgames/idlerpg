@@ -20,6 +20,7 @@ package Game.Map
 			ImageLoader.Load("Data/TileSheet.png", LoadedTileSet);
 			
 			TileTemplate.LoadTileInfo();
+			ObjectTemplate.LoadObjectInfo();
 			
 			Global.LoadingTotal += 2;
 		}
@@ -38,7 +39,7 @@ package Game.Map
             }
 			
 			if (totalMaps > 0) {
-				CurrentMap = new MapData(Maps[0]);
+				CurrentMap = new MapData(Maps[1]);
 			}
 			
 			Global.LoadingTotal--;

@@ -14,6 +14,9 @@ package Game.Map {
 		public var TotalTiles:int = 0;
 		public var Tiles:Vector.<int>;
 		
+		public var TotalObjects:int = 0;
+		public var Objects:Vector.<ObjectInstance>
+		
 		public function MapData(mapname:String) {
 			Name = mapname;
 			
@@ -33,23 +36,30 @@ package Game.Map {
 			
 			Tiles = new Vector.<int>(TotalTiles, true);
 			
-			for (var i:int = 0; i < TileSizeX; i++) {
+			var i:int;
+			
+			for (i = 0; i < TileSizeX; i++) {
 				for (var j:int = 0; j < TileSizeY; j++) {
 					var ttt:int = b.readShort();
-					Tiles[i + TileSizeY * j] = ttt;
+					Tiles[i + TileSizeX * j] = ttt;
 				}
 			}
 			
 			//Now objects
-			/*f.AddShort((short)map.Objects.Count);
+			TotalObjects = b.readShort();
+			Objects = new Vector.<ObjectInstance>(TotalObjects, true);
 			
-			for (int i = 0; i < map.Objects.Count; i++) {
-				BaseObject obj = map.Objects[i];
-
-				f.AddShort(ObjectCrusher.RealignedItemIndexes[obj.ObjectType]);
-				f.AddShort((short)obj.Location.X);
-				f.AddShort((short)obj.Location.Y);
-			}*/
+			for (i = 0; i < TotalObjects; i++) {
+				var o:ObjectInstance = new ObjectInstance();
+				
+				var id:int = b.readShort();
+				var _x:int = b.readShort();
+				var _y:int = b.readShort();
+				
+				o.SetInformation(id, _x, _y);
+				
+				Objects[i] = o;
+			}
 			
 			Global.LoadingTotal--;
 		}

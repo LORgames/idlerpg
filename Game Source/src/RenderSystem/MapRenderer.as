@@ -45,9 +45,10 @@ package RenderSystem {
 			while (--i > -1) {
 				var tileType:int = tiles[i];
 				
-				destPoint.x = 48 * (i % WorldData.CurrentMap.TileSizeX);
-				destPoint.y = 48 * int(i / WorldData.CurrentMap.TileSizeY);
+				destPoint.x = 48 * int(i % WorldData.CurrentMap.TileSizeX);
+				destPoint.y = 48 * int(i / WorldData.CurrentMap.TileSizeX);
 				
+				trace(i + " & " + destPoint + " *" + tileType);
 				data.copyPixels(tileArt, TileTemplate.Tiles[tileType].Frames[0], destPoint);
 				
 				prevType = tileType;

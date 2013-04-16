@@ -33,6 +33,10 @@ namespace ToolToGameExporter {
                     Image im = Image.FromFile(t.Animation.Frames[0]);
                     Bitmap bmp = new Bitmap(im.Width * t.Animation.Frames.Count, im.Height, PixelFormat.Format32bppPArgb);
                     Graphics gfx = Graphics.FromImage(bmp);
+
+                    f.AddShort((short)im.Width);
+                    f.AddShort((short)im.Height);
+
                     im.Dispose();
 
                     gfx.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
