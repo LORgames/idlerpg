@@ -11,29 +11,32 @@ package Game.Map {
 		public var TileSizeX:int = 0;
 		public var TileSizeY:int = 0;
 		
+		public var TotalTiles:int = 0;
 		public var Tiles:Vector.<int>;
 		
 		public function MapData(mapname:String) {
 			Name = mapname;
 			
-			BinaryLoader.Load("Data/Map_" + mapname + ".bin", ParseData, FailedLoad);
+			BinaryLoader.Load("Data/Map_" + mapname + ".bin", ParseData);
+			
+			Global.LoadingTotal++;
 		}
 		
 		public function ParseData(b:ByteArray):void {
 			var l:int = b.readShort();
 			var s:String = b.readMultiByte(l, "iso-8859-1"); //map name
 			
-			if (Name != s) trace("MapData (" + Name + "): a serious problem occured, filename != internal map name");
-			
 			//Tiles First?
 			TileSizeX = b.readShort();
 			TileSizeY = b.readShort();
+			TotalTiles = TileSizeX * TileSizeY;
 			
-			Tiles = new Vector.<int>(TileSizeX * TileSizeY, true);
+			Tiles = new Vector.<int>(TotalTiles, true);
 			
 			for (var i:int = 0; i < TileSizeX; i++) {
-				for (var j:int = 0; j < TileSizeX; j++) {
-					Tiles[i + TileSizeY * j] = b.readShort();
+				for (var j:int = 0; j < TileSizeY; j++) {
+					var ttt:int = b.readShort();
+					Tiles[i + TileSizeY * j] = ttt;
 				}
 			}
 			
@@ -47,10 +50,8 @@ package Game.Map {
 				f.AddShort((short)obj.Location.X);
 				f.AddShort((short)obj.Location.Y);
 			}*/
-		}
-		
-		public function FailedLoad(s:String):void {
 			
+			Global.LoadingTotal--;
 		}
 	}
 

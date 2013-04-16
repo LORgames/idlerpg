@@ -77,7 +77,7 @@ namespace ToolCache.Map.Tiles {
         }
 
         public override string ToString() {
-            return TileName;
+            return TileName + " (" + TileID + ")";
         }
     }
 }

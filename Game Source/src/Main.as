@@ -1,5 +1,7 @@
 package {
 	import flash.display.Sprite;
+	import flash.display.StageAlign;
+	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import Game.General.BinaryLoader;
 	import Game.General.ImageLoader;
@@ -28,8 +30,12 @@ package {
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			// entry point
 			
+			//Set up the stage
+			stage.scaleMode = StageScaleMode.NO_SCALE;
+			stage.align = StageAlign.TOP_LEFT;
+			
+			//Set up some other things
 			Renderer = new Renderman();
-			this.addChild(Renderer.bitmap);
 			
 			BinaryLoader.Initialize();
 			ImageLoader.Initialize();

@@ -96,5 +96,9 @@ namespace ToolCache.Map.Tiles {
                 RecalculateWalkable();
             }
         }
+
+        public override string ToString() {
+            return "Tile: " + TileID;
+        }
     }
 }

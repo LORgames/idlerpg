@@ -7,11 +7,14 @@ using ToolCache.Items;
 using ToolCache.Equipment;
 using ToolCache.Map.Objects;
 using ToolCache.Map;
+using ToolCache.Map.Tiles;
 
 namespace ToolCache.General {
     public class Startup {
         public static void GoGoGadget() {
             TemplateCache.Initialize();
+            TileCache.Initialize();
+
             MapPieceCache.Initialize();
 
             ElementManager.Initialize();

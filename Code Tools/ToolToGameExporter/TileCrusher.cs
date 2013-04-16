@@ -60,12 +60,14 @@ namespace ToolToGameExporter {
 
                 Image im = Image.FromFile(tiles[i]);
                 gfx.DrawImage(im, new Rectangle(p.X, p.Y, 48, 48));
+                im.Dispose();
 
                 //bmp.SetResolution(im.HorizontalResolution, im.VerticalResolution);
             }
 
             f.Encode(Global.EXPORT_DIRECTORY + "/TileInfo.bin");
             bmp.Save(Global.EXPORT_DIRECTORY + "/TileSheet.png");
+            bmp.Dispose();
         }
 
     }

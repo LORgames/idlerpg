@@ -20,7 +20,7 @@ namespace ToolToGameExporter {
 
         private void game_btn_Click(object sender, EventArgs e) {
             folderBrowserDialog1.ShowDialog();
-            game_loc_TB.Text = folderBrowserDialog1.SelectedPath;
+            txtDataFolderLocation.Text = folderBrowserDialog1.SelectedPath;
         }
 
         private void convert_btn_Click(object sender, EventArgs e) {
@@ -33,8 +33,12 @@ namespace ToolToGameExporter {
             try {
                 ObjectCrusher.Go();
                 TileCrusher.Go();
-
                 MapCrusher.Go();
+
+                if (Directory.Exists(txtDataFolderLocation.Text)) {
+                    Directory.Delete(txtDataFolderLocation.Text, true);
+                    Directory.Move(Global.EXPORT_DIRECTORY, txtDataFolderLocation.Text);
+                }
             } catch {
                 MessageBox.Show("Please close the exporter and try again! (Some kind of caching issue occurred)");
 

@@ -17,6 +17,8 @@ namespace ToolToGameExporter {
             foreach (MapPiece map in MapPieceCache.Pieces) {
                 BinaryIO f = new BinaryIO();
 
+                if (!map.isLoaded) MapPieceCache.ChangeCurrentPiece(map);
+                
                 m.AddString(map.Name);
                 f.AddString(map.Name);
 
@@ -26,6 +28,7 @@ namespace ToolToGameExporter {
 
                 for (int i = 0; i < map.Tiles.numTilesX; i++) {
                     for (int j = 0; j < map.Tiles.numTilesY; j++) {
+                        short _d = map.Tiles[i, j];
                         f.AddShort(TileCrusher.RemappedTileIds[map.Tiles[i, j]]);
                     }
                 }

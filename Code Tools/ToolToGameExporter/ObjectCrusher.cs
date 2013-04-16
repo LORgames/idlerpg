@@ -33,6 +33,7 @@ namespace ToolToGameExporter {
                     Image im = Image.FromFile(t.Animation.Frames[0]);
                     Bitmap bmp = new Bitmap(im.Width * t.Animation.Frames.Count, im.Height, PixelFormat.Format32bppPArgb);
                     Graphics gfx = Graphics.FromImage(bmp);
+                    im.Dispose();
 
                     gfx.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
                     gfx.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
@@ -40,16 +41,16 @@ namespace ToolToGameExporter {
 
                     for (int i = 0; i < t.Animation.Frames.Count; i++) {
                         im = Image.FromFile(t.Animation.Frames[i]);
-
                         gfx.DrawImage(im, new Rectangle(im.Width * i, 0, im.Width, im.Height));
+                        im.Dispose();
                     }
 
                     bmp.Save(Global.EXPORT_DIRECTORY + "/Object_" + highestIndex + ".png");
+                    bmp.Dispose();
                 }
                 
                 highestIndex++;
             }
-
 
             f.Encode(Global.EXPORT_DIRECTORY + "/ObjectInfo.bin");
         }

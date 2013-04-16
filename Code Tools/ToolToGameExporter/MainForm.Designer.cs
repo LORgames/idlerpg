@@ -24,7 +24,7 @@
         /// </summary>
         private void InitializeComponent() {
             this.label2 = new System.Windows.Forms.Label();
-            this.game_loc_TB = new System.Windows.Forms.TextBox();
+            this.txtDataFolderLocation = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.game_btn = new System.Windows.Forms.Button();
             this.convert_btn = new System.Windows.Forms.Button();
@@ -35,18 +35,18 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(9, 9);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(82, 13);
+            this.label2.Size = new System.Drawing.Size(109, 13);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Game Location:";
+            this.label2.Text = "Data Folder Location:";
             // 
-            // game_loc_TB
+            // txtDataFolderLocation
             // 
-            this.game_loc_TB.Location = new System.Drawing.Point(12, 27);
-            this.game_loc_TB.Name = "game_loc_TB";
-            this.game_loc_TB.ReadOnly = true;
-            this.game_loc_TB.Size = new System.Drawing.Size(121, 20);
-            this.game_loc_TB.TabIndex = 2;
-            this.game_loc_TB.Text = "../Codes/";
+            this.txtDataFolderLocation.Location = new System.Drawing.Point(12, 27);
+            this.txtDataFolderLocation.Name = "txtDataFolderLocation";
+            this.txtDataFolderLocation.ReadOnly = true;
+            this.txtDataFolderLocation.Size = new System.Drawing.Size(121, 20);
+            this.txtDataFolderLocation.TabIndex = 2;
+            this.txtDataFolderLocation.Text = "../Game Source/bin/Data/";
             // 
             // game_btn
             // 
@@ -68,7 +68,7 @@
             this.convert_btn.UseVisualStyleBackColor = true;
             this.convert_btn.Click += new System.EventHandler(this.convert_btn_Click);
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -76,8 +76,8 @@
             this.Controls.Add(this.convert_btn);
             this.Controls.Add(this.game_btn);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.game_loc_TB);
-            this.Name = "Form1";
+            this.Controls.Add(this.txtDataFolderLocation);
+            this.Name = "MainForm";
             this.Text = "Exporter";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -87,7 +87,7 @@
         #endregion
 
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox game_loc_TB;
+        private System.Windows.Forms.TextBox txtDataFolderLocation;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Button game_btn;
         private System.Windows.Forms.Button convert_btn;

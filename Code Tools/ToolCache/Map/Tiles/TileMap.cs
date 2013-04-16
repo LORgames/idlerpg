@@ -134,5 +134,9 @@ namespace ToolCache.Map.Tiles {
 
             return retList;
         }
+
+        public override string ToString() {
+            return Map.Name + " (Tiles)";
+        }
     }
 }

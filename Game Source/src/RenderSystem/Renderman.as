@@ -8,25 +8,22 @@ package RenderSystem {
 	 * @author Paul
 	 */
 	public class Renderman {
-		
-		public var bitmap:Bitmap;
-		private var data:BitmapData; // Display thing: very bad if this needs to be resized
+		private var map:MapRenderer;
 		
 		public function Renderman() {
-			bitmap = new Bitmap();
+			map = new MapRenderer();
+			
+			Main.I.addChild(map);
 		}
 		
 		public function Resized():void {
-			data = new BitmapData(Main.I.stage.stageWidth, Main.I.stage.stageHeight, false);
-			bitmap.bitmapData = data;
+			map.Resized();
 		}
 		
 		public function Render():void {
-			data.lock();
+			if (Global.LoadingTotal > 0) return;
 			
-			
-			
-			data.unlock();
+			map.Draw();
 		}
 		
 	}

@@ -11,13 +11,17 @@ package Game.Map
 	public class WorldData {
 		
 		private static var Maps:Vector.<String>;
-		private static var TileSheet:BitmapData;
+		public static var TileSheet:BitmapData;
 		
 		public static var CurrentMap:MapData;
 		
 		public static function Initialize():void {
-			BinaryLoader.Load("Data/MapInfo.bin", ParseWorldFile, LoadFailed);
-			ImageLoader.Load("Data/TileSheet.png", LoadedTileSet, LoadFailed);
+			BinaryLoader.Load("Data/MapInfo.bin", ParseWorldFile);
+			ImageLoader.Load("Data/TileSheet.png", LoadedTileSet);
+			
+			TileTemplate.LoadTileInfo();
+			
+			Global.LoadingTotal += 2;
 		}
 		
 		public static function ParseWorldFile(data:ByteArray):void {
@@ -36,15 +40,13 @@ package Game.Map
 			if (totalMaps > 0) {
 				CurrentMap = new MapData(Maps[0]);
 			}
+			
+			Global.LoadingTotal--;
 		}
 		
 		public static function LoadedTileSet(e:BitmapData):void {
 			TileSheet = e;
-		}
-		
-		public static function LoadFailed(e:String):void {
-			//Uhoh! No can load.
-			trace("No can load something..?");
+			Global.LoadingTotal--;
 		}
 		
 	}

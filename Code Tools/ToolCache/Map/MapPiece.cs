@@ -102,5 +102,9 @@ namespace ToolCache.Map {
         public void RecalculateWalkable() {
             Tiles.RecalculateWalkable();
         }
+
+        public override string ToString() {
+            return Name + " (map)";
+        }
     }
 }
