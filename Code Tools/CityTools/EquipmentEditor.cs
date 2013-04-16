@@ -11,6 +11,7 @@ using ToolCache.Map.Tiles;
 using System.IO;
 using ToolCache.Drawing;
 using ToolCache.Equipment;
+using ToolCache.Animation;
 
 namespace CityTools {
     public partial class EquipmentEditor : Form {
@@ -26,6 +27,7 @@ namespace CityTools {
         private EquipmentItem head = EquipmentManager.TypeLists[EquipmentTypes.Hat].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Hat][0] : null;
         private EquipmentItem legs = EquipmentManager.TypeLists[EquipmentTypes.Legs].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Legs][0] : null;
         private EquipmentItem weap = EquipmentManager.TypeLists[EquipmentTypes.Weapon].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Weapon][0] : null;
+        private EquipmentItem shad = EquipmentManager.TypeLists[EquipmentTypes.Shadow].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Shadow][0] : null;
 
         public EquipmentEditor() {
             InitializeComponent();
@@ -54,13 +56,19 @@ namespace CityTools {
 
             //Add states to the state box thing
             cbAnimationState.Items.Clear();
+            cbPreviewState.Items.Clear();
             foreach (String s in Enum.GetNames(typeof(States))) {
                 cbAnimationState.Items.Add(s);
+                cbPreviewState.Items.Add(s);
             }
             cbAnimationState.SelectedIndex = 0;
+            cbPreviewState.SelectedIndex = 0;
+
 
             //TODO: Add Roots to treeview.
             if (!Directory.Exists("Equipment")) Directory.CreateDirectory("Equipment");
+            ccAnimationBack.SetSaveLocation("Equipment");
+            ccAnimationFront.SetSaveLocation("Equipment");
 
             CreateNew();
 
@@ -99,6 +107,7 @@ namespace CityTools {
             cbDispHeadgear.Items.Clear();
             cbDispPants.Items.Clear();
             cbDispWeapon.Items.Clear();
+            cbDispShadow.Items.Clear();
 
             ComboBox relCB = cbDispBody;
 
@@ -107,6 +116,7 @@ namespace CityTools {
             cbDispHeadgear.SuspendLayout();
             cbDispPants.SuspendLayout();
             cbDispWeapon.SuspendLayout();
+            cbDispShadow.SuspendLayout();
 
             foreach (KeyValuePair<EquipmentTypes, List<EquipmentItem>> kvp in EquipmentManager.TypeLists) {
                 if (kvp.Key == EquipmentTypes.Body) relCB = cbDispBody;
@@ -114,7 +124,8 @@ namespace CityTools {
                 else if (kvp.Key == EquipmentTypes.Hat) relCB = cbDispHeadgear;
                 else if (kvp.Key == EquipmentTypes.Legs) relCB = cbDispPants;
                 else if (kvp.Key == EquipmentTypes.Weapon) relCB = cbDispWeapon;
-                
+                else if (kvp.Key == EquipmentTypes.Shadow) relCB = cbDispShadow;
+
                 foreach (EquipmentItem ei in kvp.Value) {
                     relCB.Items.Add(ei.Name);
                 }
@@ -135,11 +146,15 @@ namespace CityTools {
             if (weap == null) cbDispWeapon.Text = EquipmentManager.TypeLists[EquipmentTypes.Weapon].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Weapon][0].Name : "";
             else cbDispWeapon.Text = weap.Name;
 
+            if (shad == null) cbDispShadow.Text = EquipmentManager.TypeLists[EquipmentTypes.Shadow].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Shadow][0].Name : "";
+            else cbDispShadow.Text = shad.Name;
+
             cbDispBody.ResumeLayout();
             cbDispFace.ResumeLayout();
             cbDispHeadgear.ResumeLayout();
             cbDispPants.ResumeLayout();
             cbDispWeapon.ResumeLayout();
+            cbDispShadow.ResumeLayout();
         }
         
         private void UpdateForm() {
@@ -170,8 +185,8 @@ namespace CityTools {
             }
 
             if (currentEquipment.Animations.ContainsKey(s)) {
-                ccAnimationFront.ChangeToAnimation(currentEquipment.Animations[s].GetAnimation(currentDirection, 0), FilenamePrefix(currentDirection));
-                ccAnimationBack.ChangeToAnimation(currentEquipment.Animations[s].GetAnimation(currentDirection, 1), FilenamePrefix(currentDirection));
+                ccAnimationFront.ChangeToAnimation(currentEquipment.Animations[s].GetAnimation(currentDirection, 0));
+                ccAnimationBack.ChangeToAnimation(currentEquipment.Animations[s].GetAnimation(currentDirection, 1));
             }
         }
 
@@ -186,15 +201,15 @@ namespace CityTools {
                 }
             }
 
-            States cState = (States)Enum.Parse(typeof(States), cbAnimationState.Text);
+            States cState = (States)Enum.Parse(typeof(States), cbPreviewState.Text);
 
             //Draw 5 people :) [different directions, same gear]
             for (int i = 0; i < 4; i++) {
                 Point p = new Point();
                 p.X = pbEquipmentDisplay.Width / 5 * (i+1);
-                p.Y = pbEquipmentDisplay.Height - 20;
+                p.Y = pbEquipmentDisplay.Height - 40;
 
-                PersonDrawer.Draw(e.Graphics, p, (Direction)i, cState, head, face, body, legs, weap);
+                PersonDrawer.Draw(e.Graphics, p, (Direction)i, cState, shad, head, face, body, legs, weap);
             }
         }
 
@@ -229,7 +244,7 @@ namespace CityTools {
                             string ext = Path.GetExtension(filename).ToLower();
                             if (ext == ".png") {
                                 //Add animation
-                                string nFilename = "Equipment/" + FilenamePrefix(x) + Path.GetFileNameWithoutExtension(filename) + ".png";
+                                string nFilename = "Equipment/" + Path.GetFileNameWithoutExtension(filename) + ".png";
 
                                 bool copied = false;
 
@@ -266,20 +281,6 @@ namespace CityTools {
             }
         }
 
-        private string FilenamePrefix(Direction x) {
-            if (x == Direction.Left) {
-                return "L_";
-            } else if (x == Direction.Right) {
-                return "R_";
-            } else if (x == Direction.Up) {
-                return "U_";
-            } else if (x == Direction.Down) {
-                return "D_";
-            }
-
-            return "X_";
-        }
-
         private void cbItemType_SelectedIndexChanged(object sender, EventArgs e) {
             //Needs to reload things most likely
 
@@ -306,16 +307,22 @@ namespace CityTools {
                         lblBackAnimationName.Text = "N/A";
                         break;
                     case EquipmentTypes.Legs:
-                        ccAnimationBack.Enabled = true;
+                        ccAnimationBack.Enabled = false;
 
                         lblFrontAnimationName.Text = "LEGS";
-                        lblBackAnimationName.Text = "SHADOW";
+                        lblBackAnimationName.Text = "N/A";
                         break;
                     case EquipmentTypes.Weapon:
                         ccAnimationBack.Enabled = true;
 
                         lblFrontAnimationName.Text = "FRONT";
                         lblBackAnimationName.Text = "BACK";
+                        break;
+                    case EquipmentTypes.Shadow:
+                        ccAnimationBack.Enabled = false;
+
+                        lblFrontAnimationName.Text = "SHADOW";
+                        lblBackAnimationName.Text = "N/A";
                         break;
                 }
             } else {
@@ -441,6 +448,7 @@ namespace CityTools {
             head = UpdateEquipmentDisplaySetsHelper(cbDispHeadgear.Text);
             legs = UpdateEquipmentDisplaySetsHelper(cbDispPants.Text);
             weap = UpdateEquipmentDisplaySetsHelper(cbDispWeapon.Text);
+            shad = UpdateEquipmentDisplaySetsHelper(cbDispShadow.Text);
         }
 
         private EquipmentItem UpdateEquipmentDisplaySetsHelper(string itemname) {
@@ -452,9 +460,27 @@ namespace CityTools {
         }
 
         private void numOffset_ValueChanged(object sender, EventArgs e) {
+            if (_updatingForm) return;
+
             currentEquipment.OffsetX = (short)numOffsetX.Value;
             currentEquipment.OffsetY = (short)numOffsetY.Value;
             _iE = true;
+        }
+
+        private void btnSwapAnimations_Click(object sender, EventArgs e) {
+            if (ccAnimationBack.Enabled && ccAnimationFront.Enabled) {
+                States eType;
+
+                if (!Enum.TryParse<States>(cbAnimationState.Text, out eType)) {
+                    return;
+                }
+
+                currentEquipment.Animations[eType].SwapAnimations(currentDirection);
+                ccAnimationFront.ChangeToAnimation(currentEquipment.Animations[eType].GetAnimation(currentDirection, 0));
+                ccAnimationBack.ChangeToAnimation(currentEquipment.Animations[eType].GetAnimation(currentDirection, 1));
+
+                _iE = true;
+            }
         }
     }
 }

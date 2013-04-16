@@ -8,6 +8,7 @@ namespace ToolCache.Map.Tiles {
     public class TileMap {
         public int numTilesX;
         public int numTilesY;
+        public MapPiece Map;
 
         public short this[int i, int j] {
             get {
@@ -20,8 +21,8 @@ namespace ToolCache.Map.Tiles {
 
         public TileInstance[,] Data;
 
-        public TileMap() {
-            
+        public TileMap(MapPiece owner) {
+            Map = owner;
         }
 
         public void CreateMapFromNothing(short fillTileID) {
@@ -90,6 +91,14 @@ namespace ToolCache.Map.Tiles {
                         newTiles[i, j] = new TileInstance(fillTileID, i, j);
                     }
                 }
+            }
+
+            //Loop over objects and move them
+            int offsetX = (extendX == 0) ? 0 : (extendX == 2 ? TileTemplate.PIXELS_X * (oldTotalTilesX - 1) : TileTemplate.PIXELS_X * sizeDifX / 2);
+            int offsetY = (extendY == 0) ? 0 : (extendY == 2 ? TileTemplate.PIXELS_Y * (oldTotalTilesY - 1) : TileTemplate.PIXELS_Y * sizeDifY / 2);
+
+            foreach(Objects.BaseObject o in Map.Objects) {
+                o.Move(offsetX, offsetY);
             }
 
             Data = newTiles;

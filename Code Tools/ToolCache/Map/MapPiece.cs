@@ -25,12 +25,13 @@ namespace ToolCache.Map {
         public string Filename = "";
 
         public List<BaseObject> Objects = new List<BaseObject>();
-        public TileMap Tiles = new TileMap();
+        public TileMap Tiles;
 
         public Rectangle WorldRectangle;
         
         public MapPiece(string filename, short fillTileID) {
             Filename = filename;
+            Tiles = new TileMap(this);
             Tiles.CreateMapFromNothing(fillTileID);
         }
 

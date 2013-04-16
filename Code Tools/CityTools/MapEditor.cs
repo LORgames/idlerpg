@@ -123,16 +123,12 @@ namespace CityTools {
 
             this.ActiveControl = mapViewPanel;
 
-            if (Camera.ProcessKeys(keyData)) {
-                Camera.FixViewArea(drawArea);
-                mapViewPanel.Invalidate();
-            } else if (keyData == Keys.Escape) {
-                input_buffer.gfx.Clear(Color.Transparent);
-                paintMode = PaintMode.Off;
-                mapViewPanel.Invalidate();
-            } else if (paintMode == PaintMode.ObjectSelector) {
-                ScenicHelper.ProcessCmdKey(ref msg, keyData);
-                mapViewPanel.Invalidate();
+            if (keyData == Keys.D1) {
+                ckbShowTileGrid.Checked = !ckbShowTileGrid.Checked;
+            } else if (keyData == Keys.D2) {
+                ckbShowWalkableGrid.Checked = !ckbShowWalkableGrid.Checked;
+            } else if (keyData == Keys.D3) {
+                ckbShowObjectBases.Checked = !ckbShowObjectBases.Checked;
             } else if (keyData == Keys.T) {
                 OpenTileEditor();
             } else if (keyData == Keys.O) {
@@ -143,12 +139,16 @@ namespace CityTools {
                 OpenItemEditor();
             } else if (keyData == Keys.U) {
                 OpenEquipmentEditor();
-            } else if (keyData == Keys.D1) {
-                ckbShowTileGrid.Checked = !ckbShowTileGrid.Checked;
-            } else if (keyData == Keys.D2) {
-                ckbShowWalkableGrid.Checked = !ckbShowWalkableGrid.Checked;
-            } else if (keyData == Keys.D3) {
-                ckbShowObjectBases.Checked = !ckbShowObjectBases.Checked;
+            } else if (Camera.ProcessKeys(keyData)) {
+                Camera.FixViewArea(drawArea);
+                mapViewPanel.Invalidate();
+            } else if (keyData == Keys.Escape) {
+                input_buffer.gfx.Clear(Color.Transparent);
+                paintMode = PaintMode.Off;
+                mapViewPanel.Invalidate();
+            } else if (paintMode == PaintMode.ObjectSelector) {
+                ScenicHelper.ProcessCmdKey(ref msg, keyData);
+                mapViewPanel.Invalidate();
             }
 
             return base.ProcessCmdKey(ref msg, keyData);

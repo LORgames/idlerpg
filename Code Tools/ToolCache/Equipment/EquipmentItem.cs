@@ -14,6 +14,8 @@ namespace ToolCache.Equipment {
         public EquipmentTypes OldType = EquipmentTypes.Body;
 
         public string Name = "Unnamed";
+        public string OldName = "Unnamed";
+
         public bool isAvailableAtStart = false;
 
         public short OffsetX = 0;
@@ -44,6 +46,7 @@ namespace ToolCache.Equipment {
             }
 
             t.OffsetX = f.GetShort();
+            t.OffsetY = f.GetShort();
 
             t.VerifyAnimationSets();
 
@@ -83,8 +86,14 @@ namespace ToolCache.Equipment {
             return Animations[States.Default].GetAnimation(d, layer);
         }
 
-        private Point _p;
-        public Point Offset { get; set; }
+        private Point _p = new Point();
+        public Point Offset {
+            get {
+                _p.X = OffsetX;
+                _p.Y = OffsetY;
+                return _p;
+            }
+        }
 
         internal Point GetCenter(States s, Direction d, int layer = 2) {
             if (layer == 2) {

@@ -62,10 +62,13 @@ namespace CityTools {
             this.cbPreviewState = new System.Windows.Forms.ComboBox();
             this.numOffsetX = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
-            this.ccAnimationBack = new CityTools.ClipIns.AnimationList();
-            this.ccAnimationFront = new CityTools.ClipIns.AnimationList();
             this.label11 = new System.Windows.Forms.Label();
             this.numOffsetY = new System.Windows.Forms.NumericUpDown();
+            this.cbDispShadow = new System.Windows.Forms.ComboBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.btnSwapAnimations = new System.Windows.Forms.Button();
+            this.ccAnimationBack = new CityTools.ClipIns.AnimationList();
+            this.ccAnimationFront = new CityTools.ClipIns.AnimationList();
             ((System.ComponentModel.ISupportInitialize)(this.pbEquipmentDisplay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numOffsetX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numOffsetY)).BeginInit();
@@ -92,9 +95,9 @@ namespace CityTools {
             // cbTileList
             // 
             this.cbTileList.FormattingEnabled = true;
-            this.cbTileList.Location = new System.Drawing.Point(22, 19);
+            this.cbTileList.Location = new System.Drawing.Point(16, 139);
             this.cbTileList.Name = "cbTileList";
-            this.cbTileList.Size = new System.Drawing.Size(87, 21);
+            this.cbTileList.Size = new System.Drawing.Size(94, 21);
             this.cbTileList.TabIndex = 5;
             this.cbTileList.SelectedIndexChanged += new System.EventHandler(this.cbTileList_SelectedIndexChanged);
             // 
@@ -112,7 +115,7 @@ namespace CityTools {
             this.cbAnimationState.FormattingEnabled = true;
             this.cbAnimationState.Location = new System.Drawing.Point(258, 294);
             this.cbAnimationState.Name = "cbAnimationState";
-            this.cbAnimationState.Size = new System.Drawing.Size(108, 21);
+            this.cbAnimationState.Size = new System.Drawing.Size(123, 21);
             this.cbAnimationState.TabIndex = 9;
             this.cbAnimationState.SelectedIndexChanged += new System.EventHandler(this.cbAnimationState_SelectedIndexChanged);
             // 
@@ -171,11 +174,11 @@ namespace CityTools {
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(498, 264);
+            this.label3.Location = new System.Drawing.Point(523, 264);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(116, 26);
+            this.label3.Size = new System.Drawing.Size(93, 26);
             this.label3.TabIndex = 14;
-            this.label3.Text = "Quick Drop\r\n(hold shift for 2nd layer)";
+            this.label3.Text = "Quick Drop\r\n(shift for 2nd layer)";
             this.label3.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // label4
@@ -207,7 +210,7 @@ namespace CityTools {
             // ckbAvailableAtStart
             // 
             this.ckbAvailableAtStart.AutoSize = true;
-            this.ckbAvailableAtStart.Location = new System.Drawing.Point(405, 296);
+            this.ckbAvailableAtStart.Location = new System.Drawing.Point(387, 175);
             this.ckbAvailableAtStart.Name = "ckbAvailableAtStart";
             this.ckbAvailableAtStart.Size = new System.Drawing.Size(85, 17);
             this.ckbAvailableAtStart.TabIndex = 18;
@@ -278,7 +281,7 @@ namespace CityTools {
             // 
             this.btnCreateNew.Location = new System.Drawing.Point(217, 171);
             this.btnCreateNew.Name = "btnCreateNew";
-            this.btnCreateNew.Size = new System.Drawing.Size(290, 23);
+            this.btnCreateNew.Size = new System.Drawing.Size(164, 23);
             this.btnCreateNew.TabIndex = 25;
             this.btnCreateNew.Text = "Create New";
             this.btnCreateNew.UseVisualStyleBackColor = true;
@@ -291,7 +294,7 @@ namespace CityTools {
             // cbDispWeapon
             // 
             this.cbDispWeapon.FormattingEnabled = true;
-            this.cbDispWeapon.Location = new System.Drawing.Point(516, 19);
+            this.cbDispWeapon.Location = new System.Drawing.Point(416, 22);
             this.cbDispWeapon.Name = "cbDispWeapon";
             this.cbDispWeapon.Size = new System.Drawing.Size(94, 21);
             this.cbDispWeapon.TabIndex = 33;
@@ -301,7 +304,7 @@ namespace CityTools {
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(536, 3);
+            this.label9.Location = new System.Drawing.Point(436, 6);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(48, 13);
             this.label9.TabIndex = 32;
@@ -310,7 +313,7 @@ namespace CityTools {
             // cbDispBody
             // 
             this.cbDispBody.FormattingEnabled = true;
-            this.cbDispBody.Location = new System.Drawing.Point(116, 19);
+            this.cbDispBody.Location = new System.Drawing.Point(16, 22);
             this.cbDispBody.Name = "cbDispBody";
             this.cbDispBody.Size = new System.Drawing.Size(94, 21);
             this.cbDispBody.TabIndex = 35;
@@ -320,7 +323,7 @@ namespace CityTools {
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(146, 3);
+            this.label6.Location = new System.Drawing.Point(46, 6);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(31, 13);
             this.label6.TabIndex = 34;
@@ -329,7 +332,7 @@ namespace CityTools {
             // cbDispFace
             // 
             this.cbDispFace.FormattingEnabled = true;
-            this.cbDispFace.Location = new System.Drawing.Point(216, 19);
+            this.cbDispFace.Location = new System.Drawing.Point(116, 22);
             this.cbDispFace.Name = "cbDispFace";
             this.cbDispFace.Size = new System.Drawing.Size(94, 21);
             this.cbDispFace.TabIndex = 37;
@@ -339,7 +342,7 @@ namespace CityTools {
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(246, 3);
+            this.label7.Location = new System.Drawing.Point(146, 6);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(31, 13);
             this.label7.TabIndex = 36;
@@ -348,7 +351,7 @@ namespace CityTools {
             // cbDispPants
             // 
             this.cbDispPants.FormattingEnabled = true;
-            this.cbDispPants.Location = new System.Drawing.Point(316, 19);
+            this.cbDispPants.Location = new System.Drawing.Point(216, 22);
             this.cbDispPants.Name = "cbDispPants";
             this.cbDispPants.Size = new System.Drawing.Size(94, 21);
             this.cbDispPants.TabIndex = 39;
@@ -358,7 +361,7 @@ namespace CityTools {
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(343, 3);
+            this.label8.Location = new System.Drawing.Point(243, 6);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(34, 13);
             this.label8.TabIndex = 38;
@@ -367,7 +370,7 @@ namespace CityTools {
             // cbDispHeadgear
             // 
             this.cbDispHeadgear.FormattingEnabled = true;
-            this.cbDispHeadgear.Location = new System.Drawing.Point(416, 19);
+            this.cbDispHeadgear.Location = new System.Drawing.Point(316, 22);
             this.cbDispHeadgear.Name = "cbDispHeadgear";
             this.cbDispHeadgear.Size = new System.Drawing.Size(94, 21);
             this.cbDispHeadgear.TabIndex = 41;
@@ -377,7 +380,7 @@ namespace CityTools {
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(433, 3);
+            this.label10.Location = new System.Drawing.Point(333, 6);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(54, 13);
             this.label10.TabIndex = 40;
@@ -386,15 +389,15 @@ namespace CityTools {
             // cbPreviewState
             // 
             this.cbPreviewState.FormattingEnabled = true;
-            this.cbPreviewState.Location = new System.Drawing.Point(22, 46);
+            this.cbPreviewState.Location = new System.Drawing.Point(116, 139);
             this.cbPreviewState.Name = "cbPreviewState";
-            this.cbPreviewState.Size = new System.Drawing.Size(87, 21);
+            this.cbPreviewState.Size = new System.Drawing.Size(94, 21);
             this.cbPreviewState.TabIndex = 42;
             this.cbPreviewState.SelectedIndexChanged += new System.EventHandler(this.cbPreviewState_SelectedIndexChanged);
             // 
             // numOffsetX
             // 
-            this.numOffsetX.Location = new System.Drawing.Point(405, 217);
+            this.numOffsetX.Location = new System.Drawing.Point(387, 217);
             this.numOffsetX.Maximum = new decimal(new int[] {
             250,
             0,
@@ -406,18 +409,74 @@ namespace CityTools {
             0,
             -2147483648});
             this.numOffsetX.Name = "numOffsetX";
-            this.numOffsetX.Size = new System.Drawing.Size(85, 20);
+            this.numOffsetX.Size = new System.Drawing.Size(120, 20);
             this.numOffsetX.TabIndex = 43;
             this.numOffsetX.ValueChanged += new System.EventHandler(this.numOffset_ValueChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(405, 201);
+            this.label1.Location = new System.Drawing.Point(384, 201);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(45, 13);
             this.label1.TabIndex = 44;
             this.label1.Text = "Offset X";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(384, 240);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(45, 13);
+            this.label11.TabIndex = 46;
+            this.label11.Text = "Offset Y";
+            // 
+            // numOffsetY
+            // 
+            this.numOffsetY.Location = new System.Drawing.Point(387, 257);
+            this.numOffsetY.Maximum = new decimal(new int[] {
+            250,
+            0,
+            0,
+            0});
+            this.numOffsetY.Minimum = new decimal(new int[] {
+            250,
+            0,
+            0,
+            -2147483648});
+            this.numOffsetY.Name = "numOffsetY";
+            this.numOffsetY.Size = new System.Drawing.Size(120, 20);
+            this.numOffsetY.TabIndex = 45;
+            this.numOffsetY.ValueChanged += new System.EventHandler(this.numOffset_ValueChanged);
+            // 
+            // cbDispShadow
+            // 
+            this.cbDispShadow.FormattingEnabled = true;
+            this.cbDispShadow.Location = new System.Drawing.Point(516, 22);
+            this.cbDispShadow.Name = "cbDispShadow";
+            this.cbDispShadow.Size = new System.Drawing.Size(94, 21);
+            this.cbDispShadow.TabIndex = 48;
+            this.cbDispShadow.SelectedIndexChanged += new System.EventHandler(this.changeFullDisplay);
+            this.cbDispShadow.TextUpdate += new System.EventHandler(this.changeFullDisplay);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(536, 6);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(46, 13);
+            this.label12.TabIndex = 47;
+            this.label12.Text = "Shadow";
+            // 
+            // btnSwapAnimations
+            // 
+            this.btnSwapAnimations.Location = new System.Drawing.Point(387, 292);
+            this.btnSwapAnimations.Name = "btnSwapAnimations";
+            this.btnSwapAnimations.Size = new System.Drawing.Size(120, 23);
+            this.btnSwapAnimations.TabIndex = 49;
+            this.btnSwapAnimations.Text = "Animation Swap";
+            this.btnSwapAnimations.UseVisualStyleBackColor = true;
+            this.btnSwapAnimations.Click += new System.EventHandler(this.btnSwapAnimations_Click);
             // 
             // ccAnimationBack
             // 
@@ -435,38 +494,14 @@ namespace CityTools {
             this.ccAnimationFront.Size = new System.Drawing.Size(199, 100);
             this.ccAnimationFront.TabIndex = 6;
             // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(405, 241);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(45, 13);
-            this.label11.TabIndex = 46;
-            this.label11.Text = "Offset Y";
-            // 
-            // numOffsetY
-            // 
-            this.numOffsetY.Location = new System.Drawing.Point(405, 257);
-            this.numOffsetY.Maximum = new decimal(new int[] {
-            250,
-            0,
-            0,
-            0});
-            this.numOffsetY.Minimum = new decimal(new int[] {
-            250,
-            0,
-            0,
-            -2147483648});
-            this.numOffsetY.Name = "numOffsetY";
-            this.numOffsetY.Size = new System.Drawing.Size(85, 20);
-            this.numOffsetY.TabIndex = 45;
-            this.numOffsetY.ValueChanged += new System.EventHandler(this.numOffset_ValueChanged);
-            // 
             // EquipmentEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(628, 600);
+            this.Controls.Add(this.btnSwapAnimations);
+            this.Controls.Add(this.cbDispShadow);
+            this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.numOffsetY);
             this.Controls.Add(this.label1);
@@ -557,5 +592,8 @@ namespace CityTools {
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.NumericUpDown numOffsetY;
+        private System.Windows.Forms.ComboBox cbDispShadow;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Button btnSwapAnimations;
     }
 }

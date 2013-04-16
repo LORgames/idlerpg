@@ -7,7 +7,7 @@ using System.IO;
 
 namespace ToolCache.Equipment {
     public enum Direction { Left, Right, Up, Down };
-    public enum EquipmentTypes { Body, Legs, Weapon, Face, Hat };
+    public enum EquipmentTypes { Body, Legs, Weapon, Face, Hat, Shadow };
     public enum States { Default, Walking, Attacking, Dancing };
 
     public class EquipmentManager {
@@ -59,6 +59,7 @@ namespace ToolCache.Equipment {
                 nextTry++;
             }
 
+            currentEquipment.OldName = currentEquipment.Name;
             Equipment.Add(currentEquipment.Name, currentEquipment);
 
             TypeLists[currentEquipment.Type].Add(currentEquipment);
@@ -72,6 +73,16 @@ namespace ToolCache.Equipment {
 
                 if (!TypeLists[currentEquipment.Type].Contains(currentEquipment)) {
                     TypeLists[currentEquipment.Type].Add(currentEquipment);
+                }
+            }
+
+            if (currentEquipment.Name != currentEquipment.OldName) {
+                if (Equipment.ContainsKey(currentEquipment.Name)) {
+                    currentEquipment.Name = currentEquipment.OldName;
+                } else {
+                    Equipment.Remove(currentEquipment.OldName);
+                    Equipment.Add(currentEquipment.Name, currentEquipment);
+                    currentEquipment.OldName = currentEquipment.Name;
                 }
             }
         }

@@ -84,5 +84,32 @@ namespace ToolCache.Equipment {
             Up_1.PackIntoBinaryIO(f);
             Down_1.PackIntoBinaryIO(f);
         }
+
+        public void SwapAnimations(Direction currentDirection) {
+            AnimatedObject _t;
+
+            switch (currentDirection) {
+                case Direction.Left:
+                    _t = Left_0;
+                    Left_0 = Left_1;
+                    Left_1 = _t;
+                    break;
+                case Direction.Right:
+                    _t = Right_0;
+                    Right_0 = Right_1;
+                    Right_1 = _t;
+                    break;
+                case Direction.Up:
+                    _t = Up_0;
+                    Up_0 = Up_1;
+                    Up_1 = _t;
+                    break;
+                default:
+                    _t = Down_0;
+                    Down_0 = Down_1;
+                    Down_1 = _t;
+                    break;
+            }
+        }
     }
 }
