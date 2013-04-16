@@ -10,6 +10,8 @@ package RenderSystem {
 	public class Renderman {
 		private var map:MapRenderer;
 		
+		public static var AnimatedObjects:Vector.<AnimatedCache> = new Vector.<AnimatedCache>();
+		
 		public function Renderman() {
 			map = new MapRenderer();
 			
@@ -25,6 +27,12 @@ package RenderSystem {
 			if (Global.LoadingTotal > 0) return;
 			
 			map.Draw();
+			
+			var i:int = AnimatedObjects.length;
+			
+			while (--i > -1) {
+				AnimatedObjects[i].UpdateAnimation(0.05);
+			}
 		}
 		
 	}

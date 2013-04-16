@@ -1,5 +1,4 @@
-package Game.Map 
-{
+package Game.Map {
 	import adobe.utils.CustomActions;
 	import flash.display.BitmapData;
 	import flash.geom.Point;
@@ -7,11 +6,13 @@ package Game.Map
 	import flash.utils.ByteArray;
 	import Game.General.BinaryLoader;
 	import Game.General.ImageLoader;
+	import RenderSystem.AnimatedCache;
+	import RenderSystem.Renderman;
 	/**
 	 * ...
 	 * @author Paul
 	 */
-	public class ObjectTemplate {
+	public class ObjectTemplate implements AnimatedCache {
 		
 		public var ObjectID:int;
 		public var TotalFrames:int;
@@ -23,6 +24,12 @@ package Game.Map
 		private var bitmapCopy:BitmapData;
 		private var fullBitmap:BitmapData;
 		
+		private var timeout:Number = 0;
+		private var currentFrame:int = 0;
+		private var frameSize:Rectangle = new Rectangle();
+		
+		public const EmptyPoint:Point = new Point();
+		
 		public function GetBitmap():BitmapData {
 			if (!isLoading) {
 				isLoading = true;
@@ -33,8 +40,24 @@ package Game.Map
 		}
 		
 		private function LoadedBitmap(e:BitmapData):void {
-			fullBitmap = e;
-			bitmapCopy.copyPixels(e, new Rectangle(0, 0, bitmapCopy.width, bitmapCopy.height), new Point());
+			bitmapCopy.copyPixels(e, frameSize, EmptyPoint);
+			
+			if (TotalFrames > 1) {
+				Renderman.AnimatedObjects.push(this);
+				fullBitmap = e;
+			}
+		}
+		
+		public function UpdateAnimation(dt:Number):void {
+			timeout += dt;
+			if (timeout > 0.1) {
+				timeout -= dt;
+				currentFrame++;
+				if (currentFrame == TotalFrames) currentFrame = 0;
+				
+				frameSize.x = currentFrame * frameSize.width;
+				bitmapCopy.copyPixels(fullBitmap, frameSize, EmptyPoint);
+			}
 		}
 		
 		//The Static Things (Including Loading)
@@ -65,10 +88,10 @@ package Game.Map
 				
 				obj.isSolid = (e.readByte() == 1);
 				
-				_w = e.readShort();
-				_h = e.readShort();
+				obj.frameSize.width = e.readShort();
+				obj.frameSize.height = e.readShort();
 				
-				obj.bitmapCopy = new BitmapData(_w, _h);
+				obj.bitmapCopy = new BitmapData(obj.frameSize.width, obj.frameSize.height);
 				
 				Objects[i] = obj;
 			}
