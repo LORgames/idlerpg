@@ -1,5 +1,4 @@
-package Game.Map 
-{
+package Game.Map {
 	import flash.display.Bitmap;
 	/**
 	 * ...

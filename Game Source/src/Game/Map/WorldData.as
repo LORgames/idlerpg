@@ -1,6 +1,7 @@
 package Game.Map {
 	import flash.display.BitmapData;
 	import flash.utils.ByteArray;
+	import Game.Critter.BaseCritter;
 	import Game.General.BinaryLoader;
 	import Game.General.ImageLoader;
 	/**
@@ -13,6 +14,8 @@ package Game.Map {
 		public static var TileSheet:BitmapData;
 		
 		public static var CurrentMap:MapData;
+		
+		public static var ME:BaseCritter = new BaseCritter();
 		
 		public static function Initialize():void {
 			BinaryLoader.Load("Data/MapInfo.bin", ParseWorldFile);
@@ -38,7 +41,7 @@ package Game.Map {
             }
 			
 			if (totalMaps > 0) {
-				CurrentMap = new MapData(Maps[1]);
+				CurrentMap = new MapData(Maps[2]);
 			}
 			
 			Global.LoadingTotal--;

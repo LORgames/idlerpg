@@ -7,6 +7,8 @@ package {
 	import Game.General.BinaryLoader;
 	import Game.General.ImageLoader;
 	import Game.Map.WorldData;
+	import InputSystems.IInputSystem;
+	import InputSystems.KeyboardInput;
 	import RenderSystem.Renderman;
 	
 	/**
@@ -17,6 +19,7 @@ package {
 		//So can link back to this
 		public static var I:Main;
 		public static var OrderedLayer:Sprite = new Sprite();
+		public static var Input:IInputSystem;
 		
 		//Some other important things
 		public var Renderer:Renderman;
@@ -48,6 +51,9 @@ package {
 			stage.addEventListener(Event.ENTER_FRAME, Cycle);
 			
 			Resized();
+			
+			//Need more logic to adding input system?
+			Input = new KeyboardInput();
 		}
 		
 		private function Cycle(e:* = null):void {

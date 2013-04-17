@@ -91,7 +91,7 @@ package Game.Map {
 				obj.frameSize.width = e.readShort();
 				obj.frameSize.height = e.readShort();
 				
-				obj.bitmapCopy = new BitmapData(obj.frameSize.width, obj.frameSize.height, true, 0x808080FF);
+				obj.bitmapCopy = new BitmapData(obj.frameSize.width, obj.frameSize.height, true, 0x608080FF);
 				
 				Objects[i] = obj;
 			}

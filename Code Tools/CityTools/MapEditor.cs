@@ -129,6 +129,8 @@ namespace CityTools {
                 ckbShowWalkableGrid.Checked = !ckbShowWalkableGrid.Checked;
             } else if (keyData == Keys.D3) {
                 ckbShowObjectBases.Checked = !ckbShowObjectBases.Checked;
+            } else if (keyData == Keys.D4) {
+                ckbShowWalkableGrid2.Checked = !ckbShowWalkableGrid2.Checked;
             } else if (keyData == Keys.T) {
                 OpenTileEditor();
             } else if (keyData == Keys.O) {

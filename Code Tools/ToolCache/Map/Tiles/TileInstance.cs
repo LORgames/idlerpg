@@ -20,6 +20,11 @@ namespace ToolCache.Map.Tiles {
         public Boolean Walkable;
         public byte AccessDirections = TileTemplate.ACCESS_ALL;
 
+        //public TileInstance Left;
+		//public TileInstance Right;
+		//public TileInstance Up;
+		//public TileInstance Down;
+
         private List<BaseObject> Objects = new List<BaseObject>();
 
         public List<BaseObject> EXOB {
@@ -30,10 +35,10 @@ namespace ToolCache.Map.Tiles {
             ChangeTile(id);
 
             TileRectangleC = new Rectangle(x * TileTemplate.PIXELS_X + ALLOWED_PENETRATION, y * TileTemplate.PIXELS_Y + ALLOWED_PENETRATION, TileTemplate.PIXELS_X - 2 * ALLOWED_PENETRATION, TileTemplate.PIXELS_Y - 2 * ALLOWED_PENETRATION);
-            TileRectangleL = new Rectangle(x * TileTemplate.PIXELS_X, y * TileTemplate.PIXELS_Y, ALLOWED_PENETRATION, TileTemplate.PIXELS_Y);
-            TileRectangleR = new Rectangle((x + 1) * TileTemplate.PIXELS_X - ALLOWED_PENETRATION, y * TileTemplate.PIXELS_Y, ALLOWED_PENETRATION, TileTemplate.PIXELS_Y);
-            TileRectangleT = new Rectangle(x * TileTemplate.PIXELS_X, y * TileTemplate.PIXELS_Y, TileTemplate.PIXELS_X, ALLOWED_PENETRATION);
-            TileRectangleB = new Rectangle(x * TileTemplate.PIXELS_X, (y + 1) * TileTemplate.PIXELS_Y - ALLOWED_PENETRATION, TileTemplate.PIXELS_X, ALLOWED_PENETRATION);
+            TileRectangleL = new Rectangle(x * TileTemplate.PIXELS_X, y * TileTemplate.PIXELS_Y + ALLOWED_PENETRATION, ALLOWED_PENETRATION, TileTemplate.PIXELS_Y - ALLOWED_PENETRATION * 2);
+            TileRectangleR = new Rectangle((x + 1) * TileTemplate.PIXELS_X - ALLOWED_PENETRATION, y * TileTemplate.PIXELS_Y + ALLOWED_PENETRATION, ALLOWED_PENETRATION, TileTemplate.PIXELS_Y - ALLOWED_PENETRATION * 2);
+            TileRectangleT = new Rectangle(x * TileTemplate.PIXELS_X + ALLOWED_PENETRATION, y * TileTemplate.PIXELS_Y, TileTemplate.PIXELS_X - ALLOWED_PENETRATION*2, ALLOWED_PENETRATION);
+            TileRectangleB = new Rectangle(x * TileTemplate.PIXELS_X + ALLOWED_PENETRATION, (y + 1) * TileTemplate.PIXELS_Y - ALLOWED_PENETRATION, TileTemplate.PIXELS_X - ALLOWED_PENETRATION * 2, ALLOWED_PENETRATION);
         }
 
         internal void ChangeTile(short newid) {

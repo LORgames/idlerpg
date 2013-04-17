@@ -91,6 +91,15 @@ namespace CityTools.Terrain {
                                 buffer.gfx.FillRectangle(NotWalkable, x, y, TileTemplate.PIXELS_X * Camera.ZoomLevel, TileTemplate.PIXELS_Y * Camera.ZoomLevel);
                             }
                         }
+
+                        if (MainWindow.instance.ckbShowWalkableGrid2.Checked) {
+                            Rectangle r = new Rectangle();
+
+                            CopyRectangleWithOffset(ref r, MapPieceCache.CurrentPiece.Tiles.Data[i, j].TileRectangleB); buffer.gfx.FillRectangle((MapPieceCache.CurrentPiece.Tiles.Data[i, j].AccessDirections & TileTemplate.ACCESS_BOTTOM) > 0 ? Brushes.Green : Brushes.Red, r);
+                            CopyRectangleWithOffset(ref r, MapPieceCache.CurrentPiece.Tiles.Data[i, j].TileRectangleT); buffer.gfx.FillRectangle((MapPieceCache.CurrentPiece.Tiles.Data[i, j].AccessDirections & TileTemplate.ACCESS_TOP) > 0 ? Brushes.Green : Brushes.Red, r);
+                            CopyRectangleWithOffset(ref r, MapPieceCache.CurrentPiece.Tiles.Data[i, j].TileRectangleL); buffer.gfx.FillRectangle((MapPieceCache.CurrentPiece.Tiles.Data[i, j].AccessDirections & TileTemplate.ACCESS_LEFT) > 0 ? Brushes.Green : Brushes.Red, r);
+                            CopyRectangleWithOffset(ref r, MapPieceCache.CurrentPiece.Tiles.Data[i, j].TileRectangleR); buffer.gfx.FillRectangle((MapPieceCache.CurrentPiece.Tiles.Data[i, j].AccessDirections & TileTemplate.ACCESS_RIGHT) > 0 ? Brushes.Green : Brushes.Red, r);
+                        }
                     }
                 }
             }
@@ -106,6 +115,13 @@ namespace CityTools.Terrain {
                     buffer.gfx.DrawLine(Pens.Beige, 0, yPos, buffer.bmp.Width, yPos);
                 }
             }
+        }
+
+        private static void CopyRectangleWithOffset(ref Rectangle r, Rectangle c) {
+            r.X = c.X - (int)Camera.Offset.X;
+            r.Y = c.Y - (int)Camera.Offset.Y;
+            r.Width = c.Width;
+            r.Height = c.Height;
         }
 
         public static void SetCurrentTile(short newTile) {

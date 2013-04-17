@@ -34,7 +34,5 @@ package RenderSystem {
 				AnimatedObjects[i].UpdateAnimation(0.05);
 			}
 		}
-		
 	}
-
 }
