@@ -18,8 +18,15 @@ namespace ToolCache.Equipment {
 
         public bool isAvailableAtStart = false;
 
+        public bool OffsetsLocked = true;
         public short OffsetX = 0;
         public short OffsetY = 0;
+        public short OffsetX_1 = 0;
+        public short OffsetY_1 = 0;
+        public short OffsetX_2 = 0;
+        public short OffsetY_2 = 0;
+        public short OffsetX_3 = 0;
+        public short OffsetY_3 = 0;
 
         public EquipmentItem(bool initialize = true) {
             if(initialize) VerifyAnimationSets();
@@ -87,12 +94,24 @@ namespace ToolCache.Equipment {
         }
 
         private Point _p = new Point();
-        public Point Offset {
-            get {
+        public Point Offset(Direction d) {
+            if (OffsetsLocked || d == Direction.Left) {
                 _p.X = OffsetX;
                 _p.Y = OffsetY;
-                return _p;
+            } else {
+                if (d == Direction.Right) {
+                    _p.X = OffsetX_1;
+                    _p.Y = OffsetY_1;
+                } else if (d == Direction.Up) {
+                    _p.X = OffsetX_2;
+                    _p.Y = OffsetY_2;
+                } else {
+                    _p.X = OffsetX_3;
+                    _p.Y = OffsetY_3;
+                }
             }
+
+            return _p;
         }
 
         internal Point GetCenter(States s, Direction d, int layer = 2) {

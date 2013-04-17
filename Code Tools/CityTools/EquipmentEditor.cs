@@ -169,8 +169,8 @@ namespace CityTools {
             ccAnimationFront.ChangeToAnimation(currentEquipment.Animations[States.Default].GetAnimation(currentDirection, 0));
             ccAnimationBack.ChangeToAnimation(currentEquipment.Animations[States.Default].GetAnimation(currentDirection, 1));
 
-            numOffsetX.Value = currentEquipment.OffsetX;
-            numOffsetY.Value = currentEquipment.OffsetY;
+            numOffsetX_0.Value = currentEquipment.OffsetX;
+            numOffsetY_0.Value = currentEquipment.OffsetY;
 
             _updatingForm = false;
         }
@@ -342,44 +342,6 @@ namespace CityTools {
             }
         }
 
-        private void btnRotLeft_Click(object sender, EventArgs e) {
-            switch (currentDirection) {
-                case Direction.Left:
-                    currentDirection = Direction.Up;
-                    break;
-                case Direction.Right:
-                    currentDirection = Direction.Down;
-                    break;
-                case Direction.Up:
-                    currentDirection = Direction.Right;
-                    break;
-                case Direction.Down:
-                    currentDirection = Direction.Left;
-                    break;
-            }
-
-            UpdateDirection();
-        }
-
-        private void btnRotRight_Click(object sender, EventArgs e) {
-            switch (currentDirection) {
-                case Direction.Left:
-                    currentDirection = Direction.Down;
-                    break;
-                case Direction.Right:
-                    currentDirection = Direction.Up;
-                    break;
-                case Direction.Up:
-                    currentDirection = Direction.Left;
-                    break;
-                case Direction.Down:
-                    currentDirection = Direction.Right;
-                    break;
-            }
-
-            UpdateDirection();
-        }
-
         private void ValueChanged(object sender, EventArgs e) {
             if(!_updatingForm) _iE = true;
         }
@@ -474,8 +436,33 @@ namespace CityTools {
         private void numOffset_ValueChanged(object sender, EventArgs e) {
             if (_updatingForm) return;
 
-            currentEquipment.OffsetX = (short)numOffsetX.Value;
-            currentEquipment.OffsetY = (short)numOffsetY.Value;
+            _updatingForm = true;
+
+            if (ckbLockOffsets.Checked) {
+                currentEquipment.OffsetX = (short)numOffsetX_0.Value;
+                currentEquipment.OffsetY = (short)numOffsetY_0.Value;
+            } else {
+                if (sender == numOffsetX_0) {
+                    currentEquipment.OffsetX = (short)numOffsetX_0.Value;
+                } else if (sender == numOffsetX_1) {
+                    currentEquipment.OffsetX_1 = (short)numOffsetX_1.Value;
+                } else if (sender == numOffsetX_2) {
+                    currentEquipment.OffsetX_2 = (short)numOffsetX_2.Value;
+                } else if (sender == numOffsetX_3) {
+                    currentEquipment.OffsetX_3 = (short)numOffsetX_3.Value;
+                } else if (sender == numOffsetY_0) {
+                    currentEquipment.OffsetY = (short)numOffsetY_0.Value;
+                } else if (sender == numOffsetY_1) {
+                    currentEquipment.OffsetY_1 = (short)numOffsetY_1.Value;
+                } else if (sender == numOffsetY_2) {
+                    currentEquipment.OffsetY_2 = (short)numOffsetY_2.Value;
+                } else if (sender == numOffsetY_3) {
+                    currentEquipment.OffsetY_3 = (short)numOffsetY_3.Value;
+                }
+            }
+
+            _updatingForm = false;
+
             _iE = true;
         }
 
@@ -493,6 +480,41 @@ namespace CityTools {
 
                 _iE = true;
             }
+        }
+
+        private void ckbLockOffsets_CheckedChanged(object sender, EventArgs e) {
+            if (_updatingForm) return;
+
+            _updatingForm = true;
+            if (ckbLockOffsets.Checked) {
+                LockOffsets(numOffsetX_1, numOffsetY_1);
+                LockOffsets(numOffsetX_2, numOffsetY_2);
+                LockOffsets(numOffsetX_3, numOffsetY_3);
+            }
+
+            _updatingForm = false;
+        }
+
+        private void LockOffsets(NumericUpDown _x, NumericUpDown _y) {
+            _x.ReadOnly = true;
+            _y.ReadOnly = true;
+
+            _x.Value = numOffsetX_0.Value;
+            _y.Value = numOffsetY_0.Value;
+        }
+
+        private void rotDrp_MouseOver(object sender, EventArgs e) {
+            if (sender == drpDown) {
+                currentDirection = Direction.Down;
+            } else if (sender == drpLeft) {
+                currentDirection = Direction.Left;
+            } else if (sender == drpRight) {
+                currentDirection = Direction.Right;
+            } else if (sender == drpUp) {
+                currentDirection = Direction.Up;
+            }
+
+            UpdateDirection();
         }
     }
 }

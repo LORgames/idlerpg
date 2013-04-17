@@ -23,11 +23,11 @@ namespace ToolCache.Drawing {
             if (weapon != null && weapon.Type != EquipmentTypes.Weapon) return false;
 
             //The linking offsets
-            Point p_offset = pants.Offset;
-            Point b_offset = body.Offset;
-            Point f_offset = face.Offset;
-            Point w_offset = weapon == null ? Point.Empty : weapon.Offset;
-            Point h_offset = head == null ? Point.Empty : head.Offset;
+            Point p_offset = pants.Offset(d);
+            Point b_offset = body.Offset(d);
+            Point f_offset = face.Offset(d);
+            Point w_offset = weapon == null ? Point.Empty : weapon.Offset(d);
+            Point h_offset = head == null ? Point.Empty : head.Offset(d);
 
             if (d == Direction.Down || d == Direction.Right) {
                 w_offset.X = -w_offset.X;
