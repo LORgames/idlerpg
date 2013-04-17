@@ -7,7 +7,7 @@ using System.IO;
 
 namespace ToolCache.Equipment {
     public enum Direction { Left, Right, Up, Down };
-    public enum EquipmentTypes { Body, Legs, Weapon, Face, Hat, Shadow };
+    public enum EquipmentTypes { Body, Legs, Weapon, Head, Headgear, Shadow };
     public enum States { Default, Walking, Attacking, Dancing };
 
     public class EquipmentManager {

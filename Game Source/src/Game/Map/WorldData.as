@@ -1,5 +1,4 @@
-package Game.Map 
-{
+package Game.Map {
 	import flash.display.BitmapData;
 	import flash.utils.ByteArray;
 	import Game.General.BinaryLoader;
@@ -39,7 +38,7 @@ package Game.Map
             }
 			
 			if (totalMaps > 0) {
-				CurrentMap = new MapData(Maps[4]);
+				CurrentMap = new MapData(Maps[1]);
 			}
 			
 			Global.LoadingTotal--;

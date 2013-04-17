@@ -15,11 +15,11 @@ namespace ToolCache.Drawing {
             //Need face, body and legs
             if (shadow == null || shadow.Type != EquipmentTypes.Shadow) return false;
             if (pants == null || pants.Type != EquipmentTypes.Legs) return false;
-            if (face == null || face.Type != EquipmentTypes.Face) return false;
+            if (face == null || face.Type != EquipmentTypes.Head) return false;
             if (body == null || body.Type != EquipmentTypes.Body) return false;
 
             //Make sure the others are what they say as well
-            if (head != null && head.Type != EquipmentTypes.Hat) return false;
+            if (head != null && head.Type != EquipmentTypes.Headgear) return false;
             if (weapon != null && weapon.Type != EquipmentTypes.Weapon) return false;
 
             //The linking offsets

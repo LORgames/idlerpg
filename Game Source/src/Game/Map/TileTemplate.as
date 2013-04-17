@@ -3,13 +3,13 @@ package Game.Map {
 	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;
 	import Game.General.BinaryLoader;
-	import RenderSystem.AnimatedCache;
+	import RenderSystem.IAnimated;
 	import RenderSystem.Renderman;
 	/**
 	 * ...
 	 * @author Paul
 	 */
-	public class TileTemplate implements AnimatedCache {
+	public class TileTemplate implements IAnimated {
 		public var Frame:Rectangle = new Rectangle(0, 0, 48, 48);
 		public var TotalFrames:int = 0;
 		public var StartingFrame:int = 0;

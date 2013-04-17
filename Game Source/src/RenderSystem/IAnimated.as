@@ -3,7 +3,7 @@ package RenderSystem {
 	 * ...
 	 * @author Paul
 	 */
-	public interface AnimatedCache {
+	public interface IAnimated {
 		function UpdateAnimation(dt:Number):void;
 	}
 	

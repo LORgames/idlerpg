@@ -6,13 +6,13 @@ package Game.Map {
 	import flash.utils.ByteArray;
 	import Game.General.BinaryLoader;
 	import Game.General.ImageLoader;
-	import RenderSystem.AnimatedCache;
+	import RenderSystem.IAnimated;
 	import RenderSystem.Renderman;
 	/**
 	 * ...
 	 * @author Paul
 	 */
-	public class ObjectTemplate implements AnimatedCache {
+	public class ObjectTemplate implements IAnimated {
 		
 		public var ObjectID:int;
 		public var TotalFrames:int;
@@ -91,7 +91,7 @@ package Game.Map {
 				obj.frameSize.width = e.readShort();
 				obj.frameSize.height = e.readShort();
 				
-				obj.bitmapCopy = new BitmapData(obj.frameSize.width, obj.frameSize.height);
+				obj.bitmapCopy = new BitmapData(obj.frameSize.width, obj.frameSize.height, true, 0x808080FF);
 				
 				Objects[i] = obj;
 			}

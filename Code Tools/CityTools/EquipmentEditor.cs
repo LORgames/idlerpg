@@ -23,8 +23,8 @@ namespace CityTools {
         private Boolean _updatingForm = false;
 
         private EquipmentItem body = EquipmentManager.TypeLists[EquipmentTypes.Body].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Body][0] : null;
-        private EquipmentItem face = EquipmentManager.TypeLists[EquipmentTypes.Face].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Face][0] : null;
-        private EquipmentItem head = EquipmentManager.TypeLists[EquipmentTypes.Hat].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Hat][0] : null;
+        private EquipmentItem face = EquipmentManager.TypeLists[EquipmentTypes.Head].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Head][0] : null;
+        private EquipmentItem head = EquipmentManager.TypeLists[EquipmentTypes.Headgear].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Headgear][0] : null;
         private EquipmentItem legs = EquipmentManager.TypeLists[EquipmentTypes.Legs].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Legs][0] : null;
         private EquipmentItem weap = EquipmentManager.TypeLists[EquipmentTypes.Weapon].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Weapon][0] : null;
         private EquipmentItem shad = EquipmentManager.TypeLists[EquipmentTypes.Shadow].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Shadow][0] : null;
@@ -120,8 +120,8 @@ namespace CityTools {
 
             foreach (KeyValuePair<EquipmentTypes, List<EquipmentItem>> kvp in EquipmentManager.TypeLists) {
                 if (kvp.Key == EquipmentTypes.Body) relCB = cbDispBody;
-                else if (kvp.Key == EquipmentTypes.Face) relCB = cbDispFace;
-                else if (kvp.Key == EquipmentTypes.Hat) relCB = cbDispHeadgear;
+                else if (kvp.Key == EquipmentTypes.Head) relCB = cbDispFace;
+                else if (kvp.Key == EquipmentTypes.Headgear) relCB = cbDispHeadgear;
                 else if (kvp.Key == EquipmentTypes.Legs) relCB = cbDispPants;
                 else if (kvp.Key == EquipmentTypes.Weapon) relCB = cbDispWeapon;
                 else if (kvp.Key == EquipmentTypes.Shadow) relCB = cbDispShadow;
@@ -134,10 +134,10 @@ namespace CityTools {
             if (body == null) cbDispBody.Text = EquipmentManager.TypeLists[EquipmentTypes.Body].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Body][0].Name : "";
             else cbDispBody.Text = body.Name;
             
-            if (face == null) cbDispFace.Text = EquipmentManager.TypeLists[EquipmentTypes.Face].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Face][0].Name : "";
+            if (face == null) cbDispFace.Text = EquipmentManager.TypeLists[EquipmentTypes.Head].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Head][0].Name : "";
             else cbDispFace.Text = face.Name;
             
-            if (head == null) cbDispHeadgear.Text = EquipmentManager.TypeLists[EquipmentTypes.Hat].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Hat][0].Name : "";
+            if (head == null) cbDispHeadgear.Text = EquipmentManager.TypeLists[EquipmentTypes.Headgear].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Headgear][0].Name : "";
             else cbDispHeadgear.Text = head.Name;
             
             if (legs == null) cbDispPants.Text = EquipmentManager.TypeLists[EquipmentTypes.Legs].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Legs][0].Name : "";
@@ -219,6 +219,18 @@ namespace CityTools {
 
         private void quickDrop_DragOver(object sender, DragEventArgs e) {
             e.Effect = DragDropEffects.Copy;
+
+            if (sender == drpDown) {
+                currentDirection = Direction.Down;
+            } else if (sender == drpLeft) {
+                currentDirection = Direction.Left;
+            } else if (sender == drpRight) {
+                currentDirection = Direction.Right;
+            } else if (sender == drpUp) {
+                currentDirection = Direction.Up;
+            }
+
+            UpdateDirection();
         }
 
         private void quickDrop_DragDrop(object sender, DragEventArgs e) {
@@ -294,13 +306,13 @@ namespace CityTools {
                         lblFrontAnimationName.Text = "FRONT";
                         lblBackAnimationName.Text = "BACK";
                         break;
-                    case EquipmentTypes.Face:
+                    case EquipmentTypes.Head:
                         ccAnimationBack.Enabled = false;
 
                         lblFrontAnimationName.Text = "FACE";
                         lblBackAnimationName.Text = "N/A";
                         break;
-                    case EquipmentTypes.Hat:
+                    case EquipmentTypes.Headgear:
                         ccAnimationBack.Enabled = false;
 
                         lblFrontAnimationName.Text = "HEADGEAR";
@@ -431,8 +443,8 @@ namespace CityTools {
                 }
 
                 if (ei.Type == EquipmentTypes.Body) cbDispBody.Text = ei.Name;
-                if (ei.Type == EquipmentTypes.Face) cbDispFace.Text = ei.Name;
-                if (ei.Type == EquipmentTypes.Hat) cbDispHeadgear.Text = ei.Name;
+                if (ei.Type == EquipmentTypes.Head) cbDispFace.Text = ei.Name;
+                if (ei.Type == EquipmentTypes.Headgear) cbDispHeadgear.Text = ei.Name;
                 if (ei.Type == EquipmentTypes.Legs) cbDispPants.Text = ei.Name;
                 if (ei.Type == EquipmentTypes.Weapon) cbDispWeapon.Text = ei.Name;
             }

@@ -10,7 +10,7 @@ package RenderSystem {
 	public class Renderman {
 		private var map:MapRenderer;
 		
-		public static var AnimatedObjects:Vector.<AnimatedCache> = new Vector.<AnimatedCache>();
+		public static var AnimatedObjects:Vector.<IAnimated> = new Vector.<IAnimated>();
 		
 		public function Renderman() {
 			map = new MapRenderer();

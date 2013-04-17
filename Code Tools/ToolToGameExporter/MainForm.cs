@@ -38,6 +38,8 @@ namespace ToolToGameExporter {
                     Directory.Delete(txtDataFolderLocation.Text, true);
                     Directory.Move(Global.EXPORT_DIRECTORY, txtDataFolderLocation.Text);
                 }
+
+                MessageBox.Show("Exported To The Data Folder");
             } catch {
                 MessageBox.Show("Please close the exporter and try again! (Some kind of caching issue occurred)");
 
