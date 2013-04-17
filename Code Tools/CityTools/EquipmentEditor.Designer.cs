@@ -519,7 +519,6 @@ namespace CityTools {
             0,
             -2147483648});
             this.numOffsetY_1.Name = "numOffsetY_1";
-            this.numOffsetY_1.ReadOnly = true;
             this.numOffsetY_1.Size = new System.Drawing.Size(36, 20);
             this.numOffsetY_1.TabIndex = 53;
             this.numOffsetY_1.ValueChanged += new System.EventHandler(this.numOffset_ValueChanged);
@@ -538,7 +537,6 @@ namespace CityTools {
             0,
             -2147483648});
             this.numOffsetX_1.Name = "numOffsetX_1";
-            this.numOffsetX_1.ReadOnly = true;
             this.numOffsetX_1.Size = new System.Drawing.Size(36, 20);
             this.numOffsetX_1.TabIndex = 52;
             this.numOffsetX_1.ValueChanged += new System.EventHandler(this.numOffset_ValueChanged);
@@ -566,7 +564,6 @@ namespace CityTools {
             0,
             -2147483648});
             this.numOffsetY_2.Name = "numOffsetY_2";
-            this.numOffsetY_2.ReadOnly = true;
             this.numOffsetY_2.Size = new System.Drawing.Size(36, 20);
             this.numOffsetY_2.TabIndex = 56;
             this.numOffsetY_2.ValueChanged += new System.EventHandler(this.numOffset_ValueChanged);
@@ -585,7 +582,6 @@ namespace CityTools {
             0,
             -2147483648});
             this.numOffsetX_2.Name = "numOffsetX_2";
-            this.numOffsetX_2.ReadOnly = true;
             this.numOffsetX_2.Size = new System.Drawing.Size(36, 20);
             this.numOffsetX_2.TabIndex = 55;
             this.numOffsetX_2.ValueChanged += new System.EventHandler(this.numOffset_ValueChanged);
@@ -613,7 +609,6 @@ namespace CityTools {
             0,
             -2147483648});
             this.numOffsetY_3.Name = "numOffsetY_3";
-            this.numOffsetY_3.ReadOnly = true;
             this.numOffsetY_3.Size = new System.Drawing.Size(36, 20);
             this.numOffsetY_3.TabIndex = 59;
             this.numOffsetY_3.ValueChanged += new System.EventHandler(this.numOffset_ValueChanged);
@@ -632,7 +627,6 @@ namespace CityTools {
             0,
             -2147483648});
             this.numOffsetX_3.Name = "numOffsetX_3";
-            this.numOffsetX_3.ReadOnly = true;
             this.numOffsetX_3.Size = new System.Drawing.Size(36, 20);
             this.numOffsetX_3.TabIndex = 58;
             this.numOffsetX_3.ValueChanged += new System.EventHandler(this.numOffset_ValueChanged);

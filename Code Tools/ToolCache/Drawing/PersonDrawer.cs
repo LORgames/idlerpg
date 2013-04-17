@@ -29,10 +29,6 @@ namespace ToolCache.Drawing {
             Point w_offset = weapon == null ? Point.Empty : weapon.Offset(d);
             Point h_offset = head == null ? Point.Empty : head.Offset(d);
 
-            if (d == Direction.Down || d == Direction.Right) {
-                w_offset.X = -w_offset.X;
-            }
-
             //The centers
             Point shadowCenter = shadow.GetCenter(s, d);
             Point pantsCenter = pants.GetCenter(s, d);

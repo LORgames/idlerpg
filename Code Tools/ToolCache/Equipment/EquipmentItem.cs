@@ -38,7 +38,10 @@ namespace ToolCache.Equipment {
             t.Name = f.GetString();
             t.Type = (EquipmentTypes)f.GetByte();
 
-            t.isAvailableAtStart = (f.GetByte() == (byte)1 ? true : false);
+            byte bool_Settings = f.GetByte();
+
+            t.isAvailableAtStart = (bool_Settings & 1) > 0;
+            t.OffsetsLocked = (bool_Settings & 2) > 0;
 
             short totalAnimationSets = f.GetShort();
 
@@ -54,6 +57,15 @@ namespace ToolCache.Equipment {
 
             t.OffsetX = f.GetShort();
             t.OffsetY = f.GetShort();
+
+            if (!t.OffsetsLocked) {
+                t.OffsetX_1 = f.GetShort();
+                t.OffsetY_1 = f.GetShort();
+                t.OffsetX_2 = f.GetShort();
+                t.OffsetY_2 = f.GetShort();
+                t.OffsetX_3 = f.GetShort();
+                t.OffsetY_3 = f.GetShort();
+            }
 
             t.VerifyAnimationSets();
 
@@ -71,7 +83,12 @@ namespace ToolCache.Equipment {
         public void PackIntoBinaryIO(BinaryIO f) {
             f.AddString(Name);
             f.AddByte((byte)Type);
-            f.AddByte(isAvailableAtStart ? (byte)1 : (byte)0);
+
+            byte settings = 0;
+            settings |= isAvailableAtStart ? (byte)1 : (byte)0;
+            settings |= OffsetsLocked ? (byte)2 : (byte)0;
+
+            f.AddByte(settings);
 
             f.AddShort((short)Animations.Count);
 
@@ -81,6 +98,16 @@ namespace ToolCache.Equipment {
 
             f.AddShort((short)OffsetX);
             f.AddShort((short)OffsetY);
+
+
+            if (!OffsetsLocked) {
+                f.AddShort(OffsetX_1);
+                f.AddShort(OffsetY_1);
+                f.AddShort(OffsetX_2);
+                f.AddShort(OffsetY_2);
+                f.AddShort(OffsetX_3);
+                f.AddShort(OffsetY_3);
+            }
         }
 
         public AnimatedObject DisplayAnimation(States s, Direction d, int layer) {

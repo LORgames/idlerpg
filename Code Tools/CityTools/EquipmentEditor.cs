@@ -172,6 +172,10 @@ namespace CityTools {
             numOffsetX_0.Value = currentEquipment.OffsetX;
             numOffsetY_0.Value = currentEquipment.OffsetY;
 
+            ckbLockOffsets.Checked = currentEquipment.OffsetsLocked;
+
+            UpdateOffsets();
+
             _updatingForm = false;
         }
 
@@ -485,22 +489,50 @@ namespace CityTools {
         private void ckbLockOffsets_CheckedChanged(object sender, EventArgs e) {
             if (_updatingForm) return;
 
+            currentEquipment.OffsetsLocked = ckbLockOffsets.Checked;
+
+            UpdateOffsets(!currentEquipment.OffsetsLocked);
+        }
+
+        private void UpdateOffsets(bool justUnlocked = false) {
             _updatingForm = true;
-            if (ckbLockOffsets.Checked) {
+
+            if (justUnlocked) {
+                currentEquipment.OffsetX_1 = currentEquipment.OffsetX;
+                currentEquipment.OffsetX_2 = currentEquipment.OffsetX;
+                currentEquipment.OffsetX_3 = currentEquipment.OffsetX;
+                currentEquipment.OffsetY_1 = currentEquipment.OffsetY;
+                currentEquipment.OffsetY_2 = currentEquipment.OffsetY;
+                currentEquipment.OffsetY_3 = currentEquipment.OffsetY;
+            }
+
+            if (currentEquipment.OffsetsLocked) {
                 LockOffsets(numOffsetX_1, numOffsetY_1);
                 LockOffsets(numOffsetX_2, numOffsetY_2);
                 LockOffsets(numOffsetX_3, numOffsetY_3);
+            } else {
+                UnlockOffsets(numOffsetX_1, numOffsetY_1, currentEquipment.OffsetX_1, currentEquipment.OffsetY_1);
+                UnlockOffsets(numOffsetX_2, numOffsetY_2, currentEquipment.OffsetX_2, currentEquipment.OffsetY_2);
+                UnlockOffsets(numOffsetX_3, numOffsetY_3, currentEquipment.OffsetX_3, currentEquipment.OffsetY_3);
             }
 
             _updatingForm = false;
         }
 
         private void LockOffsets(NumericUpDown _x, NumericUpDown _y) {
-            _x.ReadOnly = true;
-            _y.ReadOnly = true;
+            _x.Enabled = false;
+            _y.Enabled = false;
 
-            _x.Value = numOffsetX_0.Value;
-            _y.Value = numOffsetY_0.Value;
+            _x.Value = 0;
+            _y.Value = 0;
+        }
+
+        private void UnlockOffsets(NumericUpDown _x, NumericUpDown _y, short _x2, short _y2) {
+            _x.Enabled = true;
+            _y.Enabled = true;
+
+            _x.Value = _x2;
+            _y.Value = _y2;
         }
 
         private void rotDrp_MouseOver(object sender, EventArgs e) {
