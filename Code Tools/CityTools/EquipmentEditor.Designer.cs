@@ -69,6 +69,7 @@ namespace CityTools {
             this.btnSwapAnimations = new System.Windows.Forms.Button();
             this.ccAnimationBack = new CityTools.ClipIns.AnimationList();
             this.ccAnimationFront = new CityTools.ClipIns.AnimationList();
+            this.ckbDrawWaist = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbEquipmentDisplay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numOffsetX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numOffsetY)).BeginInit();
@@ -494,11 +495,24 @@ namespace CityTools {
             this.ccAnimationFront.Size = new System.Drawing.Size(199, 100);
             this.ccAnimationFront.TabIndex = 6;
             // 
+            // ckbDrawWaist
+            // 
+            this.ckbDrawWaist.AutoSize = true;
+            this.ckbDrawWaist.Checked = true;
+            this.ckbDrawWaist.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ckbDrawWaist.Location = new System.Drawing.Point(223, 141);
+            this.ckbDrawWaist.Name = "ckbDrawWaist";
+            this.ckbDrawWaist.Size = new System.Drawing.Size(76, 17);
+            this.ckbDrawWaist.TabIndex = 50;
+            this.ckbDrawWaist.Text = "Waist Line";
+            this.ckbDrawWaist.UseVisualStyleBackColor = true;
+            // 
             // EquipmentEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(628, 600);
+            this.Controls.Add(this.ckbDrawWaist);
             this.Controls.Add(this.btnSwapAnimations);
             this.Controls.Add(this.cbDispShadow);
             this.Controls.Add(this.label12);
@@ -595,5 +609,6 @@ namespace CityTools {
         private System.Windows.Forms.ComboBox cbDispShadow;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button btnSwapAnimations;
+        private System.Windows.Forms.CheckBox ckbDrawWaist;
     }
 }

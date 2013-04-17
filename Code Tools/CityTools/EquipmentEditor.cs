@@ -209,7 +209,7 @@ namespace CityTools {
                 p.X = pbEquipmentDisplay.Width / 5 * (i+1);
                 p.Y = pbEquipmentDisplay.Height - 40;
 
-                PersonDrawer.Draw(e.Graphics, p, (Direction)i, cState, shad, head, face, body, legs, weap);
+                PersonDrawer.Draw(e.Graphics, p, (Direction)i, cState, shad, head, face, body, legs, weap, ckbDrawWaist.Checked);
             }
         }
 

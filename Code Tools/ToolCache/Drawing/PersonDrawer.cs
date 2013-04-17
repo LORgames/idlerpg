@@ -8,7 +8,7 @@ using ToolCache.Equipment;
 namespace ToolCache.Drawing {
     public class PersonDrawer {
 
-        public static Boolean Draw(Graphics g, Point p, Direction d, States s, EquipmentItem shadow, EquipmentItem head, EquipmentItem face, EquipmentItem body, EquipmentItem pants, EquipmentItem weapon) {
+        public static Boolean Draw(Graphics g, Point p, Direction d, States s, EquipmentItem shadow, EquipmentItem head, EquipmentItem face, EquipmentItem body, EquipmentItem pants, EquipmentItem weapon, bool drawWaist) {
             if (g == null) return false;
             if (p == null) return false;
 
@@ -28,6 +28,10 @@ namespace ToolCache.Drawing {
             Point f_offset = face.Offset;
             Point w_offset = weapon == null ? Point.Empty : weapon.Offset;
             Point h_offset = head == null ? Point.Empty : head.Offset;
+
+            if (d == Direction.Down || d == Direction.Right) {
+                w_offset.X = -w_offset.X;
+            }
 
             //The centers
             Point shadowCenter = shadow.GetCenter(s, d);
@@ -71,7 +75,7 @@ namespace ToolCache.Drawing {
 
             ////////////////////////////////////////// DRAW STUFF
 
-            g.DrawLine(Pens.Red, p.X - 20, WaistHeight, p.X + 20, WaistHeight);
+            if(drawWaist) g.DrawLine(Pens.Red, p.X - 20, WaistHeight, p.X + 20, WaistHeight);
 
             //Draw Shadow
             shadow.DisplayAnimation(s, d, 0).Draw(g, shadowPosition.X, shadowPosition.Y, 1);
