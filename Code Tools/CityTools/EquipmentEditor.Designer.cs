@@ -467,9 +467,9 @@ namespace CityTools {
             // 
             // btnSwapAnimations
             // 
-            this.btnSwapAnimations.Location = new System.Drawing.Point(556, 478);
+            this.btnSwapAnimations.Location = new System.Drawing.Point(556, 458);
             this.btnSwapAnimations.Name = "btnSwapAnimations";
-            this.btnSwapAnimations.Size = new System.Drawing.Size(90, 23);
+            this.btnSwapAnimations.Size = new System.Drawing.Size(90, 43);
             this.btnSwapAnimations.TabIndex = 49;
             this.btnSwapAnimations.Text = "Animation Swap";
             this.btnSwapAnimations.UseVisualStyleBackColor = true;

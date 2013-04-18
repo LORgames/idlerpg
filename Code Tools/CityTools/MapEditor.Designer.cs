@@ -57,6 +57,7 @@
             this.ckbShowTileGrid = new System.Windows.Forms.ToolStripMenuItem();
             this.ckbShowWalkableGrid = new System.Windows.Forms.ToolStripMenuItem();
             this.ckbShowObjectBases = new System.Windows.Forms.ToolStripMenuItem();
+            this.ckbShowWalkableGrid2 = new System.Windows.Forms.ToolStripMenuItem();
             this.viewportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ckbViewportEnabled = new System.Windows.Forms.ToolStripMenuItem();
             this.txtViewportWidth = new System.Windows.Forms.ToolStripTextBox();
@@ -67,6 +68,7 @@
             this.btnElementalEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.btnItemEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.btnEquipmentEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnCritterEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.mapViewPanel = new System.Windows.Forms.PictureBox();
             this.toolpanel_splitter = new System.Windows.Forms.SplitContainer();
             this.tabFirstLevel = new System.Windows.Forms.TabControl();
@@ -81,7 +83,6 @@
             this.pnlObjectScenicCache = new System.Windows.Forms.Panel();
             this.cbScenicCacheSelector = new System.Windows.Forms.ComboBox();
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
-            this.ckbShowWalkableGrid2 = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.main_splitter)).BeginInit();
             this.main_splitter.Panel1.SuspendLayout();
             this.main_splitter.Panel2.SuspendLayout();
@@ -120,6 +121,7 @@
             this.main_splitter.Size = new System.Drawing.Size(897, 461);
             this.main_splitter.SplitterDistance = 662;
             this.main_splitter.TabIndex = 0;
+            this.main_splitter.TabStop = false;
             // 
             // mapViewPanel_c
             // 
@@ -322,7 +324,7 @@
             this.ckbShowObjectBases,
             this.ckbShowWalkableGrid2});
             this.mnuShowGrids.Name = "mnuShowGrids";
-            this.mnuShowGrids.Size = new System.Drawing.Size(152, 22);
+            this.mnuShowGrids.Size = new System.Drawing.Size(141, 22);
             this.mnuShowGrids.Text = "Grids";
             // 
             // ckbShowTileGrid
@@ -346,6 +348,13 @@
             this.ckbShowObjectBases.Size = new System.Drawing.Size(194, 22);
             this.ckbShowObjectBases.Text = "Show Object Bases (3)";
             // 
+            // ckbShowWalkableGrid2
+            // 
+            this.ckbShowWalkableGrid2.CheckOnClick = true;
+            this.ckbShowWalkableGrid2.Name = "ckbShowWalkableGrid2";
+            this.ckbShowWalkableGrid2.Size = new System.Drawing.Size(194, 22);
+            this.ckbShowWalkableGrid2.Text = "Show Walkable 2 (4)";
+            // 
             // viewportToolStripMenuItem
             // 
             this.viewportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -353,7 +362,7 @@
             this.txtViewportWidth,
             this.txtViewportHeight});
             this.viewportToolStripMenuItem.Name = "viewportToolStripMenuItem";
-            this.viewportToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.viewportToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.viewportToolStripMenuItem.Text = "Viewport";
             // 
             // ckbViewportEnabled
@@ -385,9 +394,10 @@
             this.btnObjectEditor,
             this.btnElementalEditor,
             this.btnItemEditor,
-            this.btnEquipmentEditor});
+            this.btnEquipmentEditor,
+            this.btnCritterEditor});
             this.otherToolsToolStripMenuItem.Name = "otherToolsToolStripMenuItem";
-            this.otherToolsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.otherToolsToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.otherToolsToolStripMenuItem.Text = "Other Tools";
             // 
             // btnTileEditorTool
@@ -424,6 +434,13 @@
             this.btnEquipmentEditor.Size = new System.Drawing.Size(214, 22);
             this.btnEquipmentEditor.Text = "Equipment Editor (U)";
             this.btnEquipmentEditor.Click += new System.EventHandler(this.btnEquipmentEditor_Click);
+            // 
+            // btnCritterEditor
+            // 
+            this.btnCritterEditor.Name = "btnCritterEditor";
+            this.btnCritterEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnCritterEditor.Text = "Critter Editor (C)";
+            this.btnCritterEditor.Click += new System.EventHandler(this.btnCritterEditor_Click);
             // 
             // mapViewPanel
             // 
@@ -584,13 +601,6 @@
             // 
             this.timerRefresh.Tick += new System.EventHandler(this.timerRefresh_Tick);
             // 
-            // ckbShowWalkableGrid2
-            // 
-            this.ckbShowWalkableGrid2.CheckOnClick = true;
-            this.ckbShowWalkableGrid2.Name = "ckbShowWalkableGrid2";
-            this.ckbShowWalkableGrid2.Size = new System.Drawing.Size(194, 22);
-            this.ckbShowWalkableGrid2.Text = "Show Walkable 2 (4)";
-            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -680,6 +690,7 @@
         private System.Windows.Forms.ToolStripMenuItem btnItemEditor;
         private System.Windows.Forms.ToolStripMenuItem btnEquipmentEditor;
         internal System.Windows.Forms.ToolStripMenuItem ckbShowWalkableGrid2;
+        private System.Windows.Forms.ToolStripMenuItem btnCritterEditor;
     }
 }
 

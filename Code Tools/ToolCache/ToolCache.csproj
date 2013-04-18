@@ -47,7 +47,12 @@
     <Compile Include="Animation\AnimatedObject.cs" />
     <Compile Include="Combat\Elements\Element.cs" />
     <Compile Include="Combat\Elements\ElementManager.cs" />
-    <Compile Include="Critters\ICritter.cs" />
+    <Compile Include="Critters\AITypes.cs" />
+    <Compile Include="Critters\Critter.cs" />
+    <Compile Include="Critters\CritterBeast.cs" />
+    <Compile Include="Critters\CritterHuman.cs" />
+    <Compile Include="Critters\CritterManager.cs" />
+    <Compile Include="Critters\LootDrop.cs" />
     <Compile Include="Drawing\PersonDrawer.cs" />
     <Compile Include="Equipment\EquipmentAnimationSet.cs" />
     <Compile Include="Equipment\EquipmentItem.cs" />

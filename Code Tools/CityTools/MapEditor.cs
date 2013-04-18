@@ -141,6 +141,8 @@ namespace CityTools {
                 OpenItemEditor();
             } else if (keyData == Keys.U) {
                 OpenEquipmentEditor();
+            } else if (keyData == Keys.C) {
+                OpenCritterEditor();
             } else if (Camera.ProcessKeys(keyData)) {
                 Camera.FixViewArea(drawArea);
                 mapViewPanel.Invalidate();
@@ -302,6 +304,11 @@ namespace CityTools {
             t.ShowDialog(this);
         }
 
+        private void OpenCritterEditor() {
+            CritterEditor t = new CritterEditor();
+            t.ShowDialog(this);
+        }
+
         private void TileEditor_Closing(object sender, FormClosingEventArgs e) {
             CacheInterfaces.TileInterface.ReloadAll();
         }
@@ -328,6 +335,10 @@ namespace CityTools {
 
         private void btnEquipmentEditor_Click(object sender, EventArgs e) {
             OpenEquipmentEditor();
+        }
+
+        private void btnCritterEditor_Click(object sender, EventArgs e) {
+            OpenCritterEditor();
         }
     }
 }

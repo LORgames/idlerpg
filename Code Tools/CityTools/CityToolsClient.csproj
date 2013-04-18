@@ -49,6 +49,11 @@
     <Compile Include="CacheInterfaces\MapInterface.cs" />
     <Compile Include="CacheInterfaces\ObjectInterface.cs" />
     <Compile Include="CacheInterfaces\TileInterface.cs" />
+    <Compile Include="ClipIns\BufferedPaint\BufferedPainter.cs" />
+    <Compile Include="ClipIns\BufferedPaint\Interop.cs" />
+    <Compile Include="ClipIns\GroupedComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ClipIns\ImageSelector_ImagePnl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -69,6 +74,12 @@
     </Compile>
     <Compile Include="Core\Camera.cs" />
     <Compile Include="Core\DrawingHelper.cs" />
+    <Compile Include="CritterEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CritterEditor.Designer.cs">
+      <DependentUpon>CritterEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="ElementEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -136,6 +147,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Components\ObjectCacheControl.resx">
       <DependentUpon>ObjectCacheControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CritterEditor.resx">
+      <DependentUpon>CritterEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ElementEditor.resx">
       <DependentUpon>ElementEditor.cs</DependentUpon>

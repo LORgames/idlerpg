@@ -117,6 +117,8 @@ namespace CityTools.ClipIns {
                     break;
                 }
             }
+
+            UpdateBoxes();
         }
 
         internal void ShiftLeft(AnimationFrame animationFrame) {
