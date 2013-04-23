@@ -2,7 +2,7 @@
 <application xmlns="http://ns.adobe.com/air/application/3.6">
   <id>com.LORgames.iRPG</id>
   <versionNumber>0.1</versionNumber>
-  <supportedProfiles>mobileDevice</supportedProfiles>
+  <supportedProfiles>desktop extendedDesktop mobileDevice</supportedProfiles>
   <filename>iRPG</filename>
   <name>iRPG</name>
   <copyright>LORgames 2013</copyright>
