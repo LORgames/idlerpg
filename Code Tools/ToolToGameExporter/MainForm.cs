@@ -33,6 +33,7 @@ namespace ToolToGameExporter {
                 ObjectCrusher.Go();
                 TileCrusher.Go();
                 MapCrusher.Go();
+                EquipmentCrusher.Go();
 
                 if (Directory.Exists(txtDataFolderLocation.Text)) {
                     Directory.Delete(txtDataFolderLocation.Text, true);

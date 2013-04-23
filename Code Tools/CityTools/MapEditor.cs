@@ -273,7 +273,11 @@ namespace CityTools {
         }
 
         private void timerRefresh_Tick(object sender, EventArgs e) {
-            ToolCache.Animation.AnimatedObject.Update(0.1);
+            ToolCache.Animation.AnimatedObject.Update(0.05);
+            mapViewPanel.Invalidate();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e) {
             mapViewPanel.Invalidate();
         }
 

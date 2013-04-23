@@ -99,7 +99,6 @@ namespace ToolCache.Equipment {
             f.AddShort((short)OffsetX);
             f.AddShort((short)OffsetY);
 
-
             if (!OffsetsLocked) {
                 f.AddShort(OffsetX_1);
                 f.AddShort(OffsetY_1);

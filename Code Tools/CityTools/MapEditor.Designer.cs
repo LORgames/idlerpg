@@ -83,6 +83,7 @@
             this.pnlObjectScenicCache = new System.Windows.Forms.Panel();
             this.cbScenicCacheSelector = new System.Windows.Forms.ComboBox();
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.main_splitter)).BeginInit();
             this.main_splitter.Panel1.SuspendLayout();
             this.main_splitter.Panel2.SuspendLayout();
@@ -599,7 +600,12 @@
             // 
             // timerRefresh
             // 
+            this.timerRefresh.Interval = 50;
             this.timerRefresh.Tick += new System.EventHandler(this.timerRefresh_Tick);
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // MainWindow
             // 
@@ -691,6 +697,7 @@
         private System.Windows.Forms.ToolStripMenuItem btnEquipmentEditor;
         internal System.Windows.Forms.ToolStripMenuItem ckbShowWalkableGrid2;
         private System.Windows.Forms.ToolStripMenuItem btnCritterEditor;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

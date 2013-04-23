@@ -64,6 +64,8 @@ namespace ToolCache.Animation {
             int frameID = (int)(totalTime / PlaybackSpeed);
             Image im = ImageCache.RequestImage(Frames[frameID % Frames.Count]);
 
+            if(PlaybackSpeed < 0.1) System.Diagnostics.Debug.WriteLine(frameID);
+
             if (alpha >= 0.95f) {
                 gfx.DrawImage(im, xPos, yPos, im.Width * scale, im.Height * scale);
             } else {
