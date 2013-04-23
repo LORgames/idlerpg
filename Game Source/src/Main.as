@@ -1,9 +1,11 @@
 package {
-	import flash.display.Shape;
+	import flash.desktop.NativeApplication;
+	import flash.events.Event;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
-	import flash.events.Event;
+	import flash.ui.Multitouch;
+	import flash.ui.MultitouchInputMode;
 	import Game.General.BinaryLoader;
 	import Game.General.ImageLoader;
 	import Game.Map.WorldData;
@@ -27,17 +29,12 @@ package {
 		public function Main():void {
 			I = this;
 			
-			if (stage) init();
-			else addEventListener(Event.ADDED_TO_STAGE, init);
-		}
-		
-		private function init(e:Event = null):void {
-			removeEventListener(Event.ADDED_TO_STAGE, init);
-			// entry point
-			
-			//Set up the stage
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
+			stage.addEventListener(Event.DEACTIVATE, deactivate);
+			
+			// touch or gesture?
+			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 			
 			//Set up some other things
 			Renderer = new Renderman();
@@ -54,6 +51,11 @@ package {
 			
 			//Need more logic to adding input system?
 			Input = new KeyboardInput();
+		}
+		
+		private function deactivate(e:Event):void {
+			// auto-close
+			NativeApplication.nativeApplication.exit();
 		}
 		
 		private function Cycle(e:* = null):void {
