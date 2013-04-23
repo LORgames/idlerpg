@@ -71,9 +71,11 @@ namespace ToolCache.Map.Objects {
                 return 1;
             } else if (ActualX < other.ActualX) {
                 return -1;
+            } else if (ActualX > other.ActualX) {
+                return 1;
             }
 
-            return 1;
+            return 0;
         }
 
         public void Delete() {
