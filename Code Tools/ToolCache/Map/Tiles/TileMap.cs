@@ -104,14 +104,6 @@ namespace ToolCache.Map.Tiles {
             Data = newTiles;
         }
 
-        internal void RecalculateWalkable() {
-            for (int i = 0; i < numTilesX; i++) {
-                for (int j = 0; j < numTilesY; j++) {
-                    Data[i, j].RecalculateWalkable();
-                }
-            }
-        }
-
         public List<TileInstance> GetTilesFromWorldRectangle(int x, int y, int w, int h) {
             List<TileInstance> retList = new List<TileInstance>();
 

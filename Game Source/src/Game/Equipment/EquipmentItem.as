@@ -19,7 +19,7 @@ package Game.Equipment {
 		
 		public var TotalFrames:int = 0;
 		public var Frame:int = 0;
-		
+		public var FrameDT:Number = 0;
 		
 		public var CopyRect:Rectangle = new Rectangle();
 		public var DestPoint:Point = new Point();
@@ -44,6 +44,19 @@ package Game.Equipment {
 			Frame = 0;
 			this.visible = true;
 			
+			if (Info.FrameCount(0, Direction, Layer) > 0) {
+				this.visible = true;
+				CopyRect.y = Info.GetOffset(State, Direction, Layer);
+				
+				TotalFrames = Info.FrameCount(State, Direction, Layer);
+				
+				if (TotalFrames == 0) {
+					TotalFrames = Info.FrameCount(0, Direction, Layer);
+				}
+			} else {
+				this.visible = false;
+			}
+			
 			if(Info != null) {
 				if (direction == 1) return Info.Offset_1;
 				if (direction == 2) return Info.Offset_2;
@@ -59,13 +72,19 @@ package Game.Equipment {
 		}
 		
 		public function UpdateAnimation(dt:Number):void {
-			if (Info != null && Info.Image != null) {
-				if (Info.FrameCount(0, Direction, Layer) > 0) { //make sure this layer has a default at least
-					CopyRect.y = Info.GetOffset(State, Direction, Layer);
-					this.bitmapData.copyPixels(Info.Image, CopyRect, DestPoint);
-				} else {
-					this.visible = false;
+			if(TotalFrames > 1) {
+				FrameDT += dt;
+				if (FrameDT > Info.AnimationSpeed) {
+					FrameDT -= Info.AnimationSpeed;
 				}
+				
+				Frame++;
+				if (Frame == TotalFrames) Frame = 0;
+				CopyRect.x = Frame * Info.SizeX;
+			}
+			
+			if (Info != null && Info.Image != null && TotalFrames > 0) {
+				this.bitmapData.copyPixels(Info.Image, CopyRect, DestPoint);
 			}
 		}
 	}

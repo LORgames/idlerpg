@@ -12,18 +12,20 @@ namespace ToolCache.Map.Objects {
         public string ObjectGroup;
 
         public AnimatedObject Animation;
-        public Rectangle Base;
+        public List<Rectangle> Blocks;
+
+        public int OffsetY = 0;
 
         public bool isSolid;
 
-        public Template(short typeID, string name, string group, AnimatedObject animation, Rectangle _base, bool isSolid) {
+        public Template(short typeID, string name, string group, AnimatedObject animation, int OffsetY, List<Rectangle> _blocks, bool isSolid) {
             ObjectID = typeID;
 
             ObjectName = name;
             ObjectGroup = group;
 
             Animation = animation;
-            Base = _base;
+            Blocks = _blocks;
 
             this.isSolid = isSolid;
         }

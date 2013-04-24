@@ -22,10 +22,14 @@ namespace ToolToGameExporter {
                 RealignedItemIndexes.Add(t.ObjectID, highestIndex);
 
                 f.AddByte((byte)t.Animation.Frames.Count);
-                f.AddShort((short)t.Base.Left);
-                f.AddShort((short)t.Base.Right);
-                f.AddShort((short)t.Base.Width);
-                f.AddShort((short)t.Base.Height);
+
+                //f.AddShort(t.OffsetY);
+
+                //f.AddByte(1);
+                f.AddShort((short)(t.Blocks[0].Left));
+                f.AddShort((short)(t.Blocks[0].Right));
+                f.AddShort((short)(t.Blocks[0].Width));
+                f.AddShort((short)(t.Blocks[0].Height));
 
                 f.AddByte((byte)(t.isSolid ? 1 : 0));
 

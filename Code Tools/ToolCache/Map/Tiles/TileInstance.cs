@@ -18,7 +18,6 @@ namespace ToolCache.Map.Tiles {
         public Rectangle TileRectangleB;
 
         public Boolean Walkable;
-        public byte AccessDirections = TileTemplate.ACCESS_ALL;
 
         //public TileInstance Left;
 		//public TileInstance Right;
@@ -45,61 +44,22 @@ namespace ToolCache.Map.Tiles {
             TileID = newid;
 
             if (TileCache.G(newid) == null) TileID = 0;
-
-            RecalculateWalkable();
         }
 
         private void UpdateFromTemplate() {
             try {
-                AccessDirections = TileCache.G(TileID).directionalAccess;
                 Walkable = TileCache.G(TileID).isWalkable;
             } catch {
                 
             }
         }
 
-        internal void RecalculateWalkable() {
-            UpdateFromTemplate();
-
-            if (Walkable) {
-                foreach (BaseObject b in Objects) {
-                    if (TemplateCache.G(b.ObjectType).isSolid) {
-                        if(b.ActualBase.IntersectsWith(TileRectangleC)) { // Check the core first
-                            Walkable = false;
-                            break;
-                        } else if ((AccessDirections & TileTemplate.ACCESS_LEFT) > 0 && b.ActualBase.IntersectsWith(TileRectangleL)) { //Start removing sides
-                            AccessDirections -= TileTemplate.ACCESS_LEFT;
-                        } else if ((AccessDirections & TileTemplate.ACCESS_RIGHT) > 0 && b.ActualBase.IntersectsWith(TileRectangleR)) { //Start removing sides
-                            AccessDirections -= TileTemplate.ACCESS_RIGHT;
-                        } else if ((AccessDirections & TileTemplate.ACCESS_TOP) > 0 && b.ActualBase.IntersectsWith(TileRectangleT)) { //Start removing sides
-                            AccessDirections -= TileTemplate.ACCESS_TOP;
-                        } else if ((AccessDirections & TileTemplate.ACCESS_BOTTOM) > 0 && b.ActualBase.IntersectsWith(TileRectangleB)) { //Start removing sides
-                            AccessDirections -= TileTemplate.ACCESS_BOTTOM;
-                        }
-
-                        if (AccessDirections == TileTemplate.ACCESS_NONE) {
-                            Walkable = false;
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
         internal void AddObject(BaseObject obj) {
             Objects.Add(obj);
-
-            if (Walkable) {
-                RecalculateWalkable();
-            }
         }
 
         internal void RemoveObject(BaseObject obj) {
             Objects.Remove(obj);
-
-            if (!Walkable) {
-                RecalculateWalkable();
-            }
         }
 
         public override string ToString() {

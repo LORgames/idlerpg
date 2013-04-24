@@ -54,10 +54,14 @@ namespace ToolCache.Map.Objects {
                     int BaseHeight = f.GetInt();
 
                     Rectangle _base = new Rectangle(BaseLeft, BaseTop, BaseWidth, BaseHeight);
+                    int OffsetY = _base.Top;
 
                     bool isSolid = f.GetByte() == 1;
 
-                    ObjectTypes.Add(ObjectID, new Template(ObjectID, ObjectName, ObjectGroup, animation, _base, isSolid));
+                    List<Rectangle> _rects = new List<Rectangle>();
+                    _rects.Add(_base);
+
+                    ObjectTypes.Add(ObjectID, new Template(ObjectID, ObjectName, ObjectGroup, animation, OffsetY, _rects, isSolid));
 
                     if (!GroupsToObjectUUIDS.ContainsKey(ObjectGroup)) {
                         GroupsToObjectUUIDS.Add(ObjectGroup, new List<short>());
@@ -85,10 +89,10 @@ namespace ToolCache.Map.Objects {
                 f.AddString(kvp.Value.ObjectName);
                 f.AddString(kvp.Value.ObjectGroup);
 
-                f.AddInt(kvp.Value.Base.Left);
-                f.AddInt(kvp.Value.Base.Top);
-                f.AddInt(kvp.Value.Base.Width);
-                f.AddInt(kvp.Value.Base.Height);
+                f.AddInt(kvp.Value.Blocks[0].Left);
+                f.AddInt(kvp.Value.Blocks[0].Top);
+                f.AddInt(kvp.Value.Blocks[0].Width);
+                f.AddInt(kvp.Value.Blocks[0].Height);
 
                 f.AddByte((kvp.Value.isSolid ? (byte)1 : (byte)0));
             }

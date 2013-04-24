@@ -55,9 +55,7 @@
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.mnuShowGrids = new System.Windows.Forms.ToolStripMenuItem();
             this.ckbShowTileGrid = new System.Windows.Forms.ToolStripMenuItem();
-            this.ckbShowWalkableGrid = new System.Windows.Forms.ToolStripMenuItem();
             this.ckbShowObjectBases = new System.Windows.Forms.ToolStripMenuItem();
-            this.ckbShowWalkableGrid2 = new System.Windows.Forms.ToolStripMenuItem();
             this.viewportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ckbViewportEnabled = new System.Windows.Forms.ToolStripMenuItem();
             this.txtViewportWidth = new System.Windows.Forms.ToolStripTextBox();
@@ -321,11 +319,9 @@
             // 
             this.mnuShowGrids.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ckbShowTileGrid,
-            this.ckbShowWalkableGrid,
-            this.ckbShowObjectBases,
-            this.ckbShowWalkableGrid2});
+            this.ckbShowObjectBases});
             this.mnuShowGrids.Name = "mnuShowGrids";
-            this.mnuShowGrids.Size = new System.Drawing.Size(141, 22);
+            this.mnuShowGrids.Size = new System.Drawing.Size(152, 22);
             this.mnuShowGrids.Text = "Grids";
             // 
             // ckbShowTileGrid
@@ -335,26 +331,12 @@
             this.ckbShowTileGrid.Size = new System.Drawing.Size(194, 22);
             this.ckbShowTileGrid.Text = "Show Outlines (1)";
             // 
-            // ckbShowWalkableGrid
-            // 
-            this.ckbShowWalkableGrid.CheckOnClick = true;
-            this.ckbShowWalkableGrid.Name = "ckbShowWalkableGrid";
-            this.ckbShowWalkableGrid.Size = new System.Drawing.Size(194, 22);
-            this.ckbShowWalkableGrid.Text = "Show Walkable (2)";
-            // 
             // ckbShowObjectBases
             // 
             this.ckbShowObjectBases.CheckOnClick = true;
             this.ckbShowObjectBases.Name = "ckbShowObjectBases";
             this.ckbShowObjectBases.Size = new System.Drawing.Size(194, 22);
-            this.ckbShowObjectBases.Text = "Show Object Bases (3)";
-            // 
-            // ckbShowWalkableGrid2
-            // 
-            this.ckbShowWalkableGrid2.CheckOnClick = true;
-            this.ckbShowWalkableGrid2.Name = "ckbShowWalkableGrid2";
-            this.ckbShowWalkableGrid2.Size = new System.Drawing.Size(194, 22);
-            this.ckbShowWalkableGrid2.Text = "Show Walkable 2 (4)";
+            this.ckbShowObjectBases.Text = "Show Object Bases (2)";
             // 
             // viewportToolStripMenuItem
             // 
@@ -363,7 +345,7 @@
             this.txtViewportWidth,
             this.txtViewportHeight});
             this.viewportToolStripMenuItem.Name = "viewportToolStripMenuItem";
-            this.viewportToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.viewportToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.viewportToolStripMenuItem.Text = "Viewport";
             // 
             // ckbViewportEnabled
@@ -398,7 +380,7 @@
             this.btnEquipmentEditor,
             this.btnCritterEditor});
             this.otherToolsToolStripMenuItem.Name = "otherToolsToolStripMenuItem";
-            this.otherToolsToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.otherToolsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.otherToolsToolStripMenuItem.Text = "Other Tools";
             // 
             // btnTileEditorTool
@@ -690,12 +672,10 @@
         private System.Windows.Forms.ToolStripMenuItem btnObjectEditor;
         internal System.Windows.Forms.ComboBox cbScenicCacheSelector;
         private System.Windows.Forms.ToolStripMenuItem btnElementalEditor;
-        internal System.Windows.Forms.ToolStripMenuItem ckbShowWalkableGrid;
         internal System.Windows.Forms.ToolStripMenuItem ckbShowTileGrid;
         internal System.Windows.Forms.ToolStripMenuItem ckbShowObjectBases;
         private System.Windows.Forms.ToolStripMenuItem btnItemEditor;
         private System.Windows.Forms.ToolStripMenuItem btnEquipmentEditor;
-        internal System.Windows.Forms.ToolStripMenuItem ckbShowWalkableGrid2;
         private System.Windows.Forms.ToolStripMenuItem btnCritterEditor;
         private System.Windows.Forms.Timer timer1;
     }

@@ -15,7 +15,7 @@ namespace CityTools {
         Point p0 = Point.Empty;
         Point p1 = Point.Empty;
 
-        Rectangle _base = Rectangle.Empty;
+        List<Rectangle> _bases = new List<Rectangle>();
 
         public TemplateEditor() {
             InitializeComponent();
@@ -34,14 +34,14 @@ namespace CityTools {
                 ccAnimation.ChangeToAnimation(TemplateCache.G(objectID).Animation);
                 cbTemplateGroup.Text = TemplateCache.G(objectID).ObjectGroup;
                 txtTemplateName.Text = TemplateCache.G(objectID).ObjectName;
-                _base = TemplateCache.G(objectID).Base;
+                _bases = TemplateCache.G(objectID).Blocks;
                 this.objectID = objectID;
             } else {
                 this.objectID = TemplateCache.NextID();
                 ccAnimation.ClearAnimation();
                 cbTemplateGroup.Text = "Unknown";
                 txtTemplateName.Text = "<Unknown>";
-                _base = Rectangle.Empty;
+                _bases = new List<Rectangle>();
             }
 
             lblTemplateID.Text = "N:" + this.objectID;
@@ -52,9 +52,9 @@ namespace CityTools {
                 TemplateCache.G(objectID).Animation = ccAnimation.GetAnimation();
                 TemplateCache.G(objectID).ObjectGroup = cbTemplateGroup.Text;
                 TemplateCache.G(objectID).ObjectName = txtTemplateName.Text;
-                TemplateCache.G(objectID).Base = _base;
+                TemplateCache.G(objectID).Blocks = _bases;
             } else {
-                Template t = new Template(objectID, txtTemplateName.Text, cbTemplateGroup.Text, ccAnimation.GetAnimation(), _base, true);
+                Template t = new Template(objectID, txtTemplateName.Text, cbTemplateGroup.Text, ccAnimation.GetAnimation(), 0, _bases, true);
                 TemplateCache.AddObject(t);
             }
         }
@@ -104,9 +104,6 @@ namespace CityTools {
             if (e.Button == System.Windows.Forms.MouseButtons.Left) {
                 p0 = e.Location;
                 p1 = e.Location;
-
-                _base.X = e.Location.X;
-                _base.Y = e.Location.Y;
             }
         }
 
@@ -119,19 +116,19 @@ namespace CityTools {
                 if (p1.X < 0) p1.X = 0;
                 if (p1.Y < 0) p1.Y = 0;
 
-                _base.X = Math.Min(p0.X, p1.X);
-                _base.Y = Math.Min(p0.Y, p1.Y);
-                _base.Width = Math.Abs(p1.X - p0.X);
-                _base.Height = Math.Abs(p1.Y - p0.Y);
+                Rectangle r = new Rectangle();
+                r.X = Math.Min(p0.X, p1.X);
+                r.Y = Math.Min(p0.Y, p1.Y);
+                r.Width = Math.Abs(p1.X - p0.X);
+                r.Height = Math.Abs(p1.Y - p0.Y);
+
+                _bases.Add(r);
             }
         }
 
         private void pbExampleBase_MouseMove(object sender, MouseEventArgs e) {
             if (e.Button == System.Windows.Forms.MouseButtons.Left) {
                 p1 = e.Location;
-
-                _base.Width = p1.X - p0.X;
-                _base.Height = p1.Y - p0.Y;
             }
         }
 
@@ -141,9 +138,13 @@ namespace CityTools {
 
         private void pbExampleBase_Paint(object sender, PaintEventArgs e) {
             ccAnimation.GetAnimation().Draw(e.Graphics, 0, 0, 1);
-            e.Graphics.DrawRectangle(Pens.Red, _base);
 
-            System.Diagnostics.Debug.WriteLine(_base);
+            foreach (Rectangle r in _bases) {
+                e.Graphics.DrawRectangle(Pens.Magenta, r);
+            }
+
+            //Rectangle r = new Rectangle(p0.X, p0.Y, p1.X-p0.X, p1.Y-p0.Y);
+            //e.Graphics.DrawRectangle(Pens.Red, r);
         }
     }
 }

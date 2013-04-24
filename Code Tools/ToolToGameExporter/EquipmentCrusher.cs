@@ -32,6 +32,8 @@ namespace ToolToGameExporter {
                     f.AddString(ei.Name);
                     f.AddByte((byte)((ei.isAvailableAtStart?1:0) + (ei.OffsetsLocked?2:0)));
 
+                    f.AddFloat(ei.AnimationSpeed);
+
                     f.AddShort(ei.OffsetX);
                     f.AddShort(ei.OffsetY);
 

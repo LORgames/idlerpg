@@ -49,7 +49,7 @@ package Game.Map {
 					
 					var walkdata:int = b.readByte();
 					ttt.Walkable = (walkdata & 32) > 0;
-					ttt.AccessDirections = walkdata & ~32
+					ttt.AccessDirections = walkdata & ~32;
 					
 					Tiles[i + TileSizeX * j] = ttt;
 				}

@@ -83,23 +83,6 @@ namespace CityTools.Terrain {
                         int y = (int)Math.Floor((j * TileTemplate.PIXELS_Y - Camera.Offset.Y) * Camera.ZoomLevel);
 
                         TileCache.G(f).Animation.Draw(buffer.gfx, x, y, Camera.ZoomLevel);
-
-                        if (MainWindow.instance.ckbShowWalkableGrid.Checked) {
-                            if (MapPieceCache.CurrentPiece.Tiles.Data[i, j].Walkable) {
-                                buffer.gfx.FillRectangle(Walkable, x, y, TileTemplate.PIXELS_X * Camera.ZoomLevel, TileTemplate.PIXELS_Y * Camera.ZoomLevel);
-                            } else {
-                                buffer.gfx.FillRectangle(NotWalkable, x, y, TileTemplate.PIXELS_X * Camera.ZoomLevel, TileTemplate.PIXELS_Y * Camera.ZoomLevel);
-                            }
-                        }
-
-                        if (MainWindow.instance.ckbShowWalkableGrid2.Checked) {
-                            Rectangle r = new Rectangle();
-
-                            CopyRectangleWithOffset(ref r, MapPieceCache.CurrentPiece.Tiles.Data[i, j].TileRectangleB); buffer.gfx.FillRectangle((MapPieceCache.CurrentPiece.Tiles.Data[i, j].AccessDirections & TileTemplate.ACCESS_BOTTOM) > 0 ? Brushes.Green : Brushes.Red, r);
-                            CopyRectangleWithOffset(ref r, MapPieceCache.CurrentPiece.Tiles.Data[i, j].TileRectangleT); buffer.gfx.FillRectangle((MapPieceCache.CurrentPiece.Tiles.Data[i, j].AccessDirections & TileTemplate.ACCESS_TOP) > 0 ? Brushes.Green : Brushes.Red, r);
-                            CopyRectangleWithOffset(ref r, MapPieceCache.CurrentPiece.Tiles.Data[i, j].TileRectangleL); buffer.gfx.FillRectangle((MapPieceCache.CurrentPiece.Tiles.Data[i, j].AccessDirections & TileTemplate.ACCESS_LEFT) > 0 ? Brushes.Green : Brushes.Red, r);
-                            CopyRectangleWithOffset(ref r, MapPieceCache.CurrentPiece.Tiles.Data[i, j].TileRectangleR); buffer.gfx.FillRectangle((MapPieceCache.CurrentPiece.Tiles.Data[i, j].AccessDirections & TileTemplate.ACCESS_RIGHT) > 0 ? Brushes.Green : Brushes.Red, r);
-                        }
                     }
                 }
             }

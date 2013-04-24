@@ -4,6 +4,7 @@ package {
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
+	import flash.events.TouchEvent;
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
 	import Game.Equipment.EquipmentManager;
@@ -12,6 +13,7 @@ package {
 	import Game.Map.WorldData;
 	import InputSystems.IInputSystem;
 	import InputSystems.KeyboardInput;
+	import InputSystems.TouchInput;
 	import RenderSystem.Renderman;
 	
 	/**
@@ -52,7 +54,11 @@ package {
 			Resized();
 			
 			//Need more logic to adding input system?
-			Input = new KeyboardInput();
+			if(Multitouch.supportsTouchEvents) {
+				Input = new TouchInput();//new KeyboardInput();
+			} else {
+				Input = new KeyboardInput();
+			}
 		}
 		
 		private function deactivate(e:Event):void {
@@ -62,6 +68,17 @@ package {
 		
 		private function Cycle(e:* = null):void {
 			Renderer.Render();
+			
+			var i:int = OrderedLayer.numChildren;
+			while(--i > 1) {
+				if (OrderedLayer.getChildAt(i).y < OrderedLayer.getChildAt(i - 1).y) {
+					OrderedLayer.swapChildrenAt(i, i - 1);
+				}
+				
+				if (OrderedLayer.getChildAt(i - 1).y < OrderedLayer.getChildAt(i - 2).y) {
+					OrderedLayer.swapChildrenAt(i - 1, i - 2);
+				}
+			}
 		}
 		
 		private function Resized(e:* = null):void {

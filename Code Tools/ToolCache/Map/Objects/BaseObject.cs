@@ -19,7 +19,7 @@ namespace ToolCache.Map.Objects {
 
         public int ActualY;
         public int ActualX;
-        public Rectangle ActualBase;
+        public List<Rectangle> ActualBases = new List<Rectangle>();
 
         // Constructor for indexing and sorting
         public BaseObject(short ObjectType, Point initialLocation) {
@@ -35,8 +35,8 @@ namespace ToolCache.Map.Objects {
         public void Move(int x, int y) {
             //Remove from the existing tiles
             //Figure out what tiles I'm touching and mark them unwalkable
-            if (ActualBase != null) {
-                List<TileInstance> tiles = MapPieceCache.CurrentPiece.Tiles.GetTilesFromWorldRectangle(ActualX, ActualY, ObjectTemplate.Base.Width, ObjectTemplate.Base.Height);
+            foreach(Rectangle ActualBase in ActualBases) {
+                List<TileInstance> tiles = MapPieceCache.CurrentPiece.Tiles.GetTilesFromWorldRectangle(ActualBase.X, ActualBase.Y, ActualBase.Width, ActualBase.Height);
 
                 foreach (TileInstance tile in tiles) {
                     tile.RemoveObject(this);
@@ -51,16 +51,20 @@ namespace ToolCache.Map.Objects {
         }
 
         private void RecalculatePosition() {
-            ActualX = Location.X + ObjectTemplate.Base.Left;
-            ActualY = Location.Y + ObjectTemplate.Base.Top;
+            ActualX = Location.X;// +ObjectTemplate.Base.Left;
+            ActualY = Location.Y + ObjectTemplate.OffsetY;
 
-            ActualBase = new Rectangle(ActualX, ActualY, ObjectTemplate.Base.Width, ObjectTemplate.Base.Height);
+            ActualBases.Clear();
 
-            //Figure out what tiles I'm touching and mark them unwalkable
-            List<TileInstance> tiles = MapPieceCache.CurrentPiece.Tiles.GetTilesFromWorldRectangle(ActualX, ActualY, ObjectTemplate.Base.Width, ObjectTemplate.Base.Height);
+            foreach (Rectangle r in ObjectTemplate.Blocks) {
+                Rectangle ActualBase = new Rectangle(r.X + Location.X, r.Y + Location.Y, r.Width, r.Height);
+                
+                //Figure out what tiles I'm touching and mark them unwalkable
+                List<TileInstance> tiles = MapPieceCache.CurrentPiece.Tiles.GetTilesFromWorldRectangle(ActualBase.X, ActualBase.Y, ActualBase.Width, ActualBase.Height);
 
-            foreach (TileInstance tile in tiles) {
-                tile.AddObject(this);
+                foreach (TileInstance tile in tiles) {
+                    tile.AddObject(this);
+                }
             }
         }
 
@@ -82,10 +86,12 @@ namespace ToolCache.Map.Objects {
             MapPieceCache.CurrentPiece.Objects.Remove(this);
 
             //Figure out what tiles I'm touching and mark them unwalkable
-            List<TileInstance> tiles = MapPieceCache.CurrentPiece.Tiles.GetTilesFromWorldRectangle(ActualX, ActualY, ObjectTemplate.Base.Width, ObjectTemplate.Base.Height);
+            foreach (Rectangle ActualBase in ActualBases) {
+                List<TileInstance> tiles = MapPieceCache.CurrentPiece.Tiles.GetTilesFromWorldRectangle(ActualBase.X, ActualBase.Y, ActualBase.Width, ActualBase.Height);
 
-            foreach (TileInstance tile in tiles) {
-                tile.RemoveObject(this);
+                foreach (TileInstance tile in tiles) {
+                    tile.RemoveObject(this);
+                }
             }
         }
     }

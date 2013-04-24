@@ -9,13 +9,6 @@ using ToolCache.Map.Objects;
 namespace ToolCache.Map.Tiles {
     public class TileTemplate {
         //Some constants
-        public const byte ACCESS_LEFT = 1;
-        public const byte ACCESS_RIGHT = 2;
-        public const byte ACCESS_TOP = 4;
-        public const byte ACCESS_BOTTOM = 8;
-        public const byte ACCESS_ALL = ACCESS_LEFT | ACCESS_RIGHT | ACCESS_TOP | ACCESS_BOTTOM;
-        public const byte ACCESS_NONE = 0;
-
         public const byte SLIDING_NONE = 0;
         public const byte SLIDING_LEFT = 1;
         public const byte SLIDING_RIGHT = 2;
@@ -41,7 +34,6 @@ namespace ToolCache.Map.Tiles {
         public short damagePerSecond = 0;
 
         public float movementCost = 1; // 1 = normal, 2 = twice as slow, 0.5 = twice as fast (32 bits)
-        public byte directionalAccess = ACCESS_ALL; //Which directions tile can be accessed from bitwise LRTB order (4bits)
         public byte slidingDirection = SLIDING_NONE; //0=none, 1=left, 2=right, 3=top, 4=bottom, 5=direction of travel (3 bits)
 
         internal void LoadFromFile(General.BinaryIO f) {
@@ -52,7 +44,7 @@ namespace ToolCache.Map.Tiles {
             Animation = AnimatedObject.UnpackFromBinaryIO(f);
 
             isWalkable = f.GetByte() == 1;
-            directionalAccess = f.GetByte();
+            byte directionalAccess = f.GetByte();
             movementCost = f.GetFloat();
             slidingDirection = f.GetByte();
             
@@ -68,7 +60,7 @@ namespace ToolCache.Map.Tiles {
             Animation.PackIntoBinaryIO(f);
 
             f.AddByte(isWalkable ? (byte)1 : (byte)0);
-            f.AddByte(directionalAccess);
+            f.AddByte((byte)0);
             f.AddFloat(movementCost);
             f.AddByte(slidingDirection);
 

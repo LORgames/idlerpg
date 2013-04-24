@@ -46,16 +46,20 @@ namespace CityTools.ObjectSystem {
                     List<BaseObject> objects = tile.EXOB;
                     for (int k = 0; k < objects.Count; k++) {
                         if (!selectedObjects.Contains(objects[k])) {
-                            if (selectBox.IntersectsWith(objects[k].ActualBase)) {
-                                selectedObjects.Add(objects[k]);
+                            foreach (Rectangle r in objects[k].ActualBases) {
+                                if (selectBox.IntersectsWith(r)) {
+                                    selectedObjects.Add(objects[k]);
+                                }
                             }
                         }
                     }
                 }
             } else {
                 foreach (BaseObject obj in MapPieceCache.CurrentPiece.Objects) {
-                    if (selectBox.IntersectsWith(obj.ActualBase)) {
-                        selectedObjects.Add(obj);
+                    foreach (Rectangle r in obj.ActualBases) {
+                        if (selectBox.IntersectsWith(r)) {
+                            selectedObjects.Add(obj);
+                        }
                     }
                 }
             }
@@ -157,19 +161,19 @@ namespace CityTools.ObjectSystem {
                 float y = (obj.Location.Y - Camera.Offset.Y) * Camera.ZoomLevel;
 
                 if (MainWindow.instance.ckbShowObjectBases.Checked) {
-                    Rectangle b = TemplateCache.G(obj.ObjectType).Base;
+                    foreach (Rectangle b in TemplateCache.G(obj.ObjectType).Blocks) {
+                        Rectangle r = new Rectangle();
 
-                    Rectangle r = new Rectangle();
+                        r.X = (int)(x + b.X * Camera.ZoomLevel);
+                        r.Y = (int)(y + b.Y * Camera.ZoomLevel);
+                        r.Width = (int)(b.Width * Camera.ZoomLevel);
+                        r.Height = (int)(b.Height * Camera.ZoomLevel);
 
-                    r.X = (int)(x + b.X * Camera.ZoomLevel);
-                    r.Y = (int)(y + b.Y * Camera.ZoomLevel);
-                    r.Width = (int)(b.Width * Camera.ZoomLevel);
-                    r.Height = (int)(b.Height * Camera.ZoomLevel);
-
-                    if (!selectedObjects.Contains(obj)) {
-                        buffer.gfx.FillRectangle(Brushes.Magenta, r);
-                    } else {
-                        buffer.gfx.FillRectangle(Brushes.Yellow, r);
+                        if (!selectedObjects.Contains(obj)) {
+                            buffer.gfx.FillRectangle(Brushes.Magenta, r);
+                        } else {
+                            buffer.gfx.FillRectangle(Brushes.Yellow, r);
+                        }
                     }
 
                     TemplateCache.G(obj.ObjectType).Animation.Draw(buffer.gfx, x, y, Camera.ZoomLevel, 0.33f);

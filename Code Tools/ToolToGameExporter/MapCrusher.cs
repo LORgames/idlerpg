@@ -33,11 +33,9 @@ namespace ToolToGameExporter {
                         }
 
                         short _d = map.Tiles[i, j];
-                        byte directables = map.Tiles.Data[i, j].AccessDirections;
-                        directables |= map.Tiles.Data[i, j].Walkable ? (byte)32 : (byte)0;
 
                         f.AddShort(TileCrusher.RemappedTileIds[map.Tiles[i, j]]);
-                        f.AddByte(directables);
+                        f.AddByte((byte)0);
                     }
                 }
 

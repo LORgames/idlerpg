@@ -37,7 +37,7 @@ namespace CityTools {
             //Add all tiles to the tile list
             cbTileList.Items.Clear();
             foreach(KeyValuePair<short, TileTemplate> kvp in TileCache.Tiles) {
-                if (kvp.Value.isWalkable && kvp.Value.directionalAccess == TileTemplate.ACCESS_ALL) {
+                if (kvp.Value.isWalkable) {
                     cbTileList.Items.Add(kvp.Value);
 
                     if (kvp.Value.TileName == "Grass") {

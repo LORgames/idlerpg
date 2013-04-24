@@ -37,7 +37,7 @@ namespace ToolToGameExporter {
                 f.AddByte((byte)tt.Animation.Frames.Count);
                 f.AddByte((byte)(tt.isWalkable?1:0));
                 f.AddFloat(tt.movementCost);
-                f.AddByte(tt.directionalAccess);
+                f.AddByte((byte)0);
                 f.AddByte(tt.slidingDirection);
                 
                 f.AddShort(tt.damageElement);

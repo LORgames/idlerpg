@@ -13,6 +13,7 @@ package Game.Equipment {
 		
 		public var SizeX:int;
 		public var SizeY:int;
+		public var AnimationSpeed:Number;
 		
 		public var OffsetsLocked:Boolean;
 		public var Offset:Point;

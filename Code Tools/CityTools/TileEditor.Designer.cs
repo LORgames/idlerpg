@@ -45,12 +45,7 @@ namespace CityTools {
             this.label1 = new System.Windows.Forms.Label();
             this.cbDamageElement = new System.Windows.Forms.ComboBox();
             this.lblDamage = new System.Windows.Forms.Label();
-            this.ckbDown = new System.Windows.Forms.CheckBox();
-            this.ckbUp = new System.Windows.Forms.CheckBox();
-            this.ckbRight = new System.Windows.Forms.CheckBox();
-            this.ckbLeft = new System.Windows.Forms.CheckBox();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.ccAnimation = new AnimationList();
+            this.ccAnimation = new CityTools.ClipIns.AnimationList();
             this.panel3 = new System.Windows.Forms.Panel();
             this.numMovementCost = new System.Windows.Forms.NumericUpDown();
             this.cbSlideDirection = new System.Windows.Forms.ComboBox();
@@ -60,7 +55,6 @@ namespace CityTools {
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numDamagePerSecond)).BeginInit();
-            this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numMovementCost)).BeginInit();
             this.SuspendLayout();
@@ -171,7 +165,7 @@ namespace CityTools {
             this.ckbIsWalkable.AutoSize = true;
             this.ckbIsWalkable.Checked = true;
             this.ckbIsWalkable.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ckbIsWalkable.Location = new System.Drawing.Point(4, 7);
+            this.ckbIsWalkable.Location = new System.Drawing.Point(18, 82);
             this.ckbIsWalkable.Name = "ckbIsWalkable";
             this.ckbIsWalkable.Size = new System.Drawing.Size(71, 17);
             this.ckbIsWalkable.TabIndex = 8;
@@ -240,71 +234,6 @@ namespace CityTools {
             this.lblDamage.Size = new System.Drawing.Size(55, 13);
             this.lblDamage.TabIndex = 0;
             this.lblDamage.Text = "Damaging";
-            // 
-            // ckbDown
-            // 
-            this.ckbDown.AutoSize = true;
-            this.ckbDown.Checked = true;
-            this.ckbDown.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ckbDown.Location = new System.Drawing.Point(84, 53);
-            this.ckbDown.Name = "ckbDown";
-            this.ckbDown.Size = new System.Drawing.Size(82, 17);
-            this.ckbDown.TabIndex = 10;
-            this.ckbDown.Text = "Walk Down";
-            this.ckbDown.UseVisualStyleBackColor = true;
-            this.ckbDown.CheckedChanged += new System.EventHandler(this.isEdited);
-            // 
-            // ckbUp
-            // 
-            this.ckbUp.AutoSize = true;
-            this.ckbUp.Checked = true;
-            this.ckbUp.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ckbUp.Location = new System.Drawing.Point(5, 53);
-            this.ckbUp.Name = "ckbUp";
-            this.ckbUp.Size = new System.Drawing.Size(68, 17);
-            this.ckbUp.TabIndex = 11;
-            this.ckbUp.Text = "Walk Up";
-            this.ckbUp.UseVisualStyleBackColor = true;
-            this.ckbUp.CheckedChanged += new System.EventHandler(this.isEdited);
-            // 
-            // ckbRight
-            // 
-            this.ckbRight.AutoSize = true;
-            this.ckbRight.Checked = true;
-            this.ckbRight.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ckbRight.Location = new System.Drawing.Point(84, 30);
-            this.ckbRight.Name = "ckbRight";
-            this.ckbRight.Size = new System.Drawing.Size(79, 17);
-            this.ckbRight.TabIndex = 12;
-            this.ckbRight.Text = "Walk Right";
-            this.ckbRight.UseVisualStyleBackColor = true;
-            this.ckbRight.CheckedChanged += new System.EventHandler(this.isEdited);
-            // 
-            // ckbLeft
-            // 
-            this.ckbLeft.AutoSize = true;
-            this.ckbLeft.Checked = true;
-            this.ckbLeft.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ckbLeft.Location = new System.Drawing.Point(4, 30);
-            this.ckbLeft.Name = "ckbLeft";
-            this.ckbLeft.Size = new System.Drawing.Size(72, 17);
-            this.ckbLeft.TabIndex = 13;
-            this.ckbLeft.Text = "Walk Left";
-            this.ckbLeft.UseVisualStyleBackColor = true;
-            this.ckbLeft.CheckedChanged += new System.EventHandler(this.isEdited);
-            // 
-            // panel2
-            // 
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.ckbIsWalkable);
-            this.panel2.Controls.Add(this.ckbLeft);
-            this.panel2.Controls.Add(this.ckbDown);
-            this.panel2.Controls.Add(this.ckbRight);
-            this.panel2.Controls.Add(this.ckbUp);
-            this.panel2.Location = new System.Drawing.Point(15, 77);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(169, 78);
-            this.panel2.TabIndex = 14;
             // 
             // ccAnimation
             // 
@@ -405,8 +334,8 @@ namespace CityTools {
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(371, 380);
+            this.Controls.Add(this.ckbIsWalkable);
             this.Controls.Add(this.panel3);
-            this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.lblAnimation);
             this.Controls.Add(this.lblGroup);
@@ -423,8 +352,6 @@ namespace CityTools {
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numDamagePerSecond)).EndInit();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numMovementCost)).EndInit();
@@ -453,11 +380,6 @@ namespace CityTools {
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbDamageElement;
         private System.Windows.Forms.Label lblDamage;
-        private System.Windows.Forms.CheckBox ckbDown;
-        private System.Windows.Forms.CheckBox ckbUp;
-        private System.Windows.Forms.CheckBox ckbRight;
-        private System.Windows.Forms.CheckBox ckbLeft;
-        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.ComboBox cbSlideDirection;
         private System.Windows.Forms.Label label3;

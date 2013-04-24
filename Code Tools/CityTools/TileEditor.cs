@@ -44,11 +44,6 @@ namespace CityTools {
                 txtTileName.Text = t.TileName;
                 ckbIsWalkable.Checked = t.isWalkable;
 
-                ckbLeft.Checked = (t.directionalAccess&TileTemplate.ACCESS_LEFT)>0?true:false;
-                ckbRight.Checked = (t.directionalAccess & TileTemplate.ACCESS_RIGHT) > 0 ? true : false;
-                ckbUp.Checked = (t.directionalAccess & TileTemplate.ACCESS_TOP) > 0 ? true : false;
-                ckbDown.Checked = (t.directionalAccess & TileTemplate.ACCESS_BOTTOM) > 0 ? true : false;
-
                 cbDamageElement.SelectedIndex = ElementManager.ElementIDToIndex(t.damageElement);
                 numDamagePerSecond.Value = t.damagePerSecond;
 
@@ -62,11 +57,6 @@ namespace CityTools {
                 cbTileGroup.Text = "Unknown";
                 txtTileName.Text = "<Unknown>";
                 ckbIsWalkable.Checked = true;
-
-                ckbLeft.Checked = true;
-                ckbRight.Checked = true;
-                ckbUp.Checked = true;
-                ckbDown.Checked = true;
 
                 cbDamageElement.SelectedIndex = 0;
                 numDamagePerSecond.Value = 0;
@@ -94,12 +84,6 @@ namespace CityTools {
             t.TileName = txtTileName.Text;
             t.isWalkable = ckbIsWalkable.Checked;
 
-            t.directionalAccess = TileTemplate.ACCESS_NONE;
-            t.directionalAccess |= (ckbLeft.Checked ? TileTemplate.ACCESS_LEFT : (byte)0);
-            t.directionalAccess |= (ckbRight.Checked ? TileTemplate.ACCESS_RIGHT : (byte)0);
-            t.directionalAccess |= (ckbUp.Checked ? TileTemplate.ACCESS_TOP : (byte)0);
-            t.directionalAccess |= (ckbDown.Checked ? TileTemplate.ACCESS_BOTTOM : (byte)0);
-
             t.movementCost = (float)numMovementCost.Value;
             t.slidingDirection = (byte)cbSlideDirection.SelectedIndex;
             
@@ -123,7 +107,6 @@ namespace CityTools {
 
         private void TileEditor_FormClosing(object sender, FormClosingEventArgs e) {
             TileCache.SaveDatabase();
-            MapPieceCache.CurrentPiece.RecalculateWalkable();
         }
 
         private void UpdateTileNames() {
@@ -160,18 +143,6 @@ namespace CityTools {
         }
 
         private void ckbIsWalkable_CheckedChanged(object sender, EventArgs e) {
-            if (!ckbIsWalkable.Checked) {
-                ckbLeft.Enabled = false;
-                ckbRight.Enabled = false;
-                ckbUp.Enabled = false;
-                ckbDown.Enabled = false;
-            } else {
-                ckbLeft.Enabled = true;
-                ckbRight.Enabled = true;
-                ckbUp.Enabled = true;
-                ckbDown.Enabled = true;
-            }
-
             Edited = true;
         }
 

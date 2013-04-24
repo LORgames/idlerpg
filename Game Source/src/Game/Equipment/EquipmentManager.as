@@ -42,7 +42,7 @@ package Game.Equipment {
 			i = Headgear.length; while ( --i > -1) ReadEquipmentInfo(b, Headgear, Headgear.length - (i+1));
 			i = Weapons.length; while ( --i > -1) ReadEquipmentInfo(b, Weapons, Weapons.length - (i+1));
 			
-			WorldData.ME.equipment.Equip(0, 0, 0, 0, 0, 0);
+			WorldData.ME.equipment.Equip(0, 0, 0, 0, 1, 2);
 			Global.LoadingTotal--;
 		}
 		
@@ -54,6 +54,8 @@ package Game.Equipment {
 			var bool:int = b.readByte();
 			e.isAvailableAtStart = (bool & 0x1) > 0;
 			e.OffsetsLocked = (bool & 0x2) > 0;
+			
+			e.AnimationSpeed = b.readFloat();
 			
 			e.Offset = new Point(b.readShort(), b.readShort());
 			
