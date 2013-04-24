@@ -154,5 +154,10 @@ namespace CityTools.ClipIns {
         private void numFramerate_ValueChanged(object sender, EventArgs e) {
             _anim.PlaybackSpeed = (float)numFramerate.Value;
         }
+
+        internal void DisablePlaybackSpeed() {
+            numFramerate.Enabled = false;
+            numFramerate.Visible = false;
+        }
     }
 }

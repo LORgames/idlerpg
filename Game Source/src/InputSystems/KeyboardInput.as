@@ -21,13 +21,13 @@ package InputSystems {
 		
 		private function KeyDown(ke:KeyboardEvent):void {
 			if (ke.keyCode == Keyboard.W) {
-				WorldData.ME.RequestMove(1);
+				WorldData.ME.RequestMove(2);
 			} else if (ke.keyCode == Keyboard.S) {
 				WorldData.ME.RequestMove(3);
 			} else if (ke.keyCode == Keyboard.A) {
 				WorldData.ME.RequestMove(0);
 			} else if (ke.keyCode == Keyboard.D) {
-				WorldData.ME.RequestMove(2);
+				WorldData.ME.RequestMove(1);
 			}
 		}
 		

@@ -28,6 +28,8 @@ namespace ToolCache.Equipment {
         public short OffsetX_3 = 0;
         public short OffsetY_3 = 0;
 
+        public float AnimationSpeed = 0.2f;
+
         public EquipmentItem(bool initialize = true) {
             if(initialize) VerifyAnimationSets();
         }
@@ -43,6 +45,7 @@ namespace ToolCache.Equipment {
             t.isAvailableAtStart = (bool_Settings & 1) > 0;
             t.OffsetsLocked = (bool_Settings & 2) > 0;
 
+            t.AnimationSpeed = f.GetFloat();
             short totalAnimationSets = f.GetShort();
 
             for (short i = 0; i < totalAnimationSets; i++) {
@@ -68,6 +71,7 @@ namespace ToolCache.Equipment {
             }
 
             t.VerifyAnimationSets();
+            t.UpdateSpeed();
 
             return t;
         }
@@ -90,6 +94,7 @@ namespace ToolCache.Equipment {
 
             f.AddByte(settings);
 
+            f.AddFloat(AnimationSpeed);
             f.AddShort((short)Animations.Count);
 
             foreach (EquipmentAnimationSet kvp in Animations.Values) {
@@ -151,6 +156,12 @@ namespace ToolCache.Equipment {
                 return c0;
             } else {
                 return DisplayAnimation(s, d, layer).Center;
+            }
+        }
+
+        public void UpdateSpeed() {
+            foreach (EquipmentAnimationSet eas in Animations.Values) {
+                eas.UpdateSpeed(AnimationSpeed);
             }
         }
     }

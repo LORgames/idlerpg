@@ -111,5 +111,16 @@ namespace ToolCache.Equipment {
                     break;
             }
         }
+
+        internal void UpdateSpeed(float AnimationSpeed) {
+            Left_1.PlaybackSpeed = AnimationSpeed;
+            Left_0.PlaybackSpeed = AnimationSpeed;
+            Right_1.PlaybackSpeed = AnimationSpeed;
+            Right_0.PlaybackSpeed = AnimationSpeed;
+            Up_1.PlaybackSpeed = AnimationSpeed;
+            Up_0.PlaybackSpeed = AnimationSpeed;
+            Down_1.PlaybackSpeed = AnimationSpeed;
+            Down_0.PlaybackSpeed = AnimationSpeed;
+        }
     }
 }

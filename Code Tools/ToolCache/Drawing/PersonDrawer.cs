@@ -51,7 +51,7 @@ namespace ToolCache.Drawing {
 
             //Solve body position
             Point bodyLink = Point.Empty;
-            bodyLink.X = p.X - bodyCenter.X;
+            bodyLink.X = p.X - bodyCenter.X - b_offset.X;
             bodyLink.Y = WaistHeight - b_offset.Y;
 
             //Solve head position
@@ -90,13 +90,23 @@ namespace ToolCache.Drawing {
             //Draw Head
             face.DisplayAnimation(s, d, 0).Draw(g, headLink.X, headLink.Y, 1);
 
-            //Draw Headgear
-            if (head != null) {
-                head.DisplayAnimation(s, d, 0).Draw(g, headgearLink.X, headgearLink.Y, 1);
-            }
+            if (d == Direction.Down) { //when heading down the layers are flipped
+                //Draw Body Front
+                body.DisplayAnimation(s, d, 0).Draw(g, bodyLink.X, bodyLink.Y, 1);
 
-            //Draw Body Front
-            body.DisplayAnimation(s, d, 0).Draw(g, bodyLink.X, bodyLink.Y, 1);
+                //Draw Headgear
+                if (head != null) {
+                    head.DisplayAnimation(s, d, 0).Draw(g, headgearLink.X, headgearLink.Y, 1);
+                }
+            } else {
+                //Draw Headgear
+                if (head != null) {
+                    head.DisplayAnimation(s, d, 0).Draw(g, headgearLink.X, headgearLink.Y, 1);
+                }
+
+                //Draw Body Front
+                body.DisplayAnimation(s, d, 0).Draw(g, bodyLink.X, bodyLink.Y, 1);
+            }
 
             //Draw Weapon Front
             if (weapon != null) {

@@ -29,8 +29,7 @@ package Game.Map {
 		}
 		
 		public function ParseData(b:ByteArray):void {
-			var l:int = b.readShort();
-			var s:String = b.readMultiByte(l, "iso-8859-1"); //map name
+			BinaryLoader.GetString(b);
 			
 			//Tiles First?
 			TileSizeX = b.readShort();
@@ -115,7 +114,7 @@ package Game.Map {
 			
 			Global.LoadingTotal--;
 			
-			WorldData.ME.ShiftMaps(this, 100);
+			WorldData.ME.ShiftMaps(this, 7);
 		}
 	}
 

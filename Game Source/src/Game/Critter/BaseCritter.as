@@ -9,7 +9,7 @@ package Game.Critter {
 	 * ...
 	 * @author Paul
 	 */
-	public class BaseCritter extends Bitmap {
+	public class BaseCritter {
 		
 		public var position:int = -1;
 		public var movementSpeed:int = 0;
@@ -20,16 +20,17 @@ package Game.Critter {
 		
 		public var currentMap:MapData;
 		
+		public var X:int = 0;
+		public var Y:int = 0;
+		
 		public function BaseCritter() {
-			this.bitmapData = new BitmapData(48, 48, true, 0xFFFF0000);
-			Main.OrderedLayer.addChild(this);
+			//this.bitmapData = new BitmapData(48, 48, true, 0xFFFF0000);
+			//Main.OrderedLayer.addChild(this);
 		}
 		
 		public function UpdatePosition():void {
-			this.x = int(position % currentMap.TileSizeX) * 48;
-			this.y = int(position / currentMap.TileSizeX) * 48;
-			
-			trace(this.x + ", " + this.y);
+			this.X = int(position % currentMap.TileSizeX) * 48;
+			this.Y = int(position / currentMap.TileSizeX) * 48;
 		}
 		
 		public function ShiftMaps(newMap:MapData, location:int = 0):void {
@@ -47,11 +48,11 @@ package Game.Critter {
 				n = currentMap.Tiles[position].Left;
 				p--;
 			} else if (moveDir == 1) {
-				n = currentMap.Tiles[position].Up;
-				p -= currentMap.TileSizeX;
-			} else if (moveDir == 2) {
 				n = currentMap.Tiles[position].Right;
 				p++;
+			} else if (moveDir == 2) {
+				n = currentMap.Tiles[position].Up;
+				p -= currentMap.TileSizeX;
 			} else {
 				n = currentMap.Tiles[position].Down;
 				p += currentMap.TileSizeX;
@@ -60,8 +61,6 @@ package Game.Critter {
 			if (n != null) {
 				if (n.TemporaryLock) n = null;
 			}
-			
-			trace("Move: " + n + " & " + moveDir);
 			
 			if (n != null) {
 				currentMap.Tiles[position].TemporaryLock = false;

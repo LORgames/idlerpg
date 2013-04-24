@@ -2,6 +2,7 @@ package Game.Map {
 	import flash.display.BitmapData;
 	import flash.utils.ByteArray;
 	import Game.Critter.BaseCritter;
+	import Game.Critter.Person;
 	import Game.General.BinaryLoader;
 	import Game.General.ImageLoader;
 	/**
@@ -15,7 +16,7 @@ package Game.Map {
 		
 		public static var CurrentMap:MapData;
 		
-		public static var ME:BaseCritter = new BaseCritter();
+		public static var ME:Person = new Person();
 		
 		public static function Initialize():void {
 			BinaryLoader.Load("Data/MapInfo.bin", ParseWorldFile);

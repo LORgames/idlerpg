@@ -70,6 +70,9 @@ namespace CityTools {
             ccAnimationBack.SetSaveLocation("Equipment");
             ccAnimationFront.SetSaveLocation("Equipment");
 
+            ccAnimationBack.DisablePlaybackSpeed();
+            ccAnimationFront.DisablePlaybackSpeed();
+
             CreateNew();
 
             RefreshTree();
@@ -173,6 +176,8 @@ namespace CityTools {
             numOffsetY_0.Value = currentEquipment.OffsetY;
 
             ckbLockOffsets.Checked = currentEquipment.OffsetsLocked;
+
+            numAnimSpeed.Value = (decimal)currentEquipment.AnimationSpeed;
 
             UpdateOffsets();
 
@@ -547,6 +552,13 @@ namespace CityTools {
             }
 
             UpdateDirection();
+        }
+
+        private void numAnimSpeed_ValueChanged(object sender, EventArgs e) {
+            if (_updatingForm) return;
+
+            currentEquipment.AnimationSpeed = (float)numAnimSpeed.Value;
+            currentEquipment.UpdateSpeed();
         }
     }
 }

@@ -77,6 +77,8 @@ namespace CityTools {
             this.numOffsetX_3 = new System.Windows.Forms.NumericUpDown();
             this.ckbLockOffsets = new System.Windows.Forms.CheckBox();
             this.label14 = new System.Windows.Forms.Label();
+            this.numAnimSpeed = new System.Windows.Forms.NumericUpDown();
+            this.label17 = new System.Windows.Forms.Label();
             this.ccAnimationBack = new CityTools.ClipIns.AnimationList();
             this.ccAnimationFront = new CityTools.ClipIns.AnimationList();
             ((System.ComponentModel.ISupportInitialize)(this.pbEquipmentDisplay)).BeginInit();
@@ -88,6 +90,7 @@ namespace CityTools {
             ((System.ComponentModel.ISupportInitialize)(this.numOffsetX_2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numOffsetY_3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numOffsetX_3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numAnimSpeed)).BeginInit();
             this.SuspendLayout();
             // 
             // treeEquipmentList
@@ -249,7 +252,7 @@ namespace CityTools {
             // lblFrontAnimationName
             // 
             this.lblFrontAnimationName.AutoSize = true;
-            this.lblFrontAnimationName.Location = new System.Drawing.Point(221, 582);
+            this.lblFrontAnimationName.Location = new System.Drawing.Point(219, 592);
             this.lblFrontAnimationName.Name = "lblFrontAnimationName";
             this.lblFrontAnimationName.Size = new System.Drawing.Size(44, 13);
             this.lblFrontAnimationName.TabIndex = 22;
@@ -258,7 +261,7 @@ namespace CityTools {
             // lblBackAnimationName
             // 
             this.lblBackAnimationName.AutoSize = true;
-            this.lblBackAnimationName.Location = new System.Drawing.Point(437, 582);
+            this.lblBackAnimationName.Location = new System.Drawing.Point(446, 592);
             this.lblBackAnimationName.Name = "lblBackAnimationName";
             this.lblBackAnimationName.Size = new System.Drawing.Size(35, 13);
             this.lblBackAnimationName.TabIndex = 23;
@@ -468,9 +471,9 @@ namespace CityTools {
             // 
             // btnSwapAnimations
             // 
-            this.btnSwapAnimations.Location = new System.Drawing.Point(556, 458);
+            this.btnSwapAnimations.Location = new System.Drawing.Point(556, 480);
             this.btnSwapAnimations.Name = "btnSwapAnimations";
-            this.btnSwapAnimations.Size = new System.Drawing.Size(90, 43);
+            this.btnSwapAnimations.Size = new System.Drawing.Size(106, 21);
             this.btnSwapAnimations.TabIndex = 49;
             this.btnSwapAnimations.Text = "Animation Swap";
             this.btnSwapAnimations.UseVisualStyleBackColor = true;
@@ -654,12 +657,50 @@ namespace CityTools {
             this.label14.TabIndex = 62;
             this.label14.Text = "Direction:";
             // 
+            // numAnimSpeed
+            // 
+            this.numAnimSpeed.DecimalPlaces = 2;
+            this.numAnimSpeed.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            131072});
+            this.numAnimSpeed.Location = new System.Drawing.Point(614, 454);
+            this.numAnimSpeed.Maximum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            131072});
+            this.numAnimSpeed.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            131072});
+            this.numAnimSpeed.Name = "numAnimSpeed";
+            this.numAnimSpeed.Size = new System.Drawing.Size(47, 20);
+            this.numAnimSpeed.TabIndex = 63;
+            this.numAnimSpeed.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            65536});
+            this.numAnimSpeed.ValueChanged += new System.EventHandler(this.numAnimSpeed_ValueChanged);
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(554, 458);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(54, 13);
+            this.label17.TabIndex = 64;
+            this.label17.Text = "Playback:";
+            // 
             // ccAnimationBack
             // 
             this.ccAnimationBack.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ccAnimationBack.Location = new System.Drawing.Point(433, 507);
+            this.ccAnimationBack.Location = new System.Drawing.Point(444, 507);
             this.ccAnimationBack.Name = "ccAnimationBack";
-            this.ccAnimationBack.Size = new System.Drawing.Size(213, 100);
+            this.ccAnimationBack.Size = new System.Drawing.Size(218, 100);
             this.ccAnimationBack.TabIndex = 21;
             // 
             // ccAnimationFront
@@ -667,14 +708,16 @@ namespace CityTools {
             this.ccAnimationFront.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ccAnimationFront.Location = new System.Drawing.Point(217, 507);
             this.ccAnimationFront.Name = "ccAnimationFront";
-            this.ccAnimationFront.Size = new System.Drawing.Size(210, 100);
+            this.ccAnimationFront.Size = new System.Drawing.Size(221, 100);
             this.ccAnimationFront.TabIndex = 6;
             // 
             // EquipmentEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(658, 619);
+            this.ClientSize = new System.Drawing.Size(674, 619);
+            this.Controls.Add(this.label17);
+            this.Controls.Add(this.numAnimSpeed);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.ckbLockOffsets);
             this.Controls.Add(this.label16);
@@ -739,6 +782,7 @@ namespace CityTools {
             ((System.ComponentModel.ISupportInitialize)(this.numOffsetX_2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numOffsetY_3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numOffsetX_3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numAnimSpeed)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -799,5 +843,7 @@ namespace CityTools {
         private System.Windows.Forms.NumericUpDown numOffsetX_3;
         private System.Windows.Forms.CheckBox ckbLockOffsets;
         private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.NumericUpDown numAnimSpeed;
+        private System.Windows.Forms.Label label17;
     }
 }

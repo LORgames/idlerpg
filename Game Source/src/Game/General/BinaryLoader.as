@@ -7,6 +7,7 @@ package Game.General {
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
+	import flash.utils.ByteArray;
 	/**
 	 * ...
 	 * @author Paul
@@ -87,6 +88,11 @@ package Game.General {
 			loadQueue.push(l);
 			
 			ProcessNext();
+		}
+		
+		public static function GetString(b:ByteArray):String {
+			var l:int = b.readShort();
+			return b.readMultiByte(l, "iso-8859-1"); //map name
 		}
 		
 	}

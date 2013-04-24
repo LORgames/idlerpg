@@ -6,6 +6,7 @@ package {
 	import flash.display.StageScaleMode;
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
+	import Game.Equipment.EquipmentManager;
 	import Game.General.BinaryLoader;
 	import Game.General.ImageLoader;
 	import Game.Map.WorldData;
@@ -43,6 +44,7 @@ package {
 			ImageLoader.Initialize();
 			
 			WorldData.Initialize();
+			new EquipmentManager();
 			
 			stage.addEventListener(Event.RESIZE, Resized);
 			stage.addEventListener(Event.ENTER_FRAME, Cycle);
