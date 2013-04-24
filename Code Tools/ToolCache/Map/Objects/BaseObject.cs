@@ -58,7 +58,8 @@ namespace ToolCache.Map.Objects {
 
             foreach (Rectangle r in ObjectTemplate.Blocks) {
                 Rectangle ActualBase = new Rectangle(r.X + Location.X, r.Y + Location.Y, r.Width, r.Height);
-                
+                ActualBases.Add(ActualBase);
+
                 //Figure out what tiles I'm touching and mark them unwalkable
                 List<TileInstance> tiles = MapPieceCache.CurrentPiece.Tiles.GetTilesFromWorldRectangle(ActualBase.X, ActualBase.Y, ActualBase.Width, ActualBase.Height);
 

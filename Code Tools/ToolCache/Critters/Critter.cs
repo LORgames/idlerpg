@@ -27,12 +27,27 @@ namespace ToolCache.Critters {
         public List<String> Types = new List<string>();
 
         internal virtual void PackIntoBinaryIO(BinaryIO f) {
-            
+            f.AddShort(ID);
+            f.AddString(Name);
+
+            f.AddInt(AIType);
+            f.AddByte(Size);
+
+            f.AddInt(ExperienceGain);
+            f.AddInt(Health);
+            f.AddByte(OneOfAKind ? (byte)1 : (byte)0);
+
+            f.AddShort((short)Loot.Count);
+            foreach (LootDrop l in Loot) l.Pack(f);
+
+            f.AddShort((short)Groups.Count);
+            foreach (String s in Groups) f.AddString(s);
+
+            f.AddShort((short)Types.Count);
+            foreach (String s in Types) f.AddString(s);
         }
 
-        public virtual void Draw(LBuffer buffer) {
-
-        }
+        public virtual void Draw(LBuffer buffer) { } //Does nothing by design
 
         ///////////////////////Statics
         internal static Critter Load(BinaryIO f) {

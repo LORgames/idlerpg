@@ -4,8 +4,12 @@
 set FLEX_SDK=C:\Program Files\FlashDevelop\Tools\flexsdk
 set AUTO_INSTALL_IOS=yes
 
+if not exist "%FLEX_SDK%\bin" set FLEX_SDK=C:\Program Files (x86)\FlashDevelop\Tools\flexsdk
+
 :: Path to Android SDK
 set ANDROID_SDK=C:\Program Files\FlashDevelop\Tools\android
+
+if not exist "%ANDROID_SDK%\platform-tools" set ANDROID_SDK=C:\Program Files (x86)\FlashDevelop\Tools\android
 
 
 :validation

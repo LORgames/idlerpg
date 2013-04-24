@@ -36,6 +36,8 @@ namespace ToolCache.Map.Tiles {
                     Data[i, j] = new TileInstance(fillTileID, i, j);
                 }
             }
+
+            Map.WorldRectangle = new System.Drawing.Rectangle(0, 0, numTilesX * TileTemplate.PIXELS_X, numTilesY * TileTemplate.PIXELS_Y);
         }
 
         public void LoadMapFromFile(BinaryIO mapFile) {
@@ -49,6 +51,8 @@ namespace ToolCache.Map.Tiles {
                     Data[i, j] = new TileInstance(mapFile.GetShort(), i, j);
                 }
             }
+
+            Map.WorldRectangle = new System.Drawing.Rectangle(0, 0, numTilesX * TileTemplate.PIXELS_X, numTilesY * TileTemplate.PIXELS_Y);
         }
 
         public void SaveMap(BinaryIO mapFile) {
@@ -102,6 +106,8 @@ namespace ToolCache.Map.Tiles {
             }
 
             Data = newTiles;
+
+            Map.WorldRectangle = new System.Drawing.Rectangle(0, 0, numTilesX * TileTemplate.PIXELS_X, numTilesY * TileTemplate.PIXELS_Y);
         }
 
         public List<TileInstance> GetTilesFromWorldRectangle(int x, int y, int w, int h) {
