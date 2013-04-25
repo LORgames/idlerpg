@@ -17,11 +17,15 @@ namespace CityTools {
 
         List<Rectangle> _bases = new List<Rectangle>();
 
+        Boolean _iE = false; //is edited
+        Boolean _new = false; //Is it new?
+
         public TemplateEditor() {
             InitializeComponent();
 
             ccAnimation.SetSaveLocation("Objects");
             ccAnimation.ClearAnimation();
+            ccAnimation.AnimationChanged += ValueChanged;
 
             UpdateObjectNames();
             ChangeTo(-1);
@@ -30,13 +34,25 @@ namespace CityTools {
         }
 
         private void ChangeTo(short objectID) {
+            if (_iE) {
+                if (_new && MessageBox.Show("Do you want to keep this object?", "Caption?", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+                    Save();
+                } else if (!_new) {
+                    Save();
+                }
+            }
+
             if (TemplateCache.G(objectID) != null) {
+                _new = false;
                 ccAnimation.ChangeToAnimation(TemplateCache.G(objectID).Animation);
                 cbTemplateGroup.Text = TemplateCache.G(objectID).ObjectGroup;
                 txtTemplateName.Text = TemplateCache.G(objectID).ObjectName;
+                numOffsetHeight.Value = TemplateCache.G(objectID).OffsetY;
+                ckbIsSolid.Checked = TemplateCache.G(objectID).isSolid;
                 _bases = TemplateCache.G(objectID).Blocks;
                 this.objectID = objectID;
             } else {
+                _new = true;
                 this.objectID = TemplateCache.NextID();
                 ccAnimation.ClearAnimation();
                 cbTemplateGroup.Text = "Unknown";
@@ -45,18 +61,27 @@ namespace CityTools {
             }
 
             lblTemplateID.Text = "N:" + this.objectID;
+            _iE = false;
         }
 
         private void btnSave_Click(object sender, EventArgs e) {
+            Save();
+        }
+
+        private void Save() {
             if (TemplateCache.G(objectID) != null) {
                 TemplateCache.G(objectID).Animation = ccAnimation.GetAnimation();
                 TemplateCache.G(objectID).ObjectGroup = cbTemplateGroup.Text;
                 TemplateCache.G(objectID).ObjectName = txtTemplateName.Text;
                 TemplateCache.G(objectID).Blocks = _bases;
+                TemplateCache.G(objectID).OffsetY = (int)numOffsetHeight.Value;
+                TemplateCache.G(objectID).isSolid = ckbIsSolid.Checked;
             } else {
-                Template t = new Template(objectID, txtTemplateName.Text, cbTemplateGroup.Text, ccAnimation.GetAnimation(), 0, _bases, true);
+                Template t = new Template(objectID, txtTemplateName.Text, cbTemplateGroup.Text, ccAnimation.GetAnimation(), (int)numOffsetHeight.Value, _bases, ckbIsSolid.Checked);
                 TemplateCache.AddObject(t);
             }
+
+            _new = false;
         }
 
         private void btnDeleteTemplate_Click(object sender, EventArgs e) {
@@ -70,33 +95,37 @@ namespace CityTools {
         }
 
         private void TemplateEditor_FormClosing(object sender, FormClosingEventArgs e) {
+            if (_iE) {
+                if (_new && MessageBox.Show("Do you want to keep this object?", "Caption?", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+                    Save();
+                } else if (!_new) {
+                    Save();
+                }
+            }
+
             TemplateCache.WriteDatabase();
         }
 
         private void UpdateObjectNames() {
-            cbTemplateNames.Items.Clear();
+            //cbTemplateNames.Items.Clear();
             cbTemplateGroup.Items.Clear();
 
-            foreach (KeyValuePair<short, Template> kvp in TemplateCache.ObjectTypes) {
-                cbTemplateNames.Items.Add(kvp.Key + "| " + kvp.Value.ObjectName);
-            }
+            Dictionary<string, TreeNode> rootNodes = new Dictionary<string, TreeNode>();
+            List<string> groups = TemplateCache.GetGroups();
 
-            foreach (String groupName in TemplateCache.GetGroups()) {
+            foreach (String groupName in groups) {
+                rootNodes.Add(groupName, new TreeNode(groupName));
+                treeTemplateNames.Nodes.Add(rootNodes[groupName]);
+
                 cbTemplateGroup.Items.Add(groupName);
             }
-        }
 
-        private void cbTemplateNames_SelectedIndexChanged(object sender, EventArgs e) {
-            if (cbTemplateNames.Text.IndexOf('|') > -1) {
-                string txt = cbTemplateNames.Text.Split('|')[0];
+            foreach (KeyValuePair<short, Template> kvp in TemplateCache.ObjectTypes) {
+                //cbTemplateNames.Items.Add(kvp.Key + "| " + kvp.Value.ObjectName);
+                TreeNode node = new TreeNode(kvp.Value.ObjectName);
+                node.Tag = kvp.Key;
 
-                short value;
-
-                if (short.TryParse(txt, out value)) {
-                    if (TemplateCache.G(value) != null) {
-                        ChangeTo(value);
-                    }
-                }
+                rootNodes[kvp.Value.ObjectGroup].Nodes.Add(node);
             }
         }
 
@@ -139,12 +168,29 @@ namespace CityTools {
         private void pbExampleBase_Paint(object sender, PaintEventArgs e) {
             ccAnimation.GetAnimation().Draw(e.Graphics, 0, 0, 1);
 
-            foreach (Rectangle r in _bases) {
-                e.Graphics.DrawRectangle(Pens.Magenta, r);
+            if (ckbDrawRectangles.Checked) {
+                foreach (Rectangle r in _bases) {
+                    e.Graphics.DrawRectangle(Pens.White, r);
+                }
             }
 
-            //Rectangle r = new Rectangle(p0.X, p0.Y, p1.X-p0.X, p1.Y-p0.Y);
-            //e.Graphics.DrawRectangle(Pens.Red, r);
+            if (ckbDrawOffset.Checked) {
+                e.Graphics.DrawLine(Pens.Red, 0, (int)numOffsetHeight.Value, pbExampleBase.Width, (int)numOffsetHeight.Value);
+            }
+        }
+
+        private void treeTemplateNames_AfterSelect(object sender, TreeViewEventArgs e) {
+            if (treeTemplateNames.SelectedNode.Tag != null) {
+                ChangeTo((short)treeTemplateNames.SelectedNode.Tag);
+            }
+        }
+
+        private void ValueChanged(object sender, EventArgs e) {
+            _iE = true;
+        }
+
+        private void btnRemoveBoxes_Click(object sender, EventArgs e) {
+            _bases.Clear();
         }
     }
 }

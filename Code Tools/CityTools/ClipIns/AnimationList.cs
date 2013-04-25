@@ -16,6 +16,7 @@ namespace CityTools.ClipIns {
         internal string location = "objcache";
 
         internal string filenamePrefix = "";
+        public event ChangedEventHandler AnimationChanged;
 
         public AnimationList() {
             InitializeComponent();
@@ -59,27 +60,23 @@ namespace CityTools.ClipIns {
                                 //Add animation
                                 string nFilename = location + "/" + filenamePrefix + Path.GetFileNameWithoutExtension(filename) + ".png";
 
-                                bool copied = false;
-
                                 if (Path.GetFullPath(nFilename) == Path.GetFullPath(filename)) {
-                                    copied = true;
+                                    //Don't need to do anything, its the same file
                                 } else if (!File.Exists(nFilename)) {
                                     File.Copy(filename, nFilename);
-                                    copied = true;
-                                } else if(MessageBox.Show("Overwrite " + nFilename + "?", "Overwrite?", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+                                } else if (MessageBox.Show("Overwrite " + nFilename + "?", "Overwrite?", MessageBoxButtons.YesNo) == DialogResult.Yes) {
                                     File.Copy(filename, nFilename, true);
-                                    copied = true;
                                 }
 
-                                if (copied) {
-                                    _anim.Frames.Add(nFilename);
-                                    UpdateBoxes();
-                                }
+                                AnimationChanged(this, null);
+                                _anim.Frames.Add(nFilename);
                             }
                         }
                     }
                 }
             }
+
+            UpdateBoxes();
         }
 
         private void splitContainer1_Panel2_DragOver(object sender, DragEventArgs e) {
@@ -118,6 +115,7 @@ namespace CityTools.ClipIns {
                 }
             }
 
+            AnimationChanged(this, null);
             UpdateBoxes();
         }
 
@@ -133,6 +131,7 @@ namespace CityTools.ClipIns {
                 }
             }
 
+            AnimationChanged(this, null);
             UpdateBoxes();
         }
 
@@ -148,11 +147,13 @@ namespace CityTools.ClipIns {
                 }
             }
 
+            AnimationChanged(this, null);
             UpdateBoxes();
         }
 
         private void numFramerate_ValueChanged(object sender, EventArgs e) {
             _anim.PlaybackSpeed = (float)numFramerate.Value;
+            AnimationChanged(this, null);
         }
 
         internal void DisablePlaybackSpeed() {

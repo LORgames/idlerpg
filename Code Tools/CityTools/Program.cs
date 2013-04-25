@@ -4,6 +4,9 @@ using System.Linq;
 using System.Windows.Forms;
 
 namespace CityTools {
+
+    public delegate void ChangedEventHandler(object sender, EventArgs e);
+
     static class Program {
         /// <summary>
         /// The main entry point for the application.

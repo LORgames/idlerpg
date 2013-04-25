@@ -27,6 +27,7 @@ namespace ToolCache.Map.Objects {
             Animation = animation;
             Blocks = _blocks;
 
+            this.OffsetY = OffsetY;
             this.isSolid = isSolid;
         }
     }

@@ -5,8 +5,6 @@ using System.Text;
 
 namespace ToolToGameExporter {
     public class Global {
-
         public static string EXPORT_DIRECTORY = "_tEXPORT";
-
     }
 }

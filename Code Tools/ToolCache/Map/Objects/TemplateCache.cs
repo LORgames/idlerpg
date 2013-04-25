@@ -48,18 +48,21 @@ namespace ToolCache.Map.Objects {
                     string ObjectName = f.GetString();
                     string ObjectGroup = f.GetString();
 
-                    int BaseLeft = f.GetInt();
-                    int BaseTop = f.GetInt();
-                    int BaseWidth = f.GetInt();
-                    int BaseHeight = f.GetInt();
+                    int totalRectangles = f.GetByte();
+                    List<Rectangle> _rects = new List<Rectangle>();
 
-                    Rectangle _base = new Rectangle(BaseLeft, BaseTop, BaseWidth, BaseHeight);
-                    int OffsetY = _base.Top;
+                    while (--totalRectangles > -1) {
+                        int BaseLeft = f.GetShort();
+                        int BaseTop = f.GetShort();
+                        int BaseWidth = f.GetShort();
+                        int BaseHeight = f.GetShort();
+
+                        Rectangle _base = new Rectangle(BaseLeft, BaseTop, BaseWidth, BaseHeight);
+                        _rects.Add(_base);
+                    }
 
                     bool isSolid = f.GetByte() == 1;
-
-                    List<Rectangle> _rects = new List<Rectangle>();
-                    _rects.Add(_base);
+                    int OffsetY = f.GetShort();
 
                     ObjectTypes.Add(ObjectID, new Template(ObjectID, ObjectName, ObjectGroup, animation, OffsetY, _rects, isSolid));
 
@@ -89,12 +92,17 @@ namespace ToolCache.Map.Objects {
                 f.AddString(kvp.Value.ObjectName);
                 f.AddString(kvp.Value.ObjectGroup);
 
-                f.AddInt(kvp.Value.Blocks[0].Left);
-                f.AddInt(kvp.Value.Blocks[0].Top);
-                f.AddInt(kvp.Value.Blocks[0].Width);
-                f.AddInt(kvp.Value.Blocks[0].Height);
+                f.AddByte((byte)kvp.Value.Blocks.Count);
+
+                foreach (Rectangle r in kvp.Value.Blocks) {
+                    f.AddShort((short)r.Left);
+                    f.AddShort((short)r.Top);
+                    f.AddShort((short)r.Width);
+                    f.AddShort((short)r.Height);
+                }
 
                 f.AddByte((kvp.Value.isSolid ? (byte)1 : (byte)0));
+                f.AddShort((short)kvp.Value.OffsetY);
             }
 
             f.Encode(RESOLVED_DATABASE_FILENAME);
