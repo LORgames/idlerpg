@@ -4,8 +4,8 @@ package RenderSystem {
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.geom.Point;
-	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;
+	import Game.Map.TileHelper;
 	import Game.Map.TileInstance;
 	import Game.Map.TileTemplate;
 	import Game.Map.WorldData;
@@ -57,17 +57,7 @@ package RenderSystem {
 				data.copyPixels(tileArt, TileTemplate.Tiles[tileType].Frame, destPoint);
 				
 				prevType = tileType;
-				
-				var rects:Vector.<Rectangle> = tiles[i].SolidRectangles;
-				j = rects.length;
-				
-				while (--j > -1) {
-					var r:Rectangle = rects[j];
-					DebugLayer.graphics.drawRect(r.x, r.y, r.width, r.height);
-				}
 			}
-			
-			DebugLayer.graphics.drawRect(WorldData.ME.MyRect.x, WorldData.ME.MyRect.y, WorldData.ME.MyRect.width, WorldData.ME.MyRect.height);
 			
 			data.unlock();
 		}

@@ -31,8 +31,8 @@ namespace ToolToGameExporter {
                 i = t.Blocks.Count;
 
                 while (--i > -1) {
-                    f.AddShort((short)(t.Blocks[i].Left));
-                    f.AddShort((short)(t.Blocks[i].Right));
+                    f.AddShort((short)(t.Blocks[i].X));
+                    f.AddShort((short)(t.Blocks[i].Y));
                     f.AddShort((short)(t.Blocks[i].Width));
                     f.AddShort((short)(t.Blocks[i].Height));
                 }

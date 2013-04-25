@@ -68,7 +68,7 @@ package {
 		
 		private function deactivate(e:Event):void {
 			// auto-close
-			NativeApplication.nativeApplication.exit();
+			//NativeApplication.nativeApplication.exit();
 		}
 		
 		private function Cycle(e:* = null):void {

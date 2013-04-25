@@ -26,7 +26,7 @@ package Game.Critter {
 		
 		public var X:int = 0;
 		public var Y:int = 0;
-		public var MyRect:Rectangle = new Rectangle(0, 0, 0, 0);
+		public var MyRect:Rect = new Rect(0, 0, 0, 0);
 		
 		public function BaseCritter() {
 			
@@ -98,18 +98,24 @@ package Game.Critter {
 			var i:int = tiles.length;
 			var collision:Boolean = false;
 			
-			while (--i > -1) {
-				var rs:Vector.<Rectangle> = tiles[i].SolidRectangles;
-				var j:int = rs.length;
-				
-				while (--j > -1) {
-					if (rs[j].intersects(MyRect)) {
-						collision = true;
-						break;
+			if (MyRect.x < 0 || MyRect.y < 0 || MyRect.x + MyRect.height > currentMap.SizeX || MyRect.y + MyRect.width > currentMap.SizeY) {
+				collision = true;
+			}
+			
+			if(!collision) {
+				while (--i > -1) {
+					var rs:Vector.<Rect> = tiles[i].SolidRectangles;
+					var j:int = rs.length;
+					
+					while (--j > -1) {
+						if (rs[j].intersects(MyRect)) {
+							collision = true;
+							break;
+						}
 					}
+					
+					if (collision) break;
 				}
-				
-				if (collision) break;
 			}
 			
 			if (collision) {

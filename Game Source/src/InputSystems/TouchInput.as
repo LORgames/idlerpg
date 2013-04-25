@@ -31,6 +31,8 @@ package InputSystems {
 				MovementTouch = te.touchPointID;
 				MovementTouchX = te.stageX;
 				MovementTouchY = te.stageY;
+			} else if (te.stageX > Main.I.stage.stageWidth / 2) {
+				WorldData.ME.RequestBasicAttack();
 			}
 		}
 		

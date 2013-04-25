@@ -13,6 +13,9 @@ package Game.Map {
 		public var TileSizeX:int = 0;
 		public var TileSizeY:int = 0;
 		
+		public var SizeX:int = 0;
+		public var SizeY:int = 0;
+		
 		public var TotalTiles:int = 0;
 		public var Tiles:Vector.<TileInstance>;
 		
@@ -36,6 +39,9 @@ package Game.Map {
 			TileSizeX = b.readShort();
 			TileSizeY = b.readShort();
 			TotalTiles = TileSizeX * TileSizeY;
+			
+			SizeX = TileSizeX * 48;
+			SizeY = TileSizeY * 48;
 			
 			Tiles = new Vector.<TileInstance>(TotalTiles, true);
 			
@@ -69,7 +75,7 @@ package Game.Map {
 			
 			Global.LoadingTotal--;
 			
-			WorldData.ME.ShiftMaps(this, 8);
+			WorldData.ME.ShiftMaps(this, 80);
 		}
 	}
 

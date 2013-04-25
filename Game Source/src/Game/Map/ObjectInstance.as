@@ -38,7 +38,7 @@ package Game.Map {
 			
 			if (Template.isSolid) {
 				while (--totalRects > -1) {
-					var rect:Rectangle = new Rectangle(this.x + Template.Bases[totalRects].x, this.y + Template.Bases[totalRects].y, Template.Bases[totalRects].width, Template.Bases[totalRects].height);
+					var rect:Rect = new Rect(this.x + Template.Bases[totalRects].x, this.y + Template.Bases[totalRects].y, Template.Bases[totalRects].width, Template.Bases[totalRects].height);
 					
 					tiles = TileHelper.GetTiles(rect, Map);
 					i = tiles.length;
