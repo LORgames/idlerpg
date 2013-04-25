@@ -42,6 +42,14 @@ namespace ToolToGameExporter {
                 f.AddShort(tt.damageElement);
                 f.AddShort(tt.damagePerSecond);
 
+                f.AddByte((byte)tt.Collision.Count);
+                foreach (Rectangle r in tt.Collision) {
+                    f.AddShort((short)r.X);
+                    f.AddShort((short)r.Y);
+                    f.AddShort((short)r.Width);
+                    f.AddShort((short)r.Height);
+                }
+
                 foreach (String s in tt.Animation.Frames) {
                     tiles.Add(s);
                 }

@@ -11,6 +11,7 @@ package Game.Map {
 	 */
 	public class TileTemplate implements IAnimated {
 		public var Frame:Rectangle = new Rectangle(0, 0, 48, 48);
+		
 		public var TotalFrames:int = 0;
 		public var StartingFrame:int = 0;
 		public var PlaybackSpeed:Number = 0;
@@ -20,6 +21,8 @@ package Game.Map {
 		
 		public var DamageElement:int = 0;
 		public var DamagePerSecond:int = 0;
+		
+		public var Collisions:Vector.<Rect>;
 		
 		private var timeout:Number = 0;
 		private var currentFrame:int = 0;
@@ -62,6 +65,13 @@ package Game.Map {
 				
 				tt.DamageElement = e.readShort();
 				tt.DamagePerSecond = e.readShort();
+				
+				var __t:int = e.readByte();
+				tt.Collisions = new Vector.<Rect>(__t, true);
+				
+				while (--__t > -1) {
+					tt.Collisions[__t] = new Rect(e.readShort(), e.readShort(), e.readShort(), e.readShort());
+				}
 				
 				var j:int = tt.TotalFrames;
 				tt.Frame.x = runningTileCount % 21 * 48;

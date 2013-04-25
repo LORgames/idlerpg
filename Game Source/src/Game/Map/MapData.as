@@ -52,7 +52,10 @@ package Game.Map {
 			for (i = 0; i < TileSizeX; i++) {
 				for (var j:int = 0; j < TileSizeY; j++) {
 					var ttt:TileInstance = new TileInstance();
+
 					ttt.TileID = b.readShort();
+					ttt.RecalculateRectangles(i, j);
+					
 					Tiles[i + TileSizeX * j] = ttt;
 				}
 			}
@@ -75,7 +78,7 @@ package Game.Map {
 			
 			Global.LoadingTotal--;
 			
-			WorldData.ME.ShiftMaps(this, 80);
+			WorldData.ME.ShiftMaps(this, 280);
 		}
 	}
 
