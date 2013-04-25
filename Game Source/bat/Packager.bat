@@ -3,6 +3,8 @@
 if "%PLATFORM%"=="android" goto android-config
 if "%PLATFORM%"=="ios" goto ios-config
 if "%PLATFORM%"=="ios-dist" goto ios-dist-config
+if "%PLATFORM%"=="native" goto native-config
+if "%PLATFORM%"=="windows" goto windows-config
 goto start
 
 
@@ -13,6 +15,24 @@ set ICONS=%AND_ICONS%
 set DIST_EXT=apk
 set TYPE=apk
 goto start
+
+:native-config
+set CERT_FILE=%AND_CERT_FILE%
+set SIGNING_OPTIONS=%AND_SIGNING_OPTIONS% -tsa none
+set ICONS=%AND_ICONS%
+set DIST_EXT=air
+set TYPE=air
+set TARGETTYPE=air
+goto start
+
+:windows-config
+set CERT_FILE=%AND_CERT_FILE%
+set SIGNING_OPTIONS=%AND_SIGNING_OPTIONS%
+set ICONS=%AND_ICONS%
+set DIST_EXT=exe
+set TYPE=air
+set TARGETTYPE=native
+goto start-native
 
 :ios-config
 set CERT_FILE=%IOS_DEV_CERT_FILE%
@@ -41,7 +61,24 @@ set OUTPUT=%DIST_PATH%\%DIST_NAME%%TARGET%.%DIST_EXT%
 echo Packaging: %OUTPUT%
 echo using certificate: %CERT_FILE%...
 echo.
-call adt -package -target %TYPE%%TARGET% %OPTIONS% %SIGNING_OPTIONS% "%OUTPUT%" "%APP_XML%" %FILE_OR_DIR%
+if not "%TYPE%"=="air" call adt -package -target %TYPE%%TARGET% %OPTIONS% %SIGNING_OPTIONS% "%OUTPUT%" "%APP_XML%" %FILE_OR_DIR%
+if "%TYPE%"=="air" call adt -package %OPTIONS% %SIGNING_OPTIONS% -target %TARGETTYPE% "%OUTPUT%" "%APP_XML%" %FILE_OR_DIR%
+echo.
+if errorlevel 1 goto failed
+goto end
+
+:start-native
+if not exist "%CERT_FILE%" goto certificate
+:: Output file
+set FILE_OR_DIR=%FILE_OR_DIR% -C "%ICONS%" .
+if not exist "%DIST_PATH%" md "%DIST_PATH%"
+set OUTPUT=%DIST_PATH%\%DIST_NAME%%TARGET%.%DIST_EXT%
+set AIR_INPUT=%DIST_PATH%\%DIST_NAME%%TARGET%.air
+:: Package
+echo Packaging: %OUTPUT%
+echo using certificate: %CERT_FILE%...
+echo.
+call adt -package -target native "%OUTPUT%" "%AIR_INPUT%"
 echo.
 if errorlevel 1 goto failed
 goto end
@@ -61,7 +98,7 @@ if %PAUSE_ERRORS%==1 pause
 exit
 
 :failed
-echo APK setup creation FAILED.
+echo %DIST_EXT% setup creation FAILED.
 echo.
 echo Troubleshooting: 
 echo - did you build your project in FlashDevelop?

@@ -218,6 +218,10 @@
       <Project>{A685AA27-BC93-44F9-9A10-8196B32DADB0}</Project>
       <Name>ToolCache</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ToolToGameExporter\ToolToGameExporter.csproj">
+      <Project>{45509774-3534-4FDB-8783-1A1DFB5BD058}</Project>
+      <Name>ToolToGameExporter</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">

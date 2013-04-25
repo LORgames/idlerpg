@@ -2,17 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using System.IO;
 
 namespace ToolToGameExporter {
-    static class Program {
+    public static class Program {
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main() {
+        public static void Main(string[] args) {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+
+            ToolCache.General.Startup.GoGoGadget(); // Start the system
+
+            if (args.Length == 0) {
+                Application.Run(new MainForm());
+            } else if (args.Length == 1) {
+                Application.Run();
+                Processor.Go(args[0]);
+            } else {
+                Application.Run();
+                MessageBox.Show("Unknown arguments!");
+            }
         }
     }
 }

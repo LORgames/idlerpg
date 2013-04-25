@@ -4,9 +4,10 @@ call bat\SetupSDK.bat
 call bat\SetupApplication.bat
 
 :target
-goto desktop
+::goto desktop
 ::goto android-debug
 ::goto android-test
+goto windows-package
 set INTERPRETER=-interpreter
 ::goto ios-debug
 ::goto ios-test
@@ -99,9 +100,24 @@ echo.
 adb shell am start -n air.%APP_ID%/.AppEntry
 exit
 
+:windows-package
+set PLATFORM=native
+call bat\Packager.bat
+
+set PLATFORM=windows
+call bat\Packager.bat
+
+goto end
+
 :installfail
 echo.
 echo Installing the app on the device failed
+goto end
+
+:failedair
+echo AIR setup creation FAILED.
+echo.
+goto end
 
 :end
 pause

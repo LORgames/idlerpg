@@ -44,6 +44,10 @@ package {
 			// touch or gesture?
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 			
+			if (stage.nativeWindow.maximizable) {
+				stage.nativeWindow.maximize();
+			}
+			
 			//Set up some other things
 			Renderer = new Renderman();
 			

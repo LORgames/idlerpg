@@ -19,6 +19,7 @@ using ToolCache.Map.Objects;
 using ToolCache.Combat.Elements;
 using ToolCache.Items;
 using ToolCache.Equipment;
+using System.Diagnostics;
 
 namespace CityTools {
     public enum PaintMode {
@@ -129,6 +130,8 @@ namespace CityTools {
                 ckbShowObjectBases.Checked = !ckbShowObjectBases.Checked;
             } else if (keyData == Keys.D3) {
                 ckbShowTileBases.Checked = !ckbShowTileBases.Checked;
+            } else if (keyData == Keys.F5) {
+                ExportAndRun();
             } else if (keyData == Keys.T) {
                 OpenTileEditor();
             } else if (keyData == Keys.O) {
@@ -311,6 +314,13 @@ namespace CityTools {
             t.ShowDialog(this);
         }
 
+        private void ExportAndRun() {
+            ToolToGameExporter.Processor.Go("../Build/Data/");
+
+            Process p = Process.Start("../Build/iRPG.exe");
+            p.WaitForExit();
+        }
+
         private void TileEditor_Closing(object sender, FormClosingEventArgs e) {
             CacheInterfaces.TileInterface.ReloadAll();
         }
@@ -341,6 +351,10 @@ namespace CityTools {
 
         private void btnCritterEditor_Click(object sender, EventArgs e) {
             OpenCritterEditor();
+        }
+
+        private void btnExport_Click(object sender, EventArgs e) {
+            ExportAndRun();
         }
     }
 }
