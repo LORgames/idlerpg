@@ -102,8 +102,8 @@ namespace ToolToGameExporter {
             Image im;
 
             foreach (States s in states) {
-                foreach (int l in layers) {
-                    foreach (Direction d in directions) {
+                foreach (Direction d in directions) {
+                    foreach (int l in layers) {
                         AnimatedObject anim = ei.Animations[s].GetAnimation(d, l);
                         
                         if (anim.Frames.Count > 0) {

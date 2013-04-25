@@ -15,6 +15,8 @@ package Game.Equipment {
 		
 		public var Layer:int = 0;
 		public var Direction:int = 0;
+		
+		public var LoopState:Boolean = true;
 		public var State:int = 0;
 		
 		public var TotalFrames:int = 0;
@@ -39,24 +41,22 @@ package Game.Equipment {
 			CopyRect.height = Info.SizeY;
 		}
 		
-		public function Offset(direction:int = 0):Point {
-			Direction = direction;
+		public function SetState(newState:int, loop:Boolean = true):void {
+			State = newState;
 			Frame = 0;
-			this.visible = true;
 			
-			if (Info.FrameCount(0, Direction, Layer) > 0) {
-				this.visible = true;
-				CopyRect.y = Info.GetOffset(State, Direction, Layer);
-				
-				TotalFrames = Info.FrameCount(State, Direction, Layer);
-				
-				if (TotalFrames == 0) {
-					TotalFrames = Info.FrameCount(0, Direction, Layer);
-				}
-			} else {
-				this.visible = false;
-			}
+			LoopState = loop;
 			
+			Recalculate();
+		}
+		
+		public function SetDirection(newDirection:int):void {
+			Direction = newDirection;
+			Frame = 0;
+			Recalculate();
+		}
+		
+		public function Offset(direction:int = 0):Point {
 			if(Info != null) {
 				if (direction == 1) return Info.Offset_1;
 				if (direction == 2) return Info.Offset_2;
@@ -67,6 +67,21 @@ package Game.Equipment {
 			}
 		}
 		
+		public function Recalculate():void {
+			if (Info.FrameCount(0, Direction, Layer) > 0) {
+				this.visible = true;
+				CopyRect.y = Info.GetSpriteSheetOffset(State, Direction, Layer);
+				
+				TotalFrames = Info.FrameCount(State, Direction, Layer);
+				
+				if (TotalFrames == 0) {
+					TotalFrames = Info.FrameCount(0, Direction, Layer);
+				}
+			} else {
+				this.visible = false;
+			}
+		}
+		
 		public function GetCenter():Point {
 			return Info.Center;
 		}
@@ -74,13 +89,17 @@ package Game.Equipment {
 		public function UpdateAnimation(dt:Number):void {
 			if(TotalFrames > 1) {
 				FrameDT += dt;
+				
 				if (FrameDT > Info.AnimationSpeed) {
 					FrameDT -= Info.AnimationSpeed;
+					Frame++;
+					if (Frame == TotalFrames) {
+						if (LoopState) Frame = 0;
+						else SetState(0);
+					}
+					
+					CopyRect.x = Frame * Info.SizeX;
 				}
-				
-				Frame++;
-				if (Frame == TotalFrames) Frame = 0;
-				CopyRect.x = Frame * Info.SizeX;
 			}
 			
 			if (Info != null && Info.Image != null && TotalFrames > 0) {

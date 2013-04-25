@@ -2,6 +2,7 @@ package Game.Critter
 {
 	import Game.Equipment.EquipmentSet;
 	import Game.Map.WorldData;
+	import Interfaces.IUpdatable;
 	import RenderSystem.Camera;
 	/**
 	 * ...
@@ -12,24 +13,30 @@ package Game.Critter
 		
 		public function Person() {
 			Main.OrderedLayer.addChild(equipment);
+			Main.Updatables.push(this);
+			
+			MyRect.width = 24;
+			MyRect.height = 12;
 		}
 		
-		override public function UpdatePosition():void {
-			super.UpdatePosition();
-			equipment.x = this.X + 24;
-			equipment.y = this.Y + 24;
+		public override function Update(dt:Number):void {
+			super.Update(dt);
+			equipment.x = this.X;
+			equipment.y = this.Y;
+		}
+		
+		override public function RequestMove(xSpeed:Number, ySpeed:Number):void {
+			var _d:int = direction
 			
-			if (this == WorldData.ME) {
-				Camera.X = -this.X + Main.I.stage.stageWidth/2;
-				Camera.Y = -this.Y + Main.I.stage.stageHeight/2;
-				Main.OrderedLayer.x = Camera.X;
-				Main.OrderedLayer.y = Camera.Y;
+			super.RequestMove(xSpeed, ySpeed);
+			
+			if (_d != direction) {
+				equipment.ChangeDirection(direction);
 			}
 		}
 		
-		override public function RequestMove(moveDir:int):void {
-			equipment.ChangeDirection(moveDir);
-			super.RequestMove(moveDir);
+		override public function RequestBasicAttack():void {
+			equipment.ChangeState(2);
 		}
 		
 	}

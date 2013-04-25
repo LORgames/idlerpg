@@ -65,7 +65,7 @@ namespace CityTools.Terrain {
             int TopEdge = (int)(Camera.Offset.Y / TileTemplate.PIXELS_Y);
 
             int RightEdge = (int)Math.Ceiling(Camera.ViewArea.Right / TileTemplate.PIXELS_X);
-            int BottomEdge = (int)Math.Ceiling(Camera.ViewArea.Bottom / TileTemplate.PIXELS_Y);
+            int BottomEdge = (int)Math.Ceiling(Camera.ViewArea.Bottom / TileTemplate.PIXELS_Y) + 1;
 
             if (LeftEdge < 0) LeftEdge = 0;
             if (TopEdge < 0) TopEdge = 0;

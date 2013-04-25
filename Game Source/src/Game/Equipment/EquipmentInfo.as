@@ -31,7 +31,7 @@ package Game.Equipment {
 		public var Image:BitmapData;
 		
 		private var Loading:Boolean = false;
-		private var SpriteSheetYOffsets:Vector.<int> = new Vector.<int>(32, true); //TODO: Badly need to optimize this
+		private var SpriteSheetYOffsets:Vector.<int> = new Vector.<int>(16, true); //TODO: Badly need to optimize this (should be able to go smaller again)
 		
 		public function LoadIfRequired():void {
 			if (Image == null && !Loading) {
@@ -48,21 +48,37 @@ package Game.Equipment {
 			var currentOffset:int = 0;
 			
 			for (var i:int = 0; i < 4; i++) { //4 states
-				for (var k:int = 0; k < 2; k++) { //2 layers
-					for (var j:int = 0; j < 4; j++) { //4 directions
+				for (var j:int = 0; j < 4; j++) { //4 directions
+					var state_Direction:int = 0;
+					
+					for (var k:int = 0; k < 2; k++) { //2 layers
 						if (FrameCount(i, j, k) > 0) {
-							SpriteSheetYOffsets[16 * k + 4 * j + i] = currentOffset;
+							if (k == 0) {
+								state_Direction = currentOffset & 0xFFFF;
+							} else {
+								var c:int = currentOffset;
+								state_Direction |= (c << 16);
+							}
+							
 							currentOffset += SizeY;
-						} else {
-							SpriteSheetYOffsets[16 * k + 4 * j + i] = 0;
 						}
 					}
+					
+					SpriteSheetYOffsets[4 * j + i] = state_Direction;
 				}
 			}
 		}
 		
-		public function GetOffset(state:int, direction:int, layer:int):int {
-			return SpriteSheetYOffsets[layer * 16 + direction * 4 + state];
+		public function GetSpriteSheetOffset(state:int, direction:int, layer:int):int {
+			var _t:int = SpriteSheetYOffsets[direction * 4 + state];
+			
+			if (layer == 0) {
+				_t &= 0xFFFF;
+			} else {
+				_t = _t >> 16;
+			}
+			
+			return _t;
 		}
 		
 		public function FrameCount(state:int, direction:int, layer:int):int {

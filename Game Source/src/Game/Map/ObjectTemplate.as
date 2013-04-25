@@ -16,6 +16,7 @@ package Game.Map {
 		
 		public var ObjectID:int;
 		public var TotalFrames:int;
+		public var PlaybackSpeed:Number;
 		public var Bases:Vector.<Rectangle>;
 		
 		public var isSolid:Boolean;
@@ -51,10 +52,12 @@ package Game.Map {
 		
 		public function UpdateAnimation(dt:Number):void {
 			timeout += dt;
-			if (timeout > 0.1) {
-				timeout -= dt;
-				currentFrame++;
-				if (currentFrame == TotalFrames) currentFrame = 0;
+			if (timeout > PlaybackSpeed) {
+				while(timeout > PlaybackSpeed) {
+					timeout -= PlaybackSpeed;
+					currentFrame++;
+					if (currentFrame == TotalFrames) currentFrame = 0;
+				}
 				
 				frameSize.x = currentFrame * frameSize.width;
 				bitmapCopy.copyPixels(fullBitmap, frameSize, EmptyPoint);
@@ -100,6 +103,7 @@ package Game.Map {
 				
 				obj.frameSize.width = e.readShort();
 				obj.frameSize.height = e.readShort();
+				obj.PlaybackSpeed = e.readFloat();
 				
 				obj.bitmapCopy = new BitmapData(obj.frameSize.width, obj.frameSize.height, true, 0x608080FF);
 				

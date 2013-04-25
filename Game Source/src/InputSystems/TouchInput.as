@@ -37,18 +37,27 @@ package InputSystems {
 		private function TouchUp(te:TouchEvent):void {
 			if (te.touchPointID == MovementTouch) {
 				MovementTouch = -1;
+				WorldData.ME.RequestMove(0, 0);
 			}
 		}
 		
 		private function TouchMove(te:TouchEvent):void {
 			if (te.touchPointID == MovementTouch) {
-				var dX:int = te.stageX - MovementTouchX;
-				var dY:int = te.stageY - MovementTouchY;
+				var dX:Number = te.stageX - MovementTouchX;
+				var dY:Number = te.stageY - MovementTouchY;
 				
-				if (dX <-25) WorldData.ME.RequestMove(0);
-				if (dX > 25) WorldData.ME.RequestMove(1);
-				if (dY <-25) WorldData.ME.RequestMove(2);
-				if (dY > 25) WorldData.ME.RequestMove(3);
+				var aX:Number = Math.abs(dX);
+				var aY:Number = Math.abs(dY);
+				
+				if (aX > aY) {
+					dX /= aX;
+					dY /= aX;
+				} else {
+					dX /= aY;
+					dY /= aY;
+				}
+				
+				WorldData.ME.RequestMove(dX, dY);
 			}
 		}
 		

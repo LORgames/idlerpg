@@ -1,81 +1,125 @@
 package Game.Critter {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.geom.Rectangle;
 	import Game.Map.MapData;
+	import Game.Map.TileHelper;
 	import Game.Map.TileInstance;
 	import Game.Map.TileTemplate;
 	import Game.Map.WorldData;
+	import Interfaces.IObjectLayer;
+	import Interfaces.IUpdatable;
 	/**
 	 * ...
 	 * @author Paul
 	 */
-	public class BaseCritter {
-		
-		public var position:int = -1;
-		public var movementSpeed:int = 0;
+	public class BaseCritter implements IUpdatable {
 		public var direction:int = 0;
-		
 		public var state:int = 0;
+		
 		public var isMoving:Boolean = false;
+		public var moveSpeedX:int = 0;
+		public var moveSpeedY:int = 0;
+		public var MovementSpeed:int = 100;
 		
 		public var currentMap:MapData;
 		
 		public var X:int = 0;
 		public var Y:int = 0;
+		public var MyRect:Rectangle = new Rectangle(0, 0, 0, 0);
 		
 		public function BaseCritter() {
-			//this.bitmapData = new BitmapData(48, 48, true, 0xFFFF0000);
-			//Main.OrderedLayer.addChild(this);
-		}
-		
-		public function UpdatePosition():void {
-			this.X = int(position % currentMap.TileSizeX) * 48;
-			this.Y = int(position / currentMap.TileSizeX) * 48;
+			
 		}
 		
 		public function ShiftMaps(newMap:MapData, location:int = 0):void {
 			currentMap = newMap;
-			newMap.Tiles[location].TemporaryLock = true;
-			position = location;
-			UpdatePosition();
+			
+			this.X = (location % newMap.TileSizeX) * 48;
+			this.Y = (location / newMap.TileSizeX) * 48;
 		}
 		
-		public function RequestMove(xSpeed:int, ySpeed:int):void {
-			var n:TileInstance;
-			var p:int = position;
-			
-			if (moveDir == 0) {
-				n = currentMap.Tiles[position].Left;
-				p--;
-			} else if (moveDir == 1) {
-				n = currentMap.Tiles[position].Right;
-				p++;
-			} else if (moveDir == 2) {
-				n = currentMap.Tiles[position].Up;
-				p -= currentMap.TileSizeX;
+		public function RequestMove(xSpeed:Number, ySpeed:Number):void {
+			if(xSpeed != 0 || ySpeed != 0) {
+				var moveDir:int = SpeedToDirection(xSpeed, ySpeed);
+				direction = moveDir;
+				
+				moveSpeedX = xSpeed * MovementSpeed;
+				moveSpeedY = ySpeed * MovementSpeed;
 			} else {
-				n = currentMap.Tiles[position].Down;
-				p += currentMap.TileSizeX;
-			}
-			
-			if (n != null) {
-				if (n.TemporaryLock) n = null;
-			}
-			
-			if (n != null) {
-				currentMap.Tiles[position].TemporaryLock = false;
-				n.TemporaryLock = true;
-				position = p;
-				UpdatePosition();
+				moveSpeedX = 0;
+				moveSpeedY = 0;
 			}
 		}
 		
 		protected function SpeedToDirection(xSpeed:int, ySpeed:int):int {
+			var mx:int = xSpeed < 0 ? -xSpeed : xSpeed;
+			var my:int = ySpeed < 0 ? -ySpeed : ySpeed;
 			
+			if (mx > my) {
+				if (xSpeed < 0) {
+					return 0;
+				} else {
+					return 1;
+				}
+			} else {
+				if (ySpeed < 0) {
+					return 2;
+				} else {
+					return 3;
+				}
+			}
+		}
+		
+		public function RequestBasicAttack():void {
+			//need to deal with a few things here, incl state management
 		}
 		
 		public function RequestTeleport(tileID:int):void {
 			
+		}
+		
+		public function Update(dt:Number):void {
+			if (currentMap == null) return;
+			
+			//Store these in case
+			var prevX:int = X;
+			var prevY:int = Y;
+			
+			//Process the things
+			X += moveSpeedX * dt;
+			Y += moveSpeedY * dt;
+			
+			MyRect.x = X - MyRect.width / 2;
+			MyRect.y = Y - MyRect.height / 2;
+			
+			//Now do a quick tile check to see if we hit anything
+			var tiles:Vector.<TileInstance> = TileHelper.GetTiles(MyRect, currentMap);
+			var i:int = tiles.length;
+			var collision:Boolean = false;
+			
+			while (--i > -1) {
+				var rs:Vector.<Rectangle> = tiles[i].SolidRectangles;
+				var j:int = rs.length;
+				
+				while (--j > -1) {
+					if (rs[j].intersects(MyRect)) {
+						collision = true;
+						break;
+					}
+				}
+				
+				if (collision) break;
+			}
+			
+			if (collision) {
+				//Undo the changes
+				X = prevX;
+				Y = prevY;
+				
+				MyRect.x = X - MyRect.width / 2;
+				MyRect.y = Y - MyRect.height / 2;
+			}
 		}
 		
 	}

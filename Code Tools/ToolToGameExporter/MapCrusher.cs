@@ -35,7 +35,6 @@ namespace ToolToGameExporter {
                         short _d = map.Tiles[i, j];
 
                         f.AddShort(TileCrusher.RemappedTileIds[map.Tiles[i, j]]);
-                        f.AddByte((byte)0);
                     }
                 }
 

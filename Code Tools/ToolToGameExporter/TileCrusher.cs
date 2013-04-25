@@ -35,11 +35,10 @@ namespace ToolToGameExporter {
                 RemappedTileIds.Add(tt.TileID, highestID);
 
                 f.AddByte((byte)tt.Animation.Frames.Count);
-                f.AddByte((byte)(tt.isWalkable?1:0));
                 f.AddFloat(tt.movementCost);
-                f.AddByte((byte)0);
                 f.AddByte(tt.slidingDirection);
-                
+                f.AddFloat(tt.Animation.PlaybackSpeed);
+
                 f.AddShort(tt.damageElement);
                 f.AddShort(tt.damagePerSecond);
 

@@ -21,18 +21,22 @@ package InputSystems {
 		
 		private function KeyDown(ke:KeyboardEvent):void {
 			if (ke.keyCode == Keyboard.W) {
-				WorldData.ME.RequestMove(2);
+				WorldData.ME.RequestMove(0, -1);
 			} else if (ke.keyCode == Keyboard.S) {
-				WorldData.ME.RequestMove(3);
+				WorldData.ME.RequestMove(0, 1);
 			} else if (ke.keyCode == Keyboard.A) {
-				WorldData.ME.RequestMove(0);
+				WorldData.ME.RequestMove(-1, 0);
 			} else if (ke.keyCode == Keyboard.D) {
-				WorldData.ME.RequestMove(1);
+				WorldData.ME.RequestMove(1, 0);
+			}
+			
+			if (ke.keyCode == Keyboard.SPACE) {
+				WorldData.ME.RequestBasicAttack();
 			}
 		}
 		
 		private function KeyUp(ke:KeyboardEvent):void {
-			
+			WorldData.ME.RequestMove(0, 0);
 		}
 		
 	}

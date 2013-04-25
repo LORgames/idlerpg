@@ -13,11 +13,9 @@ package Game.Map {
 		public var Frame:Rectangle = new Rectangle(0, 0, 48, 48);
 		public var TotalFrames:int = 0;
 		public var StartingFrame:int = 0;
+		public var PlaybackSpeed:Number = 0;
 		
-		public var isWalkable:Boolean = false;
 		public var movementCost:Number = 0;
-		
-		public var DirectionalAccess:int = ACCESS_ALL;
 		public var SlideDirection:int = SLIDING_NONE;
 		
 		public var DamageElement:int = 0;
@@ -28,8 +26,8 @@ package Game.Map {
 		
 		public function UpdateAnimation(dt:Number):void {
 			timeout += dt;
-			if (timeout > 0.1) {
-				timeout -= dt;
+			if (timeout > PlaybackSpeed) {
+				timeout -= PlaybackSpeed;
 				currentFrame++;
 				if (currentFrame == StartingFrame+TotalFrames) currentFrame = StartingFrame;
 				
@@ -57,11 +55,10 @@ package Game.Map {
 				var tt:TileTemplate = new TileTemplate();
 				
 				tt.TotalFrames = e.readByte();
-				tt.isWalkable = e.readByte() == 1;
 				tt.movementCost = e.readFloat();
 				
-				tt.DirectionalAccess = e.readByte();
 				tt.SlideDirection = e.readByte();
+				tt.PlaybackSpeed = e.readFloat();
 				
 				tt.DamageElement = e.readShort();
 				tt.DamagePerSecond = e.readShort();
@@ -71,6 +68,7 @@ package Game.Map {
 				tt.Frame.y = int(runningTileCount / 21) * 48;
 				
 				tt.StartingFrame = runningTileCount;
+				tt.currentFrame = tt.StartingFrame;
 				
 				if (tt.TotalFrames > 1) Renderman.AnimatedObjects.push(tt);
 				
@@ -82,13 +80,6 @@ package Game.Map {
 		}
 		
 		//The constants
-		public static const ACCESS_LEFT:int = 1;
-        public static const ACCESS_RIGHT:int = 2;
-        public static const ACCESS_TOP:int = 4;
-        public static const ACCESS_BOTTOM:int = 8;
-        public static const ACCESS_ALL:int = ACCESS_LEFT | ACCESS_RIGHT | ACCESS_TOP | ACCESS_BOTTOM;
-        public static const ACCESS_NONE:int = 0;
-		
         public static const SLIDING_NONE:int = 0;
         public static const SLIDING_LEFT:int = 1;
         public static const SLIDING_RIGHT:int = 2;

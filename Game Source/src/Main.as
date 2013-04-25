@@ -14,6 +14,8 @@ package {
 	import InputSystems.IInputSystem;
 	import InputSystems.KeyboardInput;
 	import InputSystems.TouchInput;
+	import Interfaces.IObjectLayer;
+	import Interfaces.IUpdatable;
 	import RenderSystem.Renderman;
 	
 	/**
@@ -23,7 +25,10 @@ package {
 	public class Main extends Sprite {
 		//So can link back to this
 		public static var I:Main;
+		
 		public static var OrderedLayer:Sprite = new Sprite();
+		public static var Updatables:Vector.<IUpdatable> = new Vector.<IUpdatable>();
+		
 		public static var Input:IInputSystem;
 		
 		//Some other important things
@@ -67,18 +72,28 @@ package {
 		}
 		
 		private function Cycle(e:* = null):void {
-			Renderer.Render();
+			var dt:Number = 1.0 / stage.frameRate;
+			var i:int;
 			
-			var i:int = OrderedLayer.numChildren;
+			//Update what we need to update
+			i = Updatables.length;
+			while (--i > -1) {
+				Updatables[i].Update(dt);
+			}
+			
+			//Sort the children
+			i = OrderedLayer.numChildren;
 			while(--i > 1) {
-				if (OrderedLayer.getChildAt(i).y < OrderedLayer.getChildAt(i - 1).y) {
+				if ((IObjectLayer)(OrderedLayer.getChildAt(i)).GetTrueY() < (IObjectLayer)(OrderedLayer.getChildAt(i - 1)).GetTrueY()) {
 					OrderedLayer.swapChildrenAt(i, i - 1);
 				}
 				
-				if (OrderedLayer.getChildAt(i - 1).y < OrderedLayer.getChildAt(i - 2).y) {
+				if ((IObjectLayer)(OrderedLayer.getChildAt(i - 1)).GetTrueY() < (IObjectLayer)(OrderedLayer.getChildAt(i - 2)).GetTrueY()) {
 					OrderedLayer.swapChildrenAt(i - 1, i - 2);
 				}
 			}
+			
+			Renderer.Render(dt);
 		}
 		
 		private function Resized(e:* = null):void {

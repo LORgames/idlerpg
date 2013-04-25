@@ -2,6 +2,8 @@ package RenderSystem {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.geom.Rectangle;
+	import Game.Map.MapData;
+	import Game.Map.WorldData;
 	
 	/**
 	 * ...
@@ -17,21 +19,31 @@ package RenderSystem {
 			
 			Main.I.addChild(map);
 			Main.I.addChild(Main.OrderedLayer);
+			
+			Main.I.addChild(map.DebugLayer);
 		}
 		
 		public function Resized():void {
 			map.Resized();
 		}
 		
-		public function Render():void {
+		public function Render(dt:Number):void {
 			if (Global.LoadingTotal > 0) return;
+			
+			Camera.X = -WorldData.ME.X + Main.I.stage.stageWidth/2;
+			Camera.Y = -WorldData.ME.Y + Main.I.stage.stageHeight / 2;
+			
+			Main.OrderedLayer.x = Camera.X;
+			Main.OrderedLayer.y = Camera.Y;
+			map.DebugLayer.x = Camera.X;
+			map.DebugLayer.y = Camera.Y;
 			
 			map.Draw();
 			
 			var i:int = AnimatedObjects.length;
 			
 			while (--i > -1) {
-				AnimatedObjects[i].UpdateAnimation(0.05);
+				AnimatedObjects[i].UpdateAnimation(dt);
 			}
 		}
 	}

@@ -46,6 +46,7 @@ namespace ToolToGameExporter {
 
                     f.AddShort((short)im.Width);
                     f.AddShort((short)im.Height);
+                    f.AddFloat(t.Animation.PlaybackSpeed);
 
                     im.Dispose();
 

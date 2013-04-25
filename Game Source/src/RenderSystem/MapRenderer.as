@@ -1,6 +1,7 @@
 package RenderSystem {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -16,6 +17,7 @@ package RenderSystem {
 	public class MapRenderer extends Bitmap {
 		
 		private var data:BitmapData; // Display thing: very bad if this needs to be resized
+		public var DebugLayer:Sprite = new Sprite();
 		
 		public function MapRenderer() {
 			
@@ -28,6 +30,7 @@ package RenderSystem {
 		
 		public function Draw():void {
 			var i:int = WorldData.CurrentMap.TotalTiles;
+			var j:int = 0;
 			
 			var _x:int = Camera.X;
 			var _y:int = Camera.Y;
@@ -42,6 +45,9 @@ package RenderSystem {
 			
 			data.fillRect(data.rect, 0xFF336699);
 			
+			DebugLayer.graphics.clear();
+			DebugLayer.graphics.lineStyle(1, 0xFF00FF);
+			
 			while (--i > -1) {
 				var tileType:int = tiles[i].TileID;
 				
@@ -51,7 +57,17 @@ package RenderSystem {
 				data.copyPixels(tileArt, TileTemplate.Tiles[tileType].Frame, destPoint);
 				
 				prevType = tileType;
+				
+				var rects:Vector.<Rectangle> = tiles[i].SolidRectangles;
+				j = rects.length;
+				
+				while (--j > -1) {
+					var r:Rectangle = rects[j];
+					DebugLayer.graphics.drawRect(r.x, r.y, r.width, r.height);
+				}
 			}
+			
+			DebugLayer.graphics.drawRect(WorldData.ME.MyRect.x, WorldData.ME.MyRect.y, WorldData.ME.MyRect.width, WorldData.ME.MyRect.height);
 			
 			data.unlock();
 		}
