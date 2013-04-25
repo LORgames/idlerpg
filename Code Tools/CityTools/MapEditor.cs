@@ -127,6 +127,8 @@ namespace CityTools {
                 ckbShowTileGrid.Checked = !ckbShowTileGrid.Checked;
             } else if (keyData == Keys.D2) {
                 ckbShowObjectBases.Checked = !ckbShowObjectBases.Checked;
+            } else if (keyData == Keys.D3) {
+                ckbShowTileBases.Checked = !ckbShowTileBases.Checked;
             } else if (keyData == Keys.T) {
                 OpenTileEditor();
             } else if (keyData == Keys.O) {

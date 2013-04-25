@@ -37,12 +37,10 @@ namespace CityTools {
             //Add all tiles to the tile list
             cbTileList.Items.Clear();
             foreach(KeyValuePair<short, TileTemplate> kvp in TileCache.Tiles) {
-                if (kvp.Value.isWalkable) {
-                    cbTileList.Items.Add(kvp.Value);
+                cbTileList.Items.Add(kvp.Value);
 
-                    if (kvp.Value.TileName == "Grass") {
-                        cbTileList.SelectedIndex = cbTileList.Items.Count - 1;
-                    }
+                if (kvp.Value.TileName == "Grass") {
+                    cbTileList.SelectedIndex = cbTileList.Items.Count - 1;
                 }
             }
             

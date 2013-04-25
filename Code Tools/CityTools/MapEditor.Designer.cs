@@ -82,6 +82,7 @@
             this.cbScenicCacheSelector = new System.Windows.Forms.ComboBox();
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.ckbShowTileBases = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.main_splitter)).BeginInit();
             this.main_splitter.Panel1.SuspendLayout();
             this.main_splitter.Panel2.SuspendLayout();
@@ -319,7 +320,8 @@
             // 
             this.mnuShowGrids.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ckbShowTileGrid,
-            this.ckbShowObjectBases});
+            this.ckbShowObjectBases,
+            this.ckbShowTileBases});
             this.mnuShowGrids.Name = "mnuShowGrids";
             this.mnuShowGrids.Size = new System.Drawing.Size(152, 22);
             this.mnuShowGrids.Text = "Grids";
@@ -589,6 +591,13 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // ckbShowTileBases
+            // 
+            this.ckbShowTileBases.CheckOnClick = true;
+            this.ckbShowTileBases.Name = "ckbShowTileBases";
+            this.ckbShowTileBases.Size = new System.Drawing.Size(194, 22);
+            this.ckbShowTileBases.Text = "Show Tile Bases (3)";
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -678,6 +687,7 @@
         private System.Windows.Forms.ToolStripMenuItem btnEquipmentEditor;
         private System.Windows.Forms.ToolStripMenuItem btnCritterEditor;
         private System.Windows.Forms.Timer timer1;
+        internal System.Windows.Forms.ToolStripMenuItem ckbShowTileBases;
     }
 }
 

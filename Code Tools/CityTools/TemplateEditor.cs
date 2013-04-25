@@ -19,6 +19,7 @@ namespace CityTools {
 
         Boolean _iE = false; //is edited
         Boolean _new = false; //Is it new?
+        Boolean _updating = false; //Is it updating?
 
         public TemplateEditor() {
             InitializeComponent();
@@ -42,6 +43,8 @@ namespace CityTools {
                 }
             }
 
+            _updating = true;
+
             if (TemplateCache.G(objectID) != null) {
                 _new = false;
                 ccAnimation.ChangeToAnimation(TemplateCache.G(objectID).Animation);
@@ -61,6 +64,8 @@ namespace CityTools {
             }
 
             lblTemplateID.Text = "N:" + this.objectID;
+
+            _updating = false;
             _iE = false;
         }
 
@@ -82,6 +87,9 @@ namespace CityTools {
             }
 
             _new = false;
+            _iE = false;
+
+            UpdateObjectNames();
         }
 
         private void btnDeleteTemplate_Click(object sender, EventArgs e) {
@@ -96,7 +104,7 @@ namespace CityTools {
 
         private void TemplateEditor_FormClosing(object sender, FormClosingEventArgs e) {
             if (_iE) {
-                if (_new && MessageBox.Show("Do you want to keep this object?", "Caption?", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+                if (_new && MessageBox.Show("Do you want to keep this object?", "Save Object?", MessageBoxButtons.YesNo) == DialogResult.Yes) {
                     Save();
                 } else if (!_new) {
                     Save();
@@ -107,8 +115,8 @@ namespace CityTools {
         }
 
         private void UpdateObjectNames() {
-            //cbTemplateNames.Items.Clear();
             cbTemplateGroup.Items.Clear();
+            treeTemplateNames.Nodes.Clear();
 
             Dictionary<string, TreeNode> rootNodes = new Dictionary<string, TreeNode>();
             List<string> groups = TemplateCache.GetGroups();
@@ -121,12 +129,13 @@ namespace CityTools {
             }
 
             foreach (KeyValuePair<short, Template> kvp in TemplateCache.ObjectTypes) {
-                //cbTemplateNames.Items.Add(kvp.Key + "| " + kvp.Value.ObjectName);
                 TreeNode node = new TreeNode(kvp.Value.ObjectName);
                 node.Tag = kvp.Key;
 
                 rootNodes[kvp.Value.ObjectGroup].Nodes.Add(node);
             }
+
+            treeTemplateNames.ExpandAll();
         }
 
         private void pbExampleBase_MouseDown(object sender, MouseEventArgs e) {
@@ -186,7 +195,7 @@ namespace CityTools {
         }
 
         private void ValueChanged(object sender, EventArgs e) {
-            _iE = true;
+            if(!_updating) _iE = true;
         }
 
         private void btnRemoveBoxes_Click(object sender, EventArgs e) {

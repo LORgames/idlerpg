@@ -28,7 +28,7 @@ namespace CityTools.CacheInterfaces {
 
             foreach(TileTemplate t in TileCache.GetTilesInGroup(MainWindow.instance.cbTileGroups.Text)) {
                 if(t.Animation.Frames.Count > 0) {
-                    CachedObject co = new CachedObject(t.Animation.Frames[0], (t.isWalkable?"W":"S"), t.TileID.ToString());
+                    CachedObject co = new CachedObject(t.Animation.Frames[0], "", t.TileID.ToString());
                     
                     (MainWindow.instance.pnlTiles.Controls[0] as ObjectCacheControl).pnlInternal.Controls.Add(co);
                 }

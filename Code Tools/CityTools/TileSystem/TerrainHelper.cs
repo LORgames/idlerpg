@@ -82,7 +82,24 @@ namespace CityTools.Terrain {
                         int x = (int)Math.Floor((i * TileTemplate.PIXELS_X - Camera.Offset.X) * Camera.ZoomLevel);
                         int y = (int)Math.Floor((j * TileTemplate.PIXELS_Y - Camera.Offset.Y) * Camera.ZoomLevel);
 
-                        TileCache.G(f).Animation.Draw(buffer.gfx, x, y, Camera.ZoomLevel);
+                        if (MainWindow.instance.ckbShowTileBases.Checked) {
+                            List<Rectangle> rects = TileCache.G(f).Collision;
+
+                            foreach (Rectangle b in rects) {
+                                Rectangle r = new Rectangle();
+
+                                r.X = (int)(x + b.X * Camera.ZoomLevel);
+                                r.Y = (int)(y + b.Y * Camera.ZoomLevel);
+                                r.Width = (int)(b.Width * Camera.ZoomLevel);
+                                r.Height = (int)(b.Height * Camera.ZoomLevel);
+
+                                buffer.gfx.FillRectangle(Brushes.Magenta, r);
+                            }
+
+                            TileCache.G(f).Animation.Draw(buffer.gfx, x, y, Camera.ZoomLevel, 0.33f);
+                        } else {
+                            TileCache.G(f).Animation.Draw(buffer.gfx, x, y, Camera.ZoomLevel);
+                        }
                     }
                 }
             }

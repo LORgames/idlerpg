@@ -47,11 +47,7 @@ namespace ToolCache.Map.Tiles {
         }
 
         private void UpdateFromTemplate() {
-            try {
-                Walkable = TileCache.G(TileID).isWalkable;
-            } catch {
-                
-            }
+            
         }
 
         internal void AddObject(BaseObject obj) {

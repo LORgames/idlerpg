@@ -5,6 +5,7 @@ using System.Text;
 using ToolCache.Animation;
 using ToolCache.General;
 using ToolCache.Map.Objects;
+using System.Drawing;
 
 namespace ToolCache.Map.Tiles {
     public class TileTemplate {
@@ -24,12 +25,12 @@ namespace ToolCache.Map.Tiles {
         public string TileName = "Unknown";
         public string TileGroup = "Unknown";
 
+        public List<Rectangle> Collision = new List<Rectangle>();
+
         //Animation Information
         public AnimatedObject Animation;
 
         //Gameplay Information
-        public Boolean isWalkable = true; //(1 bit)
-        
         public short damageElement = 0; // 0 = No damage, everything else is the ID of the damaging element (8 bits)
         public short damagePerSecond = 0;
 
@@ -43,13 +44,16 @@ namespace ToolCache.Map.Tiles {
 
             Animation = AnimatedObject.UnpackFromBinaryIO(f);
 
-            isWalkable = f.GetByte() == 1;
-            byte directionalAccess = f.GetByte();
             movementCost = f.GetFloat();
             slidingDirection = f.GetByte();
             
             damageElement = f.GetShort();
             damagePerSecond = f.GetShort();
+
+            int i = f.GetByte();
+            while (--i > -1) {
+                Collision.Add(new Rectangle(f.GetShort(), f.GetShort(), f.GetShort(), f.GetShort()));
+            }
         }
 
         internal void SaveToFile(BinaryIO f) {
@@ -59,13 +63,19 @@ namespace ToolCache.Map.Tiles {
 
             Animation.PackIntoBinaryIO(f);
 
-            f.AddByte(isWalkable ? (byte)1 : (byte)0);
-            f.AddByte((byte)0);
             f.AddFloat(movementCost);
             f.AddByte(slidingDirection);
 
             f.AddShort(damageElement);
             f.AddShort(damagePerSecond);
+
+            f.AddByte((byte)Collision.Count);
+            foreach (Rectangle r in Collision) {
+                f.AddShort((short)r.X);
+                f.AddShort((short)r.Y);
+                f.AddShort((short)r.Width);
+                f.AddShort((short)r.Height);
+            }
         }
 
         public override string ToString() {
