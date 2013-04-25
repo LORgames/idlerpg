@@ -38,10 +38,13 @@ namespace CityTools {
             this.lblName = new System.Windows.Forms.Label();
             this.cbTemplateGroup = new System.Windows.Forms.ComboBox();
             this.txtTemplateName = new System.Windows.Forms.TextBox();
-            this.ccAnimation = new AnimationList();
+            this.ccAnimation = new CityTools.ClipIns.AnimationList();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.numOffsetHeight = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbExampleBase)).BeginInit();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numOffsetHeight)).BeginInit();
             this.SuspendLayout();
             // 
             // pbExampleBase
@@ -160,11 +163,29 @@ namespace CityTools {
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // numOffsetHeight
+            // 
+            this.numOffsetHeight.Location = new System.Drawing.Point(146, 216);
+            this.numOffsetHeight.Name = "numOffsetHeight";
+            this.numOffsetHeight.Size = new System.Drawing.Size(120, 20);
+            this.numOffsetHeight.TabIndex = 12;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(105, 218);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "Offset";
+            // 
             // TemplateEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 541);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.numOffsetHeight);
             this.Controls.Add(this.ccAnimation);
             this.Controls.Add(this.lblGroup);
             this.Controls.Add(this.lblName);
@@ -178,6 +199,7 @@ namespace CityTools {
             ((System.ComponentModel.ISupportInitialize)(this.pbExampleBase)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numOffsetHeight)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -198,5 +220,7 @@ namespace CityTools {
         private System.Windows.Forms.TextBox txtTemplateName;
         private AnimationList ccAnimation;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.NumericUpDown numOffsetHeight;
+        private System.Windows.Forms.Label label1;
     }
 }
