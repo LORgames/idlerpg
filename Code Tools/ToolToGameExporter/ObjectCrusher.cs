@@ -18,18 +18,24 @@ namespace ToolToGameExporter {
             BinaryIO f = new BinaryIO();
             f.AddShort((short)TemplateCache.ObjectTypes.Count);
 
+            int i = 0;
+
             foreach (Template t in TemplateCache.ObjectTypes.Values) {
                 RealignedItemIndexes.Add(t.ObjectID, highestIndex);
 
                 f.AddByte((byte)t.Animation.Frames.Count);
 
-                //f.AddShort(t.OffsetY);
+                f.AddShort((short)t.OffsetY);
 
-                //f.AddByte(1);
-                f.AddShort((short)(t.Blocks[0].Left));
-                f.AddShort((short)(t.Blocks[0].Right));
-                f.AddShort((short)(t.Blocks[0].Width));
-                f.AddShort((short)(t.Blocks[0].Height));
+                f.AddByte((byte)t.Blocks.Count);
+                i = t.Blocks.Count;
+
+                while (--i > -1) {
+                    f.AddShort((short)(t.Blocks[i].Left));
+                    f.AddShort((short)(t.Blocks[i].Right));
+                    f.AddShort((short)(t.Blocks[i].Width));
+                    f.AddShort((short)(t.Blocks[i].Height));
+                }
 
                 f.AddByte((byte)(t.isSolid ? 1 : 0));
 
@@ -47,7 +53,7 @@ namespace ToolToGameExporter {
                     gfx.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
                     gfx.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
 
-                    for (int i = 0; i < t.Animation.Frames.Count; i++) {
+                    for (i = 0; i < t.Animation.Frames.Count; i++) {
                         im = Image.FromFile(t.Animation.Frames[i]);
                         gfx.DrawImage(im, new Rectangle(im.Width * i, 0, im.Width, im.Height));
                         im.Dispose();

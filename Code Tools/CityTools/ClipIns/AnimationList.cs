@@ -28,6 +28,12 @@ namespace CityTools.ClipIns {
             splitContainer1.Panel2.VerticalScroll.Visible = false;
         }
 
+        public void OnAnimationChanged(object o, EventArgs e) {
+            if (AnimationChanged != null) {
+                AnimationChanged(o, e);
+            }
+        }
+
         public void SetSaveLocation(string directory) {
             location = directory;
         }
@@ -68,7 +74,7 @@ namespace CityTools.ClipIns {
                                     File.Copy(filename, nFilename, true);
                                 }
 
-                                AnimationChanged(this, null);
+                                OnAnimationChanged(this, null);
                                 _anim.Frames.Add(nFilename);
                             }
                         }
@@ -115,7 +121,7 @@ namespace CityTools.ClipIns {
                 }
             }
 
-            AnimationChanged(this, null);
+            OnAnimationChanged(this, null);
             UpdateBoxes();
         }
 
@@ -131,7 +137,7 @@ namespace CityTools.ClipIns {
                 }
             }
 
-            AnimationChanged(this, null);
+            OnAnimationChanged(this, null);
             UpdateBoxes();
         }
 
@@ -147,13 +153,13 @@ namespace CityTools.ClipIns {
                 }
             }
 
-            AnimationChanged(this, null);
+            OnAnimationChanged(this, null);
             UpdateBoxes();
         }
 
         private void numFramerate_ValueChanged(object sender, EventArgs e) {
             _anim.PlaybackSpeed = (float)numFramerate.Value;
-            AnimationChanged(this, null);
+            OnAnimationChanged(this, null);
         }
 
         internal void DisablePlaybackSpeed() {

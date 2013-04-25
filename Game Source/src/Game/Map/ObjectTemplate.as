@@ -16,9 +16,10 @@ package Game.Map {
 		
 		public var ObjectID:int;
 		public var TotalFrames:int;
-		public var Base:Rectangle;
+		public var Bases:Vector.<Rectangle>;
 		
 		public var isSolid:Boolean;
+		public var OffsetHeight:int;
 		
 		private var isLoading:Boolean = false;
 		private var bitmapCopy:BitmapData;
@@ -72,6 +73,7 @@ package Game.Map {
 		private static function LoadedObjects(e:ByteArray):void {
 			TotalObjects = e.readShort();
 			Objects = new Vector.<ObjectTemplate>(TotalObjects, true);
+			var totalRects:int = 0;
 			
 			for (var i:int = 0; i < TotalObjects; i++) {
 				var obj:ObjectTemplate = new ObjectTemplate();
@@ -79,12 +81,20 @@ package Game.Map {
 				obj.ObjectID = i;
 				obj.TotalFrames = e.readByte();
 				
-				var _x:int = e.readShort();
-				var _y:int = e.readShort();
-				var _w:int = e.readShort();
-				var _h:int = e.readShort();
+				obj.OffsetHeight = e.readShort();
 				
-				obj.Base = new Rectangle(_x, _y, _w, _h);
+				totalRects = e.readByte();
+				
+				obj.Bases = new Vector.<Rectangle>(totalRects, true);
+				
+				while(--totalRects > -1) {
+					var _x:int = e.readShort();
+					var _y:int = e.readShort();
+					var _w:int = e.readShort();
+					var _h:int = e.readShort();
+					
+					obj.Bases[totalRects] = new Rectangle(_x, _y, _w, _h);
+				}
 				
 				obj.isSolid = (e.readByte() == 1);
 				

@@ -40,7 +40,7 @@ package Game.Critter {
 			UpdatePosition();
 		}
 		
-		public function RequestMove(moveDir:int):void {
+		public function RequestMove(xSpeed:int, ySpeed:int):void {
 			var n:TileInstance;
 			var p:int = position;
 			
@@ -68,6 +68,10 @@ package Game.Critter {
 				position = p;
 				UpdatePosition();
 			}
+		}
+		
+		protected function SpeedToDirection(xSpeed:int, ySpeed:int):int {
+			
 		}
 		
 		public function RequestTeleport(tileID:int):void {
