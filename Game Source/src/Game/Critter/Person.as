@@ -26,17 +26,26 @@ package Game.Critter
 		}
 		
 		override public function RequestMove(xSpeed:Number, ySpeed:Number):void {
-			var _d:int = direction
+			var _d:int = direction;
+			var _m:Boolean = isMoving;
 			
 			super.RequestMove(xSpeed, ySpeed);
 			
 			if (_d != direction) {
 				equipment.ChangeDirection(direction);
 			}
+			
+			if (_m != isMoving) {
+				if (isMoving) {
+					equipment.ChangeState(1, 0);
+				} else {
+					equipment.ChangeState(0, 1);
+				}
+			}
 		}
 		
 		override public function RequestBasicAttack():void {
-			equipment.ChangeState(2);
+			equipment.ChangeState(2, 0);
 		}
 		
 	}

@@ -30,11 +30,11 @@ package Game.Equipment {
 			Renderman.AnimatedObjects.push(this);
 		}
 		
-		public function SetInformation(equipment:EquipmentInfo, layer:int = 1):void {
+		public function SetInformation(equipment:EquipmentInfo, layer:int = 0):void {
 			Info = equipment;
 			Info.LoadIfRequired();
 			
-			Layer = layer - 1;
+			Layer = layer;
 			this.bitmapData = new BitmapData(Info.SizeX, Info.SizeY);
 			
 			CopyRect.width = Info.SizeX;
@@ -52,7 +52,7 @@ package Game.Equipment {
 		
 		public function SetDirection(newDirection:int):void {
 			Direction = newDirection;
-			Frame = 0;
+			if(LoopState) Frame = 0;
 			Recalculate();
 		}
 		
@@ -70,7 +70,9 @@ package Game.Equipment {
 		public function Recalculate():void {
 			if (Info.FrameCount(0, Direction, Layer) > 0) {
 				this.visible = true;
+				
 				CopyRect.y = Info.GetSpriteSheetOffset(State, Direction, Layer);
+				CopyRect.x = Frame * Info.SizeX;
 				
 				TotalFrames = Info.FrameCount(State, Direction, Layer);
 				

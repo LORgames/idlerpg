@@ -41,14 +41,17 @@ package Game.Critter {
 		
 		public function RequestMove(xSpeed:Number, ySpeed:Number):void {
 			if(xSpeed != 0 || ySpeed != 0) {
-				var moveDir:int = SpeedToDirection(xSpeed, ySpeed);
-				direction = moveDir;
+				direction = SpeedToDirection(xSpeed, ySpeed);
 				
 				moveSpeedX = xSpeed * MovementSpeed;
 				moveSpeedY = ySpeed * MovementSpeed;
+				
+				isMoving = true;
 			} else {
 				moveSpeedX = 0;
 				moveSpeedY = 0;
+				
+				isMoving = false;
 			}
 		}
 		

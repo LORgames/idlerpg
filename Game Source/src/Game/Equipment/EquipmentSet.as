@@ -101,8 +101,8 @@ package Game.Equipment {
 			UpdateSet();
 		}
 		
-		public function ChangeState(newState:int):void {
-			if (newState == 1) { //Walking
+		public function ChangeState(newState:int, fromState:int):void {
+			if ((newState == 1 && fromState == 0) || (newState == 0 && fromState == 1)) { //Walking
 				Legs.SetState(newState);
 			} else if (newState == 2) { //Attacking
 				Weapon1.SetState(newState, false);
@@ -114,11 +114,13 @@ package Game.Equipment {
 			Shadow.SetInformation(EquipmentManager.I.Shadows[shadowID]);
 			Legs.SetInformation(EquipmentManager.I.Legs[pantsID]);
 			Body1.SetInformation(EquipmentManager.I.Bodies[bodyID]);
-			Body2.SetInformation(EquipmentManager.I.Bodies[bodyID], 2);
+			Body2.SetInformation(EquipmentManager.I.Bodies[bodyID], 1);
 			Face.SetInformation(EquipmentManager.I.Heads[faceID]);
 			Headgear.SetInformation(EquipmentManager.I.Headgear[headgearID]);
 			Weapon1.SetInformation(EquipmentManager.I.Weapons[weaponID]);
-			Weapon2.SetInformation(EquipmentManager.I.Weapons[weaponID], 2);
+			Weapon2.SetInformation(EquipmentManager.I.Weapons[weaponID], 1);
+			
+			ChangeDirection(3);
 		}
 		
 		public function GetTrueY():int {
