@@ -76,6 +76,7 @@ namespace CityTools.CacheInterfaces {
 
         internal static void Save() {
             MapPieceCache.CurrentPiece.Save();
+            MainWindow.instance.DrawThumbnail();
             UpdateGUI();
         }
 

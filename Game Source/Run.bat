@@ -4,9 +4,9 @@ call bat\SetupSDK.bat
 call bat\SetupApplication.bat
 
 :target
-goto desktop
+::goto desktop::
 ::goto android-debug
-::goto android-test
+goto android-test
 ::goto windows-package
 set INTERPRETER=-interpreter
 ::goto ios-debug
@@ -71,8 +71,8 @@ goto end
 echo.
 echo Packaging and installing application for debugging on Android (%DEBUG_IP%)
 echo.
-set TARGET=-debug
-set OPTIONS=-connect %DEBUG_IP%
+set TARGET=-debug -listen
+set OPTIONS=
 goto android-package
 
 :android-test
@@ -94,11 +94,19 @@ echo.
 adb -d install -r "%OUTPUT%"
 if errorlevel 1 goto installfail
 
+if not "%TARGET%"=="-debug -listen" goto android-run
+
+adb forward tcp:7936 tcp:7936
+adb shell am start -n air.%APP_ID%/.AppEntry
+fdb -p 7936
+goto end
+
+:android-run
 echo.
 echo Starting application on the device for debugging...
 echo.
 adb shell am start -n air.%APP_ID%/.AppEntry
-exit
+goto end
 
 :windows-package
 set PLATFORM=native

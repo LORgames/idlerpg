@@ -23,7 +23,7 @@ set ICONS=%AND_ICONS%
 set DIST_EXT=air
 set TYPE=air
 set TARGETTYPE=air
-goto start
+goto start-air
 
 :windows-config
 set CERT_FILE=%AND_CERT_FILE%
@@ -61,8 +61,22 @@ set OUTPUT=%DIST_PATH%\%DIST_NAME%%TARGET%.%DIST_EXT%
 echo Packaging: %OUTPUT%
 echo using certificate: %CERT_FILE%...
 echo.
-if not "%TYPE%"=="air" call adt -package -target %TYPE%%TARGET% %OPTIONS% %SIGNING_OPTIONS% "%OUTPUT%" "%APP_XML%" %FILE_OR_DIR%
-if "%TYPE%"=="air" call adt -package %OPTIONS% %SIGNING_OPTIONS% -target %TARGETTYPE% "%OUTPUT%" "%APP_XML%" %FILE_OR_DIR%
+call adt -package -target %TYPE%%TARGET% %OPTIONS% %SIGNING_OPTIONS% "%OUTPUT%" "%APP_XML%" %FILE_OR_DIR%
+echo.
+if errorlevel 1 goto failed
+goto end
+
+:start-air
+if not exist "%CERT_FILE%" goto certificate
+:: Output file
+set FILE_OR_DIR=%FILE_OR_DIR% -C "%ICONS%" .
+if not exist "%DIST_PATH%" md "%DIST_PATH%"
+set OUTPUT=%DIST_PATH%\%DIST_NAME%%TARGET%.%DIST_EXT%
+:: Package
+echo Packaging: %OUTPUT%
+echo using certificate: %CERT_FILE%...
+echo.
+call adt -package %OPTIONS% %SIGNING_OPTIONS% -target %TARGETTYPE% "%OUTPUT%" "%APP_XML%" %FILE_OR_DIR%
 echo.
 if errorlevel 1 goto failed
 goto end

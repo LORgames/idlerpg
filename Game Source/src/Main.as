@@ -1,5 +1,6 @@
 package {
 	import flash.desktop.NativeApplication;
+	import flash.display.NativeWindow;
 	import flash.events.Event;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
@@ -17,6 +18,7 @@ package {
 	import Interfaces.IObjectLayer;
 	import Interfaces.IUpdatable;
 	import RenderSystem.Renderman;
+	import SoundSystem.MusicPlayer;
 	
 	/**
 	 * ...
@@ -44,7 +46,7 @@ package {
 			// touch or gesture?
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 			
-			if (stage.nativeWindow.maximizable) {
+			if (NativeWindow.isSupported && stage.nativeWindow.maximizable) {
 				stage.nativeWindow.maximize();
 			}
 			
@@ -68,11 +70,13 @@ package {
 			} else {
 				Input = new KeyboardInput();
 			}
+			
+			MusicPlayer.PlaySong(0);
 		}
 		
 		private function deactivate(e:Event):void {
 			// auto-close
-			//NativeApplication.nativeApplication.exit();
+			NativeApplication.nativeApplication.exit();
 		}
 		
 		private function Cycle(e:* = null):void {

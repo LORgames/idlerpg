@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace ToolToGameExporter {
     public class Processor {
-        public static void Go(string p) {
+        public static bool Go(string p, bool silent = false) {
             if (Directory.Exists(Global.EXPORT_DIRECTORY)) {
                 Directory.Delete(Global.EXPORT_DIRECTORY, true);
             }
@@ -26,13 +26,16 @@ namespace ToolToGameExporter {
 
                 Directory.Move(Global.EXPORT_DIRECTORY, p);
 
-                MessageBox.Show("Exported To The Data Folder");
+                if(!silent) MessageBox.Show("Exported To The Data Folder");
+                return true;
             } catch {
-                MessageBox.Show("Please close the exporter and try again! (Some kind of caching issue occurred)");
+                if(!silent) MessageBox.Show("Please close the exporter and try again! (Some kind of caching issue occurred)");
 
                 try {
                     Directory.Delete(Global.EXPORT_DIRECTORY, true);
                 } catch { }
+
+                return false;
             }
         }
     }

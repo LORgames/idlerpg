@@ -20,6 +20,7 @@ using ToolCache.Combat.Elements;
 using ToolCache.Items;
 using ToolCache.Equipment;
 using System.Diagnostics;
+using System.Threading;
 
 namespace CityTools {
     public enum PaintMode {
@@ -212,6 +213,36 @@ namespace CityTools {
             ScenicHelper.DrawObjects(objects_buffer);
         }
 
+        internal void DrawThumbnail() {
+            LBuffer total = new LBuffer(new Rectangle(0, 0, MapPieceCache.CurrentPiece.Tiles.numTilesX * TileTemplate.PIXELS_X / 4, MapPieceCache.CurrentPiece.Tiles.numTilesY * TileTemplate.PIXELS_Y / 2));
+            LBuffer terrainBits = new LBuffer(total.size);
+            LBuffer objectBits = new LBuffer(total.size);
+            Camera.Offset.X = 0;
+            Camera.Offset.Y = 0;
+            Camera.ZoomLevel = 0.25f;
+            Camera.FixViewArea(total.size);
+
+            Terrain.TerrainHelper.DrawTerrain(terrainBits);
+            ScenicHelper.DrawObjects(objectBits);
+
+            terrainBits.gfx.Flush();
+            objectBits.gfx.Flush();
+
+            total.gfx.DrawImage(terrainBits.bmp, Point.Empty);
+            total.gfx.DrawImage(objectBits.bmp, Point.Empty);
+
+            total.gfx.Flush();
+            total.gfx.Dispose();
+
+            if(!Directory.Exists("Maps/Thumbs")) Directory.CreateDirectory("Maps/Thumbs");
+
+            Bitmap bmp2 = new Bitmap(total.bmp);
+            total.bmp.Dispose();
+            Thread.Yield();
+
+            bmp2.Save("Maps/Thumbs/" + MapPieceCache.CurrentPiece.Filename + ".png");
+        }
+
         private void mapViewPanel_Resize(object sender, EventArgs e) {
             if (!initialized) return;
 
@@ -316,10 +347,11 @@ namespace CityTools {
 
         private void ExportAndRun() {
             try {
-                ToolToGameExporter.Processor.Go("Build/Data/");
-
-                Process p = Process.Start("Build/iRPG.exe");
-                p.WaitForExit();
+                if (ToolToGameExporter.Processor.Go("Build/Data/", true)) {
+                    Process p = Process.Start("Build/iRPG.exe");
+                } else {
+                    MessageBox.Show("Could not export data. Skipping running the build.");
+                }
             } catch {
                 MessageBox.Show("Could not run the build. Perhaps you do not have AIR 3.7 installed?");
             }

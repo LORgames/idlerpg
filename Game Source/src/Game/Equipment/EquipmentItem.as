@@ -68,7 +68,7 @@ package Game.Equipment {
 		}
 		
 		public function Recalculate():void {
-			if (Info.FrameCount(0, Direction, Layer) > 0) {
+			if (Info != null && Info.FrameCount(0, Direction, Layer) > 0) {
 				this.visible = true;
 				
 				CopyRect.y = Info.GetSpriteSheetOffset(State, Direction, Layer);

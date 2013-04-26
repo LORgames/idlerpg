@@ -8,10 +8,13 @@ namespace ToolCache.Drawing {
     public class LBuffer {
         public Bitmap bmp;
         public Graphics gfx;
+        public Rectangle size;
 
         public LBuffer(Rectangle size) {
             bmp = new Bitmap(size.Width, size.Height, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
             gfx = Graphics.FromImage(bmp);
+
+            this.size = size;
 
             gfx.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
             gfx.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
