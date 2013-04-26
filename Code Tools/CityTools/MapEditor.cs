@@ -315,10 +315,14 @@ namespace CityTools {
         }
 
         private void ExportAndRun() {
-            ToolToGameExporter.Processor.Go("../Build/Data/");
+            try {
+                ToolToGameExporter.Processor.Go("Build/Data/");
 
-            Process p = Process.Start("../Build/iRPG.exe");
-            p.WaitForExit();
+                Process p = Process.Start("Build/iRPG.exe");
+                p.WaitForExit();
+            } catch {
+                MessageBox.Show("Could not run the build. Perhaps you do not have AIR 3.7 installed?");
+            }
         }
 
         private void TileEditor_Closing(object sender, FormClosingEventArgs e) {

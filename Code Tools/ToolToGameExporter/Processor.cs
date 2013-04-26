@@ -22,8 +22,9 @@ namespace ToolToGameExporter {
 
                 if (Directory.Exists(p)) {
                     Directory.Delete(p, true);
-                    Directory.Move(Global.EXPORT_DIRECTORY, p);
                 }
+
+                Directory.Move(Global.EXPORT_DIRECTORY, p);
 
                 MessageBox.Show("Exported To The Data Folder");
             } catch {

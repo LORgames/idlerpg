@@ -68,6 +68,7 @@
             this.btnItemEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.btnEquipmentEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.btnCritterEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnExport = new System.Windows.Forms.ToolStripMenuItem();
             this.mapViewPanel = new System.Windows.Forms.PictureBox();
             this.toolpanel_splitter = new System.Windows.Forms.SplitContainer();
             this.tabFirstLevel = new System.Windows.Forms.TabControl();
@@ -83,7 +84,6 @@
             this.cbScenicCacheSelector = new System.Windows.Forms.ComboBox();
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.btnExport = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.main_splitter)).BeginInit();
             this.main_splitter.Panel1.SuspendLayout();
             this.main_splitter.Panel2.SuspendLayout();
@@ -436,6 +436,13 @@
             this.btnCritterEditor.Text = "Critter Editor (C)";
             this.btnCritterEditor.Click += new System.EventHandler(this.btnCritterEditor_Click);
             // 
+            // btnExport
+            // 
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(214, 22);
+            this.btnExport.Text = "Compile And Run (F5)";
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            // 
             // mapViewPanel
             // 
             this.mapViewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -599,13 +606,6 @@
             // timer1
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // btnExport
-            // 
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(214, 22);
-            this.btnExport.Text = "Export And Run (F5)";
-            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
             // MainWindow
             // 
