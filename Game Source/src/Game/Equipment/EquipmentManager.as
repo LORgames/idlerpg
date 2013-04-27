@@ -42,7 +42,7 @@ package Game.Equipment {
 			i = Headgear.length; while ( --i > -1) ReadEquipmentInfo(b, Headgear, Headgear.length - (i+1));
 			i = Weapons.length; while ( --i > -1) ReadEquipmentInfo(b, Weapons, Weapons.length - (i+1));
 			
-			WorldData.ME.equipment.Equip(0, 0, 0, 0, 1, 2);
+			WorldData.ME.equipment.Equip(0, 0, 2, 3, 5, 1);
 			Global.LoadingTotal--;
 		}
 		

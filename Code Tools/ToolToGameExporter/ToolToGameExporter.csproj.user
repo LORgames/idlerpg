@@ -4,6 +4,6 @@
     <StartWorkingDirectory>C:\Documents and Settings\Home\Desktop\IdleRPG\Tools\</StartWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <StartWorkingDirectory>C:\Documents and Settings\Home\Desktop\IdleRPG\Tools\</StartWorkingDirectory>
+    <StartWorkingDirectory>C:\Users\Paul\Desktop\IdleRPG\Tools\</StartWorkingDirectory>
   </PropertyGroup>
 </Project>

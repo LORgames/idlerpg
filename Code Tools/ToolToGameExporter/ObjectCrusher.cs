@@ -13,6 +13,8 @@ namespace ToolToGameExporter {
         public static Dictionary<short, short> RealignedItemIndexes = new Dictionary<short, short>();
 
         public static void Go() {
+            RealignedItemIndexes.Clear();
+
             short highestIndex = 0;
 
             BinaryIO f = new BinaryIO();

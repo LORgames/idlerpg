@@ -1,4 +1,5 @@
 package Game.Map {
+	import flash.desktop.NativeApplication;
 	import flash.display.BitmapData;
 	import flash.utils.ByteArray;
 	import Game.Critter.BaseCritter;
@@ -15,10 +16,14 @@ package Game.Map {
 		public static var TileSheet:BitmapData;
 		
 		public static var CurrentMap:MapData;
+		private static var RequestedMapLoad:String = "";
 		
 		public static var ME:Person = new Person();
 		
-		public static function Initialize():void {
+		public static function Initialize(loadReq:String):void {
+			RequestedMapLoad = loadReq;
+			trace("Looking for: " + RequestedMapLoad);
+			
 			BinaryLoader.Load("Data/MapInfo.bin", ParseWorldFile);
 			ImageLoader.Load("Data/TileSheet.png", LoadedTileSet);
 			
@@ -32,17 +37,22 @@ package Game.Map {
 			var totalMaps:int = data.readShort();
 			
 			Maps = new Vector.<String>(totalMaps, true);
+			var loadMapID:int = 2;
 			
 			var i:int = totalMaps;
 			while(--i > -1) {
 				var l:int = data.readShort();
 				var s:String = data.readMultiByte(l, "iso-8859-1");
 				
+				if (s == RequestedMapLoad) {
+					loadMapID = i;
+				}
+				
 				Maps[i] = s;
             }
 			
 			if (totalMaps > 0) {
-				CurrentMap = new MapData(Maps[2]);
+				CurrentMap = new MapData(Maps[loadMapID]);
 			}
 			
 			Global.LoadingTotal--;

@@ -78,7 +78,7 @@ package Game.Map {
 			
 			Global.LoadingTotal--;
 			
-			WorldData.ME.ShiftMaps(this, 280);
+			WorldData.ME.ShiftMaps(this, 281);
 		}
 	}
 

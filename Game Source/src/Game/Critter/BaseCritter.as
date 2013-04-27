@@ -21,6 +21,7 @@ package Game.Critter {
 		public var moveSpeedX:int = 0;
 		public var moveSpeedY:int = 0;
 		public var MovementSpeed:int = 100;
+		public var CurrentMovementCost:Number = 1;
 		
 		public var currentMap:MapData;
 		
@@ -90,8 +91,9 @@ package Game.Critter {
 			var prevY:int = Y;
 			
 			//Process the things
-			X += moveSpeedX * dt;
-			Y += moveSpeedY * dt;
+			X += moveSpeedX * dt / CurrentMovementCost;
+			Y += moveSpeedY * dt / CurrentMovementCost;
+			CurrentMovementCost = 1; //reset to 1 and then update the other things when possible
 			
 			MyRect.x = X - MyRect.width / 2;
 			MyRect.y = Y - MyRect.height / 2;
@@ -109,6 +111,10 @@ package Game.Critter {
 				while (--i > -1) {
 					var rs:Vector.<Rect> = tiles[i].SolidRectangles;
 					var j:int = rs.length;
+					
+					if (TileTemplate.Tiles[tiles[i].TileID].movementCost > CurrentMovementCost) {
+						CurrentMovementCost = TileTemplate.Tiles[tiles[i].TileID].movementCost;
+					}
 					
 					while (--j > -1) {
 						if (rs[j].intersects(MyRect)) {

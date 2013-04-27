@@ -21,6 +21,8 @@ using ToolCache.Items;
 using ToolCache.Equipment;
 using System.Diagnostics;
 using System.Threading;
+using CityTools.Terrain;
+using System.Drawing.Imaging;
 
 namespace CityTools {
     public enum PaintMode {
@@ -214,33 +216,37 @@ namespace CityTools {
         }
 
         internal void DrawThumbnail() {
-            LBuffer total = new LBuffer(new Rectangle(0, 0, MapPieceCache.CurrentPiece.Tiles.numTilesX * TileTemplate.PIXELS_X / 4, MapPieceCache.CurrentPiece.Tiles.numTilesY * TileTemplate.PIXELS_Y / 2));
-            LBuffer terrainBits = new LBuffer(total.size);
-            LBuffer objectBits = new LBuffer(total.size);
+            float scale = 0.1f;
+            Size s  = new Size((int)(MapPieceCache.CurrentPiece.Tiles.numTilesX * TileTemplate.PIXELS_X * scale), (int)(MapPieceCache.CurrentPiece.Tiles.numTilesY * TileTemplate.PIXELS_Y * scale));
+            Rectangle r = new Rectangle(Point.Empty, s);
+
+            Bitmap total = new Bitmap(s.Width, s.Height, PixelFormat.Format32bppArgb);
+            LBuffer terrainBits = new LBuffer(r);
+            LBuffer objectBits = new LBuffer(r);
+
             Camera.Offset.X = 0;
             Camera.Offset.Y = 0;
-            Camera.ZoomLevel = 0.25f;
-            Camera.FixViewArea(total.size);
+            Camera.ZoomLevel = scale;
+            Camera.FixViewArea(r);
 
-            Terrain.TerrainHelper.DrawTerrain(terrainBits);
+            TerrainHelper.DrawTerrain(terrainBits);
             ScenicHelper.DrawObjects(objectBits);
 
-            terrainBits.gfx.Flush();
-            objectBits.gfx.Flush();
+            using(Graphics gfx = Graphics.FromImage(total)) {
+                gfx.DrawImage(terrainBits.bmp, Point.Empty);
+                gfx.DrawImage(objectBits.bmp, Point.Empty);
+            }
 
-            total.gfx.DrawImage(terrainBits.bmp, Point.Empty);
-            total.gfx.DrawImage(objectBits.bmp, Point.Empty);
+            terrainBits.gfx.Dispose();
+            objectBits.gfx.Dispose();
+            terrainBits.bmp.Dispose();
+            objectBits.bmp.Dispose();
 
-            total.gfx.Flush();
-            total.gfx.Dispose();
+            Thread.Yield();
 
             if(!Directory.Exists("Maps/Thumbs")) Directory.CreateDirectory("Maps/Thumbs");
 
-            Bitmap bmp2 = new Bitmap(total.bmp);
-            total.bmp.Dispose();
-            Thread.Yield();
-
-            bmp2.Save("Maps/Thumbs/" + MapPieceCache.CurrentPiece.Filename + ".png");
+            total.Save("Maps/Thumbs/" + MapPieceCache.CurrentPiece.Name + ".png");
         }
 
         private void mapViewPanel_Resize(object sender, EventArgs e) {
@@ -346,14 +352,21 @@ namespace CityTools {
         }
 
         private void ExportAndRun() {
+            string args = "map=" + MapPieceCache.CurrentPiece.Name;
+
             try {
                 if (ToolToGameExporter.Processor.Go("Build/Data/", true)) {
-                    Process p = Process.Start("Build/iRPG.exe");
+                    if (File.Exists("./Build/iRPG.exe")) {
+                        Process p = Process.Start(Path.GetFullPath("./Build/iRPG.exe"), args);
+                        p.WaitForExit();
+                    } else {
+                        MessageBox.Show("Cannot find build.");
+                    }
                 } else {
                     MessageBox.Show("Could not export data. Skipping running the build.");
                 }
             } catch {
-                MessageBox.Show("Could not run the build. Perhaps you do not have AIR 3.7 installed?");
+                MessageBox.Show("Could not run the build. No idea why.\n\nSuggestions:\n1. Double check you have AIR3.7.\n2. Double check you don't already have the game open.\n\nIf problems continue, let Paul know and he'll look deeper.");
             }
         }
 

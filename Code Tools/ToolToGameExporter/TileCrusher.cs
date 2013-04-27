@@ -14,6 +14,7 @@ namespace ToolToGameExporter {
         public static Dictionary<short, short> RemappedTileIds = new Dictionary<short, short>();
 
         public static void Go() {
+            RemappedTileIds.Clear();
             List<string> tiles = new List<string>();
 
             short highestID = 0;

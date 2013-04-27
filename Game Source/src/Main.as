@@ -5,6 +5,7 @@ package {
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
+	import flash.events.InvokeEvent;
 	import flash.events.TouchEvent;
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
@@ -43,11 +44,32 @@ package {
 			stage.align = StageAlign.TOP_LEFT;
 			stage.addEventListener(Event.DEACTIVATE, deactivate);
 			
+			NativeApplication.nativeApplication.addEventListener(InvokeEvent.INVOKE, OnInvoke);
+			
 			// touch or gesture?
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 			
 			if (NativeWindow.isSupported && stage.nativeWindow.maximizable) {
 				stage.nativeWindow.maximize();
+			}
+			
+			//Need more logic to adding input system?
+			if(Multitouch.supportsTouchEvents) {
+				Input = new TouchInput();//new KeyboardInput();
+			} else {
+				Input = new KeyboardInput();
+			}
+		}
+		
+		private function OnInvoke(e:InvokeEvent):void {
+			var loadMap:String = "";
+			
+			if (e.arguments.length > 0) {
+				var args:Array = e.arguments.join(" ").split("|");
+				
+				if ((args[0] as String).indexOf("map=") == 0) {
+					loadMap = (args[0] as String).substr(4);
+				}
 			}
 			
 			//Set up some other things
@@ -56,20 +78,13 @@ package {
 			BinaryLoader.Initialize();
 			ImageLoader.Initialize();
 			
-			WorldData.Initialize();
+			WorldData.Initialize(loadMap);
 			new EquipmentManager();
 			
 			stage.addEventListener(Event.RESIZE, Resized);
 			stage.addEventListener(Event.ENTER_FRAME, Cycle);
 			
 			Resized();
-			
-			//Need more logic to adding input system?
-			if(Multitouch.supportsTouchEvents) {
-				Input = new TouchInput();//new KeyboardInput();
-			} else {
-				Input = new KeyboardInput();
-			}
 			
 			MusicPlayer.PlaySong(0);
 		}

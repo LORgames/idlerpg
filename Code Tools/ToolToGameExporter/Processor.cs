@@ -14,7 +14,7 @@ namespace ToolToGameExporter {
 
             Directory.CreateDirectory(Global.EXPORT_DIRECTORY);
 
-            try {
+            //try {
                 ObjectCrusher.Go();
                 TileCrusher.Go();
                 MapCrusher.Go();
@@ -28,7 +28,7 @@ namespace ToolToGameExporter {
 
                 if(!silent) MessageBox.Show("Exported To The Data Folder");
                 return true;
-            } catch {
+            /*} catch {
                 if(!silent) MessageBox.Show("Please close the exporter and try again! (Some kind of caching issue occurred)");
 
                 try {
@@ -36,7 +36,7 @@ namespace ToolToGameExporter {
                 } catch { }
 
                 return false;
-            }
+            }*/
         }
     }
 }

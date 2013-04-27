@@ -1,9 +1,11 @@
 package RenderSystem {
+	import adobe.utils.CustomActions;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;
 	import Game.Map.TileHelper;
 	import Game.Map.TileInstance;
@@ -16,8 +18,9 @@ package RenderSystem {
 	 */
 	public class MapRenderer extends Bitmap {
 		
-		private var data:BitmapData; // Display thing: very bad if this needs to be resized
+		private var data:BitmapData; // Display thing.
 		public var DebugLayer:Sprite = new Sprite();
+		public var fullRect:Rectangle = new Rectangle();
 		
 		public function MapRenderer() {
 			
@@ -26,37 +29,46 @@ package RenderSystem {
 		public function Resized():void {
 			data = new BitmapData(Main.I.stage.stageWidth, Main.I.stage.stageHeight, false);
 			this.bitmapData = data;
+			
+			fullRect.width = data.width;
+			fullRect.height = data.height;
 		}
 		
 		public function Draw():void {
-			var i:int = WorldData.CurrentMap.TotalTiles;
-			var j:int = 0;
+			var destPoint:Point = new Point();
 			
-			var _x:int = Camera.X;
-			var _y:int = Camera.Y;
+			var xTilePosL:int = -Camera.X / 48;
+			var yTilePosL:int = -Camera.Y / 48;
+			var xTilePosU:int = (-Camera.X + data.width) / 48;
+			var yTilePosU:int = (-Camera.Y + data.height) / 48;
+			
+			if (xTilePosL < 0) xTilePosL = 0;
+			if (yTilePosL < 0) yTilePosL = 0;
+			if (xTilePosU >= WorldData.CurrentMap.TileSizeX) xTilePosU = WorldData.CurrentMap.TileSizeX - 1;
+			if (yTilePosU >= WorldData.CurrentMap.TileSizeY) yTilePosU = WorldData.CurrentMap.TileSizeY - 1;
+			
 			var tiles:Vector.<TileInstance> = WorldData.CurrentMap.Tiles;
 			var tileArt:BitmapData = WorldData.TileSheet;
 			
-			var destPoint:Point = new Point();
-			
-			var prevType:int = -1;
+			var xPos:int = xTilePosU+1;
+			var yPos:int = 0;
+			var xSize:int = WorldData.CurrentMap.TileSizeX;
 			
 			data.lock();
 			
-			data.fillRect(data.rect, 0xFF336699);
+			data.fillRect(fullRect, 0x0);
 			
-			DebugLayer.graphics.clear();
-			DebugLayer.graphics.lineStyle(1, 0xFF00FF);
-			
-			while (--i > -1) {
-				var tileType:int = tiles[i].TileID;
+			while (--xPos >= xTilePosL) {
+				yPos = yTilePosU+1;
 				
-				destPoint.x = 48 * int(i % WorldData.CurrentMap.TileSizeX) + _x;
-				destPoint.y = 48 * int(i / WorldData.CurrentMap.TileSizeX) + _y;
-				
-				data.copyPixels(tileArt, TileTemplate.Tiles[tileType].Frame, destPoint);
-				
-				prevType = tileType;
+				while (--yPos >= yTilePosL) {
+					var tileType:int = tiles[xPos+yPos*xSize].TileID;
+					
+					destPoint.x = 48 * xPos + Camera.X;
+					destPoint.y = 48 * yPos + Camera.Y;
+					
+					data.copyPixels(tileArt, TileTemplate.Tiles[tileType].Frame, destPoint);
+				}
 			}
 			
 			data.unlock();
