@@ -79,6 +79,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Sound\SoundData.cs" />
+    <Compile Include="Sound\SoundDatabase.cs" />
     <Compile Include="World\Portal.cs" />
     <Compile Include="World\WorldManager.cs" />
   </ItemGroup>

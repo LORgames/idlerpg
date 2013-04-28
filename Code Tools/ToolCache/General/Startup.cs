@@ -8,6 +8,7 @@ using ToolCache.Equipment;
 using ToolCache.Map.Objects;
 using ToolCache.Map;
 using ToolCache.Map.Tiles;
+using ToolCache.Sound;
 
 namespace ToolCache.General {
     public class Startup {
@@ -15,11 +16,14 @@ namespace ToolCache.General {
             TemplateCache.Initialize();
             TileCache.Initialize();
 
+            SoundDatabase.Initialize();
+
             MapPieceCache.Initialize();
 
             ElementManager.Initialize();
             ItemDatabase.Initialize();
             EquipmentManager.Initialize();
+
         }
     }
 }
