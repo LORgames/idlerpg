@@ -84,6 +84,7 @@
             this.cbScenicCacheSelector = new System.Windows.Forms.ComboBox();
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.btnSoundEditor = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.main_splitter)).BeginInit();
             this.main_splitter.Panel1.SuspendLayout();
             this.main_splitter.Panel2.SuspendLayout();
@@ -208,7 +209,7 @@
             // lblPieceName
             // 
             this.lblPieceName.Name = "lblPieceName";
-            this.lblPieceName.Size = new System.Drawing.Size(38, 22);
+            this.lblPieceName.Size = new System.Drawing.Size(42, 22);
             this.lblPieceName.Text = "Name:";
             // 
             // txtPieceName
@@ -219,7 +220,7 @@
             // lblFilename
             // 
             this.lblFilename.Name = "lblFilename";
-            this.lblFilename.Size = new System.Drawing.Size(53, 22);
+            this.lblFilename.Size = new System.Drawing.Size(57, 22);
             this.lblFilename.Text = "<Empty>";
             // 
             // toolStripSeparator3
@@ -242,7 +243,7 @@
             this.menuMapSizing.Image = ((System.Drawing.Image)(resources.GetObject("menuMapSizing.Image")));
             this.menuMapSizing.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.menuMapSizing.Name = "menuMapSizing";
-            this.menuMapSizing.Size = new System.Drawing.Size(39, 22);
+            this.menuMapSizing.Size = new System.Drawing.Size(40, 22);
             this.menuMapSizing.Text = "Size";
             // 
             // lblMapWidth
@@ -256,7 +257,7 @@
             // 
             this.txtMapSizeX.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtMapSizeX.Name = "txtMapSizeX";
-            this.txtMapSizeX.Size = new System.Drawing.Size(100, 21);
+            this.txtMapSizeX.Size = new System.Drawing.Size(100, 23);
             this.txtMapSizeX.Text = "100";
             // 
             // lblMapHeight
@@ -269,7 +270,7 @@
             // 
             this.txtMapSizeY.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtMapSizeY.Name = "txtMapSizeY";
-            this.txtMapSizeY.Size = new System.Drawing.Size(100, 21);
+            this.txtMapSizeY.Size = new System.Drawing.Size(100, 23);
             this.txtMapSizeY.Text = "100";
             // 
             // toolStripSeparator2
@@ -284,7 +285,7 @@
             "Anchor Center",
             "Anchor Right"});
             this.cbMapExtendX.Name = "cbMapExtendX";
-            this.cbMapExtendX.Size = new System.Drawing.Size(121, 21);
+            this.cbMapExtendX.Size = new System.Drawing.Size(121, 23);
             this.cbMapExtendX.Text = "Anchor Center";
             // 
             // cbMapExtendY
@@ -294,7 +295,7 @@
             "Anchor Middle",
             "Anchor Bottom"});
             this.cbMapExtendY.Name = "cbMapExtendY";
-            this.cbMapExtendY.Size = new System.Drawing.Size(121, 21);
+            this.cbMapExtendY.Size = new System.Drawing.Size(121, 23);
             this.cbMapExtendY.Text = "Anchor Middle";
             // 
             // btnMapSizeChange
@@ -314,7 +315,7 @@
             this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(42, 22);
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(45, 22);
             this.toolStripDropDownButton1.Text = "View";
             // 
             // mnuShowGrids
@@ -331,21 +332,21 @@
             // 
             this.ckbShowTileGrid.CheckOnClick = true;
             this.ckbShowTileGrid.Name = "ckbShowTileGrid";
-            this.ckbShowTileGrid.Size = new System.Drawing.Size(194, 22);
+            this.ckbShowTileGrid.Size = new System.Drawing.Size(190, 22);
             this.ckbShowTileGrid.Text = "Show Outlines (1)";
             // 
             // ckbShowObjectBases
             // 
             this.ckbShowObjectBases.CheckOnClick = true;
             this.ckbShowObjectBases.Name = "ckbShowObjectBases";
-            this.ckbShowObjectBases.Size = new System.Drawing.Size(194, 22);
+            this.ckbShowObjectBases.Size = new System.Drawing.Size(190, 22);
             this.ckbShowObjectBases.Text = "Show Object Bases (2)";
             // 
             // ckbShowTileBases
             // 
             this.ckbShowTileBases.CheckOnClick = true;
             this.ckbShowTileBases.Name = "ckbShowTileBases";
-            this.ckbShowTileBases.Size = new System.Drawing.Size(194, 22);
+            this.ckbShowTileBases.Size = new System.Drawing.Size(190, 22);
             this.ckbShowTileBases.Text = "Show Tile Bases (3)";
             // 
             // viewportToolStripMenuItem
@@ -369,14 +370,14 @@
             // 
             this.txtViewportWidth.AutoToolTip = true;
             this.txtViewportWidth.Name = "txtViewportWidth";
-            this.txtViewportWidth.Size = new System.Drawing.Size(100, 21);
+            this.txtViewportWidth.Size = new System.Drawing.Size(100, 23);
             this.txtViewportWidth.Text = "800";
             this.txtViewportWidth.ToolTipText = "Viewport Width";
             // 
             // txtViewportHeight
             // 
             this.txtViewportHeight.Name = "txtViewportHeight";
-            this.txtViewportHeight.Size = new System.Drawing.Size(100, 21);
+            this.txtViewportHeight.Size = new System.Drawing.Size(100, 23);
             this.txtViewportHeight.Text = "600";
             this.txtViewportHeight.ToolTipText = "Viewport Height";
             // 
@@ -389,7 +390,8 @@
             this.btnItemEditor,
             this.btnEquipmentEditor,
             this.btnCritterEditor,
-            this.btnExport});
+            this.btnExport,
+            this.btnSoundEditor});
             this.otherToolsToolStripMenuItem.Name = "otherToolsToolStripMenuItem";
             this.otherToolsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.otherToolsToolStripMenuItem.Text = "Other Tools";
@@ -397,49 +399,49 @@
             // btnTileEditorTool
             // 
             this.btnTileEditorTool.Name = "btnTileEditorTool";
-            this.btnTileEditorTool.Size = new System.Drawing.Size(214, 22);
+            this.btnTileEditorTool.Size = new System.Drawing.Size(216, 22);
             this.btnTileEditorTool.Text = "Tile Editor (T)";
             this.btnTileEditorTool.Click += new System.EventHandler(this.btnTileEditorTool_Click);
             // 
             // btnObjectEditor
             // 
             this.btnObjectEditor.Name = "btnObjectEditor";
-            this.btnObjectEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnObjectEditor.Size = new System.Drawing.Size(216, 22);
             this.btnObjectEditor.Text = "Object Template Editor (O)";
             this.btnObjectEditor.Click += new System.EventHandler(this.btnObjectEditor_Click);
             // 
             // btnElementalEditor
             // 
             this.btnElementalEditor.Name = "btnElementalEditor";
-            this.btnElementalEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnElementalEditor.Size = new System.Drawing.Size(216, 22);
             this.btnElementalEditor.Text = "Elemental Editor (R)";
             this.btnElementalEditor.Click += new System.EventHandler(this.btnElementalEditor_Click);
             // 
             // btnItemEditor
             // 
             this.btnItemEditor.Name = "btnItemEditor";
-            this.btnItemEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnItemEditor.Size = new System.Drawing.Size(216, 22);
             this.btnItemEditor.Text = "Item Editor (I)";
             this.btnItemEditor.Click += new System.EventHandler(this.btnItemEditor_Click);
             // 
             // btnEquipmentEditor
             // 
             this.btnEquipmentEditor.Name = "btnEquipmentEditor";
-            this.btnEquipmentEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnEquipmentEditor.Size = new System.Drawing.Size(216, 22);
             this.btnEquipmentEditor.Text = "Equipment Editor (U)";
             this.btnEquipmentEditor.Click += new System.EventHandler(this.btnEquipmentEditor_Click);
             // 
             // btnCritterEditor
             // 
             this.btnCritterEditor.Name = "btnCritterEditor";
-            this.btnCritterEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnCritterEditor.Size = new System.Drawing.Size(216, 22);
             this.btnCritterEditor.Text = "Critter Editor (C)";
             this.btnCritterEditor.Click += new System.EventHandler(this.btnCritterEditor_Click);
             // 
             // btnExport
             // 
             this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(214, 22);
+            this.btnExport.Size = new System.Drawing.Size(216, 22);
             this.btnExport.Text = "Compile And Run (F5)";
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
@@ -607,6 +609,13 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // btnSoundEditor
+            // 
+            this.btnSoundEditor.Name = "btnSoundEditor";
+            this.btnSoundEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnSoundEditor.Text = "Sound Editor (Z)";
+            this.btnSoundEditor.Click += new System.EventHandler(this.btnSoundEditor_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -698,6 +707,7 @@
         private System.Windows.Forms.Timer timer1;
         internal System.Windows.Forms.ToolStripMenuItem ckbShowTileBases;
         private System.Windows.Forms.ToolStripMenuItem btnExport;
+        private System.Windows.Forms.ToolStripMenuItem btnSoundEditor;
     }
 }
 

@@ -28,12 +28,15 @@
             // 
             // pnlContent
             // 
+            this.pnlContent.AllowDrop = true;
             this.pnlContent.AutoScroll = true;
             this.pnlContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlContent.Location = new System.Drawing.Point(0, 0);
             this.pnlContent.Name = "pnlContent";
             this.pnlContent.Size = new System.Drawing.Size(483, 427);
             this.pnlContent.TabIndex = 0;
+            this.pnlContent.DragDrop += new System.Windows.Forms.DragEventHandler(this.pnlContent_DragDrop);
+            this.pnlContent.DragOver += new System.Windows.Forms.DragEventHandler(this.pnlContent_DragOver);
             // 
             // SoundSelector_Panel
             // 

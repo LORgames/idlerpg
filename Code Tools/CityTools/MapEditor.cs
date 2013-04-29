@@ -147,6 +147,8 @@ namespace CityTools {
                 OpenEquipmentEditor();
             } else if (keyData == Keys.C) {
                 OpenCritterEditor();
+            } else if (keyData == Keys.Z) {
+                OpenSoundEditor();
             } else if (Camera.ProcessKeys(keyData)) {
                 Camera.FixViewArea(drawArea);
                 mapViewPanel.Invalidate();
@@ -351,6 +353,11 @@ namespace CityTools {
             t.ShowDialog(this);
         }
 
+        private void OpenSoundEditor() {
+            SoundEditor t = new SoundEditor();
+            t.ShowDialog(this);
+        }
+
         private void ExportAndRun() {
             string args = "map=" + MapPieceCache.CurrentPiece.Name;
 
@@ -404,6 +411,10 @@ namespace CityTools {
 
         private void btnExport_Click(object sender, EventArgs e) {
             ExportAndRun();
+        }
+
+        private void btnSoundEditor_Click(object sender, EventArgs e) {
+            OpenSoundEditor();
         }
     }
 }

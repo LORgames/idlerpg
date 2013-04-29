@@ -20,12 +20,6 @@ namespace CityTools.ClipIns {
 
         public AnimationList() {
             InitializeComponent();
-
-            splitContainer1.Panel2.AutoScroll = false;
-            splitContainer1.Panel2.HorizontalScroll.Enabled = true;
-            splitContainer1.Panel2.HorizontalScroll.Visible = true;
-            splitContainer1.Panel2.VerticalScroll.Enabled = false;
-            splitContainer1.Panel2.VerticalScroll.Visible = false;
         }
 
         public void OnAnimationChanged(object o, EventArgs e) {

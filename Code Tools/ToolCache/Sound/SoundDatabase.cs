@@ -24,11 +24,11 @@ namespace ToolCache.Sound {
                 BinaryIO f = new BinaryIO(File.ReadAllBytes(Settings.CACHE + "/db_Sound.bin"));
 
                 //First load music
-                short totalMusic = f.GetByte();
+                short totalMusic = f.GetShort();
                 while (--totalMusic > -1) {
                     SoundData s = new SoundData();
                     s.Filename = f.GetString();
-                    s.Filename = f.GetString();
+                    s.Name = f.GetString();
                     Music.Add(s);
                 }
 
@@ -37,7 +37,7 @@ namespace ToolCache.Sound {
                 while (--totalAmbience > -1) {
                     SoundData s = new SoundData();
                     s.Filename = f.GetString();
-                    s.Filename = f.GetString();
+                    s.Name = f.GetString();
                     Ambience.Add(s);
                 }
 
@@ -46,7 +46,7 @@ namespace ToolCache.Sound {
                 while (--totalEffects > -1) {
                     SoundData s = new SoundData();
                     s.Filename = f.GetString();
-                    s.Filename = f.GetString();
+                    s.Name = f.GetString();
                     Effects.Add(s);
                 }
             }

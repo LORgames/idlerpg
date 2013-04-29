@@ -76,6 +76,12 @@
     <Compile Include="ClipIns\ImageSelector_ImagePnl.Designer.cs">
       <DependentUpon>ImageSelector_ImagePnl.cs</DependentUpon>
     </Compile>
+    <Compile Include="ClipIns\SoundEditor_SoundPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ClipIns\SoundEditor_SoundPanel.Designer.cs">
+      <DependentUpon>SoundEditor_SoundPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="ClipIns\SoundSelector_Panel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -175,6 +181,9 @@
     </Compile>
     <EmbeddedResource Include="ClipIns\ImageSelector_ImagePnl.resx">
       <DependentUpon>ImageSelector_ImagePnl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClipIns\SoundEditor_SoundPanel.resx">
+      <DependentUpon>SoundEditor_SoundPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ClipIns\SoundSelector_Panel.resx">
       <DependentUpon>SoundSelector_Panel.cs</DependentUpon>

@@ -25,10 +25,10 @@
         private void InitializeComponent() {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabMusic = new System.Windows.Forms.TabPage();
-            this.tabAmbience = new System.Windows.Forms.TabPage();
-            this.tabEffects = new System.Windows.Forms.TabPage();
             this.sndMusic = new CityTools.ClipIns.SoundSelector_Panel();
+            this.tabAmbience = new System.Windows.Forms.TabPage();
             this.sndAmbience = new CityTools.ClipIns.SoundSelector_Panel();
+            this.tabEffects = new System.Windows.Forms.TabPage();
             this.sndEffects = new CityTools.ClipIns.SoundSelector_Panel();
             this.tabControl1.SuspendLayout();
             this.tabMusic.SuspendLayout();
@@ -59,6 +59,14 @@
             this.tabMusic.Text = "Music";
             this.tabMusic.UseVisualStyleBackColor = true;
             // 
+            // sndMusic
+            // 
+            this.sndMusic.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sndMusic.Location = new System.Drawing.Point(3, 3);
+            this.sndMusic.Name = "sndMusic";
+            this.sndMusic.Size = new System.Drawing.Size(477, 421);
+            this.sndMusic.TabIndex = 0;
+            // 
             // tabAmbience
             // 
             this.tabAmbience.Controls.Add(this.sndAmbience);
@@ -70,6 +78,14 @@
             this.tabAmbience.Text = "Ambience";
             this.tabAmbience.UseVisualStyleBackColor = true;
             // 
+            // sndAmbience
+            // 
+            this.sndAmbience.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sndAmbience.Location = new System.Drawing.Point(3, 3);
+            this.sndAmbience.Name = "sndAmbience";
+            this.sndAmbience.Size = new System.Drawing.Size(477, 421);
+            this.sndAmbience.TabIndex = 0;
+            // 
             // tabEffects
             // 
             this.tabEffects.Controls.Add(this.sndEffects);
@@ -79,22 +95,6 @@
             this.tabEffects.TabIndex = 2;
             this.tabEffects.Text = "Effects";
             this.tabEffects.UseVisualStyleBackColor = true;
-            // 
-            // sndMusic
-            // 
-            this.sndMusic.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sndMusic.Location = new System.Drawing.Point(3, 3);
-            this.sndMusic.Name = "sndMusic";
-            this.sndMusic.Size = new System.Drawing.Size(477, 421);
-            this.sndMusic.TabIndex = 0;
-            // 
-            // sndAmbience
-            // 
-            this.sndAmbience.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sndAmbience.Location = new System.Drawing.Point(3, 3);
-            this.sndAmbience.Name = "sndAmbience";
-            this.sndAmbience.Size = new System.Drawing.Size(477, 421);
-            this.sndAmbience.TabIndex = 0;
             // 
             // sndEffects
             // 
@@ -112,6 +112,7 @@
             this.Controls.Add(this.tabControl1);
             this.Name = "SoundEditor";
             this.Text = "SoundEditor";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SoundEditor_FormClosing);
             this.tabControl1.ResumeLayout(false);
             this.tabMusic.ResumeLayout(false);
             this.tabAmbience.ResumeLayout(false);
