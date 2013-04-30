@@ -335,13 +335,13 @@ namespace CityTools {
         private void OpenTileEditor() {
             TileEditor t = new TileEditor();
             t.ShowDialog(this);
-            t.FormClosing += new FormClosingEventHandler(TileEditor_Closing);
+            CacheInterfaces.TileInterface.ReloadAll();
         }
 
         private void OpenTemplateEditor() {
             TemplateEditor t = new TemplateEditor();
             t.ShowDialog(this);
-            t.FormClosing += new FormClosingEventHandler(TemplateEditor_Closing);
+            CacheInterfaces.ObjectInterface.ReloadAll();
         }
 
         private void OpenElementEditor() {
@@ -387,14 +387,6 @@ namespace CityTools {
             } catch {
                 MessageBox.Show("Could not run the build. No idea why.\n\nSuggestions:\n1. Double check you have AIR3.7.\n2. Double check you don't already have the game open.\n\nIf problems continue, let Paul know and he'll look deeper.");
             }
-        }
-
-        private void TileEditor_Closing(object sender, FormClosingEventArgs e) {
-            CacheInterfaces.TileInterface.ReloadAll();
-        }
-
-        private void TemplateEditor_Closing(object sender, FormClosingEventArgs e) {
-            CacheInterfaces.ObjectInterface.ReloadAll();
         }
 
         private void btnTileEditorTool_Click(object sender, EventArgs e) {

@@ -17,8 +17,6 @@ namespace CityTools.CacheInterfaces {
             MainWindow.instance.cbMapMusic.TextChanged += new EventHandler(cbMapMusic_TextChanged);
 
             MainWindow.instance.btnMapResize.Click += new EventHandler(mapSize_TextChanged);
-
-            List<MapPiece> pieces = MapPieceCache.Pieces;
         }
 
 

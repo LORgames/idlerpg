@@ -85,8 +85,6 @@ package {
 			stage.addEventListener(Event.ENTER_FRAME, Cycle);
 			
 			Resized();
-			
-			MusicPlayer.PlaySong(0);
 		}
 		
 		private function deactivate(e:Event):void {

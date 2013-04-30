@@ -17,10 +17,19 @@ namespace ToolToGameExporter {
             foreach (MapPiece map in MapPieceCache.Pieces) {
                 BinaryIO f = new BinaryIO();
 
-                if (!map.isLoaded) MapPieceCache.ChangeCurrentPiece(map);
+                if (!map.isLoaded) map.Load(true);
                 
                 m.AddString(map.Name);
                 f.AddString(map.Name);
+
+                //Add the music ID
+                if (SoundCrusher.MusicConversions.ContainsKey(map.Music)) {
+                    f.AddShort(SoundCrusher.MusicConversions[map.Music]);
+                } else {
+                    f.AddShort(0);
+
+                    if(map.Music != "") Processor.Errors.Add("Map (" + map.Name + ") uses music (" + map.Music + ") that doesn't exist.");
+                }
 
                 //Tiles First?
                 f.AddShort((short)map.Tiles.numTilesX);

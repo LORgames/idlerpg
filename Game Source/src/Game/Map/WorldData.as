@@ -6,6 +6,7 @@ package Game.Map {
 	import Game.Critter.Person;
 	import Game.General.BinaryLoader;
 	import Game.General.ImageLoader;
+	import SoundSystem.MusicPlayer;
 	/**
 	 * ...
 	 * @author Paul

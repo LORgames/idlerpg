@@ -3,6 +3,7 @@ package Game.Map {
 	import flash.utils.ByteArray;
 	import Game.Critter.BaseCritter;
 	import Game.General.BinaryLoader;
+	import SoundSystem.MusicPlayer;
 	/**
 	 * ...
 	 * @author Paul
@@ -10,6 +11,8 @@ package Game.Map {
 	public class MapData {
 		
 		public var Name:String = "";
+		public var Music:int = 0;
+		
 		public var TileSizeX:int = 0;
 		public var TileSizeY:int = 0;
 		
@@ -34,6 +37,7 @@ package Game.Map {
 		
 		public function ParseData(b:ByteArray):void {
 			BinaryLoader.GetString(b);
+			Music = b.readShort();
 			
 			//Tiles First?
 			TileSizeX = b.readShort();
@@ -78,6 +82,7 @@ package Game.Map {
 			
 			Global.LoadingTotal--;
 			
+			MusicPlayer.PlaySong(Music);
 			WorldData.ME.ShiftMaps(this, 281);
 		}
 	}
