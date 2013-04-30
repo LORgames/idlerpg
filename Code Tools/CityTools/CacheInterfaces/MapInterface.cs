@@ -70,7 +70,7 @@ namespace CityTools.CacheInterfaces {
             Camera.Offset.X = 0;
             Camera.Offset.Y = 0;
             Camera.ZoomLevel = 1;
-            Camera.FixViewArea(MainWindow.instance.mapViewPanel.DisplayRectangle);
+            Camera.FixViewArea(MainWindow.instance.mapViewPanel.Size);
 
             MapPieceCache.ChangeCurrentPiece(newPiece);
 

@@ -26,7 +26,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WorldEditor));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnMoveMode = new System.Windows.Forms.ToolStripButton();
-            this.btnLinkMode = new System.Windows.Forms.ToolStripButton();
+            this.btnLinkAdd = new System.Windows.Forms.ToolStripButton();
+            this.btnLinkBreak = new System.Windows.Forms.ToolStripButton();
             this.pbMainPanel = new System.Windows.Forms.PictureBox();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMainPanel)).BeginInit();
@@ -36,7 +37,8 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnMoveMode,
-            this.btnLinkMode});
+            this.btnLinkAdd,
+            this.btnLinkBreak});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(705, 25);
@@ -50,16 +52,25 @@
             this.btnMoveMode.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnMoveMode.Name = "btnMoveMode";
             this.btnMoveMode.Size = new System.Drawing.Size(23, 22);
-            this.btnMoveMode.Text = "toolStripButton1";
+            this.btnMoveMode.Text = "Move Pieces";
             // 
-            // btnLinkMode
+            // btnLinkAdd
             // 
-            this.btnLinkMode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnLinkMode.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkMode.Image")));
-            this.btnLinkMode.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnLinkMode.Name = "btnLinkMode";
-            this.btnLinkMode.Size = new System.Drawing.Size(23, 22);
-            this.btnLinkMode.Text = "toolStripButton1";
+            this.btnLinkAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnLinkAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkAdd.Image")));
+            this.btnLinkAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnLinkAdd.Name = "btnLinkAdd";
+            this.btnLinkAdd.Size = new System.Drawing.Size(23, 22);
+            this.btnLinkAdd.Text = "Add Portal Links";
+            // 
+            // btnLinkBreak
+            // 
+            this.btnLinkBreak.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnLinkBreak.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkBreak.Image")));
+            this.btnLinkBreak.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnLinkBreak.Name = "btnLinkBreak";
+            this.btnLinkBreak.Size = new System.Drawing.Size(23, 22);
+            this.btnLinkBreak.Text = "Break Portal Links";
             // 
             // pbMainPanel
             // 
@@ -70,6 +81,7 @@
             this.pbMainPanel.TabIndex = 1;
             this.pbMainPanel.TabStop = false;
             this.pbMainPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.pbMainPanel_Paint);
+            this.pbMainPanel.Resize += new System.EventHandler(this.pbMainPanel_Resize);
             // 
             // WorldEditor
             // 
@@ -80,6 +92,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Name = "WorldEditor";
             this.Text = "World Editor";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WorldEditor_FormClosing);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMainPanel)).EndInit();
@@ -92,7 +105,8 @@
 
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton btnMoveMode;
-        private System.Windows.Forms.ToolStripButton btnLinkMode;
+        private System.Windows.Forms.ToolStripButton btnLinkAdd;
         private System.Windows.Forms.PictureBox pbMainPanel;
+        private System.Windows.Forms.ToolStripButton btnLinkBreak;
     }
 }

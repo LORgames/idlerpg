@@ -11,7 +11,7 @@ namespace CityTools.Core {
         public static RectangleF ViewArea = new Rectangle();
         public static float ZoomLevel = 1.0f;
 
-        public static void FixViewArea(Rectangle drawArea) {
+        public static void FixViewArea(Size drawArea) {
             Offset.X = (float)Math.Round(Offset.X);
             Offset.Y = (float)Math.Round(Offset.Y);
 
@@ -41,6 +41,30 @@ namespace CityTools.Core {
             }
 
             return false;
+        }
+
+        public static float[] Pack() {
+            float[] values = new float[7];
+
+            values[0] = Offset.X;
+            values[1] = Offset.Y;
+            values[2] = ViewArea.X;
+            values[3] = ViewArea.Y;
+            values[4] = ViewArea.Width;
+            values[5] = ViewArea.Height;
+            values[6] = ZoomLevel;
+
+            return values;
+        }
+
+        public static void Unpack(float[] values) {
+            Offset.X = values[0];
+            Offset.Y = values[1];
+            ViewArea.X = values[2];
+            ViewArea.Y = values[3];
+            ViewArea.Width = values[4];
+            ViewArea.Height = values[5];
+            ZoomLevel = values[6];
         }
     }
 }

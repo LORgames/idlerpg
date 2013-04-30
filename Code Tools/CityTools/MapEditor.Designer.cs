@@ -39,7 +39,7 @@
             this.btnDuplicate = new System.Windows.Forms.ToolStripButton();
             this.btnSavePiece = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btnViewMenu = new System.Windows.Forms.ToolStripDropDownButton();
             this.mnuShowGrids = new System.Windows.Forms.ToolStripMenuItem();
             this.ckbShowTileGrid = new System.Windows.Forms.ToolStripMenuItem();
             this.ckbShowObjectBases = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,18 +48,37 @@
             this.ckbViewportEnabled = new System.Windows.Forms.ToolStripMenuItem();
             this.txtViewportWidth = new System.Windows.Forms.ToolStripTextBox();
             this.txtViewportHeight = new System.Windows.Forms.ToolStripTextBox();
-            this.otherToolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnOtherToolsMenu = new System.Windows.Forms.ToolStripDropDownButton();
             this.btnTileEditorTool = new System.Windows.Forms.ToolStripMenuItem();
             this.btnObjectEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.btnElementalEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.btnItemEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.btnEquipmentEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.btnCritterEditor = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnExport = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSoundEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnExport = new System.Windows.Forms.ToolStripButton();
             this.mapViewPanel = new System.Windows.Forms.PictureBox();
             this.toolpanel_splitter = new System.Windows.Forms.SplitContainer();
             this.tabFirstLevel = new System.Windows.Forms.TabControl();
+            this.tabOptions = new System.Windows.Forms.TabPage();
+            this.cbMapMusic = new System.Windows.Forms.ComboBox();
+            this.lblMusic = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.btnMapResize = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cbMapExtendY = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.cbMapExtendX = new System.Windows.Forms.ComboBox();
+            this.txtMapSizeX = new System.Windows.Forms.TextBox();
+            this.txtMapSizeY = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.border_1 = new System.Windows.Forms.Label();
+            this.txtFilename = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtPieceName = new System.Windows.Forms.TextBox();
             this.tabTerrain = new System.Windows.Forms.TabPage();
             this.pnlTiles = new System.Windows.Forms.Panel();
             this.cbTileGroups = new System.Windows.Forms.ComboBox();
@@ -72,25 +91,9 @@
             this.cbScenicCacheSelector = new System.Windows.Forms.ComboBox();
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.tabOptions = new System.Windows.Forms.TabPage();
-            this.txtPieceName = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtFilename = new System.Windows.Forms.TextBox();
-            this.border_1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.txtMapSizeY = new System.Windows.Forms.TextBox();
-            this.txtMapSizeX = new System.Windows.Forms.TextBox();
-            this.cbMapExtendX = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.cbMapExtendY = new System.Windows.Forms.ComboBox();
-            this.btnMapResize = new System.Windows.Forms.Button();
-            this.label8 = new System.Windows.Forms.Label();
-            this.lblMusic = new System.Windows.Forms.Label();
-            this.cbMapMusic = new System.Windows.Forms.ComboBox();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnWorldEditor = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.main_splitter)).BeginInit();
             this.main_splitter.Panel1.SuspendLayout();
             this.main_splitter.Panel2.SuspendLayout();
@@ -102,6 +105,7 @@
             this.toolpanel_splitter.Panel2.SuspendLayout();
             this.toolpanel_splitter.SuspendLayout();
             this.tabFirstLevel.SuspendLayout();
+            this.tabOptions.SuspendLayout();
             this.tabTerrain.SuspendLayout();
             this.tabPalette.SuspendLayout();
             this.tabObjectTools.SuspendLayout();
@@ -110,7 +114,6 @@
             this.obj_splitter.Panel1.SuspendLayout();
             this.obj_splitter.Panel2.SuspendLayout();
             this.obj_splitter.SuspendLayout();
-            this.tabOptions.SuspendLayout();
             this.SuspendLayout();
             // 
             // main_splitter
@@ -151,7 +154,11 @@
             this.btnDuplicate,
             this.btnSavePiece,
             this.toolStripSeparator1,
-            this.toolStripDropDownButton1});
+            this.btnOtherToolsMenu,
+            this.toolStripSeparator2,
+            this.btnExport,
+            this.toolStripSeparator3,
+            this.btnViewMenu});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(662, 25);
@@ -208,19 +215,18 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripDropDownButton1
+            // btnViewMenu
             // 
-            this.toolStripDropDownButton1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnViewMenu.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btnViewMenu.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnViewMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuShowGrids,
-            this.viewportToolStripMenuItem,
-            this.otherToolsToolStripMenuItem});
-            this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
-            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(45, 22);
-            this.toolStripDropDownButton1.Text = "View";
+            this.viewportToolStripMenuItem});
+            this.btnViewMenu.Image = ((System.Drawing.Image)(resources.GetObject("btnViewMenu.Image")));
+            this.btnViewMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnViewMenu.Name = "btnViewMenu";
+            this.btnViewMenu.Size = new System.Drawing.Size(45, 22);
+            this.btnViewMenu.Text = "View";
             // 
             // mnuShowGrids
             // 
@@ -285,20 +291,23 @@
             this.txtViewportHeight.Text = "600";
             this.txtViewportHeight.ToolTipText = "Viewport Height";
             // 
-            // otherToolsToolStripMenuItem
+            // btnOtherToolsMenu
             // 
-            this.otherToolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnOtherToolsMenu.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btnOtherToolsMenu.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnOtherToolsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnTileEditorTool,
             this.btnObjectEditor,
             this.btnElementalEditor,
             this.btnItemEditor,
             this.btnEquipmentEditor,
             this.btnCritterEditor,
-            this.btnExport,
-            this.btnSoundEditor});
-            this.otherToolsToolStripMenuItem.Name = "otherToolsToolStripMenuItem";
-            this.otherToolsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.otherToolsToolStripMenuItem.Text = "Other Tools";
+            this.btnSoundEditor,
+            this.btnWorldEditor});
+            this.btnOtherToolsMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOtherToolsMenu.Name = "btnOtherToolsMenu";
+            this.btnOtherToolsMenu.Size = new System.Drawing.Size(82, 22);
+            this.btnOtherToolsMenu.Text = "Other Tools";
             // 
             // btnTileEditorTool
             // 
@@ -342,19 +351,19 @@
             this.btnCritterEditor.Text = "Critter Editor (C)";
             this.btnCritterEditor.Click += new System.EventHandler(this.btnCritterEditor_Click);
             // 
-            // btnExport
-            // 
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(216, 22);
-            this.btnExport.Text = "Compile And Run (F5)";
-            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
-            // 
             // btnSoundEditor
             // 
             this.btnSoundEditor.Name = "btnSoundEditor";
             this.btnSoundEditor.Size = new System.Drawing.Size(216, 22);
             this.btnSoundEditor.Text = "Sound Editor (Z)";
             this.btnSoundEditor.Click += new System.EventHandler(this.btnSoundEditor_Click);
+            // 
+            // btnExport
+            // 
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(56, 22);
+            this.btnExport.Text = "Test (F5)";
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
             // mapViewPanel
             // 
@@ -398,6 +407,196 @@
             this.tabFirstLevel.SelectedIndex = 0;
             this.tabFirstLevel.Size = new System.Drawing.Size(231, 461);
             this.tabFirstLevel.TabIndex = 0;
+            // 
+            // tabOptions
+            // 
+            this.tabOptions.Controls.Add(this.cbMapMusic);
+            this.tabOptions.Controls.Add(this.lblMusic);
+            this.tabOptions.Controls.Add(this.label8);
+            this.tabOptions.Controls.Add(this.btnMapResize);
+            this.tabOptions.Controls.Add(this.label7);
+            this.tabOptions.Controls.Add(this.cbMapExtendY);
+            this.tabOptions.Controls.Add(this.label6);
+            this.tabOptions.Controls.Add(this.cbMapExtendX);
+            this.tabOptions.Controls.Add(this.txtMapSizeX);
+            this.tabOptions.Controls.Add(this.txtMapSizeY);
+            this.tabOptions.Controls.Add(this.label5);
+            this.tabOptions.Controls.Add(this.label4);
+            this.tabOptions.Controls.Add(this.label3);
+            this.tabOptions.Controls.Add(this.border_1);
+            this.tabOptions.Controls.Add(this.txtFilename);
+            this.tabOptions.Controls.Add(this.label2);
+            this.tabOptions.Controls.Add(this.label1);
+            this.tabOptions.Controls.Add(this.txtPieceName);
+            this.tabOptions.Location = new System.Drawing.Point(4, 22);
+            this.tabOptions.Name = "tabOptions";
+            this.tabOptions.Padding = new System.Windows.Forms.Padding(3);
+            this.tabOptions.Size = new System.Drawing.Size(223, 435);
+            this.tabOptions.TabIndex = 3;
+            this.tabOptions.Text = "Options";
+            this.tabOptions.UseVisualStyleBackColor = true;
+            // 
+            // cbMapMusic
+            // 
+            this.cbMapMusic.FormattingEnabled = true;
+            this.cbMapMusic.Location = new System.Drawing.Point(78, 229);
+            this.cbMapMusic.Name = "cbMapMusic";
+            this.cbMapMusic.Size = new System.Drawing.Size(131, 21);
+            this.cbMapMusic.TabIndex = 17;
+            // 
+            // lblMusic
+            // 
+            this.lblMusic.AutoSize = true;
+            this.lblMusic.Location = new System.Drawing.Point(34, 232);
+            this.lblMusic.Name = "lblMusic";
+            this.lblMusic.Size = new System.Drawing.Size(38, 13);
+            this.lblMusic.TabIndex = 16;
+            this.lblMusic.Text = "Music:";
+            // 
+            // label8
+            // 
+            this.label8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label8.Location = new System.Drawing.Point(11, 225);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(200, 1);
+            this.label8.TabIndex = 15;
+            // 
+            // btnMapResize
+            // 
+            this.btnMapResize.Location = new System.Drawing.Point(120, 190);
+            this.btnMapResize.Name = "btnMapResize";
+            this.btnMapResize.Size = new System.Drawing.Size(89, 23);
+            this.btnMapResize.TabIndex = 14;
+            this.btnMapResize.Text = "Resize";
+            this.btnMapResize.UseVisualStyleBackColor = true;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(20, 166);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(52, 13);
+            this.label7.TabIndex = 13;
+            this.label7.Text = "Resize Y:";
+            // 
+            // cbMapExtendY
+            // 
+            this.cbMapExtendY.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.cbMapExtendY.FormattingEnabled = true;
+            this.cbMapExtendY.Items.AddRange(new object[] {
+            "Anchor Top",
+            "Anchor Middle",
+            "Anchor Bottom"});
+            this.cbMapExtendY.Location = new System.Drawing.Point(78, 163);
+            this.cbMapExtendY.Name = "cbMapExtendY";
+            this.cbMapExtendY.Size = new System.Drawing.Size(131, 21);
+            this.cbMapExtendY.TabIndex = 12;
+            this.cbMapExtendY.Text = "Anchor Middle";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(20, 139);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(52, 13);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "Resize X:";
+            // 
+            // cbMapExtendX
+            // 
+            this.cbMapExtendX.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.cbMapExtendX.FormattingEnabled = true;
+            this.cbMapExtendX.Items.AddRange(new object[] {
+            "Anchor Left",
+            "Anchor Center",
+            "Anchor Right"});
+            this.cbMapExtendX.Location = new System.Drawing.Point(78, 136);
+            this.cbMapExtendX.Name = "cbMapExtendX";
+            this.cbMapExtendX.Size = new System.Drawing.Size(131, 21);
+            this.cbMapExtendX.TabIndex = 10;
+            this.cbMapExtendX.Text = "Anchor Center";
+            // 
+            // txtMapSizeX
+            // 
+            this.txtMapSizeX.Location = new System.Drawing.Point(78, 87);
+            this.txtMapSizeX.Name = "txtMapSizeX";
+            this.txtMapSizeX.Size = new System.Drawing.Size(131, 20);
+            this.txtMapSizeX.TabIndex = 9;
+            // 
+            // txtMapSizeY
+            // 
+            this.txtMapSizeY.Location = new System.Drawing.Point(78, 110);
+            this.txtMapSizeY.Name = "txtMapSizeY";
+            this.txtMapSizeY.Size = new System.Drawing.Size(131, 20);
+            this.txtMapSizeY.TabIndex = 8;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(20, 113);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(41, 13);
+            this.label5.TabIndex = 7;
+            this.label5.Text = "Height:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(20, 90);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(38, 13);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "Width:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 70);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(82, 13);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Map Size (Tiles)";
+            // 
+            // border_1
+            // 
+            this.border_1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.border_1.Location = new System.Drawing.Point(9, 59);
+            this.border_1.Name = "border_1";
+            this.border_1.Size = new System.Drawing.Size(200, 1);
+            this.border_1.TabIndex = 4;
+            // 
+            // txtFilename
+            // 
+            this.txtFilename.Location = new System.Drawing.Point(78, 32);
+            this.txtFilename.Name = "txtFilename";
+            this.txtFilename.ReadOnly = true;
+            this.txtFilename.Size = new System.Drawing.Size(131, 20);
+            this.txtFilename.TabIndex = 3;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(20, 35);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(52, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Filename:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(10, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(62, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Map Name:";
+            // 
+            // txtPieceName
+            // 
+            this.txtPieceName.Location = new System.Drawing.Point(78, 6);
+            this.txtPieceName.Name = "txtPieceName";
+            this.txtPieceName.Size = new System.Drawing.Size(131, 20);
+            this.txtPieceName.TabIndex = 0;
             // 
             // tabTerrain
             // 
@@ -521,195 +720,22 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // tabOptions
+            // toolStripSeparator2
             // 
-            this.tabOptions.Controls.Add(this.cbMapMusic);
-            this.tabOptions.Controls.Add(this.lblMusic);
-            this.tabOptions.Controls.Add(this.label8);
-            this.tabOptions.Controls.Add(this.btnMapResize);
-            this.tabOptions.Controls.Add(this.label7);
-            this.tabOptions.Controls.Add(this.cbMapExtendY);
-            this.tabOptions.Controls.Add(this.label6);
-            this.tabOptions.Controls.Add(this.cbMapExtendX);
-            this.tabOptions.Controls.Add(this.txtMapSizeX);
-            this.tabOptions.Controls.Add(this.txtMapSizeY);
-            this.tabOptions.Controls.Add(this.label5);
-            this.tabOptions.Controls.Add(this.label4);
-            this.tabOptions.Controls.Add(this.label3);
-            this.tabOptions.Controls.Add(this.border_1);
-            this.tabOptions.Controls.Add(this.txtFilename);
-            this.tabOptions.Controls.Add(this.label2);
-            this.tabOptions.Controls.Add(this.label1);
-            this.tabOptions.Controls.Add(this.txtPieceName);
-            this.tabOptions.Location = new System.Drawing.Point(4, 22);
-            this.tabOptions.Name = "tabOptions";
-            this.tabOptions.Padding = new System.Windows.Forms.Padding(3);
-            this.tabOptions.Size = new System.Drawing.Size(223, 435);
-            this.tabOptions.TabIndex = 3;
-            this.tabOptions.Text = "Options";
-            this.tabOptions.UseVisualStyleBackColor = true;
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
-            // txtPieceName
+            // toolStripSeparator3
             // 
-            this.txtPieceName.Location = new System.Drawing.Point(78, 6);
-            this.txtPieceName.Name = "txtPieceName";
-            this.txtPieceName.Size = new System.Drawing.Size(131, 20);
-            this.txtPieceName.TabIndex = 0;
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
             // 
-            // label1
+            // btnWorldEditor
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(62, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Map Name:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(20, 35);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(52, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Filename:";
-            // 
-            // txtFilename
-            // 
-            this.txtFilename.Location = new System.Drawing.Point(78, 32);
-            this.txtFilename.Name = "txtFilename";
-            this.txtFilename.ReadOnly = true;
-            this.txtFilename.Size = new System.Drawing.Size(131, 20);
-            this.txtFilename.TabIndex = 3;
-            // 
-            // border_1
-            // 
-            this.border_1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.border_1.Location = new System.Drawing.Point(9, 59);
-            this.border_1.Name = "border_1";
-            this.border_1.Size = new System.Drawing.Size(200, 1);
-            this.border_1.TabIndex = 4;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 70);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(82, 13);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Map Size (Tiles)";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(20, 90);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(38, 13);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "Width:";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(20, 113);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(41, 13);
-            this.label5.TabIndex = 7;
-            this.label5.Text = "Height:";
-            // 
-            // txtMapSizeY
-            // 
-            this.txtMapSizeY.Location = new System.Drawing.Point(78, 110);
-            this.txtMapSizeY.Name = "txtMapSizeY";
-            this.txtMapSizeY.Size = new System.Drawing.Size(131, 20);
-            this.txtMapSizeY.TabIndex = 8;
-            // 
-            // txtMapSizeX
-            // 
-            this.txtMapSizeX.Location = new System.Drawing.Point(78, 87);
-            this.txtMapSizeX.Name = "txtMapSizeX";
-            this.txtMapSizeX.Size = new System.Drawing.Size(131, 20);
-            this.txtMapSizeX.TabIndex = 9;
-            // 
-            // cbMapExtendX
-            // 
-            this.cbMapExtendX.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.cbMapExtendX.FormattingEnabled = true;
-            this.cbMapExtendX.Items.AddRange(new object[] {
-            "Anchor Left",
-            "Anchor Center",
-            "Anchor Right"});
-            this.cbMapExtendX.Location = new System.Drawing.Point(78, 136);
-            this.cbMapExtendX.Name = "cbMapExtendX";
-            this.cbMapExtendX.Size = new System.Drawing.Size(131, 21);
-            this.cbMapExtendX.TabIndex = 10;
-            this.cbMapExtendX.Text = "Anchor Center";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(20, 139);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(52, 13);
-            this.label6.TabIndex = 11;
-            this.label6.Text = "Resize X:";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(20, 166);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(52, 13);
-            this.label7.TabIndex = 13;
-            this.label7.Text = "Resize Y:";
-            // 
-            // cbMapExtendY
-            // 
-            this.cbMapExtendY.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.cbMapExtendY.FormattingEnabled = true;
-            this.cbMapExtendY.Items.AddRange(new object[] {
-            "Anchor Top",
-            "Anchor Middle",
-            "Anchor Bottom"});
-            this.cbMapExtendY.Location = new System.Drawing.Point(78, 163);
-            this.cbMapExtendY.Name = "cbMapExtendY";
-            this.cbMapExtendY.Size = new System.Drawing.Size(131, 21);
-            this.cbMapExtendY.TabIndex = 12;
-            this.cbMapExtendY.Text = "Anchor Middle";
-            // 
-            // btnMapResize
-            // 
-            this.btnMapResize.Location = new System.Drawing.Point(120, 190);
-            this.btnMapResize.Name = "btnMapResize";
-            this.btnMapResize.Size = new System.Drawing.Size(89, 23);
-            this.btnMapResize.TabIndex = 14;
-            this.btnMapResize.Text = "Resize";
-            this.btnMapResize.UseVisualStyleBackColor = true;
-            // 
-            // label8
-            // 
-            this.label8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label8.Location = new System.Drawing.Point(11, 225);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(200, 1);
-            this.label8.TabIndex = 15;
-            // 
-            // lblMusic
-            // 
-            this.lblMusic.AutoSize = true;
-            this.lblMusic.Location = new System.Drawing.Point(34, 232);
-            this.lblMusic.Name = "lblMusic";
-            this.lblMusic.Size = new System.Drawing.Size(38, 13);
-            this.lblMusic.TabIndex = 16;
-            this.lblMusic.Text = "Music:";
-            // 
-            // cbMapMusic
-            // 
-            this.cbMapMusic.FormattingEnabled = true;
-            this.cbMapMusic.Location = new System.Drawing.Point(78, 229);
-            this.cbMapMusic.Name = "cbMapMusic";
-            this.cbMapMusic.Size = new System.Drawing.Size(131, 21);
-            this.cbMapMusic.TabIndex = 17;
+            this.btnWorldEditor.Name = "btnWorldEditor";
+            this.btnWorldEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnWorldEditor.Text = "World Editor (X)";
+            this.btnWorldEditor.Click += new System.EventHandler(this.btnWorldEditor_Click);
             // 
             // MainWindow
             // 
@@ -734,6 +760,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.toolpanel_splitter)).EndInit();
             this.toolpanel_splitter.ResumeLayout(false);
             this.tabFirstLevel.ResumeLayout(false);
+            this.tabOptions.ResumeLayout(false);
+            this.tabOptions.PerformLayout();
             this.tabTerrain.ResumeLayout(false);
             this.tabPalette.ResumeLayout(false);
             this.tabObjectTools.ResumeLayout(false);
@@ -742,8 +770,6 @@
             this.obj_splitter.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.obj_splitter)).EndInit();
             this.obj_splitter.ResumeLayout(false);
-            this.tabOptions.ResumeLayout(false);
-            this.tabOptions.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -772,13 +798,13 @@
         internal System.Windows.Forms.ComboBox cbTileGroups;
         private System.Windows.Forms.Timer timerRefresh;
         internal System.Windows.Forms.Panel pnlTiles;
-        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
+        private System.Windows.Forms.ToolStripDropDownButton btnViewMenu;
         internal System.Windows.Forms.ToolStripMenuItem mnuShowGrids;
         private System.Windows.Forms.ToolStripMenuItem viewportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ckbViewportEnabled;
         private System.Windows.Forms.ToolStripTextBox txtViewportWidth;
         private System.Windows.Forms.ToolStripTextBox txtViewportHeight;
-        private System.Windows.Forms.ToolStripMenuItem otherToolsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripDropDownButton btnOtherToolsMenu;
         private System.Windows.Forms.ToolStripMenuItem btnTileEditorTool;
         private System.Windows.Forms.ToolStripMenuItem btnObjectEditor;
         internal System.Windows.Forms.ComboBox cbScenicCacheSelector;
@@ -790,7 +816,7 @@
         private System.Windows.Forms.ToolStripMenuItem btnCritterEditor;
         private System.Windows.Forms.Timer timer1;
         internal System.Windows.Forms.ToolStripMenuItem ckbShowTileBases;
-        private System.Windows.Forms.ToolStripMenuItem btnExport;
+        private System.Windows.Forms.ToolStripButton btnExport;
         private System.Windows.Forms.ToolStripMenuItem btnSoundEditor;
         private System.Windows.Forms.TabPage tabOptions;
         private System.Windows.Forms.Label border_1;
@@ -811,6 +837,9 @@
         private System.Windows.Forms.Label label8;
         internal System.Windows.Forms.ComboBox cbMapMusic;
         internal System.Windows.Forms.Button btnMapResize;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem btnWorldEditor;
     }
 }
 

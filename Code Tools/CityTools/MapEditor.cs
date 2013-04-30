@@ -39,7 +39,7 @@ namespace CityTools {
         public bool REQUIRES_CLOSE = false;
 
         //Our drawing settings
-        public Rectangle drawArea = new Rectangle();
+        public Size drawArea = new Size();
         public PaintMode paintMode = PaintMode.Off;
 
         //Our drawing buffers
@@ -68,7 +68,7 @@ namespace CityTools {
             CacheInterfaces.ObjectInterface.Initialize();
             CacheInterfaces.SoundInterface.PopulateList();
 
-            drawArea = mapViewPanel.DisplayRectangle;
+            drawArea = mapViewPanel.Size;
             Camera.FixViewArea(drawArea);
 
             initialized = true;
@@ -80,7 +80,7 @@ namespace CityTools {
         private void CreateBuffers() {
             if (!initialized) return;
 
-            drawArea = mapViewPanel.DisplayRectangle;
+            drawArea = mapViewPanel.DisplayRectangle.Size;
 
             terrain_buffer = new LBuffer(drawArea);
             objects_buffer = new LBuffer(drawArea);
@@ -93,7 +93,7 @@ namespace CityTools {
             if (!initialized) return;
             if (REQUIRES_CLOSE) { this.Close(); return; }
 
-            drawArea = e.ClipRectangle;
+            drawArea = e.ClipRectangle.Size;
             e.Graphics.FillRectangle(new SolidBrush(BACKGROUND_COLOR), e.ClipRectangle);
 
             RedrawTerrain();
@@ -150,6 +150,8 @@ namespace CityTools {
                 OpenCritterEditor();
             } else if (keyData == Keys.Z) {
                 OpenSoundEditor();
+            } else if (keyData == Keys.X) {
+                OpenWorldEditor();
             } else if (Camera.ProcessKeys(keyData)) {
                 Camera.FixViewArea(drawArea);
                 mapViewPanel.Invalidate();
@@ -224,8 +226,8 @@ namespace CityTools {
             Rectangle r = new Rectangle(Point.Empty, s);
 
             Bitmap total = new Bitmap(s.Width, s.Height, PixelFormat.Format32bppArgb);
-            LBuffer terrainBits = new LBuffer(r);
-            LBuffer objectBits = new LBuffer(r);
+            LBuffer terrainBits = new LBuffer(s);
+            LBuffer objectBits = new LBuffer(s);
 
             float prev_CamX = Camera.Offset.X;
             float prev_CamY = Camera.Offset.Y;
@@ -235,7 +237,7 @@ namespace CityTools {
             Camera.Offset.X = 0;
             Camera.Offset.Y = 0;
             Camera.ZoomLevel = scale;
-            Camera.FixViewArea(r);
+            Camera.FixViewArea(s);
 
             TerrainHelper.DrawTerrain(terrainBits);
             ScenicHelper.DrawObjects(objectBits);
@@ -265,7 +267,7 @@ namespace CityTools {
         private void mapViewPanel_Resize(object sender, EventArgs e) {
             if (!initialized) return;
 
-            drawArea = mapViewPanel.DisplayRectangle;
+            drawArea = mapViewPanel.Size;
             Camera.FixViewArea(drawArea);
             CreateBuffers();
 
@@ -370,6 +372,11 @@ namespace CityTools {
             CacheInterfaces.SoundInterface.PopulateList();
         }
 
+        private void OpenWorldEditor() {
+            WorldEditor t = new WorldEditor();
+            t.ShowDialog(this);
+        }
+
         private void ExportAndRun() {
             string args = "map=" + MapPieceCache.CurrentPiece.Name;
 
@@ -419,6 +426,10 @@ namespace CityTools {
 
         private void btnSoundEditor_Click(object sender, EventArgs e) {
             OpenSoundEditor();
+        }
+
+        private void btnWorldEditor_Click(object sender, EventArgs e) {
+            OpenWorldEditor();
         }
     }
 }
