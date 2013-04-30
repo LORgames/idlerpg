@@ -81,6 +81,10 @@
             this.pbMainPanel.TabIndex = 1;
             this.pbMainPanel.TabStop = false;
             this.pbMainPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.pbMainPanel_Paint);
+            this.pbMainPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pbMainPanel_MouseDown);
+            this.pbMainPanel.MouseLeave += new System.EventHandler(this.pbMainPanel_MouseLeave);
+            this.pbMainPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbMainPanel_MouseMove);
+            this.pbMainPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pbMainPanel_MouseUp);
             this.pbMainPanel.Resize += new System.EventHandler(this.pbMainPanel_Resize);
             // 
             // WorldEditor

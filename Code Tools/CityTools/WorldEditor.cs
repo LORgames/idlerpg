@@ -17,6 +17,11 @@ namespace CityTools {
 
         private Point Offset = new Point();
 
+        private bool isMouseDown = false;
+        private WorldData selectedObject = null;
+        private Point p0 = Point.Empty;
+        private Point p1 = Point.Empty;
+
         public WorldEditor() {
             InitializeComponent();
 
@@ -28,7 +33,7 @@ namespace CityTools {
         }
 
         private void pbMainPanel_Paint(object sender, PaintEventArgs e) {
-            buffer.gfx.Clear(Color.CornflowerBlue);
+            buffer.gfx.Clear(Color.Beige);
 
             foreach (WorldData d in Data) {
                 d.Draw(buffer, Offset);
@@ -52,42 +57,102 @@ namespace CityTools {
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
             if (keyData == Keys.W) {
-                Offset.Y -= 5;
+                Offset.Y -= 25;
             } else if (keyData == Keys.S) {
-                Offset.Y += 5;
+                Offset.Y += 25;
             } else if (keyData == Keys.A) {
-                Offset.X -= 5;
+                Offset.X -= 25;
             } else if (keyData == Keys.D) {
-                Offset.X += 5;
+                Offset.X += 25;
             }
 
             pbMainPanel.Invalidate();
 
             return base.ProcessCmdKey(ref msg, keyData);
         }
+
+        private void pbMainPanel_MouseDown(object sender, MouseEventArgs e) {
+            isMouseDown = true;
+
+            p0.X = e.X - Offset.X;
+            p0.Y = e.Y - Offset.Y;
+
+            selectedObject = null;
+
+            foreach (WorldData d in Data) {
+                if (d.rect.Contains(p0)) {
+                    selectedObject = d;
+                    break;
+                }
+            }
+
+            if (selectedObject == null) isMouseDown = false;
+        }
+
+        private void pbMainPanel_MouseMove(object sender, MouseEventArgs e) {
+            if (isMouseDown) {
+                p1.X = e.X - Offset.X;
+                p1.Y = e.Y - Offset.Y;
+
+                int dx = p1.X - p0.X;
+                int dy = p1.Y - p0.Y;
+
+                selectedObject.rect.Offset(new Point(dx, dy));
+
+                p0.X = p1.X;
+                p0.Y = p1.Y;
+
+                pbMainPanel.Invalidate();
+            }
+        }
+
+        private void pbMainPanel_MouseUp(object sender, MouseEventArgs e) {
+            isMouseDown = false;
+            pbMainPanel.Invalidate();
+        }
+
+        private void pbMainPanel_MouseLeave(object sender, EventArgs e) {
+            isMouseDown = false;
+        }
     }
 
     public class WorldData {
         private Image image;
-        private Rectangle rect;
+        
+        public Rectangle rect;
+        public Rectangle ScrolledAABB = new Rectangle();
 
-        private static Rectangle r;
+        public MapPiece myPiece;
 
         public WorldData(MapPiece piece) {
             image = Image.FromFile("Maps/Thumbs/" + piece.Name + ".png");
             rect = new Rectangle(piece.WorldPosition, image.Size);
+
+            myPiece = piece;
+
+            if (!piece.isLoaded) {
+                piece.Load(true);
+            }
         }
 
         public void Draw(LBuffer buffer, Point offset) {
-            rect.X = r.X + offset.X;
-            rect.Y = r.Y + offset.Y;
-            rect.Width = r.Width;
-            rect.Height = r.Height;
+            ScrolledAABB.X = rect.X + offset.X;
+            ScrolledAABB.Y = rect.Y + offset.Y;
+            ScrolledAABB.Width = rect.Width;
+            ScrolledAABB.Height = rect.Height;
 
-            buffer.gfx.DrawImage(image, rect);
+            buffer.gfx.DrawImage(image, ScrolledAABB);
+            buffer.gfx.DrawRectangle(Pens.Black, ScrolledAABB);
         }
 
         public void Dispose() {
+            if (myPiece.WorldPosition.X != rect.X || myPiece.WorldPosition.Y != rect.Y) {
+                myPiece.WorldPosition.X = rect.X;
+                myPiece.WorldPosition.Y = rect.Y;
+
+                myPiece.Save();
+            }
+
             image.Dispose();
             image = null;
         }
