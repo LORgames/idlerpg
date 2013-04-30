@@ -82,7 +82,6 @@
     <Compile Include="Sound\SoundData.cs" />
     <Compile Include="Sound\SoundDatabase.cs" />
     <Compile Include="World\Portal.cs" />
-    <Compile Include="World\WorldManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

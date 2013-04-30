@@ -23,7 +23,6 @@ namespace ToolCache.General {
             ElementManager.Initialize();
             ItemDatabase.Initialize();
             EquipmentManager.Initialize();
-
         }
     }
 }

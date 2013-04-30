@@ -12,5 +12,9 @@ namespace CityTools {
         public WorldEditor() {
             InitializeComponent();
         }
+
+        private void pbMainPanel_Paint(object sender, PaintEventArgs e) {
+
+        }
     }
 }

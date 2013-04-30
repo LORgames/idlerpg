@@ -24,6 +24,8 @@ namespace ToolCache.Map {
         public string Name = "Unnamed";
         public string Filename = "";
 
+        public Point WorldPosition = Point.Empty;
+
         public List<BaseObject> Objects = new List<BaseObject>();
         public TileMap Tiles;
 
@@ -44,6 +46,9 @@ namespace ToolCache.Map {
             BinaryIO f = new BinaryIO(File.ReadAllBytes(Filename));
             Name = f.GetString();
             Music = f.GetString();
+
+            WorldPosition.X = f.GetShort();
+            WorldPosition.Y = f.GetShort();
 
             //Exit Early
             if (!loadingForUse) {
@@ -77,6 +82,9 @@ namespace ToolCache.Map {
             //Save Settings
             f.AddString(Name);
             f.AddString(Music);
+
+            f.AddShort((short)WorldPosition.X);
+            f.AddShort((short)WorldPosition.Y);
 
             //Save terrain
             Tiles.SaveMap(f);
