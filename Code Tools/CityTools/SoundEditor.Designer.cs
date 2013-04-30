@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SoundEditor));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabMusic = new System.Windows.Forms.TabPage();
             this.sndMusic = new CityTools.ClipIns.SoundSelector_Panel();
@@ -30,10 +31,12 @@
             this.sndAmbience = new CityTools.ClipIns.SoundSelector_Panel();
             this.tabEffects = new System.Windows.Forms.TabPage();
             this.sndEffects = new CityTools.ClipIns.SoundSelector_Panel();
+            this.player = new AxWMPLib.AxWindowsMediaPlayer();
             this.tabControl1.SuspendLayout();
             this.tabMusic.SuspendLayout();
             this.tabAmbience.SuspendLayout();
             this.tabEffects.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.player)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -104,11 +107,22 @@
             this.sndEffects.Size = new System.Drawing.Size(483, 427);
             this.sndEffects.TabIndex = 0;
             // 
+            // player
+            // 
+            this.player.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.player.Enabled = true;
+            this.player.Location = new System.Drawing.Point(0, 407);
+            this.player.Name = "player";
+            this.player.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("player.OcxState")));
+            this.player.Size = new System.Drawing.Size(491, 46);
+            this.player.TabIndex = 1;
+            // 
             // SoundEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(491, 453);
+            this.Controls.Add(this.player);
             this.Controls.Add(this.tabControl1);
             this.Name = "SoundEditor";
             this.Text = "SoundEditor";
@@ -117,6 +131,7 @@
             this.tabMusic.ResumeLayout(false);
             this.tabAmbience.ResumeLayout(false);
             this.tabEffects.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.player)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -130,5 +145,6 @@
         private ClipIns.SoundSelector_Panel sndMusic;
         private ClipIns.SoundSelector_Panel sndAmbience;
         private ClipIns.SoundSelector_Panel sndEffects;
+        public AxWMPLib.AxWindowsMediaPlayer player;
     }
 }

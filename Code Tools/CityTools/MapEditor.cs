@@ -66,6 +66,7 @@ namespace CityTools {
             CacheInterfaces.MapInterface.Initialize();
             CacheInterfaces.TileInterface.Initialize();
             CacheInterfaces.ObjectInterface.Initialize();
+            CacheInterfaces.SoundInterface.PopulateList();
 
             drawArea = mapViewPanel.DisplayRectangle;
             Camera.FixViewArea(drawArea);
@@ -226,6 +227,11 @@ namespace CityTools {
             LBuffer terrainBits = new LBuffer(r);
             LBuffer objectBits = new LBuffer(r);
 
+            float prev_CamX = Camera.Offset.X;
+            float prev_CamY = Camera.Offset.Y;
+            float prev_CamZ = Camera.ZoomLevel;
+            RectangleF prev_CamV = Camera.ViewArea;
+
             Camera.Offset.X = 0;
             Camera.Offset.Y = 0;
             Camera.ZoomLevel = scale;
@@ -249,6 +255,11 @@ namespace CityTools {
             if(!Directory.Exists("Maps/Thumbs")) Directory.CreateDirectory("Maps/Thumbs");
 
             total.Save("Maps/Thumbs/" + MapPieceCache.CurrentPiece.Name + ".png");
+
+            Camera.Offset.X = prev_CamX;
+            Camera.Offset.Y = prev_CamY;
+            Camera.ZoomLevel = prev_CamZ;
+            Camera.ViewArea = prev_CamV;
         }
 
         private void mapViewPanel_Resize(object sender, EventArgs e) {
@@ -356,6 +367,7 @@ namespace CityTools {
         private void OpenSoundEditor() {
             SoundEditor t = new SoundEditor();
             t.ShowDialog(this);
+            CacheInterfaces.SoundInterface.PopulateList();
         }
 
         private void ExportAndRun() {

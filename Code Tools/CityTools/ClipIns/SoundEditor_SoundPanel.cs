@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using ToolCache.Sound;
 using System.IO;
+using System.Media;
 
 namespace CityTools.ClipIns {
     public partial class SoundEditor_SoundPanel : UserControl {
@@ -43,6 +44,10 @@ namespace CityTools.ClipIns {
             } else if(!txtFilename.Focused) {
                 txtFilename.Text = Sound.Filename;
             }
+        }
+
+        private void btnPlay_Click(object sender, EventArgs e) {
+            SoundEditor.I.player.URL = Owner.SaveLocation + "/" + Sound.Filename;
         }
     }
 }

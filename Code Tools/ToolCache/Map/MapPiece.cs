@@ -28,6 +28,7 @@ namespace ToolCache.Map {
         public TileMap Tiles;
 
         public Rectangle WorldRectangle;
+        public string Music = "";
         
         public MapPiece(string filename, short fillTileID) {
             Filename = filename;
@@ -37,14 +38,18 @@ namespace ToolCache.Map {
 
         public void Edited() { _iE = true; }
 
-        internal void Load(Boolean loadingForUse) {
+        public void Load(Boolean loadingForUse) {
             if (!File.Exists(Filename)) return;
             
             BinaryIO f = new BinaryIO(File.ReadAllBytes(Filename));
             Name = f.GetString();
+            Music = f.GetString();
 
             //Exit Early
-            if (!loadingForUse) return;
+            if (!loadingForUse) {
+                f.Dispose();
+                return;
+            }
 
             isLoaded = true;
             Objects = new List<BaseObject>();
@@ -69,7 +74,9 @@ namespace ToolCache.Map {
         public void Save() {
             BinaryIO f = new BinaryIO();
 
+            //Save Settings
             f.AddString(Name);
+            f.AddString(Music);
 
             //Save terrain
             Tiles.SaveMap(f);
@@ -96,6 +103,11 @@ namespace ToolCache.Map {
 
         public void ChangeName(string p) {
             Name = p;
+            Edited();
+        }
+
+        public void ChangeMusic(string p) {
+            Music = p;
             Edited();
         }
 

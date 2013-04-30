@@ -10,7 +10,10 @@ using ToolCache.Sound;
 
 namespace CityTools {
     public partial class SoundEditor : Form {
+        public static SoundEditor I;
+
         public SoundEditor() {
+            I = this;
             InitializeComponent();
 
             sndMusic.ChangeSoundList(SoundDatabase.Music, "Sound/Music");
@@ -20,6 +23,8 @@ namespace CityTools {
 
         private void SoundEditor_FormClosing(object sender, FormClosingEventArgs e) {
             SoundDatabase.SaveDatabase();
+            player.Ctlcontrols.stop();
+            I = null;
         }
     }
 }

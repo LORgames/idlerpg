@@ -14,8 +14,11 @@ namespace CityTools.CacheInterfaces {
 
             MainWindow.instance.cbMapPieces.SelectedIndexChanged += new EventHandler(combo_mappieces_SelectedIndexChanged);
             MainWindow.instance.txtPieceName.TextChanged += new EventHandler(txtPieceName_TextChanged);
+            MainWindow.instance.cbMapMusic.TextChanged += new EventHandler(cbMapMusic_TextChanged);
 
-            MainWindow.instance.btnMapSizeChange.Click += new EventHandler(mapSize_TextChanged);
+            MainWindow.instance.btnMapResize.Click += new EventHandler(mapSize_TextChanged);
+
+            List<MapPiece> pieces = MapPieceCache.Pieces;
         }
 
 
@@ -27,10 +30,12 @@ namespace CityTools.CacheInterfaces {
             }
 
             MainWindow.instance.txtPieceName.Text = MapPieceCache.CurrentPiece.Name;
-            MainWindow.instance.lblFilename.Text = MapPieceCache.CurrentPiece.Filename;
+            MainWindow.instance.txtFilename.Text = MapPieceCache.CurrentPiece.Filename;
 
             MainWindow.instance.txtMapSizeX.Text = MapPieceCache.CurrentPiece.Tiles.numTilesX.ToString();
             MainWindow.instance.txtMapSizeY.Text = MapPieceCache.CurrentPiece.Tiles.numTilesY.ToString();
+
+            MainWindow.instance.cbMapMusic.Text = MapPieceCache.CurrentPiece.Music;
         }
 
         private static void mapSize_TextChanged(object sender, EventArgs e) {
@@ -58,6 +63,11 @@ namespace CityTools.CacheInterfaces {
             }
         }
 
+        static void cbMapMusic_TextChanged(object sender, EventArgs e) {
+            if (MainWindow.instance.cbMapMusic.Text != MapPieceCache.CurrentPiece.Music)
+                MapPieceCache.CurrentPiece.ChangeMusic(MainWindow.instance.cbMapMusic.Text);
+        }
+
         internal static void ChangeCurrentPiece(MapPiece newPiece) {
             Camera.Offset.X = 0;
             Camera.Offset.Y = 0;
@@ -77,6 +87,7 @@ namespace CityTools.CacheInterfaces {
         internal static void Save() {
             MapPieceCache.CurrentPiece.Save();
             MainWindow.instance.DrawThumbnail();
+
             UpdateGUI();
         }
 
