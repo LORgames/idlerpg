@@ -6,6 +6,13 @@ using ToolCache.Map;
 using CityTools.Core;
 using System.Windows.Forms;
 using ToolCache.Map.Tiles;
+using System.Drawing;
+using ToolCache.Drawing;
+using System.Drawing.Imaging;
+using CityTools.Terrain;
+using CityTools.ObjectSystem;
+using System.Threading;
+using System.IO;
 
 namespace CityTools.CacheInterfaces {
     public class MapInterface {
@@ -84,7 +91,7 @@ namespace CityTools.CacheInterfaces {
 
         internal static void Save() {
             MapPieceCache.CurrentPiece.Save();
-            MainWindow.instance.DrawThumbnail();
+            DrawThumbnail();
 
             UpdateGUI();
         }
@@ -100,6 +107,50 @@ namespace CityTools.CacheInterfaces {
         internal static void Duplicate() {
             MapPieceCache.Duplicate();
             UpdateGUI();
+        }
+
+        internal static void DrawThumbnail() {
+            float scale = 0.1f;
+            Size s = new Size((int)(MapPieceCache.CurrentPiece.Tiles.numTilesX * TileTemplate.PIXELS_X * scale), (int)(MapPieceCache.CurrentPiece.Tiles.numTilesY * TileTemplate.PIXELS_Y * scale));
+            Rectangle r = new Rectangle(Point.Empty, s);
+
+            Bitmap total = new Bitmap(s.Width, s.Height, PixelFormat.Format32bppArgb);
+            LBuffer terrainBits = new LBuffer(s);
+            LBuffer objectBits = new LBuffer(s);
+
+            float prev_CamX = Camera.Offset.X;
+            float prev_CamY = Camera.Offset.Y;
+            float prev_CamZ = Camera.ZoomLevel;
+            RectangleF prev_CamV = Camera.ViewArea;
+
+            Camera.Offset.X = 0;
+            Camera.Offset.Y = 0;
+            Camera.ZoomLevel = scale;
+            Camera.FixViewArea(s);
+
+            TerrainHelper.DrawTerrain(terrainBits);
+            ScenicHelper.DrawObjects(objectBits);
+
+            using (Graphics gfx = Graphics.FromImage(total)) {
+                gfx.DrawImage(terrainBits.bmp, Point.Empty);
+                gfx.DrawImage(objectBits.bmp, Point.Empty);
+            }
+
+            terrainBits.gfx.Dispose();
+            objectBits.gfx.Dispose();
+            terrainBits.bmp.Dispose();
+            objectBits.bmp.Dispose();
+
+            Thread.Yield();
+
+            if (!Directory.Exists("Maps/Thumbs")) Directory.CreateDirectory("Maps/Thumbs");
+
+            total.Save("Maps/Thumbs/" + MapPieceCache.CurrentPiece.Name + ".png");
+
+            Camera.Offset.X = prev_CamX;
+            Camera.Offset.Y = prev_CamY;
+            Camera.ZoomLevel = prev_CamZ;
+            Camera.ViewArea = prev_CamV;
         }
     }
 }

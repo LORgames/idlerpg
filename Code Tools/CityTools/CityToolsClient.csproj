@@ -66,6 +66,7 @@
     <Compile Include="CacheInterfaces\ObjectInterface.cs" />
     <Compile Include="CacheInterfaces\SoundInterface.cs" />
     <Compile Include="CacheInterfaces\TileInterface.cs" />
+    <Compile Include="CacheInterfaces\ToolsInterface.cs" />
     <Compile Include="ClipIns\BufferedPaint\BufferedPainter.cs" />
     <Compile Include="ClipIns\BufferedPaint\Interop.cs" />
     <Compile Include="ClipIns\GroupedComboBox.cs">

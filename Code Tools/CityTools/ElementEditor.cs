@@ -6,8 +6,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using ToolCache.Combat.Elements;
 
-namespace ToolCache.Combat.Elements {
+namespace CityTools {
     public partial class ElementEditor : Form {
         private Boolean Updating = false;
         private DataTable dt;

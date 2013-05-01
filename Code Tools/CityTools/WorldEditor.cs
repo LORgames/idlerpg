@@ -57,13 +57,13 @@ namespace CityTools {
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
             if (keyData == Keys.W) {
-                Offset.Y -= 25;
-            } else if (keyData == Keys.S) {
                 Offset.Y += 25;
+            } else if (keyData == Keys.S) {
+                Offset.Y -= 25;
             } else if (keyData == Keys.A) {
-                Offset.X -= 25;
-            } else if (keyData == Keys.D) {
                 Offset.X += 25;
+            } else if (keyData == Keys.D) {
+                Offset.X -= 25;
             }
 
             pbMainPanel.Invalidate();

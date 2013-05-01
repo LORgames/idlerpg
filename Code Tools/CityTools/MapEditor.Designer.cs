@@ -39,6 +39,18 @@
             this.btnDuplicate = new System.Windows.Forms.ToolStripButton();
             this.btnSavePiece = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnOtherToolsMenu = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btnTileEditorTool = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnObjectEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnElementalEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnItemEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnEquipmentEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnCritterEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSoundEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnWorldEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnExport = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.btnViewMenu = new System.Windows.Forms.ToolStripDropDownButton();
             this.mnuShowGrids = new System.Windows.Forms.ToolStripMenuItem();
             this.ckbShowTileGrid = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,15 +60,6 @@
             this.ckbViewportEnabled = new System.Windows.Forms.ToolStripMenuItem();
             this.txtViewportWidth = new System.Windows.Forms.ToolStripTextBox();
             this.txtViewportHeight = new System.Windows.Forms.ToolStripTextBox();
-            this.btnOtherToolsMenu = new System.Windows.Forms.ToolStripDropDownButton();
-            this.btnTileEditorTool = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnObjectEditor = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnElementalEditor = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnItemEditor = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnEquipmentEditor = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnCritterEditor = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnSoundEditor = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnExport = new System.Windows.Forms.ToolStripButton();
             this.mapViewPanel = new System.Windows.Forms.PictureBox();
             this.toolpanel_splitter = new System.Windows.Forms.SplitContainer();
             this.tabFirstLevel = new System.Windows.Forms.TabControl();
@@ -91,9 +94,12 @@
             this.cbScenicCacheSelector = new System.Windows.Forms.ComboBox();
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnWorldEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.label9 = new System.Windows.Forms.Label();
+            this.listPortals = new System.Windows.Forms.ListBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.btnAddPortal = new System.Windows.Forms.Button();
+            this.btnDeletePortals = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.main_splitter)).BeginInit();
             this.main_splitter.Panel1.SuspendLayout();
             this.main_splitter.Panel2.SuspendLayout();
@@ -215,6 +221,88 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
+            // btnOtherToolsMenu
+            // 
+            this.btnOtherToolsMenu.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btnOtherToolsMenu.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnOtherToolsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnTileEditorTool,
+            this.btnObjectEditor,
+            this.btnElementalEditor,
+            this.btnItemEditor,
+            this.btnEquipmentEditor,
+            this.btnCritterEditor,
+            this.btnSoundEditor,
+            this.btnWorldEditor});
+            this.btnOtherToolsMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOtherToolsMenu.Name = "btnOtherToolsMenu";
+            this.btnOtherToolsMenu.Size = new System.Drawing.Size(82, 22);
+            this.btnOtherToolsMenu.Text = "Other Tools";
+            // 
+            // btnTileEditorTool
+            // 
+            this.btnTileEditorTool.Name = "btnTileEditorTool";
+            this.btnTileEditorTool.Size = new System.Drawing.Size(216, 22);
+            this.btnTileEditorTool.Text = "Tile Editor (T)";
+            // 
+            // btnObjectEditor
+            // 
+            this.btnObjectEditor.Name = "btnObjectEditor";
+            this.btnObjectEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnObjectEditor.Text = "Object Template Editor (O)";
+            // 
+            // btnElementalEditor
+            // 
+            this.btnElementalEditor.Name = "btnElementalEditor";
+            this.btnElementalEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnElementalEditor.Text = "Elemental Editor (R)";
+            // 
+            // btnItemEditor
+            // 
+            this.btnItemEditor.Name = "btnItemEditor";
+            this.btnItemEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnItemEditor.Text = "Item Editor (I)";
+            // 
+            // btnEquipmentEditor
+            // 
+            this.btnEquipmentEditor.Name = "btnEquipmentEditor";
+            this.btnEquipmentEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnEquipmentEditor.Text = "Equipment Editor (U)";
+            // 
+            // btnCritterEditor
+            // 
+            this.btnCritterEditor.Name = "btnCritterEditor";
+            this.btnCritterEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnCritterEditor.Text = "Critter Editor (C)";
+            // 
+            // btnSoundEditor
+            // 
+            this.btnSoundEditor.Name = "btnSoundEditor";
+            this.btnSoundEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnSoundEditor.Text = "Sound Editor (Z)";
+            // 
+            // btnWorldEditor
+            // 
+            this.btnWorldEditor.Name = "btnWorldEditor";
+            this.btnWorldEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnWorldEditor.Text = "World Editor (X)";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnExport
+            // 
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(56, 22);
+            this.btnExport.Text = "Test (F5)";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
             // btnViewMenu
             // 
             this.btnViewMenu.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
@@ -235,7 +323,7 @@
             this.ckbShowObjectBases,
             this.ckbShowTileBases});
             this.mnuShowGrids.Name = "mnuShowGrids";
-            this.mnuShowGrids.Size = new System.Drawing.Size(152, 22);
+            this.mnuShowGrids.Size = new System.Drawing.Size(121, 22);
             this.mnuShowGrids.Text = "Grids";
             // 
             // ckbShowTileGrid
@@ -266,7 +354,7 @@
             this.txtViewportWidth,
             this.txtViewportHeight});
             this.viewportToolStripMenuItem.Name = "viewportToolStripMenuItem";
-            this.viewportToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.viewportToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.viewportToolStripMenuItem.Text = "Viewport";
             // 
             // ckbViewportEnabled
@@ -290,80 +378,6 @@
             this.txtViewportHeight.Size = new System.Drawing.Size(100, 23);
             this.txtViewportHeight.Text = "600";
             this.txtViewportHeight.ToolTipText = "Viewport Height";
-            // 
-            // btnOtherToolsMenu
-            // 
-            this.btnOtherToolsMenu.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.btnOtherToolsMenu.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnOtherToolsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnTileEditorTool,
-            this.btnObjectEditor,
-            this.btnElementalEditor,
-            this.btnItemEditor,
-            this.btnEquipmentEditor,
-            this.btnCritterEditor,
-            this.btnSoundEditor,
-            this.btnWorldEditor});
-            this.btnOtherToolsMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOtherToolsMenu.Name = "btnOtherToolsMenu";
-            this.btnOtherToolsMenu.Size = new System.Drawing.Size(82, 22);
-            this.btnOtherToolsMenu.Text = "Other Tools";
-            // 
-            // btnTileEditorTool
-            // 
-            this.btnTileEditorTool.Name = "btnTileEditorTool";
-            this.btnTileEditorTool.Size = new System.Drawing.Size(216, 22);
-            this.btnTileEditorTool.Text = "Tile Editor (T)";
-            this.btnTileEditorTool.Click += new System.EventHandler(this.btnTileEditorTool_Click);
-            // 
-            // btnObjectEditor
-            // 
-            this.btnObjectEditor.Name = "btnObjectEditor";
-            this.btnObjectEditor.Size = new System.Drawing.Size(216, 22);
-            this.btnObjectEditor.Text = "Object Template Editor (O)";
-            this.btnObjectEditor.Click += new System.EventHandler(this.btnObjectEditor_Click);
-            // 
-            // btnElementalEditor
-            // 
-            this.btnElementalEditor.Name = "btnElementalEditor";
-            this.btnElementalEditor.Size = new System.Drawing.Size(216, 22);
-            this.btnElementalEditor.Text = "Elemental Editor (R)";
-            this.btnElementalEditor.Click += new System.EventHandler(this.btnElementalEditor_Click);
-            // 
-            // btnItemEditor
-            // 
-            this.btnItemEditor.Name = "btnItemEditor";
-            this.btnItemEditor.Size = new System.Drawing.Size(216, 22);
-            this.btnItemEditor.Text = "Item Editor (I)";
-            this.btnItemEditor.Click += new System.EventHandler(this.btnItemEditor_Click);
-            // 
-            // btnEquipmentEditor
-            // 
-            this.btnEquipmentEditor.Name = "btnEquipmentEditor";
-            this.btnEquipmentEditor.Size = new System.Drawing.Size(216, 22);
-            this.btnEquipmentEditor.Text = "Equipment Editor (U)";
-            this.btnEquipmentEditor.Click += new System.EventHandler(this.btnEquipmentEditor_Click);
-            // 
-            // btnCritterEditor
-            // 
-            this.btnCritterEditor.Name = "btnCritterEditor";
-            this.btnCritterEditor.Size = new System.Drawing.Size(216, 22);
-            this.btnCritterEditor.Text = "Critter Editor (C)";
-            this.btnCritterEditor.Click += new System.EventHandler(this.btnCritterEditor_Click);
-            // 
-            // btnSoundEditor
-            // 
-            this.btnSoundEditor.Name = "btnSoundEditor";
-            this.btnSoundEditor.Size = new System.Drawing.Size(216, 22);
-            this.btnSoundEditor.Text = "Sound Editor (Z)";
-            this.btnSoundEditor.Click += new System.EventHandler(this.btnSoundEditor_Click);
-            // 
-            // btnExport
-            // 
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(56, 22);
-            this.btnExport.Text = "Test (F5)";
-            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
             // mapViewPanel
             // 
@@ -410,6 +424,12 @@
             // 
             // tabOptions
             // 
+            this.tabOptions.Controls.Add(this.checkBox1);
+            this.tabOptions.Controls.Add(this.btnDeletePortals);
+            this.tabOptions.Controls.Add(this.btnAddPortal);
+            this.tabOptions.Controls.Add(this.label10);
+            this.tabOptions.Controls.Add(this.listPortals);
+            this.tabOptions.Controls.Add(this.label9);
             this.tabOptions.Controls.Add(this.cbMapMusic);
             this.tabOptions.Controls.Add(this.lblMusic);
             this.tabOptions.Controls.Add(this.label8);
@@ -439,7 +459,7 @@
             // cbMapMusic
             // 
             this.cbMapMusic.FormattingEnabled = true;
-            this.cbMapMusic.Location = new System.Drawing.Point(78, 229);
+            this.cbMapMusic.Location = new System.Drawing.Point(78, 233);
             this.cbMapMusic.Name = "cbMapMusic";
             this.cbMapMusic.Size = new System.Drawing.Size(131, 21);
             this.cbMapMusic.TabIndex = 17;
@@ -447,7 +467,7 @@
             // lblMusic
             // 
             this.lblMusic.AutoSize = true;
-            this.lblMusic.Location = new System.Drawing.Point(34, 232);
+            this.lblMusic.Location = new System.Drawing.Point(34, 236);
             this.lblMusic.Name = "lblMusic";
             this.lblMusic.Size = new System.Drawing.Size(38, 13);
             this.lblMusic.TabIndex = 16;
@@ -720,22 +740,61 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // toolStripSeparator2
+            // label9
             // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            this.label9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label9.Location = new System.Drawing.Point(11, 268);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(200, 1);
+            this.label9.TabIndex = 18;
             // 
-            // toolStripSeparator3
+            // listPortals
             // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            this.listPortals.FormattingEnabled = true;
+            this.listPortals.Location = new System.Drawing.Point(13, 289);
+            this.listPortals.Name = "listPortals";
+            this.listPortals.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
+            this.listPortals.Size = new System.Drawing.Size(101, 56);
+            this.listPortals.TabIndex = 19;
             // 
-            // btnWorldEditor
+            // label10
             // 
-            this.btnWorldEditor.Name = "btnWorldEditor";
-            this.btnWorldEditor.Size = new System.Drawing.Size(216, 22);
-            this.btnWorldEditor.Text = "World Editor (X)";
-            this.btnWorldEditor.Click += new System.EventHandler(this.btnWorldEditor_Click);
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(8, 273);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(39, 13);
+            this.label10.TabIndex = 20;
+            this.label10.Text = "Portals";
+            // 
+            // btnAddPortal
+            // 
+            this.btnAddPortal.Location = new System.Drawing.Point(120, 289);
+            this.btnAddPortal.Name = "btnAddPortal";
+            this.btnAddPortal.Size = new System.Drawing.Size(37, 23);
+            this.btnAddPortal.TabIndex = 21;
+            this.btnAddPortal.Text = "Add";
+            this.btnAddPortal.UseVisualStyleBackColor = true;
+            this.btnAddPortal.Click += new System.EventHandler(this.btnAddPortal_Click);
+            // 
+            // btnDeletePortals
+            // 
+            this.btnDeletePortals.Location = new System.Drawing.Point(162, 289);
+            this.btnDeletePortals.Name = "btnDeletePortals";
+            this.btnDeletePortals.Size = new System.Drawing.Size(47, 23);
+            this.btnDeletePortals.TabIndex = 22;
+            this.btnDeletePortals.Text = "Delete Selected";
+            this.btnDeletePortals.UseVisualStyleBackColor = true;
+            this.btnDeletePortals.Click += new System.EventHandler(this.btnDeletePortals_Click);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(120, 318);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(100, 17);
+            this.checkBox1.TabIndex = 23;
+            this.checkBox1.Text = "Draw All Portals";
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // MainWindow
             // 
@@ -805,19 +864,19 @@
         private System.Windows.Forms.ToolStripTextBox txtViewportWidth;
         private System.Windows.Forms.ToolStripTextBox txtViewportHeight;
         private System.Windows.Forms.ToolStripDropDownButton btnOtherToolsMenu;
-        private System.Windows.Forms.ToolStripMenuItem btnTileEditorTool;
-        private System.Windows.Forms.ToolStripMenuItem btnObjectEditor;
+        internal System.Windows.Forms.ToolStripMenuItem btnTileEditorTool;
+        internal System.Windows.Forms.ToolStripMenuItem btnObjectEditor;
         internal System.Windows.Forms.ComboBox cbScenicCacheSelector;
-        private System.Windows.Forms.ToolStripMenuItem btnElementalEditor;
+        internal System.Windows.Forms.ToolStripMenuItem btnElementalEditor;
         internal System.Windows.Forms.ToolStripMenuItem ckbShowTileGrid;
         internal System.Windows.Forms.ToolStripMenuItem ckbShowObjectBases;
-        private System.Windows.Forms.ToolStripMenuItem btnItemEditor;
-        private System.Windows.Forms.ToolStripMenuItem btnEquipmentEditor;
-        private System.Windows.Forms.ToolStripMenuItem btnCritterEditor;
+        internal System.Windows.Forms.ToolStripMenuItem btnItemEditor;
+        internal System.Windows.Forms.ToolStripMenuItem btnEquipmentEditor;
+        internal System.Windows.Forms.ToolStripMenuItem btnCritterEditor;
         private System.Windows.Forms.Timer timer1;
         internal System.Windows.Forms.ToolStripMenuItem ckbShowTileBases;
-        private System.Windows.Forms.ToolStripButton btnExport;
-        private System.Windows.Forms.ToolStripMenuItem btnSoundEditor;
+        internal System.Windows.Forms.ToolStripButton btnExport;
+        internal System.Windows.Forms.ToolStripMenuItem btnSoundEditor;
         private System.Windows.Forms.TabPage tabOptions;
         private System.Windows.Forms.Label border_1;
         private System.Windows.Forms.Label label2;
@@ -839,7 +898,13 @@
         internal System.Windows.Forms.Button btnMapResize;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripMenuItem btnWorldEditor;
+        internal System.Windows.Forms.ToolStripMenuItem btnWorldEditor;
+        private System.Windows.Forms.Label label9;
+        internal System.Windows.Forms.Button btnDeletePortals;
+        internal System.Windows.Forms.Button btnAddPortal;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ListBox listPortals;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
 

@@ -67,6 +67,7 @@ namespace CityTools {
             CacheInterfaces.TileInterface.Initialize();
             CacheInterfaces.ObjectInterface.Initialize();
             CacheInterfaces.SoundInterface.PopulateList();
+            CacheInterfaces.ToolsInterface.Initialize();
 
             drawArea = mapViewPanel.Size;
             Camera.FixViewArea(drawArea);
@@ -134,24 +135,8 @@ namespace CityTools {
                 ckbShowObjectBases.Checked = !ckbShowObjectBases.Checked;
             } else if (keyData == Keys.D3) {
                 ckbShowTileBases.Checked = !ckbShowTileBases.Checked;
-            } else if (keyData == Keys.F5) {
-                ExportAndRun();
-            } else if (keyData == Keys.T) {
-                OpenTileEditor();
-            } else if (keyData == Keys.O) {
-                OpenTemplateEditor();
-            } else if (keyData == Keys.R) {
-                OpenElementEditor();
-            } else if (keyData == Keys.I) {
-                OpenItemEditor();
-            } else if (keyData == Keys.U) {
-                OpenEquipmentEditor();
-            } else if (keyData == Keys.C) {
-                OpenCritterEditor();
-            } else if (keyData == Keys.Z) {
-                OpenSoundEditor();
-            } else if (keyData == Keys.X) {
-                OpenWorldEditor();
+            } else if (CacheInterfaces.ToolsInterface.ProcessKeys(keyData)) {
+                //Do nothing
             } else if (Camera.ProcessKeys(keyData)) {
                 Camera.FixViewArea(drawArea);
                 mapViewPanel.Invalidate();
@@ -218,50 +203,6 @@ namespace CityTools {
 
             Terrain.TerrainHelper.DrawTerrain(terrain_buffer);
             ScenicHelper.DrawObjects(objects_buffer);
-        }
-
-        internal void DrawThumbnail() {
-            float scale = 0.1f;
-            Size s  = new Size((int)(MapPieceCache.CurrentPiece.Tiles.numTilesX * TileTemplate.PIXELS_X * scale), (int)(MapPieceCache.CurrentPiece.Tiles.numTilesY * TileTemplate.PIXELS_Y * scale));
-            Rectangle r = new Rectangle(Point.Empty, s);
-
-            Bitmap total = new Bitmap(s.Width, s.Height, PixelFormat.Format32bppArgb);
-            LBuffer terrainBits = new LBuffer(s);
-            LBuffer objectBits = new LBuffer(s);
-
-            float prev_CamX = Camera.Offset.X;
-            float prev_CamY = Camera.Offset.Y;
-            float prev_CamZ = Camera.ZoomLevel;
-            RectangleF prev_CamV = Camera.ViewArea;
-
-            Camera.Offset.X = 0;
-            Camera.Offset.Y = 0;
-            Camera.ZoomLevel = scale;
-            Camera.FixViewArea(s);
-
-            TerrainHelper.DrawTerrain(terrainBits);
-            ScenicHelper.DrawObjects(objectBits);
-
-            using(Graphics gfx = Graphics.FromImage(total)) {
-                gfx.DrawImage(terrainBits.bmp, Point.Empty);
-                gfx.DrawImage(objectBits.bmp, Point.Empty);
-            }
-
-            terrainBits.gfx.Dispose();
-            objectBits.gfx.Dispose();
-            terrainBits.bmp.Dispose();
-            objectBits.bmp.Dispose();
-
-            Thread.Yield();
-
-            if(!Directory.Exists("Maps/Thumbs")) Directory.CreateDirectory("Maps/Thumbs");
-
-            total.Save("Maps/Thumbs/" + MapPieceCache.CurrentPiece.Name + ".png");
-
-            Camera.Offset.X = prev_CamX;
-            Camera.Offset.Y = prev_CamY;
-            Camera.ZoomLevel = prev_CamZ;
-            Camera.ViewArea = prev_CamV;
         }
 
         private void mapViewPanel_Resize(object sender, EventArgs e) {
@@ -334,102 +275,12 @@ namespace CityTools {
             mapViewPanel.Invalidate();
         }
 
-        private void OpenTileEditor() {
-            TileEditor t = new TileEditor();
-            t.ShowDialog(this);
-            CacheInterfaces.TileInterface.ReloadAll();
+        private void btnAddPortal_Click(object sender, EventArgs e) {
+
         }
 
-        private void OpenTemplateEditor() {
-            TemplateEditor t = new TemplateEditor();
-            t.ShowDialog(this);
-            CacheInterfaces.ObjectInterface.ReloadAll();
-        }
+        private void btnDeletePortals_Click(object sender, EventArgs e) {
 
-        private void OpenElementEditor() {
-            ElementEditor t = new ElementEditor();
-            t.ShowDialog(this);
-        }
-
-        private void OpenEquipmentEditor() {
-            EquipmentEditor t = new EquipmentEditor();
-            t.ShowDialog(this);
-        }
-
-        private void OpenItemEditor() {
-            ItemEditor t = new ItemEditor();
-            t.ShowDialog(this);
-        }
-
-        private void OpenCritterEditor() {
-            CritterEditor t = new CritterEditor();
-            t.ShowDialog(this);
-        }
-
-        private void OpenSoundEditor() {
-            SoundEditor t = new SoundEditor();
-            t.ShowDialog(this);
-            CacheInterfaces.SoundInterface.PopulateList();
-        }
-
-        private void OpenWorldEditor() {
-            WorldEditor t = new WorldEditor();
-            t.ShowDialog(this);
-        }
-
-        private void ExportAndRun() {
-            string args = "map=" + MapPieceCache.CurrentPiece.Name;
-
-            try {
-                if (ToolToGameExporter.Processor.Go("Build/Data/", true)) {
-                    if (File.Exists("./Build/iRPG.exe")) {
-                        Process p = Process.Start(Path.GetFullPath("./Build/iRPG.exe"), args);
-                        p.WaitForExit();
-                    } else {
-                        MessageBox.Show("Cannot find build.");
-                    }
-                } else {
-                    MessageBox.Show("Could not export data. Skipping running the build.");
-                }
-            } catch {
-                MessageBox.Show("Could not run the build. No idea why.\n\nSuggestions:\n1. Double check you have AIR3.7.\n2. Double check you don't already have the game open.\n\nIf problems continue, let Paul know and he'll look deeper.");
-            }
-        }
-
-        private void btnTileEditorTool_Click(object sender, EventArgs e) {
-            OpenTileEditor();
-        }
-
-        private void btnObjectEditor_Click(object sender, EventArgs e) {
-            OpenTemplateEditor();
-        }
-
-        private void btnElementalEditor_Click(object sender, EventArgs e) {
-            OpenElementEditor();
-        }
-
-        private void btnItemEditor_Click(object sender, EventArgs e) {
-            OpenItemEditor();
-        }
-
-        private void btnEquipmentEditor_Click(object sender, EventArgs e) {
-            OpenEquipmentEditor();
-        }
-
-        private void btnCritterEditor_Click(object sender, EventArgs e) {
-            OpenCritterEditor();
-        }
-
-        private void btnExport_Click(object sender, EventArgs e) {
-            ExportAndRun();
-        }
-
-        private void btnSoundEditor_Click(object sender, EventArgs e) {
-            OpenSoundEditor();
-        }
-
-        private void btnWorldEditor_Click(object sender, EventArgs e) {
-            OpenWorldEditor();
         }
     }
 }

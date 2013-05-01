@@ -8,6 +8,7 @@ using System.IO;
 using ToolCache.General;
 using ToolCache.Map.Objects;
 using ToolCache.Map.Tiles;
+using ToolCache.World;
 
 namespace ToolCache.Map {
     public class MapPiece {
@@ -25,6 +26,7 @@ namespace ToolCache.Map {
         public string Filename = "";
 
         public Point WorldPosition = Point.Empty;
+        public List<Portal> Portals = new List<Portal>();
 
         public List<BaseObject> Objects = new List<BaseObject>();
         public TileMap Tiles;
@@ -49,6 +51,11 @@ namespace ToolCache.Map {
 
             WorldPosition.X = f.GetShort();
             WorldPosition.Y = f.GetShort();
+
+            short totalPortals = f.GetByte();
+            while (--totalPortals > -1) {
+                Portals.Add(World.Portals.LoadPortal(this, f));
+            }
 
             //Exit Early
             if (!loadingForUse) {
@@ -85,6 +92,11 @@ namespace ToolCache.Map {
 
             f.AddShort((short)WorldPosition.X);
             f.AddShort((short)WorldPosition.Y);
+
+            f.AddByte((byte)Portals.Count);
+            foreach (Portal p in Portals) {
+                p.Save(f);
+            }
 
             //Save terrain
             Tiles.SaveMap(f);

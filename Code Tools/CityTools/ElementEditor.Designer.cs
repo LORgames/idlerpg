@@ -1,4 +1,4 @@
-﻿namespace ToolCache.Combat.Elements {
+﻿namespace CityTools {
     partial class ElementEditor {
         /// <summary>
         /// Required designer variable.
