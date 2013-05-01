@@ -52,9 +52,10 @@ namespace ToolCache.Map {
             WorldPosition.X = f.GetShort();
             WorldPosition.Y = f.GetShort();
 
+            Portals.Clear();
             short totalPortals = f.GetByte();
             while (--totalPortals > -1) {
-                Portals.Add(World.Portals.LoadPortal(this, f));
+                World.Portals.LoadPortal(this, f);
             }
 
             //Exit Early

@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="CacheInterfaces\MapInterface.cs" />
     <Compile Include="CacheInterfaces\ObjectInterface.cs" />
+    <Compile Include="CacheInterfaces\PortalInterface.cs" />
     <Compile Include="CacheInterfaces\SoundInterface.cs" />
     <Compile Include="CacheInterfaces\TileInterface.cs" />
     <Compile Include="CacheInterfaces\ToolsInterface.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="ItemEditor.Designer.cs">
       <DependentUpon>ItemEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="ObjectSystem\PortalHelper.cs" />
     <Compile Include="ObjectSystem\ScenicPlacementHelper.cs" />
     <Compile Include="ObjectSystem\ScenicHelper.cs" />
     <Compile Include="Program.cs" />

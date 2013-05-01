@@ -64,6 +64,17 @@
             this.toolpanel_splitter = new System.Windows.Forms.SplitContainer();
             this.tabFirstLevel = new System.Windows.Forms.TabControl();
             this.tabOptions = new System.Windows.Forms.TabPage();
+            this.btnPortalExit = new System.Windows.Forms.Button();
+            this.btnPortalEntry = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.txtPortalName = new System.Windows.Forms.TextBox();
+            this.ckbShowPortals = new System.Windows.Forms.CheckBox();
+            this.btnDeletePortals = new System.Windows.Forms.Button();
+            this.btnAddPortal = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
+            this.listPortals = new System.Windows.Forms.ListBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.cbMapMusic = new System.Windows.Forms.ComboBox();
             this.lblMusic = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -94,12 +105,7 @@
             this.cbScenicCacheSelector = new System.Windows.Forms.ComboBox();
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.label9 = new System.Windows.Forms.Label();
-            this.listPortals = new System.Windows.Forms.ListBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.btnAddPortal = new System.Windows.Forms.Button();
-            this.btnDeletePortals = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.btnResetWorldPosition = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.main_splitter)).BeginInit();
             this.main_splitter.Panel1.SuspendLayout();
             this.main_splitter.Panel2.SuspendLayout();
@@ -424,7 +430,13 @@
             // 
             // tabOptions
             // 
-            this.tabOptions.Controls.Add(this.checkBox1);
+            this.tabOptions.Controls.Add(this.btnResetWorldPosition);
+            this.tabOptions.Controls.Add(this.btnPortalExit);
+            this.tabOptions.Controls.Add(this.btnPortalEntry);
+            this.tabOptions.Controls.Add(this.label12);
+            this.tabOptions.Controls.Add(this.label11);
+            this.tabOptions.Controls.Add(this.txtPortalName);
+            this.tabOptions.Controls.Add(this.ckbShowPortals);
             this.tabOptions.Controls.Add(this.btnDeletePortals);
             this.tabOptions.Controls.Add(this.btnAddPortal);
             this.tabOptions.Controls.Add(this.label10);
@@ -455,6 +467,103 @@
             this.tabOptions.TabIndex = 3;
             this.tabOptions.Text = "Options";
             this.tabOptions.UseVisualStyleBackColor = true;
+            // 
+            // btnPortalExit
+            // 
+            this.btnPortalExit.Location = new System.Drawing.Point(165, 368);
+            this.btnPortalExit.Name = "btnPortalExit";
+            this.btnPortalExit.Size = new System.Drawing.Size(44, 23);
+            this.btnPortalExit.TabIndex = 28;
+            this.btnPortalExit.Text = "Exit";
+            this.btnPortalExit.UseVisualStyleBackColor = true;
+            // 
+            // btnPortalEntry
+            // 
+            this.btnPortalEntry.Location = new System.Drawing.Point(120, 368);
+            this.btnPortalEntry.Name = "btnPortalEntry";
+            this.btnPortalEntry.Size = new System.Drawing.Size(44, 23);
+            this.btnPortalEntry.TabIndex = 27;
+            this.btnPortalEntry.Text = "Entry";
+            this.btnPortalEntry.UseVisualStyleBackColor = true;
+            // 
+            // label12
+            // 
+            this.label12.BackColor = System.Drawing.Color.Silver;
+            this.label12.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.label12.Location = new System.Drawing.Point(36, 351);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(150, 1);
+            this.label12.TabIndex = 26;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(11, 355);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(65, 13);
+            this.label11.TabIndex = 25;
+            this.label11.Text = "Portal Name";
+            // 
+            // txtPortalName
+            // 
+            this.txtPortalName.Location = new System.Drawing.Point(14, 371);
+            this.txtPortalName.Name = "txtPortalName";
+            this.txtPortalName.Size = new System.Drawing.Size(100, 20);
+            this.txtPortalName.TabIndex = 24;
+            // 
+            // ckbShowPortals
+            // 
+            this.ckbShowPortals.AutoSize = true;
+            this.ckbShowPortals.Location = new System.Drawing.Point(120, 318);
+            this.ckbShowPortals.Name = "ckbShowPortals";
+            this.ckbShowPortals.Size = new System.Drawing.Size(100, 17);
+            this.ckbShowPortals.TabIndex = 23;
+            this.ckbShowPortals.Text = "Draw All Portals";
+            this.ckbShowPortals.UseVisualStyleBackColor = true;
+            // 
+            // btnDeletePortals
+            // 
+            this.btnDeletePortals.Location = new System.Drawing.Point(162, 289);
+            this.btnDeletePortals.Name = "btnDeletePortals";
+            this.btnDeletePortals.Size = new System.Drawing.Size(47, 23);
+            this.btnDeletePortals.TabIndex = 22;
+            this.btnDeletePortals.Text = "Delete Selected";
+            this.btnDeletePortals.UseVisualStyleBackColor = true;
+            // 
+            // btnAddPortal
+            // 
+            this.btnAddPortal.Location = new System.Drawing.Point(120, 289);
+            this.btnAddPortal.Name = "btnAddPortal";
+            this.btnAddPortal.Size = new System.Drawing.Size(37, 23);
+            this.btnAddPortal.TabIndex = 21;
+            this.btnAddPortal.Text = "Add";
+            this.btnAddPortal.UseVisualStyleBackColor = true;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(8, 273);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(39, 13);
+            this.label10.TabIndex = 20;
+            this.label10.Text = "Portals";
+            // 
+            // listPortals
+            // 
+            this.listPortals.FormattingEnabled = true;
+            this.listPortals.Location = new System.Drawing.Point(13, 289);
+            this.listPortals.Name = "listPortals";
+            this.listPortals.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.listPortals.Size = new System.Drawing.Size(101, 56);
+            this.listPortals.TabIndex = 19;
+            // 
+            // label9
+            // 
+            this.label9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label9.Location = new System.Drawing.Point(11, 268);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(200, 1);
+            this.label9.TabIndex = 18;
             // 
             // cbMapMusic
             // 
@@ -740,61 +849,15 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // label9
+            // btnResetWorldPosition
             // 
-            this.label9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label9.Location = new System.Drawing.Point(11, 268);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(200, 1);
-            this.label9.TabIndex = 18;
-            // 
-            // listPortals
-            // 
-            this.listPortals.FormattingEnabled = true;
-            this.listPortals.Location = new System.Drawing.Point(13, 289);
-            this.listPortals.Name = "listPortals";
-            this.listPortals.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.listPortals.Size = new System.Drawing.Size(101, 56);
-            this.listPortals.TabIndex = 19;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(8, 273);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(39, 13);
-            this.label10.TabIndex = 20;
-            this.label10.Text = "Portals";
-            // 
-            // btnAddPortal
-            // 
-            this.btnAddPortal.Location = new System.Drawing.Point(120, 289);
-            this.btnAddPortal.Name = "btnAddPortal";
-            this.btnAddPortal.Size = new System.Drawing.Size(37, 23);
-            this.btnAddPortal.TabIndex = 21;
-            this.btnAddPortal.Text = "Add";
-            this.btnAddPortal.UseVisualStyleBackColor = true;
-            this.btnAddPortal.Click += new System.EventHandler(this.btnAddPortal_Click);
-            // 
-            // btnDeletePortals
-            // 
-            this.btnDeletePortals.Location = new System.Drawing.Point(162, 289);
-            this.btnDeletePortals.Name = "btnDeletePortals";
-            this.btnDeletePortals.Size = new System.Drawing.Size(47, 23);
-            this.btnDeletePortals.TabIndex = 22;
-            this.btnDeletePortals.Text = "Delete Selected";
-            this.btnDeletePortals.UseVisualStyleBackColor = true;
-            this.btnDeletePortals.Click += new System.EventHandler(this.btnDeletePortals_Click);
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(120, 318);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(100, 17);
-            this.checkBox1.TabIndex = 23;
-            this.checkBox1.Text = "Draw All Portals";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.btnResetWorldPosition.Location = new System.Drawing.Point(23, 190);
+            this.btnResetWorldPosition.Name = "btnResetWorldPosition";
+            this.btnResetWorldPosition.Size = new System.Drawing.Size(91, 23);
+            this.btnResetWorldPosition.TabIndex = 29;
+            this.btnResetWorldPosition.Text = "Reset Location";
+            this.btnResetWorldPosition.UseVisualStyleBackColor = true;
+            this.btnResetWorldPosition.Click += new System.EventHandler(this.btnResetWorldPosition_Click);
             // 
             // MainWindow
             // 
@@ -903,8 +966,14 @@
         internal System.Windows.Forms.Button btnDeletePortals;
         internal System.Windows.Forms.Button btnAddPortal;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.ListBox listPortals;
-        private System.Windows.Forms.CheckBox checkBox1;
+        internal System.Windows.Forms.ListBox listPortals;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
+        internal System.Windows.Forms.TextBox txtPortalName;
+        internal System.Windows.Forms.Button btnPortalExit;
+        internal System.Windows.Forms.Button btnPortalEntry;
+        internal System.Windows.Forms.CheckBox ckbShowPortals;
+        private System.Windows.Forms.Button btnResetWorldPosition;
     }
 }
 

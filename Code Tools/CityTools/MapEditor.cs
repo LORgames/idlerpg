@@ -29,7 +29,8 @@ namespace CityTools {
         Off,
         Terrain,
         Objects,
-        ObjectSelector
+        ObjectSelector,
+        Portals
     }
 
     public partial class MainWindow : Form {
@@ -125,7 +126,9 @@ namespace CityTools {
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
-            if (txtPieceName.Focused) return base.ProcessCmdKey(ref msg, keyData);
+            if (FindFocusedControl(this) is TextBox) {
+                return base.ProcessCmdKey(ref msg, keyData);
+            }
 
             this.ActiveControl = mapViewPanel;
 
@@ -163,6 +166,8 @@ namespace CityTools {
                 ScenicHelper.MouseUp(e);
             } else if (paintMode == PaintMode.Objects) {
                 mapViewPanel.Invalidate();
+            } else if (paintMode == PaintMode.Portals) {
+                PortalHelper.MouseUp(e);
             }
 
             was_mouse_down = false;
@@ -178,7 +183,9 @@ namespace CityTools {
             } else if (paintMode == PaintMode.ObjectSelector) {
                 ScenicHelper.UpdateMouse(e, input_buffer);
             } else if (paintMode == PaintMode.Terrain) {
-                Terrain.TerrainHelper.MouseMoveOrDown(e, input_buffer);
+                TerrainHelper.MouseMoveOrDown(e, input_buffer);
+            } else if (paintMode == PaintMode.Portals) {
+                PortalHelper.UpdateMouse(e, input_buffer);
             }
 
             mapViewPanel.Invalidate();
@@ -191,7 +198,9 @@ namespace CityTools {
             } else if (paintMode == PaintMode.ObjectSelector) {
                 ScenicHelper.MouseDown(e);
             } else if (paintMode == PaintMode.Terrain) {
-                Terrain.TerrainHelper.MouseMoveOrDown(e, input_buffer);
+                TerrainHelper.MouseMoveOrDown(e, input_buffer);
+            } else if (paintMode == PaintMode.Portals) {
+                PortalHelper.MouseDown(e);
             }
         }
 
@@ -201,7 +210,8 @@ namespace CityTools {
             terrain_buffer.gfx.Clear(Color.Transparent);
             objects_buffer.gfx.Clear(Color.Transparent);
 
-            Terrain.TerrainHelper.DrawTerrain(terrain_buffer);
+            TerrainHelper.DrawTerrain(terrain_buffer);
+            PortalHelper.Draw(terrain_buffer);
             ScenicHelper.DrawObjects(objects_buffer);
         }
 
@@ -281,6 +291,22 @@ namespace CityTools {
 
         private void btnDeletePortals_Click(object sender, EventArgs e) {
 
+        }
+
+        public static Control FindFocusedControl(Control control) {
+            var container = control as ContainerControl;
+            while (container != null) {
+                control = container.ActiveControl;
+                container = control as ContainerControl;
+            }
+            return control;
+        }
+
+        private void btnResetWorldPosition_Click(object sender, EventArgs e) {
+            if (MessageBox.Show("This will move the map back to (0, 0) in the World Editor. Are you sure you want to do that?", "Warning!", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes) {
+                MapPieceCache.CurrentPiece.WorldPosition = Point.Empty;
+                MapPieceCache.CurrentPiece.Edited();
+            }
         }
     }
 }

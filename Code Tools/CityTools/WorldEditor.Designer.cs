@@ -53,6 +53,7 @@
             this.btnMoveMode.Name = "btnMoveMode";
             this.btnMoveMode.Size = new System.Drawing.Size(23, 22);
             this.btnMoveMode.Text = "Move Pieces";
+            this.btnMoveMode.Click += new System.EventHandler(this.btnMoveMode_Click);
             // 
             // btnLinkAdd
             // 
@@ -62,6 +63,7 @@
             this.btnLinkAdd.Name = "btnLinkAdd";
             this.btnLinkAdd.Size = new System.Drawing.Size(23, 22);
             this.btnLinkAdd.Text = "Add Portal Links";
+            this.btnLinkAdd.Click += new System.EventHandler(this.btnLinkAdd_Click);
             // 
             // btnLinkBreak
             // 

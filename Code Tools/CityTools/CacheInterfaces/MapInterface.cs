@@ -13,6 +13,7 @@ using CityTools.Terrain;
 using CityTools.ObjectSystem;
 using System.Threading;
 using System.IO;
+using ToolCache.World;
 
 namespace CityTools.CacheInterfaces {
     public class MapInterface {
@@ -24,23 +25,29 @@ namespace CityTools.CacheInterfaces {
             MainWindow.instance.cbMapMusic.TextChanged += new EventHandler(cbMapMusic_TextChanged);
 
             MainWindow.instance.btnMapResize.Click += new EventHandler(mapSize_TextChanged);
+
+            PortalInterface.Initialize();
         }
 
-
         private static void UpdateGUI() {
+            //Update the list of all maps
             MainWindow.instance.cbMapPieces.Items.Clear();
-
             foreach (MapPiece mp in MapPieceCache.Pieces) {
                 MainWindow.instance.cbMapPieces.Items.Add(mp.Name);
             }
 
+            //Update the map info
             MainWindow.instance.txtPieceName.Text = MapPieceCache.CurrentPiece.Name;
             MainWindow.instance.txtFilename.Text = MapPieceCache.CurrentPiece.Filename;
 
+            //Update the map size
             MainWindow.instance.txtMapSizeX.Text = MapPieceCache.CurrentPiece.Tiles.numTilesX.ToString();
             MainWindow.instance.txtMapSizeY.Text = MapPieceCache.CurrentPiece.Tiles.numTilesY.ToString();
 
+            //Update the music
             MainWindow.instance.cbMapMusic.Text = MapPieceCache.CurrentPiece.Music;
+
+            PortalInterface.UpdateGUI();
         }
 
         private static void mapSize_TextChanged(object sender, EventArgs e) {
@@ -74,19 +81,23 @@ namespace CityTools.CacheInterfaces {
         }
 
         internal static void ChangeCurrentPiece(MapPiece newPiece) {
+            //Reset camera
             Camera.Offset.X = 0;
             Camera.Offset.Y = 0;
             Camera.ZoomLevel = 1;
             Camera.FixViewArea(MainWindow.instance.mapViewPanel.Size);
 
+            //Change the piece
             MapPieceCache.ChangeCurrentPiece(newPiece);
 
             UpdateGUI();
+            PortalInterface.UpdatePortalList();
         }
 
         internal static void NewPiece() {
             MapPieceCache.CreateNew(34); //Blank tile
             UpdateGUI();
+            PortalInterface.UpdatePortalList();
         }
 
         internal static void Save() {
@@ -102,6 +113,7 @@ namespace CityTools.CacheInterfaces {
             }
 
             UpdateGUI();
+            PortalInterface.UpdatePortalList();
         }
 
         internal static void Duplicate() {
