@@ -14,6 +14,7 @@ namespace ToolToGameExporter {
             BinaryIO m = new BinaryIO();
 
             m.AddShort((short)MapPieceCache.Pieces.Count);
+            m.AddShort((short)Portals.Data.Count);
 
             foreach (MapPiece map in MapPieceCache.Pieces) {
                 BinaryIO f = new BinaryIO();
@@ -36,10 +37,10 @@ namespace ToolToGameExporter {
                 m.AddByte((byte)map.Portals.Count);
 
                 foreach (Portal p in map.Portals) {
-                    m.AddShort(p.ID);
+                    m.AddShort(PortalCrusher.RemappedPortalIDs[p.ID]);
 
-                    f.AddShort(p.ID);
-                    f.AddShort(p.ExitID);
+                    f.AddShort(PortalCrusher.RemappedPortalIDs[p.ID]);
+                    f.AddShort(PortalCrusher.RemappedPortalIDs[p.ExitID]);
                     f.AddShort((short)p.ExitPoint.X);
                     f.AddShort((short)p.ExitPoint.Y);
                     f.AddShort((short)p.EntryPoint.X);

@@ -19,31 +19,35 @@ namespace ToolToGameExporter {
 
             Directory.CreateDirectory(Global.EXPORT_DIRECTORY);
 
-            //try {
+            try {
+                //Tier 0  Crushing. No Dependancies.
                 SoundCrusher.Go();
                 ObjectCrusher.Go();
                 TileCrusher.Go();
-                MapCrusher.Go();
-                EquipmentCrusher.Go();
+                PortalCrusher.Go();
+
+                //Tier 1 Crushing. Tier 0 Dependancies
+                MapCrusher.Go(); //Requires Portals, Tiles, Sounds and Objects.
+                EquipmentCrusher.Go(); //Requires Sounds.
 
                 if (Directory.Exists(p)) {
                     Directory.Delete(p, true);
                 }
-
+                
                 Directory.Move(Global.EXPORT_DIRECTORY, p);
-
+                
                 if(!silent) MessageBox.Show("Exported To The Data Folder");
-
+                
                 string ss = "";
-
+                
                 foreach (String error in Errors) {
                     ss += error + "\n";
                 }
-
+                
                 if(ss != "") MessageBox.Show(ss);
-
+                
                 return true;
-            /*} catch {
+            } catch {
                 if(!silent) MessageBox.Show("Please close the exporter and try again! (Some kind of caching issue occurred)");
 
                 try {
@@ -51,7 +55,7 @@ namespace ToolToGameExporter {
                 } catch { }
 
                 return false;
-            }*/
+            }
         }
     }
 }

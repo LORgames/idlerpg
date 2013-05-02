@@ -12,12 +12,13 @@ package Game.Map {
 	 * @author Paul
 	 */
 	public class WorldData {
-		
-		private static var Maps:Vector.<String>;
-		public static var TileSheet:BitmapData;
+		public static var Maps:Vector.<String>;
+		public static var PortalDestinations:Vector.<String>;
 		
 		public static var CurrentMap:MapData;
 		private static var RequestedMapLoad:String = "";
+		
+		public static var TileSheet:BitmapData;
 		
 		public static var ME:Person = new Person();
 		
@@ -36,9 +37,12 @@ package Game.Map {
 		
 		public static function ParseWorldFile(data:ByteArray):void {
 			var totalMaps:int = data.readShort();
+			var totalPortals:int = data.readShort();
 			
 			Maps = new Vector.<String>(totalMaps, true);
-			var loadMapID:int = 2;
+			PortalDestinations = new Vector.<String>(totalPortals, true);
+			
+			var loadMapID:int = 0;
 			
 			var i:int = totalMaps;
 			while(--i > -1) {
@@ -47,7 +51,12 @@ package Game.Map {
 				var p:int = data.readByte();
 				
 				while (--p > -1) {
+					var portalID:int = data.readShort();
+					PortalDestinations[portalID] = s;
 					
+					if (RequestedMapLoad == "" && portalID == 0) {
+						loadMapID = i;
+					}
 				}
 				
 				if (s == RequestedMapLoad) {

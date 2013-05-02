@@ -3,6 +3,7 @@ package Game.Critter {
 	import flash.display.BitmapData;
 	import flash.geom.Rectangle;
 	import Game.Map.MapData;
+	import Game.Map.Portal;
 	import Game.Map.TileHelper;
 	import Game.Map.TileInstance;
 	import Game.Map.TileTemplate;
@@ -40,20 +41,11 @@ package Game.Critter {
 			this.Y = (location / newMap.TileSizeX) * 48;
 		}
 		
-		public function RequestMove(xSpeed:Number, ySpeed:Number):void {
-			if(xSpeed != 0 || ySpeed != 0) {
-				direction = SpeedToDirection(xSpeed, ySpeed);
-				
-				moveSpeedX = xSpeed * MovementSpeed;
-				moveSpeedY = ySpeed * MovementSpeed;
-				
-				isMoving = true;
-			} else {
-				moveSpeedX = 0;
-				moveSpeedY = 0;
-				
-				isMoving = false;
-			}
+		public function RequestTeleport(newMap:MapData, portal:Portal):void {
+			currentMap = newMap;
+			
+			this.X = portal.ExitPoint.x;
+			this.Y = portal.ExitPoint.y;
 		}
 		
 		protected function SpeedToDirection(xSpeed:int, ySpeed:int):int {
@@ -73,14 +65,6 @@ package Game.Critter {
 					return 3;
 				}
 			}
-		}
-		
-		public function RequestBasicAttack():void {
-			//need to deal with a few things here, incl state management
-		}
-		
-		public function RequestTeleport(tileID:int):void {
-			
 		}
 		
 		public function Update(dt:Number):void {
@@ -103,18 +87,19 @@ package Game.Critter {
 			var i:int = tiles.length;
 			var collision:Boolean = false;
 			
+			//Check if the critter tried to leave the map boundaries
 			if (MyRect.x < 0 || MyRect.y < 0 || MyRect.x + MyRect.height > currentMap.SizeX || MyRect.y + MyRect.width > currentMap.SizeY) {
 				collision = true;
 			}
 			
+			//They didn't leave the map? Lets try solid objects
 			if(!collision) {
 				while (--i > -1) {
-					var rs:Vector.<Rect> = tiles[i].SolidRectangles;
-					var j:int = rs.length;
+					var j:int;
 					
-					if (TileTemplate.Tiles[tiles[i].TileID].movementCost > CurrentMovementCost) {
-						CurrentMovementCost = TileTemplate.Tiles[tiles[i].TileID].movementCost;
-					}
+					//Look for collision in the tile.
+					var rs:Vector.<Rect> = tiles[i].SolidRectangles;
+					j = rs.length;
 					
 					while (--j > -1) {
 						if (rs[j].intersects(MyRect)) {
@@ -124,6 +109,11 @@ package Game.Critter {
 					}
 					
 					if (collision) break;
+					
+					//No collision so lets update the movement speed
+					if (TileTemplate.Tiles[tiles[i].TileID].movementCost > CurrentMovementCost) {
+						CurrentMovementCost = TileTemplate.Tiles[tiles[i].TileID].movementCost;
+					}
 				}
 			}
 			
@@ -135,6 +125,26 @@ package Game.Critter {
 				MyRect.x = X - MyRect.width / 2;
 				MyRect.y = Y - MyRect.height / 2;
 			}
+		}
+		
+		public function RequestMove(xSpeed:Number, ySpeed:Number):void {
+			if(xSpeed != 0 || ySpeed != 0) {
+				direction = SpeedToDirection(xSpeed, ySpeed);
+				
+				moveSpeedX = xSpeed * MovementSpeed;
+				moveSpeedY = ySpeed * MovementSpeed;
+				
+				isMoving = true;
+			} else {
+				moveSpeedX = 0;
+				moveSpeedY = 0;
+				
+				isMoving = false;
+			}
+		}
+		
+		public function RequestBasicAttack():void {
+			//need to deal with a few things here, incl state management
 		}
 		
 	}
