@@ -30,6 +30,8 @@ namespace ToolCache.Equipment {
 
         public float AnimationSpeed = 0.2f;
 
+        public string OnAttackScript = "";
+
         public EquipmentItem(bool initialize = true) {
             if(initialize) VerifyAnimationSets();
         }
@@ -69,6 +71,8 @@ namespace ToolCache.Equipment {
                 t.OffsetX_3 = f.GetShort();
                 t.OffsetY_3 = f.GetShort();
             }
+
+            t.OnAttackScript = f.GetString();
 
             t.VerifyAnimationSets();
             t.UpdateSpeed();
@@ -112,6 +116,8 @@ namespace ToolCache.Equipment {
                 f.AddShort(OffsetX_3);
                 f.AddShort(OffsetY_3);
             }
+
+            f.AddString(OnAttackScript);
         }
 
         public AnimatedObject DisplayAnimation(States s, Direction d, int layer) {

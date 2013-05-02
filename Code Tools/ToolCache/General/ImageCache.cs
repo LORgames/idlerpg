@@ -30,7 +30,11 @@ namespace ToolCache.General {
 
         public static void ForceCache(string filename) {
             using (var bmpTemp = new Bitmap(filename)) {
-                img_store.Add(filename, new Bitmap(bmpTemp)); //(well that was easy)
+                if (img_store.ContainsKey(filename)) {
+                    img_store[filename] = new Bitmap(bmpTemp);
+                } else {
+                    img_store.Add(filename, new Bitmap(bmpTemp)); //(well that was easy)
+                }
             }
         }
     }

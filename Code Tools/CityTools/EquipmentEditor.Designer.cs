@@ -720,6 +720,7 @@ namespace CityTools {
             this.txtAttackScript.Name = "txtAttackScript";
             this.txtAttackScript.Size = new System.Drawing.Size(312, 69);
             this.txtAttackScript.TabIndex = 65;
+            this.txtAttackScript.TextChanged += new System.EventHandler(this.ValueChanged);
             // 
             // label18
             // 

@@ -177,6 +177,8 @@ namespace CityTools {
 
             numAnimSpeed.Value = (decimal)currentEquipment.AnimationSpeed;
 
+            txtAttackScript.Text = currentEquipment.OnAttackScript;
+
             UpdateOffsets();
 
             _updatingForm = false;
@@ -388,6 +390,8 @@ namespace CityTools {
             currentEquipment.isAvailableAtStart = ckbAvailableAtStart.Checked;
             currentEquipment.Name = txtName.Text;
             currentEquipment.Type = (EquipmentTypes)Enum.Parse(typeof(EquipmentTypes), cbItemType.Text);
+
+            currentEquipment.OnAttackScript = txtAttackScript.Text;
 
             if (_new) EquipmentManager.AddEquipment(currentEquipment);
             else EquipmentManager.Updated(currentEquipment);
