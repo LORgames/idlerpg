@@ -15,7 +15,6 @@ package Game.Map {
 		public static var Maps:Vector.<String>;
 		public static var PortalDestinations:Vector.<String>;
 		
-		public static var CurrentMap:MapData;
 		private static var RequestedMapLoad:String = "";
 		
 		public static var TileSheet:BitmapData;
@@ -67,7 +66,7 @@ package Game.Map {
             }
 			
 			if (totalMaps > 0) {
-				CurrentMap = new MapData(Maps[loadMapID]);
+				ME.CurrentMap = new MapData(Maps[loadMapID]);
 			}
 			
 			Global.LoadingTotal--;

@@ -27,24 +27,28 @@ package Game.Critter
 			equipment.y = this.Y;
 			
 			//Need to make sure there is a map for more advanced checks
-			if (currentMap == null) return;
+			if (CurrentMap == null) return;
 			
 			//Check to see if this object can portal
-			var j:int = currentMap.Portals.length;
-			while (--j > -1) {
-				if (currentMap.Portals[j].Entry.intersects(MyRect)) {
-					if (WorldData.CurrentMap.Name == WorldData.PortalDestinations[currentMap.Portals[j].ExitID]) {
-						var k:int = currentMap.Portals.length;
-						while (--k > -1) {
-							if(currentMap.Portals[j].ExitID == currentMap.Portals[k].ID) {
-								RequestTeleport(currentMap, currentMap.Portals[k]);
+			if(CurrentMap.Portals != null) {
+				var j:int = CurrentMap.Portals.length;
+				while (--j > -1) {
+					if (CurrentMap.Portals[j].Entry.intersects(MyRect)) {
+						var exitID:int = CurrentMap.Portals[j].ExitID;
+						if (WorldData.ME.CurrentMap.Name == WorldData.PortalDestinations[exitID]) {
+							var k:int = CurrentMap.Portals.length;
+							while (--k > -1) {
+								if(CurrentMap.Portals[j].ExitID == CurrentMap.Portals[k].ID) {
+									RequestTeleport(CurrentMap, CurrentMap.Portals[k]);
+								}
 							}
+							break;
+						} else {
+							trace("Entering portal " + CurrentMap.Portals[j].ID + " (" + j + ") and leaving portal " + exitID);
+							WorldData.ME.CurrentMap = new MapData(WorldData.PortalDestinations[exitID], exitID);
 						}
 						break;
-					} else {
-						WorldData.CurrentMap = new MapData(WorldData.PortalDestinations[currentMap.Portals[j].ExitID]);
 					}
-					break;
 				}
 			}
 		}

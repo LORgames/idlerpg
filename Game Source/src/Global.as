@@ -1,8 +1,7 @@
-package  
-{
+package {
 	/**
 	 * ...
-	 * @author ...
+	 * @author Paul
 	 */
 	public class Global {
 		public static var LoadingTotal:int = 0;

@@ -7,7 +7,7 @@ using ToolCache.General;
 using System.Drawing;
 
 namespace ToolCache.World {
-    public class Portal {
+    public class Portal : IComparable<Portal> {
 
         public string Name;
 
@@ -37,6 +37,10 @@ namespace ToolCache.World {
 
         public override string ToString() {
             return Name + " (" + ID + ")";
+        }
+
+        public int CompareTo(Portal other) {
+            return this.ID.CompareTo(other.ID);
         }
     }
 

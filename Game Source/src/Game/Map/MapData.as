@@ -1,4 +1,5 @@
 package Game.Map {
+	import flash.display.IDrawCommand;
 	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;
 	import Game.Critter.BaseCritter;
@@ -29,8 +30,14 @@ package Game.Map {
 		
 		public var Critters:Vector.<BaseCritter> = new Vector.<BaseCritter>();
 		
-		public function MapData(mapname:String) {
+		private static var firstload:Boolean = true;
+		private var ExpectedAtPortalID:int = -1;
+		
+		public function MapData(mapname:String, portalID:int = -1) {
 			Name = mapname;
+			
+			this.ExpectedAtPortalID = portalID;
+			if (portalID != -1) firstload = true;
 			
 			BinaryLoader.Load("Data/Map_" + mapname + ".bin", ParseData);
 			
@@ -42,6 +49,7 @@ package Game.Map {
 			var i:int;
 			var x:int;
 			var y:int;
+			var _pID:int = 0;
 			
 			//Some map information
 			BinaryLoader.GetString(b); //name of the map (can be discarded atm)
@@ -55,6 +63,12 @@ package Game.Map {
 			//Load in all the portals
 			while (--portals > -1) {
 				Portals[i] = new Portal(b);
+				
+				if (firstload && ExpectedAtPortalID == Portals[i].ID) {
+					trace("Found portal " + portals + " (" + ExpectedAtPortalID + ") == " + Portals[i].ID);
+					_pID = i;
+				}
+				
 				i++;
 			}
 			
@@ -107,12 +121,15 @@ package Game.Map {
 			
 			Global.LoadingTotal--;
 			
-			//MusicPlayer.PlaySong(Music);
+			MusicPlayer.PlaySong(Music);
 			
-			if (Portals.length > 0) {
-				WorldData.ME.RequestTeleport(this, Portals[0]);
-			} else {
-				WorldData.ME.ShiftMaps(this, 281);
+			if (firstload) {
+				firstload = false;
+				if (Portals.length > 0) {
+					WorldData.ME.RequestTeleport(this, Portals[_pID]);
+				} else {
+					WorldData.ME.ShiftMaps(this, 281);
+				}
 			}
 		}
 	}

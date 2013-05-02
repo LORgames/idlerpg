@@ -13,10 +13,15 @@ namespace ToolToGameExporter {
 
             short nextID = 0;
 
-            foreach (Portal p in Portals.Data.Values) {
+            List<Portal> AllValues = Portals.Data.Values.ToList<Portal>();
+            AllValues.Sort();
+
+            foreach (Portal p in AllValues) {
                 RemappedPortalIDs[p.ID] = nextID;
                 nextID++;
             }
+
+            return;
         }
 
     }

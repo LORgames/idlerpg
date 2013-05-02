@@ -24,7 +24,7 @@ package Game.Critter {
 		public var MovementSpeed:int = 100;
 		public var CurrentMovementCost:Number = 1;
 		
-		public var currentMap:MapData;
+		public var CurrentMap:MapData;
 		
 		public var X:int = 0;
 		public var Y:int = 0;
@@ -35,14 +35,14 @@ package Game.Critter {
 		}
 		
 		public function ShiftMaps(newMap:MapData, location:int = 0):void {
-			currentMap = newMap;
+			CurrentMap = newMap;
 			
 			this.X = (location % newMap.TileSizeX) * 48;
 			this.Y = (location / newMap.TileSizeX) * 48;
 		}
 		
 		public function RequestTeleport(newMap:MapData, portal:Portal):void {
-			currentMap = newMap;
+			CurrentMap = newMap;
 			
 			this.X = portal.ExitPoint.x;
 			this.Y = portal.ExitPoint.y;
@@ -68,7 +68,7 @@ package Game.Critter {
 		}
 		
 		public function Update(dt:Number):void {
-			if (currentMap == null) return;
+			if (CurrentMap == null) return;
 			
 			//Store these in case
 			var prevX:int = X;
@@ -83,12 +83,12 @@ package Game.Critter {
 			MyRect.y = Y - MyRect.height / 2;
 			
 			//Now do a quick tile check to see if we hit anything
-			var tiles:Vector.<TileInstance> = TileHelper.GetTiles(MyRect, currentMap);
+			var tiles:Vector.<TileInstance> = TileHelper.GetTiles(MyRect, CurrentMap);
 			var i:int = tiles.length;
 			var collision:Boolean = false;
 			
 			//Check if the critter tried to leave the map boundaries
-			if (MyRect.x < 0 || MyRect.y < 0 || MyRect.x + MyRect.height > currentMap.SizeX || MyRect.y + MyRect.width > currentMap.SizeY) {
+			if (MyRect.x < 0 || MyRect.y < 0 || MyRect.x + MyRect.height > CurrentMap.SizeX || MyRect.y + MyRect.width > CurrentMap.SizeY) {
 				collision = true;
 			}
 			

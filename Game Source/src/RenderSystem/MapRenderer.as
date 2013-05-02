@@ -44,15 +44,15 @@ package RenderSystem {
 			
 			if (xTilePosL < 0) xTilePosL = 0;
 			if (yTilePosL < 0) yTilePosL = 0;
-			if (xTilePosU >= WorldData.CurrentMap.TileSizeX) xTilePosU = WorldData.CurrentMap.TileSizeX - 1;
-			if (yTilePosU >= WorldData.CurrentMap.TileSizeY) yTilePosU = WorldData.CurrentMap.TileSizeY - 1;
+			if (xTilePosU >= WorldData.ME.CurrentMap.TileSizeX) xTilePosU = WorldData.ME.CurrentMap.TileSizeX - 1;
+			if (yTilePosU >= WorldData.ME.CurrentMap.TileSizeY) yTilePosU = WorldData.ME.CurrentMap.TileSizeY - 1;
 			
-			var tiles:Vector.<TileInstance> = WorldData.CurrentMap.Tiles;
+			var tiles:Vector.<TileInstance> = WorldData.ME.CurrentMap.Tiles;
 			var tileArt:BitmapData = WorldData.TileSheet;
 			
 			var xPos:int = xTilePosU+1;
 			var yPos:int = 0;
-			var xSize:int = WorldData.CurrentMap.TileSizeX;
+			var xSize:int = WorldData.ME.CurrentMap.TileSizeX;
 			
 			data.lock();
 			

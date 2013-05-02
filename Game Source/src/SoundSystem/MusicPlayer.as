@@ -10,7 +10,7 @@ package SoundSystem
 	 */
 	public class MusicPlayer {
 		
-		private static var snd:Sound = new Sound();
+		private static var snd:Sound;
 		private static var channel:SoundChannel;
 		
 		public static function PlaySong(id:int = 0):void {
@@ -21,6 +21,8 @@ package SoundSystem
 			}
 			
 			var req:URLRequest = new URLRequest("Data/Music_" + id + ".mp3");
+			
+			snd = new Sound();
 			snd.load(req);
 			
 			FinishedPlaying();
@@ -32,7 +34,6 @@ package SoundSystem
 			channel = snd.play(80);
 			channel.addEventListener(Event.SOUND_COMPLETE, FinishedPlaying);
 		}
-		
 	}
 
 }
