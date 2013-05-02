@@ -39,6 +39,8 @@ package Game.Map {
 			this.ExpectedAtPortalID = portalID;
 			if (portalID != -1) firstload = true;
 			
+			// TODO: start fade transition
+			
 			BinaryLoader.Load("Data/Map_" + mapname + ".bin", ParseData);
 			
 			Global.LoadingTotal++;
@@ -131,6 +133,10 @@ package Game.Map {
 					WorldData.ME.ShiftMaps(this, 281);
 				}
 			}
+			
+			// TODO: end fade transition
+			// when global loading = 0 (in main.cycle do if prev load = 0 and current load not 0 then fade to black
+			// else if prev load is > 0 and current load is now 0 then fade in
 		}
 	}
 

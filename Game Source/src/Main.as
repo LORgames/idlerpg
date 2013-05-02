@@ -112,6 +112,16 @@ package {
 				TrySwap(i-4);
 			}
 			
+			if (Global.PrevLoadingTotal == 0 && Global.LoadingTotal != 0) {
+				//fade out
+				//Renderman.FadeOut();
+			} else if (Global.PrevLoadingTotal > 0 && Global.LoadingTotal == 0) {
+				//fade in
+				//Renderman.FadeIn();
+			}
+			
+			Global.PrevLoadingTotal = Global.LoadingTotal;
+			
 			Renderer.Render(dt);
 		}
 		

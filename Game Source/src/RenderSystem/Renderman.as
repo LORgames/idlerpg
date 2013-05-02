@@ -14,17 +14,24 @@ package RenderSystem {
 		
 		public static var AnimatedObjects:Vector.<IAnimated> = new Vector.<IAnimated>();
 		
+		private var loadScreen:LoadScreen;
+		
 		public function Renderman() {
 			map = new MapRenderer();
 			
+			loadScreen = new LoadScreen();
+			
 			Main.I.addChild(map);
 			Main.I.addChild(Main.OrderedLayer);
+			
+			Main.I.addChild(loadScreen);
 			
 			Main.I.addChild(map.DebugLayer);
 		}
 		
 		public function Resized():void {
 			map.Resized();
+			loadScreen.Resized();
 		}
 		
 		public function Render(dt:Number):void {
@@ -39,6 +46,8 @@ package RenderSystem {
 			map.DebugLayer.y = Camera.Y;
 			
 			map.Draw();
+			
+			loadScreen.Draw();
 			
 			var i:int = AnimatedObjects.length;
 			
