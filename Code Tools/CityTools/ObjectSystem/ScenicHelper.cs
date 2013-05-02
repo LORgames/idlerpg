@@ -45,9 +45,9 @@ namespace CityTools.ObjectSystem {
                 foreach (TileInstance tile in tiles) {
                     List<BaseObject> objects = tile.EXOB;
                     for (int k = 0; k < objects.Count; k++) {
-                        if (!selectedObjects.Contains(objects[k])) {
-                            foreach (Rectangle r in objects[k].ActualBases) {
-                                if (selectBox.IntersectsWith(r)) {
+                        foreach (Rectangle r in objects[k].ActualBases) {
+                            if (selectBox.IntersectsWith(r)) {
+                                if (!selectedObjects.Contains(objects[k])) {
                                     selectedObjects.Add(objects[k]);
                                 }
                             }
