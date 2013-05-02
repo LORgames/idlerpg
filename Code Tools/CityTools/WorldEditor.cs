@@ -40,12 +40,14 @@ namespace CityTools {
         public WorldEditor() {
             InitializeComponent();
 
+            // load all pieces
             foreach (MapPiece p in MapPieceCache.Pieces) {
                 Data.Add(new WorldData(p));
             }
 
             buffer = new LBuffer(pbMainPanel.Size);
 
+            // set all pens
             PortalPen_OneWay.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
             PortalPen_TwoWay.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
             PortalPen_TwoWay.StartCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
@@ -54,10 +56,12 @@ namespace CityTools {
         private void pbMainPanel_Paint(object sender, PaintEventArgs e) {
             buffer.gfx.Clear(Color.Beige);
 
+            // draw all map pieces
             foreach (WorldData d in Data) {
                 d.Draw(buffer, Offset);
             }
 
+            // draw all the portals in the map pieces
             foreach (Portal portal0 in Portals.Data.Values) {
                 if (portal0.ExitID > 0 && portal0.ExitID != portal0.ID && Portals.Data.ContainsKey(portal0.ExitID)) {
                     int x1 = portal0.Map.WorldPosition.X + portal0.ExitPoint.X / 10 + Offset.X;
@@ -77,13 +81,16 @@ namespace CityTools {
                 }
             }
 
+            // if adding a link, draw arrow from selected portal to the cursor
             if (EditMode == WorldEditMode.AddLink && selectedPortal != null && isMouseDown) {
                 buffer.gfx.DrawLine(PortalPen_OneWay, p0.X + Offset.X, p0.Y + Offset.Y, p1.X + Offset.X, p1.Y + Offset.Y);
             }
 
+            // draw buffer to screen
             e.Graphics.DrawImage(buffer.bmp, Point.Empty);
         }
 
+        // clean up
         private void WorldEditor_FormClosing(object sender, FormClosingEventArgs e) {
             foreach (WorldData d in Data) {
                 d.Dispose();
@@ -93,11 +100,13 @@ namespace CityTools {
         }
 
         private void pbMainPanel_Resize(object sender, EventArgs e) {
+            // clean up buffer and then create new buffer
             buffer.Dispose();
             buffer = new LBuffer(pbMainPanel.Size);
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
+            // move the map piece via WASD
             if (keyData == Keys.W) {
                 Offset.Y += 25;
             } else if (keyData == Keys.S) {
@@ -108,18 +117,21 @@ namespace CityTools {
                 Offset.X -= 25;
             }
 
+            // force redraw of screen
             pbMainPanel.Invalidate();
 
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
         private Portal SelectPortal(MouseEventArgs e) {
+            // size of portal icon
             Rectangle r = new Rectangle(0, 0, 16, 16);
 
             Point _p = Point.Empty;
             _p.X = e.X - Offset.X;
             _p.Y = e.Y - Offset.Y;
 
+            // Scan for portal under cursor.
             foreach (WorldData d in Data) {
                 if (d.rect.Contains(_p)) {
                     foreach (Portal p in d.myPiece.Portals) {
@@ -139,30 +151,49 @@ namespace CityTools {
         private void pbMainPanel_MouseDown(object sender, MouseEventArgs e) {
             isMouseDown = true;
 
+            Rectangle r = new Rectangle(0, 0, 16, 16);
+
             p0.X = e.X - Offset.X;
             p0.Y = e.Y - Offset.Y;
 
             selectedObject = null;
+            selectedPortal = null;
             
+            // scan map pieces for map or portal under cursor.
             foreach (WorldData d in Data) {
                 if (d.rect.Contains(p0)) {
-                    selectedObject = d;
+                    bool hitPortal = false;
+
+                    // scan for portal
+                    foreach (Portal p in d.myPiece.Portals) {
+                        r.X = p.ExitPoint.X / 10 + d.rect.X + Offset.X - 8;
+                        r.Y = p.ExitPoint.Y / 10 + d.rect.Y + Offset.Y - 8;
+
+                        if (r.Contains(e.Location)) {
+                            selectedPortal = p;
+                            hitPortal = true;
+                            if (e.Button == MouseButtons.Left) {
+                                EditMode = WorldEditMode.AddLink;
+                            } else if (e.Button == MouseButtons.Right) {
+                                selectedPortal.ExitID = selectedPortal.ID;
+                                selectedPortal = null;
+                                selectedObject = null;
+                            }
+                            break;
+                        }
+                    }
+
+                    // if not a portal use the map piece
+                    if (!hitPortal) {
+                        selectedObject = d;
+                        EditMode = WorldEditMode.Move;
+                    }
                     break;
                 }
             }
 
-            if (EditMode == WorldEditMode.AddLink || EditMode == WorldEditMode.RemoveLink) {
-                selectedPortal = SelectPortal(e);
-
-                if (EditMode == WorldEditMode.RemoveLink) {
-                    selectedPortal.ExitID = selectedPortal.ID;
-                    selectedPortal = null;
-                    selectedObject = null;
-                }
-            }
-
-
-            if (selectedObject == null) isMouseDown = false;
+            // if nothing hit, cancel mouse down
+            if (selectedObject == null && selectedPortal == null) isMouseDown = false;
         }
 
         private void pbMainPanel_MouseMove(object sender, MouseEventArgs e) {
@@ -170,6 +201,7 @@ namespace CityTools {
                 p1.X = e.X - Offset.X;
                 p1.Y = e.Y - Offset.Y;
 
+                // move the map piece with the cursor
                 if (EditMode == WorldEditMode.Move) {
                     int dx = p1.X - p0.X;
                     int dy = p1.Y - p0.Y;
@@ -182,14 +214,17 @@ namespace CityTools {
                     p0.Y = p1.Y;
                 }
 
+                // force redraw of screen
                 pbMainPanel.Invalidate();
             }
         }
 
         private void pbMainPanel_MouseUp(object sender, MouseEventArgs e) {
             isMouseDown = false;
+            // force redraw of screen
             pbMainPanel.Invalidate();
 
+            // if adding link, scan for portal underneath, if found create link
             if (EditMode == WorldEditMode.AddLink) {
                 Portal p2 = SelectPortal(e);
 
@@ -207,14 +242,6 @@ namespace CityTools {
 
         private void pbMainPanel_MouseLeave(object sender, EventArgs e) {
             isMouseDown = false;
-        }
-
-        private void btnMoveMode_Click(object sender, EventArgs e) {
-            EditMode = WorldEditMode.Move;
-        }
-
-        private void btnLinkAdd_Click(object sender, EventArgs e) {
-            EditMode = WorldEditMode.AddLink;
         }
     }
 
