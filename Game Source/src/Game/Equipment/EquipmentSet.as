@@ -25,8 +25,8 @@ package Game.Equipment {
 			this.addChild(Legs);
 			this.addChild(Body2);
 			this.addChild(Face);
-			this.addChild(Headgear);
 			this.addChild(Body1);
+			this.addChild(Headgear);
 			this.addChild(Weapon1);
 		}
 		
@@ -68,7 +68,7 @@ package Game.Equipment {
 			
             //Solve body position
             Body1.x = - bodyCenter.x - b_offset.x;
-            Body1.y = WaistHeight - b_offset.y;
+            Body1.y = WaistHeight - b_offset.y - bodyCenter.y;
 			
             //Solve body position
             Body2.x = Body1.x;
@@ -76,15 +76,15 @@ package Game.Equipment {
 			
             //Solve head position
             Face.x = - f_offset.x - faceCenter.x;
-            Face.y = WaistHeight - f_offset.y;
+            Face.y = WaistHeight - f_offset.y - faceCenter.y;
 			
 			//Solve headgear if possible
             Headgear.x = - h_offset.x - headCenter.x;
-            Headgear.y = WaistHeight - h_offset.y;
+            Headgear.y = WaistHeight - h_offset.y - headCenter.y;
 			
             //Solve weapon if possible
             Weapon1.x = - w_offset.x - weaponCenter.x;
-            Weapon1.y = WaistHeight - w_offset.y;
+            Weapon1.y = WaistHeight - w_offset.y - weaponCenter.y;
 			
             Weapon2.x = Weapon1.x;
             Weapon2.y = Weapon1.y;

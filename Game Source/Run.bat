@@ -4,9 +4,9 @@ call bat\SetupSDK.bat
 call bat\SetupApplication.bat
 
 :target
-goto desktop
+::goto desktop
 ::goto android-debug
-::goto android-test
+goto android-test
 ::goto windows-package
 set INTERPRETER=-interpreter
 ::goto ios-debug
@@ -20,7 +20,7 @@ set SCREEN_SIZE=iPhone5Retina
 
 :desktop-run
 echo.
-echo Starting AIR Debug Launcher with screen size '%SCREEN_SIZE%'
+echo Starting AIR Debug Launcher.
 echo.
 echo (hint: edit 'Run.bat' to test on device or change screen size)
 echo.

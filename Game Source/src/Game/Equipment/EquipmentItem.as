@@ -10,7 +10,6 @@ package Game.Equipment {
 	 * @author Paul
 	 */
 	public class EquipmentItem extends Bitmap implements IAnimated {
-		
 		public var Info:EquipmentInfo;
 		
 		public var Layer:int = 0;

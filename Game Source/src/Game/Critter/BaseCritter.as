@@ -14,7 +14,7 @@ package Game.Critter {
 	 * @author Paul
 	 */
 	public class BaseCritter implements IUpdatable {
-		public var direction:int = 0;
+		public var direction:int = 3;
 		public var state:int = 0;
 		
 		public var isMoving:Boolean = false;

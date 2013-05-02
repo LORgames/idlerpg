@@ -52,22 +52,22 @@ namespace ToolCache.Drawing {
             //Solve body position
             Point bodyLink = Point.Empty;
             bodyLink.X = p.X - bodyCenter.X - b_offset.X;
-            bodyLink.Y = WaistHeight - b_offset.Y;
+            bodyLink.Y = WaistHeight - b_offset.Y - bodyCenter.Y;
 
             //Solve head position
             Point headLink = Point.Empty;
             headLink.X = p.X - f_offset.X - faceCenter.X;
-            headLink.Y = WaistHeight - f_offset.Y;
+            headLink.Y = WaistHeight - f_offset.Y - faceCenter.Y;
 
             //Solve headgear if possible
             Point headgearLink = Point.Empty;
             headgearLink.X = p.X - h_offset.X - headCenter.X;
-            headgearLink.Y = WaistHeight - h_offset.Y;
+            headgearLink.Y = WaistHeight - h_offset.Y - headCenter.Y;
 
             //Solve weapon if possible
             Point weaponLink = Point.Empty;
             weaponLink.X = p.X - w_offset.X - weaponCenter.X;
-            weaponLink.Y = WaistHeight - w_offset.Y;
+            weaponLink.Y = WaistHeight - w_offset.Y - weaponCenter.Y;
 
             ////////////////////////////////////////// DRAW STUFF
 

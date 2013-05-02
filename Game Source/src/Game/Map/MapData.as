@@ -25,6 +25,8 @@ package Game.Map {
 		public var TotalObjects:int = 0;
 		public var Objects:Vector.<ObjectInstance>;
 		
+		public var Portals:Vector.<Portal>;
+		
 		public var Critters:Vector.<BaseCritter> = new Vector.<BaseCritter>();
 		
 		public function MapData(mapname:String) {

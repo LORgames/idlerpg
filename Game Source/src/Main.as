@@ -104,17 +104,21 @@ package {
 			
 			//Sort the children
 			i = OrderedLayer.numChildren;
-			while(--i > 1) {
-				if ((IObjectLayer)(OrderedLayer.getChildAt(i)).GetTrueY() < (IObjectLayer)(OrderedLayer.getChildAt(i - 1)).GetTrueY()) {
-					OrderedLayer.swapChildrenAt(i, i - 1);
-				}
-				
-				if ((IObjectLayer)(OrderedLayer.getChildAt(i - 1)).GetTrueY() < (IObjectLayer)(OrderedLayer.getChildAt(i - 2)).GetTrueY()) {
-					OrderedLayer.swapChildrenAt(i - 1, i - 2);
-				}
+			while(--i > 4) {
+				TrySwap(i-0);
+				TrySwap(i-1);
+				TrySwap(i-2);
+				TrySwap(i-3);
+				TrySwap(i-4);
 			}
 			
 			Renderer.Render(dt);
+		}
+		
+		private function TrySwap(i:int):void {
+			if ((IObjectLayer)(OrderedLayer.getChildAt(i)).GetTrueY() < (IObjectLayer)(OrderedLayer.getChildAt(i-1)).GetTrueY()) {
+				OrderedLayer.swapChildrenAt(i, i-1);
+			}
 		}
 		
 		private function Resized(e:* = null):void {

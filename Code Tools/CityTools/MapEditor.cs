@@ -285,14 +285,6 @@ namespace CityTools {
             mapViewPanel.Invalidate();
         }
 
-        private void btnAddPortal_Click(object sender, EventArgs e) {
-
-        }
-
-        private void btnDeletePortals_Click(object sender, EventArgs e) {
-
-        }
-
         public static Control FindFocusedControl(Control control) {
             var container = control as ContainerControl;
             while (container != null) {

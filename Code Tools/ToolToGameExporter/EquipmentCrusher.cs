@@ -119,6 +119,7 @@ namespace ToolToGameExporter {
                                 if (size.Height > im.Height) yPos += (size.Height - im.Height) / 2;
 
                                 gfx.DrawImage(im, new Rectangle(xPos, yPos, im.Width, im.Height));
+                                
                                 im.Dispose();
                             }
                         }

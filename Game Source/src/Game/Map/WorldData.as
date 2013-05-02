@@ -42,8 +42,13 @@ package Game.Map {
 			
 			var i:int = totalMaps;
 			while(--i > -1) {
-				var l:int = data.readShort();
-				var s:String = data.readMultiByte(l, "iso-8859-1");
+				var s:String = BinaryLoader.GetString(data);
+				
+				var p:int = data.readByte();
+				
+				while (--p > -1) {
+					
+				}
 				
 				if (s == RequestedMapLoad) {
 					loadMapID = i;

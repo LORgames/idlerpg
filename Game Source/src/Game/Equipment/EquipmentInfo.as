@@ -89,7 +89,7 @@ package Game.Equipment {
 			if (state == 2) sData = Frames_Attacking;
 			if (state == 3) sData = Frames_Dancing;
 			
-			var o:int = 4 * (3 - direction) + 16 * layer;
+			var o:int = 4 * direction + 16 * layer;
 			var s:int = (sData & (0xF << o)) >> o;
 			
 			return s;

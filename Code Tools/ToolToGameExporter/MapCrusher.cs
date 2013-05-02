@@ -5,6 +5,7 @@ using System.Text;
 using ToolCache.Map;
 using ToolCache.General;
 using ToolCache.Map.Objects;
+using ToolCache.World;
 
 namespace ToolToGameExporter {
     public class MapCrusher {
@@ -29,6 +30,22 @@ namespace ToolToGameExporter {
                     f.AddShort(0);
 
                     if(map.Music != "") Processor.Errors.Add("Map (" + map.Name + ") uses music (" + map.Music + ") that doesn't exist.");
+                }
+
+                f.AddByte((byte)map.Portals.Count);
+                m.AddByte((byte)map.Portals.Count);
+
+                foreach (Portal p in map.Portals) {
+                    m.AddShort(p.ID);
+
+                    f.AddShort(p.ID);
+                    f.AddShort(p.ExitID);
+                    f.AddShort((short)p.ExitPoint.X);
+                    f.AddShort((short)p.ExitPoint.Y);
+                    f.AddShort((short)p.EntryPoint.X);
+                    f.AddShort((short)p.EntryPoint.Y);
+                    f.AddShort((short)p.EntrySize.Width);
+                    f.AddShort((short)p.EntrySize.Height);
                 }
 
                 //Tiles First?
