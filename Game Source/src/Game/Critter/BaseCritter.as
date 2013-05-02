@@ -132,7 +132,9 @@ package Game.Critter {
 				direction = SpeedToDirection(xSpeed, ySpeed);
 				
 				moveSpeedX = xSpeed * MovementSpeed;
-				moveSpeedY = ySpeed * MovementSpeed;
+				
+				if(ySpeed < 0) moveSpeedY = ySpeed * MovementSpeed * 0.707;
+				if(ySpeed > 0) moveSpeedY = ySpeed * MovementSpeed * 0.900;
 				
 				isMoving = true;
 			} else {
