@@ -14,6 +14,10 @@ package RenderSystem {
 		
 		public static var AnimatedObjects:Vector.<IAnimated> = new Vector.<IAnimated>();
 		
+		private var fade:Number = 1;
+		private var fadeOut:Boolean = false;
+		private var fadeIn:Boolean = false;
+		
 		private var loadScreen:LoadScreen;
 		
 		public function Renderman() {
@@ -29,12 +33,41 @@ package RenderSystem {
 			Main.I.addChild(map.DebugLayer);
 		}
 		
+		public function FadeOut():void {
+			fadeOut = true;
+		}
+		
+		public function FadeIn():void {
+			fadeIn = true;
+		}
+		
 		public function Resized():void {
 			map.Resized();
 			loadScreen.Resized();
 		}
 		
 		public function Render(dt:Number):void {
+			if (fade > 0) {
+				if (fadeOut) {
+					fade -= 0.05;
+					if (fade <= 0) {
+						fade = 0;
+						fadeOut = false;
+					}
+				} else {
+					if (fadeIn) {
+						fade += 0.05;
+						if (fade >= 1) {
+							fade = 1;
+							fadeIn = false;
+						}
+					}
+				}
+				
+				loadScreen.alpha = fade;
+				loadScreen.Draw();
+			}
+			
 			if (Global.LoadingTotal > 0) return;
 			
 			Camera.X = -WorldData.ME.X + Main.I.stage.stageWidth/2;
@@ -46,8 +79,6 @@ package RenderSystem {
 			map.DebugLayer.y = Camera.Y;
 			
 			map.Draw();
-			
-			loadScreen.Draw();
 			
 			var i:int = AnimatedObjects.length;
 			

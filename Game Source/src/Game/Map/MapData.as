@@ -39,7 +39,7 @@ package Game.Map {
 			this.ExpectedAtPortalID = portalID;
 			if (portalID != -1) firstload = true;
 			
-			// TODO: start fade transition
+			Main.I.Renderer.FadeOut();
 			
 			BinaryLoader.Load("Data/Map_" + mapname + ".bin", ParseData);
 			
@@ -134,9 +134,7 @@ package Game.Map {
 				}
 			}
 			
-			// TODO: end fade transition
-			// when global loading = 0 (in main.cycle do if prev load = 0 and current load not 0 then fade to black
-			// else if prev load is > 0 and current load is now 0 then fade in
+			Main.I.Renderer.FadeIn();
 		}
 	}
 
