@@ -71,6 +71,7 @@ package Game.Equipment {
 			
 			e.SizeX = b.readByte();
 			e.SizeY = b.readByte();
+			
 			e.Center = new Point(e.SizeX / 2, e.SizeY / 2);
 			
 			e.Frames_Default = b.readInt();

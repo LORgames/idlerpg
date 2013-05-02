@@ -61,6 +61,10 @@ namespace ToolCache.General {
             return GetShort(seemlessReadIndex);
         }
 
+        public void AddUnsignedShort(ushort number) {
+            out_data.AddRange(BitConverter.GetBytes(IPAddress.HostToNetworkOrder(number)));
+        }
+
         public void AddByte(byte number) {
             out_data.Add(number);
         }

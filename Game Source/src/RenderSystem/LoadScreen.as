@@ -19,7 +19,6 @@ package RenderSystem {
 	public class LoadScreen extends Bitmap {
 		
 		private var data:BitmapData; // Display thing.
-		public var fullRect:Rectangle = new Rectangle();
 		
 		public function LoadScreen() {
 			
@@ -28,15 +27,12 @@ package RenderSystem {
 		public function Resized():void {
 			data = new BitmapData(Main.I.stage.stageWidth, Main.I.stage.stageHeight, true);
 			this.bitmapData = data;
-			
-			fullRect.width = data.width;
-			fullRect.height = data.height;
 		}
 		
 		public function Draw():void {
 			data.lock();
 			
-			data.floodFill(0, 0, 0x0);
+			data.floodFill(0, 0, 0xFF000000);
 			
 			data.unlock();
 		}

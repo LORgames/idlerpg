@@ -13,11 +13,15 @@ namespace ToolToGameExporter {
     internal class EquipmentCrusher {
 
         public static EquipmentTypes[] equipmenttypes = { EquipmentTypes.Shadow, EquipmentTypes.Legs, EquipmentTypes.Body, EquipmentTypes.Head, EquipmentTypes.Headgear, EquipmentTypes.Weapon };
-        public static Direction[] directions = { Direction.Left, Direction.Right, Direction.Up, Direction.Down };
-        public static States[] states = { States.Default, States.Walking, States.Attacking, States.Dancing };
-        public static int[] layers = { 0, 1 };
+        private static Direction[] directions = { Direction.Left, Direction.Right, Direction.Up, Direction.Down };
+        private static States[] states = { States.Default, States.Walking, States.Attacking, States.Dancing };
+        private static int[] layers = { 0, 1 };
+        
+        public static Dictionary<string, short> MappedEquipmentIDs = new Dictionary<string,short>();
 
         public static void Go() {
+            MappedEquipmentIDs.Clear();
+
             BinaryIO f = new BinaryIO();
             short nextID = 0;
             
@@ -27,15 +31,24 @@ namespace ToolToGameExporter {
             }
 
             foreach(EquipmentTypes et in equipmenttypes) {
+                short id = 0;
+
                 //Now throw the equipment into the file as well..?
                 foreach (EquipmentItem ei in EquipmentManager.TypeLists[et]) {
                     f.AddString(ei.Name);
                     f.AddByte((byte)((ei.isAvailableAtStart?1:0) + (ei.OffsetsLocked?2:0)));
 
+                    MappedEquipmentIDs.Add(ei.Name, id++);
+
                     f.AddFloat(ei.AnimationSpeed);
 
                     f.AddShort(ei.OffsetX);
                     f.AddShort(ei.OffsetY);
+
+                    if (ei.OnAttackScript.Length > 2) {
+                        BinaryIO _g = new BinaryIO();
+                        ScriptCrusher.ProcessScript("Equipment:"+ei.Name, ei.OnAttackScript, _g);
+                    }
 
                     if (!ei.OffsetsLocked) {
                         f.AddShort(ei.OffsetX_1);

@@ -19,7 +19,7 @@ namespace ToolToGameExporter {
 
             Directory.CreateDirectory(Global.EXPORT_DIRECTORY);
 
-            try {
+            //try {
                 //Tier 0  Crushing. No Dependancies.
                 SoundCrusher.Go();
                 ObjectCrusher.Go();
@@ -47,7 +47,7 @@ namespace ToolToGameExporter {
                 if(ss != "") MessageBox.Show(ss);
                 
                 return true;
-            } catch {
+            /*} catch {
                 if(!silent) MessageBox.Show("Please close the exporter and try again! (Some kind of caching issue occurred)");
 
                 try {
@@ -55,7 +55,7 @@ namespace ToolToGameExporter {
                 } catch { }
 
                 return false;
-            }
+            }*/
         }
     }
 }
