@@ -28,7 +28,7 @@ namespace ToolCache.General {
             return img_store.ContainsKey(filename);
         }
 
-        internal static void ForceCache(string filename) {
+        public static void ForceCache(string filename) {
             using (var bmpTemp = new Bitmap(filename)) {
                 img_store.Add(filename, new Bitmap(bmpTemp)); //(well that was easy)
             }

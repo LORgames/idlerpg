@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using ToolCache.Combat.Elements;
 using ToolCache.Map;
 using ToolCache.Map.Tiles;
+using ToolCache.General;
 
 namespace CityTools {
     public partial class TileEditor : Form {
@@ -27,7 +28,7 @@ namespace CityTools {
             InitializeComponent();
             ccAnimation.SetSaveLocation("Tiles");
             ccAnimation.ClearAnimation();
-            ccAnimation.AnimationChanged += ValueChanged;
+            ccAnimation.AnimationChanged += AnimationChanged;
 
             UpdateElementNames();
 
@@ -184,6 +185,14 @@ namespace CityTools {
 
         private void ValueChanged(object sender, EventArgs e) {
             if(!_updating) _iE = true;
+        }
+
+        private void AnimationChanged(object sender, EventArgs e) {
+            if (!_updating) _iE = true;
+
+            foreach (String s in ccAnimation.GetAnimation().Frames) {
+                ImageCache.ForceCache(s);
+            }
         }
 
         private void btnRemoveBoxes_Click(object sender, EventArgs e) {

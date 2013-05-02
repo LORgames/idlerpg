@@ -81,6 +81,8 @@ namespace CityTools {
             this.label17 = new System.Windows.Forms.Label();
             this.ccAnimationBack = new CityTools.ClipIns.AnimationList();
             this.ccAnimationFront = new CityTools.ClipIns.AnimationList();
+            this.txtAttackScript = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbEquipmentDisplay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numOffsetX_0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numOffsetY_0)).BeginInit();
@@ -711,11 +713,30 @@ namespace CityTools {
             this.ccAnimationFront.Size = new System.Drawing.Size(221, 100);
             this.ccAnimationFront.TabIndex = 6;
             // 
+            // txtAttackScript
+            // 
+            this.txtAttackScript.Location = new System.Drawing.Point(334, 187);
+            this.txtAttackScript.Multiline = true;
+            this.txtAttackScript.Name = "txtAttackScript";
+            this.txtAttackScript.Size = new System.Drawing.Size(312, 69);
+            this.txtAttackScript.TabIndex = 65;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(334, 171);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(55, 13);
+            this.label18.TabIndex = 66;
+            this.label18.Text = "On Attack";
+            // 
             // EquipmentEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(674, 619);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.txtAttackScript);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.numAnimSpeed);
             this.Controls.Add(this.label14);
@@ -845,5 +866,7 @@ namespace CityTools {
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.NumericUpDown numAnimSpeed;
         private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.TextBox txtAttackScript;
+        private System.Windows.Forms.Label label18;
     }
 }

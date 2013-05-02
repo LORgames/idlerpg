@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using ToolCache.Map.Objects;
+using ToolCache.General;
 
 namespace CityTools {
     public partial class TemplateEditor : Form {
@@ -26,7 +27,7 @@ namespace CityTools {
 
             ccAnimation.SetSaveLocation("Objects");
             ccAnimation.ClearAnimation();
-            ccAnimation.AnimationChanged += ValueChanged;
+            ccAnimation.AnimationChanged += AnimationChanged;
 
             UpdateObjectNames();
             ChangeTo(-1);
@@ -196,6 +197,14 @@ namespace CityTools {
 
         private void ValueChanged(object sender, EventArgs e) {
             if(!_updating) _iE = true;
+        }
+
+        private void AnimationChanged(object sender, EventArgs e) {
+            if (!_updating) _iE = true;
+
+            foreach (String s in ccAnimation.GetAnimation().Frames) {
+                ImageCache.ForceCache(s);
+            }
         }
 
         private void btnRemoveBoxes_Click(object sender, EventArgs e) {
