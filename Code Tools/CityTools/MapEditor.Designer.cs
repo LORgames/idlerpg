@@ -64,6 +64,7 @@
             this.toolpanel_splitter = new System.Windows.Forms.SplitContainer();
             this.tabFirstLevel = new System.Windows.Forms.TabControl();
             this.tabOptions = new System.Windows.Forms.TabPage();
+            this.btnResetWorldPosition = new System.Windows.Forms.Button();
             this.btnPortalExit = new System.Windows.Forms.Button();
             this.btnPortalEntry = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
@@ -105,7 +106,6 @@
             this.cbScenicCacheSelector = new System.Windows.Forms.ComboBox();
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.btnResetWorldPosition = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.main_splitter)).BeginInit();
             this.main_splitter.Panel1.SuspendLayout();
             this.main_splitter.Panel2.SuspendLayout();
@@ -242,55 +242,55 @@
             this.btnWorldEditor});
             this.btnOtherToolsMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnOtherToolsMenu.Name = "btnOtherToolsMenu";
-            this.btnOtherToolsMenu.Size = new System.Drawing.Size(82, 22);
+            this.btnOtherToolsMenu.Size = new System.Drawing.Size(76, 22);
             this.btnOtherToolsMenu.Text = "Other Tools";
             // 
             // btnTileEditorTool
             // 
             this.btnTileEditorTool.Name = "btnTileEditorTool";
-            this.btnTileEditorTool.Size = new System.Drawing.Size(216, 22);
+            this.btnTileEditorTool.Size = new System.Drawing.Size(214, 22);
             this.btnTileEditorTool.Text = "Tile Editor (T)";
             // 
             // btnObjectEditor
             // 
             this.btnObjectEditor.Name = "btnObjectEditor";
-            this.btnObjectEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnObjectEditor.Size = new System.Drawing.Size(214, 22);
             this.btnObjectEditor.Text = "Object Template Editor (O)";
             // 
             // btnElementalEditor
             // 
             this.btnElementalEditor.Name = "btnElementalEditor";
-            this.btnElementalEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnElementalEditor.Size = new System.Drawing.Size(214, 22);
             this.btnElementalEditor.Text = "Elemental Editor (R)";
             // 
             // btnItemEditor
             // 
             this.btnItemEditor.Name = "btnItemEditor";
-            this.btnItemEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnItemEditor.Size = new System.Drawing.Size(214, 22);
             this.btnItemEditor.Text = "Item Editor (I)";
             // 
             // btnEquipmentEditor
             // 
             this.btnEquipmentEditor.Name = "btnEquipmentEditor";
-            this.btnEquipmentEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnEquipmentEditor.Size = new System.Drawing.Size(214, 22);
             this.btnEquipmentEditor.Text = "Equipment Editor (U)";
             // 
             // btnCritterEditor
             // 
             this.btnCritterEditor.Name = "btnCritterEditor";
-            this.btnCritterEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnCritterEditor.Size = new System.Drawing.Size(214, 22);
             this.btnCritterEditor.Text = "Critter Editor (C)";
             // 
             // btnSoundEditor
             // 
             this.btnSoundEditor.Name = "btnSoundEditor";
-            this.btnSoundEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnSoundEditor.Size = new System.Drawing.Size(214, 22);
             this.btnSoundEditor.Text = "Sound Editor (Z)";
             // 
             // btnWorldEditor
             // 
             this.btnWorldEditor.Name = "btnWorldEditor";
-            this.btnWorldEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnWorldEditor.Size = new System.Drawing.Size(214, 22);
             this.btnWorldEditor.Text = "World Editor (X)";
             // 
             // toolStripSeparator2
@@ -301,7 +301,7 @@
             // btnExport
             // 
             this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(56, 22);
+            this.btnExport.Size = new System.Drawing.Size(55, 22);
             this.btnExport.Text = "Test (F5)";
             // 
             // toolStripSeparator3
@@ -319,7 +319,7 @@
             this.btnViewMenu.Image = ((System.Drawing.Image)(resources.GetObject("btnViewMenu.Image")));
             this.btnViewMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnViewMenu.Name = "btnViewMenu";
-            this.btnViewMenu.Size = new System.Drawing.Size(45, 22);
+            this.btnViewMenu.Size = new System.Drawing.Size(42, 22);
             this.btnViewMenu.Text = "View";
             // 
             // mnuShowGrids
@@ -329,28 +329,28 @@
             this.ckbShowObjectBases,
             this.ckbShowTileBases});
             this.mnuShowGrids.Name = "mnuShowGrids";
-            this.mnuShowGrids.Size = new System.Drawing.Size(121, 22);
+            this.mnuShowGrids.Size = new System.Drawing.Size(127, 22);
             this.mnuShowGrids.Text = "Grids";
             // 
             // ckbShowTileGrid
             // 
             this.ckbShowTileGrid.CheckOnClick = true;
             this.ckbShowTileGrid.Name = "ckbShowTileGrid";
-            this.ckbShowTileGrid.Size = new System.Drawing.Size(190, 22);
+            this.ckbShowTileGrid.Size = new System.Drawing.Size(194, 22);
             this.ckbShowTileGrid.Text = "Show Outlines (1)";
             // 
             // ckbShowObjectBases
             // 
             this.ckbShowObjectBases.CheckOnClick = true;
             this.ckbShowObjectBases.Name = "ckbShowObjectBases";
-            this.ckbShowObjectBases.Size = new System.Drawing.Size(190, 22);
+            this.ckbShowObjectBases.Size = new System.Drawing.Size(194, 22);
             this.ckbShowObjectBases.Text = "Show Object Bases (2)";
             // 
             // ckbShowTileBases
             // 
             this.ckbShowTileBases.CheckOnClick = true;
             this.ckbShowTileBases.Name = "ckbShowTileBases";
-            this.ckbShowTileBases.Size = new System.Drawing.Size(190, 22);
+            this.ckbShowTileBases.Size = new System.Drawing.Size(194, 22);
             this.ckbShowTileBases.Text = "Show Tile Bases (3)";
             // 
             // viewportToolStripMenuItem
@@ -360,7 +360,7 @@
             this.txtViewportWidth,
             this.txtViewportHeight});
             this.viewportToolStripMenuItem.Name = "viewportToolStripMenuItem";
-            this.viewportToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.viewportToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.viewportToolStripMenuItem.Text = "Viewport";
             // 
             // ckbViewportEnabled
@@ -374,14 +374,14 @@
             // 
             this.txtViewportWidth.AutoToolTip = true;
             this.txtViewportWidth.Name = "txtViewportWidth";
-            this.txtViewportWidth.Size = new System.Drawing.Size(100, 23);
+            this.txtViewportWidth.Size = new System.Drawing.Size(100, 21);
             this.txtViewportWidth.Text = "800";
             this.txtViewportWidth.ToolTipText = "Viewport Width";
             // 
             // txtViewportHeight
             // 
             this.txtViewportHeight.Name = "txtViewportHeight";
-            this.txtViewportHeight.Size = new System.Drawing.Size(100, 23);
+            this.txtViewportHeight.Size = new System.Drawing.Size(100, 21);
             this.txtViewportHeight.Text = "600";
             this.txtViewportHeight.ToolTipText = "Viewport Height";
             // 
@@ -467,6 +467,16 @@
             this.tabOptions.TabIndex = 3;
             this.tabOptions.Text = "Options";
             this.tabOptions.UseVisualStyleBackColor = true;
+            // 
+            // btnResetWorldPosition
+            // 
+            this.btnResetWorldPosition.Location = new System.Drawing.Point(23, 190);
+            this.btnResetWorldPosition.Name = "btnResetWorldPosition";
+            this.btnResetWorldPosition.Size = new System.Drawing.Size(91, 23);
+            this.btnResetWorldPosition.TabIndex = 29;
+            this.btnResetWorldPosition.Text = "Reset Location";
+            this.btnResetWorldPosition.UseVisualStyleBackColor = true;
+            this.btnResetWorldPosition.Click += new System.EventHandler(this.btnResetWorldPosition_Click);
             // 
             // btnPortalExit
             // 
@@ -849,22 +859,13 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // btnResetWorldPosition
-            // 
-            this.btnResetWorldPosition.Location = new System.Drawing.Point(23, 190);
-            this.btnResetWorldPosition.Name = "btnResetWorldPosition";
-            this.btnResetWorldPosition.Size = new System.Drawing.Size(91, 23);
-            this.btnResetWorldPosition.TabIndex = 29;
-            this.btnResetWorldPosition.Text = "Reset Location";
-            this.btnResetWorldPosition.UseVisualStyleBackColor = true;
-            this.btnResetWorldPosition.Click += new System.EventHandler(this.btnResetWorldPosition_Click);
-            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(897, 461);
             this.Controls.Add(this.main_splitter);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainWindow";
             this.Text = "RED: Rpg EDitor";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;

@@ -52,11 +52,11 @@ namespace CityTools {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.treeAllTiles = new System.Windows.Forms.TreeView();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.pbDisplay = new System.Windows.Forms.PictureBox();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.ckbShowCollisions = new System.Windows.Forms.CheckBox();
             this.btnClearCollisions = new System.Windows.Forms.Button();
+            this.ckbShowCollisions = new System.Windows.Forms.CheckBox();
+            this.pbDisplay = new System.Windows.Forms.PictureBox();
             this.ccAnimation = new CityTools.ClipIns.AnimationList();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numDamagePerSecond)).BeginInit();
@@ -360,23 +360,15 @@ namespace CityTools {
             this.splitContainer2.SplitterDistance = 236;
             this.splitContainer2.TabIndex = 11;
             // 
-            // pbDisplay
+            // btnClearCollisions
             // 
-            this.pbDisplay.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.pbDisplay.Location = new System.Drawing.Point(6, 48);
-            this.pbDisplay.Name = "pbDisplay";
-            this.pbDisplay.Size = new System.Drawing.Size(100, 100);
-            this.pbDisplay.TabIndex = 0;
-            this.pbDisplay.TabStop = false;
-            this.pbDisplay.Paint += new System.Windows.Forms.PaintEventHandler(this.pbDisplay_Paint);
-            this.pbDisplay.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pbDisplay_MouseDown);
-            this.pbDisplay.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbDisplay_MouseMove);
-            this.pbDisplay.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pbDisplay_MouseUp);
-            // 
-            // timer1
-            // 
-            this.timer1.Interval = 50;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.btnClearCollisions.Location = new System.Drawing.Point(112, 71);
+            this.btnClearCollisions.Name = "btnClearCollisions";
+            this.btnClearCollisions.Size = new System.Drawing.Size(99, 23);
+            this.btnClearCollisions.TabIndex = 12;
+            this.btnClearCollisions.Text = "Clear Collisions";
+            this.btnClearCollisions.UseVisualStyleBackColor = true;
+            this.btnClearCollisions.Click += new System.EventHandler(this.btnRemoveBoxes_Click);
             // 
             // ckbShowCollisions
             // 
@@ -390,15 +382,18 @@ namespace CityTools {
             this.ckbShowCollisions.Text = "Show Collisions";
             this.ckbShowCollisions.UseVisualStyleBackColor = true;
             // 
-            // btnClearCollisions
+            // pbDisplay
             // 
-            this.btnClearCollisions.Location = new System.Drawing.Point(112, 71);
-            this.btnClearCollisions.Name = "btnClearCollisions";
-            this.btnClearCollisions.Size = new System.Drawing.Size(99, 23);
-            this.btnClearCollisions.TabIndex = 12;
-            this.btnClearCollisions.Text = "Clear Collisions";
-            this.btnClearCollisions.UseVisualStyleBackColor = true;
-            this.btnClearCollisions.Click += new System.EventHandler(this.btnRemoveBoxes_Click);
+            this.pbDisplay.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.pbDisplay.Location = new System.Drawing.Point(6, 48);
+            this.pbDisplay.Name = "pbDisplay";
+            this.pbDisplay.Size = new System.Drawing.Size(100, 100);
+            this.pbDisplay.TabIndex = 0;
+            this.pbDisplay.TabStop = false;
+            this.pbDisplay.Paint += new System.Windows.Forms.PaintEventHandler(this.pbDisplay_Paint);
+            this.pbDisplay.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pbDisplay_MouseDown);
+            this.pbDisplay.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbDisplay_MouseMove);
+            this.pbDisplay.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pbDisplay_MouseUp);
             // 
             // ccAnimation
             // 
@@ -410,12 +405,18 @@ namespace CityTools {
             this.ccAnimation.Size = new System.Drawing.Size(393, 140);
             this.ccAnimation.TabIndex = 1;
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 50;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // TileEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(619, 380);
             this.Controls.Add(this.splitContainer1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "TileEditor";
             this.Text = "TED: Tile EDitor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TileEditor_FormClosing);

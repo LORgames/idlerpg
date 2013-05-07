@@ -22,8 +22,7 @@ namespace ToolCache.Items {
         public int SellPrice = 0;
         public int BuyPrice = 0;
 
-        public short EffectID = 0;
-        public short EffectValue = 0;
+        public string ConsumeEffect = "";
 
         public bool isQuestItem = false;
 
@@ -41,8 +40,7 @@ namespace ToolCache.Items {
             f.AddInt(SellPrice);
             f.AddInt(BuyPrice);
 
-            f.AddShort(EffectID);
-            f.AddShort(EffectValue);
+            f.AddString(ConsumeEffect);
 
             f.AddByte((byte)(isQuestItem ? 1 : 0));
         }
@@ -63,8 +61,7 @@ namespace ToolCache.Items {
             t.SellPrice = f.GetInt();
             t.BuyPrice = f.GetInt();
 
-            t.EffectID = f.GetShort();
-            t.EffectValue = f.GetShort();
+            t.ConsumeEffect = f.GetString();
 
             t.isQuestItem = (f.GetByte() == 1);
 

@@ -32,9 +32,9 @@
             this.lblDeleteElement = new System.Windows.Forms.ToolStripLabel();
             this.cbElementDeleteName = new System.Windows.Forms.ToolStripComboBox();
             this.btnElementDelete = new System.Windows.Forms.ToolStripButton();
-            this.dgvElements = new System.Windows.Forms.DataGridView();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnRedraw = new System.Windows.Forms.ToolStripButton();
+            this.dgvElements = new System.Windows.Forms.DataGridView();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvElements)).BeginInit();
             this.SuspendLayout();
@@ -60,7 +60,7 @@
             // lblElementAddName
             // 
             this.lblElementAddName.Name = "lblElementAddName";
-            this.lblElementAddName.Size = new System.Drawing.Size(78, 22);
+            this.lblElementAddName.Size = new System.Drawing.Size(71, 22);
             this.lblElementAddName.Text = "Add Element:";
             // 
             // txtElementAddName
@@ -74,7 +74,7 @@
             this.btnElementAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnElementAdd.Image")));
             this.btnElementAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnElementAdd.Name = "btnElementAdd";
-            this.btnElementAdd.Size = new System.Drawing.Size(33, 22);
+            this.btnElementAdd.Size = new System.Drawing.Size(30, 22);
             this.btnElementAdd.Text = "Add";
             this.btnElementAdd.Click += new System.EventHandler(this.btnElementAdd_Click);
             // 
@@ -86,7 +86,7 @@
             // lblDeleteElement
             // 
             this.lblDeleteElement.Name = "lblDeleteElement";
-            this.lblDeleteElement.Size = new System.Drawing.Size(89, 22);
+            this.lblDeleteElement.Size = new System.Drawing.Size(83, 22);
             this.lblDeleteElement.Text = "Delete Element:";
             // 
             // cbElementDeleteName
@@ -100,9 +100,24 @@
             this.btnElementDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnElementDelete.Image")));
             this.btnElementDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnElementDelete.Name = "btnElementDelete";
-            this.btnElementDelete.Size = new System.Drawing.Size(44, 22);
+            this.btnElementDelete.Size = new System.Drawing.Size(42, 22);
             this.btnElementDelete.Text = "Delete";
             this.btnElementDelete.Click += new System.EventHandler(this.btnElementDelete_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnRedraw
+            // 
+            this.btnRedraw.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnRedraw.Image = ((System.Drawing.Image)(resources.GetObject("btnRedraw.Image")));
+            this.btnRedraw.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnRedraw.Name = "btnRedraw";
+            this.btnRedraw.Size = new System.Drawing.Size(49, 22);
+            this.btnRedraw.Text = "Refresh";
+            this.btnRedraw.Click += new System.EventHandler(this.btnRedraw_Click);
             // 
             // dgvElements
             // 
@@ -118,21 +133,6 @@
             this.dgvElements.TabIndex = 0;
             this.dgvElements.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvElements_CellValueChanged);
             // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-            // 
-            // btnRedraw
-            // 
-            this.btnRedraw.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnRedraw.Image = ((System.Drawing.Image)(resources.GetObject("btnRedraw.Image")));
-            this.btnRedraw.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnRedraw.Name = "btnRedraw";
-            this.btnRedraw.Size = new System.Drawing.Size(50, 22);
-            this.btnRedraw.Text = "Refresh";
-            this.btnRedraw.Click += new System.EventHandler(this.btnRedraw_Click);
-            // 
             // ElementEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -140,6 +140,7 @@
             this.ClientSize = new System.Drawing.Size(638, 448);
             this.Controls.Add(this.dgvElements);
             this.Controls.Add(this.toolStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ElementEditor";
             this.Text = "Element Editor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ElementEditor_FormClosing);

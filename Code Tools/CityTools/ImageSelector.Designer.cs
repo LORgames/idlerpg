@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImageSelector));
             this.tsImageSelector = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.txtSearch = new System.Windows.Forms.ToolStripTextBox();
@@ -44,7 +45,7 @@
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(122, 22);
+            this.toolStripLabel1.Size = new System.Drawing.Size(114, 22);
             this.toolStripLabel1.Text = "Search (If Applicable):";
             // 
             // txtSearch
@@ -70,6 +71,7 @@
             this.ClientSize = new System.Drawing.Size(442, 430);
             this.Controls.Add(this.pnlImages);
             this.Controls.Add(this.tsImageSelector);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ImageSelector";
             this.Text = "ImageSelector";
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.tsImageSelector_DragDrop);

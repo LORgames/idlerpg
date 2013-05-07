@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WorldEditor));
             this.pbMainPanel = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbMainPanel)).BeginInit();
             this.SuspendLayout();
@@ -48,6 +49,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(705, 555);
             this.Controls.Add(this.pbMainPanel);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "WorldEditor";
             this.Text = "World Editor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WorldEditor_FormClosing);

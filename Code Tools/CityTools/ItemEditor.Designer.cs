@@ -28,7 +28,7 @@
             this.treeItemHeirachy = new System.Windows.Forms.TreeView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnAddItem = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.btnDuplicateItem = new System.Windows.Forms.ToolStripButton();
             this.txtSearchBox = new System.Windows.Forms.ToolStripTextBox();
             this.txtConsumeEffect = new System.Windows.Forms.TextBox();
             this.txtName = new System.Windows.Forms.TextBox();
@@ -122,7 +122,7 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnAddItem,
-            this.toolStripButton1,
+            this.btnDuplicateItem,
             this.txtSearchBox});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
@@ -140,14 +140,15 @@
             this.btnAddItem.Text = "Create a New Item";
             this.btnAddItem.Click += new System.EventHandler(this.btnAddItem_Click);
             // 
-            // toolStripButton1
+            // btnDuplicateItem
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = global::CityTools.Properties.Resources.arrow_divide;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton1.Text = "toolStripButton1";
+            this.btnDuplicateItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnDuplicateItem.Image = global::CityTools.Properties.Resources.arrow_divide;
+            this.btnDuplicateItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnDuplicateItem.Name = "btnDuplicateItem";
+            this.btnDuplicateItem.Size = new System.Drawing.Size(23, 22);
+            this.btnDuplicateItem.Text = "Duplicate Current Item";
+            this.btnDuplicateItem.Click += new System.EventHandler(this.btnDuplicateItem_Click);
             // 
             // txtSearchBox
             // 
@@ -466,7 +467,7 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.ToolStripTextBox txtSearchBox;
         private System.Windows.Forms.TextBox txtName;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton btnDuplicateItem;
         private System.Windows.Forms.TextBox txtConsumeEffect;
     }
 }

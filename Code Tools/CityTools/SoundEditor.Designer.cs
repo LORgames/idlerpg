@@ -124,6 +124,7 @@
             this.ClientSize = new System.Drawing.Size(491, 453);
             this.Controls.Add(this.player);
             this.Controls.Add(this.tabControl1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SoundEditor";
             this.Text = "SoundEditor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SoundEditor_FormClosing);

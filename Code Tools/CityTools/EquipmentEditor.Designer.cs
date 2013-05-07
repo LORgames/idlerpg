@@ -26,6 +26,7 @@ namespace CityTools {
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EquipmentEditor));
             this.treeEquipmentList = new System.Windows.Forms.TreeView();
             this.cbItemType = new System.Windows.Forms.ComboBox();
             this.cbTileList = new System.Windows.Forms.ComboBox();
@@ -792,6 +793,7 @@ namespace CityTools {
             this.Controls.Add(this.pbEquipmentDisplay);
             this.Controls.Add(this.cbItemType);
             this.Controls.Add(this.treeEquipmentList);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "EquipmentEditor";
             this.Text = "Equipment Editor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EquipmentEditor_FormClosing);

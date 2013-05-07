@@ -100,7 +100,7 @@ namespace CityTools {
 
             currentItem.MaxInStack = (short)numStackSize.Value;
 
-            //TODO: Implement effects
+            currentItem.ConsumeEffect = txtConsumeEffect.Text;
 
             currentItem.Description = txtDescription.Text;
 
@@ -131,9 +131,8 @@ namespace CityTools {
             numMonetaryBuy.Value = (decimal)currentItem.BuyPrice;
             numMonetarySell.Value = (decimal)currentItem.SellPrice;
 
+            txtConsumeEffect.Text = currentItem.ConsumeEffect;
             numStackSize.Value = (decimal)currentItem.MaxInStack;
-
-            //TODO: Implement effects
 
             txtDescription.Text = currentItem.Description;
 
@@ -208,6 +207,10 @@ namespace CityTools {
 
         private void btnAddItem_Click(object sender, EventArgs e) {
             CreateNew();
+        }
+
+        private void btnDuplicateItem_Click(object sender, EventArgs e) {
+            MessageBox.Show("Trolled! This button doesn't do anything!");
         }
     }
 }
