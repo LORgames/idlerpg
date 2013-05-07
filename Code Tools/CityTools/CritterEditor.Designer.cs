@@ -29,20 +29,14 @@
             this.ssTreeStatus = new System.Windows.Forms.StatusStrip();
             this.lblTreeInformation = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolsMainTools = new System.Windows.Forms.ToolStrip();
-            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.btnCreateHumanoidCritter = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnCreateBeastCritter = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnDuplicate = new System.Windows.Forms.ToolStripButton();
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.listLoot = new System.Windows.Forms.ListView();
             this.label3 = new System.Windows.Forms.Label();
-            this.btnAddLoot = new System.Windows.Forms.Button();
             this.cbItemList = new System.Windows.Forms.ComboBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
-            this.btnAddAIType = new System.Windows.Forms.Button();
             this.listAIType = new System.Windows.Forms.ListBox();
             this.cbAITypes = new System.Windows.Forms.ComboBox();
             this.ckbOneOfAKind = new System.Windows.Forms.CheckBox();
@@ -54,9 +48,20 @@
             this.label2 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
-            this.btnAddGroup = new System.Windows.Forms.Button();
             this.listGroups = new System.Windows.Forms.ListBox();
             this.cbAddGroup = new System.Windows.Forms.ComboBox();
+            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btnCreateHumanoidCritter = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnCreateBeastCritter = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnDuplicate = new System.Windows.Forms.ToolStripButton();
+            this.btnAddGroup = new System.Windows.Forms.Button();
+            this.btnAddLoot = new System.Windows.Forms.Button();
+            this.btnAddAIType = new System.Windows.Forms.Button();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.sptFullForm)).BeginInit();
             this.sptFullForm.Panel1.SuspendLayout();
             this.sptFullForm.Panel2.SuspendLayout();
@@ -139,47 +144,10 @@
             this.toolsMainTools.TabIndex = 0;
             this.toolsMainTools.Text = "toolStrip1";
             // 
-            // toolStripDropDownButton1
-            // 
-            this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnCreateHumanoidCritter,
-            this.btnCreateBeastCritter});
-            this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
-            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(29, 22);
-            this.toolStripDropDownButton1.Text = "Create A New Critter";
-            // 
-            // btnCreateHumanoidCritter
-            // 
-            this.btnCreateHumanoidCritter.Image = global::CityTools.Properties.Resources.HumanIcon;
-            this.btnCreateHumanoidCritter.Name = "btnCreateHumanoidCritter";
-            this.btnCreateHumanoidCritter.Size = new System.Drawing.Size(152, 22);
-            this.btnCreateHumanoidCritter.Text = "Humanoid";
-            this.btnCreateHumanoidCritter.Click += new System.EventHandler(this.btnCreateHumanoidCritter_Click);
-            // 
-            // btnCreateBeastCritter
-            // 
-            this.btnCreateBeastCritter.Image = global::CityTools.Properties.Resources.DoggyIcon;
-            this.btnCreateBeastCritter.Name = "btnCreateBeastCritter";
-            this.btnCreateBeastCritter.Size = new System.Drawing.Size(152, 22);
-            this.btnCreateBeastCritter.Text = "Beast Man";
-            this.btnCreateBeastCritter.Click += new System.EventHandler(this.btnCreateBeastCritter_Click);
-            // 
-            // btnDuplicate
-            // 
-            this.btnDuplicate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnDuplicate.Image = ((System.Drawing.Image)(resources.GetObject("btnDuplicate.Image")));
-            this.btnDuplicate.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnDuplicate.Name = "btnDuplicate";
-            this.btnDuplicate.Size = new System.Drawing.Size(23, 22);
-            this.btnDuplicate.Text = "Duplicate Selected Critter";
-            // 
             // toolStripTextBox1
             // 
             this.toolStripTextBox1.Name = "toolStripTextBox1";
-            this.toolStripTextBox1.Size = new System.Drawing.Size(90, 25);
+            this.toolStripTextBox1.Size = new System.Drawing.Size(90, 21);
             // 
             // panel3
             // 
@@ -195,11 +163,20 @@
             // 
             // listLoot
             // 
+            this.listLoot.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3,
+            this.columnHeader4,
+            this.columnHeader5});
+            this.listLoot.GridLines = true;
+            this.listLoot.LabelEdit = true;
             this.listLoot.Location = new System.Drawing.Point(3, 30);
             this.listLoot.Name = "listLoot";
             this.listLoot.Size = new System.Drawing.Size(258, 119);
             this.listLoot.TabIndex = 8;
             this.listLoot.UseCompatibleStateImageBehavior = false;
+            this.listLoot.View = System.Windows.Forms.View.Details;
             // 
             // label3
             // 
@@ -210,17 +187,10 @@
             this.label3.TabIndex = 7;
             this.label3.Text = "Loot";
             // 
-            // btnAddLoot
-            // 
-            this.btnAddLoot.Image = ((System.Drawing.Image)(resources.GetObject("btnAddLoot.Image")));
-            this.btnAddLoot.Location = new System.Drawing.Point(235, 3);
-            this.btnAddLoot.Name = "btnAddLoot";
-            this.btnAddLoot.Size = new System.Drawing.Size(26, 21);
-            this.btnAddLoot.TabIndex = 6;
-            this.btnAddLoot.UseVisualStyleBackColor = true;
-            // 
             // cbItemList
             // 
+            this.cbItemList.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.cbItemList.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbItemList.FormattingEnabled = true;
             this.cbItemList.Location = new System.Drawing.Point(58, 3);
             this.cbItemList.Name = "cbItemList";
@@ -254,15 +224,6 @@
             this.label6.Size = new System.Drawing.Size(49, 13);
             this.label6.TabIndex = 7;
             this.label6.Text = "AI Types";
-            // 
-            // btnAddAIType
-            // 
-            this.btnAddAIType.Image = ((System.Drawing.Image)(resources.GetObject("btnAddAIType.Image")));
-            this.btnAddAIType.Location = new System.Drawing.Point(235, 3);
-            this.btnAddAIType.Name = "btnAddAIType";
-            this.btnAddAIType.Size = new System.Drawing.Size(26, 21);
-            this.btnAddAIType.TabIndex = 6;
-            this.btnAddAIType.UseVisualStyleBackColor = true;
             // 
             // listAIType
             // 
@@ -360,15 +321,6 @@
             this.label7.TabIndex = 7;
             this.label7.Text = "Groups";
             // 
-            // btnAddGroup
-            // 
-            this.btnAddGroup.Image = ((System.Drawing.Image)(resources.GetObject("btnAddGroup.Image")));
-            this.btnAddGroup.Location = new System.Drawing.Point(235, 3);
-            this.btnAddGroup.Name = "btnAddGroup";
-            this.btnAddGroup.Size = new System.Drawing.Size(26, 21);
-            this.btnAddGroup.TabIndex = 6;
-            this.btnAddGroup.UseVisualStyleBackColor = true;
-            // 
             // listGroups
             // 
             this.listGroups.FormattingEnabled = true;
@@ -384,6 +336,98 @@
             this.cbAddGroup.Name = "cbAddGroup";
             this.cbAddGroup.Size = new System.Drawing.Size(171, 21);
             this.cbAddGroup.TabIndex = 5;
+            // 
+            // toolStripDropDownButton1
+            // 
+            this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnCreateHumanoidCritter,
+            this.btnCreateBeastCritter});
+            this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
+            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(29, 22);
+            this.toolStripDropDownButton1.Text = "Create A New Critter";
+            // 
+            // btnCreateHumanoidCritter
+            // 
+            this.btnCreateHumanoidCritter.Image = global::CityTools.Properties.Resources.Critter_Editor___Humanoid;
+            this.btnCreateHumanoidCritter.Name = "btnCreateHumanoidCritter";
+            this.btnCreateHumanoidCritter.Size = new System.Drawing.Size(152, 22);
+            this.btnCreateHumanoidCritter.Text = "Humanoid";
+            this.btnCreateHumanoidCritter.Click += new System.EventHandler(this.btnCreateHumanoidCritter_Click);
+            // 
+            // btnCreateBeastCritter
+            // 
+            this.btnCreateBeastCritter.Image = global::CityTools.Properties.Resources.Critter_Editor___Monster;
+            this.btnCreateBeastCritter.Name = "btnCreateBeastCritter";
+            this.btnCreateBeastCritter.Size = new System.Drawing.Size(152, 22);
+            this.btnCreateBeastCritter.Text = "Beast Man";
+            this.btnCreateBeastCritter.Click += new System.EventHandler(this.btnCreateBeastCritter_Click);
+            // 
+            // btnDuplicate
+            // 
+            this.btnDuplicate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnDuplicate.Image = ((System.Drawing.Image)(resources.GetObject("btnDuplicate.Image")));
+            this.btnDuplicate.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnDuplicate.Name = "btnDuplicate";
+            this.btnDuplicate.Size = new System.Drawing.Size(23, 22);
+            this.btnDuplicate.Text = "Duplicate Selected Critter";
+            // 
+            // btnAddGroup
+            // 
+            this.btnAddGroup.Image = ((System.Drawing.Image)(resources.GetObject("btnAddGroup.Image")));
+            this.btnAddGroup.Location = new System.Drawing.Point(235, 3);
+            this.btnAddGroup.Name = "btnAddGroup";
+            this.btnAddGroup.Size = new System.Drawing.Size(26, 21);
+            this.btnAddGroup.TabIndex = 6;
+            this.btnAddGroup.UseVisualStyleBackColor = true;
+            this.btnAddGroup.Click += new System.EventHandler(this.btnAddGroup_Click);
+            // 
+            // btnAddLoot
+            // 
+            this.btnAddLoot.Image = ((System.Drawing.Image)(resources.GetObject("btnAddLoot.Image")));
+            this.btnAddLoot.Location = new System.Drawing.Point(235, 3);
+            this.btnAddLoot.Name = "btnAddLoot";
+            this.btnAddLoot.Size = new System.Drawing.Size(26, 21);
+            this.btnAddLoot.TabIndex = 6;
+            this.btnAddLoot.UseVisualStyleBackColor = true;
+            this.btnAddLoot.Click += new System.EventHandler(this.btnAddLoot_Click);
+            // 
+            // btnAddAIType
+            // 
+            this.btnAddAIType.Image = ((System.Drawing.Image)(resources.GetObject("btnAddAIType.Image")));
+            this.btnAddAIType.Location = new System.Drawing.Point(235, 3);
+            this.btnAddAIType.Name = "btnAddAIType";
+            this.btnAddAIType.Size = new System.Drawing.Size(26, 21);
+            this.btnAddAIType.TabIndex = 6;
+            this.btnAddAIType.UseVisualStyleBackColor = true;
+            this.btnAddAIType.Click += new System.EventHandler(this.btnAddAIType_Click);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Item";
+            this.columnHeader1.Width = 94;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Min#";
+            this.columnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Max#";
+            this.columnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Drop%";
+            this.columnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // columnHeader5
+            // 
+            this.columnHeader5.Text = "Set";
+            this.columnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // CritterEditor
             // 
@@ -452,5 +496,10 @@
         private System.Windows.Forms.Button btnAddGroup;
         private System.Windows.Forms.ListBox listGroups;
         private System.Windows.Forms.ComboBox cbAddGroup;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.ColumnHeader columnHeader5;
     }
 }

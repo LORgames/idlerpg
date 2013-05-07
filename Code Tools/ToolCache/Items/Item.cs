@@ -26,6 +26,10 @@ namespace ToolCache.Items {
 
         public bool isQuestItem = false;
 
+        public override string ToString() {
+            return Category + ":" + Name;
+        }
+
         internal void WriteToBinaryIO(BinaryIO f) {
             f.AddShort(ID);
             f.AddString(Category);

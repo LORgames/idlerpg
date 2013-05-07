@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using ToolCache.Critters;
 using CityTools.Properties;
+using ToolCache.Items;
 
 namespace CityTools {
     public partial class CritterEditor : Form {
@@ -27,6 +28,32 @@ namespace CityTools {
             sptFullForm.Panel2.Enabled = false;
 
             lblTreeInformation.Text = "Ready.";
+
+            FillAITypes();
+            FillItemBox();
+            FillGroups();
+            PopulateLootList();
+        }
+
+        private void FillGroups() {
+            MessageBox.Show("Cannot run 'FillGroups' in CritterEditor.cs");
+        }
+
+        private void FillItemBox() {
+            cbItemList.SuspendLayout();
+            cbItemList.Items.Clear();
+
+            foreach (Item i in ItemDatabase.Items) {
+                cbItemList.Items.Add(i);
+            }
+
+            cbItemList.ResumeLayout();
+        }
+
+        private void FillAITypes() {
+            foreach (AITypes ai in Enum.GetValues(typeof(AITypes))) {
+                cbAITypes.Items.Add(ai);
+            }
         }
 
         private void CritterEditor_FormClosing(object sender, FormClosingEventArgs e) {
@@ -49,18 +76,16 @@ namespace CityTools {
         }
 
         private void PopulateLootList() {
-            listLoot.Clear();
-
-            listLoot.Columns.Add("Item");
-            listLoot.Columns.Add("Min#");
-            listLoot.Columns.Add("Max#");
-            listLoot.Columns.Add("Drop%");
-            listLoot.Columns.Add("Set");
-
             if (critter != null) {
+                listLoot.SuspendLayout();
+
+                listLoot.Items.Clear();
+
                 foreach (LootDrop loot in critter.Loot) {
                     listLoot.Items.Add(loot.GetListViewItem());
                 }
+
+                listLoot.ResumeLayout();
             }
         }
 
@@ -81,6 +106,26 @@ namespace CityTools {
         private void SaveIfRequired() {
             _new = false;
             _iE = false;
+        }
+
+        private void btnAddLoot_Click(object sender, EventArgs e) {
+            if (cbItemList.SelectedItem is Item) {
+                LootDrop loot = LootDrop.GenerateEmpty(cbItemList.SelectedItem as Item);
+
+                critter.Loot.Add(loot);
+
+                listLoot.Items.Add(loot.GetListViewItem());
+            }
+        }
+
+        private void btnAddGroup_Click(object sender, EventArgs e) {
+            throw new NotImplementedException();
+        }
+
+        private void btnAddAIType_Click(object sender, EventArgs e) {
+            if (cbAITypes.SelectedItem is AITypes) {
+                MessageBox.Show("Has AI Type");
+            }
         }
     }
 }

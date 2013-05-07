@@ -12,6 +12,7 @@ namespace ToolCache.Critters {
         short Minimum;
         short Maximum;
         float DropChance;
+        byte SetID;
 
         internal static LootDrop Unpack(BinaryIO f) {
             LootDrop loot = new LootDrop();
@@ -19,6 +20,7 @@ namespace ToolCache.Critters {
             loot.Minimum = f.GetShort();
             loot.Maximum = f.GetShort();
             loot.DropChance = f.GetFloat();
+            loot.SetID = f.GetByte();
 
             return loot;
         }
@@ -28,17 +30,29 @@ namespace ToolCache.Critters {
             f.AddShort(Minimum);
             f.AddShort(Maximum);
             f.AddFloat(DropChance);
+            f.AddByte(SetID);
         }
 
         public ListViewItem GetListViewItem() {
-            ListViewItem lvi = new ListViewItem();
+            ListViewItem lvi = new ListViewItem(ItemDatabase.Get(ItemID).Name);
 
-            lvi.SubItems.Add(ItemDatabase.Get(ItemID).Name);
             lvi.SubItems.Add(Minimum.ToString());
             lvi.SubItems.Add(Maximum.ToString());
             lvi.SubItems.Add(DropChance.ToString());
 
             return lvi;
+        }
+
+        public static LootDrop GenerateEmpty(Item item) {
+            LootDrop ret = new LootDrop();
+
+            ret.ItemID = item.ID;
+            ret.Minimum = 1;
+            ret.Maximum = 1;
+            ret.DropChance = 100;
+            ret.SetID = 0;
+
+            return ret;
         }
     }
 }

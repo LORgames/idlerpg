@@ -81,6 +81,20 @@ namespace CityTools.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Critter_Editor___Humanoid {
+            get {
+                object obj = ResourceManager.GetObject("Critter Editor - Humanoid", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Critter_Editor___Monster {
+            get {
+                object obj = ResourceManager.GetObject("Critter Editor - Monster", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap DoggyIcon {
             get {
                 object obj = ResourceManager.GetObject("DoggyIcon", resourceCulture);
