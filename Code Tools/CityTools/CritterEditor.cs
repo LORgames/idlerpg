@@ -24,6 +24,8 @@ namespace CityTools {
             treeAllCritters.ImageList.Images.Add(Resources.HumanIcon);
             treeAllCritters.ImageList.Images.Add(Resources.DoggyIcon);
 
+            sptFullForm.Panel2.Enabled = false;
+
             lblTreeInformation.Text = "Ready.";
         }
 
@@ -34,13 +36,51 @@ namespace CityTools {
         private void UpdateForm() {
             _updatingForm = true;
 
-            cbCritterType.SelectedIndex = (int)critter.CritterType;
             txtMonsterName.Text = critter.Name;
 
             numExperience.Value = critter.ExperienceGain;
             numHealth.Value = critter.Health;
 
+            PopulateLootList();
+
+            sptFullForm.Panel2.Enabled = true;
+
             _updatingForm = false;
+        }
+
+        private void PopulateLootList() {
+            listLoot.Clear();
+
+            listLoot.Columns.Add("Item");
+            listLoot.Columns.Add("Min#");
+            listLoot.Columns.Add("Max#");
+            listLoot.Columns.Add("Drop%");
+            listLoot.Columns.Add("Set");
+
+            if (critter != null) {
+                foreach (LootDrop loot in critter.Loot) {
+                    listLoot.Items.Add(loot.GetListViewItem());
+                }
+            }
+        }
+
+        private void btnCreateHumanoidCritter_Click(object sender, EventArgs e) {
+            SaveIfRequired();
+
+            critter = new CritterHuman();
+            UpdateForm();
+        }
+
+        private void btnCreateBeastCritter_Click(object sender, EventArgs e) {
+            SaveIfRequired();
+
+            critter = new CritterBeast();
+            UpdateForm();
+        }
+
+        private void SaveIfRequired() {
+            _new = false;
+            _iE = false;
         }
     }
 }

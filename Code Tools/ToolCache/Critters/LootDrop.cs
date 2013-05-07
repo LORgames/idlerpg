@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ToolCache.General;
+using System.Windows.Forms;
+using ToolCache.Items;
 
 namespace ToolCache.Critters {
     public class LootDrop {
@@ -26,6 +28,17 @@ namespace ToolCache.Critters {
             f.AddShort(Minimum);
             f.AddShort(Maximum);
             f.AddFloat(DropChance);
+        }
+
+        public ListViewItem GetListViewItem() {
+            ListViewItem lvi = new ListViewItem();
+
+            lvi.SubItems.Add(ItemDatabase.Get(ItemID).Name);
+            lvi.SubItems.Add(Minimum.ToString());
+            lvi.SubItems.Add(Maximum.ToString());
+            lvi.SubItems.Add(DropChance.ToString());
+
+            return lvi;
         }
     }
 }

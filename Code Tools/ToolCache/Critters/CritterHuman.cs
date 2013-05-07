@@ -13,12 +13,15 @@ namespace ToolCache.Critters {
         private string headgear = "";
         private string weapon = "";
 
+        public CritterHuman() {
+            CritterType = CritterTypes.Humanoid;
+        }
+
         internal static CritterHuman LoadHumanoid(BinaryIO f) {
             CritterHuman c = new CritterHuman();
             
             //Load and set basic information
             c.BaseLoad(f);
-            c.CritterType = CritterTypes.NonHumanoid;
 
             //Load the equipment information
             c.shadow = f.GetString();
