@@ -22,6 +22,15 @@ namespace ToolToGameExporter {
         public static void Go() {
             MappedEquipmentIDs.Clear();
 
+            foreach (EquipmentTypes et in equipmenttypes) {
+                short id = 0;
+
+                //Now throw the equipment into the file as well..?
+                foreach (EquipmentItem ei in EquipmentManager.TypeLists[et]) {
+                    MappedEquipmentIDs.Add(ei.Name, id++);
+                }
+            }
+
             BinaryIO f = new BinaryIO();
             short nextID = 0;
             
@@ -31,24 +40,16 @@ namespace ToolToGameExporter {
             }
 
             foreach(EquipmentTypes et in equipmenttypes) {
-                short id = 0;
 
                 //Now throw the equipment into the file as well..?
                 foreach (EquipmentItem ei in EquipmentManager.TypeLists[et]) {
                     f.AddString(ei.Name);
                     f.AddByte((byte)((ei.isAvailableAtStart?1:0) + (ei.OffsetsLocked?2:0)));
 
-                    MappedEquipmentIDs.Add(ei.Name, id++);
-
                     f.AddFloat(ei.AnimationSpeed);
 
                     f.AddShort(ei.OffsetX);
                     f.AddShort(ei.OffsetY);
-
-                    if (ei.OnAttackScript.Length > 2) {
-                        BinaryIO _g = new BinaryIO();
-                        ScriptCrusher.ProcessScript("Equipment:"+ei.Name, ei.OnAttackScript, _g);
-                    }
 
                     if (!ei.OffsetsLocked) {
                         f.AddShort(ei.OffsetX_1);
@@ -58,6 +59,9 @@ namespace ToolToGameExporter {
                         f.AddShort(ei.OffsetX_3);
                         f.AddShort(ei.OffsetY_3);
                     }
+
+                    //Even if the script is empty, need to add the "end of script" tag
+                    ScriptCrusher.ProcessScript("Equipment:" + ei.Name, ei.OnAttackScript, f);
 
                     int rows, cols;
                     Size size = GetSizeOf(ei, out rows, out cols);

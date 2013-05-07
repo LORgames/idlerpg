@@ -2,6 +2,7 @@ package Game.Equipment {
 	import flash.display.BitmapData;
 	import flash.geom.Point;
 	import Game.General.ImageLoader;
+	import Game.General.Script;
 	/**
 	 * ...
 	 * @author Paul
@@ -32,6 +33,8 @@ package Game.Equipment {
 		
 		private var Loading:Boolean = false;
 		private var SpriteSheetYOffsets:Vector.<int> = new Vector.<int>(16, true); //TODO: Badly need to optimize this (should be able to go smaller again)
+		
+		public var OnAttackScript:Script;
 		
 		public function LoadIfRequired():void {
 			if (Image == null && !Loading) {

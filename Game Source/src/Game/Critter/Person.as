@@ -10,9 +10,11 @@ package Game.Critter
 	 * @author Paul
 	 */
 	public class Person extends BaseCritter {
-		public var equipment:EquipmentSet = new EquipmentSet();
+		public var equipment:EquipmentSet;
 		
 		public function Person() {
+			equipment = new EquipmentSet(this);
+			
 			Main.OrderedLayer.addChild(equipment);
 			Main.Updatables.push(this);
 			

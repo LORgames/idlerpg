@@ -1,6 +1,7 @@
 package Game.Equipment {
 	import flash.display.Sprite;
 	import flash.geom.Point;
+	import Game.Critter.Person;
 	import Interfaces.IObjectLayer;
 	import RenderSystem.IAnimated;
 	/**
@@ -17,9 +18,13 @@ package Game.Equipment {
 		public var Weapon1:EquipmentItem = new EquipmentItem();
 		public var Weapon2:EquipmentItem = new EquipmentItem();
 		
+		public var Owner:Person;
+		
 		public var Direction:int = 0;
 		
-		public function EquipmentSet() {
+		public function EquipmentSet(owner:Person) {
+			this.Owner = owner;
+			
 			this.addChild(Shadow);
 			this.addChild(Weapon2);
 			this.addChild(Legs);
@@ -107,6 +112,8 @@ package Game.Equipment {
 			} else if (newState == 2) { //Attacking
 				Weapon1.SetState(newState, false);
 				Weapon2.SetState(newState, false);
+				
+				Weapon1.Info.OnAttackScript.Run(Owner);
 			}
 		}
 		
@@ -121,6 +128,39 @@ package Game.Equipment {
 			Weapon2.SetInformation(EquipmentManager.I.Weapons[weaponID], 1);
 			
 			ChangeDirection(3);
+		}
+		
+		public function EquipSlot(slotID:uint, equipmentID:uint):void {
+			switch (slotID) {
+				case 0: //Shadow
+					if(EquipmentManager.I.Shadows.length > equipmentID) {
+						Shadow.SetInformation(EquipmentManager.I.Shadows[equipmentID]);
+					} break;
+				case 1: //Legs
+					if(EquipmentManager.I.Legs.length > equipmentID) {
+						Legs.SetInformation(EquipmentManager.I.Legs[equipmentID]);
+					} break;
+				case 2: //Body
+					if(EquipmentManager.I.Bodies.length > equipmentID) {
+						Body1.SetInformation(EquipmentManager.I.Bodies[equipmentID]);
+						Body2.SetInformation(EquipmentManager.I.Bodies[equipmentID], 1);
+					} break;
+				case 3: //Face
+					if(EquipmentManager.I.Heads.length > equipmentID) {
+						Face.SetInformation(EquipmentManager.I.Heads[equipmentID]);
+					} break;
+				case 4: //Headgear
+					if(EquipmentManager.I.Headgear.length > equipmentID) {
+						Headgear.SetInformation(EquipmentManager.I.Headgear[equipmentID]);
+					} break;
+				case 5: //Weapon
+					if(EquipmentManager.I.Weapons.length > equipmentID) {
+						Weapon1.SetInformation(EquipmentManager.I.Weapons[equipmentID]);
+						Weapon2.SetInformation(EquipmentManager.I.Weapons[equipmentID], 1);
+					} break;
+			}
+			
+			UpdateSet();
 		}
 		
 		public function GetTrueY():int {

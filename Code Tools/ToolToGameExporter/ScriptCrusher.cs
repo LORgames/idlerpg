@@ -11,8 +11,11 @@ namespace ToolToGameExporter {
         internal static void ProcessScript(string scriptname, string s, BinaryIO f) {
             string[] commands = s.Split(';');
 
-            foreach (string command in commands) {
+            for(int i = 0; i < commands.Length; i++) {
+                string command = commands[i];
+
                 if (command.Length < 2) continue;
+                command = command.Trim();
 
                 string action = command.Substring(0, command.IndexOf(' '));
                 string paras = command.Substring(command.IndexOf(' ')+1);
@@ -25,7 +28,7 @@ namespace ToolToGameExporter {
                         f.AddShort(SoundCrusher.EffectConversions[paras]);
                     } else {
                         f.AddUnsignedShort(0);
-                        Processor.Errors.Add("Script:" + scriptname + " cannot find sound effect: '" + paras + "'");
+                        Error("Cannot find sound effect: '" + paras + "'", scriptname);
                     }
                 } else if(action == "equip") {
                     if (EquipmentManager.Equipment.ContainsKey(paras)) {
@@ -34,15 +37,19 @@ namespace ToolToGameExporter {
                         f.AddShort(EquipmentCrusher.MappedEquipmentIDs[paras]);
                     } else {
                         f.AddUnsignedShort(0);
-                        Processor.Errors.Add("Script:" + scriptname + " cannot find equipment item: '" + paras + "'");
+                        Error("Cannot find equipment item: '" + paras + "'", scriptname);
                     }
                 } else {
-                    Processor.Errors.Add("Script:" + scriptname + " unknown command: " + command);
+                    Error("Unknown command: " + command, scriptname);
                     f.AddUnsignedShort(0);
                 }
             }
 
             f.AddUnsignedShort(0xFFFF);
+        }
+
+        private static void Error(string message, string scriptname) {
+            Processor.Errors.Add("Script:" + scriptname + " " + message);
         }
 
     }
