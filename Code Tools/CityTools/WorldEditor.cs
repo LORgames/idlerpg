@@ -101,8 +101,11 @@ namespace CityTools {
 
         private void pbMainPanel_Resize(object sender, EventArgs e) {
             // clean up buffer and then create new buffer
-            if (buffer != null && pbMainPanel != null) {
+            if (buffer != null) {
                 buffer.Dispose();
+            }
+
+            if (pbMainPanel != null) {
                 buffer = new LBuffer(pbMainPanel.Size);
             }
         }
