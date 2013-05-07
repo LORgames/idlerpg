@@ -9,6 +9,7 @@ using ToolCache.Map.Objects;
 using ToolCache.Map;
 using ToolCache.Map.Tiles;
 using ToolCache.Sound;
+using ToolCache.Critters;
 
 namespace ToolCache.General {
     public class Startup {
@@ -23,6 +24,8 @@ namespace ToolCache.General {
             ElementManager.Initialize();
             ItemDatabase.Initialize();
             EquipmentManager.Initialize();
+
+            CritterManager.Initialize();
         }
     }
 }

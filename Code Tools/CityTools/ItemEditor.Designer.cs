@@ -28,12 +28,11 @@
             this.treeItemHeirachy = new System.Windows.Forms.TreeView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnAddItem = new System.Windows.Forms.ToolStripButton();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.txtSearchBox = new System.Windows.Forms.ToolStripTextBox();
+            this.txtConsumeEffect = new System.Windows.Forms.TextBox();
             this.txtName = new System.Windows.Forms.TextBox();
-            this.numEffectValue = new System.Windows.Forms.NumericUpDown();
             this.label15 = new System.Windows.Forms.Label();
-            this.cbEffectID = new System.Windows.Forms.ComboBox();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -61,7 +60,6 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numEffectValue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numStackSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMonetarySell)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMonetaryBuy)).BeginInit();
@@ -82,10 +80,9 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.txtConsumeEffect);
             this.splitContainer1.Panel2.Controls.Add(this.txtName);
-            this.splitContainer1.Panel2.Controls.Add(this.numEffectValue);
             this.splitContainer1.Panel2.Controls.Add(this.label15);
-            this.splitContainer1.Panel2.Controls.Add(this.cbEffectID);
             this.splitContainer1.Panel2.Controls.Add(this.label14);
             this.splitContainer1.Panel2.Controls.Add(this.label13);
             this.splitContainer1.Panel2.Controls.Add(this.label12);
@@ -125,7 +122,7 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnAddItem,
-            this.toolStripLabel1,
+            this.toolStripButton1,
             this.txtSearchBox});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
@@ -136,23 +133,35 @@
             // btnAddItem
             // 
             this.btnAddItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnAddItem.Image = ((System.Drawing.Image)(resources.GetObject("btnAddItem.Image")));
+            this.btnAddItem.Image = global::CityTools.Properties.Resources.add;
             this.btnAddItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnAddItem.Name = "btnAddItem";
             this.btnAddItem.Size = new System.Drawing.Size(23, 22);
             this.btnAddItem.Text = "Create a New Item";
             this.btnAddItem.Click += new System.EventHandler(this.btnAddItem_Click);
             // 
-            // toolStripLabel1
+            // toolStripButton1
             // 
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(33, 22);
-            this.toolStripLabel1.Text = "Find:";
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = global::CityTools.Properties.Resources.arrow_divide;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton1.Text = "toolStripButton1";
             // 
             // txtSearchBox
             // 
             this.txtSearchBox.Name = "txtSearchBox";
-            this.txtSearchBox.Size = new System.Drawing.Size(95, 23);
+            this.txtSearchBox.Size = new System.Drawing.Size(95, 25);
+            // 
+            // txtConsumeEffect
+            // 
+            this.txtConsumeEffect.Location = new System.Drawing.Point(13, 214);
+            this.txtConsumeEffect.Multiline = true;
+            this.txtConsumeEffect.Name = "txtConsumeEffect";
+            this.txtConsumeEffect.Size = new System.Drawing.Size(151, 65);
+            this.txtConsumeEffect.TabIndex = 31;
+            this.txtConsumeEffect.TextChanged += new System.EventHandler(this.FormEdited);
             // 
             // txtName
             // 
@@ -162,19 +171,6 @@
             this.txtName.TabIndex = 30;
             this.txtName.TextChanged += new System.EventHandler(this.FormEdited);
             // 
-            // numEffectValue
-            // 
-            this.numEffectValue.Location = new System.Drawing.Point(13, 242);
-            this.numEffectValue.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.numEffectValue.Name = "numEffectValue";
-            this.numEffectValue.Size = new System.Drawing.Size(151, 20);
-            this.numEffectValue.TabIndex = 29;
-            this.numEffectValue.ValueChanged += new System.EventHandler(this.FormEdited);
-            // 
             // label15
             // 
             this.label15.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -182,16 +178,6 @@
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(158, 2);
             this.label15.TabIndex = 28;
-            // 
-            // cbEffectID
-            // 
-            this.cbEffectID.FormattingEnabled = true;
-            this.cbEffectID.Location = new System.Drawing.Point(13, 215);
-            this.cbEffectID.Name = "cbEffectID";
-            this.cbEffectID.Size = new System.Drawing.Size(151, 21);
-            this.cbEffectID.TabIndex = 27;
-            this.cbEffectID.Text = "No Effect";
-            this.cbEffectID.TextUpdate += new System.EventHandler(this.FormEdited);
             // 
             // label14
             // 
@@ -207,9 +193,9 @@
             this.label13.AutoSize = true;
             this.label13.Location = new System.Drawing.Point(7, 198);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(155, 13);
+            this.label13.Size = new System.Drawing.Size(60, 13);
             this.label13.TabIndex = 25;
-            this.label13.Text = "Use Effect (Not Implemented?):";
+            this.label13.Text = "Use Effect:";
             // 
             // label12
             // 
@@ -280,7 +266,7 @@
             this.numMonetarySell.Name = "numMonetarySell";
             this.numMonetarySell.Size = new System.Drawing.Size(70, 20);
             this.numMonetarySell.TabIndex = 18;
-            this.numMonetarySell.KeyUp += new System.Windows.Forms.KeyEventHandler(this.numValue2_ValueChanged);
+            this.numMonetarySell.ValueChanged += new System.EventHandler(this.numValue2_ValueChanged);
             // 
             // label8
             // 
@@ -302,7 +288,7 @@
             this.numMonetaryBuy.Name = "numMonetaryBuy";
             this.numMonetaryBuy.Size = new System.Drawing.Size(70, 20);
             this.numMonetaryBuy.TabIndex = 16;
-            this.numMonetaryBuy.KeyUp += new System.Windows.Forms.KeyEventHandler(this.numValue2_ValueChanged);
+            this.numMonetaryBuy.ValueChanged += new System.EventHandler(this.numValue2_ValueChanged);
             // 
             // label7
             // 
@@ -333,7 +319,7 @@
             this.numMonetaryValue.Name = "numMonetaryValue";
             this.numMonetaryValue.Size = new System.Drawing.Size(70, 20);
             this.numMonetaryValue.TabIndex = 13;
-            this.numMonetaryValue.KeyUp += new System.Windows.Forms.KeyEventHandler(this.numMonetaryValue_KeyUp);
+            this.numMonetaryValue.ValueChanged += new System.EventHandler(this.numMonetaryValue_KeyUp);
             // 
             // sepVOR
             // 
@@ -428,6 +414,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(539, 452);
             this.Controls.Add(this.splitContainer1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ItemEditor";
             this.Text = "Item Database";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ItemEditor_FormClosing);
@@ -439,7 +426,6 @@
             this.splitContainer1.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numEffectValue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numStackSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMonetarySell)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMonetaryBuy)).EndInit();
@@ -476,12 +462,11 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.NumericUpDown numEffectValue;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.ComboBox cbEffectID;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripTextBox txtSearchBox;
         private System.Windows.Forms.TextBox txtName;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.TextBox txtConsumeEffect;
     }
 }

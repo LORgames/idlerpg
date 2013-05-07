@@ -7,9 +7,14 @@ using ToolCache.General;
 namespace ToolCache.Critters {
     public class CritterBeast : Critter {
 
-        internal static Critter LoadBeastoid(BinaryIO f) {
-            Critter c = Critter.Load(f);
+        internal static CritterBeast LoadBeastoid(BinaryIO f) {
+            CritterBeast c = new CritterBeast();
+            
+            //Load basic information
+            c.BaseLoad(f);
             c.CritterType = CritterTypes.NonHumanoid;
+
+            //Now load more complex information (there will probably be a lot of this kind of stuff
 
             return c;
         }

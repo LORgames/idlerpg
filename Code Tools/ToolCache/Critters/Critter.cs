@@ -15,8 +15,6 @@ namespace ToolCache.Critters {
         public string Name = "MONSTAR!";
         public int AIType = 0;
 
-        public byte Size = (byte)1;
-
         public int ExperienceGain = 0;
         public int Health = 0;
         public bool OneOfAKind = false;
@@ -27,11 +25,12 @@ namespace ToolCache.Critters {
         public List<String> Types = new List<string>();
 
         internal virtual void PackIntoBinaryIO(BinaryIO f) {
+            f.AddByte((byte)CritterType);
+
             f.AddShort(ID);
             f.AddString(Name);
 
             f.AddInt(AIType);
-            f.AddByte(Size);
 
             f.AddInt(ExperienceGain);
             f.AddInt(Health);
@@ -50,35 +49,30 @@ namespace ToolCache.Critters {
         public virtual void Draw(LBuffer buffer) { } //Does nothing by design
 
         ///////////////////////Statics
-        internal static Critter Load(BinaryIO f) {
-            Critter c = new Critter();
+        internal void BaseLoad(BinaryIO f) {
+            ID = f.GetShort();
+            Name = f.GetString();
 
-            c.ID = f.GetShort();
-            c.Name = f.GetString();
+            AIType = f.GetInt();
 
-            c.AIType = f.GetInt();
-            c.Size = f.GetByte();
-
-            c.ExperienceGain = f.GetInt();
-            c.Health = f.GetInt();
-            c.OneOfAKind = f.GetByte()==1;
+            ExperienceGain = f.GetInt();
+            Health = f.GetInt();
+            OneOfAKind = f.GetByte()==1;
 
             short Total = f.GetShort();
             while (--Total > -1) {
-                c.Loot.Add(LootDrop.Unpack(f));
+                Loot.Add(LootDrop.Unpack(f));
             }
 
             Total = f.GetShort();
             while (--Total > -1) {
-                c.Groups.Add(f.GetString());
+                Groups.Add(f.GetString());
             }
 
             Total = f.GetShort();
             while (--Total > -1) {
-                c.Types.Add(f.GetString());
+                Types.Add(f.GetString());
             }
-
-            return c;
         }
     }
 }

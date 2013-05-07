@@ -182,7 +182,7 @@ namespace CityTools {
             }
         }
 
-        private void numMonetaryValue_KeyUp(object sender, KeyEventArgs e) {
+        private void numMonetaryValue_KeyUp(object sender, EventArgs e) {
             try {
                 numMonetaryBuy.Value = (Decimal)(int)(1.50M * numMonetaryValue.Value);
             } catch {
@@ -199,7 +199,7 @@ namespace CityTools {
             Edited();
         }
 
-        private void numValue2_ValueChanged(object sender, KeyEventArgs e) {
+        private void numValue2_ValueChanged(object sender, EventArgs e) {
             numMonetaryValue.Value = numMonetaryBuy.Value / 1.5M;
 
             if (_loading) return;

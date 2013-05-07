@@ -6,12 +6,40 @@ using ToolCache.General;
 
 namespace ToolCache.Critters {
     public class CritterHuman : Critter {
+        private string shadow = "";
+        private string legs = "";
+        private string body = "";
+        private string face = "";
+        private string headgear = "";
+        private string weapon = "";
 
-        internal static Critter LoadHumanoid(BinaryIO f) {
-            Critter c = Critter.Load(f);
+        internal static CritterHuman LoadHumanoid(BinaryIO f) {
+            CritterHuman c = new CritterHuman();
+            
+            //Load and set basic information
+            c.BaseLoad(f);
             c.CritterType = CritterTypes.NonHumanoid;
 
+            //Load the equipment information
+            c.shadow = f.GetString();
+            c.legs = f.GetString();
+            c.body = f.GetString();
+            c.face = f.GetString();
+            c.headgear = f.GetString();
+            c.weapon = f.GetString();
+
             return c;
+        }
+
+        internal override void PackIntoBinaryIO(BinaryIO f) {
+            base.PackIntoBinaryIO(f);
+
+            f.AddString(shadow);
+            f.AddString(legs);
+            f.AddString(body);
+            f.AddString(face);
+            f.AddString(headgear);
+            f.AddString(weapon);
         }
     }
 }
