@@ -32,14 +32,16 @@ namespace ToolCache.Map.Objects {
         }
 
         // Move function
-        public void Move(int x, int y) {
+        public void Move(int x, int y, bool needsUnlinkFromTiles = true) {
             //Remove from the existing tiles
             //Figure out what tiles I'm touching and mark them unwalkable
-            foreach(Rectangle ActualBase in ActualBases) {
-                List<TileInstance> tiles = MapPieceCache.CurrentPiece.Tiles.GetTilesFromWorldRectangle(ActualBase.X, ActualBase.Y, ActualBase.Width, ActualBase.Height);
+            if (needsUnlinkFromTiles) {
+                foreach (Rectangle ActualBase in ActualBases) {
+                    List<TileInstance> tiles = MapPieceCache.CurrentPiece.Tiles.GetTilesFromWorldRectangle(ActualBase.X, ActualBase.Y, ActualBase.Width, ActualBase.Height);
 
-                foreach (TileInstance tile in tiles) {
-                    tile.RemoveObject(this);
+                    foreach (TileInstance tile in tiles) {
+                        tile.RemoveObject(this);
+                    }
                 }
             }
 

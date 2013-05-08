@@ -21,7 +21,7 @@ package Game.Critter {
 		public var isMoving:Boolean = false;
 		public var moveSpeedX:int = 0;
 		public var moveSpeedY:int = 0;
-		public var MovementSpeed:int = 100;
+		public var MovementSpeed:int = 150;
 		public var CurrentMovementCost:Number = 1;
 		
 		public var CurrentMap:MapData;

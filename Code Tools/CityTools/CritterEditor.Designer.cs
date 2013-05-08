@@ -46,7 +46,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtMonsterName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.panel4 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.listGroups = new System.Windows.Forms.ListBox();
             this.cbAddGroup = new System.Windows.Forms.ComboBox();
@@ -72,7 +71,6 @@
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numHealth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numExperience)).BeginInit();
-            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // sptFullForm
@@ -91,7 +89,6 @@
             // 
             // sptFullForm.Panel2
             // 
-            this.sptFullForm.Panel2.Controls.Add(this.panel4);
             this.sptFullForm.Panel2.Controls.Add(this.panel3);
             this.sptFullForm.Panel2.Controls.Add(this.panel2);
             this.sptFullForm.Panel2.Controls.Add(this.panel1);
@@ -156,9 +153,9 @@
             this.panel3.Controls.Add(this.label3);
             this.panel3.Controls.Add(this.btnAddLoot);
             this.panel3.Controls.Add(this.cbItemList);
-            this.panel3.Location = new System.Drawing.Point(408, 190);
+            this.panel3.Location = new System.Drawing.Point(408, 248);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(266, 154);
+            this.panel3.Size = new System.Drawing.Size(266, 248);
             this.panel3.TabIndex = 15;
             // 
             // listLoot
@@ -173,7 +170,7 @@
             this.listLoot.LabelEdit = true;
             this.listLoot.Location = new System.Drawing.Point(3, 30);
             this.listLoot.Name = "listLoot";
-            this.listLoot.Size = new System.Drawing.Size(258, 119);
+            this.listLoot.Size = new System.Drawing.Size(258, 213);
             this.listLoot.TabIndex = 8;
             this.listLoot.UseCompatibleStateImageBehavior = false;
             this.listLoot.View = System.Windows.Forms.View.Details;
@@ -199,27 +196,31 @@
             // 
             // panel2
             // 
-            this.panel2.Location = new System.Drawing.Point(8, 37);
+            this.panel2.Location = new System.Drawing.Point(8, 248);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(394, 459);
+            this.panel2.Size = new System.Drawing.Size(394, 248);
             this.panel2.TabIndex = 15;
             // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.label7);
+            this.panel1.Controls.Add(this.listGroups);
+            this.panel1.Controls.Add(this.btnAddGroup);
             this.panel1.Controls.Add(this.label6);
+            this.panel1.Controls.Add(this.cbAddGroup);
             this.panel1.Controls.Add(this.btnAddAIType);
             this.panel1.Controls.Add(this.listAIType);
             this.panel1.Controls.Add(this.cbAITypes);
             this.panel1.Location = new System.Drawing.Point(408, 38);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(266, 146);
+            this.panel1.Size = new System.Drawing.Size(266, 204);
             this.panel1.TabIndex = 14;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 6);
+            this.label6.Location = new System.Drawing.Point(3, 7);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(49, 13);
             this.label6.TabIndex = 7;
@@ -228,17 +229,17 @@
             // listAIType
             // 
             this.listAIType.FormattingEnabled = true;
-            this.listAIType.Location = new System.Drawing.Point(3, 27);
+            this.listAIType.Location = new System.Drawing.Point(4, 49);
             this.listAIType.Name = "listAIType";
-            this.listAIType.Size = new System.Drawing.Size(258, 108);
+            this.listAIType.Size = new System.Drawing.Size(125, 147);
             this.listAIType.TabIndex = 4;
             // 
             // cbAITypes
             // 
             this.cbAITypes.FormattingEnabled = true;
-            this.cbAITypes.Location = new System.Drawing.Point(58, 3);
+            this.cbAITypes.Location = new System.Drawing.Point(6, 22);
             this.cbAITypes.Name = "cbAITypes";
-            this.cbAITypes.Size = new System.Drawing.Size(171, 21);
+            this.cbAITypes.Size = new System.Drawing.Size(97, 21);
             this.cbAITypes.TabIndex = 5;
             // 
             // ckbOneOfAKind
@@ -300,22 +301,10 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "Name:";
             // 
-            // panel4
-            // 
-            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel4.Controls.Add(this.label7);
-            this.panel4.Controls.Add(this.btnAddGroup);
-            this.panel4.Controls.Add(this.listGroups);
-            this.panel4.Controls.Add(this.cbAddGroup);
-            this.panel4.Location = new System.Drawing.Point(408, 350);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(266, 146);
-            this.panel4.TabIndex = 15;
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(3, 6);
+            this.label7.Location = new System.Drawing.Point(220, 7);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(41, 13);
             this.label7.TabIndex = 7;
@@ -324,17 +313,17 @@
             // listGroups
             // 
             this.listGroups.FormattingEnabled = true;
-            this.listGroups.Location = new System.Drawing.Point(3, 27);
+            this.listGroups.Location = new System.Drawing.Point(136, 50);
             this.listGroups.Name = "listGroups";
-            this.listGroups.Size = new System.Drawing.Size(258, 108);
+            this.listGroups.Size = new System.Drawing.Size(125, 147);
             this.listGroups.TabIndex = 4;
             // 
             // cbAddGroup
             // 
             this.cbAddGroup.FormattingEnabled = true;
-            this.cbAddGroup.Location = new System.Drawing.Point(58, 3);
+            this.cbAddGroup.Location = new System.Drawing.Point(136, 23);
             this.cbAddGroup.Name = "cbAddGroup";
-            this.cbAddGroup.Size = new System.Drawing.Size(171, 21);
+            this.cbAddGroup.Size = new System.Drawing.Size(98, 21);
             this.cbAddGroup.TabIndex = 5;
             // 
             // toolStripDropDownButton1
@@ -377,9 +366,9 @@
             // btnAddGroup
             // 
             this.btnAddGroup.Image = ((System.Drawing.Image)(resources.GetObject("btnAddGroup.Image")));
-            this.btnAddGroup.Location = new System.Drawing.Point(235, 3);
+            this.btnAddGroup.Location = new System.Drawing.Point(240, 23);
             this.btnAddGroup.Name = "btnAddGroup";
-            this.btnAddGroup.Size = new System.Drawing.Size(26, 21);
+            this.btnAddGroup.Size = new System.Drawing.Size(21, 21);
             this.btnAddGroup.TabIndex = 6;
             this.btnAddGroup.UseVisualStyleBackColor = true;
             this.btnAddGroup.Click += new System.EventHandler(this.btnAddGroup_Click);
@@ -397,9 +386,9 @@
             // btnAddAIType
             // 
             this.btnAddAIType.Image = ((System.Drawing.Image)(resources.GetObject("btnAddAIType.Image")));
-            this.btnAddAIType.Location = new System.Drawing.Point(235, 3);
+            this.btnAddAIType.Location = new System.Drawing.Point(108, 22);
             this.btnAddAIType.Name = "btnAddAIType";
-            this.btnAddAIType.Size = new System.Drawing.Size(26, 21);
+            this.btnAddAIType.Size = new System.Drawing.Size(21, 21);
             this.btnAddAIType.TabIndex = 6;
             this.btnAddAIType.UseVisualStyleBackColor = true;
             this.btnAddAIType.Click += new System.EventHandler(this.btnAddAIType_Click);
@@ -455,8 +444,6 @@
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numHealth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numExperience)).EndInit();
-            this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -491,7 +478,6 @@
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
         private System.Windows.Forms.ToolStripMenuItem btnCreateHumanoidCritter;
         private System.Windows.Forms.ToolStripMenuItem btnCreateBeastCritter;
-        private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button btnAddGroup;
         private System.Windows.Forms.ListBox listGroups;

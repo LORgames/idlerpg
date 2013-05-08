@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ToolCache.General;
+using ToolCache.Map.Objects;
 
 namespace ToolCache.Map.Tiles {
     public class TileMap {
@@ -101,11 +102,11 @@ namespace ToolCache.Map.Tiles {
             int offsetX = (extendX == 0) ? 0 : (extendX == 2 ? TileTemplate.PIXELS_X * (oldTotalTilesX - 1) : TileTemplate.PIXELS_X * sizeDifX / 2);
             int offsetY = (extendY == 0) ? 0 : (extendY == 2 ? TileTemplate.PIXELS_Y * (oldTotalTilesY - 1) : TileTemplate.PIXELS_Y * sizeDifY / 2);
 
-            foreach(Objects.BaseObject o in Map.Objects) {
-                o.Move(offsetX, offsetY);
-            }
-
             Data = newTiles;
+
+            foreach(BaseObject o in Map.Objects) {
+                o.Move(offsetX, offsetY, false);
+            }
 
             Map.WorldRectangle = new System.Drawing.Rectangle(0, 0, numTilesX * TileTemplate.PIXELS_X, numTilesY * TileTemplate.PIXELS_Y);
         }
