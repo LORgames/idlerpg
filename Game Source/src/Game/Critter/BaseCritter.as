@@ -48,6 +48,11 @@ package Game.Critter {
 			this.Y = portal.ExitPoint.y;
 		}
 		
+		public function RequestInMapTeleport():void {
+			RequestTeleport(CurrentMap, CurrentMap.Portals[Global.MapPortalID]);
+			Main.I.Renderer.FadeToWorld();
+		}
+		
 		protected function SpeedToDirection(xSpeed:int, ySpeed:int):int {
 			var mx:int = xSpeed < 0 ? -xSpeed : xSpeed;
 			var my:int = ySpeed < 0 ? -ySpeed : ySpeed;

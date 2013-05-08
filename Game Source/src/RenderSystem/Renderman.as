@@ -14,9 +14,10 @@ package RenderSystem {
 		
 		public static var AnimatedObjects:Vector.<IAnimated> = new Vector.<IAnimated>();
 		
-		private var fade:Number = 1;
-		private var fadeOut:Boolean = false;
-		private var fadeIn:Boolean = false;
+		private var fadeAlpha:int = 255;
+		private var fading:Boolean = false;
+		private var fadeToBlack:Boolean = false;
+		private var fadeCallback:Function = null;
 		
 		private var loadScreen:LoadScreen;
 		
@@ -33,12 +34,20 @@ package RenderSystem {
 			Main.I.addChild(map.DebugLayer);
 		}
 		
-		public function FadeOut():void {
-			fadeOut = true;
+		public function FadeToBlack(callbackIfRequired:Function = null):void {
+			fadeToBlack = true;
+			fading = true;
+			fadeCallback = callbackIfRequired;
 		}
 		
-		public function FadeIn():void {
-			fadeIn = true;
+		public function FadeToWorld(callbackIfRequired:Function = null):void {
+			fadeToBlack = false;
+			fading = true;
+			fadeCallback = callbackIfRequired;
+		}
+		
+		public function IsFading():Boolean {
+			return fading;
 		}
 		
 		public function Resized():void {
@@ -47,24 +56,29 @@ package RenderSystem {
 		}
 		
 		public function Render(dt:Number):void {
-			if (fade > 0) {
-				if (fadeOut) {
-					fade -= 0.05;
-					if (fade <= 0) {
-						fade = 0;
-						fadeOut = false;
+			if (fading) {
+				if (fadeToBlack) {
+					fadeAlpha += 13;
+					if (fadeAlpha >= 255) {
+						fadeAlpha = 255;
+						fading = false;
 					}
 				} else {
-					if (fadeIn) {
-						fade += 0.05;
-						if (fade >= 1) {
-							fade = 1;
-							fadeIn = false;
-						}
+					fadeAlpha -= 13;
+					if (fadeAlpha <= 0) {
+						fadeAlpha = 0;
+						fading = false;
 					}
 				}
 				
-				loadScreen.alpha = fade;
+				if (!fading) {
+					if (fadeCallback != null) {
+						fadeCallback();
+						fadeCallback = null;
+					}
+				}
+				
+				loadScreen.RealAlpha = fadeAlpha;
 				loadScreen.Draw();
 			}
 			

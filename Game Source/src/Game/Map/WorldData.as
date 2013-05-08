@@ -77,6 +77,11 @@ package Game.Map {
 			Global.LoadingTotal--;
 		}
 		
+		public static function UpdatePlayerPosition():void {
+			ME.CurrentMap = new MapData(PortalDestinations[Global.MapPortalID], Global.MapPortalID);
+			Main.I.Renderer.FadeToWorld();
+		}
+		
 	}
 
 }

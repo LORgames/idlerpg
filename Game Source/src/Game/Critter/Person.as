@@ -5,6 +5,7 @@ package Game.Critter
 	import Game.Map.WorldData;
 	import Interfaces.IUpdatable;
 	import RenderSystem.Camera;
+	import RenderSystem.Renderman;
 	/**
 	 * ...
 	 * @author Paul
@@ -40,14 +41,17 @@ package Game.Critter
 						if (WorldData.ME.CurrentMap.Name == WorldData.PortalDestinations[exitID]) {
 							var k:int = CurrentMap.Portals.length;
 							while (--k > -1) {
-								if(CurrentMap.Portals[j].ExitID == CurrentMap.Portals[k].ID) {
-									RequestTeleport(CurrentMap, CurrentMap.Portals[k]);
+								if (CurrentMap.Portals[j].ExitID == CurrentMap.Portals[k].ID) {
+									Global.MapPortalID = k;
+									Main.I.Renderer.FadeToBlack(RequestInMapTeleport);
+									trace("Requested in map teleport!");
 								}
 							}
 							break;
 						} else {
-							trace("Entering portal " + CurrentMap.Portals[j].ID + " (" + j + ") and leaving portal " + exitID);
-							WorldData.ME.CurrentMap = new MapData(WorldData.PortalDestinations[exitID], exitID);
+							Global.MapPortalID = exitID;
+							Main.I.Renderer.FadeToBlack(WorldData.UpdatePlayerPosition);
+							trace("Requested global teleport!");
 						}
 						break;
 					}

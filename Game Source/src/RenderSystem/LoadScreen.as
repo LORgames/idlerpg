@@ -19,6 +19,7 @@ package RenderSystem {
 	public class LoadScreen extends Bitmap {
 		
 		private var data:BitmapData; // Display thing.
+		public var RealAlpha:uint = 0;
 		
 		public function LoadScreen() {
 			
@@ -32,7 +33,7 @@ package RenderSystem {
 		public function Draw():void {
 			data.lock();
 			
-			data.floodFill(0, 0, 0xFF000000);
+			data.floodFill(0, 0, 0x000000 | RealAlpha << 24);
 			
 			data.unlock();
 		}

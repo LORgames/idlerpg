@@ -39,8 +39,6 @@ package Game.Map {
 			this.ExpectedAtPortalID = portalID;
 			if (portalID != -1) firstload = true;
 			
-			Main.I.Renderer.FadeOut();
-			
 			BinaryLoader.Load("Data/Map_" + mapname + ".bin", ParseData);
 			
 			Global.LoadingTotal++;
@@ -134,7 +132,7 @@ package Game.Map {
 				}
 			}
 			
-			Main.I.Renderer.FadeIn();
+			Main.I.Renderer.FadeToWorld();
 		}
 	}
 

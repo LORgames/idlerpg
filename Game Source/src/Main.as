@@ -89,7 +89,7 @@ package {
 		
 		private function deactivate(e:Event):void {
 			// auto-close
-			NativeApplication.nativeApplication.exit();
+			if(!Multitouch.supportsTouchEvents) NativeApplication.nativeApplication.exit();
 		}
 		
 		private function Cycle(e:* = null):void {
@@ -112,6 +112,7 @@ package {
 				TrySwap(i-4);
 			}
 			
+			//Do some fading?
 			if (Global.PrevLoadingTotal == 0 && Global.LoadingTotal != 0) {
 				//fade out
 				//Renderman.FadeOut();
