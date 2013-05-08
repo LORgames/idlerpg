@@ -54,7 +54,7 @@ package {
 			}
 			
 			//Need more logic to adding input system?
-			if(Multitouch.supportsTouchEvents) {
+			if(Multitouch.supportsTouchEvents && Multitouch.maxTouchPoints > 1) {
 				Input = new TouchInput();//new KeyboardInput();
 			} else {
 				Input = new KeyboardInput();
@@ -88,8 +88,10 @@ package {
 		}
 		
 		private function deactivate(e:Event):void {
-			// auto-close
-			if(!Multitouch.supportsTouchEvents) NativeApplication.nativeApplication.exit();
+			// auto-close if mobile device :)
+			if (Multitouch.supportsTouchEvents && Multitouch.maxTouchPoints > 1) {
+				NativeApplication.nativeApplication.exit();
+			}
 		}
 		
 		private function Cycle(e:* = null):void {
@@ -115,10 +117,10 @@ package {
 			//Do some fading?
 			if (Global.PrevLoadingTotal == 0 && Global.LoadingTotal != 0) {
 				//fade out
-				//Renderman.FadeOut();
+				Renderer.FadeToBlack();
 			} else if (Global.PrevLoadingTotal > 0 && Global.LoadingTotal == 0) {
 				//fade in
-				//Renderman.FadeIn();
+				Renderer.FadeToWorld();
 			}
 			
 			Global.PrevLoadingTotal = Global.LoadingTotal;

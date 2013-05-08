@@ -44,14 +44,12 @@ package Game.Critter
 								if (CurrentMap.Portals[j].ExitID == CurrentMap.Portals[k].ID) {
 									Global.MapPortalID = k;
 									Main.I.Renderer.FadeToBlack(RequestInMapTeleport);
-									trace("Requested in map teleport!");
 								}
 							}
 							break;
 						} else {
 							Global.MapPortalID = exitID;
 							Main.I.Renderer.FadeToBlack(WorldData.UpdatePlayerPosition);
-							trace("Requested global teleport!");
 						}
 						break;
 					}

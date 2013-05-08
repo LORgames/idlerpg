@@ -42,12 +42,10 @@ package Game.General {
 		
 		private static function Event_LoadingCompleted(e:Event):void {
 			currentInfo.SuccessCallback(loader.data);
-			
 			CurrentLoadingEnded();
 		}
 		
 		private static function Event_LoadProgress(e:ProgressEvent):void {
-			if(e.bytesTotal != e.bytesLoaded) trace("Progress: " + e.bytesLoaded + "/" + e.bytesTotal);
 			currentInfo.ProgressCallback(e);
 		}
 		

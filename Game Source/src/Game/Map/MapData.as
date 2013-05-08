@@ -65,7 +65,6 @@ package Game.Map {
 				Portals[i] = new Portal(b);
 				
 				if (firstload && ExpectedAtPortalID == Portals[i].ID) {
-					trace("Found portal " + portals + " (" + ExpectedAtPortalID + ") == " + Portals[i].ID);
 					_pID = i;
 				}
 				

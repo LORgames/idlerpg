@@ -23,7 +23,6 @@ package Game.Map {
 		
 		public static function Initialize(loadReq:String):void {
 			RequestedMapLoad = loadReq;
-			trace("Looking for: " + RequestedMapLoad);
 			
 			BinaryLoader.Load("Data/MapInfo.bin", ParseWorldFile);
 			ImageLoader.Load("Data/TileSheet.png", LoadedTileSet);
