@@ -50,10 +50,8 @@ package Game.General {
 			var commandBlock:ByteArray = new ByteArray();
 			
 			while (command != 0xF0FF) {
-				trace("Reading command: " + command.toString(16));
-				
 				command = b.readUnsignedShort();
-				commandBlock.writeUnsignedInt(command);
+				commandBlock.writeShort(command);
 				
 				if (command == 0xF0FF) break; //Exit early if script has ended
 				
@@ -61,12 +59,10 @@ package Game.General {
 					case 0x0001: //Play sound effect
 						commandBlock.writeShort(b.readShort()); // The sound ID
 						break;
-					case 0x0002: //Equip item on the invoker
+					case 0x3001: //Equip item on the invoker
 						commandBlock.writeShort(b.readShort());
 						commandBlock.writeShort(b.readShort());
 						break;
-					default:
-						trace("Unknown command..." + command.toString(16));
 				}
 			}
 			

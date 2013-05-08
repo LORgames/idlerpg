@@ -62,7 +62,11 @@ namespace ToolCache.General {
         }
 
         public void AddUnsignedShort(ushort number) {
-            out_data.AddRange(BitConverter.GetBytes(IPAddress.HostToNetworkOrder(number)));
+            byte[] bytes = BitConverter.GetBytes(IPAddress.HostToNetworkOrder(number));
+            byte[] writeBytes = new byte[2];
+            writeBytes[0] = bytes[2];
+            writeBytes[1] = bytes[3];
+            out_data.AddRange(writeBytes);
         }
 
         public void AddByte(byte number) {

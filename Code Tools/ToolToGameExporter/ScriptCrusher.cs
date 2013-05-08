@@ -9,8 +9,17 @@ namespace ToolToGameExporter {
     public class ScriptCrusher {
 
         internal static void ProcessScript(string scriptname, string s, BinaryIO f, List<string> snippets = null) {
+            if (s.Length == 0 && snippets == null) {
+                f.AddUnsignedShort(0xF0FF);
+                return;
+            }
+
             //Storage for snippets
-            if(snippets == null) snippets = new List<string>();
+            bool isSnippet = true;
+            if (snippets == null) {
+                snippets = new List<string>();
+                isSnippet = false;
+            }
 
             ///////////////////////////////////////////////////////////////////////////////////
             /////// PRECOMPILER
@@ -46,7 +55,6 @@ namespace ToolToGameExporter {
                     snippet = snippet.Substring(1, snippet.Length - 2);
 
                     snippets.Add(snippet);
-
                 }
             }
 
@@ -102,7 +110,8 @@ namespace ToolToGameExporter {
                 }
             }
 
-            f.AddUnsignedShort(0xF0FF);
+            //End the script loader
+            if(!isSnippet) f.AddUnsignedShort(0xF0FF);
         }
 
         private static void Error(string message, string scriptname, BinaryIO f) {
