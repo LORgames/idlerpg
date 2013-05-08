@@ -197,7 +197,7 @@
             this.panel3.Controls.Add(this.cbItemList);
             this.panel3.Location = new System.Drawing.Point(458, 248);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(290, 248);
+            this.panel3.Size = new System.Drawing.Size(290, 327);
             this.panel3.TabIndex = 15;
             // 
             // listLoot
@@ -212,7 +212,7 @@
             this.listLoot.LabelEdit = true;
             this.listLoot.Location = new System.Drawing.Point(7, 30);
             this.listLoot.Name = "listLoot";
-            this.listLoot.Size = new System.Drawing.Size(274, 213);
+            this.listLoot.Size = new System.Drawing.Size(274, 292);
             this.listLoot.TabIndex = 8;
             this.listLoot.UseCompatibleStateImageBehavior = false;
             this.listLoot.View = System.Windows.Forms.View.Details;
@@ -277,10 +277,11 @@
             // 
             // pnlHumanoid
             // 
+            this.pnlHumanoid.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlHumanoid.Controls.Add(this.pbHumanoidDisplay);
             this.pnlHumanoid.Location = new System.Drawing.Point(8, 248);
             this.pnlHumanoid.Name = "pnlHumanoid";
-            this.pnlHumanoid.Size = new System.Drawing.Size(194, 248);
+            this.pnlHumanoid.Size = new System.Drawing.Size(212, 327);
             this.pnlHumanoid.TabIndex = 15;
             // 
             // panel1
@@ -430,16 +431,17 @@
             // 
             // pnlBeast
             // 
-            this.pnlBeast.Location = new System.Drawing.Point(208, 248);
+            this.pnlBeast.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlBeast.Location = new System.Drawing.Point(226, 248);
             this.pnlBeast.Name = "pnlBeast";
-            this.pnlBeast.Size = new System.Drawing.Size(194, 248);
+            this.pnlBeast.Size = new System.Drawing.Size(226, 327);
             this.pnlBeast.TabIndex = 16;
             // 
             // pbHumanoidDisplay
             // 
             this.pbHumanoidDisplay.Location = new System.Drawing.Point(3, 3);
             this.pbHumanoidDisplay.Name = "pbHumanoidDisplay";
-            this.pbHumanoidDisplay.Size = new System.Drawing.Size(188, 114);
+            this.pbHumanoidDisplay.Size = new System.Drawing.Size(206, 114);
             this.pbHumanoidDisplay.TabIndex = 0;
             this.pbHumanoidDisplay.TabStop = false;
             // 
