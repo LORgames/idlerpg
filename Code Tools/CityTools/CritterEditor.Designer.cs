@@ -615,17 +615,47 @@
             // numHealth
             // 
             this.numHealth.Location = new System.Drawing.Point(89, 84);
+            this.numHealth.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.numHealth.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
             this.numHealth.Name = "numHealth";
             this.numHealth.Size = new System.Drawing.Size(104, 20);
             this.numHealth.TabIndex = 11;
+            this.numHealth.Value = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
             this.numHealth.ValueChanged += new System.EventHandler(this.ValueChanged);
             // 
             // numExperience
             // 
             this.numExperience.Location = new System.Drawing.Point(89, 58);
+            this.numExperience.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.numExperience.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
             this.numExperience.Name = "numExperience";
             this.numExperience.Size = new System.Drawing.Size(104, 20);
             this.numExperience.TabIndex = 10;
+            this.numExperience.Value = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
             this.numExperience.ValueChanged += new System.EventHandler(this.ValueChanged);
             // 
             // label4
