@@ -17,6 +17,7 @@ namespace ToolCache.General {
             //Tier 0 Loading:
             SoundDatabase.Initialize();
             ElementManager.Initialize();
+            Factions.Initialize();
 
             //Tier 1 Loading:
             TemplateCache.Initialize();

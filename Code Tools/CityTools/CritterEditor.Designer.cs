@@ -46,9 +46,24 @@
             this.btnAddLoot = new System.Windows.Forms.Button();
             this.cbItemList = new System.Windows.Forms.ComboBox();
             this.pnlHumanoid = new System.Windows.Forms.Panel();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.cbHumanoidWeapon = new System.Windows.Forms.ComboBox();
+            this.cbHumanoidHeadgear = new System.Windows.Forms.ComboBox();
+            this.cbHumanoidFace = new System.Windows.Forms.ComboBox();
+            this.cbHumanoidBody = new System.Windows.Forms.ComboBox();
+            this.cbHumanoidPants = new System.Windows.Forms.ComboBox();
+            this.cbHumanoidShadow = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.pbHumanoidDisplay = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label14 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.txtScript = new System.Windows.Forms.TextBox();
             this.listGroups = new System.Windows.Forms.ListBox();
             this.btnAddGroup = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
@@ -63,21 +78,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtMonsterName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.cbHumanoidShadow = new System.Windows.Forms.ComboBox();
-            this.cbHumanoidPants = new System.Windows.Forms.ComboBox();
-            this.cbHumanoidFace = new System.Windows.Forms.ComboBox();
-            this.cbHumanoidBody = new System.Windows.Forms.ComboBox();
-            this.cbHumanoidWeapon = new System.Windows.Forms.ComboBox();
-            this.cbHumanoidHeadgear = new System.Windows.Forms.ComboBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.txtScript = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.sptFullForm)).BeginInit();
             this.sptFullForm.Panel1.SuspendLayout();
             this.sptFullForm.Panel2.SuspendLayout();
@@ -320,6 +320,117 @@
             this.pnlHumanoid.Size = new System.Drawing.Size(212, 309);
             this.pnlHumanoid.TabIndex = 15;
             // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(105, 217);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(48, 13);
+            this.label13.TabIndex = 13;
+            this.label13.Text = "Weapon";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(3, 217);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(54, 13);
+            this.label12.TabIndex = 12;
+            this.label12.Text = "Headgear";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(104, 177);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(31, 13);
+            this.label11.TabIndex = 11;
+            this.label11.Text = "Face";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(3, 177);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(31, 13);
+            this.label10.TabIndex = 10;
+            this.label10.Text = "Body";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(104, 137);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(30, 13);
+            this.label9.TabIndex = 9;
+            this.label9.Text = "Legs";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(3, 137);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(46, 13);
+            this.label8.TabIndex = 8;
+            this.label8.Text = "Shadow";
+            // 
+            // cbHumanoidWeapon
+            // 
+            this.cbHumanoidWeapon.FormattingEnabled = true;
+            this.cbHumanoidWeapon.Location = new System.Drawing.Point(107, 233);
+            this.cbHumanoidWeapon.Name = "cbHumanoidWeapon";
+            this.cbHumanoidWeapon.Size = new System.Drawing.Size(100, 21);
+            this.cbHumanoidWeapon.TabIndex = 7;
+            // 
+            // cbHumanoidHeadgear
+            // 
+            this.cbHumanoidHeadgear.FormattingEnabled = true;
+            this.cbHumanoidHeadgear.Location = new System.Drawing.Point(3, 233);
+            this.cbHumanoidHeadgear.Name = "cbHumanoidHeadgear";
+            this.cbHumanoidHeadgear.Size = new System.Drawing.Size(100, 21);
+            this.cbHumanoidHeadgear.TabIndex = 6;
+            // 
+            // cbHumanoidFace
+            // 
+            this.cbHumanoidFace.FormattingEnabled = true;
+            this.cbHumanoidFace.Location = new System.Drawing.Point(108, 193);
+            this.cbHumanoidFace.Name = "cbHumanoidFace";
+            this.cbHumanoidFace.Size = new System.Drawing.Size(100, 21);
+            this.cbHumanoidFace.TabIndex = 5;
+            // 
+            // cbHumanoidBody
+            // 
+            this.cbHumanoidBody.FormattingEnabled = true;
+            this.cbHumanoidBody.Location = new System.Drawing.Point(3, 193);
+            this.cbHumanoidBody.Name = "cbHumanoidBody";
+            this.cbHumanoidBody.Size = new System.Drawing.Size(100, 21);
+            this.cbHumanoidBody.TabIndex = 4;
+            // 
+            // cbHumanoidPants
+            // 
+            this.cbHumanoidPants.FormattingEnabled = true;
+            this.cbHumanoidPants.Location = new System.Drawing.Point(107, 153);
+            this.cbHumanoidPants.Name = "cbHumanoidPants";
+            this.cbHumanoidPants.Size = new System.Drawing.Size(100, 21);
+            this.cbHumanoidPants.TabIndex = 3;
+            // 
+            // cbHumanoidShadow
+            // 
+            this.cbHumanoidShadow.FormattingEnabled = true;
+            this.cbHumanoidShadow.Location = new System.Drawing.Point(3, 153);
+            this.cbHumanoidShadow.Name = "cbHumanoidShadow";
+            this.cbHumanoidShadow.Size = new System.Drawing.Size(100, 21);
+            this.cbHumanoidShadow.TabIndex = 2;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 3);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(96, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Humanoid Controls";
+            // 
             // pbHumanoidDisplay
             // 
             this.pbHumanoidDisplay.Location = new System.Drawing.Point(2, 17);
@@ -346,6 +457,15 @@
             this.panel1.Size = new System.Drawing.Size(522, 256);
             this.panel1.TabIndex = 14;
             // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(3, 9);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(45, 13);
+            this.label14.TabIndex = 18;
+            this.label14.Text = "AI Code";
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -354,6 +474,14 @@
             this.label7.Size = new System.Drawing.Size(41, 13);
             this.label7.TabIndex = 7;
             this.label7.Text = "Groups";
+            // 
+            // txtScript
+            // 
+            this.txtScript.Location = new System.Drawing.Point(3, 24);
+            this.txtScript.Multiline = true;
+            this.txtScript.Name = "txtScript";
+            this.txtScript.Size = new System.Drawing.Size(222, 226);
+            this.txtScript.TabIndex = 17;
             // 
             // listGroups
             // 
@@ -384,6 +512,8 @@
             // 
             // cbAddGroup
             // 
+            this.cbAddGroup.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.cbAddGroup.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbAddGroup.FormattingEnabled = true;
             this.cbAddGroup.Location = new System.Drawing.Point(376, 25);
             this.cbAddGroup.Name = "cbAddGroup";
@@ -474,134 +604,6 @@
             this.label2.Size = new System.Drawing.Size(38, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "Name:";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 3);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(96, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Humanoid Controls";
-            // 
-            // cbHumanoidShadow
-            // 
-            this.cbHumanoidShadow.FormattingEnabled = true;
-            this.cbHumanoidShadow.Location = new System.Drawing.Point(3, 153);
-            this.cbHumanoidShadow.Name = "cbHumanoidShadow";
-            this.cbHumanoidShadow.Size = new System.Drawing.Size(100, 21);
-            this.cbHumanoidShadow.TabIndex = 2;
-            // 
-            // cbHumanoidPants
-            // 
-            this.cbHumanoidPants.FormattingEnabled = true;
-            this.cbHumanoidPants.Location = new System.Drawing.Point(107, 153);
-            this.cbHumanoidPants.Name = "cbHumanoidPants";
-            this.cbHumanoidPants.Size = new System.Drawing.Size(100, 21);
-            this.cbHumanoidPants.TabIndex = 3;
-            // 
-            // cbHumanoidFace
-            // 
-            this.cbHumanoidFace.FormattingEnabled = true;
-            this.cbHumanoidFace.Location = new System.Drawing.Point(108, 193);
-            this.cbHumanoidFace.Name = "cbHumanoidFace";
-            this.cbHumanoidFace.Size = new System.Drawing.Size(100, 21);
-            this.cbHumanoidFace.TabIndex = 5;
-            // 
-            // cbHumanoidBody
-            // 
-            this.cbHumanoidBody.FormattingEnabled = true;
-            this.cbHumanoidBody.Location = new System.Drawing.Point(3, 193);
-            this.cbHumanoidBody.Name = "cbHumanoidBody";
-            this.cbHumanoidBody.Size = new System.Drawing.Size(100, 21);
-            this.cbHumanoidBody.TabIndex = 4;
-            // 
-            // cbHumanoidWeapon
-            // 
-            this.cbHumanoidWeapon.FormattingEnabled = true;
-            this.cbHumanoidWeapon.Location = new System.Drawing.Point(107, 233);
-            this.cbHumanoidWeapon.Name = "cbHumanoidWeapon";
-            this.cbHumanoidWeapon.Size = new System.Drawing.Size(100, 21);
-            this.cbHumanoidWeapon.TabIndex = 7;
-            // 
-            // cbHumanoidHeadgear
-            // 
-            this.cbHumanoidHeadgear.FormattingEnabled = true;
-            this.cbHumanoidHeadgear.Location = new System.Drawing.Point(3, 233);
-            this.cbHumanoidHeadgear.Name = "cbHumanoidHeadgear";
-            this.cbHumanoidHeadgear.Size = new System.Drawing.Size(100, 21);
-            this.cbHumanoidHeadgear.TabIndex = 6;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(3, 137);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(46, 13);
-            this.label8.TabIndex = 8;
-            this.label8.Text = "Shadow";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(104, 137);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(30, 13);
-            this.label9.TabIndex = 9;
-            this.label9.Text = "Legs";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(3, 177);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(31, 13);
-            this.label10.TabIndex = 10;
-            this.label10.Text = "Body";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(104, 177);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(31, 13);
-            this.label11.TabIndex = 11;
-            this.label11.Text = "Face";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(3, 217);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(54, 13);
-            this.label12.TabIndex = 12;
-            this.label12.Text = "Headgear";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(105, 217);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(48, 13);
-            this.label13.TabIndex = 13;
-            this.label13.Text = "Weapon";
-            // 
-            // txtScript
-            // 
-            this.txtScript.Location = new System.Drawing.Point(3, 24);
-            this.txtScript.Multiline = true;
-            this.txtScript.Name = "txtScript";
-            this.txtScript.Size = new System.Drawing.Size(222, 226);
-            this.txtScript.TabIndex = 17;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(3, 9);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(45, 13);
-            this.label14.TabIndex = 18;
-            this.label14.Text = "AI Code";
             // 
             // CritterEditor
             // 

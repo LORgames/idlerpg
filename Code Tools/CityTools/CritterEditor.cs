@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using ToolCache.Critters;
 using CityTools.Properties;
 using ToolCache.Items;
+using ToolCache.Equipment;
 
 namespace CityTools {
     public partial class CritterEditor : Form {
@@ -32,11 +33,15 @@ namespace CityTools {
             FillAITypes();
             FillItemBox();
             FillGroups();
-            PopulateLootList();
+            FillEquipmentBoxes();
         }
 
         private void FillGroups() {
-            MessageBox.Show("Cannot run 'FillGroups' in CritterEditor.cs");
+            cbAddGroup.Items.Clear();
+
+            foreach (String s in Factions.AllFactions) {
+                cbAddGroup.Items.Add(s);
+            }
         }
 
         private void FillItemBox() {
@@ -56,8 +61,22 @@ namespace CityTools {
             }
         }
 
+        private void FillEquipmentBoxes() {
+            EquipmentTypes[] types = { EquipmentTypes.Shadow, EquipmentTypes.Legs, EquipmentTypes.Body, EquipmentTypes.Head, EquipmentTypes.Headgear, EquipmentTypes.Weapon };
+            ComboBox[] boxes = { cbHumanoidShadow, cbHumanoidPants, cbHumanoidBody, cbHumanoidFace, cbHumanoidHeadgear, cbHumanoidWeapon };
+
+            if (types.Length == boxes.Length) {
+                for (int i = 0; i < types.Length; i++) {
+                    boxes[i].Items.AddRange(EquipmentManager.TypeLists[types[i]].ToArray());
+                }
+            } else {
+                MessageBox.Show("Hard code error: Types != Boxes.");
+            }
+        }
+
         private void CritterEditor_FormClosing(object sender, FormClosingEventArgs e) {
             CritterManager.SaveDatabase();
+            Factions.SaveDatabase();
         }
 
         private void UpdateForm() {
@@ -71,6 +90,14 @@ namespace CityTools {
             PopulateLootList();
 
             sptFullForm.Panel2.Enabled = true;
+
+            if (critter is CritterHuman) {
+                pnlBeast.Enabled = false;
+                pnlHumanoid.Enabled = true;
+            } else {
+                pnlBeast.Enabled = true;
+                pnlHumanoid.Enabled = false;
+            }
 
             _updatingForm = false;
         }
@@ -119,12 +146,19 @@ namespace CityTools {
         }
 
         private void btnAddGroup_Click(object sender, EventArgs e) {
-            listGroups.Items.Add(cbAddGroup.SelectedText);
+            if (cbAddGroup.Text.Length > 2) {
+                if (!Factions.AllFactions.Contains(cbAddGroup.Text)) {
+                    Factions.AllFactions.Add(cbAddGroup.Text);
+                    cbAddGroup.Items.Add(cbAddGroup.Text);
+                }
+
+                listGroups.Items.Add(cbAddGroup.Text);
+            }
         }
 
         private void btnAddAIType_Click(object sender, EventArgs e) {
             if (cbAITypes.SelectedItem is AITypes) {
-                MessageBox.Show("Has AI Type");
+                listAIType.Items.Add(cbAITypes.SelectedItem);
             }
         }
     }

@@ -10,7 +10,7 @@ namespace ToolCache.Critters {
         private const string FILENAME = Settings.Database + "/Factions.bin";
         public static List<String> AllFactions = new List<String>();
 
-        private static void Initialize() {
+        internal static void Initialize() {
             AllFactions.Clear();
             ReadDatabase();
         }
@@ -20,12 +20,14 @@ namespace ToolCache.Critters {
 
             short totalFactions = b.GetShort();
 
-            while (totalFactions-- > -1) {
+            while (--totalFactions > -1) {
                 AllFactions.Add(b.GetString());
             }
+
+            b.Dispose();
         }
 
-        public static void WriteDatabase() {
+        public static void SaveDatabase() {
             BinaryIO b = new BinaryIO();
 
             b.AddShort((short)AllFactions.Count);
@@ -35,6 +37,7 @@ namespace ToolCache.Critters {
             }
 
             b.Encode(FILENAME);
+            b.Dispose();
         }
 
     }

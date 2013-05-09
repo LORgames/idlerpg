@@ -170,5 +170,9 @@ namespace ToolCache.Equipment {
                 eas.UpdateSpeed(AnimationSpeed);
             }
         }
+
+        public override string ToString() {
+            return Name;
+        }
     }
 }
