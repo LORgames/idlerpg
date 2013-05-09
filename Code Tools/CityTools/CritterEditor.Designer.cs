@@ -34,6 +34,8 @@
             this.btnCreateBeastCritter = new System.Windows.Forms.ToolStripMenuItem();
             this.btnDuplicate = new System.Windows.Forms.ToolStripButton();
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.cbBaseGroup = new System.Windows.Forms.ComboBox();
             this.pnlBeast = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.listLoot = new System.Windows.Forms.ListView();
@@ -108,6 +110,8 @@
             // 
             // sptFullForm.Panel2
             // 
+            this.sptFullForm.Panel2.Controls.Add(this.label15);
+            this.sptFullForm.Panel2.Controls.Add(this.cbBaseGroup);
             this.sptFullForm.Panel2.Controls.Add(this.pnlBeast);
             this.sptFullForm.Panel2.Controls.Add(this.panel3);
             this.sptFullForm.Panel2.Controls.Add(this.pnlHumanoid);
@@ -132,6 +136,7 @@
             this.treeAllCritters.Name = "treeAllCritters";
             this.treeAllCritters.Size = new System.Drawing.Size(162, 539);
             this.treeAllCritters.TabIndex = 2;
+            this.treeAllCritters.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeAllCritters_AfterSelect);
             // 
             // ssTreeStatus
             // 
@@ -202,6 +207,24 @@
             // 
             this.toolStripTextBox1.Name = "toolStripTextBox1";
             this.toolStripTextBox1.Size = new System.Drawing.Size(90, 25);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(15, 114);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(69, 13);
+            this.label15.TabIndex = 18;
+            this.label15.Text = "Editor Group:";
+            // 
+            // cbBaseGroup
+            // 
+            this.cbBaseGroup.FormattingEnabled = true;
+            this.cbBaseGroup.Location = new System.Drawing.Point(89, 110);
+            this.cbBaseGroup.Name = "cbBaseGroup";
+            this.cbBaseGroup.Size = new System.Drawing.Size(104, 21);
+            this.cbBaseGroup.TabIndex = 17;
+            this.cbBaseGroup.TextChanged += new System.EventHandler(this.ValueChanged);
             // 
             // pnlBeast
             // 
@@ -376,51 +399,69 @@
             // 
             // cbHumanoidWeapon
             // 
+            this.cbHumanoidWeapon.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.cbHumanoidWeapon.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbHumanoidWeapon.FormattingEnabled = true;
             this.cbHumanoidWeapon.Location = new System.Drawing.Point(107, 233);
             this.cbHumanoidWeapon.Name = "cbHumanoidWeapon";
             this.cbHumanoidWeapon.Size = new System.Drawing.Size(100, 21);
             this.cbHumanoidWeapon.TabIndex = 7;
+            this.cbHumanoidWeapon.SelectedIndexChanged += new System.EventHandler(this.ChangedEquipment);
             // 
             // cbHumanoidHeadgear
             // 
+            this.cbHumanoidHeadgear.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.cbHumanoidHeadgear.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbHumanoidHeadgear.FormattingEnabled = true;
             this.cbHumanoidHeadgear.Location = new System.Drawing.Point(3, 233);
             this.cbHumanoidHeadgear.Name = "cbHumanoidHeadgear";
             this.cbHumanoidHeadgear.Size = new System.Drawing.Size(100, 21);
             this.cbHumanoidHeadgear.TabIndex = 6;
+            this.cbHumanoidHeadgear.SelectedIndexChanged += new System.EventHandler(this.ChangedEquipment);
             // 
             // cbHumanoidFace
             // 
+            this.cbHumanoidFace.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.cbHumanoidFace.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbHumanoidFace.FormattingEnabled = true;
             this.cbHumanoidFace.Location = new System.Drawing.Point(108, 193);
             this.cbHumanoidFace.Name = "cbHumanoidFace";
             this.cbHumanoidFace.Size = new System.Drawing.Size(100, 21);
             this.cbHumanoidFace.TabIndex = 5;
+            this.cbHumanoidFace.SelectedIndexChanged += new System.EventHandler(this.ChangedEquipment);
             // 
             // cbHumanoidBody
             // 
+            this.cbHumanoidBody.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.cbHumanoidBody.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbHumanoidBody.FormattingEnabled = true;
             this.cbHumanoidBody.Location = new System.Drawing.Point(3, 193);
             this.cbHumanoidBody.Name = "cbHumanoidBody";
             this.cbHumanoidBody.Size = new System.Drawing.Size(100, 21);
             this.cbHumanoidBody.TabIndex = 4;
+            this.cbHumanoidBody.SelectedIndexChanged += new System.EventHandler(this.ChangedEquipment);
             // 
             // cbHumanoidPants
             // 
+            this.cbHumanoidPants.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.cbHumanoidPants.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbHumanoidPants.FormattingEnabled = true;
             this.cbHumanoidPants.Location = new System.Drawing.Point(107, 153);
             this.cbHumanoidPants.Name = "cbHumanoidPants";
             this.cbHumanoidPants.Size = new System.Drawing.Size(100, 21);
             this.cbHumanoidPants.TabIndex = 3;
+            this.cbHumanoidPants.SelectedIndexChanged += new System.EventHandler(this.ChangedEquipment);
             // 
             // cbHumanoidShadow
             // 
+            this.cbHumanoidShadow.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.cbHumanoidShadow.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbHumanoidShadow.FormattingEnabled = true;
             this.cbHumanoidShadow.Location = new System.Drawing.Point(3, 153);
             this.cbHumanoidShadow.Name = "cbHumanoidShadow";
             this.cbHumanoidShadow.Size = new System.Drawing.Size(100, 21);
             this.cbHumanoidShadow.TabIndex = 2;
+            this.cbHumanoidShadow.SelectedIndexChanged += new System.EventHandler(this.ChangedEquipment);
             // 
             // label1
             // 
@@ -438,6 +479,7 @@
             this.pbHumanoidDisplay.Size = new System.Drawing.Size(206, 114);
             this.pbHumanoidDisplay.TabIndex = 0;
             this.pbHumanoidDisplay.TabStop = false;
+            this.pbHumanoidDisplay.Paint += new System.Windows.Forms.PaintEventHandler(this.pbHumanoidDisplay_Paint);
             // 
             // panel1
             // 
@@ -482,6 +524,7 @@
             this.txtScript.Name = "txtScript";
             this.txtScript.Size = new System.Drawing.Size(222, 226);
             this.txtScript.TabIndex = 17;
+            this.txtScript.TextChanged += new System.EventHandler(this.ValueChanged);
             // 
             // listGroups
             // 
@@ -490,6 +533,7 @@
             this.listGroups.Name = "listGroups";
             this.listGroups.Size = new System.Drawing.Size(137, 199);
             this.listGroups.TabIndex = 4;
+            this.listGroups.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listAIType_KeyDown);
             // 
             // btnAddGroup
             // 
@@ -537,6 +581,7 @@
             this.listAIType.Name = "listAIType";
             this.listAIType.Size = new System.Drawing.Size(134, 199);
             this.listAIType.TabIndex = 4;
+            this.listAIType.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listAIType_KeyDown);
             // 
             // cbAITypes
             // 
@@ -550,12 +595,13 @@
             // 
             this.ckbOneOfAKind.AutoSize = true;
             this.ckbOneOfAKind.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.ckbOneOfAKind.Location = new System.Drawing.Point(9, 110);
+            this.ckbOneOfAKind.Location = new System.Drawing.Point(8, 139);
             this.ckbOneOfAKind.Name = "ckbOneOfAKind";
             this.ckbOneOfAKind.Size = new System.Drawing.Size(94, 17);
             this.ckbOneOfAKind.TabIndex = 13;
             this.ckbOneOfAKind.Text = "One Of A Kind";
             this.ckbOneOfAKind.UseVisualStyleBackColor = true;
+            this.ckbOneOfAKind.CheckedChanged += new System.EventHandler(this.ValueChanged);
             // 
             // label5
             // 
@@ -572,6 +618,7 @@
             this.numHealth.Name = "numHealth";
             this.numHealth.Size = new System.Drawing.Size(104, 20);
             this.numHealth.TabIndex = 11;
+            this.numHealth.ValueChanged += new System.EventHandler(this.ValueChanged);
             // 
             // numExperience
             // 
@@ -579,6 +626,7 @@
             this.numExperience.Name = "numExperience";
             this.numExperience.Size = new System.Drawing.Size(104, 20);
             this.numExperience.TabIndex = 10;
+            this.numExperience.ValueChanged += new System.EventHandler(this.ValueChanged);
             // 
             // label4
             // 
@@ -595,6 +643,7 @@
             this.txtMonsterName.Name = "txtMonsterName";
             this.txtMonsterName.Size = new System.Drawing.Size(102, 20);
             this.txtMonsterName.TabIndex = 3;
+            this.txtMonsterName.TextChanged += new System.EventHandler(this.ValueChanged);
             // 
             // label2
             // 
@@ -694,5 +743,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox txtScript;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.ComboBox cbBaseGroup;
     }
 }

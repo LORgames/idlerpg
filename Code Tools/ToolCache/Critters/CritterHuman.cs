@@ -6,12 +6,12 @@ using ToolCache.General;
 
 namespace ToolCache.Critters {
     public class CritterHuman : Critter {
-        private string shadow = "";
-        private string legs = "";
-        private string body = "";
-        private string face = "";
-        private string headgear = "";
-        private string weapon = "";
+        public string Shadow = "";
+        public string Legs = "";
+        public string Body = "";
+        public string Face = "";
+        public string Headgear = "";
+        public string Weapon = "";
 
         public CritterHuman() {
             CritterType = CritterTypes.Humanoid;
@@ -24,12 +24,12 @@ namespace ToolCache.Critters {
             c.BaseLoad(f);
 
             //Load the equipment information
-            c.shadow = f.GetString();
-            c.legs = f.GetString();
-            c.body = f.GetString();
-            c.face = f.GetString();
-            c.headgear = f.GetString();
-            c.weapon = f.GetString();
+            c.Shadow = f.GetString();
+            c.Legs = f.GetString();
+            c.Body = f.GetString();
+            c.Face = f.GetString();
+            c.Headgear = f.GetString();
+            c.Weapon = f.GetString();
 
             return c;
         }
@@ -37,12 +37,12 @@ namespace ToolCache.Critters {
         internal override void PackIntoBinaryIO(BinaryIO f) {
             base.PackIntoBinaryIO(f);
 
-            f.AddString(shadow);
-            f.AddString(legs);
-            f.AddString(body);
-            f.AddString(face);
-            f.AddString(headgear);
-            f.AddString(weapon);
+            f.AddString(Shadow);
+            f.AddString(Legs);
+            f.AddString(Body);
+            f.AddString(Face);
+            f.AddString(Headgear);
+            f.AddString(Weapon);
         }
     }
 }

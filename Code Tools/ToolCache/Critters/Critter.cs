@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ToolCache.General;
 using ToolCache.Drawing;
+using System.Windows.Forms;
 
 namespace ToolCache.Critters {
     public enum CritterTypes { Humanoid, NonHumanoid }
@@ -11,7 +12,7 @@ namespace ToolCache.Critters {
     public class Critter {
         public CritterTypes CritterType;
 
-        public short ID = 0;
+        public short ID = -1;
         public string Name = "MONSTAR!";
         public int AIType = 0;
 
@@ -19,10 +20,15 @@ namespace ToolCache.Critters {
         public int Health = 0;
         public bool OneOfAKind = false;
 
+        public string NodeGroup = "";
+        public string AICommands = "";
+
         public List<LootDrop> Loot = new List<LootDrop>();
 
         public List<String> Groups = new List<string>();
         public List<String> Types = new List<string>();
+
+        public TreeNode EditorNode = null;
 
         internal virtual void PackIntoBinaryIO(BinaryIO f) {
             f.AddByte((byte)CritterType);
@@ -44,6 +50,9 @@ namespace ToolCache.Critters {
 
             f.AddShort((short)Types.Count);
             foreach (String s in Types) f.AddString(s);
+
+            f.AddString(NodeGroup);
+            f.AddString(AICommands);
         }
 
         public virtual void Draw(LBuffer buffer) { } //Does nothing by design
@@ -73,6 +82,9 @@ namespace ToolCache.Critters {
             while (--Total > -1) {
                 Types.Add(f.GetString());
             }
+
+            NodeGroup = f.GetString();
+            AICommands = f.GetString();
         }
     }
 }
