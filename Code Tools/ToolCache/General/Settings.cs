@@ -5,6 +5,6 @@ using System.Text;
 
 namespace ToolCache.General {
     public class Settings {
-        public const string CACHE = ".\\cache\\";
+        public const string Database = ".\\Database\\";
     }
 }

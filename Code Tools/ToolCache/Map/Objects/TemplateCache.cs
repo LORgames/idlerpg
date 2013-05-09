@@ -9,7 +9,7 @@ using System.Drawing;
 
 namespace ToolCache.Map.Objects {
     public class TemplateCache {
-        public const string RESOLVED_DATABASE_FILENAME = Settings.CACHE + "db_objects.bin";
+        public const string RESOLVED_DATABASE_FILENAME = Settings.Database + "Objects.bin";
 
         public static Dictionary<short, Template> ObjectTypes = new Dictionary<short, Template>();
         private static Dictionary<string, List<short>> GroupsToObjectUUIDS = new Dictionary<string, List<short>>();

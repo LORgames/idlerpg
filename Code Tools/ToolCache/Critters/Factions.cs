@@ -7,7 +7,7 @@ using System.IO;
 
 namespace ToolCache.Critters {
     public class Factions {
-        private const string FILENAME = Settings.CACHE + "/Factions.bin";
+        private const string FILENAME = Settings.Database + "/Factions.bin";
         public static List<String> AllFactions = new List<String>();
 
         private static void Initialize() {

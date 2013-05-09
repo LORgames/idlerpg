@@ -7,7 +7,7 @@ using System.IO;
 
 namespace ToolCache.Combat.Elements {
     public class ElementManager {
-        public const string RESOLVED_DATABASE_FILENAME = Settings.CACHE + "db_elements.bin";
+        public const string RESOLVED_DATABASE_FILENAME = Settings.Database + "Elements.bin";
 
         public static Dictionary<short, Element> Elements = new Dictionary<short, Element>();
 

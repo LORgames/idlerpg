@@ -7,8 +7,7 @@ using ToolCache.General;
 
 namespace ToolCache.Map.Tiles {
     public class TileCache {
-        private const string DATABASE_NAME = "db_tiles.bin";
-        private const string RESOLVED_NAME = Settings.CACHE + DATABASE_NAME;
+        private const string FILENAME = Settings.Database + "Tiles.bin";
 
         private static Dictionary<short, TileTemplate> tiles = new Dictionary<short, TileTemplate>();
         private static Dictionary<string, List<short>> GroupsToTileUUIDS = new Dictionary<string, List<short>>();
@@ -38,8 +37,8 @@ namespace ToolCache.Map.Tiles {
 
         private static void ReadDatabase() {
             // Load object types from file
-            if (File.Exists(RESOLVED_NAME)) {
-                BinaryIO f = new BinaryIO(File.ReadAllBytes(RESOLVED_NAME));
+            if (File.Exists(FILENAME)) {
+                BinaryIO f = new BinaryIO(File.ReadAllBytes(FILENAME));
 
                 int totalTilesInFile = f.GetShort();
 
@@ -75,7 +74,7 @@ namespace ToolCache.Map.Tiles {
                 kvp.Value.SaveToFile(f);
             }
 
-            f.Encode(RESOLVED_NAME);
+            f.Encode(FILENAME);
         }
 
         public static void AddTile(TileTemplate t) {

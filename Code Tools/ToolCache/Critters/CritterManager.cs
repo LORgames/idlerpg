@@ -7,7 +7,7 @@ using System.IO;
 
 namespace ToolCache.Critters {
     public class CritterManager {
-        public const string DATABASE_FILENAME = Settings.CACHE + "/db_critters.bin";
+        public const string DATABASE_FILENAME = Settings.Database + "/Critters.bin";
 
         public static Dictionary<short, Critter> Critters = new Dictionary<short, Critter>();
         public static short NextCritterID = 0;

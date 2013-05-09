@@ -11,6 +11,8 @@ namespace ToolCache.Equipment {
     public enum States { Default, Walking, Attacking, Dancing };
 
     public class EquipmentManager {
+        private const string FILENAME = Settings.Database + "Equipment.bin";
+
         public static Dictionary<string, EquipmentItem> Equipment = new Dictionary<string, EquipmentItem>();
         public static Dictionary<EquipmentTypes, List<EquipmentItem>> TypeLists = new Dictionary<EquipmentTypes, List<EquipmentItem>>();
 
@@ -26,8 +28,8 @@ namespace ToolCache.Equipment {
         }
 
         private static void LoadFromDatabase() {
-            if (File.Exists("cache/db_equipment.bin")) {
-                BinaryIO f = new BinaryIO(File.ReadAllBytes("cache/db_equipment.bin"));
+            if (File.Exists(FILENAME)) {
+                BinaryIO f = new BinaryIO(File.ReadAllBytes(FILENAME));
 
                 int totalItems = f.GetInt();
 
@@ -47,7 +49,7 @@ namespace ToolCache.Equipment {
                 ei.PackIntoBinaryIO(f);
             }
 
-            f.Encode("cache/db_equipment.bin");
+            f.Encode(FILENAME);
         }
 
         public static void AddEquipment(EquipmentItem currentEquipment) {

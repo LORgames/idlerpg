@@ -7,6 +7,8 @@ using System.IO;
 
 namespace ToolCache.Items {
     public class ItemDatabase {
+        private const string FILENAME = Settings.Database + "Items.bin";
+
         private static Dictionary<short, Item> items = new Dictionary<short, Item>();
         private static Dictionary<string, List<Item>> itemsPerCategory = new Dictionary<string, List<Item>>();
 
@@ -33,8 +35,8 @@ namespace ToolCache.Items {
         }
 
         private static void LoadDatabase() {
-            if (File.Exists("cache/db_items.bin")) {
-                BinaryIO f = new BinaryIO(File.ReadAllBytes("cache/db_items.bin"));
+            if (File.Exists(FILENAME)) {
+                BinaryIO f = new BinaryIO(File.ReadAllBytes(FILENAME));
 
                 short totalItems = f.GetShort();
 
@@ -70,7 +72,7 @@ namespace ToolCache.Items {
                 kvp.Value.WriteToBinaryIO(f);
             }
 
-            f.Encode("cache/db_items.bin");
+            f.Encode(FILENAME);
             f.Dispose();
         }
 
