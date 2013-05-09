@@ -107,11 +107,11 @@ package {
 			//Sort the children
 			i = OrderedLayer.numChildren;
 			while(--i > 4) {
-				TrySwap(i-0);
-				TrySwap(i-1);
-				TrySwap(i-2);
-				TrySwap(i-3);
 				TrySwap(i-4);
+				TrySwap(i-3);
+				TrySwap(i-2);
+				TrySwap(i-1);
+				TrySwap(i-0);
 			}
 			
 			//Do some fading?
