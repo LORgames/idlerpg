@@ -119,7 +119,7 @@ namespace CityTools {
         }
 
         private void btnAddGroup_Click(object sender, EventArgs e) {
-            throw new NotImplementedException();
+            listGroups.Items.Add(cbAddGroup.SelectedText);
         }
 
         private void btnAddAIType_Click(object sender, EventArgs e) {

@@ -34,6 +34,7 @@
             this.btnCreateBeastCritter = new System.Windows.Forms.ToolStripMenuItem();
             this.btnDuplicate = new System.Windows.Forms.ToolStripButton();
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
+            this.pnlBeast = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.listLoot = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -45,6 +46,7 @@
             this.btnAddLoot = new System.Windows.Forms.Button();
             this.cbItemList = new System.Windows.Forms.ComboBox();
             this.pnlHumanoid = new System.Windows.Forms.Panel();
+            this.pbHumanoidDisplay = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.listGroups = new System.Windows.Forms.ListBox();
@@ -61,8 +63,21 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtMonsterName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.pnlBeast = new System.Windows.Forms.Panel();
-            this.pbHumanoidDisplay = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cbHumanoidShadow = new System.Windows.Forms.ComboBox();
+            this.cbHumanoidPants = new System.Windows.Forms.ComboBox();
+            this.cbHumanoidFace = new System.Windows.Forms.ComboBox();
+            this.cbHumanoidBody = new System.Windows.Forms.ComboBox();
+            this.cbHumanoidWeapon = new System.Windows.Forms.ComboBox();
+            this.cbHumanoidHeadgear = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.txtScript = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.sptFullForm)).BeginInit();
             this.sptFullForm.Panel1.SuspendLayout();
             this.sptFullForm.Panel2.SuspendLayout();
@@ -71,10 +86,10 @@
             this.toolsMainTools.SuspendLayout();
             this.panel3.SuspendLayout();
             this.pnlHumanoid.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbHumanoidDisplay)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numHealth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numExperience)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbHumanoidDisplay)).BeginInit();
             this.SuspendLayout();
             // 
             // sptFullForm
@@ -188,6 +203,14 @@
             this.toolStripTextBox1.Name = "toolStripTextBox1";
             this.toolStripTextBox1.Size = new System.Drawing.Size(90, 25);
             // 
+            // pnlBeast
+            // 
+            this.pnlBeast.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlBeast.Location = new System.Drawing.Point(226, 266);
+            this.pnlBeast.Name = "pnlBeast";
+            this.pnlBeast.Size = new System.Drawing.Size(226, 309);
+            this.pnlBeast.TabIndex = 16;
+            // 
             // panel3
             // 
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -195,9 +218,9 @@
             this.panel3.Controls.Add(this.label3);
             this.panel3.Controls.Add(this.btnAddLoot);
             this.panel3.Controls.Add(this.cbItemList);
-            this.panel3.Location = new System.Drawing.Point(458, 248);
+            this.panel3.Location = new System.Drawing.Point(458, 266);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(290, 327);
+            this.panel3.Size = new System.Drawing.Size(290, 309);
             this.panel3.TabIndex = 15;
             // 
             // listLoot
@@ -212,7 +235,7 @@
             this.listLoot.LabelEdit = true;
             this.listLoot.Location = new System.Drawing.Point(7, 30);
             this.listLoot.Name = "listLoot";
-            this.listLoot.Size = new System.Drawing.Size(274, 292);
+            this.listLoot.Size = new System.Drawing.Size(274, 274);
             this.listLoot.TabIndex = 8;
             this.listLoot.UseCompatibleStateImageBehavior = false;
             this.listLoot.View = System.Windows.Forms.View.Details;
@@ -278,16 +301,39 @@
             // pnlHumanoid
             // 
             this.pnlHumanoid.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlHumanoid.Controls.Add(this.label13);
+            this.pnlHumanoid.Controls.Add(this.label12);
+            this.pnlHumanoid.Controls.Add(this.label11);
+            this.pnlHumanoid.Controls.Add(this.label10);
+            this.pnlHumanoid.Controls.Add(this.label9);
+            this.pnlHumanoid.Controls.Add(this.label8);
+            this.pnlHumanoid.Controls.Add(this.cbHumanoidWeapon);
+            this.pnlHumanoid.Controls.Add(this.cbHumanoidHeadgear);
+            this.pnlHumanoid.Controls.Add(this.cbHumanoidFace);
+            this.pnlHumanoid.Controls.Add(this.cbHumanoidBody);
+            this.pnlHumanoid.Controls.Add(this.cbHumanoidPants);
+            this.pnlHumanoid.Controls.Add(this.cbHumanoidShadow);
+            this.pnlHumanoid.Controls.Add(this.label1);
             this.pnlHumanoid.Controls.Add(this.pbHumanoidDisplay);
-            this.pnlHumanoid.Location = new System.Drawing.Point(8, 248);
+            this.pnlHumanoid.Location = new System.Drawing.Point(8, 266);
             this.pnlHumanoid.Name = "pnlHumanoid";
-            this.pnlHumanoid.Size = new System.Drawing.Size(212, 327);
+            this.pnlHumanoid.Size = new System.Drawing.Size(212, 309);
             this.pnlHumanoid.TabIndex = 15;
+            // 
+            // pbHumanoidDisplay
+            // 
+            this.pbHumanoidDisplay.Location = new System.Drawing.Point(2, 17);
+            this.pbHumanoidDisplay.Name = "pbHumanoidDisplay";
+            this.pbHumanoidDisplay.Size = new System.Drawing.Size(206, 114);
+            this.pbHumanoidDisplay.TabIndex = 0;
+            this.pbHumanoidDisplay.TabStop = false;
             // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.label14);
             this.panel1.Controls.Add(this.label7);
+            this.panel1.Controls.Add(this.txtScript);
             this.panel1.Controls.Add(this.listGroups);
             this.panel1.Controls.Add(this.btnAddGroup);
             this.panel1.Controls.Add(this.label6);
@@ -295,15 +341,15 @@
             this.panel1.Controls.Add(this.btnAddAIType);
             this.panel1.Controls.Add(this.listAIType);
             this.panel1.Controls.Add(this.cbAITypes);
-            this.panel1.Location = new System.Drawing.Point(458, 38);
+            this.panel1.Location = new System.Drawing.Point(226, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(290, 204);
+            this.panel1.Size = new System.Drawing.Size(522, 256);
             this.panel1.TabIndex = 14;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(240, 7);
+            this.label7.Location = new System.Drawing.Point(472, 9);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(41, 13);
             this.label7.TabIndex = 7;
@@ -312,15 +358,15 @@
             // listGroups
             // 
             this.listGroups.FormattingEnabled = true;
-            this.listGroups.Location = new System.Drawing.Point(144, 50);
+            this.listGroups.Location = new System.Drawing.Point(376, 51);
             this.listGroups.Name = "listGroups";
-            this.listGroups.Size = new System.Drawing.Size(137, 147);
+            this.listGroups.Size = new System.Drawing.Size(137, 199);
             this.listGroups.TabIndex = 4;
             // 
             // btnAddGroup
             // 
             this.btnAddGroup.Image = ((System.Drawing.Image)(resources.GetObject("btnAddGroup.Image")));
-            this.btnAddGroup.Location = new System.Drawing.Point(260, 23);
+            this.btnAddGroup.Location = new System.Drawing.Point(492, 25);
             this.btnAddGroup.Name = "btnAddGroup";
             this.btnAddGroup.Size = new System.Drawing.Size(21, 21);
             this.btnAddGroup.TabIndex = 6;
@@ -330,7 +376,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 7);
+            this.label6.Location = new System.Drawing.Point(235, 9);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(49, 13);
             this.label6.TabIndex = 7;
@@ -339,7 +385,7 @@
             // cbAddGroup
             // 
             this.cbAddGroup.FormattingEnabled = true;
-            this.cbAddGroup.Location = new System.Drawing.Point(144, 23);
+            this.cbAddGroup.Location = new System.Drawing.Point(376, 25);
             this.cbAddGroup.Name = "cbAddGroup";
             this.cbAddGroup.Size = new System.Drawing.Size(110, 21);
             this.cbAddGroup.TabIndex = 5;
@@ -347,7 +393,7 @@
             // btnAddAIType
             // 
             this.btnAddAIType.Image = ((System.Drawing.Image)(resources.GetObject("btnAddAIType.Image")));
-            this.btnAddAIType.Location = new System.Drawing.Point(117, 23);
+            this.btnAddAIType.Location = new System.Drawing.Point(349, 25);
             this.btnAddAIType.Name = "btnAddAIType";
             this.btnAddAIType.Size = new System.Drawing.Size(21, 21);
             this.btnAddAIType.TabIndex = 6;
@@ -357,15 +403,15 @@
             // listAIType
             // 
             this.listAIType.FormattingEnabled = true;
-            this.listAIType.Location = new System.Drawing.Point(4, 49);
+            this.listAIType.Location = new System.Drawing.Point(236, 51);
             this.listAIType.Name = "listAIType";
-            this.listAIType.Size = new System.Drawing.Size(134, 147);
+            this.listAIType.Size = new System.Drawing.Size(134, 199);
             this.listAIType.TabIndex = 4;
             // 
             // cbAITypes
             // 
             this.cbAITypes.FormattingEnabled = true;
-            this.cbAITypes.Location = new System.Drawing.Point(6, 22);
+            this.cbAITypes.Location = new System.Drawing.Point(238, 24);
             this.cbAITypes.Name = "cbAITypes";
             this.cbAITypes.Size = new System.Drawing.Size(105, 21);
             this.cbAITypes.TabIndex = 5;
@@ -374,7 +420,7 @@
             // 
             this.ckbOneOfAKind.AutoSize = true;
             this.ckbOneOfAKind.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.ckbOneOfAKind.Location = new System.Drawing.Point(525, 13);
+            this.ckbOneOfAKind.Location = new System.Drawing.Point(9, 110);
             this.ckbOneOfAKind.Name = "ckbOneOfAKind";
             this.ckbOneOfAKind.Size = new System.Drawing.Size(94, 17);
             this.ckbOneOfAKind.TabIndex = 13;
@@ -384,7 +430,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(341, 15);
+            this.label5.Location = new System.Drawing.Point(15, 91);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(68, 13);
             this.label5.TabIndex = 12;
@@ -392,14 +438,14 @@
             // 
             // numHealth
             // 
-            this.numHealth.Location = new System.Drawing.Point(415, 12);
+            this.numHealth.Location = new System.Drawing.Point(89, 84);
             this.numHealth.Name = "numHealth";
             this.numHealth.Size = new System.Drawing.Size(104, 20);
             this.numHealth.TabIndex = 11;
             // 
             // numExperience
             // 
-            this.numExperience.Location = new System.Drawing.Point(226, 12);
+            this.numExperience.Location = new System.Drawing.Point(89, 58);
             this.numExperience.Name = "numExperience";
             this.numExperience.Size = new System.Drawing.Size(104, 20);
             this.numExperience.TabIndex = 10;
@@ -407,7 +453,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(157, 14);
+            this.label4.Location = new System.Drawing.Point(20, 65);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(63, 13);
             this.label4.TabIndex = 9;
@@ -415,7 +461,7 @@
             // 
             // txtMonsterName
             // 
-            this.txtMonsterName.Location = new System.Drawing.Point(49, 11);
+            this.txtMonsterName.Location = new System.Drawing.Point(89, 33);
             this.txtMonsterName.Name = "txtMonsterName";
             this.txtMonsterName.Size = new System.Drawing.Size(102, 20);
             this.txtMonsterName.TabIndex = 3;
@@ -423,27 +469,139 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(5, 14);
+            this.label2.Location = new System.Drawing.Point(45, 36);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(38, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "Name:";
             // 
-            // pnlBeast
+            // label1
             // 
-            this.pnlBeast.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlBeast.Location = new System.Drawing.Point(226, 248);
-            this.pnlBeast.Name = "pnlBeast";
-            this.pnlBeast.Size = new System.Drawing.Size(226, 327);
-            this.pnlBeast.TabIndex = 16;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 3);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(96, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Humanoid Controls";
             // 
-            // pbHumanoidDisplay
+            // cbHumanoidShadow
             // 
-            this.pbHumanoidDisplay.Location = new System.Drawing.Point(3, 3);
-            this.pbHumanoidDisplay.Name = "pbHumanoidDisplay";
-            this.pbHumanoidDisplay.Size = new System.Drawing.Size(206, 114);
-            this.pbHumanoidDisplay.TabIndex = 0;
-            this.pbHumanoidDisplay.TabStop = false;
+            this.cbHumanoidShadow.FormattingEnabled = true;
+            this.cbHumanoidShadow.Location = new System.Drawing.Point(3, 153);
+            this.cbHumanoidShadow.Name = "cbHumanoidShadow";
+            this.cbHumanoidShadow.Size = new System.Drawing.Size(100, 21);
+            this.cbHumanoidShadow.TabIndex = 2;
+            // 
+            // cbHumanoidPants
+            // 
+            this.cbHumanoidPants.FormattingEnabled = true;
+            this.cbHumanoidPants.Location = new System.Drawing.Point(107, 153);
+            this.cbHumanoidPants.Name = "cbHumanoidPants";
+            this.cbHumanoidPants.Size = new System.Drawing.Size(100, 21);
+            this.cbHumanoidPants.TabIndex = 3;
+            // 
+            // cbHumanoidFace
+            // 
+            this.cbHumanoidFace.FormattingEnabled = true;
+            this.cbHumanoidFace.Location = new System.Drawing.Point(108, 193);
+            this.cbHumanoidFace.Name = "cbHumanoidFace";
+            this.cbHumanoidFace.Size = new System.Drawing.Size(100, 21);
+            this.cbHumanoidFace.TabIndex = 5;
+            // 
+            // cbHumanoidBody
+            // 
+            this.cbHumanoidBody.FormattingEnabled = true;
+            this.cbHumanoidBody.Location = new System.Drawing.Point(3, 193);
+            this.cbHumanoidBody.Name = "cbHumanoidBody";
+            this.cbHumanoidBody.Size = new System.Drawing.Size(100, 21);
+            this.cbHumanoidBody.TabIndex = 4;
+            // 
+            // cbHumanoidWeapon
+            // 
+            this.cbHumanoidWeapon.FormattingEnabled = true;
+            this.cbHumanoidWeapon.Location = new System.Drawing.Point(107, 233);
+            this.cbHumanoidWeapon.Name = "cbHumanoidWeapon";
+            this.cbHumanoidWeapon.Size = new System.Drawing.Size(100, 21);
+            this.cbHumanoidWeapon.TabIndex = 7;
+            // 
+            // cbHumanoidHeadgear
+            // 
+            this.cbHumanoidHeadgear.FormattingEnabled = true;
+            this.cbHumanoidHeadgear.Location = new System.Drawing.Point(3, 233);
+            this.cbHumanoidHeadgear.Name = "cbHumanoidHeadgear";
+            this.cbHumanoidHeadgear.Size = new System.Drawing.Size(100, 21);
+            this.cbHumanoidHeadgear.TabIndex = 6;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(3, 137);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(46, 13);
+            this.label8.TabIndex = 8;
+            this.label8.Text = "Shadow";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(104, 137);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(30, 13);
+            this.label9.TabIndex = 9;
+            this.label9.Text = "Legs";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(3, 177);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(31, 13);
+            this.label10.TabIndex = 10;
+            this.label10.Text = "Body";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(104, 177);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(31, 13);
+            this.label11.TabIndex = 11;
+            this.label11.Text = "Face";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(3, 217);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(54, 13);
+            this.label12.TabIndex = 12;
+            this.label12.Text = "Headgear";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(105, 217);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(48, 13);
+            this.label13.TabIndex = 13;
+            this.label13.Text = "Weapon";
+            // 
+            // txtScript
+            // 
+            this.txtScript.Location = new System.Drawing.Point(3, 24);
+            this.txtScript.Multiline = true;
+            this.txtScript.Name = "txtScript";
+            this.txtScript.Size = new System.Drawing.Size(222, 226);
+            this.txtScript.TabIndex = 17;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(3, 9);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(45, 13);
+            this.label14.TabIndex = 18;
+            this.label14.Text = "AI Code";
             // 
             // CritterEditor
             // 
@@ -468,11 +626,12 @@
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.pnlHumanoid.ResumeLayout(false);
+            this.pnlHumanoid.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbHumanoidDisplay)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numHealth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numExperience)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbHumanoidDisplay)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -518,5 +677,20 @@
         private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.Panel pnlBeast;
         private System.Windows.Forms.PictureBox pbHumanoidDisplay;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox cbHumanoidWeapon;
+        private System.Windows.Forms.ComboBox cbHumanoidHeadgear;
+        private System.Windows.Forms.ComboBox cbHumanoidFace;
+        private System.Windows.Forms.ComboBox cbHumanoidBody;
+        private System.Windows.Forms.ComboBox cbHumanoidPants;
+        private System.Windows.Forms.ComboBox cbHumanoidShadow;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox txtScript;
     }
 }

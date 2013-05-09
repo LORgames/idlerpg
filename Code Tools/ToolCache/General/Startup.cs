@@ -14,18 +14,21 @@ using ToolCache.Critters;
 namespace ToolCache.General {
     public class Startup {
         public static void GoGoGadget() {
+            //Tier 0 Loading:
+            SoundDatabase.Initialize();
+            ElementManager.Initialize();
+
+            //Tier 1 Loading:
             TemplateCache.Initialize();
             TileCache.Initialize();
-
-            SoundDatabase.Initialize();
-
-            MapPieceCache.Initialize();
-
-            ElementManager.Initialize();
-            ItemDatabase.Initialize();
             EquipmentManager.Initialize();
 
+            //Tier 2 Loading:
             CritterManager.Initialize();
+            ItemDatabase.Initialize();
+
+            //Tier 3 Loading:
+            MapPieceCache.Initialize();
         }
     }
 }
