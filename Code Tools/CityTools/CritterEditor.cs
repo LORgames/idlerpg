@@ -11,9 +11,15 @@ using CityTools.Properties;
 using ToolCache.Items;
 using ToolCache.Equipment;
 using ToolCache.Drawing;
+using System.Runtime.InteropServices;
 
 namespace CityTools {
     public partial class CritterEditor : Form {
+        //// I RETARD WINFORMS CODE
+        [DllImport("User32.dll", CharSet = CharSet.Auto)]
+        public static extern IntPtr SendMessage(IntPtr h, int msg, int wParam, int[] lParam);
+        //// END RETARD CODE
+
         private Critter critter;
         
         private Boolean _iE = false; //Is Edited
@@ -39,6 +45,12 @@ namespace CityTools {
             FillEquipmentBoxes();
 
             FillTree();
+
+            SetTabWidth(txtScript, 2);
+        }
+
+        public static void SetTabWidth(TextBox textbox, int tabWidth) {
+            SendMessage(textbox.Handle, 0x00CB, 1, new int[] { tabWidth * 4 });
         }
 
         private void FillTree() {
@@ -290,14 +302,19 @@ namespace CityTools {
                     cbAddGroup.Items.Add(cbAddGroup.Text);
                 }
 
-                listGroups.Items.Add(cbAddGroup.Text);
+                if (!listGroups.Items.Contains(cbAddGroup.Text)) {
+                    listGroups.Items.Add(cbAddGroup.Text);
+                }
+
                 _iE = true;
             }
         }
 
         private void btnAddAIType_Click(object sender, EventArgs e) {
             if (cbAITypes.SelectedItem is AITypes) {
-                listAIType.Items.Add(cbAITypes.SelectedItem);
+                if (listAIType.Items.Contains(cbAITypes.SelectedItem)) {
+                    listAIType.Items.Add(cbAITypes.SelectedItem);
+                }
                 _iE = true;
             }
         }

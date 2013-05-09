@@ -562,5 +562,52 @@ namespace CityTools {
             currentEquipment.AnimationSpeed = (float)numAnimSpeed.Value;
             currentEquipment.UpdateSpeed();
         }
+
+        private void btnExportMany_Click(object sender, EventArgs e) {
+            int width = 256;
+            int height = 256;
+            int charSizeX = 35;
+            int charSizeY = 58;
+
+            int totalX = (width / charSizeX);
+
+            int offsetX = (width - (totalX * charSizeX)) / 2;
+            int offsetY = 60;
+
+            LBuffer buffer = new LBuffer(new Size(width, height));
+
+            int i = 28;
+
+            EquipmentItem shadow = EquipmentManager.TypeLists[EquipmentTypes.Shadow][0];
+            EquipmentItem legs = EquipmentManager.TypeLists[EquipmentTypes.Legs][0];
+
+            Random r = new Random();
+
+            while (--i > -1) {
+                int id = r.Next(EquipmentManager.TypeLists[EquipmentTypes.Head].Count);
+                EquipmentItem face = EquipmentManager.TypeLists[EquipmentTypes.Head][id];
+
+                id = r.Next(EquipmentManager.TypeLists[EquipmentTypes.Body].Count);
+                EquipmentItem body = EquipmentManager.TypeLists[EquipmentTypes.Body][id];
+
+                id = r.Next(EquipmentManager.TypeLists[EquipmentTypes.Headgear].Count);
+                EquipmentItem head = EquipmentManager.TypeLists[EquipmentTypes.Headgear][id];
+
+                id = r.Next(EquipmentManager.TypeLists[EquipmentTypes.Weapon].Count);
+                EquipmentItem weapon = EquipmentManager.TypeLists[EquipmentTypes.Weapon][id];
+
+                int xPos = charSizeX * (i % totalX) + (charSizeX / 2) + offsetX;
+                int yPos = charSizeY * (i / totalX) + offsetY;
+
+                Direction d = (Direction)r.Next(4);
+
+                PersonDrawer.Draw(buffer.gfx, new Point(xPos, yPos), d, States.Default,
+                    shadow, head, face, body, legs, weapon, false);
+            }
+
+            buffer.gfx.Dispose();
+            buffer.bmp.Save("Characters.png");
+            buffer.Dispose();
+        }
     }
 }

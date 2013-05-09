@@ -84,6 +84,7 @@ namespace CityTools {
             this.ccAnimationFront = new CityTools.ClipIns.AnimationList();
             this.txtAttackScript = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
+            this.btnExportMany = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbEquipmentDisplay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numOffsetX_0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numOffsetY_0)).BeginInit();
@@ -732,11 +733,22 @@ namespace CityTools {
             this.label18.TabIndex = 66;
             this.label18.Text = "On Attack";
             // 
+            // btnExportMany
+            // 
+            this.btnExportMany.Location = new System.Drawing.Point(566, 137);
+            this.btnExportMany.Name = "btnExportMany";
+            this.btnExportMany.Size = new System.Drawing.Size(75, 23);
+            this.btnExportMany.TabIndex = 67;
+            this.btnExportMany.Text = "Export Many";
+            this.btnExportMany.UseVisualStyleBackColor = true;
+            this.btnExportMany.Click += new System.EventHandler(this.btnExportMany_Click);
+            // 
             // EquipmentEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(674, 619);
+            this.Controls.Add(this.btnExportMany);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.txtAttackScript);
             this.Controls.Add(this.label17);
@@ -871,5 +883,6 @@ namespace CityTools {
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.TextBox txtAttackScript;
         private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Button btnExportMany;
     }
 }

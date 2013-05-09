@@ -519,6 +519,8 @@
             // 
             // txtScript
             // 
+            this.txtScript.AcceptsReturn = true;
+            this.txtScript.AcceptsTab = true;
             this.txtScript.Location = new System.Drawing.Point(3, 24);
             this.txtScript.Multiline = true;
             this.txtScript.Name = "txtScript";
