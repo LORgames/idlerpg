@@ -26,8 +26,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CritterEditor));
             this.sptFullForm = new System.Windows.Forms.SplitContainer();
             this.treeAllCritters = new System.Windows.Forms.TreeView();
-            this.ssTreeStatus = new System.Windows.Forms.StatusStrip();
-            this.lblTreeInformation = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolsMainTools = new System.Windows.Forms.ToolStrip();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.btnCreateHumanoidCritter = new System.Windows.Forms.ToolStripMenuItem();
@@ -37,6 +35,12 @@
             this.label15 = new System.Windows.Forms.Label();
             this.cbBaseGroup = new System.Windows.Forms.ComboBox();
             this.pnlBeast = new System.Windows.Forms.Panel();
+            this.btnBeastRight = new System.Windows.Forms.Button();
+            this.btnBeastDown = new System.Windows.Forms.Button();
+            this.btnBeastUp = new System.Windows.Forms.Button();
+            this.btnBeastLeft = new System.Windows.Forms.Button();
+            this.label16 = new System.Windows.Forms.Label();
+            this.ccBeastAnimations = new CityTools.ClipIns.AnimationList();
             this.panel3 = new System.Windows.Forms.Panel();
             this.listLoot = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -80,12 +84,14 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtMonsterName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.cbBeastState = new System.Windows.Forms.ComboBox();
+            this.label17 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.sptFullForm)).BeginInit();
             this.sptFullForm.Panel1.SuspendLayout();
             this.sptFullForm.Panel2.SuspendLayout();
             this.sptFullForm.SuspendLayout();
-            this.ssTreeStatus.SuspendLayout();
             this.toolsMainTools.SuspendLayout();
+            this.pnlBeast.SuspendLayout();
             this.panel3.SuspendLayout();
             this.pnlHumanoid.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbHumanoidDisplay)).BeginInit();
@@ -105,7 +111,6 @@
             // sptFullForm.Panel1
             // 
             this.sptFullForm.Panel1.Controls.Add(this.treeAllCritters);
-            this.sptFullForm.Panel1.Controls.Add(this.ssTreeStatus);
             this.sptFullForm.Panel1.Controls.Add(this.toolsMainTools);
             // 
             // sptFullForm.Panel2
@@ -134,25 +139,9 @@
             this.treeAllCritters.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeAllCritters.Location = new System.Drawing.Point(0, 25);
             this.treeAllCritters.Name = "treeAllCritters";
-            this.treeAllCritters.Size = new System.Drawing.Size(162, 539);
+            this.treeAllCritters.Size = new System.Drawing.Size(162, 561);
             this.treeAllCritters.TabIndex = 2;
             this.treeAllCritters.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeAllCritters_AfterSelect);
-            // 
-            // ssTreeStatus
-            // 
-            this.ssTreeStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lblTreeInformation});
-            this.ssTreeStatus.Location = new System.Drawing.Point(0, 564);
-            this.ssTreeStatus.Name = "ssTreeStatus";
-            this.ssTreeStatus.Size = new System.Drawing.Size(162, 22);
-            this.ssTreeStatus.TabIndex = 1;
-            this.ssTreeStatus.Text = "statusStrip1";
-            // 
-            // lblTreeInformation
-            // 
-            this.lblTreeInformation.Name = "lblTreeInformation";
-            this.lblTreeInformation.Size = new System.Drawing.Size(81, 17);
-            this.lblTreeInformation.Text = "Loading Tree...";
             // 
             // toolsMainTools
             // 
@@ -182,7 +171,7 @@
             // 
             this.btnCreateHumanoidCritter.Image = global::CityTools.Properties.Resources.Critter_Editor___Humanoid;
             this.btnCreateHumanoidCritter.Name = "btnCreateHumanoidCritter";
-            this.btnCreateHumanoidCritter.Size = new System.Drawing.Size(135, 22);
+            this.btnCreateHumanoidCritter.Size = new System.Drawing.Size(131, 22);
             this.btnCreateHumanoidCritter.Text = "Humanoid";
             this.btnCreateHumanoidCritter.Click += new System.EventHandler(this.btnCreateHumanoidCritter_Click);
             // 
@@ -190,7 +179,7 @@
             // 
             this.btnCreateBeastCritter.Image = global::CityTools.Properties.Resources.Critter_Editor___Monster;
             this.btnCreateBeastCritter.Name = "btnCreateBeastCritter";
-            this.btnCreateBeastCritter.Size = new System.Drawing.Size(135, 22);
+            this.btnCreateBeastCritter.Size = new System.Drawing.Size(131, 22);
             this.btnCreateBeastCritter.Text = "Beast Man";
             this.btnCreateBeastCritter.Click += new System.EventHandler(this.btnCreateBeastCritter_Click);
             // 
@@ -229,10 +218,79 @@
             // pnlBeast
             // 
             this.pnlBeast.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlBeast.Controls.Add(this.label17);
+            this.pnlBeast.Controls.Add(this.cbBeastState);
+            this.pnlBeast.Controls.Add(this.btnBeastRight);
+            this.pnlBeast.Controls.Add(this.btnBeastDown);
+            this.pnlBeast.Controls.Add(this.btnBeastUp);
+            this.pnlBeast.Controls.Add(this.btnBeastLeft);
+            this.pnlBeast.Controls.Add(this.label16);
+            this.pnlBeast.Controls.Add(this.ccBeastAnimations);
             this.pnlBeast.Location = new System.Drawing.Point(226, 266);
             this.pnlBeast.Name = "pnlBeast";
             this.pnlBeast.Size = new System.Drawing.Size(226, 309);
             this.pnlBeast.TabIndex = 16;
+            // 
+            // btnBeastRight
+            // 
+            this.btnBeastRight.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnBeastRight.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnBeastRight.Location = new System.Drawing.Point(59, 158);
+            this.btnBeastRight.Name = "btnBeastRight";
+            this.btnBeastRight.Size = new System.Drawing.Size(50, 52);
+            this.btnBeastRight.TabIndex = 18;
+            this.btnBeastRight.Text = "Right";
+            this.btnBeastRight.UseVisualStyleBackColor = false;
+            // 
+            // btnBeastDown
+            // 
+            this.btnBeastDown.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnBeastDown.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnBeastDown.Location = new System.Drawing.Point(171, 158);
+            this.btnBeastDown.Name = "btnBeastDown";
+            this.btnBeastDown.Size = new System.Drawing.Size(50, 52);
+            this.btnBeastDown.TabIndex = 17;
+            this.btnBeastDown.Text = "Down";
+            this.btnBeastDown.UseVisualStyleBackColor = false;
+            // 
+            // btnBeastUp
+            // 
+            this.btnBeastUp.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnBeastUp.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnBeastUp.Location = new System.Drawing.Point(115, 158);
+            this.btnBeastUp.Name = "btnBeastUp";
+            this.btnBeastUp.Size = new System.Drawing.Size(50, 52);
+            this.btnBeastUp.TabIndex = 16;
+            this.btnBeastUp.Text = "Up";
+            this.btnBeastUp.UseVisualStyleBackColor = false;
+            // 
+            // btnBeastLeft
+            // 
+            this.btnBeastLeft.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnBeastLeft.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnBeastLeft.Location = new System.Drawing.Point(3, 158);
+            this.btnBeastLeft.Name = "btnBeastLeft";
+            this.btnBeastLeft.Size = new System.Drawing.Size(50, 52);
+            this.btnBeastLeft.TabIndex = 15;
+            this.btnBeastLeft.Text = "Left";
+            this.btnBeastLeft.UseVisualStyleBackColor = false;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(3, 3);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(119, 13);
+            this.label16.TabIndex = 14;
+            this.label16.Text = "Non-Humanoid Controls";
+            // 
+            // ccBeastAnimations
+            // 
+            this.ccBeastAnimations.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ccBeastAnimations.Location = new System.Drawing.Point(3, 52);
+            this.ccBeastAnimations.Name = "ccBeastAnimations";
+            this.ccBeastAnimations.Size = new System.Drawing.Size(218, 103);
+            this.ccBeastAnimations.TabIndex = 0;
             // 
             // panel3
             // 
@@ -494,9 +552,9 @@
             this.panel1.Controls.Add(this.btnAddAIType);
             this.panel1.Controls.Add(this.listAIType);
             this.panel1.Controls.Add(this.cbAITypes);
-            this.panel1.Location = new System.Drawing.Point(226, 4);
+            this.panel1.Location = new System.Drawing.Point(199, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(522, 256);
+            this.panel1.Size = new System.Drawing.Size(549, 256);
             this.panel1.TabIndex = 14;
             // 
             // label14
@@ -511,7 +569,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(472, 9);
+            this.label7.Location = new System.Drawing.Point(503, 9);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(41, 13);
             this.label7.TabIndex = 7;
@@ -524,23 +582,23 @@
             this.txtScript.Location = new System.Drawing.Point(3, 24);
             this.txtScript.Multiline = true;
             this.txtScript.Name = "txtScript";
-            this.txtScript.Size = new System.Drawing.Size(222, 226);
+            this.txtScript.Size = new System.Drawing.Size(289, 226);
             this.txtScript.TabIndex = 17;
             this.txtScript.TextChanged += new System.EventHandler(this.ValueChanged);
             // 
             // listGroups
             // 
             this.listGroups.FormattingEnabled = true;
-            this.listGroups.Location = new System.Drawing.Point(376, 51);
+            this.listGroups.Location = new System.Drawing.Point(424, 52);
             this.listGroups.Name = "listGroups";
-            this.listGroups.Size = new System.Drawing.Size(137, 199);
+            this.listGroups.Size = new System.Drawing.Size(120, 199);
             this.listGroups.TabIndex = 4;
             this.listGroups.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listAIType_KeyDown);
             // 
             // btnAddGroup
             // 
             this.btnAddGroup.Image = ((System.Drawing.Image)(resources.GetObject("btnAddGroup.Image")));
-            this.btnAddGroup.Location = new System.Drawing.Point(492, 25);
+            this.btnAddGroup.Location = new System.Drawing.Point(523, 25);
             this.btnAddGroup.Name = "btnAddGroup";
             this.btnAddGroup.Size = new System.Drawing.Size(21, 21);
             this.btnAddGroup.TabIndex = 6;
@@ -550,7 +608,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(235, 9);
+            this.label6.Location = new System.Drawing.Point(295, 9);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(49, 13);
             this.label6.TabIndex = 7;
@@ -561,15 +619,15 @@
             this.cbAddGroup.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.cbAddGroup.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbAddGroup.FormattingEnabled = true;
-            this.cbAddGroup.Location = new System.Drawing.Point(376, 25);
+            this.cbAddGroup.Location = new System.Drawing.Point(424, 25);
             this.cbAddGroup.Name = "cbAddGroup";
-            this.cbAddGroup.Size = new System.Drawing.Size(110, 21);
+            this.cbAddGroup.Size = new System.Drawing.Size(93, 21);
             this.cbAddGroup.TabIndex = 5;
             // 
             // btnAddAIType
             // 
             this.btnAddAIType.Image = ((System.Drawing.Image)(resources.GetObject("btnAddAIType.Image")));
-            this.btnAddAIType.Location = new System.Drawing.Point(349, 25);
+            this.btnAddAIType.Location = new System.Drawing.Point(397, 24);
             this.btnAddAIType.Name = "btnAddAIType";
             this.btnAddAIType.Size = new System.Drawing.Size(21, 21);
             this.btnAddAIType.TabIndex = 6;
@@ -579,18 +637,18 @@
             // listAIType
             // 
             this.listAIType.FormattingEnabled = true;
-            this.listAIType.Location = new System.Drawing.Point(236, 51);
+            this.listAIType.Location = new System.Drawing.Point(298, 51);
             this.listAIType.Name = "listAIType";
-            this.listAIType.Size = new System.Drawing.Size(134, 199);
+            this.listAIType.Size = new System.Drawing.Size(120, 199);
             this.listAIType.TabIndex = 4;
             this.listAIType.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listAIType_KeyDown);
             // 
             // cbAITypes
             // 
             this.cbAITypes.FormattingEnabled = true;
-            this.cbAITypes.Location = new System.Drawing.Point(238, 24);
+            this.cbAITypes.Location = new System.Drawing.Point(298, 24);
             this.cbAITypes.Name = "cbAITypes";
-            this.cbAITypes.Size = new System.Drawing.Size(105, 21);
+            this.cbAITypes.Size = new System.Drawing.Size(93, 21);
             this.cbAITypes.TabIndex = 5;
             // 
             // ckbOneOfAKind
@@ -686,6 +744,23 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "Name:";
             // 
+            // cbBeastState
+            // 
+            this.cbBeastState.FormattingEnabled = true;
+            this.cbBeastState.Location = new System.Drawing.Point(79, 25);
+            this.cbBeastState.Name = "cbBeastState";
+            this.cbBeastState.Size = new System.Drawing.Size(106, 21);
+            this.cbBeastState.TabIndex = 19;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(38, 28);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(35, 13);
+            this.label17.TabIndex = 20;
+            this.label17.Text = "State:";
+            // 
             // CritterEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -702,10 +777,10 @@
             this.sptFullForm.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sptFullForm)).EndInit();
             this.sptFullForm.ResumeLayout(false);
-            this.ssTreeStatus.ResumeLayout(false);
-            this.ssTreeStatus.PerformLayout();
             this.toolsMainTools.ResumeLayout(false);
             this.toolsMainTools.PerformLayout();
+            this.pnlBeast.ResumeLayout(false);
+            this.pnlBeast.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.pnlHumanoid.ResumeLayout(false);
@@ -722,8 +797,6 @@
         #endregion
 
         private System.Windows.Forms.SplitContainer sptFullForm;
-        private System.Windows.Forms.StatusStrip ssTreeStatus;
-        private System.Windows.Forms.ToolStripStatusLabel lblTreeInformation;
         private System.Windows.Forms.ToolStrip toolsMainTools;
         private System.Windows.Forms.ToolStripButton btnDuplicate;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
@@ -777,5 +850,13 @@
         private System.Windows.Forms.TextBox txtScript;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.ComboBox cbBaseGroup;
+        private System.Windows.Forms.Label label16;
+        private ClipIns.AnimationList ccBeastAnimations;
+        private System.Windows.Forms.Button btnBeastRight;
+        private System.Windows.Forms.Button btnBeastDown;
+        private System.Windows.Forms.Button btnBeastUp;
+        private System.Windows.Forms.Button btnBeastLeft;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.ComboBox cbBeastState;
     }
 }

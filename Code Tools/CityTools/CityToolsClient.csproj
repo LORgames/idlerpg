@@ -308,12 +308,6 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\HumanIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\DoggyIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\arrow_divide.png" />
   </ItemGroup>
   <ItemGroup>

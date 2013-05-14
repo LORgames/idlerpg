@@ -32,12 +32,10 @@ namespace CityTools {
             InitializeComponent();
 
             treeAllCritters.ImageList = new ImageList();
-            treeAllCritters.ImageList.Images.Add(Resources.HumanIcon);
-            treeAllCritters.ImageList.Images.Add(Resources.DoggyIcon);
+            treeAllCritters.ImageList.Images.Add(Resources.Critter_Editor___Humanoid);
+            treeAllCritters.ImageList.Images.Add(Resources.Critter_Editor___Monster);
 
             sptFullForm.Panel2.Enabled = false;
-
-            lblTreeInformation.Text = "Ready.";
 
             FillAITypes();
             FillItemBox();
@@ -196,6 +194,10 @@ namespace CityTools {
                 cbHumanoidWeapon.Text = human.Weapon;
 
                 pbHumanoidDisplay.Invalidate();
+            } else {
+                CritterBeast beast = (critter as CritterBeast);
+                cbBeastState.Text = "Default";
+                ccBeastAnimations.ChangeToAnimation(beast.Animations["Default"].GetAnimation(Direction.Down));
             }
 
             PopulateLootList();

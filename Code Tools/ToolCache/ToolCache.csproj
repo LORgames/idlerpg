@@ -52,6 +52,7 @@
     <Compile Include="Critters\CritterBeast.cs" />
     <Compile Include="Critters\CritterHuman.cs" />
     <Compile Include="Critters\CritterManager.cs" />
+    <Compile Include="Critters\CritterAnimationSet.cs" />
     <Compile Include="Critters\Factions.cs" />
     <Compile Include="Critters\LootDrop.cs" />
     <Compile Include="Drawing\PersonDrawer.cs" />
