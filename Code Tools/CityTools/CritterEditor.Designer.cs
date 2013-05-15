@@ -35,12 +35,14 @@
             this.label15 = new System.Windows.Forms.Label();
             this.cbBaseGroup = new System.Windows.Forms.ComboBox();
             this.pnlBeast = new System.Windows.Forms.Panel();
+            this.lblBeastDirection = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.cbBeastState = new System.Windows.Forms.ComboBox();
             this.btnBeastRight = new System.Windows.Forms.Button();
             this.btnBeastDown = new System.Windows.Forms.Button();
             this.btnBeastUp = new System.Windows.Forms.Button();
             this.btnBeastLeft = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
-            this.ccBeastAnimations = new CityTools.ClipIns.AnimationList();
             this.panel3 = new System.Windows.Forms.Panel();
             this.listLoot = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -84,8 +86,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtMonsterName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.cbBeastState = new System.Windows.Forms.ComboBox();
-            this.label17 = new System.Windows.Forms.Label();
+            this.ccBeastAnimations = new CityTools.ClipIns.AnimationList();
             ((System.ComponentModel.ISupportInitialize)(this.sptFullForm)).BeginInit();
             this.sptFullForm.Panel1.SuspendLayout();
             this.sptFullForm.Panel2.SuspendLayout();
@@ -169,7 +170,7 @@
             // 
             // btnCreateHumanoidCritter
             // 
-            this.btnCreateHumanoidCritter.Image = global::CityTools.Properties.Resources.Critter_Editor___Humanoid;
+            this.btnCreateHumanoidCritter.Image = ((System.Drawing.Image)(resources.GetObject("btnCreateHumanoidCritter.Image")));
             this.btnCreateHumanoidCritter.Name = "btnCreateHumanoidCritter";
             this.btnCreateHumanoidCritter.Size = new System.Drawing.Size(131, 22);
             this.btnCreateHumanoidCritter.Text = "Humanoid";
@@ -177,7 +178,7 @@
             // 
             // btnCreateBeastCritter
             // 
-            this.btnCreateBeastCritter.Image = global::CityTools.Properties.Resources.Critter_Editor___Monster;
+            this.btnCreateBeastCritter.Image = ((System.Drawing.Image)(resources.GetObject("btnCreateBeastCritter.Image")));
             this.btnCreateBeastCritter.Name = "btnCreateBeastCritter";
             this.btnCreateBeastCritter.Size = new System.Drawing.Size(131, 22);
             this.btnCreateBeastCritter.Text = "Beast Man";
@@ -218,6 +219,7 @@
             // pnlBeast
             // 
             this.pnlBeast.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlBeast.Controls.Add(this.lblBeastDirection);
             this.pnlBeast.Controls.Add(this.label17);
             this.pnlBeast.Controls.Add(this.cbBeastState);
             this.pnlBeast.Controls.Add(this.btnBeastRight);
@@ -231,8 +233,36 @@
             this.pnlBeast.Size = new System.Drawing.Size(226, 309);
             this.pnlBeast.TabIndex = 16;
             // 
+            // lblBeastDirection
+            // 
+            this.lblBeastDirection.AutoSize = true;
+            this.lblBeastDirection.Location = new System.Drawing.Point(180, 30);
+            this.lblBeastDirection.Name = "lblBeastDirection";
+            this.lblBeastDirection.Size = new System.Drawing.Size(25, 13);
+            this.lblBeastDirection.TabIndex = 21;
+            this.lblBeastDirection.Text = "Left";
+            this.lblBeastDirection.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(3, 30);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(35, 13);
+            this.label17.TabIndex = 20;
+            this.label17.Text = "State:";
+            // 
+            // cbBeastState
+            // 
+            this.cbBeastState.FormattingEnabled = true;
+            this.cbBeastState.Location = new System.Drawing.Point(44, 27);
+            this.cbBeastState.Name = "cbBeastState";
+            this.cbBeastState.Size = new System.Drawing.Size(106, 21);
+            this.cbBeastState.TabIndex = 19;
+            // 
             // btnBeastRight
             // 
+            this.btnBeastRight.AllowDrop = true;
             this.btnBeastRight.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.btnBeastRight.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btnBeastRight.Location = new System.Drawing.Point(59, 158);
@@ -241,9 +271,13 @@
             this.btnBeastRight.TabIndex = 18;
             this.btnBeastRight.Text = "Right";
             this.btnBeastRight.UseVisualStyleBackColor = false;
+            this.btnBeastRight.DragDrop += new System.Windows.Forms.DragEventHandler(this.btnBeastDirection_DragDrop);
+            this.btnBeastRight.DragOver += new System.Windows.Forms.DragEventHandler(this.btnBeastDirection_DragEnter);
+            this.btnBeastRight.MouseEnter += new System.EventHandler(this.btnBeastDirection_MouseEnter);
             // 
             // btnBeastDown
             // 
+            this.btnBeastDown.AllowDrop = true;
             this.btnBeastDown.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.btnBeastDown.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btnBeastDown.Location = new System.Drawing.Point(171, 158);
@@ -252,9 +286,13 @@
             this.btnBeastDown.TabIndex = 17;
             this.btnBeastDown.Text = "Down";
             this.btnBeastDown.UseVisualStyleBackColor = false;
+            this.btnBeastDown.DragDrop += new System.Windows.Forms.DragEventHandler(this.btnBeastDirection_DragDrop);
+            this.btnBeastDown.DragOver += new System.Windows.Forms.DragEventHandler(this.btnBeastDirection_DragEnter);
+            this.btnBeastDown.MouseEnter += new System.EventHandler(this.btnBeastDirection_MouseEnter);
             // 
             // btnBeastUp
             // 
+            this.btnBeastUp.AllowDrop = true;
             this.btnBeastUp.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.btnBeastUp.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btnBeastUp.Location = new System.Drawing.Point(115, 158);
@@ -263,9 +301,13 @@
             this.btnBeastUp.TabIndex = 16;
             this.btnBeastUp.Text = "Up";
             this.btnBeastUp.UseVisualStyleBackColor = false;
+            this.btnBeastUp.DragDrop += new System.Windows.Forms.DragEventHandler(this.btnBeastDirection_DragDrop);
+            this.btnBeastUp.DragOver += new System.Windows.Forms.DragEventHandler(this.btnBeastDirection_DragEnter);
+            this.btnBeastUp.MouseEnter += new System.EventHandler(this.btnBeastDirection_MouseEnter);
             // 
             // btnBeastLeft
             // 
+            this.btnBeastLeft.AllowDrop = true;
             this.btnBeastLeft.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.btnBeastLeft.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btnBeastLeft.Location = new System.Drawing.Point(3, 158);
@@ -274,6 +316,9 @@
             this.btnBeastLeft.TabIndex = 15;
             this.btnBeastLeft.Text = "Left";
             this.btnBeastLeft.UseVisualStyleBackColor = false;
+            this.btnBeastLeft.DragDrop += new System.Windows.Forms.DragEventHandler(this.btnBeastDirection_DragDrop);
+            this.btnBeastLeft.DragOver += new System.Windows.Forms.DragEventHandler(this.btnBeastDirection_DragEnter);
+            this.btnBeastLeft.MouseEnter += new System.EventHandler(this.btnBeastDirection_MouseEnter);
             // 
             // label16
             // 
@@ -283,14 +328,6 @@
             this.label16.Size = new System.Drawing.Size(119, 13);
             this.label16.TabIndex = 14;
             this.label16.Text = "Non-Humanoid Controls";
-            // 
-            // ccBeastAnimations
-            // 
-            this.ccBeastAnimations.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ccBeastAnimations.Location = new System.Drawing.Point(3, 52);
-            this.ccBeastAnimations.Name = "ccBeastAnimations";
-            this.ccBeastAnimations.Size = new System.Drawing.Size(218, 103);
-            this.ccBeastAnimations.TabIndex = 0;
             // 
             // panel3
             // 
@@ -744,22 +781,13 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "Name:";
             // 
-            // cbBeastState
+            // ccBeastAnimations
             // 
-            this.cbBeastState.FormattingEnabled = true;
-            this.cbBeastState.Location = new System.Drawing.Point(79, 25);
-            this.cbBeastState.Name = "cbBeastState";
-            this.cbBeastState.Size = new System.Drawing.Size(106, 21);
-            this.cbBeastState.TabIndex = 19;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(38, 28);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(35, 13);
-            this.label17.TabIndex = 20;
-            this.label17.Text = "State:";
+            this.ccBeastAnimations.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ccBeastAnimations.Location = new System.Drawing.Point(3, 52);
+            this.ccBeastAnimations.Name = "ccBeastAnimations";
+            this.ccBeastAnimations.Size = new System.Drawing.Size(218, 103);
+            this.ccBeastAnimations.TabIndex = 0;
             // 
             // CritterEditor
             // 
@@ -858,5 +886,6 @@
         private System.Windows.Forms.Button btnBeastLeft;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.ComboBox cbBeastState;
+        private System.Windows.Forms.Label lblBeastDirection;
     }
 }

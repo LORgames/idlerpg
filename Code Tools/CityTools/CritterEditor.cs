@@ -12,6 +12,7 @@ using ToolCache.Items;
 using ToolCache.Equipment;
 using ToolCache.Drawing;
 using System.Runtime.InteropServices;
+using System.IO;
 
 namespace CityTools {
     public partial class CritterEditor : Form {
@@ -21,7 +22,8 @@ namespace CityTools {
         //// END RETARD CODE
 
         private Critter critter;
-        
+        private Direction direction = Direction.Left;
+
         private Boolean _iE = false; //Is Edited
         private Boolean _new = false;
         private Boolean _updatingForm = false;
@@ -34,6 +36,10 @@ namespace CityTools {
             treeAllCritters.ImageList = new ImageList();
             treeAllCritters.ImageList.Images.Add(Resources.Critter_Editor___Humanoid);
             treeAllCritters.ImageList.Images.Add(Resources.Critter_Editor___Monster);
+
+            ccBeastAnimations.AnimationChanged +=new ChangedEventHandler(ccBeastAnimations_AnimationChanged);
+            ccBeastAnimations.SetSaveLocation("Critters");
+            ccBeastAnimations.DisablePlaybackSpeed();
 
             sptFullForm.Panel2.Enabled = false;
 
@@ -58,7 +64,10 @@ namespace CityTools {
             foreach (Critter c in CritterManager.Critters.Values) {
                 //Create this critters node
                 TreeNode node = new TreeNode(c.Name);
+
                 node.ImageIndex = (int)c.CritterType;
+                node.SelectedImageIndex = (int)c.CritterType;
+
                 node.Tag = c;
 
                 c.EditorNode = node;
@@ -197,7 +206,7 @@ namespace CityTools {
             } else {
                 CritterBeast beast = (critter as CritterBeast);
                 cbBeastState.Text = "Default";
-                ccBeastAnimations.ChangeToAnimation(beast.Animations["Default"].GetAnimation(Direction.Down));
+                ccBeastAnimations.ChangeToAnimation(beast.GetAnimation("Default").GetDirection(direction));
             }
 
             PopulateLootList();
@@ -314,7 +323,7 @@ namespace CityTools {
 
         private void btnAddAIType_Click(object sender, EventArgs e) {
             if (cbAITypes.SelectedItem is AITypes) {
-                if (listAIType.Items.Contains(cbAITypes.SelectedItem)) {
+                if (!listAIType.Items.Contains(cbAITypes.SelectedItem)) {
                     listAIType.Items.Add(cbAITypes.SelectedItem);
                 }
                 _iE = true;
@@ -373,6 +382,113 @@ namespace CityTools {
                     }
 
                     _iE = true;
+                }
+            }
+        }
+
+        void ccBeastAnimations_AnimationChanged(object sender, EventArgs e) {
+            if (_updatingForm) return;
+
+            _iE = true;
+        }
+
+        private void btnBeastDirection_MouseEnter(object sender, EventArgs e) {
+            if (sender == btnBeastLeft) {
+                direction = Direction.Left;
+            } else if (sender == btnBeastRight) {
+                direction = Direction.Right;
+            } else if (sender == btnBeastUp) {
+                direction = Direction.Up;
+            } else if (sender == btnBeastDown) {
+                direction = Direction.Down;
+            }
+
+            DirectionUpdated();
+        }
+
+        private void DirectionUpdated() {
+            lblBeastDirection.Text = direction.ToString();
+
+            if (critter is CritterBeast) {
+                ccBeastAnimations.ChangeToAnimation((critter as CritterBeast).GetAnimation(cbBeastState.Text).GetDirection(direction));
+            }
+        }
+
+        private void btnBeastDirection_DragEnter(object sender, DragEventArgs e) {
+            e.Effect = DragDropEffects.Copy;
+
+            if (sender == btnBeastDown) {
+                direction = Direction.Down;
+            } else if (sender == btnBeastLeft) {
+                direction = Direction.Left;
+            } else if (sender == btnBeastRight) {
+                direction = Direction.Right;
+            } else if (sender == btnBeastUp) {
+                direction = Direction.Up;
+            }
+
+            DirectionUpdated();
+        }
+
+        private void btnBeastDirection_DragDrop(object sender, DragEventArgs e) {
+            if (!(critter is CritterBeast)) return;
+
+            if (!Directory.Exists("Critters")) Directory.CreateDirectory("Critters");
+
+            Direction x = Direction.Left;
+
+            if (sender == btnBeastDown) x = Direction.Down;
+            else if (sender == btnBeastRight) x = Direction.Right;
+            else if (sender == btnBeastUp) x = Direction.Up;
+
+            //First put the files in the cache list
+            if ((e.AllowedEffect & DragDropEffects.Copy) == DragDropEffects.Copy) {
+                string[] data = (string[])e.Data.GetData(DataFormats.FileDrop);
+                if (data != null) {
+                    for (int i = 0; i < data.Length; i++) {
+                        if (data.GetValue(i) is String) {
+                            string filename = ((string[])data)[i];
+                            string ext = Path.GetExtension(filename).ToLower();
+                            if (ext == ".png") {
+                                //Add animation
+                                string nFilename = "Critters/" + Path.GetFileNameWithoutExtension(filename) + ".png";
+
+                                bool copied = false;
+
+                                if (Path.GetFullPath(nFilename) == Path.GetFullPath(filename)) {
+                                    copied = true;
+                                } else if (!File.Exists(nFilename)) {
+                                    File.Copy(filename, nFilename);
+                                    copied = true;
+                                } else if (MessageBox.Show("Overwrite " + nFilename + "?", "Overwrite?", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+                                    File.Copy(filename, nFilename, true);
+                                    copied = true;
+                                } else {
+                                    //Keep adding _1, _2, _3 etc until we find a filename we can use.
+                                    int nextFilenameAttempt = 1;
+                                    while (File.Exists(nFilename)) {
+                                        nFilename = "Critters/" + Path.GetFileNameWithoutExtension(filename) + "_" + nextFilenameAttempt + ".png";
+                                        nextFilenameAttempt++;
+                                    }
+
+                                    File.Copy(filename, nFilename);
+                                    copied = true;
+                                }
+
+                                //Now we add it to critters animations
+                                if (copied) {
+                                    String state = cbBeastState.Text;
+
+                                    (critter as CritterBeast).GetAnimation(state).GetDirection(x).Frames.Add(nFilename);
+                                    _iE = true;
+
+                                    if (direction == x) {
+                                        ccBeastAnimations.UpdateBoxes();
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

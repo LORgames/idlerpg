@@ -7,7 +7,7 @@ using ToolCache.General;
 namespace ToolCache.Critters {
     public class CritterBeast : Critter {
 
-        public Dictionary<string, CritterAnimationSet> Animations = new Dictionary<string, CritterAnimationSet>();
+        private Dictionary<string, CritterAnimationSet> Animations = new Dictionary<string, CritterAnimationSet>();
 
         public CritterBeast() {
             CritterType = CritterTypes.NonHumanoid;
@@ -40,6 +40,15 @@ namespace ToolCache.Critters {
             }
         }
 
+        public CritterAnimationSet GetAnimation(string animation) {
+            if (Animations.ContainsKey(animation)) {
+                return Animations[animation];
+            }
+
+            CritterAnimationSet anim = new CritterAnimationSet(true, animation);
+            Animations.Add(animation, anim);
+            return anim;
+        }
 
     }
 }

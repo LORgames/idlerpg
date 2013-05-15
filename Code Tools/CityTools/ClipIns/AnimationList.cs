@@ -159,6 +159,7 @@ namespace CityTools.ClipIns {
         internal void DisablePlaybackSpeed() {
             numFramerate.Enabled = false;
             numFramerate.Visible = false;
+            lblAnimation.Text = "ANIM:";
         }
     }
 }
