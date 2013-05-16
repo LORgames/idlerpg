@@ -207,6 +207,7 @@ namespace CityTools {
                 CritterBeast beast = (critter as CritterBeast);
                 cbBeastState.Text = "Default";
                 ccBeastAnimations.ChangeToAnimation(beast.GetAnimation("Default").GetDirection(direction));
+                numBeastFPS.Value = (decimal)beast.playbackSpeed;
             }
 
             PopulateLootList();
@@ -283,6 +284,9 @@ namespace CityTools {
                 human.Face = (cbHumanoidFace.SelectedItem is EquipmentItem) ? cbHumanoidFace.Text : "";
                 human.Headgear = (cbHumanoidHeadgear.SelectedItem is EquipmentItem) ? cbHumanoidHeadgear.Text : "";
                 human.Weapon = (cbHumanoidWeapon.SelectedItem is EquipmentItem) ? cbHumanoidWeapon.Text : "";
+            } else {
+                CritterBeast beast = critter as CritterBeast;
+                beast.playbackSpeed = (float)numBeastFPS.Value;
             }
 
             if (_new) {

@@ -254,17 +254,17 @@
   <data name="btnDuplicate.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJESURBVDhPrZJhT1JRGMfv1ubH8JVbGyZiFFthY84idJQ5
-        uWoppglmogSocAkVZ5CAKCSWphZhZISYS0tnbhQhVsR0kY3Wd/C9bm7/Lnd3RbMWbf228+I8v3Oe5zzP
-        DvFf0cWUDk1EYWG3B6gPVDpq/RW/97r1Fo8j0Q97vA9ta5fdbPgHlwKVHv1yB3QvrqFiUvLTk0HykCba
-        4nUkzJj/5kcw5YMlZoRyqXY67dKrbrbS27XcjqktD8Y3XVDNNUM8ImI8XVlpUkeak66EFXNfZ/A09RD9
-        ET2aQjVJeZCkLj6+YKr2SZPaxVZMbLpxJzGM6wutKHEIkyLrCYp5hXpNnqsLX0Ug5cXsl/tofFYNRmRw
-        fkKMsY9OuON2SG+fgdAmzGUVQbTQCdSvFPBvT2Nm+x4agiTo5+WwOt1mjtRzGu4PNjjfW3HWWQKhmZ+R
-        YFGeq3rZCN/nCTz4dBf6lQ5UecuHWU1I3CXDyicNGHpngS02gNJbp8A3ZCRID6M+dG7HuXETk1ujdJ8j
-        aF9QoNxTulrmEq1e8ddhcN2MwVg/tM9VKKJ4OyRJDzATetKymjHRHrWiwWjcwfRqWu0CtaxhqlqivWh6
-        VIfjbbw9XmeBjL32K7IpcR49LG++mbPfudQB+8YAU1kVUoLTw9nnU1xvkZaTxx7/MxKnqLhqXAprtA8D
-        b3tQNlRK98wtZnV2CMyCXfMbI3rCBvD13F02nD0n+46h97UBN8LdKNTmH/gXf0Vg5OFodwEKNRwcaT/8
-        7wmygyC+A+OfKESthGw0AAAAAElFTkSuQmCC
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJDSURBVDhPrZJhT1JRGMfv1ubH8JVbGyViFFthY8widJQ5
+        QS3UNIFMlAAVMNTLDBIRlMSS1LphZISUS0tHbpQpVsR0kY3Wd/C9bm7/Lnd3RbMWbf228+I8v3Oe5zzP
+        DvFfMcbVLv2Kys5u91EXqnTVBit+741rGp8racNgog+ty5e8bPgHF0OVPtNiO4wvrqJiQvrTK8KKA/pV
+        DeVKknj6LYhwOgB7vBvqhdqpjMss5Uwl1bnYhslNH8Y3RqCdbYZkWMR4urLaqltpTo0kHZj9Oo0n6Qew
+        rZjQFKlJ1YcVlguPzlurA7KUYb4F/g0vbic9uDbXArFLmBI5jluYV+iW6/ONsSsIpSnMfLmHxmfVYEQW
+        5/wSjH10w5sYhOzWaQidwnxWEYSGTqB7pUJwawrTW3fREFaAfl4eqzNt5sl8p+D94IT7vQNn3GIISX5W
+        gvn6fO3LRgQ++3H/0x2YltpRRZV7WE1IvWKP+nEDht7Z4Yz3o/TmSfDNWQkyw6iLnN12r9/AxOYo3ecw
+        2uZUKPeVRstGRNHLQSUG1kgMxG0wPNei2MLbVijoAWZDT1peMybatSzpMZpwMb1ao52wLOqZqvbVXjQ9
+        VOJYK2+X11EoZ6/9inxSUkAPi+KQnL2OhXYMrvczlbURNTg9nD2+hUsVGzgF7PE/I3WLSqrGZXCs9qH/
+        bQ/KhkrpnrklrM4NASnYId90oydmBt/E3WHDuXOi7yh6X5txPdaFIsOhff/irwi6eTjSVYgiPQeH2w7+
+        e4LcIIjv4i4oQ5Q66ecAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="btnAddLoot.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

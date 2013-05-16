@@ -86,6 +86,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtMonsterName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.numBeastFPS = new System.Windows.Forms.NumericUpDown();
+            this.label18 = new System.Windows.Forms.Label();
             this.ccBeastAnimations = new CityTools.ClipIns.AnimationList();
             ((System.ComponentModel.ISupportInitialize)(this.sptFullForm)).BeginInit();
             this.sptFullForm.Panel1.SuspendLayout();
@@ -99,6 +101,7 @@
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numHealth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numExperience)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numBeastFPS)).BeginInit();
             this.SuspendLayout();
             // 
             // sptFullForm
@@ -219,6 +222,8 @@
             // pnlBeast
             // 
             this.pnlBeast.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlBeast.Controls.Add(this.label18);
+            this.pnlBeast.Controls.Add(this.numBeastFPS);
             this.pnlBeast.Controls.Add(this.lblBeastDirection);
             this.pnlBeast.Controls.Add(this.label17);
             this.pnlBeast.Controls.Add(this.cbBeastState);
@@ -781,6 +786,44 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "Name:";
             // 
+            // numBeastFPS
+            // 
+            this.numBeastFPS.DecimalPlaces = 2;
+            this.numBeastFPS.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            131072});
+            this.numBeastFPS.Location = new System.Drawing.Point(135, 217);
+            this.numBeastFPS.Maximum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.numBeastFPS.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            131072});
+            this.numBeastFPS.Name = "numBeastFPS";
+            this.numBeastFPS.Size = new System.Drawing.Size(86, 20);
+            this.numBeastFPS.TabIndex = 22;
+            this.numBeastFPS.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            65536});
+            this.numBeastFPS.ValueChanged += new System.EventHandler(this.ValueChanged);
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(50, 221);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(79, 13);
+            this.label18.TabIndex = 23;
+            this.label18.Text = "Animation FPS:";
+            // 
             // ccBeastAnimations
             // 
             this.ccBeastAnimations.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -818,6 +861,7 @@
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numHealth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numExperience)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numBeastFPS)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -887,5 +931,7 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.ComboBox cbBeastState;
         private System.Windows.Forms.Label lblBeastDirection;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.NumericUpDown numBeastFPS;
     }
 }
