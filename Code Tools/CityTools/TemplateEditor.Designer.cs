@@ -1,4 +1,4 @@
-﻿using CityTools.ClipIns;
+﻿using CityTools.Components;
 
 namespace CityTools {
     partial class TemplateEditor {
@@ -37,7 +37,7 @@ namespace CityTools {
             this.lblName = new System.Windows.Forms.Label();
             this.cbTemplateGroup = new System.Windows.Forms.ComboBox();
             this.txtTemplateName = new System.Windows.Forms.TextBox();
-            this.ccAnimation = new CityTools.ClipIns.AnimationList();
+            this.ccAnimation = new CityTools.Components.AnimationList();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.numOffsetHeight = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();

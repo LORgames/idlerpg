@@ -40,6 +40,8 @@ namespace ToolCache.Critters {
             lvi.SubItems.Add(Maximum.ToString());
             lvi.SubItems.Add(DropChance.ToString());
 
+            lvi.Tag = this;
+
             return lvi;
         }
 

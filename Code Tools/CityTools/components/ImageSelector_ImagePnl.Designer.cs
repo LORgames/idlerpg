@@ -1,4 +1,4 @@
-﻿namespace CityTools.ClipIns {
+﻿namespace CityTools.Components {
     partial class ImageSelector_ImagePnl {
         /// <summary> 
         /// Required designer variable.

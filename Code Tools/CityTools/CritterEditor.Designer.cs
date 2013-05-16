@@ -35,6 +35,8 @@
             this.label15 = new System.Windows.Forms.Label();
             this.cbBaseGroup = new System.Windows.Forms.ComboBox();
             this.pnlBeast = new System.Windows.Forms.Panel();
+            this.label18 = new System.Windows.Forms.Label();
+            this.numBeastFPS = new System.Windows.Forms.NumericUpDown();
             this.lblBeastDirection = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.cbBeastState = new System.Windows.Forms.ComboBox();
@@ -43,8 +45,9 @@
             this.btnBeastUp = new System.Windows.Forms.Button();
             this.btnBeastLeft = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
+            this.ccBeastAnimations = new CityTools.Components.AnimationList();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.listLoot = new System.Windows.Forms.ListView();
+            this.listLoot = new CityTools.Components.ListViewEx();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -86,22 +89,21 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtMonsterName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.numBeastFPS = new System.Windows.Forms.NumericUpDown();
-            this.label18 = new System.Windows.Forms.Label();
-            this.ccBeastAnimations = new CityTools.ClipIns.AnimationList();
+            this.numListViewHidden = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.sptFullForm)).BeginInit();
             this.sptFullForm.Panel1.SuspendLayout();
             this.sptFullForm.Panel2.SuspendLayout();
             this.sptFullForm.SuspendLayout();
             this.toolsMainTools.SuspendLayout();
             this.pnlBeast.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numBeastFPS)).BeginInit();
             this.panel3.SuspendLayout();
             this.pnlHumanoid.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbHumanoidDisplay)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numHealth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numExperience)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numBeastFPS)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numListViewHidden)).BeginInit();
             this.SuspendLayout();
             // 
             // sptFullForm
@@ -119,6 +121,7 @@
             // 
             // sptFullForm.Panel2
             // 
+            this.sptFullForm.Panel2.Controls.Add(this.numListViewHidden);
             this.sptFullForm.Panel2.Controls.Add(this.label15);
             this.sptFullForm.Panel2.Controls.Add(this.cbBaseGroup);
             this.sptFullForm.Panel2.Controls.Add(this.pnlBeast);
@@ -238,6 +241,44 @@
             this.pnlBeast.Size = new System.Drawing.Size(226, 309);
             this.pnlBeast.TabIndex = 16;
             // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(50, 221);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(79, 13);
+            this.label18.TabIndex = 23;
+            this.label18.Text = "Animation FPS:";
+            // 
+            // numBeastFPS
+            // 
+            this.numBeastFPS.DecimalPlaces = 2;
+            this.numBeastFPS.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            131072});
+            this.numBeastFPS.Location = new System.Drawing.Point(135, 217);
+            this.numBeastFPS.Maximum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.numBeastFPS.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            131072});
+            this.numBeastFPS.Name = "numBeastFPS";
+            this.numBeastFPS.Size = new System.Drawing.Size(86, 20);
+            this.numBeastFPS.TabIndex = 22;
+            this.numBeastFPS.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            65536});
+            this.numBeastFPS.ValueChanged += new System.EventHandler(this.ValueChanged);
+            // 
             // lblBeastDirection
             // 
             this.lblBeastDirection.AutoSize = true;
@@ -334,6 +375,14 @@
             this.label16.TabIndex = 14;
             this.label16.Text = "Non-Humanoid Controls";
             // 
+            // ccBeastAnimations
+            // 
+            this.ccBeastAnimations.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ccBeastAnimations.Location = new System.Drawing.Point(3, 52);
+            this.ccBeastAnimations.Name = "ccBeastAnimations";
+            this.ccBeastAnimations.Size = new System.Drawing.Size(218, 103);
+            this.ccBeastAnimations.TabIndex = 0;
+            // 
             // panel3
             // 
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -362,6 +411,7 @@
             this.listLoot.TabIndex = 8;
             this.listLoot.UseCompatibleStateImageBehavior = false;
             this.listLoot.View = System.Windows.Forms.View.Details;
+            this.listLoot.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listLoot_MouseClick);
             // 
             // columnHeader1
             // 
@@ -786,51 +836,12 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "Name:";
             // 
-            // numBeastFPS
+            // numListViewHidden
             // 
-            this.numBeastFPS.DecimalPlaces = 2;
-            this.numBeastFPS.Increment = new decimal(new int[] {
-            5,
-            0,
-            0,
-            131072});
-            this.numBeastFPS.Location = new System.Drawing.Point(135, 217);
-            this.numBeastFPS.Maximum = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            this.numBeastFPS.Minimum = new decimal(new int[] {
-            5,
-            0,
-            0,
-            131072});
-            this.numBeastFPS.Name = "numBeastFPS";
-            this.numBeastFPS.Size = new System.Drawing.Size(86, 20);
-            this.numBeastFPS.TabIndex = 22;
-            this.numBeastFPS.Value = new decimal(new int[] {
-            2,
-            0,
-            0,
-            65536});
-            this.numBeastFPS.ValueChanged += new System.EventHandler(this.ValueChanged);
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(50, 221);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(79, 13);
-            this.label18.TabIndex = 23;
-            this.label18.Text = "Animation FPS:";
-            // 
-            // ccBeastAnimations
-            // 
-            this.ccBeastAnimations.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ccBeastAnimations.Location = new System.Drawing.Point(3, 52);
-            this.ccBeastAnimations.Name = "ccBeastAnimations";
-            this.ccBeastAnimations.Size = new System.Drawing.Size(218, 103);
-            this.ccBeastAnimations.TabIndex = 0;
+            this.numListViewHidden.Location = new System.Drawing.Point(42, 211);
+            this.numListViewHidden.Name = "numListViewHidden";
+            this.numListViewHidden.Size = new System.Drawing.Size(120, 20);
+            this.numListViewHidden.TabIndex = 19;
             // 
             // CritterEditor
             // 
@@ -852,6 +863,7 @@
             this.toolsMainTools.PerformLayout();
             this.pnlBeast.ResumeLayout(false);
             this.pnlBeast.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numBeastFPS)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.pnlHumanoid.ResumeLayout(false);
@@ -861,7 +873,7 @@
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numHealth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numExperience)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numBeastFPS)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numListViewHidden)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -890,7 +902,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnAddLoot;
         private System.Windows.Forms.ComboBox cbItemList;
-        private System.Windows.Forms.ListView listLoot;
+        private CityTools.Components.ListViewEx listLoot;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
         private System.Windows.Forms.ToolStripMenuItem btnCreateHumanoidCritter;
         private System.Windows.Forms.ToolStripMenuItem btnCreateBeastCritter;
@@ -923,7 +935,7 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.ComboBox cbBaseGroup;
         private System.Windows.Forms.Label label16;
-        private ClipIns.AnimationList ccBeastAnimations;
+        private Components.AnimationList ccBeastAnimations;
         private System.Windows.Forms.Button btnBeastRight;
         private System.Windows.Forms.Button btnBeastDown;
         private System.Windows.Forms.Button btnBeastUp;
@@ -933,5 +945,6 @@
         private System.Windows.Forms.Label lblBeastDirection;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.NumericUpDown numBeastFPS;
+        private System.Windows.Forms.NumericUpDown numListViewHidden;
     }
 }

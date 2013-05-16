@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 
-namespace CityTools.ClipIns.BufferedPainting {
+namespace CityTools.Components.BufferedPainting {
 
     /// <summary>
     /// Attaches to a System.Windows.Forms.Control and provides buffered 

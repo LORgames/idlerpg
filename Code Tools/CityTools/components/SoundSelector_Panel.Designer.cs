@@ -1,4 +1,4 @@
-﻿namespace CityTools.ClipIns {
+﻿namespace CityTools.Components {
     partial class SoundSelector_Panel {
         /// <summary> 
         /// Required designer variable.

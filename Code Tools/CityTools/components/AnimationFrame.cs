@@ -6,8 +6,9 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using CityTools.Components;
 
-namespace CityTools.ClipIns {
+namespace CityTools.Components {
     public partial class AnimationFrame : UserControl {
         AnimationList parent;
 

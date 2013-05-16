@@ -1,5 +1,5 @@
 ﻿
-using CityTools.ClipIns;
+using CityTools.Components;
 
 namespace CityTools {
     partial class TileEditor {
@@ -55,7 +55,7 @@ namespace CityTools {
             this.btnClearCollisions = new System.Windows.Forms.Button();
             this.ckbShowCollisions = new System.Windows.Forms.CheckBox();
             this.pbDisplay = new System.Windows.Forms.PictureBox();
-            this.ccAnimation = new CityTools.ClipIns.AnimationList();
+            this.ccAnimation = new CityTools.Components.AnimationList();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();

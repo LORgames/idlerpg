@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
-using CityTools.ClipIns;
+using CityTools.Components;
 
 namespace CityTools {
     public partial class ImageSelector : Form {

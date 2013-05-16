@@ -1,4 +1,4 @@
-﻿using CityTools.ClipIns;
+﻿using CityTools.Components;
 
 namespace CityTools {
     partial class EquipmentEditor {
@@ -80,8 +80,8 @@ namespace CityTools {
             this.label14 = new System.Windows.Forms.Label();
             this.numAnimSpeed = new System.Windows.Forms.NumericUpDown();
             this.label17 = new System.Windows.Forms.Label();
-            this.ccAnimationBack = new CityTools.ClipIns.AnimationList();
-            this.ccAnimationFront = new CityTools.ClipIns.AnimationList();
+            this.ccAnimationBack = new CityTools.Components.AnimationList();
+            this.ccAnimationFront = new CityTools.Components.AnimationList();
             this.txtAttackScript = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.btnExportMany = new System.Windows.Forms.Button();

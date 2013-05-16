@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using ToolCache.Sound;
 using System.IO;
 
-namespace CityTools.ClipIns {
+namespace CityTools.Components {
     public partial class SoundSelector_Panel : UserControl {
         public List<SoundData> Sounds;
         internal string SaveLocation = "";

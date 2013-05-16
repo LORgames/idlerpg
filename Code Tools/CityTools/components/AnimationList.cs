@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using System.IO;
 using ToolCache.Animation;
 
-namespace CityTools.ClipIns {
+namespace CityTools.Components {
     public partial class AnimationList : UserControl {
 
         internal AnimatedObject _anim;

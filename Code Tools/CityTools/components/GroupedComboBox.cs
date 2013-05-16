@@ -7,7 +7,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.Windows.Forms.VisualStyles;
-using CityTools.ClipIns.BufferedPainting;
+using CityTools.Components.BufferedPainting;
 
 /// <summary>
 /// Represents a Windows combo box control that, when bound to a data source, is capable of 

@@ -26,11 +26,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SoundEditor));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabMusic = new System.Windows.Forms.TabPage();
-            this.sndMusic = new CityTools.ClipIns.SoundSelector_Panel();
+            this.sndMusic = new CityTools.Components.SoundSelector_Panel();
             this.tabAmbience = new System.Windows.Forms.TabPage();
-            this.sndAmbience = new CityTools.ClipIns.SoundSelector_Panel();
+            this.sndAmbience = new CityTools.Components.SoundSelector_Panel();
             this.tabEffects = new System.Windows.Forms.TabPage();
-            this.sndEffects = new CityTools.ClipIns.SoundSelector_Panel();
+            this.sndEffects = new CityTools.Components.SoundSelector_Panel();
             this.player = new AxWMPLib.AxWindowsMediaPlayer();
             this.tabControl1.SuspendLayout();
             this.tabMusic.SuspendLayout();
@@ -143,9 +143,9 @@
         private System.Windows.Forms.TabPage tabMusic;
         private System.Windows.Forms.TabPage tabAmbience;
         private System.Windows.Forms.TabPage tabEffects;
-        private ClipIns.SoundSelector_Panel sndMusic;
-        private ClipIns.SoundSelector_Panel sndAmbience;
-        private ClipIns.SoundSelector_Panel sndEffects;
+        private Components.SoundSelector_Panel sndMusic;
+        private Components.SoundSelector_Panel sndAmbience;
+        private Components.SoundSelector_Panel sndEffects;
         public AxWMPLib.AxWindowsMediaPlayer player;
     }
 }

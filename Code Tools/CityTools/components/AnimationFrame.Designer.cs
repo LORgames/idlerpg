@@ -1,4 +1,4 @@
-﻿namespace CityTools.ClipIns {
+﻿namespace CityTools.Components {
     partial class AnimationFrame {
         /// <summary> 
         /// Required designer variable.

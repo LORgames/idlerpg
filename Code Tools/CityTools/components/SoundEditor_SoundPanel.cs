@@ -10,7 +10,7 @@ using ToolCache.Sound;
 using System.IO;
 using System.Media;
 
-namespace CityTools.ClipIns {
+namespace CityTools.Components {
     public partial class SoundEditor_SoundPanel : UserControl {
         internal SoundData Sound;
         internal SoundSelector_Panel Owner;

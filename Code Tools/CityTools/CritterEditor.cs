@@ -496,5 +496,9 @@ namespace CityTools {
                 }
             }
         }
+
+        private void listLoot_MouseClick(object sender, MouseEventArgs e) {
+            
+        }
     }
 }

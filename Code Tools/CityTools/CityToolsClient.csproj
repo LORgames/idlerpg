@@ -68,27 +68,30 @@
     <Compile Include="CacheInterfaces\SoundInterface.cs" />
     <Compile Include="CacheInterfaces\TileInterface.cs" />
     <Compile Include="CacheInterfaces\ToolsInterface.cs" />
-    <Compile Include="ClipIns\BufferedPaint\BufferedPainter.cs" />
-    <Compile Include="ClipIns\BufferedPaint\Interop.cs" />
-    <Compile Include="ClipIns\GroupedComboBox.cs">
+    <Compile Include="Components\BufferedPaint\BufferedPainter.cs" />
+    <Compile Include="Components\BufferedPaint\Interop.cs" />
+    <Compile Include="Components\GroupedComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ClipIns\ImageSelector_ImagePnl.cs">
+    <Compile Include="Components\ImageSelector_ImagePnl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ClipIns\ImageSelector_ImagePnl.Designer.cs">
+    <Compile Include="Components\ImageSelector_ImagePnl.Designer.cs">
       <DependentUpon>ImageSelector_ImagePnl.cs</DependentUpon>
     </Compile>
-    <Compile Include="ClipIns\SoundEditor_SoundPanel.cs">
+    <Compile Include="Components\ListViewEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\SoundEditor_SoundPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ClipIns\SoundEditor_SoundPanel.Designer.cs">
+    <Compile Include="Components\SoundEditor_SoundPanel.Designer.cs">
       <DependentUpon>SoundEditor_SoundPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="ClipIns\SoundSelector_Panel.cs">
+    <Compile Include="Components\SoundSelector_Panel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ClipIns\SoundSelector_Panel.Designer.cs">
+    <Compile Include="Components\SoundSelector_Panel.Designer.cs">
       <DependentUpon>SoundSelector_Panel.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\CachedObject.cs">
@@ -129,16 +132,16 @@
     <Compile Include="MapEditor.Designer.cs">
       <DependentUpon>MapEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="ClipIns\AnimationFrame.cs">
+    <Compile Include="Components\AnimationFrame.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ClipIns\AnimationFrame.Designer.cs">
+    <Compile Include="Components\AnimationFrame.Designer.cs">
       <DependentUpon>AnimationFrame.cs</DependentUpon>
     </Compile>
-    <Compile Include="ClipIns\AnimationList.cs">
+    <Compile Include="Components\AnimationList.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ClipIns\AnimationList.Designer.cs">
+    <Compile Include="Components\AnimationList.Designer.cs">
       <DependentUpon>AnimationList.cs</DependentUpon>
     </Compile>
     <Compile Include="ImageSelector.cs">
@@ -183,13 +186,16 @@
     <Compile Include="WorldEditor.Designer.cs">
       <DependentUpon>WorldEditor.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="ClipIns\ImageSelector_ImagePnl.resx">
+    <EmbeddedResource Include="Components\ImageSelector_ImagePnl.resx">
       <DependentUpon>ImageSelector_ImagePnl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ClipIns\SoundEditor_SoundPanel.resx">
+    <EmbeddedResource Include="Components\ListViewEx.resx">
+      <DependentUpon>ListViewEx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\SoundEditor_SoundPanel.resx">
       <DependentUpon>SoundEditor_SoundPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ClipIns\SoundSelector_Panel.resx">
+    <EmbeddedResource Include="Components\SoundSelector_Panel.resx">
       <DependentUpon>SoundSelector_Panel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\CachedObject.resx">
@@ -210,10 +216,10 @@
     <EmbeddedResource Include="MapEditor.resx">
       <DependentUpon>MapEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ClipIns\AnimationFrame.resx">
+    <EmbeddedResource Include="Components\AnimationFrame.resx">
       <DependentUpon>AnimationFrame.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ClipIns\AnimationList.resx">
+    <EmbeddedResource Include="Components\AnimationList.resx">
       <DependentUpon>AnimationList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ImageSelector.resx">
