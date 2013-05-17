@@ -32,6 +32,7 @@
             this.btnCreateBeastCritter = new System.Windows.Forms.ToolStripMenuItem();
             this.btnDuplicate = new System.Windows.Forms.ToolStripButton();
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
+            this.numListViewHidden = new System.Windows.Forms.NumericUpDown();
             this.label15 = new System.Windows.Forms.Label();
             this.cbBaseGroup = new System.Windows.Forms.ComboBox();
             this.pnlBeast = new System.Windows.Forms.Panel();
@@ -89,12 +90,12 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtMonsterName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.numListViewHidden = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.sptFullForm)).BeginInit();
             this.sptFullForm.Panel1.SuspendLayout();
             this.sptFullForm.Panel2.SuspendLayout();
             this.sptFullForm.SuspendLayout();
             this.toolsMainTools.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numListViewHidden)).BeginInit();
             this.pnlBeast.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numBeastFPS)).BeginInit();
             this.panel3.SuspendLayout();
@@ -103,7 +104,6 @@
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numHealth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numExperience)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numListViewHidden)).BeginInit();
             this.SuspendLayout();
             // 
             // sptFullForm
@@ -203,6 +203,15 @@
             // 
             this.toolStripTextBox1.Name = "toolStripTextBox1";
             this.toolStripTextBox1.Size = new System.Drawing.Size(90, 25);
+            // 
+            // numListViewHidden
+            // 
+            this.numListViewHidden.Location = new System.Drawing.Point(42, 211);
+            this.numListViewHidden.Name = "numListViewHidden";
+            this.numListViewHidden.Size = new System.Drawing.Size(120, 20);
+            this.numListViewHidden.TabIndex = 19;
+            this.numListViewHidden.TabStop = false;
+            this.numListViewHidden.Visible = false;
             // 
             // label15
             // 
@@ -397,12 +406,15 @@
             // 
             // listLoot
             // 
+            this.listLoot.AllowColumnReorder = true;
             this.listLoot.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader3,
             this.columnHeader4,
             this.columnHeader5});
+            this.listLoot.DoubleClickActivation = false;
+            this.listLoot.FullRowSelect = true;
             this.listLoot.GridLines = true;
             this.listLoot.LabelEdit = true;
             this.listLoot.Location = new System.Drawing.Point(7, 30);
@@ -411,7 +423,6 @@
             this.listLoot.TabIndex = 8;
             this.listLoot.UseCompatibleStateImageBehavior = false;
             this.listLoot.View = System.Windows.Forms.View.Details;
-            this.listLoot.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listLoot_MouseClick);
             // 
             // columnHeader1
             // 
@@ -836,13 +847,6 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "Name:";
             // 
-            // numListViewHidden
-            // 
-            this.numListViewHidden.Location = new System.Drawing.Point(42, 211);
-            this.numListViewHidden.Name = "numListViewHidden";
-            this.numListViewHidden.Size = new System.Drawing.Size(120, 20);
-            this.numListViewHidden.TabIndex = 19;
-            // 
             // CritterEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -861,6 +865,7 @@
             this.sptFullForm.ResumeLayout(false);
             this.toolsMainTools.ResumeLayout(false);
             this.toolsMainTools.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numListViewHidden)).EndInit();
             this.pnlBeast.ResumeLayout(false);
             this.pnlBeast.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numBeastFPS)).EndInit();
@@ -873,7 +878,6 @@
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numHealth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numExperience)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numListViewHidden)).EndInit();
             this.ResumeLayout(false);
 
         }

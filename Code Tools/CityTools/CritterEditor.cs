@@ -24,9 +24,9 @@ namespace CityTools {
         private Critter critter;
         private Direction direction = Direction.Left;
 
-        private Boolean _iE = false; //Is Edited
-        private Boolean _new = false;
-        private Boolean _updatingForm = false;
+        private Boolean _isCritterEdited = false; //Is Edited
+        private Boolean _isNewCritter = false;
+        private Boolean _isUpdatingForm = false;
 
         private Dictionary<string, TreeNode> GroupNodes = new Dictionary<string, TreeNode>();
 
@@ -42,6 +42,8 @@ namespace CityTools {
             ccBeastAnimations.DisablePlaybackSpeed();
 
             sptFullForm.Panel2.Enabled = false;
+
+            SetupLootBox();
 
             FillAITypes();
             FillItemBox();
@@ -129,6 +131,39 @@ namespace CityTools {
             Factions.SaveDatabase();
         }
 
+        private void SetupLootBox() {
+            listLoot.SubItemClicked += new Components.SubItemEventHandler(listLoot_SubItemClicked);
+            listLoot.SubItemEndEditing += new Components.SubItemEndEditingEventHandler(listLoot_SubItemEndEditing);
+        }
+
+        void listLoot_SubItemEndEditing(object sender, Components.SubItemEndEditingEventArgs e) {
+            e.DisplayText = (e.Item.Tag as LootDrop).UpdateFromListView(e.Item, e.SubItem, e.DisplayText);
+            _isCritterEdited = true;
+        }
+
+        void listLoot_SubItemClicked(object sender, Components.SubItemEventArgs e) {
+            if (e.SubItem > 0) {
+                if (e.SubItem == 1 || e.SubItem == 2) { //min and max numbers
+                    numListViewHidden.DecimalPlaces = 0;
+                    numListViewHidden.Minimum = 1;
+                    numListViewHidden.Maximum = 255;
+                    numListViewHidden.Increment = 1;
+                } else if (e.SubItem == 3) { // Percentage chance
+                    numListViewHidden.DecimalPlaces = 2;
+                    numListViewHidden.Minimum = 0.01M;
+                    numListViewHidden.Maximum = 100;
+                    numListViewHidden.Increment = 5;
+                } else if (e.SubItem == 4) { // set
+                    numListViewHidden.DecimalPlaces = 0;
+                    numListViewHidden.Minimum = 0;
+                    numListViewHidden.Maximum = 255;
+                    numListViewHidden.Increment = 1;
+                }
+
+                listLoot.StartEditing(numListViewHidden, e.Item, e.SubItem);
+            }
+        }
+
         private void PopulateLootList() {
             if (critter != null) {
                 listLoot.SuspendLayout();
@@ -147,8 +182,8 @@ namespace CityTools {
             SaveIfRequired();
 
             critter = new CritterHuman();
-            _new = true;
-            _iE = false;
+            _isNewCritter = true;
+            _isCritterEdited = false;
 
             UpdateForm();
         }
@@ -157,14 +192,14 @@ namespace CityTools {
             SaveIfRequired();
 
             critter = new CritterBeast();
-            _new = true;
-            _iE = false;
+            _isNewCritter = true;
+            _isCritterEdited = false;
 
             UpdateForm();
         }
 
         private void UpdateForm() {
-            _updatingForm = true;
+            _isUpdatingForm = true;
 
             //Fill in the boxes
             txtMonsterName.Text = critter.Name;
@@ -222,11 +257,11 @@ namespace CityTools {
                 pnlHumanoid.Enabled = false;
             }
 
-            _updatingForm = false;
+            _isUpdatingForm = false;
         }
 
         private void SaveIfRequired() {
-            if (!_iE) return;
+            if (!_isCritterEdited) return;
 
             //Set the critter information
             critter.Name = txtMonsterName.Text;
@@ -289,14 +324,14 @@ namespace CityTools {
                 beast.playbackSpeed = (float)numBeastFPS.Value;
             }
 
-            if (_new) {
+            if (_isNewCritter) {
                 CritterManager.AddCritter(critter);
             } else {
                 CritterManager.UpdatedCritter(critter);
             }
 
-            _new = false;
-            _iE = false;
+            _isNewCritter = false;
+            _isCritterEdited = false;
         }
 
         private void btnAddLoot_Click(object sender, EventArgs e) {
@@ -306,7 +341,7 @@ namespace CityTools {
                 critter.Loot.Add(loot);
 
                 listLoot.Items.Add(loot.GetListViewItem());
-                _iE = true;
+                _isCritterEdited = true;
             }
         }
 
@@ -321,7 +356,7 @@ namespace CityTools {
                     listGroups.Items.Add(cbAddGroup.Text);
                 }
 
-                _iE = true;
+                _isCritterEdited = true;
             }
         }
 
@@ -330,7 +365,7 @@ namespace CityTools {
                 if (!listAIType.Items.Contains(cbAITypes.SelectedItem)) {
                     listAIType.Items.Add(cbAITypes.SelectedItem);
                 }
-                _iE = true;
+                _isCritterEdited = true;
             }
         }
 
@@ -348,16 +383,16 @@ namespace CityTools {
         }
 
         private void ChangedEquipment(object sender, EventArgs e) {
-            if (_updatingForm) return;
+            if (_isUpdatingForm) return;
 
-            _iE = true;
+            _isCritterEdited = true;
             pbHumanoidDisplay.Invalidate();
         }
 
         private void ValueChanged(object sender, EventArgs e) {
-            if (_updatingForm) return;
+            if (_isUpdatingForm) return;
 
-            _iE = true;
+            _isCritterEdited = true;
         }
 
         private void treeAllCritters_AfterSelect(object sender, TreeViewEventArgs e) {
@@ -385,15 +420,15 @@ namespace CityTools {
                         lv.Items.RemoveAt(array[i]);
                     }
 
-                    _iE = true;
+                    _isCritterEdited = true;
                 }
             }
         }
 
         void ccBeastAnimations_AnimationChanged(object sender, EventArgs e) {
-            if (_updatingForm) return;
+            if (_isUpdatingForm) return;
 
-            _iE = true;
+            _isCritterEdited = true;
         }
 
         private void btnBeastDirection_MouseEnter(object sender, EventArgs e) {
@@ -484,7 +519,7 @@ namespace CityTools {
                                     String state = cbBeastState.Text;
 
                                     (critter as CritterBeast).GetAnimation(state).GetDirection(x).Frames.Add(nFilename);
-                                    _iE = true;
+                                    _isCritterEdited = true;
 
                                     if (direction == x) {
                                         ccBeastAnimations.UpdateBoxes();
@@ -495,10 +530,6 @@ namespace CityTools {
                     }
                 }
             }
-        }
-
-        private void listLoot_MouseClick(object sender, MouseEventArgs e) {
-            
         }
     }
 }

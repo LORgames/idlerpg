@@ -38,11 +38,35 @@ namespace ToolCache.Critters {
 
             lvi.SubItems.Add(Minimum.ToString());
             lvi.SubItems.Add(Maximum.ToString());
-            lvi.SubItems.Add(DropChance.ToString());
+            lvi.SubItems.Add(DropChance.ToString("F2"));
+            lvi.SubItems.Add(SetID.ToString());
 
             lvi.Tag = this;
 
             return lvi;
+        }
+
+        public string UpdateFromListView(ListViewItem myListView, int subitem, string newValue) {
+            switch (subitem) {
+                case 1:
+                    Minimum = short.Parse(newValue);
+                    if (Minimum > Maximum) Minimum = Maximum;
+                    if (Minimum < 1) Minimum = 1;
+                    return Minimum.ToString();
+                case 2:
+                    Maximum = short.Parse(newValue);
+                    if (Minimum > Maximum) Minimum = Maximum; myListView.SubItems[2].Text = Minimum.ToString();
+                    if (Maximum < 1) Maximum = 1;
+                    return Maximum.ToString();
+                case 3:
+                    DropChance = float.Parse(newValue);
+                    return DropChance.ToString("F2");
+                case 4:
+                    SetID = byte.Parse(newValue);
+                    return SetID.ToString();
+            }
+
+            return "";
         }
 
         public static LootDrop GenerateEmpty(Item item) {
