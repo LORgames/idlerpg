@@ -13,6 +13,7 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -25,7 +26,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -81,6 +81,12 @@
     </Compile>
     <Compile Include="Components\ListViewEx.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\ScriptBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\ScriptBox.Designer.cs">
+      <DependentUpon>ScriptBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\SoundEditor_SoundPanel.cs">
       <SubType>UserControl</SubType>
@@ -191,6 +197,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Components\ListViewEx.resx">
       <DependentUpon>ListViewEx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\ScriptBox.resx">
+      <DependentUpon>ScriptBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\SoundEditor_SoundPanel.resx">
       <DependentUpon>SoundEditor_SoundPanel.cs</DependentUpon>

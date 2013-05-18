@@ -75,7 +75,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label14 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.txtScript = new System.Windows.Forms.TextBox();
+            this.txtScript = new Components.ScriptBox();
             this.listGroups = new System.Windows.Forms.ListBox();
             this.btnAddGroup = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
@@ -680,10 +680,7 @@
             // 
             // txtScript
             // 
-            this.txtScript.AcceptsReturn = true;
-            this.txtScript.AcceptsTab = true;
             this.txtScript.Location = new System.Drawing.Point(3, 24);
-            this.txtScript.Multiline = true;
             this.txtScript.Name = "txtScript";
             this.txtScript.Size = new System.Drawing.Size(289, 226);
             this.txtScript.TabIndex = 17;
@@ -935,7 +932,7 @@
         private System.Windows.Forms.ComboBox cbHumanoidShadow;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.TextBox txtScript;
+        private Components.ScriptBox txtScript;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.ComboBox cbBaseGroup;
         private System.Windows.Forms.Label label16;

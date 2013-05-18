@@ -11,16 +11,10 @@ using CityTools.Properties;
 using ToolCache.Items;
 using ToolCache.Equipment;
 using ToolCache.Drawing;
-using System.Runtime.InteropServices;
 using System.IO;
 
 namespace CityTools {
     public partial class CritterEditor : Form {
-        //// I RETARD WINFORMS CODE
-        [DllImport("User32.dll", CharSet = CharSet.Auto)]
-        public static extern IntPtr SendMessage(IntPtr h, int msg, int wParam, int[] lParam);
-        //// END RETARD CODE
-
         private Critter critter;
         private Direction direction = Direction.Left;
 
@@ -34,8 +28,8 @@ namespace CityTools {
             InitializeComponent();
 
             treeAllCritters.ImageList = new ImageList();
-            treeAllCritters.ImageList.Images.Add(Resources.Critter_Editor___Humanoid);
-            treeAllCritters.ImageList.Images.Add(Resources.Critter_Editor___Monster);
+            treeAllCritters.ImageList.Images.Add(Resources.Humanoid);
+            treeAllCritters.ImageList.Images.Add(Resources.Monster);
 
             ccBeastAnimations.AnimationChanged +=new ChangedEventHandler(ccBeastAnimations_AnimationChanged);
             ccBeastAnimations.SetSaveLocation("Critters");
@@ -52,11 +46,7 @@ namespace CityTools {
 
             FillTree();
 
-            SetTabWidth(txtScript, 2);
-        }
-
-        public static void SetTabWidth(TextBox textbox, int tabWidth) {
-            SendMessage(textbox.Handle, 0x00CB, 1, new int[] { tabWidth * 4 });
+            txtScript.Setup(ToolCache.Scripting.ScriptTypes.Critter);
         }
 
         private void FillTree() {
@@ -210,7 +200,7 @@ namespace CityTools {
             ckbOneOfAKind.Checked = critter.OneOfAKind;
             cbBaseGroup.Text = critter.NodeGroup;
 
-            txtScript.Text = critter.AICommands;
+            txtScript.Script = critter.AICommands;
 
             //Now we do groups
             listGroups.Items.Clear();
@@ -270,7 +260,7 @@ namespace CityTools {
             critter.OneOfAKind = ckbOneOfAKind.Checked;
 
             critter.NodeGroup = cbBaseGroup.Text;
-            critter.AICommands = txtScript.Text;
+            critter.AICommands = txtScript.Script;
 
             //Update the critters nodes
             if (critter.EditorNode == null) {

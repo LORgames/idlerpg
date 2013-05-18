@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CityTools")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("RPG Editor")]
+[assembly: AssemblyDescription("Our toolset for creating fully custom RPGs.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CityTools")]
-[assembly: AssemblyCopyright("Copyright ©  2012")]
+[assembly: AssemblyCompany("LORgames")]
+[assembly: AssemblyProduct("RPG Builder")]
+[assembly: AssemblyCopyright("Copyright ©  2011 - 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

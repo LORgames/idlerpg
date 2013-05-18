@@ -93,9 +93,9 @@ namespace CityTools.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Critter_Editor___Humanoid {
+        internal static System.Drawing.Bitmap Humanoid {
             get {
-                object obj = ResourceManager.GetObject("Critter Editor - Humanoid", resourceCulture);
+                object obj = ResourceManager.GetObject("Humanoid", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +103,9 @@ namespace CityTools.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Critter_Editor___Monster {
+        internal static System.Drawing.Bitmap Monster {
             get {
-                object obj = ResourceManager.GetObject("Critter Editor - Monster", resourceCulture);
+                object obj = ResourceManager.GetObject("Monster", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

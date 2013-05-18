@@ -81,6 +81,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Scripting\Parser.cs" />
+    <Compile Include="Scripting\ScriptTypes.cs" />
     <Compile Include="Sound\SoundData.cs" />
     <Compile Include="Sound\SoundDatabase.cs" />
     <Compile Include="World\Portal.cs" />
