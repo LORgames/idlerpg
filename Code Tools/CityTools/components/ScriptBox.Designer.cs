@@ -41,18 +41,19 @@
             this.txtScript.TabIndex = 0;
             this.txtScript.Text = "";
             this.txtScript.WordWrap = false;
+            this.txtScript.TextChanged += new System.EventHandler(this.txtScript_TextChanged);
             // 
             // scriptContextMenu
             // 
             this.scriptContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnParse});
             this.scriptContextMenu.Name = "scriptContextMenu";
-            this.scriptContextMenu.Size = new System.Drawing.Size(153, 48);
+            this.scriptContextMenu.Size = new System.Drawing.Size(103, 26);
             // 
             // btnParse
             // 
             this.btnParse.Name = "btnParse";
-            this.btnParse.Size = new System.Drawing.Size(152, 22);
+            this.btnParse.Size = new System.Drawing.Size(102, 22);
             this.btnParse.Text = "Parse";
             this.btnParse.Click += new System.EventHandler(this.btnParse_Click);
             // 

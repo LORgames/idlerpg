@@ -44,5 +44,9 @@ namespace CityTools.Components {
         private void btnParse_Click(object sender, EventArgs e) {
             MessageBox.Show(Parser.Parse(Script, ScriptType));
         }
+
+        private void txtScript_TextChanged(object sender, EventArgs e) {
+            this.OnTextChanged(e);
+        }
     }
 }

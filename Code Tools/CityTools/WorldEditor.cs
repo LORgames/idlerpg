@@ -241,7 +241,14 @@ namespace CityTools {
                     }
 
                     selectedPortal.Map.Save();
-                } 
+                }
+            } else if (EditMode == WorldEditMode.Move) {
+                //Save the map if its updated, really need to have a database of map locations
+                //Rather than have them in the file so people can move them around without screwing up
+                //Any edits people might have made
+                if (selectedObject != null) {
+                    selectedObject.myPiece.Save();
+                }
             }
         }
 
