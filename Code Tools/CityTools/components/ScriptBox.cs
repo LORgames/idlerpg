@@ -18,7 +18,7 @@ namespace CityTools.Components {
                 return txtScript.Text;
             }
             set {
-                if (ScriptType == ScriptTypes.Unknown) {
+                if (ScriptType == ScriptTypes.Unknown && value != "") {
                     MessageBox.Show("Warning: ScriptBox is still set to ScriptTypes.Unknown!");
                 }
                 txtScript.Text = value;
@@ -28,7 +28,11 @@ namespace CityTools.Components {
         //Would much rather if text wasn't used, for now it just calls the Script things
         public override string Text { get { return Script; } set { Script = value; } }
 
-        public ScriptTypes ScriptType = ScriptTypes.Unknown;
+        private ScriptTypes _type = ScriptTypes.Unknown;
+        public ScriptTypes ScriptType {
+            get { return _type; }
+            set { _type = value; }
+        }
 
         public ScriptBox() {
             InitializeComponent();

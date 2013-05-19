@@ -24,7 +24,9 @@ namespace CityTools {
             InitializeComponent();
 
             if (!Directory.Exists("Icons")) Directory.CreateDirectory("Icons");
-            
+
+            txtConsumeEffect.Setup(ToolCache.Scripting.ScriptTypes.Item);
+
             CreateNew();
             LoadItemList();
         }

@@ -30,7 +30,7 @@
             this.btnAddItem = new System.Windows.Forms.ToolStripButton();
             this.btnDuplicateItem = new System.Windows.Forms.ToolStripButton();
             this.txtSearchBox = new System.Windows.Forms.ToolStripTextBox();
-            this.txtConsumeEffect = new System.Windows.Forms.TextBox();
+            this.txtConsumeEffect = new Components.ScriptBox();
             this.txtName = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
@@ -158,7 +158,6 @@
             // txtConsumeEffect
             // 
             this.txtConsumeEffect.Location = new System.Drawing.Point(13, 214);
-            this.txtConsumeEffect.Multiline = true;
             this.txtConsumeEffect.Name = "txtConsumeEffect";
             this.txtConsumeEffect.Size = new System.Drawing.Size(151, 65);
             this.txtConsumeEffect.TabIndex = 31;
@@ -468,6 +467,6 @@
         private System.Windows.Forms.ToolStripTextBox txtSearchBox;
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.ToolStripButton btnDuplicateItem;
-        private System.Windows.Forms.TextBox txtConsumeEffect;
+        private Components.ScriptBox txtConsumeEffect;
     }
 }

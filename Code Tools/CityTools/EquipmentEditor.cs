@@ -18,9 +18,9 @@ namespace CityTools {
         private Direction currentDirection = Direction.Left;
         private EquipmentItem currentEquipment = new EquipmentItem();
 
-        private Boolean _iE = false; //Is Edited
-        private Boolean _new = false;
-        private Boolean _updatingForm = false;
+        private Boolean _hasEquipmentBeenEdited = false; //Is Edited
+        private Boolean _isNewEquipmentItem = false;
+        private Boolean _isCurrentUpdatingForm = false;
 
         private EquipmentItem body = EquipmentManager.TypeLists[EquipmentTypes.Body].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Body][0] : null;
         private EquipmentItem face = EquipmentManager.TypeLists[EquipmentTypes.Head].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Head][0] : null;
@@ -34,42 +34,20 @@ namespace CityTools {
 
             Random r = new Random();
 
-            //Add all tiles to the tile list
-            cbTileList.Items.Clear();
-            foreach(KeyValuePair<short, TileTemplate> kvp in TileCache.Tiles) {
-                cbTileList.Items.Add(kvp.Value);
-
-                if (kvp.Value.TileName == "Grass") {
-                    cbTileList.SelectedIndex = cbTileList.Items.Count - 1;
-                }
-            }
-            
-
-            //Add types to the equipment types
-            cbItemType.Items.Clear();
-            foreach(String s in Enum.GetNames(typeof(EquipmentTypes))) {
-                cbItemType.Items.Add(s);
-            }
-            cbItemType.SelectedIndex = 0;
+            //Add all tiles
+            FillTileBox();
 
             //Add states to the state box thing
-            cbAnimationState.Items.Clear();
-            cbPreviewState.Items.Clear();
-            foreach (String s in Enum.GetNames(typeof(States))) {
-                cbAnimationState.Items.Add(s);
-                cbPreviewState.Items.Add(s);
-            }
-            cbAnimationState.SelectedIndex = 0;
-            cbPreviewState.SelectedIndex = 0;
+            FillStateBoxes();
+            
+            //Add types to the equipment types
+            FillTypesBoxes();
 
+            //Setup the animations
+            SetupAnimations();
 
-            //TODO: Add Roots to treeview.
-            if (!Directory.Exists("Equipment")) Directory.CreateDirectory("Equipment");
-            ccAnimationBack.SetSaveLocation("Equipment");
-            ccAnimationFront.SetSaveLocation("Equipment");
-
-            ccAnimationBack.DisablePlaybackSpeed();
-            ccAnimationFront.DisablePlaybackSpeed();
+            //Prepare Script Box
+            txtScript.Setup(ToolCache.Scripting.ScriptTypes.Equipment);
 
             CreateNew();
 
@@ -78,10 +56,50 @@ namespace CityTools {
             timer1.Start();
         }
 
+        private void SetupAnimations() {
+            if (!Directory.Exists("Equipment")) Directory.CreateDirectory("Equipment");
+            ccAnimationBack.SetSaveLocation("Equipment");
+            ccAnimationFront.SetSaveLocation("Equipment");
+
+            ccAnimationBack.DisablePlaybackSpeed();
+            ccAnimationFront.DisablePlaybackSpeed();
+        }
+
+        private void FillTypesBoxes() {
+            cbItemType.Items.Clear();
+            foreach (String s in Enum.GetNames(typeof(EquipmentTypes))) {
+                cbItemType.Items.Add(s);
+            }
+            cbItemType.SelectedIndex = 0;
+        }
+
+        private void FillStateBoxes() {
+            cbAnimationState.Items.Clear();
+            cbPreviewState.Items.Clear();
+            foreach (String s in Enum.GetNames(typeof(States))) {
+                cbAnimationState.Items.Add(s);
+                cbPreviewState.Items.Add(s);
+            }
+            cbAnimationState.SelectedIndex = 0;
+            cbPreviewState.SelectedIndex = 0;
+        }
+
+        private void FillTileBox() {
+            //Add all tiles to the tile list
+            cbTileList.Items.Clear();
+            foreach (KeyValuePair<short, TileTemplate> kvp in TileCache.Tiles) {
+                cbTileList.Items.Add(kvp.Value);
+
+                if (kvp.Value.TileName == "Grass") {
+                    cbTileList.SelectedIndex = cbTileList.Items.Count - 1;
+                }
+            }
+        }
+
         private void CreateNew() {
             SaveIfRequired();
 
-            _new = true;
+            _isNewEquipmentItem = true;
             currentEquipment = new EquipmentItem();
             UpdateForm();
         }
@@ -159,7 +177,7 @@ namespace CityTools {
         }
         
         private void UpdateForm() {
-            _updatingForm = true;
+            _isCurrentUpdatingForm = true;
 
             cbItemType.Text = Enum.GetName(typeof(EquipmentTypes), currentEquipment.Type);
             txtName.Text = currentEquipment.Name;
@@ -181,7 +199,7 @@ namespace CityTools {
 
             UpdateOffsets();
 
-            _updatingForm = false;
+            _isCurrentUpdatingForm = false;
         }
 
         private void UpdateDirection() {
@@ -352,7 +370,7 @@ namespace CityTools {
         }
 
         private void ValueChanged(object sender, EventArgs e) {
-            if(!_updatingForm) _iE = true;
+            if(!_isCurrentUpdatingForm) _hasEquipmentBeenEdited = true;
         }
 
         private void cbAnimationState_SelectedIndexChanged(object sender, EventArgs e) {
@@ -383,9 +401,9 @@ namespace CityTools {
         }
 
         private void SaveIfRequired() {
-            if (!_iE) return;
+            if (!_hasEquipmentBeenEdited) return;
 
-            _iE = false;
+            _hasEquipmentBeenEdited = false;
 
             currentEquipment.isAvailableAtStart = ckbAvailableAtStart.Checked;
             currentEquipment.Name = txtName.Text;
@@ -393,9 +411,9 @@ namespace CityTools {
 
             currentEquipment.OnAttackScript = txtScript.Text;
 
-            if (_new) EquipmentManager.AddEquipment(currentEquipment);
+            if (_isNewEquipmentItem) EquipmentManager.AddEquipment(currentEquipment);
             else EquipmentManager.Updated(currentEquipment);
-            _new = false;
+            _isNewEquipmentItem = false;
 
             RefreshTree();
         }
@@ -411,7 +429,7 @@ namespace CityTools {
                 if (ei != currentEquipment) {
                     SaveIfRequired();
                     currentEquipment = ei;
-                    _new = false;
+                    _isNewEquipmentItem = false;
                     UpdateForm();
                 }
 
@@ -445,9 +463,9 @@ namespace CityTools {
         }
 
         private void numOffset_ValueChanged(object sender, EventArgs e) {
-            if (_updatingForm) return;
+            if (_isCurrentUpdatingForm) return;
 
-            _updatingForm = true;
+            _isCurrentUpdatingForm = true;
 
             if (ckbLockOffsets.Checked) {
                 currentEquipment.OffsetX = (short)numOffsetX_0.Value;
@@ -472,9 +490,9 @@ namespace CityTools {
                 }
             }
 
-            _updatingForm = false;
+            _isCurrentUpdatingForm = false;
 
-            _iE = true;
+            _hasEquipmentBeenEdited = true;
         }
 
         private void btnSwapAnimations_Click(object sender, EventArgs e) {
@@ -489,12 +507,12 @@ namespace CityTools {
                 ccAnimationFront.ChangeToAnimation(currentEquipment.Animations[eType].GetAnimation(currentDirection, 0));
                 ccAnimationBack.ChangeToAnimation(currentEquipment.Animations[eType].GetAnimation(currentDirection, 1));
 
-                _iE = true;
+                _hasEquipmentBeenEdited = true;
             }
         }
 
         private void ckbLockOffsets_CheckedChanged(object sender, EventArgs e) {
-            if (_updatingForm) return;
+            if (_isCurrentUpdatingForm) return;
 
             currentEquipment.OffsetsLocked = ckbLockOffsets.Checked;
 
@@ -502,7 +520,7 @@ namespace CityTools {
         }
 
         private void UpdateOffsets(bool justUnlocked = false) {
-            _updatingForm = true;
+            _isCurrentUpdatingForm = true;
 
             if (justUnlocked) {
                 currentEquipment.OffsetX_1 = currentEquipment.OffsetX;
@@ -523,7 +541,7 @@ namespace CityTools {
                 UnlockOffsets(numOffsetX_3, numOffsetY_3, currentEquipment.OffsetX_3, currentEquipment.OffsetY_3);
             }
 
-            _updatingForm = false;
+            _isCurrentUpdatingForm = false;
         }
 
         private void LockOffsets(NumericUpDown _x, NumericUpDown _y) {
@@ -557,7 +575,7 @@ namespace CityTools {
         }
 
         private void numAnimSpeed_ValueChanged(object sender, EventArgs e) {
-            if (_updatingForm) return;
+            if (_isCurrentUpdatingForm) return;
 
             currentEquipment.AnimationSpeed = (float)numAnimSpeed.Value;
             currentEquipment.UpdateSpeed();
