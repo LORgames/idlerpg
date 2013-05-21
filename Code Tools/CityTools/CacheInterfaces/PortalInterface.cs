@@ -5,6 +5,7 @@ using System.Text;
 using ToolCache.World;
 using ToolCache.Map;
 using CityTools.ObjectSystem;
+using CityTools.MiscHelpers;
 
 namespace CityTools.CacheInterfaces {
     internal class PortalInterface {
@@ -13,7 +14,7 @@ namespace CityTools.CacheInterfaces {
             MainWindow.instance.btnDeletePortals.Click += new EventHandler(btnDeletePortals_Click);
 
             MainWindow.instance.listPortals.SelectedIndexChanged += new EventHandler(listPortals_SelectedIndexChanged);
-            MainWindow.instance.ckbShowPortals.CheckedChanged += new EventHandler(ckbShowPortals_CheckedChanged);
+            MainWindow.instance.ckbDrawPortals.CheckedChanged += new EventHandler(ckbShowPortals_CheckedChanged);
 
             MainWindow.instance.txtPortalName.TextChanged += new EventHandler(txtPortalName_TextChanged);
             MainWindow.instance.txtPortalName.LostFocus += new EventHandler(txtPortalName_LostFocus);
@@ -44,15 +45,16 @@ namespace CityTools.CacheInterfaces {
                 MainWindow.instance.listPortals.Items.Add(p);
             }
 
+            UpdatePortalDrawList();
             UpdateGUI();
         }
 
         private static void UpdatePortalDrawList() {
-            if (MainWindow.instance.ckbShowPortals.Checked) {
+            PortalHelper.DrawList.Clear();
+
+            if (MainWindow.instance.ckbDrawPortals.Checked) {
                 PortalHelper.DrawList.AddRange(MapPieceCache.CurrentPiece.Portals);
             } else {
-                PortalHelper.DrawList.Clear();
-
                 foreach (object p in MainWindow.instance.listPortals.SelectedItems) {
                     if (p is Portal) {
                         PortalHelper.DrawList.Add(p as Portal);

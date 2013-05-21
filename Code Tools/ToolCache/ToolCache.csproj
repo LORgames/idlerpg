@@ -66,8 +66,13 @@
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\ItemDatabase.cs" />
     <Compile Include="Drawing\LBuffer.cs" />
+    <Compile Include="Map\Background\BackgroundTypes.cs" />
+    <Compile Include="Map\Background\IBackground.cs" />
     <Compile Include="Map\MapPieceCache.cs" />
     <Compile Include="Map\Objects\Template.cs" />
+    <Compile Include="Map\Regions\CritterSpawn.cs" />
+    <Compile Include="Map\Regions\SpawnRegion.cs" />
+    <Compile Include="Map\Background\SolidBackground.cs" />
     <Compile Include="Map\Tiles\TileInstance.cs" />
     <Compile Include="Map\Tiles\TileMap.cs" />
     <Compile Include="Map\MapPiece.cs" />

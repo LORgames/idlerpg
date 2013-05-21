@@ -64,13 +64,36 @@
             this.toolpanel_splitter = new System.Windows.Forms.SplitContainer();
             this.tabFirstLevel = new System.Windows.Forms.TabControl();
             this.tabOptions = new System.Windows.Forms.TabPage();
+            this.btnChangeBackground = new System.Windows.Forms.Button();
+            this.numSpawnLoad = new System.Windows.Forms.NumericUpDown();
+            this.label21 = new System.Windows.Forms.Label();
+            this.cbBackgroundType = new System.Windows.Forms.ComboBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.numSpawnTimer = new System.Windows.Forms.NumericUpDown();
+            this.numSpawnMax = new System.Windows.Forms.NumericUpDown();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.listCritterSpawns = new CityTools.Components.ListViewEx();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.label16 = new System.Windows.Forms.Label();
+            this.btnRegionResize = new System.Windows.Forms.Button();
+            this.label15 = new System.Windows.Forms.Label();
+            this.txtRegionName = new System.Windows.Forms.TextBox();
+            this.cbDrawRegions = new System.Windows.Forms.CheckBox();
+            this.btnDeleteRegion = new System.Windows.Forms.Button();
+            this.btnAddRegion = new System.Windows.Forms.Button();
+            this.label14 = new System.Windows.Forms.Label();
+            this.listRegions = new System.Windows.Forms.ListBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.btnResetWorldPosition = new System.Windows.Forms.Button();
             this.btnPortalExit = new System.Windows.Forms.Button();
             this.btnPortalEntry = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.txtPortalName = new System.Windows.Forms.TextBox();
-            this.ckbShowPortals = new System.Windows.Forms.CheckBox();
+            this.ckbDrawPortals = new System.Windows.Forms.CheckBox();
             this.btnDeletePortals = new System.Windows.Forms.Button();
             this.btnAddPortal = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
@@ -105,7 +128,8 @@
             this.pnlObjectScenicCache = new System.Windows.Forms.Panel();
             this.cbScenicCacheSelector = new System.Windows.Forms.ComboBox();
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timerRedrawAll = new System.Windows.Forms.Timer(this.components);
+            this.colorDialog = new System.Windows.Forms.ColorDialog();
             ((System.ComponentModel.ISupportInitialize)(this.main_splitter)).BeginInit();
             this.main_splitter.Panel1.SuspendLayout();
             this.main_splitter.Panel2.SuspendLayout();
@@ -118,6 +142,9 @@
             this.toolpanel_splitter.SuspendLayout();
             this.tabFirstLevel.SuspendLayout();
             this.tabOptions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numSpawnLoad)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numSpawnTimer)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numSpawnMax)).BeginInit();
             this.tabTerrain.SuspendLayout();
             this.tabPalette.SuspendLayout();
             this.tabObjectTools.SuspendLayout();
@@ -142,8 +169,8 @@
             // main_splitter.Panel2
             // 
             this.main_splitter.Panel2.Controls.Add(this.toolpanel_splitter);
-            this.main_splitter.Size = new System.Drawing.Size(897, 461);
-            this.main_splitter.SplitterDistance = 662;
+            this.main_splitter.Size = new System.Drawing.Size(925, 769);
+            this.main_splitter.SplitterDistance = 680;
             this.main_splitter.TabIndex = 0;
             this.main_splitter.TabStop = false;
             // 
@@ -154,7 +181,7 @@
             this.mapViewPanel_c.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mapViewPanel_c.Location = new System.Drawing.Point(0, 0);
             this.mapViewPanel_c.Name = "mapViewPanel_c";
-            this.mapViewPanel_c.Size = new System.Drawing.Size(662, 461);
+            this.mapViewPanel_c.Size = new System.Drawing.Size(680, 769);
             this.mapViewPanel_c.TabIndex = 0;
             // 
             // toolStrip1
@@ -173,7 +200,7 @@
             this.btnViewMenu});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(662, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(680, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -242,55 +269,55 @@
             this.btnWorldEditor});
             this.btnOtherToolsMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnOtherToolsMenu.Name = "btnOtherToolsMenu";
-            this.btnOtherToolsMenu.Size = new System.Drawing.Size(76, 22);
+            this.btnOtherToolsMenu.Size = new System.Drawing.Size(82, 22);
             this.btnOtherToolsMenu.Text = "Other Tools";
             // 
             // btnTileEditorTool
             // 
             this.btnTileEditorTool.Name = "btnTileEditorTool";
-            this.btnTileEditorTool.Size = new System.Drawing.Size(214, 22);
+            this.btnTileEditorTool.Size = new System.Drawing.Size(216, 22);
             this.btnTileEditorTool.Text = "Tile Editor (T)";
             // 
             // btnObjectEditor
             // 
             this.btnObjectEditor.Name = "btnObjectEditor";
-            this.btnObjectEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnObjectEditor.Size = new System.Drawing.Size(216, 22);
             this.btnObjectEditor.Text = "Object Template Editor (O)";
             // 
             // btnElementalEditor
             // 
             this.btnElementalEditor.Name = "btnElementalEditor";
-            this.btnElementalEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnElementalEditor.Size = new System.Drawing.Size(216, 22);
             this.btnElementalEditor.Text = "Elemental Editor (R)";
             // 
             // btnItemEditor
             // 
             this.btnItemEditor.Name = "btnItemEditor";
-            this.btnItemEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnItemEditor.Size = new System.Drawing.Size(216, 22);
             this.btnItemEditor.Text = "Item Editor (I)";
             // 
             // btnEquipmentEditor
             // 
             this.btnEquipmentEditor.Name = "btnEquipmentEditor";
-            this.btnEquipmentEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnEquipmentEditor.Size = new System.Drawing.Size(216, 22);
             this.btnEquipmentEditor.Text = "Equipment Editor (U)";
             // 
             // btnCritterEditor
             // 
             this.btnCritterEditor.Name = "btnCritterEditor";
-            this.btnCritterEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnCritterEditor.Size = new System.Drawing.Size(216, 22);
             this.btnCritterEditor.Text = "Critter Editor (C)";
             // 
             // btnSoundEditor
             // 
             this.btnSoundEditor.Name = "btnSoundEditor";
-            this.btnSoundEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnSoundEditor.Size = new System.Drawing.Size(216, 22);
             this.btnSoundEditor.Text = "Sound Editor (Z)";
             // 
             // btnWorldEditor
             // 
             this.btnWorldEditor.Name = "btnWorldEditor";
-            this.btnWorldEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnWorldEditor.Size = new System.Drawing.Size(216, 22);
             this.btnWorldEditor.Text = "World Editor (X)";
             // 
             // toolStripSeparator2
@@ -301,7 +328,7 @@
             // btnExport
             // 
             this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(55, 22);
+            this.btnExport.Size = new System.Drawing.Size(56, 22);
             this.btnExport.Text = "Test (F5)";
             // 
             // toolStripSeparator3
@@ -319,7 +346,7 @@
             this.btnViewMenu.Image = ((System.Drawing.Image)(resources.GetObject("btnViewMenu.Image")));
             this.btnViewMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnViewMenu.Name = "btnViewMenu";
-            this.btnViewMenu.Size = new System.Drawing.Size(42, 22);
+            this.btnViewMenu.Size = new System.Drawing.Size(45, 22);
             this.btnViewMenu.Text = "View";
             // 
             // mnuShowGrids
@@ -329,28 +356,28 @@
             this.ckbShowObjectBases,
             this.ckbShowTileBases});
             this.mnuShowGrids.Name = "mnuShowGrids";
-            this.mnuShowGrids.Size = new System.Drawing.Size(127, 22);
+            this.mnuShowGrids.Size = new System.Drawing.Size(121, 22);
             this.mnuShowGrids.Text = "Grids";
             // 
             // ckbShowTileGrid
             // 
             this.ckbShowTileGrid.CheckOnClick = true;
             this.ckbShowTileGrid.Name = "ckbShowTileGrid";
-            this.ckbShowTileGrid.Size = new System.Drawing.Size(194, 22);
+            this.ckbShowTileGrid.Size = new System.Drawing.Size(190, 22);
             this.ckbShowTileGrid.Text = "Show Outlines (1)";
             // 
             // ckbShowObjectBases
             // 
             this.ckbShowObjectBases.CheckOnClick = true;
             this.ckbShowObjectBases.Name = "ckbShowObjectBases";
-            this.ckbShowObjectBases.Size = new System.Drawing.Size(194, 22);
+            this.ckbShowObjectBases.Size = new System.Drawing.Size(190, 22);
             this.ckbShowObjectBases.Text = "Show Object Bases (2)";
             // 
             // ckbShowTileBases
             // 
             this.ckbShowTileBases.CheckOnClick = true;
             this.ckbShowTileBases.Name = "ckbShowTileBases";
-            this.ckbShowTileBases.Size = new System.Drawing.Size(194, 22);
+            this.ckbShowTileBases.Size = new System.Drawing.Size(190, 22);
             this.ckbShowTileBases.Text = "Show Tile Bases (3)";
             // 
             // viewportToolStripMenuItem
@@ -360,7 +387,7 @@
             this.txtViewportWidth,
             this.txtViewportHeight});
             this.viewportToolStripMenuItem.Name = "viewportToolStripMenuItem";
-            this.viewportToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.viewportToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.viewportToolStripMenuItem.Text = "Viewport";
             // 
             // ckbViewportEnabled
@@ -374,14 +401,14 @@
             // 
             this.txtViewportWidth.AutoToolTip = true;
             this.txtViewportWidth.Name = "txtViewportWidth";
-            this.txtViewportWidth.Size = new System.Drawing.Size(100, 21);
+            this.txtViewportWidth.Size = new System.Drawing.Size(100, 23);
             this.txtViewportWidth.Text = "800";
             this.txtViewportWidth.ToolTipText = "Viewport Width";
             // 
             // txtViewportHeight
             // 
             this.txtViewportHeight.Name = "txtViewportHeight";
-            this.txtViewportHeight.Size = new System.Drawing.Size(100, 21);
+            this.txtViewportHeight.Size = new System.Drawing.Size(100, 23);
             this.txtViewportHeight.Text = "600";
             this.txtViewportHeight.ToolTipText = "Viewport Height";
             // 
@@ -390,13 +417,13 @@
             this.mapViewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mapViewPanel.Location = new System.Drawing.Point(0, 0);
             this.mapViewPanel.Name = "mapViewPanel";
-            this.mapViewPanel.Size = new System.Drawing.Size(662, 461);
+            this.mapViewPanel.Size = new System.Drawing.Size(680, 769);
             this.mapViewPanel.TabIndex = 0;
             this.mapViewPanel.TabStop = false;
             this.mapViewPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.mapViewPanel_Paint);
-            this.mapViewPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.drawPanel_ME_down);
-            this.mapViewPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.drawPanel_ME_move);
-            this.mapViewPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.drawPanel_ME_up);
+            this.mapViewPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.drawPanel_MouseDown);
+            this.mapViewPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.drawPanel_MouseMove);
+            this.mapViewPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.drawPanel_MouseUp);
             this.mapViewPanel.Resize += new System.EventHandler(this.mapViewPanel_Resize);
             // 
             // toolpanel_splitter
@@ -412,7 +439,7 @@
             // toolpanel_splitter.Panel2
             // 
             this.toolpanel_splitter.Panel2.Controls.Add(this.tabFirstLevel);
-            this.toolpanel_splitter.Size = new System.Drawing.Size(231, 461);
+            this.toolpanel_splitter.Size = new System.Drawing.Size(241, 769);
             this.toolpanel_splitter.SplitterDistance = 25;
             this.toolpanel_splitter.TabIndex = 0;
             // 
@@ -425,18 +452,40 @@
             this.tabFirstLevel.Location = new System.Drawing.Point(0, 0);
             this.tabFirstLevel.Name = "tabFirstLevel";
             this.tabFirstLevel.SelectedIndex = 0;
-            this.tabFirstLevel.Size = new System.Drawing.Size(231, 461);
+            this.tabFirstLevel.Size = new System.Drawing.Size(241, 769);
             this.tabFirstLevel.TabIndex = 0;
             // 
             // tabOptions
             // 
+            this.tabOptions.AutoScroll = true;
+            this.tabOptions.Controls.Add(this.btnChangeBackground);
+            this.tabOptions.Controls.Add(this.numSpawnLoad);
+            this.tabOptions.Controls.Add(this.label21);
+            this.tabOptions.Controls.Add(this.cbBackgroundType);
+            this.tabOptions.Controls.Add(this.label20);
+            this.tabOptions.Controls.Add(this.label19);
+            this.tabOptions.Controls.Add(this.numSpawnTimer);
+            this.tabOptions.Controls.Add(this.numSpawnMax);
+            this.tabOptions.Controls.Add(this.label18);
+            this.tabOptions.Controls.Add(this.label17);
+            this.tabOptions.Controls.Add(this.listCritterSpawns);
+            this.tabOptions.Controls.Add(this.label16);
+            this.tabOptions.Controls.Add(this.btnRegionResize);
+            this.tabOptions.Controls.Add(this.label15);
+            this.tabOptions.Controls.Add(this.txtRegionName);
+            this.tabOptions.Controls.Add(this.cbDrawRegions);
+            this.tabOptions.Controls.Add(this.btnDeleteRegion);
+            this.tabOptions.Controls.Add(this.btnAddRegion);
+            this.tabOptions.Controls.Add(this.label14);
+            this.tabOptions.Controls.Add(this.listRegions);
+            this.tabOptions.Controls.Add(this.label13);
             this.tabOptions.Controls.Add(this.btnResetWorldPosition);
             this.tabOptions.Controls.Add(this.btnPortalExit);
             this.tabOptions.Controls.Add(this.btnPortalEntry);
             this.tabOptions.Controls.Add(this.label12);
             this.tabOptions.Controls.Add(this.label11);
             this.tabOptions.Controls.Add(this.txtPortalName);
-            this.tabOptions.Controls.Add(this.ckbShowPortals);
+            this.tabOptions.Controls.Add(this.ckbDrawPortals);
             this.tabOptions.Controls.Add(this.btnDeletePortals);
             this.tabOptions.Controls.Add(this.btnAddPortal);
             this.tabOptions.Controls.Add(this.label10);
@@ -463,10 +512,243 @@
             this.tabOptions.Location = new System.Drawing.Point(4, 22);
             this.tabOptions.Name = "tabOptions";
             this.tabOptions.Padding = new System.Windows.Forms.Padding(3);
-            this.tabOptions.Size = new System.Drawing.Size(223, 435);
+            this.tabOptions.Size = new System.Drawing.Size(233, 743);
             this.tabOptions.TabIndex = 3;
             this.tabOptions.Text = "Options";
             this.tabOptions.UseVisualStyleBackColor = true;
+            // 
+            // btnChangeBackground
+            // 
+            this.btnChangeBackground.Location = new System.Drawing.Point(109, 704);
+            this.btnChangeBackground.Name = "btnChangeBackground";
+            this.btnChangeBackground.Size = new System.Drawing.Size(100, 23);
+            this.btnChangeBackground.TabIndex = 51;
+            this.btnChangeBackground.Text = "Change";
+            this.btnChangeBackground.UseVisualStyleBackColor = true;
+            this.btnChangeBackground.Click += new System.EventHandler(this.btnChangeBackground_Click);
+            // 
+            // numSpawnLoad
+            // 
+            this.numSpawnLoad.Location = new System.Drawing.Point(85, 550);
+            this.numSpawnLoad.Maximum = new decimal(new int[] {
+            25,
+            0,
+            0,
+            0});
+            this.numSpawnLoad.Name = "numSpawnLoad";
+            this.numSpawnLoad.Size = new System.Drawing.Size(59, 20);
+            this.numSpawnLoad.TabIndex = 50;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(82, 534);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(62, 13);
+            this.label21.TabIndex = 49;
+            this.label21.Text = "Load Count";
+            // 
+            // cbBackgroundType
+            // 
+            this.cbBackgroundType.FormattingEnabled = true;
+            this.cbBackgroundType.Items.AddRange(new object[] {
+            "Solid"});
+            this.cbBackgroundType.Location = new System.Drawing.Point(14, 706);
+            this.cbBackgroundType.Name = "cbBackgroundType";
+            this.cbBackgroundType.Size = new System.Drawing.Size(89, 21);
+            this.cbBackgroundType.TabIndex = 48;
+            this.cbBackgroundType.Text = "Solid";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(10, 690);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(89, 13);
+            this.label20.TabIndex = 47;
+            this.label20.Text = "Map Background";
+            // 
+            // label19
+            // 
+            this.label19.BackColor = System.Drawing.Color.Silver;
+            this.label19.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.label19.Location = new System.Drawing.Point(36, 686);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(150, 1);
+            this.label19.TabIndex = 46;
+            // 
+            // numSpawnTimer
+            // 
+            this.numSpawnTimer.Location = new System.Drawing.Point(14, 550);
+            this.numSpawnTimer.Maximum = new decimal(new int[] {
+            1200,
+            0,
+            0,
+            0});
+            this.numSpawnTimer.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numSpawnTimer.Name = "numSpawnTimer";
+            this.numSpawnTimer.Size = new System.Drawing.Size(65, 20);
+            this.numSpawnTimer.TabIndex = 45;
+            this.numSpawnTimer.Value = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
+            // 
+            // numSpawnMax
+            // 
+            this.numSpawnMax.Location = new System.Drawing.Point(150, 550);
+            this.numSpawnMax.Maximum = new decimal(new int[] {
+            25,
+            0,
+            0,
+            0});
+            this.numSpawnMax.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numSpawnMax.Name = "numSpawnMax";
+            this.numSpawnMax.Size = new System.Drawing.Size(59, 20);
+            this.numSpawnMax.TabIndex = 44;
+            this.numSpawnMax.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(147, 534);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(62, 13);
+            this.label18.TabIndex = 43;
+            this.label18.Text = "Max Critters";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(11, 534);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(71, 13);
+            this.label17.TabIndex = 42;
+            this.label17.Text = "Timeout (sec)";
+            // 
+            // listCritterSpawns
+            // 
+            this.listCritterSpawns.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2});
+            this.listCritterSpawns.DoubleClickActivation = false;
+            this.listCritterSpawns.FullRowSelect = true;
+            this.listCritterSpawns.Location = new System.Drawing.Point(14, 576);
+            this.listCritterSpawns.Name = "listCritterSpawns";
+            this.listCritterSpawns.Size = new System.Drawing.Size(195, 103);
+            this.listCritterSpawns.TabIndex = 41;
+            this.listCritterSpawns.UseCompatibleStateImageBehavior = false;
+            this.listCritterSpawns.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Critter";
+            this.columnHeader1.Width = 130;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Spawn%";
+            // 
+            // label16
+            // 
+            this.label16.BackColor = System.Drawing.Color.Silver;
+            this.label16.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.label16.Location = new System.Drawing.Point(36, 490);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(150, 1);
+            this.label16.TabIndex = 40;
+            // 
+            // btnRegionResize
+            // 
+            this.btnRegionResize.Location = new System.Drawing.Point(165, 508);
+            this.btnRegionResize.Name = "btnRegionResize";
+            this.btnRegionResize.Size = new System.Drawing.Size(44, 23);
+            this.btnRegionResize.TabIndex = 38;
+            this.btnRegionResize.Text = "Entry";
+            this.btnRegionResize.UseVisualStyleBackColor = true;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(11, 495);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(108, 13);
+            this.label15.TabIndex = 37;
+            this.label15.Text = "Spawn Region Name";
+            // 
+            // txtRegionName
+            // 
+            this.txtRegionName.Location = new System.Drawing.Point(14, 511);
+            this.txtRegionName.Name = "txtRegionName";
+            this.txtRegionName.Size = new System.Drawing.Size(145, 20);
+            this.txtRegionName.TabIndex = 36;
+            // 
+            // cbDrawRegions
+            // 
+            this.cbDrawRegions.AutoSize = true;
+            this.cbDrawRegions.Location = new System.Drawing.Point(120, 456);
+            this.cbDrawRegions.Name = "cbDrawRegions";
+            this.cbDrawRegions.Size = new System.Drawing.Size(65, 17);
+            this.cbDrawRegions.TabIndex = 35;
+            this.cbDrawRegions.Text = "Draw All";
+            this.cbDrawRegions.UseVisualStyleBackColor = true;
+            // 
+            // btnDeleteRegion
+            // 
+            this.btnDeleteRegion.Location = new System.Drawing.Point(162, 427);
+            this.btnDeleteRegion.Name = "btnDeleteRegion";
+            this.btnDeleteRegion.Size = new System.Drawing.Size(47, 23);
+            this.btnDeleteRegion.TabIndex = 34;
+            this.btnDeleteRegion.Text = "Delete";
+            this.btnDeleteRegion.UseVisualStyleBackColor = true;
+            // 
+            // btnAddRegion
+            // 
+            this.btnAddRegion.Location = new System.Drawing.Point(120, 427);
+            this.btnAddRegion.Name = "btnAddRegion";
+            this.btnAddRegion.Size = new System.Drawing.Size(37, 23);
+            this.btnAddRegion.TabIndex = 33;
+            this.btnAddRegion.Text = "Add";
+            this.btnAddRegion.UseVisualStyleBackColor = true;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(8, 411);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(45, 13);
+            this.label14.TabIndex = 32;
+            this.label14.Text = "Spawns";
+            // 
+            // listRegions
+            // 
+            this.listRegions.FormattingEnabled = true;
+            this.listRegions.Location = new System.Drawing.Point(13, 427);
+            this.listRegions.Name = "listRegions";
+            this.listRegions.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.listRegions.Size = new System.Drawing.Size(101, 56);
+            this.listRegions.TabIndex = 31;
+            // 
+            // label13
+            // 
+            this.label13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label13.Location = new System.Drawing.Point(11, 400);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(200, 1);
+            this.label13.TabIndex = 30;
             // 
             // btnResetWorldPosition
             // 
@@ -521,15 +803,15 @@
             this.txtPortalName.Size = new System.Drawing.Size(100, 20);
             this.txtPortalName.TabIndex = 24;
             // 
-            // ckbShowPortals
+            // ckbDrawPortals
             // 
-            this.ckbShowPortals.AutoSize = true;
-            this.ckbShowPortals.Location = new System.Drawing.Point(120, 318);
-            this.ckbShowPortals.Name = "ckbShowPortals";
-            this.ckbShowPortals.Size = new System.Drawing.Size(100, 17);
-            this.ckbShowPortals.TabIndex = 23;
-            this.ckbShowPortals.Text = "Draw All Portals";
-            this.ckbShowPortals.UseVisualStyleBackColor = true;
+            this.ckbDrawPortals.AutoSize = true;
+            this.ckbDrawPortals.Location = new System.Drawing.Point(120, 318);
+            this.ckbDrawPortals.Name = "ckbDrawPortals";
+            this.ckbDrawPortals.Size = new System.Drawing.Size(65, 17);
+            this.ckbDrawPortals.TabIndex = 23;
+            this.ckbDrawPortals.Text = "Draw All";
+            this.ckbDrawPortals.UseVisualStyleBackColor = true;
             // 
             // btnDeletePortals
             // 
@@ -537,7 +819,7 @@
             this.btnDeletePortals.Name = "btnDeletePortals";
             this.btnDeletePortals.Size = new System.Drawing.Size(47, 23);
             this.btnDeletePortals.TabIndex = 22;
-            this.btnDeletePortals.Text = "Delete Selected";
+            this.btnDeletePortals.Text = "Delete";
             this.btnDeletePortals.UseVisualStyleBackColor = true;
             // 
             // btnAddPortal
@@ -744,7 +1026,7 @@
             this.tabTerrain.Location = new System.Drawing.Point(4, 22);
             this.tabTerrain.Name = "tabTerrain";
             this.tabTerrain.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTerrain.Size = new System.Drawing.Size(223, 435);
+            this.tabTerrain.Size = new System.Drawing.Size(233, 743);
             this.tabTerrain.TabIndex = 2;
             this.tabTerrain.Text = "Terrain";
             this.tabTerrain.UseVisualStyleBackColor = true;
@@ -754,7 +1036,7 @@
             this.pnlTiles.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlTiles.Location = new System.Drawing.Point(3, 24);
             this.pnlTiles.Name = "pnlTiles";
-            this.pnlTiles.Size = new System.Drawing.Size(217, 408);
+            this.pnlTiles.Size = new System.Drawing.Size(227, 716);
             this.pnlTiles.TabIndex = 1;
             // 
             // cbTileGroups
@@ -763,7 +1045,7 @@
             this.cbTileGroups.FormattingEnabled = true;
             this.cbTileGroups.Location = new System.Drawing.Point(3, 3);
             this.cbTileGroups.Name = "cbTileGroups";
-            this.cbTileGroups.Size = new System.Drawing.Size(217, 21);
+            this.cbTileGroups.Size = new System.Drawing.Size(227, 21);
             this.cbTileGroups.TabIndex = 0;
             this.cbTileGroups.SelectedIndexChanged += new System.EventHandler(this.cbTile_SelectedIndexChanged);
             // 
@@ -773,7 +1055,7 @@
             this.tabPalette.Location = new System.Drawing.Point(4, 22);
             this.tabPalette.Margin = new System.Windows.Forms.Padding(0);
             this.tabPalette.Name = "tabPalette";
-            this.tabPalette.Size = new System.Drawing.Size(223, 435);
+            this.tabPalette.Size = new System.Drawing.Size(233, 743);
             this.tabPalette.TabIndex = 1;
             this.tabPalette.Text = "Objects";
             this.tabPalette.UseVisualStyleBackColor = true;
@@ -786,7 +1068,7 @@
             this.tabObjectTools.Margin = new System.Windows.Forms.Padding(0);
             this.tabObjectTools.Name = "tabObjectTools";
             this.tabObjectTools.SelectedIndex = 0;
-            this.tabObjectTools.Size = new System.Drawing.Size(223, 435);
+            this.tabObjectTools.Size = new System.Drawing.Size(233, 743);
             this.tabObjectTools.TabIndex = 1;
             // 
             // tabObjects
@@ -795,7 +1077,7 @@
             this.tabObjects.Location = new System.Drawing.Point(4, 22);
             this.tabObjects.Margin = new System.Windows.Forms.Padding(0);
             this.tabObjects.Name = "tabObjects";
-            this.tabObjects.Size = new System.Drawing.Size(215, 409);
+            this.tabObjects.Size = new System.Drawing.Size(225, 717);
             this.tabObjects.TabIndex = 1;
             this.tabObjects.Text = "Scenary";
             this.tabObjects.UseVisualStyleBackColor = true;
@@ -818,7 +1100,7 @@
             // 
             this.obj_splitter.Panel2.Controls.Add(this.pnlObjectScenicCache);
             this.obj_splitter.Panel2.Controls.Add(this.cbScenicCacheSelector);
-            this.obj_splitter.Size = new System.Drawing.Size(215, 409);
+            this.obj_splitter.Size = new System.Drawing.Size(225, 717);
             this.obj_splitter.SplitterDistance = 30;
             this.obj_splitter.TabIndex = 0;
             // 
@@ -837,7 +1119,7 @@
             this.pnlObjectScenicCache.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlObjectScenicCache.Location = new System.Drawing.Point(0, 21);
             this.pnlObjectScenicCache.Name = "pnlObjectScenicCache";
-            this.pnlObjectScenicCache.Size = new System.Drawing.Size(215, 354);
+            this.pnlObjectScenicCache.Size = new System.Drawing.Size(225, 662);
             this.pnlObjectScenicCache.TabIndex = 1;
             // 
             // cbScenicCacheSelector
@@ -846,7 +1128,7 @@
             this.cbScenicCacheSelector.FormattingEnabled = true;
             this.cbScenicCacheSelector.Location = new System.Drawing.Point(0, 0);
             this.cbScenicCacheSelector.Name = "cbScenicCacheSelector";
-            this.cbScenicCacheSelector.Size = new System.Drawing.Size(215, 21);
+            this.cbScenicCacheSelector.Size = new System.Drawing.Size(225, 21);
             this.cbScenicCacheSelector.TabIndex = 0;
             this.cbScenicCacheSelector.SelectedIndexChanged += new System.EventHandler(this.obj_scenary_cache_CB_SelectionChangeCommitted);
             // 
@@ -855,15 +1137,21 @@
             this.timerRefresh.Interval = 50;
             this.timerRefresh.Tick += new System.EventHandler(this.timerRefresh_Tick);
             // 
-            // timer1
+            // timerRedrawAll
             // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.timerRedrawAll.Tick += new System.EventHandler(this.timerRedraw_Tick);
+            // 
+            // colorDialog
+            // 
+            this.colorDialog.AnyColor = true;
+            this.colorDialog.FullOpen = true;
+            this.colorDialog.SolidColorOnly = true;
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(897, 461);
+            this.ClientSize = new System.Drawing.Size(925, 769);
             this.Controls.Add(this.main_splitter);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainWindow";
@@ -885,6 +1173,9 @@
             this.tabFirstLevel.ResumeLayout(false);
             this.tabOptions.ResumeLayout(false);
             this.tabOptions.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numSpawnLoad)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numSpawnTimer)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numSpawnMax)).EndInit();
             this.tabTerrain.ResumeLayout(false);
             this.tabPalette.ResumeLayout(false);
             this.tabObjectTools.ResumeLayout(false);
@@ -937,7 +1228,7 @@
         internal System.Windows.Forms.ToolStripMenuItem btnItemEditor;
         internal System.Windows.Forms.ToolStripMenuItem btnEquipmentEditor;
         internal System.Windows.Forms.ToolStripMenuItem btnCritterEditor;
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer timerRedrawAll;
         internal System.Windows.Forms.ToolStripMenuItem ckbShowTileBases;
         internal System.Windows.Forms.ToolStripButton btnExport;
         internal System.Windows.Forms.ToolStripMenuItem btnSoundEditor;
@@ -973,8 +1264,32 @@
         internal System.Windows.Forms.TextBox txtPortalName;
         internal System.Windows.Forms.Button btnPortalExit;
         internal System.Windows.Forms.Button btnPortalEntry;
-        internal System.Windows.Forms.CheckBox ckbShowPortals;
+        internal System.Windows.Forms.CheckBox ckbDrawPortals;
         private System.Windows.Forms.Button btnResetWorldPosition;
+        internal System.Windows.Forms.CheckBox cbDrawRegions;
+        internal System.Windows.Forms.Button btnDeleteRegion;
+        internal System.Windows.Forms.Button btnAddRegion;
+        private System.Windows.Forms.Label label14;
+        internal System.Windows.Forms.ListBox listRegions;
+        private System.Windows.Forms.Label label13;
+        internal System.Windows.Forms.Button btnRegionResize;
+        private System.Windows.Forms.Label label15;
+        internal System.Windows.Forms.TextBox txtRegionName;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label19;
+        internal System.Windows.Forms.NumericUpDown numSpawnTimer;
+        internal System.Windows.Forms.NumericUpDown numSpawnMax;
+        internal Components.ListViewEx listCritterSpawns;
+        internal System.Windows.Forms.NumericUpDown numSpawnLoad;
+        private System.Windows.Forms.Label label21;
+        internal System.Windows.Forms.ComboBox cbBackgroundType;
+        private System.Windows.Forms.ColorDialog colorDialog;
+        private System.Windows.Forms.Button btnChangeBackground;
     }
 }
 

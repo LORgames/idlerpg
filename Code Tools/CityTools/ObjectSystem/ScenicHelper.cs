@@ -150,7 +150,7 @@ namespace CityTools.ObjectSystem {
         public static void DrawObjects(LBuffer buffer) {
             //drawList.Clear();
 
-            //TODO: Figure out what to draw again
+            //TODO: Figure out what to draw instead of just drawing everything
 
             drawList = MapPieceCache.CurrentPiece.Objects;
             drawList.Sort();

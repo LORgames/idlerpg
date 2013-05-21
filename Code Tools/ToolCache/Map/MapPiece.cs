@@ -9,6 +9,8 @@ using ToolCache.General;
 using ToolCache.Map.Objects;
 using ToolCache.Map.Tiles;
 using ToolCache.World;
+using ToolCache.Map.Regions;
+using ToolCache.Map.Background;
 
 namespace ToolCache.Map {
     public class MapPiece {
@@ -30,9 +32,12 @@ namespace ToolCache.Map {
 
         public List<BaseObject> Objects = new List<BaseObject>();
         public TileMap Tiles;
+        public List<SpawnRegion> Spawns = new List<SpawnRegion>();
 
         public Rectangle WorldRectangle;
         public string Music = "";
+
+        public IBackground Background = new SolidBackground(Color.CornflowerBlue);
         
         public MapPiece(string filename, short fillTileID) {
             Filename = filename;
@@ -81,6 +86,22 @@ namespace ToolCache.Map {
                 Objects.Add(new BaseObject(sourceID, new Point(locationX, locationY)));
             }
 
+            //Now load the critters
+            if (!f.IsEndOfFile()) {
+                int totalTerritories = f.GetShort();
+
+                while (--totalTerritories > -1) {
+                    Spawns.Add(SpawnRegion.LoadFromBinaryIO(f));
+                }
+            }
+
+            //Background information
+            if (!f.IsEndOfFile()) {
+                if ((BackgroundTypes)f.GetByte() == BackgroundTypes.Solid) {
+                    Background = new SolidBackground(f);
+                }
+            }
+
             f.Dispose();
         }
 
@@ -91,9 +112,11 @@ namespace ToolCache.Map {
             f.AddString(Name);
             f.AddString(Music);
 
+            //Some shorts for the position in the world editor
             f.AddShort((short)WorldPosition.X);
             f.AddShort((short)WorldPosition.Y);
 
+            //Save the portals
             f.AddByte((byte)Portals.Count);
             foreach (Portal p in Portals) {
                 p.Save(f);
@@ -102,7 +125,7 @@ namespace ToolCache.Map {
             //Save terrain
             Tiles.SaveMap(f);
 
-            //finally save the scenary
+            //finally save the objects
             f.AddInt(Objects.Count);
 
             foreach (BaseObject ps in Objects) {
@@ -110,6 +133,15 @@ namespace ToolCache.Map {
                 f.AddInt(ps.Location.X);
                 f.AddInt(ps.Location.Y);
             }
+
+            //Now save the critters
+            f.AddShort((short)Spawns.Count);
+            foreach (SpawnRegion spawn in Spawns) {
+                spawn.SaveToBinaryIO(f);
+            }
+
+            //Save background information
+            Background.SaveToBinary(f);
 
             f.Encode(Filename);
 

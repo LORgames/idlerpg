@@ -23,6 +23,9 @@ using System.Diagnostics;
 using System.Threading;
 using CityTools.Terrain;
 using System.Drawing.Imaging;
+using ToolCache.Map.Background;
+using CityTools.CacheInterfaces;
+using CityTools.MiscHelpers;
 
 namespace CityTools {
     public enum PaintMode {
@@ -30,7 +33,8 @@ namespace CityTools {
         Terrain,
         Objects,
         ObjectSelector,
-        Portals
+        Portals,
+        Regions
     }
 
     public partial class MainWindow : Form {
@@ -63,20 +67,27 @@ namespace CityTools {
             instance = this;
 
             InitializeComponent();
+            InitializeInterfaces();
+            InitializeDrawing();
 
-            CacheInterfaces.MapInterface.Initialize();
-            CacheInterfaces.TileInterface.Initialize();
-            CacheInterfaces.ObjectInterface.Initialize();
-            CacheInterfaces.SoundInterface.PopulateList();
-            CacheInterfaces.ToolsInterface.Initialize();
+            timerRefresh.Start();
+        }
 
+        private void InitializeDrawing() {
             drawArea = mapViewPanel.Size;
             Camera.FixViewArea(drawArea);
 
             initialized = true;
             CreateBuffers();
+        }
 
-            timerRefresh.Start();
+        private static void InitializeInterfaces() {
+            CacheInterfaces.MapInterface.Initialize();
+            CacheInterfaces.TileInterface.Initialize();
+            CacheInterfaces.ObjectInterface.Initialize();
+            CacheInterfaces.SoundInterface.PopulateList();
+            CacheInterfaces.ToolsInterface.Initialize();
+            CacheInterfaces.RegionInterface.Initialize();
         }
 
         private void CreateBuffers() {
@@ -159,7 +170,7 @@ namespace CityTools {
             mapViewPanel.Invalidate();
         }
 
-        private void drawPanel_ME_up(object sender, MouseEventArgs e) {
+        private void drawPanel_MouseUp(object sender, MouseEventArgs e) {
             if (paintMode == PaintMode.ObjectSelector) {
                 input_buffer.gfx.Clear(Color.Transparent);
                 mapViewPanel.Invalidate();
@@ -168,12 +179,14 @@ namespace CityTools {
                 mapViewPanel.Invalidate();
             } else if (paintMode == PaintMode.Portals) {
                 PortalHelper.MouseUp(e);
+            } else if (paintMode == PaintMode.Regions) {
+                RegionHelper.MouseUp(e);
             }
 
             was_mouse_down = false;
         }
 
-        private void drawPanel_ME_move(object sender, MouseEventArgs e) {
+        private void drawPanel_MouseMove(object sender, MouseEventArgs e) {
             if (ActiveForm == this) {
                 mapViewPanel.Focus();
             }
@@ -186,12 +199,14 @@ namespace CityTools {
                 TerrainHelper.MouseMoveOrDown(e, input_buffer);
             } else if (paintMode == PaintMode.Portals) {
                 PortalHelper.UpdateMouse(e, input_buffer);
+            } else if (paintMode == PaintMode.Portals) {
+                RegionHelper.UpdateMouse(e, input_buffer);
             }
 
             mapViewPanel.Invalidate();
         }
 
-        private void drawPanel_ME_down(object sender, MouseEventArgs e) {
+        private void drawPanel_MouseDown(object sender, MouseEventArgs e) {
             if (paintMode == PaintMode.Objects) {
                 ScenicPlacementHelper.MouseDown(e, input_buffer);
                 mapViewPanel.Invalidate();
@@ -201,6 +216,8 @@ namespace CityTools {
                 TerrainHelper.MouseMoveOrDown(e, input_buffer);
             } else if (paintMode == PaintMode.Portals) {
                 PortalHelper.MouseDown(e);
+            } else if (paintMode == PaintMode.Portals) {
+                RegionHelper.MouseDown(e);
             }
         }
 
@@ -212,6 +229,7 @@ namespace CityTools {
 
             TerrainHelper.DrawTerrain(terrain_buffer);
             PortalHelper.Draw(terrain_buffer);
+            RegionHelper.Draw(terrain_buffer);
             ScenicHelper.DrawObjects(objects_buffer);
         }
 
@@ -281,7 +299,7 @@ namespace CityTools {
             mapViewPanel.Invalidate();
         }
 
-        private void timer1_Tick(object sender, EventArgs e) {
+        private void timerRedraw_Tick(object sender, EventArgs e) {
             mapViewPanel.Invalidate();
         }
 
@@ -298,6 +316,23 @@ namespace CityTools {
             if (MessageBox.Show("This will move the map back to (0, 0) in the World Editor. Are you sure you want to do that?", "Warning!", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes) {
                 MapPieceCache.CurrentPiece.WorldPosition = Point.Empty;
                 MapPieceCache.CurrentPiece.Edited();
+            }
+        }
+
+        private void btnChangeBackground_Click(object sender, EventArgs e) {
+            if (cbBackgroundType.Text == "Solid") {
+                if (MapPieceCache.CurrentPiece.Background is SolidBackground) {
+                    colorDialog.Color = (MapPieceCache.CurrentPiece.Background as SolidBackground).myColour;
+                } else {
+                    colorDialog.Color = Color.CornflowerBlue;
+                }
+
+                if (colorDialog.ShowDialog() != System.Windows.Forms.DialogResult.Cancel) {
+                    MapPieceCache.CurrentPiece.Background = new SolidBackground(colorDialog.Color);
+                    MapPieceCache.CurrentPiece.Edited();
+                }
+            } else {
+                MessageBox.Show("Unknown background type!");
             }
         }
     }

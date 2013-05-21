@@ -172,5 +172,9 @@ namespace ToolCache.General {
                 in_data = null;
             }
         }
+
+        internal bool IsEndOfFile() {
+            return (seemlessReadIndex == in_data.Length);
+        }
     }
 }
