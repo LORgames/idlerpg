@@ -32,9 +32,9 @@ namespace CityTools.CacheInterfaces {
                 if (sender == MainWindow.instance.numSpawnTimer) {
                     (MainWindow.instance.listRegions.SelectedItem as SpawnRegion).Timeout = (short)MainWindow.instance.numSpawnTimer.Value;
                 } else if (sender == MainWindow.instance.numSpawnLoad) {
-                    (MainWindow.instance.listRegions.SelectedItem as SpawnRegion).SpawnOnLoad = (short)MainWindow.instance.numSpawnLoad.Value;
+                    (MainWindow.instance.listRegions.SelectedItem as SpawnRegion).SpawnOnLoad = (byte)MainWindow.instance.numSpawnLoad.Value;
                 } else if (sender == MainWindow.instance.numSpawnMax) {
-                    (MainWindow.instance.listRegions.SelectedItem as SpawnRegion).MaxSpawn = (short)MainWindow.instance.numSpawnMax.Value;
+                    (MainWindow.instance.listRegions.SelectedItem as SpawnRegion).MaxSpawn = (byte)MainWindow.instance.numSpawnMax.Value;
                 }
             }
         }
@@ -79,11 +79,11 @@ namespace CityTools.CacheInterfaces {
         }
 
         private static void UpdateRegionDrawList() {
+            RegionHelper.DrawList.Clear();
+
             if (MainWindow.instance.cbDrawRegions.Checked) {
                 RegionHelper.DrawList.AddRange(MapPieceCache.CurrentPiece.Spawns);
             } else {
-                RegionHelper.DrawList.Clear();
-
                 foreach (object p in MainWindow.instance.listRegions.SelectedItems) {
                     if (p is SpawnRegion) {
                         RegionHelper.DrawList.Add(p as SpawnRegion);
@@ -98,6 +98,7 @@ namespace CityTools.CacheInterfaces {
             }
 
             UpdateGUI();
+            UpdateRegionDrawList();
         }
 
         private static void txtRegionName_TextChanged(object sender, EventArgs e) {

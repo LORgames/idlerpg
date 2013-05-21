@@ -12,6 +12,7 @@ using ToolCache.Items;
 using ToolCache.Equipment;
 using ToolCache.Drawing;
 using System.IO;
+using ToolCache.Map.Regions;
 
 namespace CityTools {
     public partial class CritterEditor : Form {
@@ -519,6 +520,14 @@ namespace CityTools {
                         }
                     }
                 }
+            }
+        }
+
+        private void btnAddToSpawnList_Click(object sender, EventArgs e) {
+            if (MainWindow.instance.listRegions.SelectedItems.Count == 1) {
+                (MainWindow.instance.listRegions.SelectedItem as SpawnRegion).SpawnList.Add(new CritterSpawn(critter.ID));
+                CacheInterfaces.RegionInterface.UpdateGUI();
+                ToolCache.Map.MapPieceCache.CurrentPiece.Edited();
             }
         }
     }

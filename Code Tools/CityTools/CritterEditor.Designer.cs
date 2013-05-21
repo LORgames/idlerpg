@@ -47,14 +47,7 @@ namespace CityTools {
             this.btnBeastUp = new System.Windows.Forms.Button();
             this.btnBeastLeft = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
-            this.ccBeastAnimations = new CityTools.Components.AnimationList();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.listLoot = new CityTools.Components.ListViewEx();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label3 = new System.Windows.Forms.Label();
             this.btnAddLoot = new System.Windows.Forms.Button();
             this.cbItemList = new System.Windows.Forms.ComboBox();
@@ -90,6 +83,14 @@ namespace CityTools {
             this.label4 = new System.Windows.Forms.Label();
             this.txtMonsterName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.btnAddToSpawnList = new System.Windows.Forms.Button();
+            this.ccBeastAnimations = new CityTools.Components.AnimationList();
+            this.listLoot = new CityTools.Components.ListViewEx();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.txtScript = new CityTools.Components.ScriptBox();
             ((System.ComponentModel.ISupportInitialize)(this.sptFullForm)).BeginInit();
             this.sptFullForm.Panel1.SuspendLayout();
@@ -122,7 +123,7 @@ namespace CityTools {
             // 
             // sptFullForm.Panel2
             // 
-            this.sptFullForm.Panel2.Controls.Add(this.numListViewHidden);
+            this.sptFullForm.Panel2.Controls.Add(this.btnAddToSpawnList);
             this.sptFullForm.Panel2.Controls.Add(this.label15);
             this.sptFullForm.Panel2.Controls.Add(this.cbBaseGroup);
             this.sptFullForm.Panel2.Controls.Add(this.pnlBeast);
@@ -207,7 +208,7 @@ namespace CityTools {
             // 
             // numListViewHidden
             // 
-            this.numListViewHidden.Location = new System.Drawing.Point(42, 211);
+            this.numListViewHidden.Location = new System.Drawing.Point(87, 80);
             this.numListViewHidden.Name = "numListViewHidden";
             this.numListViewHidden.Size = new System.Drawing.Size(120, 20);
             this.numListViewHidden.TabIndex = 19;
@@ -385,17 +386,10 @@ namespace CityTools {
             this.label16.TabIndex = 14;
             this.label16.Text = "Non-Humanoid Controls";
             // 
-            // ccBeastAnimations
-            // 
-            this.ccBeastAnimations.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ccBeastAnimations.Location = new System.Drawing.Point(3, 52);
-            this.ccBeastAnimations.Name = "ccBeastAnimations";
-            this.ccBeastAnimations.Size = new System.Drawing.Size(218, 103);
-            this.ccBeastAnimations.TabIndex = 0;
-            // 
             // panel3
             // 
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel3.Controls.Add(this.numListViewHidden);
             this.panel3.Controls.Add(this.listLoot);
             this.panel3.Controls.Add(this.label3);
             this.panel3.Controls.Add(this.btnAddLoot);
@@ -404,55 +398,6 @@ namespace CityTools {
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(290, 309);
             this.panel3.TabIndex = 15;
-            // 
-            // listLoot
-            // 
-            this.listLoot.AllowColumnReorder = true;
-            this.listLoot.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3,
-            this.columnHeader4,
-            this.columnHeader5});
-            this.listLoot.DoubleClickActivation = false;
-            this.listLoot.FullRowSelect = true;
-            this.listLoot.GridLines = true;
-            this.listLoot.LabelEdit = true;
-            this.listLoot.Location = new System.Drawing.Point(7, 30);
-            this.listLoot.Name = "listLoot";
-            this.listLoot.Size = new System.Drawing.Size(274, 274);
-            this.listLoot.TabIndex = 8;
-            this.listLoot.UseCompatibleStateImageBehavior = false;
-            this.listLoot.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "Item";
-            this.columnHeader1.Width = 106;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Min#";
-            this.columnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.columnHeader2.Width = 40;
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Text = "Max#";
-            this.columnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.columnHeader3.Width = 44;
-            // 
-            // columnHeader4
-            // 
-            this.columnHeader4.Text = "Drop%";
-            this.columnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.columnHeader4.Width = 47;
-            // 
-            // columnHeader5
-            // 
-            this.columnHeader5.Text = "Set";
-            this.columnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.columnHeader5.Width = 32;
             // 
             // label3
             // 
@@ -837,10 +782,77 @@ namespace CityTools {
             this.label2.TabIndex = 2;
             this.label2.Text = "Name:";
             // 
-            // scriptBox1
+            // btnAddToSpawnList
+            // 
+            this.btnAddToSpawnList.Location = new System.Drawing.Point(8, 237);
+            this.btnAddToSpawnList.Name = "btnAddToSpawnList";
+            this.btnAddToSpawnList.Size = new System.Drawing.Size(185, 23);
+            this.btnAddToSpawnList.TabIndex = 19;
+            this.btnAddToSpawnList.Text = "Add To Current Spawn Region";
+            this.btnAddToSpawnList.UseVisualStyleBackColor = true;
+            this.btnAddToSpawnList.Click += new System.EventHandler(this.btnAddToSpawnList_Click);
+            // 
+            // ccBeastAnimations
+            // 
+            this.ccBeastAnimations.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ccBeastAnimations.Location = new System.Drawing.Point(3, 52);
+            this.ccBeastAnimations.Name = "ccBeastAnimations";
+            this.ccBeastAnimations.Size = new System.Drawing.Size(218, 103);
+            this.ccBeastAnimations.TabIndex = 0;
+            // 
+            // listLoot
+            // 
+            this.listLoot.AllowColumnReorder = true;
+            this.listLoot.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3,
+            this.columnHeader4,
+            this.columnHeader5});
+            this.listLoot.DoubleClickActivation = false;
+            this.listLoot.FullRowSelect = true;
+            this.listLoot.GridLines = true;
+            this.listLoot.LabelEdit = true;
+            this.listLoot.Location = new System.Drawing.Point(7, 30);
+            this.listLoot.Name = "listLoot";
+            this.listLoot.Size = new System.Drawing.Size(274, 274);
+            this.listLoot.TabIndex = 8;
+            this.listLoot.UseCompatibleStateImageBehavior = false;
+            this.listLoot.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Item";
+            this.columnHeader1.Width = 106;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Min#";
+            this.columnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.columnHeader2.Width = 40;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Max#";
+            this.columnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.columnHeader3.Width = 44;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Drop%";
+            this.columnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.columnHeader4.Width = 47;
+            // 
+            // columnHeader5
+            // 
+            this.columnHeader5.Text = "Set";
+            this.columnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.columnHeader5.Width = 32;
+            // 
+            // txtScript
             // 
             this.txtScript.Location = new System.Drawing.Point(3, 25);
-            this.txtScript.Name = "scriptBox1";
+            this.txtScript.Name = "txtScript";
             this.txtScript.Script = "";
             this.txtScript.ScriptType = ToolCache.Scripting.ScriptTypes.Unknown;
             this.txtScript.Size = new System.Drawing.Size(289, 225);
@@ -949,5 +961,6 @@ namespace CityTools {
         private System.Windows.Forms.NumericUpDown numBeastFPS;
         private System.Windows.Forms.NumericUpDown numListViewHidden;
         private ScriptBox txtScript;
+        private System.Windows.Forms.Button btnAddToSpawnList;
     }
 }

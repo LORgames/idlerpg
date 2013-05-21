@@ -11,8 +11,8 @@ namespace ToolCache.Map.Regions {
         public List<CritterSpawn> SpawnList = new List<CritterSpawn>();
         public string Name = "Unnamed Spawn";
 
-        public short SpawnOnLoad = 1;
-        public short MaxSpawn = 10;
+        public byte SpawnOnLoad = 1;
+        public byte MaxSpawn = 10;
         public short Timeout = 60;
 
         public static SpawnRegion LoadFromBinaryIO(BinaryIO f) {
@@ -20,9 +20,11 @@ namespace ToolCache.Map.Regions {
 
             s.Name = f.GetString();
 
-            s.SpawnOnLoad = f.GetShort();
-            s.MaxSpawn = f.GetShort();
+            s.SpawnOnLoad = f.GetByte();
+            s.MaxSpawn = f.GetByte();
             s.Timeout = f.GetShort();
+
+            f.GetByte(); //How many rectangles
 
             s.Area.X = f.GetShort();
             s.Area.Y = f.GetShort();
@@ -41,9 +43,11 @@ namespace ToolCache.Map.Regions {
         public void SaveToBinaryIO(BinaryIO f) {
             f.AddString(Name);
 
-            f.AddShort(SpawnOnLoad);
-            f.AddShort(MaxSpawn);
+            f.AddByte(SpawnOnLoad);
+            f.AddByte(MaxSpawn);
             f.AddShort(Timeout);
+
+            f.AddByte(1); //How many rectangles?
 
             f.AddShort((short)Area.X);
             f.AddShort((short)Area.Y);
