@@ -63,7 +63,13 @@ namespace CityTools.CacheInterfaces {
         }
 
         private static void UpdateSpawnList() {
-            
+            MainWindow.instance.listCritterSpawns.Items.Clear();
+
+            if (MainWindow.instance.listRegions.SelectedItems.Count == 1) {
+                foreach (CritterSpawn spawn in (MainWindow.instance.listRegions.SelectedItem as SpawnRegion).SpawnList) {
+                    MainWindow.instance.listCritterSpawns.Items.Add(spawn.GetListViewItem());
+                }
+            }
         }
 
         internal static void UpdateRegionList() {
