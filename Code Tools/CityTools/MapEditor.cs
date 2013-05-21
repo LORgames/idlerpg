@@ -199,7 +199,7 @@ namespace CityTools {
                 TerrainHelper.MouseMoveOrDown(e, input_buffer);
             } else if (paintMode == PaintMode.Portals) {
                 PortalHelper.UpdateMouse(e, input_buffer);
-            } else if (paintMode == PaintMode.Portals) {
+            } else if (paintMode == PaintMode.Regions) {
                 RegionHelper.UpdateMouse(e, input_buffer);
             }
 
@@ -216,7 +216,7 @@ namespace CityTools {
                 TerrainHelper.MouseMoveOrDown(e, input_buffer);
             } else if (paintMode == PaintMode.Portals) {
                 PortalHelper.MouseDown(e);
-            } else if (paintMode == PaintMode.Portals) {
+            } else if (paintMode == PaintMode.Regions) {
                 RegionHelper.MouseDown(e);
             }
         }

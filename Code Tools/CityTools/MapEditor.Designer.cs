@@ -74,9 +74,6 @@
             this.numSpawnMax = new System.Windows.Forms.NumericUpDown();
             this.label18 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
-            this.listCritterSpawns = new CityTools.Components.ListViewEx();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label16 = new System.Windows.Forms.Label();
             this.btnRegionResize = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
@@ -130,6 +127,9 @@
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.timerRedrawAll = new System.Windows.Forms.Timer(this.components);
             this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.listCritterSpawns = new CityTools.Components.ListViewEx();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.main_splitter)).BeginInit();
             this.main_splitter.Panel1.SuspendLayout();
             this.main_splitter.Panel2.SuspendLayout();
@@ -639,29 +639,6 @@
             this.label17.TabIndex = 42;
             this.label17.Text = "Timeout (sec)";
             // 
-            // listCritterSpawns
-            // 
-            this.listCritterSpawns.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2});
-            this.listCritterSpawns.DoubleClickActivation = false;
-            this.listCritterSpawns.FullRowSelect = true;
-            this.listCritterSpawns.Location = new System.Drawing.Point(14, 576);
-            this.listCritterSpawns.Name = "listCritterSpawns";
-            this.listCritterSpawns.Size = new System.Drawing.Size(195, 103);
-            this.listCritterSpawns.TabIndex = 41;
-            this.listCritterSpawns.UseCompatibleStateImageBehavior = false;
-            this.listCritterSpawns.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "Critter";
-            this.columnHeader1.Width = 130;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Spawn%";
-            // 
             // label16
             // 
             this.label16.BackColor = System.Drawing.Color.Silver;
@@ -673,11 +650,11 @@
             // 
             // btnRegionResize
             // 
-            this.btnRegionResize.Location = new System.Drawing.Point(165, 508);
+            this.btnRegionResize.Location = new System.Drawing.Point(150, 508);
             this.btnRegionResize.Name = "btnRegionResize";
-            this.btnRegionResize.Size = new System.Drawing.Size(44, 23);
+            this.btnRegionResize.Size = new System.Drawing.Size(59, 23);
             this.btnRegionResize.TabIndex = 38;
-            this.btnRegionResize.Text = "Entry";
+            this.btnRegionResize.Text = "Resize";
             this.btnRegionResize.UseVisualStyleBackColor = true;
             // 
             // label15
@@ -693,7 +670,7 @@
             // 
             this.txtRegionName.Location = new System.Drawing.Point(14, 511);
             this.txtRegionName.Name = "txtRegionName";
-            this.txtRegionName.Size = new System.Drawing.Size(145, 20);
+            this.txtRegionName.Size = new System.Drawing.Size(130, 20);
             this.txtRegionName.TabIndex = 36;
             // 
             // cbDrawRegions
@@ -1146,6 +1123,30 @@
             this.colorDialog.AnyColor = true;
             this.colorDialog.FullOpen = true;
             this.colorDialog.SolidColorOnly = true;
+            // 
+            // listCritterSpawns
+            // 
+            this.listCritterSpawns.AllowColumnReorder = true;
+            this.listCritterSpawns.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2});
+            this.listCritterSpawns.DoubleClickActivation = false;
+            this.listCritterSpawns.FullRowSelect = true;
+            this.listCritterSpawns.Location = new System.Drawing.Point(14, 576);
+            this.listCritterSpawns.Name = "listCritterSpawns";
+            this.listCritterSpawns.Size = new System.Drawing.Size(195, 103);
+            this.listCritterSpawns.TabIndex = 41;
+            this.listCritterSpawns.UseCompatibleStateImageBehavior = false;
+            this.listCritterSpawns.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Critter";
+            this.columnHeader1.Width = 130;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Spawn%";
             // 
             // MainWindow
             // 

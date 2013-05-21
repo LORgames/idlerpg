@@ -157,18 +157,18 @@
   <data name="btnDuplicate.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJ6SURBVDhPfZLNTxNRFMVZqvG/ceMOQyh+JSSAFDfGRBMX
-        xpgQi6HxoyiNsMUimqCJW9mYKBstSoB+QFtKCygpLU/SUtqZAu3Mo8XOTOd431DYFDzJyVvMfb+597zb
-        1OYMTnS7I9GeoQizDy8khXuGFpLtg6HYpX7/w+bb02ea/qcb7lBM1/WkxHUmk/OqzjIFjWVUjQ15Zdbl
-        Xnp/4d6Xc/XyRtlfhdcLdNGfOvRsqsomVzjjVZ350hrz/Ciwy8/mBurljeoYXEiWCBBJkzMCorGpBGcp
-        ibMC1xj/q7M7bxZT9fJGCYBCgGW6HCcLkI+6+DAnY2x6G6+9W5YffIyX747HKrdGw+stTt/zi72fzh4D
-        VAKs0mVhAQlRF2M/szABSLwGmZxXDWSKGnKqhmGvjG539Gvz/YnzxyMcAYTFKB76627ZhJ8ZCG7qoGww
-        uVIGr5qgbOCZ2cGVJ7Oe4xESks6S8uEpIKLtUsXEYtrAYsbA/B8NU4kDbEhlUDagbNDlGjMtgHiFkwDK
-        gYnlrIH4lgHKBr6NKrxrFXyOc2zRODdd7wjgirCMUmgAjBBAPQB+5UzL8WwNoU0NPla1OsmpNfQIQPvT
-        4IroIK/Q8pQ0Jim0ULRMI99pBAsA/M7VsLpdQ4w6CWdEHhry3IRdAK45A9+uO+ejNkdgo/VRYPXIne4Q
-        jQAkJCApH55rBFvOAuE0rG/drrem9ZQnqXMwou+V9VMBxYpOAOrgNHW9XEJOKZ4KyKtF2F9EUS9v1NX+
-        4O4ON0DZIFfSQNmAsrFcIO/t19A8MF2tlzeqpXdupqUvsG3rGzVtjiC3OebJ4gzytj7/fqtjNt/xOKT8
-        Ax1noa9jyww0AAAAAElFTkSuQmCC
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJ5SURBVDhPfZLNTxNRFMVZqvG/ceMOQyh+JSSAFDfGRBMX
+        xpgQi6HxoyiNsMUCGzVxKxsTZaNFCdAPaEtpASWl5UlaSjtToJ15tLUz0zneNxQ2BU9y8hZz32/uPe+2
+        dDiDU73uSLRvJMLso0tJ4b6RpWTncCh2ZdD/uPXu7LmW/+mWOxTTdT0pcZ3J5Lyqs0xBYxlVYyNemfW4
+        V95fevDlQqO8WfY34c0CXfSnjjyfqrHpNc54TWe+tMY8Pwrs6ouFoUZ5s7qGl5IlAkTS5IyAaGwmwVlK
+        4qzANcb/6uzexHKqUd4sAVAIsEqX42QB8lEXHxZkTM7u4q13x/Kjj/Hy/Xexyp3x8Gab0/fycv+n8ycA
+        lQDrdFlYQELUxeTPLEwAEq9DJudVA5mihpyqYdQro9cd/dr6cOriyQjHAGExiof+ul824WcGgts6KBtM
+        r5XBayYoG3jm9nDt2bznZISEpLOkfHQKiGi7VDGxnDawnDGw+EfDTKKKLakMygaUDXpcHtMCiFc4DaBU
+        TaxmDcR3DFA28G3V4N2o4HOcY4fGue2aIIArwjJKoQkwRgC1CvzKmZbj2TpC2xp8rGZ1klPr6BOAzufB
+        NdFBXqHlKWlMUmihaJnGvtMIFgD4natjfbeOGHUSzog8NOS5CbsA3HAGvt10LkZtjsBW+5PA+rG73SEa
+        AUhIQFI+OjcItpoFwmlY33pd46b1lKepeziiH5T1MwHFik4A6uAs9bxeQU4pngnIq0XYX0XRKG/W9cHg
+        /h43QNkgV9JA2YCysVwgHxzW0To0W2uUN6utf2GubSCwaxsYM22OILc5FsniDPKOAf9hu2M+3/U0pPwD
+        A8ahmns98D0AAAAASUVORK5CYII=
 </value>
   </data>
   <data name="btnSavePiece.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

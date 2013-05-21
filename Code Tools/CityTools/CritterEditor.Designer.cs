@@ -1,4 +1,5 @@
-﻿namespace CityTools {
+﻿using CityTools.Components;
+namespace CityTools {
     partial class CritterEditor {
         /// <summary>
         /// Required designer variable.
@@ -75,7 +76,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label14 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.txtScript = new Components.ScriptBox();
             this.listGroups = new System.Windows.Forms.ListBox();
             this.btnAddGroup = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
@@ -90,6 +90,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtMonsterName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.txtScript = new CityTools.Components.ScriptBox();
             ((System.ComponentModel.ISupportInitialize)(this.sptFullForm)).BeginInit();
             this.sptFullForm.Panel1.SuspendLayout();
             this.sptFullForm.Panel2.SuspendLayout();
@@ -645,9 +646,9 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.txtScript);
             this.panel1.Controls.Add(this.label14);
             this.panel1.Controls.Add(this.label7);
-            this.panel1.Controls.Add(this.txtScript);
             this.panel1.Controls.Add(this.listGroups);
             this.panel1.Controls.Add(this.btnAddGroup);
             this.panel1.Controls.Add(this.label6);
@@ -677,14 +678,6 @@
             this.label7.Size = new System.Drawing.Size(41, 13);
             this.label7.TabIndex = 7;
             this.label7.Text = "Groups";
-            // 
-            // txtScript
-            // 
-            this.txtScript.Location = new System.Drawing.Point(3, 24);
-            this.txtScript.Name = "txtScript";
-            this.txtScript.Size = new System.Drawing.Size(289, 226);
-            this.txtScript.TabIndex = 17;
-            this.txtScript.TextChanged += new System.EventHandler(this.ValueChanged);
             // 
             // listGroups
             // 
@@ -844,6 +837,15 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "Name:";
             // 
+            // scriptBox1
+            // 
+            this.txtScript.Location = new System.Drawing.Point(3, 25);
+            this.txtScript.Name = "scriptBox1";
+            this.txtScript.Script = "";
+            this.txtScript.ScriptType = ToolCache.Scripting.ScriptTypes.Unknown;
+            this.txtScript.Size = new System.Drawing.Size(289, 225);
+            this.txtScript.TabIndex = 19;
+            // 
             // CritterEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -932,7 +934,6 @@
         private System.Windows.Forms.ComboBox cbHumanoidShadow;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label14;
-        private Components.ScriptBox txtScript;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.ComboBox cbBaseGroup;
         private System.Windows.Forms.Label label16;
@@ -947,5 +948,6 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.NumericUpDown numBeastFPS;
         private System.Windows.Forms.NumericUpDown numListViewHidden;
+        private ScriptBox txtScript;
     }
 }

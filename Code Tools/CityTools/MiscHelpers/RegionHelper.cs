@@ -41,6 +41,7 @@ namespace CityTools.MiscHelpers {
                 selectedRegion.Area.Location = p0a;
                 selectedRegion.Area.Width = p1a.X - p0a.X;
                 selectedRegion.Area.Height = p1a.Y - p0a.Y;
+
                 MapPieceCache.CurrentPiece.Edited();
             }
 

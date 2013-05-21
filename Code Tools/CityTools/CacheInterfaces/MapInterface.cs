@@ -46,8 +46,10 @@ namespace CityTools.CacheInterfaces {
 
             //Update the music
             MainWindow.instance.cbMapMusic.Text = MapPieceCache.CurrentPiece.Music;
-
+            
+            PortalInterface.UpdatePortalList();
             PortalInterface.UpdateGUI();
+            RegionInterface.UpdateGUI();
         }
 
         private static void mapSize_TextChanged(object sender, EventArgs e) {
@@ -91,13 +93,11 @@ namespace CityTools.CacheInterfaces {
             MapPieceCache.ChangeCurrentPiece(newPiece);
 
             UpdateGUI();
-            PortalInterface.UpdatePortalList();
         }
 
         internal static void NewPiece() {
             MapPieceCache.CreateNew(34); //Blank tile
             UpdateGUI();
-            PortalInterface.UpdatePortalList();
         }
 
         internal static void Save() {
@@ -113,7 +113,6 @@ namespace CityTools.CacheInterfaces {
             }
 
             UpdateGUI();
-            PortalInterface.UpdatePortalList();
         }
 
         internal static void Duplicate() {
