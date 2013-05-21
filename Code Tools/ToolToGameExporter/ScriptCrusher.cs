@@ -8,53 +8,36 @@ using ToolCache.Equipment;
 namespace ToolToGameExporter {
     public class ScriptCrusher {
 
-        internal static void ProcessScript(string scriptname, string s, BinaryIO f, List<string> snippets = null) {
-            if (s.Length == 0 && snippets == null) {
-                f.AddUnsignedShort(0xF0FF);
-                return;
-            }
-
-            //Storage for snippets
-            bool isSnippet = true;
-            if (snippets == null) {
-                snippets = new List<string>();
-                isSnippet = false;
-            }
+        internal static void ProcessScript(string scriptname, string script, BinaryIO f) {
+            //Some variables
+            int i = 0;
 
             ///////////////////////////////////////////////////////////////////////////////////
             /////// PRECOMPILER
             ///////////////////////////////////////////////////////////////////////////////////
+            
+            //Strip \r characters from the script
+            script = script.Replace("\r", "");
 
-            //Check for balanced brackets in s
-            if (s.Count(c => c == '(') != s.Count(c => c == ')')) {
-                Error("Unbalanced brackets. Cannot generate snippets.", scriptname, f);
-                return;
-            }
+            //Count the total events
+            List<string> commands = script.Split('\n').ToList<string>(); //Each line is a new command
 
-            List<int> nextIndex = new List<int>();
+            for (i = 0; i < commands.Count; i++) {
+                string trimmedCommand = commands[i].TrimStart('\t');
 
-            while (s.Contains('(')) {
-                int nextOpen = s.IndexOf('(');
-                int nextClose = s.IndexOf(')');
-                
-                int open1UP = s.IndexOf('(', nextOpen+1);
+                if (trimmedCommand.Length < 2) {
+                    commands.RemoveAt(i);
+                    i--;
+                    continue;
+                }
 
-                if (open1UP < nextClose && open1UP != -1) {
-                    nextIndex.Add(nextOpen);
-                } else {
-                    //Get the little snippet, needs a +1 to get the close bracket
-                    string snippet = s.Substring(nextOpen, nextClose-nextOpen+1);
+                int indentLevel = commands[i].Length - trimmedCommand.Length;
 
-                    //Remove the snippet from the script and replace it with the snippet block
-                    //  => gets recompiled back in later by the compiler
-
-                    int snippetID = snippets.Count;
-                    s = s.Replace(snippet, "snippet " + snippetID + ";");
-
-                    //Just trim the snippet to remove the brackets
-                    snippet = snippet.Substring(1, snippet.Length - 2);
-
-                    snippets.Add(snippet);
+                if (indentLevel == 0) {
+                    if (!ToolCache.Scripting.ValidEventList.ValidEvents.Contains(commands[i].Trim())) {
+                        Error("Invalid event: " + commands[i].Trim(), scriptname, f);
+                        return;
+                    }
                 }
             }
 
@@ -62,9 +45,7 @@ namespace ToolToGameExporter {
             /////// COMPILER
             ///////////////////////////////////////////////////////////////////////////////////
 
-            string[] commands = s.Split(';'); //Outdated, will need a better way to do this...
-
-            for(int i = 0; i < commands.Length; i++) {
+            for(i = 0; i < commands.Count; i++) {
                 //Get the next command?
                 string command = commands[i];
 
@@ -73,51 +54,42 @@ namespace ToolToGameExporter {
                 if (command.Length < 2) continue;
 
                 //Figure out what I was trying to do...
-                string action = command.Substring(0, command.IndexOf(' '));
-                string paras = command.Substring(command.IndexOf(' ')+1);
+                string action; string parameters;
+
+                if (command.IndexOf(' ') > -1) {
+                    action = command.Substring(0, command.IndexOf(' '));
+                    parameters = command.Substring(command.IndexOf(' ') + 1);
+                } else {
+                    action = command;
+                    parameters = "";
+                }
 
                 switch(action) {
                     case "playsound":
-                        if (SoundCrusher.EffectConversions.ContainsKey(paras)) {
+                        if (SoundCrusher.EffectConversions.ContainsKey(parameters)) {
                             f.AddUnsignedShort(0x0001);
-                            f.AddShort(SoundCrusher.EffectConversions[paras]);
+                            f.AddShort(SoundCrusher.EffectConversions[parameters]);
                         } else {
-                            Error("Cannot find sound effect: '" + paras + "'", scriptname, f);
+                            Error("Cannot find sound effect: '" + parameters + "'", scriptname, f);
                         } break;
                     case "equip":
-                        if (EquipmentManager.Equipment.ContainsKey(paras)) {
+                        if (EquipmentManager.Equipment.ContainsKey(parameters)) {
                             f.AddUnsignedShort(0x3001);
-                            f.AddShort((short)Array.IndexOf(EquipmentCrusher.equipmenttypes, EquipmentManager.Equipment[paras].Type));
-                            f.AddShort(EquipmentCrusher.MappedEquipmentIDs[paras]);
+                            f.AddShort((short)Array.IndexOf(EquipmentCrusher.equipmenttypes, EquipmentManager.Equipment[parameters].Type));
+                            f.AddShort(EquipmentCrusher.MappedEquipmentIDs[parameters]);
                         } else {
-                            Error("Cannot find equipment item: '" + paras + "'", scriptname, f);
+                            Error("Cannot find equipment item: '" + parameters + "'", scriptname, f);
                         } break;
-                    case "snippet":
-                        int snippetID;
-                        if (int.TryParse(paras, out snippetID)) {
-                            if (snippets.Count > snippetID) {
-                                ProcessScript(scriptname + ":Snippet:" + snippetID, snippets[snippetID], f, snippets);
-                            } else {
-                                Error("There are not that many snippets available.", scriptname, f);
-                            }
-                        } else {
-                            Error("Cannot parse snippet UUID: " + paras, scriptname, f);
-                        }
-                        break;
                     default:
                         Error("Unknown command: " + command, scriptname, f);
                         break;
                 }
             }
-
-            //End the script loader
-            if(!isSnippet) f.AddUnsignedShort(0xF0FF);
         }
 
         private static void Error(string message, string scriptname, BinaryIO f) {
             Processor.Errors.Add("Script:" + scriptname + " " + message);
             f.AddUnsignedShort(0x0000);
         }
-
     }
 }

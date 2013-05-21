@@ -27,8 +27,13 @@ namespace ToolToGameExporter {
                 PortalCrusher.Go();
 
                 //Tier 1 Crushing. Tier 0 Dependancies
-                MapCrusher.Go(); //Requires Portals, Tiles, Sounds and Objects.
                 EquipmentCrusher.Go(); //Requires Sounds.
+                
+                //Tier 2 Crushing. Tier 1 Dependancies
+                CritterCrusher.Go(); //Requires Equipment
+
+                //Tier 3 Crushing. Tier 2 Depedancies
+                MapCrusher.Go(); //Requires Portals, Tiles, Sounds and Objects. + Critters
 
                 if (Directory.Exists(p)) {
                     Directory.Delete(p, true);
