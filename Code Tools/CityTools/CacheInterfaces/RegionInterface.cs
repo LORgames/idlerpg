@@ -59,11 +59,7 @@ namespace CityTools.CacheInterfaces {
                 MainWindow.instance.numSpawnTimer.Value = (MainWindow.instance.listRegions.SelectedItem as SpawnRegion).Timeout;
 
                 UpdateSpawnList();
-
-                MapPieceCache.CurrentPiece.Edited();
             }
-
-            RegionInterface.UpdateRegionList();
         }
 
         private static void UpdateSpawnList() {
@@ -77,6 +73,9 @@ namespace CityTools.CacheInterfaces {
             foreach (SpawnRegion p in MapPieceCache.CurrentPiece.Spawns) {
                 MainWindow.instance.listRegions.Items.Add(p);
             }
+
+            UpdateRegionDrawList();
+            UpdateGUI();
         }
 
         private static void UpdateRegionDrawList() {

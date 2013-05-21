@@ -297,6 +297,8 @@ namespace CityTools {
 
                 buffer.gfx.DrawImage(portalIcon, PortalRect);
             }
+
+            buffer.gfx.DrawString(myPiece.Name, new Font(FontFamily.GenericSerif, 10, FontStyle.Bold), Brushes.White, ScrolledAABB);
         }
 
         public void Dispose() {

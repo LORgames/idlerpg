@@ -49,6 +49,8 @@ namespace CityTools.CacheInterfaces {
             
             PortalInterface.UpdatePortalList();
             PortalInterface.UpdateGUI();
+
+            RegionInterface.UpdateRegionList();
             RegionInterface.UpdateGUI();
         }
 
