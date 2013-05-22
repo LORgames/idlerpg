@@ -77,5 +77,15 @@ namespace ToolCache.Sound {
 
             f.Encode(FILENAME);
         }
+
+        internal static bool HasEffect(string EffectName) {
+            foreach (SoundData sound in Effects) {
+                if (sound.Name == EffectName) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

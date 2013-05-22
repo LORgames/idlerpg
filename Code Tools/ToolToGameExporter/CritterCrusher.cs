@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ToolCache.Critters;
 using ToolCache.General;
+using ToolCache.Scripting;
 
 namespace ToolToGameExporter {
     public class CritterCrusher {
@@ -24,7 +25,7 @@ namespace ToolToGameExporter {
                 f.AddInt(c.ExperienceGain);
                 f.AddInt(c.Health);
 
-                ScriptCrusher.ProcessScript("Critter:" + c.Name + ":AI", c.AICommands, f);
+                ScriptCrusher.ProcessScript(new ScriptInfo("Critter:AI:" + c.Name, ScriptTypes.Critter), c.AICommands, f);
 
                 if (c.CritterType == CritterTypes.Humanoid) {
                     CritterHuman ch = (c as CritterHuman);

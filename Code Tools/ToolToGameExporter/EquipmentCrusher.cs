@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
 using ToolCache.Animation;
+using ToolCache.Scripting;
 
 namespace ToolToGameExporter {
     internal class EquipmentCrusher {
@@ -61,7 +62,7 @@ namespace ToolToGameExporter {
                     }
 
                     //Even if the script is empty, need to add the "end of script" tag
-                    ScriptCrusher.ProcessScript("Equipment:" + ei.Name, ei.OnAttackScript, f);
+                    ScriptCrusher.ProcessScript(new ScriptInfo("Equipment:" + ei.Name, ScriptTypes.Equipment), ei.OnAttackScript, f);
 
                     int rows, cols;
                     Size size = GetSizeOf(ei, out rows, out cols);

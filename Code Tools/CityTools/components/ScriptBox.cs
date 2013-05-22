@@ -46,7 +46,16 @@ namespace CityTools.Components {
         }
 
         private void btnParse_Click(object sender, EventArgs e) {
-            MessageBox.Show(Parser.Parse(Script, ScriptType));
+            ScriptInfo info = new ScriptInfo("IParseString", ScriptType);
+            Parser.Parse(Script, info);
+
+            string errors = String.Format("Errors {0}:\n", info.Errors.Count);
+
+            foreach (String s in info.Errors) {
+                errors += "\n" + s;
+            }
+
+            MessageBox.Show(errors);
         }
 
         private void txtScript_TextChanged(object sender, EventArgs e) {

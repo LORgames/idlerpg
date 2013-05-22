@@ -87,6 +87,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Scripting\Parser.cs" />
+    <Compile Include="Scripting\ScriptCommand.cs" />
+    <Compile Include="Scripting\ScriptInfo.cs" />
     <Compile Include="Scripting\ScriptTypes.cs" />
     <Compile Include="Scripting\ValidEventList.cs" />
     <Compile Include="Sound\SoundData.cs" />
@@ -102,6 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Combat\Effects\" />
+    <Folder Include="ExportCrushers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

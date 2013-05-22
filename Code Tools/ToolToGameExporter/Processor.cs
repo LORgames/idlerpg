@@ -8,7 +8,7 @@ using System.Windows.Forms;
 namespace ToolToGameExporter {
     public class Processor {
 
-        public static List<String> Errors = new List<string>();
+        public static List<ProcessingError> Errors = new List<ProcessingError>();
 
         public static bool Go(string p, bool silent = false) {
             Errors.Clear();
@@ -40,18 +40,16 @@ namespace ToolToGameExporter {
                 }
                 
                 Directory.Move(Global.EXPORT_DIRECTORY, p);
-                
-                if(!silent) MessageBox.Show("Exported To The Data Folder");
-                
-                string ss = "";
-                
-                foreach (String error in Errors) {
-                    ss += error + "\n";
+
+                if (Errors.Count == 0) {
+                    FinishedDisplay fd = new FinishedDisplay("Exported To Data Folder", Errors);
+                    fd.ShowDialog();
+                    return true;
+                } else {
+                    FinishedDisplay fd = new FinishedDisplay("Did not export successfully. Errors:", Errors);
+                    fd.ShowDialog();
+                    return false;
                 }
-                
-                if(ss != "") MessageBox.Show(ss);
-                
-                return true;
             /*} catch {
                 if(!silent) MessageBox.Show("Please close the exporter and try again! (Some kind of caching issue occurred)");
 
