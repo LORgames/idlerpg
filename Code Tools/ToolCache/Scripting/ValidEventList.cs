@@ -10,7 +10,10 @@ namespace ToolCache.Scripting {
             "ModifyAttack",
             "ModifyDamage",
             "Spawn",
-            "Attacked"
+            "Attacked",
+            "Use",
+            "Equip",
+            "MinionDied"
         };
     }
 }

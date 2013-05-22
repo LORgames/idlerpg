@@ -89,5 +89,15 @@ namespace ToolCache.Critters {
                 }
             }
         }
+
+        internal static bool HasCritter(string CritterName) {
+            foreach (Critter c in Critters.Values) {
+                if (c.Name == CritterName) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

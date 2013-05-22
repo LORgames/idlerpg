@@ -42,8 +42,9 @@ namespace ToolToGameExporter {
                 Directory.Move(Global.EXPORT_DIRECTORY, p);
 
                 if (Errors.Count == 0) {
-                    FinishedDisplay fd = new FinishedDisplay("Exported To Data Folder", Errors);
-                    fd.ShowDialog();
+                    if (!silent) {
+                        MessageBox.Show("Exported To Data Folder");
+                    }
                     return true;
                 } else {
                     FinishedDisplay fd = new FinishedDisplay("Did not export successfully. Errors:", Errors);

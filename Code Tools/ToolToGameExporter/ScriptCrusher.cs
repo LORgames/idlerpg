@@ -14,7 +14,11 @@ namespace ToolToGameExporter {
             /////// PRECOMPILER
             ///////////////////////////////////////////////////////////////////////////////////
 
-            List<ScriptCommand> Commands = Parser.CleanAndDivideScript(script, info);
+            Parser.CleanAndDivideScript(script, info);
+
+            if (info.Errors.Count > 0) {
+                return;
+            }
 
             ///////////////////////////////////////////////////////////////////////////////////
             /////// COMPILER
@@ -22,15 +26,16 @@ namespace ToolToGameExporter {
 
             int expectedIndentation = 0;
 
-            for(int i = 0; i < Commands.Count; i++) {
+            for(int i = 0; i < info.Commands.Count; i++) {
                 //Get the next command?
-                ScriptCommand command = Commands[i];
+                ScriptCommand command = info.Commands[i];
 
                 if (command.Indent > expectedIndentation) {
                     info.Errors.Add("Unexpected Indentation.");
                 } else if (command.Indent < expectedIndentation) {
                     while (expectedIndentation > command.Indent) {
                         f.AddUnsignedShort(0xF0FE);
+                        expectedIndentation--;
                     }
                 }
 

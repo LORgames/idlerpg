@@ -11,43 +11,30 @@ namespace ToolCache.Scripting {
                 info.Errors.Add("Script type is unknown!");
                 return;
             }
+
+            CleanAndDivideScript(script, info);
         }
 
-        public static List<ScriptCommand> CleanAndDivideScript(string script, ScriptInfo scriptInfo) {
+        public static void CleanAndDivideScript(string script, ScriptInfo scriptInfo) {
             int i = 0;
 
             //Strip \r characters from the script
             script = script.Replace("\r", "");
 
             //Count the total events
-            List<ScriptCommand> Commands = new List<ScriptCommand>();
-            
             List<string> lines = script.Split('\n').ToList<string>(); //Each line is a new command
 
             for (i = 0; i < lines.Count; i++) {
                 ScriptCommand Command = new ScriptCommand(lines[i], scriptInfo);
 
                 if (Command.Trimmed.Length > 2) {
-                    Commands.Add(Command);
+                    scriptInfo.Commands.Add(Command);
                 }
             }
 
-            return Commands;
-        }
-
-        public static int GetEventCountAndFlags(List<ScriptCommand> Commands, ScriptInfo scriptInfo, out int flags) {
-            int count = 0;
-            flags = 0;
-
-            for (int i = 0; i < Commands.Count; i++) {
-                
+            foreach (ScriptCommand comm in scriptInfo.Commands) {
+                comm.Parse(scriptInfo);
             }
-
-            return count;
-        }
-
-        public static void Error(string error, ScriptInfo info) {
-            info.Errors.Add(error);
         }
 
     }
