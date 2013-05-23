@@ -16,6 +16,8 @@ namespace ToolToGameExporter {
             short nextID = 0;
             BinaryIO f = new BinaryIO();
 
+            f.AddShort((short)CritterManager.Critters.Count);
+
             foreach (Critter c in CritterManager.Critters.Values) {
                 f.AddByte((byte)c.CritterType);
                 f.AddString(c.Name);

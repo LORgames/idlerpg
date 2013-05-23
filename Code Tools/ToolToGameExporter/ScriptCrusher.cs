@@ -60,6 +60,11 @@ namespace ToolToGameExporter {
                 }
             }
 
+            while (expectedIndentation > 0) {
+                f.AddUnsignedShort(0xF0FE); //End Block
+                expectedIndentation--;
+            }
+
             f.AddUnsignedShort(0xFFFF);
             ErrorAddAll(info);
         }

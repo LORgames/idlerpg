@@ -84,7 +84,6 @@ package Game.Equipment {
 			}
 			
 			//Read in the script
-			trace("Equipment Script: " + e.Name);
 			e.MyScript = Script.ReadScript(b);
 			
 			//What size is each frame?

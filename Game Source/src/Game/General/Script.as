@@ -60,7 +60,6 @@ package Game.General {
 						if (target is Person) {
 							var person:Person = (target as Person);
 							person.equipment.EquipSlot(EventScript.readShort(), EventScript.readShort());
-							trace("Trying to equip on item on someone thats not a person.");
 						} break;
 				}
 			}
@@ -83,8 +82,6 @@ package Game.General {
 			while (command != 0xFFFF) { //While not end of file
 				command = b.readUnsignedShort();
 				
-				trace("Processing: 0x" + command.toString(16));
-				
 				if (command < 0x1000) { //All events are in this range
 					if (activeScript != null) {
 						activeScript.writeShort(0xFFFF);
@@ -95,12 +92,8 @@ package Game.General {
 					if (activeEvent < TOTAL_EVENT_TYPES) {
 						commandBlock[activeEvent] = new ByteArray();
 						activeScript = commandBlock[activeEvent];
-						
-						
-						trace("\tAdded event (" + activeEvent + ") to queue.");
 					} else {
 						activeScript = new ByteArray();
-						trace("Event type is too high [" + activeEvent + " < " + TOTAL_EVENT_TYPES + " = false]. Created dummy script to discard this event.");
 					}
 				} else {
 					if (command == 0xFFFF) {

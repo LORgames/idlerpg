@@ -18,6 +18,7 @@ package Game.Critter {
 		public var direction:int = 3;
 		public var state:int = 0;
 		
+		//Current state information
 		public var isMoving:Boolean = false;
 		public var moveSpeedX:int = 0;
 		public var moveSpeedY:int = 0;
