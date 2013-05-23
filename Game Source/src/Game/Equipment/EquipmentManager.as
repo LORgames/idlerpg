@@ -85,7 +85,7 @@ package Game.Equipment {
 			
 			//Read in the script
 			trace("Equipment Script: " + e.Name);
-			e.OnAttackScript = Script.ReadScript(b);
+			e.MyScript = Script.ReadScript(b);
 			
 			//What size is each frame?
 			e.SizeX = b.readByte();

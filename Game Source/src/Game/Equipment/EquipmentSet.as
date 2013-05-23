@@ -2,6 +2,7 @@ package Game.Equipment {
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	import Game.Critter.Person;
+	import Game.General.Script;
 	import Interfaces.IObjectLayer;
 	import RenderSystem.IAnimated;
 	/**
@@ -113,7 +114,7 @@ package Game.Equipment {
 				Weapon1.SetState(newState, false);
 				Weapon2.SetState(newState, false);
 				
-				Weapon1.Info.OnAttackScript.Run(Owner);
+				Weapon1.Info.MyScript.Run(Script.Attack, Owner);
 			}
 		}
 		
