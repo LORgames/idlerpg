@@ -17,6 +17,8 @@ namespace ToolToGameExporter {
             Parser.CleanAndDivideScript(script, info);
 
             if (info.Errors.Count > 0) {
+                f.AddUnsignedShort(0xFFFF);
+                ErrorAddAll(info);
                 return;
             }
 
@@ -34,7 +36,7 @@ namespace ToolToGameExporter {
                     info.Errors.Add("Unexpected Indentation.");
                 } else if (command.Indent < expectedIndentation) {
                     while (expectedIndentation > command.Indent) {
-                        f.AddUnsignedShort(0xF0FE);
+                        f.AddUnsignedShort(0xF0FE); //End Block
                         expectedIndentation--;
                     }
                 }
@@ -42,7 +44,7 @@ namespace ToolToGameExporter {
                 //Is this an event, lets process it as such
                 if (command.Indent == 0) {
                     f.AddUnsignedShort(command.CommandID);
-                    f.AddUnsignedShort(0xF0FD);
+                    f.AddUnsignedShort(0xF0FD); //Start Block
 
                     expectedIndentation++;
                 } else {
@@ -58,6 +60,7 @@ namespace ToolToGameExporter {
                 }
             }
 
+            f.AddUnsignedShort(0xFFFF);
             ErrorAddAll(info);
         }
 

@@ -92,7 +92,6 @@ package Game.General {
 			var l:int = b.readShort();
 			return b.readMultiByte(l, "iso-8859-1"); //map name
 		}
-		
 	}
 
 }

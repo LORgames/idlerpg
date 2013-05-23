@@ -41,7 +41,8 @@ namespace ToolCache.Scripting {
             if (!ValidEventList.ValidEvents.Contains(Trimmed)) {
                 info.Errors.Add("Invalid event: " + Trimmed);
             } else {
-                info.EventFlags |= (0x1 << Array.IndexOf(ValidEventList.ValidEvents, Trimmed));
+                CommandID = (ushort)Array.IndexOf(ValidEventList.ValidEvents, Trimmed);
+                info.EventFlags |= (0x1 << CommandID);
                 info.EventCount++;
             }
         }

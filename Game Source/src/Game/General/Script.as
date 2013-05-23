@@ -24,13 +24,13 @@ package Game.General {
 			while (true) {
 				command = commands.readUnsignedShort();
 				
-				if (command == 0xF0FF) break;
+				if (command == 0xFFFF) break;
 				
 				switch(command) {
-					case 0x0001: //Play sound effect
+					case 0x1001: //Play sound effect
 						EffectsPlayer.Play(commands.readShort());
 						break;
-					case 0x3001: //Equip item on the invoker
+					case 0x4001: //Equip item on the invoker
 						if (invoker is Person) {
 							var person:Person = (invoker as Person);
 							person.equipment.EquipSlot(commands.readShort(), commands.readShort());
@@ -49,17 +49,19 @@ package Game.General {
 			var command:uint = 0;
 			var commandBlock:ByteArray = new ByteArray();
 			
-			while (command != 0xF0FF) {
+			while (command != 0xFFFF) {
 				command = b.readUnsignedShort();
 				commandBlock.writeShort(command);
 				
-				if (command == 0xF0FF) break; //Exit early if script has ended
+				trace(command.toString(16));
+				
+				if (command == 0xFFFF) break; //Exit early if script has ended
 				
 				switch(command) {
-					case 0x0001: //Play sound effect
+					case 0x1001: //Play sound effect
 						commandBlock.writeShort(b.readShort()); // The sound ID
 						break;
-					case 0x3001: //Equip item on the invoker
+					case 0x4001: //Equip item on the invoker
 						commandBlock.writeShort(b.readShort());
 						commandBlock.writeShort(b.readShort());
 						break;
