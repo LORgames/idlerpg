@@ -20,6 +20,9 @@ namespace ToolToGameExporter {
             Directory.CreateDirectory(Global.EXPORT_DIRECTORY);
 
             //try {
+                //Precrush. No Dependancies.
+                CritterCrusher.Precrush();
+
                 //Tier 0  Crushing. No Dependancies.
                 SoundCrusher.Go();
                 ObjectCrusher.Go();

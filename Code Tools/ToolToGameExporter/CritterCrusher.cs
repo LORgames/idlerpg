@@ -9,11 +9,22 @@ using ToolCache.Scripting;
 namespace ToolToGameExporter {
     public class CritterCrusher {
         public static Dictionary<short, short> RemappedCritterIDs = new Dictionary<short, short>();
+        public static Dictionary<string, short> NameToRemappedIDs = new Dictionary<string, short>();
 
-        public static void Go() {
+        public static void Precrush() {
             RemappedCritterIDs.Clear();
+            NameToRemappedIDs.Clear();
 
             short nextID = 0;
+
+            foreach (Critter c in CritterManager.Critters.Values) {
+                RemappedCritterIDs.Add(c.ID, nextID);
+                NameToRemappedIDs.Add(c.Name, nextID);
+                nextID++;
+            }
+        }
+
+        public static void Go() {
             BinaryIO f = new BinaryIO();
 
             f.AddShort((short)CritterManager.Critters.Count);
@@ -40,9 +51,6 @@ namespace ToolToGameExporter {
                 } else {
                     
                 }
-
-                RemappedCritterIDs.Add(c.ID, nextID);
-                nextID++;
             }
 
             f.Encode(Global.EXPORT_DIRECTORY + "/CritterInfo.bin");

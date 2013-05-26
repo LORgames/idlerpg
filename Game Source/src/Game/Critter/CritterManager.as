@@ -21,7 +21,7 @@ package Game.Critter {
 			Critters = new Vector.<CritterInfoBase>(critterCount, true);
 			
 			for (var i:int = 0; i < critterCount; i++) {
-				var type = b.readByte();
+				var type:int = b.readByte();
 				
 				if (type == 0) { //Is Humanoid
 					Critters[i] = new CritterInfoHuman(b);

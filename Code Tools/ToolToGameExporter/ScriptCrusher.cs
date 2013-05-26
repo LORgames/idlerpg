@@ -53,6 +53,8 @@ namespace ToolToGameExporter {
                     switch (command.CommandID) {
                         case 0x1001: //PlaySound
                             f.AddShort(SoundCrusher.EffectConversions[command.Parameters]); break;
+                        case 0x1002: //Spawn critter
+                            f.AddShort(CritterCrusher.NameToRemappedIDs[command.Parameters]); break;
                         case 0x4001: //PlaySound
                             f.AddShort((short)Array.IndexOf(EquipmentCrusher.equipmenttypes, EquipmentManager.Equipment[command.Parameters].Type));
                             f.AddShort(EquipmentCrusher.MappedEquipmentIDs[command.Parameters]); break;

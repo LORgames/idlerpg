@@ -9,6 +9,7 @@ package {
 	import flash.events.TouchEvent;
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
+	import Game.Critter.CritterManager;
 	import Game.Equipment.EquipmentManager;
 	import Game.General.BinaryLoader;
 	import Game.General.ImageLoader;
@@ -79,7 +80,9 @@ package {
 			ImageLoader.Initialize();
 			
 			WorldData.Initialize(loadMap);
+			
 			new EquipmentManager();
+			new CritterManager();
 			
 			stage.addEventListener(Event.RESIZE, Resized);
 			stage.addEventListener(Event.ENTER_FRAME, Cycle);

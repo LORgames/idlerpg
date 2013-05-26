@@ -25,6 +25,8 @@ package Game.Critter {
 		protected function LoadBasicInfo(b:ByteArray):void {
 			Name = BinaryLoader.GetString(b);
 			
+			trace("Critter Loaded: " + Name);
+			
 			AIType = b.readInt();
 			
 			ExperienceGain = b.readInt();
