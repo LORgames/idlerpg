@@ -24,9 +24,9 @@ package Game.Critter {
 				var type = b.readByte();
 				
 				if (type == 0) { //Is Humanoid
-					
+					Critters[i] = new CritterInfoHuman(b);
 				} else if (type == 1) { //Is non-humanoid
-					
+					Critters[i] = new CritterInfoBeast(b);
 				}
 			}
 		}
