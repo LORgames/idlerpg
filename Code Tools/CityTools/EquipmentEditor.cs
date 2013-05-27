@@ -179,7 +179,7 @@ namespace CityTools {
             txtName.Text = currentEquipment.Name;
             ckbAvailableAtStart.Checked = currentEquipment.isAvailableAtStart;
 
-            cbAnimationState.Text = Enum.GetName(typeof(States), States.Default);
+            cbAnimationState.Text = "Default";
 
             ccAnimationFront.ChangeToAnimation(currentEquipment.Animations["Default"].GetAnimation(currentDirection, 0));
             ccAnimationBack.ChangeToAnimation(currentEquipment.Animations["Default"].GetAnimation(currentDirection, 1));

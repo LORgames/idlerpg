@@ -15,7 +15,6 @@ namespace ToolToGameExporter {
 
         public static EquipmentTypes[] equipmenttypes = { EquipmentTypes.Shadow, EquipmentTypes.Legs, EquipmentTypes.Body, EquipmentTypes.Head, EquipmentTypes.Headgear, EquipmentTypes.Weapon };
         private static Direction[] directions = { Direction.Left, Direction.Right, Direction.Up, Direction.Down };
-        private static States[] states = { States.Default, States.Walking, States.Attacking, States.Dancing };
         private static int[] layers = { 0, 1 };
         
         public static Dictionary<string, short> MappedEquipmentIDs = new Dictionary<string,short>();
