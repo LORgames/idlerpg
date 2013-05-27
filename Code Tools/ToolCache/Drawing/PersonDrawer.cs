@@ -8,7 +8,7 @@ using ToolCache.Equipment;
 namespace ToolCache.Drawing {
     public class PersonDrawer {
 
-        public static Boolean Draw(Graphics g, Point p, Direction d, States s, EquipmentItem shadow, EquipmentItem head, EquipmentItem face, EquipmentItem body, EquipmentItem pants, EquipmentItem weapon, bool drawWaist) {
+        public static Boolean Draw(Graphics g, Point p, Direction d, String s, EquipmentItem shadow, EquipmentItem head, EquipmentItem face, EquipmentItem body, EquipmentItem pants, EquipmentItem weapon, bool drawWaist) {
             if (g == null) return false;
             if (p == null) return false;
 

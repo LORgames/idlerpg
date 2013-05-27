@@ -136,28 +136,34 @@ package Game.Equipment {
 				case 0: //Shadow
 					if(EquipmentManager.I.Shadows.length > equipmentID) {
 						Shadow.SetInformation(EquipmentManager.I.Shadows[equipmentID]);
+						Shadow.Info.MyScript.Run(Script.Equip, Owner);
 					} break;
 				case 1: //Legs
 					if(EquipmentManager.I.Legs.length > equipmentID) {
 						Legs.SetInformation(EquipmentManager.I.Legs[equipmentID]);
+						Legs.Info.MyScript.Run(Script.Equip, Owner);
 					} break;
 				case 2: //Body
 					if(EquipmentManager.I.Bodies.length > equipmentID) {
 						Body1.SetInformation(EquipmentManager.I.Bodies[equipmentID]);
 						Body2.SetInformation(EquipmentManager.I.Bodies[equipmentID], 1);
+						Body1.Info.MyScript.Run(Script.Equip, Owner);
 					} break;
 				case 3: //Face
 					if(EquipmentManager.I.Heads.length > equipmentID) {
 						Face.SetInformation(EquipmentManager.I.Heads[equipmentID]);
+						Face.Info.MyScript.Run(Script.Equip, Owner);
 					} break;
 				case 4: //Headgear
 					if(EquipmentManager.I.Headgear.length > equipmentID) {
 						Headgear.SetInformation(EquipmentManager.I.Headgear[equipmentID]);
+						Headgear.Info.MyScript.Run(Script.Equip, Owner);
 					} break;
 				case 5: //Weapon
 					if(EquipmentManager.I.Weapons.length > equipmentID) {
 						Weapon1.SetInformation(EquipmentManager.I.Weapons[equipmentID]);
 						Weapon2.SetInformation(EquipmentManager.I.Weapons[equipmentID], 1);
+						Weapon1.Info.MyScript.Run(Script.Equip, Owner);
 					} break;
 			}
 			

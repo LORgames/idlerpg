@@ -8,7 +8,7 @@ using System.Drawing;
 
 namespace ToolCache.Equipment {
     public class EquipmentAnimationSet {
-        public States State = States.Default;
+        public string StateName = "Default";
 
         public AnimatedObject Left_0;
         public AnimatedObject Right_0;
@@ -20,9 +20,9 @@ namespace ToolCache.Equipment {
         public AnimatedObject Up_1;
         public AnimatedObject Down_1;
 
-        public EquipmentAnimationSet(bool initialize = true, States s = States.Default) {
+        public EquipmentAnimationSet(bool initialize = true, String s = "Default") {
             if (initialize) {
-                State = s;
+                StateName = s;
 
                 Left_0 = new AnimatedObject();
                 Right_0 = new AnimatedObject();
@@ -53,7 +53,7 @@ namespace ToolCache.Equipment {
             EquipmentAnimationSet eas = new EquipmentAnimationSet(false);
 
             //Set information
-            eas.State = (States)f.GetByte();
+            eas.StateName = f.GetString();
 
             //Unpack animations
             eas.Left_0 = AnimatedObject.UnpackFromBinaryIO(f);
@@ -66,12 +66,31 @@ namespace ToolCache.Equipment {
             eas.Up_1 = AnimatedObject.UnpackFromBinaryIO(f);
             eas.Down_1 = AnimatedObject.UnpackFromBinaryIO(f);
 
+            if (eas.TotalFrames() == 0) {
+                return null;
+            }
+
             return eas;
+        }
+
+        internal int TotalFrames() {
+            int frames = 0;
+
+            frames += Left_0.Frames.Count;
+            frames += Right_0.Frames.Count;
+            frames += Up_0.Frames.Count;
+            frames += Down_0.Frames.Count;
+            frames += Left_1.Frames.Count;
+            frames += Right_1.Frames.Count;
+            frames += Up_1.Frames.Count;
+            frames += Down_1.Frames.Count;
+
+            return frames;
         }
 
         internal void SaveToBinaryIO(BinaryIO f) {
             //Set information
-            f.AddByte((byte)State);
+            f.AddString(StateName);
 
             //Unpack animations
             Left_0.PackIntoBinaryIO(f);

@@ -57,7 +57,6 @@ namespace CityTools {
             this.label8 = new System.Windows.Forms.Label();
             this.cbDispHeadgear = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.cbPreviewState = new System.Windows.Forms.ComboBox();
             this.numOffsetX_0 = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
@@ -141,6 +140,8 @@ namespace CityTools {
             this.cbAnimationState.Size = new System.Drawing.Size(72, 21);
             this.cbAnimationState.TabIndex = 9;
             this.cbAnimationState.SelectedIndexChanged += new System.EventHandler(this.cbAnimationState_SelectedIndexChanged);
+            this.cbAnimationState.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cbAnimationState_KeyPress);
+            this.cbAnimationState.Leave += new System.EventHandler(this.cbAnimationState_SelectedIndexChanged);
             // 
             // drpLeft
             // 
@@ -391,15 +392,6 @@ namespace CityTools {
             this.label10.TabIndex = 40;
             this.label10.Text = "Headgear";
             // 
-            // cbPreviewState
-            // 
-            this.cbPreviewState.FormattingEnabled = true;
-            this.cbPreviewState.Location = new System.Drawing.Point(116, 139);
-            this.cbPreviewState.Name = "cbPreviewState";
-            this.cbPreviewState.Size = new System.Drawing.Size(94, 21);
-            this.cbPreviewState.TabIndex = 42;
-            this.cbPreviewState.SelectedIndexChanged += new System.EventHandler(this.cbPreviewState_SelectedIndexChanged);
-            // 
             // numOffsetX_0
             // 
             this.numOffsetX_0.Location = new System.Drawing.Point(254, 340);
@@ -488,7 +480,7 @@ namespace CityTools {
             this.ckbDrawWaist.AutoSize = true;
             this.ckbDrawWaist.Checked = true;
             this.ckbDrawWaist.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ckbDrawWaist.Location = new System.Drawing.Point(223, 141);
+            this.ckbDrawWaist.Location = new System.Drawing.Point(116, 141);
             this.ckbDrawWaist.Name = "ckbDrawWaist";
             this.ckbDrawWaist.Size = new System.Drawing.Size(76, 17);
             this.ckbDrawWaist.TabIndex = 50;
@@ -720,6 +712,7 @@ namespace CityTools {
             this.txtScript.Location = new System.Drawing.Point(334, 187);
             this.txtScript.Name = "txtScript";
             this.txtScript.Script = "";
+            this.txtScript.ScriptType = ToolCache.Scripting.ScriptTypes.Unknown;
             this.txtScript.Size = new System.Drawing.Size(312, 236);
             this.txtScript.TabIndex = 65;
             this.txtScript.TextChanged += new System.EventHandler(this.ValueChanged);
@@ -773,7 +766,6 @@ namespace CityTools {
             this.Controls.Add(this.numOffsetY_0);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.numOffsetX_0);
-            this.Controls.Add(this.cbPreviewState);
             this.Controls.Add(this.cbDispHeadgear);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.cbDispPants);
@@ -858,7 +850,6 @@ namespace CityTools {
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox cbDispHeadgear;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.ComboBox cbPreviewState;
         private System.Windows.Forms.NumericUpDown numOffsetX_0;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label11;

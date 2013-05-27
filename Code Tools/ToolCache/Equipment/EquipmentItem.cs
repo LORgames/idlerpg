@@ -8,7 +8,7 @@ using ToolCache.Animation;
 
 namespace ToolCache.Equipment {
     public class EquipmentItem {
-        public Dictionary<States, EquipmentAnimationSet> Animations = new Dictionary<States, EquipmentAnimationSet>();
+        public Dictionary<String, EquipmentAnimationSet> Animations = new Dictionary<String, EquipmentAnimationSet>();
 
         public EquipmentTypes Type = EquipmentTypes.Body;
         public EquipmentTypes OldType = EquipmentTypes.Body;
@@ -33,7 +33,9 @@ namespace ToolCache.Equipment {
         public string OnAttackScript = "";
 
         public EquipmentItem(bool initialize = true) {
-            if(initialize) VerifyAnimationSets();
+            if (initialize) {
+                VerifyAnimationSets();
+            }
         }
 
         public static EquipmentItem UnpackFromBinaryIO(BinaryIO f) {
@@ -53,10 +55,10 @@ namespace ToolCache.Equipment {
             for (short i = 0; i < totalAnimationSets; i++) {
                 EquipmentAnimationSet eas = EquipmentAnimationSet.LoadFromBinaryIO(f);
 
-                try {
-                    t.Animations.Add(eas.State, eas);
-                } catch {
-                    //TODO: should do something here
+                if (eas == null) {
+                    System.Diagnostics.Debug.WriteLine(t.Name + " failed to load an animation...");
+                } else {
+                    t.Animations.Add(eas.StateName, eas);
                 }
             }
 
@@ -80,11 +82,22 @@ namespace ToolCache.Equipment {
             return t;
         }
 
-        private void VerifyAnimationSets() {
-            foreach (States s in Enum.GetValues(typeof(States))) {
-                if (!Animations.ContainsKey(s)) {
-                    Animations.Add(s, new EquipmentAnimationSet(true, s));
+        public void VerifyAnimationSets() {
+            List<string> removeKeys = new List<string>();
+
+            foreach(KeyValuePair<String, EquipmentAnimationSet> kvp in Animations) {
+                if (kvp.Value.StateName != "Default" && kvp.Value.TotalFrames() == 0) {
+                    removeKeys.Add(kvp.Key);
+                    System.Diagnostics.Debug.WriteLine(Name + ": Removed Animation: " + kvp.Key); 
                 }
+            }
+
+            foreach (String s in removeKeys) {
+                Animations.Remove(s);
+            }
+
+            if (!Animations.ContainsKey("Default")) {
+                Animations.Add("Default", new EquipmentAnimationSet());
             }
         }
 
@@ -120,14 +133,16 @@ namespace ToolCache.Equipment {
             f.AddString(OnAttackScript);
         }
 
-        public AnimatedObject DisplayAnimation(States s, Direction d, int layer) {
-            AnimatedObject anim = Animations[s].GetAnimation(d, layer);
-            
-            if (anim.Frames.Count > 0) {
-                return anim;
+        public AnimatedObject DisplayAnimation(String s, Direction d, int layer) {
+            if (Animations.ContainsKey(s)) {
+                AnimatedObject anim = Animations[s].GetAnimation(d, layer);
+
+                if (anim.Frames.Count > 0) {
+                    return anim;
+                }
             }
 
-            return Animations[States.Default].GetAnimation(d, layer);
+            return Animations["Default"].GetAnimation(d, layer);
         }
 
         private Point _p = new Point();
@@ -151,7 +166,7 @@ namespace ToolCache.Equipment {
             return _p;
         }
 
-        internal Point GetCenter(States s, Direction d, int layer = 2) {
+        internal Point GetCenter(String s, Direction d, int layer = 2) {
             if (layer == 2) {
                 Point c0 = DisplayAnimation(s, d, 0).Center;
 
@@ -173,6 +188,16 @@ namespace ToolCache.Equipment {
 
         public override string ToString() {
             return Name;
+        }
+
+        public EquipmentAnimationSet GetAnimation(string state) {
+            if (Animations.ContainsKey(state)) {
+                return Animations[state];
+            }
+
+            EquipmentAnimationSet eas = new EquipmentAnimationSet(true, state);
+            Animations.Add(state, eas);
+            return eas;
         }
     }
 }

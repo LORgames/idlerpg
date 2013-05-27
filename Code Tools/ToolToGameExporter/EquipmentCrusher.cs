@@ -81,8 +81,12 @@ namespace ToolToGameExporter {
                         bmp.Dispose();
                     }
 
+                    ei.VerifyAnimationSets();
+
+                    f.AddByte((byte)ei.Animations.Count);
+
                     //build an atlas of the frame counts
-                    foreach (States s in states) {
+                    foreach (String s in ei.Animations.Keys) {
                         int stateData = 0;
                         int stateOffset = 0;
 
@@ -119,7 +123,7 @@ namespace ToolToGameExporter {
 
             Image im;
 
-            foreach (States s in states) {
+            foreach (String s in ei.Animations.Keys) {
                 foreach (Direction d in directions) {
                     foreach (int l in layers) {
                         AnimatedObject anim = ei.Animations[s].GetAnimation(d, l);
@@ -155,7 +159,7 @@ namespace ToolToGameExporter {
             rows = 0;
             cols = 0;
 
-            foreach (KeyValuePair<States, EquipmentAnimationSet> kvp in ei.Animations) {
+            foreach (KeyValuePair<String, EquipmentAnimationSet> kvp in ei.Animations) {
                 foreach (Direction d in directions) {
                     foreach (int l in layers) {
                         AnimatedObject anim = kvp.Value.GetAnimation(d, l);

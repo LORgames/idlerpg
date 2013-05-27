@@ -16,7 +16,7 @@ using ToolCache.Animation;
 namespace CityTools {
     public partial class EquipmentEditor : Form {
         private Direction currentDirection = Direction.Left;
-        private EquipmentItem currentEquipment = new EquipmentItem();
+        private EquipmentItem currentEquipment = new EquipmentItem(true);
 
         private Boolean _hasEquipmentBeenEdited = false; //Is Edited
         private Boolean _isNewEquipmentItem = false;
@@ -36,9 +36,6 @@ namespace CityTools {
 
             //Add all tiles
             FillTileBox();
-
-            //Add states to the state box thing
-            FillStateBoxes();
             
             //Add types to the equipment types
             FillTypesBoxes();
@@ -75,13 +72,12 @@ namespace CityTools {
 
         private void FillStateBoxes() {
             cbAnimationState.Items.Clear();
-            cbPreviewState.Items.Clear();
-            foreach (String s in Enum.GetNames(typeof(States))) {
+            
+            foreach (String s in currentEquipment.Animations.Keys) {
                 cbAnimationState.Items.Add(s);
-                cbPreviewState.Items.Add(s);
             }
+
             cbAnimationState.SelectedIndex = 0;
-            cbPreviewState.SelectedIndex = 0;
         }
 
         private void FillTileBox() {
@@ -100,7 +96,7 @@ namespace CityTools {
             SaveIfRequired();
 
             _isNewEquipmentItem = true;
-            currentEquipment = new EquipmentItem();
+            currentEquipment = new EquipmentItem(true);
             UpdateForm();
         }
 
@@ -185,8 +181,8 @@ namespace CityTools {
 
             cbAnimationState.Text = Enum.GetName(typeof(States), States.Default);
 
-            ccAnimationFront.ChangeToAnimation(currentEquipment.Animations[States.Default].GetAnimation(currentDirection, 0));
-            ccAnimationBack.ChangeToAnimation(currentEquipment.Animations[States.Default].GetAnimation(currentDirection, 1));
+            ccAnimationFront.ChangeToAnimation(currentEquipment.Animations["Default"].GetAnimation(currentDirection, 0));
+            ccAnimationBack.ChangeToAnimation(currentEquipment.Animations["Default"].GetAnimation(currentDirection, 1));
 
             numOffsetX_0.Value = currentEquipment.OffsetX;
             numOffsetY_0.Value = currentEquipment.OffsetY;
@@ -198,6 +194,7 @@ namespace CityTools {
             txtScript.Text = currentEquipment.OnAttackScript;
 
             UpdateOffsets();
+            FillStateBoxes();
 
             _isCurrentUpdatingForm = false;
         }
@@ -205,15 +202,11 @@ namespace CityTools {
         private void UpdateDirection() {
             lblDirection.Text = Enum.GetName(typeof(Direction), currentDirection);
 
-            States s;
+            String state = cbAnimationState.Text;
 
-            if (!Enum.TryParse<States>(cbAnimationState.Text, out s)) {
-                s = States.Default;
-            }
-
-            if (currentEquipment.Animations.ContainsKey(s)) {
-                ccAnimationFront.ChangeToAnimation(currentEquipment.Animations[s].GetAnimation(currentDirection, 0));
-                ccAnimationBack.ChangeToAnimation(currentEquipment.Animations[s].GetAnimation(currentDirection, 1));
+            if (currentEquipment.Animations.ContainsKey(state)) {
+                ccAnimationFront.ChangeToAnimation(currentEquipment.Animations[state].GetAnimation(currentDirection, 0));
+                ccAnimationBack.ChangeToAnimation(currentEquipment.Animations[state].GetAnimation(currentDirection, 1));
             }
         }
 
@@ -228,15 +221,14 @@ namespace CityTools {
                 }
             }
 
-            States cState = (States)Enum.Parse(typeof(States), cbPreviewState.Text);
-
             //Draw 5 people :) [different directions, same gear]
             for (int i = 0; i < 4; i++) {
                 Point p = new Point();
                 p.X = pbEquipmentDisplay.Width / 5 * (i+1);
                 p.Y = pbEquipmentDisplay.Height - 40;
 
-                PersonDrawer.Draw(e.Graphics, p, (Direction)i, cState, shad, head, face, body, legs, weap, ckbDrawWaist.Checked);
+                //Need a better way to do this with the states?
+                PersonDrawer.Draw(e.Graphics, p, (Direction)i, "Default", shad, head, face, body, legs, weap, ckbDrawWaist.Checked);
             }
         }
 
@@ -300,7 +292,7 @@ namespace CityTools {
                                 }
 
                                 if (copied) {
-                                    States selectedState = (States)Enum.Parse(typeof(States), cbAnimationState.Text);
+                                    String selectedState = cbAnimationState.Text;
 
                                     if (layer2) {
                                         currentEquipment.Animations[selectedState].GetAnimation(x, 1).Frames.Add(nFilename);
@@ -374,24 +366,8 @@ namespace CityTools {
         }
 
         private void cbAnimationState_SelectedIndexChanged(object sender, EventArgs e) {
-            States eType;
-
-            if (Enum.TryParse<States>(cbAnimationState.Text, out eType)) {
-                ccAnimationFront.ChangeToAnimation(currentEquipment.Animations[eType].GetAnimation(currentDirection, 0));
-                ccAnimationBack.ChangeToAnimation(currentEquipment.Animations[eType].GetAnimation(currentDirection, 1));
-            } else {
-                cbAnimationState.Text = Enum.GetName(typeof(States), States.Default);
-            }
-        }
-
-        private void cbPreviewState_SelectedIndexChanged(object sender, EventArgs e) {
-            States eType;
-
-            if (Enum.TryParse<States>(cbPreviewState.Text, out eType)) {
-                pbEquipmentDisplay.Invalidate();
-            } else {
-                cbPreviewState.Text = Enum.GetName(typeof(States), States.Default);
-            }
+            ccAnimationFront.ChangeToAnimation(currentEquipment.GetAnimation(cbAnimationState.Text).GetAnimation(currentDirection, 0));
+            ccAnimationBack.ChangeToAnimation(currentEquipment.GetAnimation(cbAnimationState.Text).GetAnimation(currentDirection, 1));
         }
 
         private void EquipmentEditor_FormClosing(object sender, FormClosingEventArgs e) {
@@ -497,17 +473,13 @@ namespace CityTools {
 
         private void btnSwapAnimations_Click(object sender, EventArgs e) {
             if (ccAnimationBack.Enabled && ccAnimationFront.Enabled) {
-                States eType;
+                if (currentEquipment.Animations.ContainsKey(cbAnimationState.Text)) {
+                    currentEquipment.Animations[cbAnimationState.Text].SwapAnimations(currentDirection);
+                    ccAnimationFront.ChangeToAnimation(currentEquipment.Animations[cbAnimationState.Text].GetAnimation(currentDirection, 0));
+                    ccAnimationBack.ChangeToAnimation(currentEquipment.Animations[cbAnimationState.Text].GetAnimation(currentDirection, 1));
 
-                if (!Enum.TryParse<States>(cbAnimationState.Text, out eType)) {
-                    return;
+                    _hasEquipmentBeenEdited = true;
                 }
-
-                currentEquipment.Animations[eType].SwapAnimations(currentDirection);
-                ccAnimationFront.ChangeToAnimation(currentEquipment.Animations[eType].GetAnimation(currentDirection, 0));
-                ccAnimationBack.ChangeToAnimation(currentEquipment.Animations[eType].GetAnimation(currentDirection, 1));
-
-                _hasEquipmentBeenEdited = true;
             }
         }
 
@@ -619,13 +591,19 @@ namespace CityTools {
 
                 Direction d = (Direction)r.Next(4);
 
-                PersonDrawer.Draw(buffer.gfx, new Point(xPos, yPos), d, States.Default,
+                PersonDrawer.Draw(buffer.gfx, new Point(xPos, yPos), d, "Default",
                     shadow, head, face, body, legs, weapon, false);
             }
 
             buffer.gfx.Dispose();
             buffer.bmp.Save("Characters.png");
             buffer.Dispose();
+        }
+
+        private void cbAnimationState_KeyPress(object sender, KeyPressEventArgs e) {
+            if (e.KeyChar == (char)Keys.Return) {
+                this.Focus();
+            }
         }
     }
 }
