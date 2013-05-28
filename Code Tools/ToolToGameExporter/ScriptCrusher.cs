@@ -32,6 +32,8 @@ namespace ToolToGameExporter {
                 //Get the next command?
                 ScriptCommand command = info.Commands[i];
 
+                if (command.CommandID == 0xFFFF) continue;
+
                 if (command.Indent > expectedIndentation) {
                     info.Errors.Add("Unexpected Indentation.");
                 } else if (command.Indent < expectedIndentation) {

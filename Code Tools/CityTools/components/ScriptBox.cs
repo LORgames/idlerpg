@@ -73,7 +73,7 @@ namespace CityTools.Components {
         }
 
         private void QuickParseText() {
-            //throw new NotImplementedException();
+            //Script
         }
     }
 }
