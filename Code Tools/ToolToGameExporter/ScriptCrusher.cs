@@ -58,6 +58,10 @@ namespace ToolToGameExporter {
                         case 0x4001: //PlaySound
                             f.AddShort((short)Array.IndexOf(EquipmentCrusher.equipmenttypes, EquipmentManager.Equipment[command.Parameters].Type));
                             f.AddShort(EquipmentCrusher.MappedEquipmentIDs[command.Parameters]); break;
+                        case 0x6000: //PlayAnimation
+                            f.AddShort((short)info.AnimationNames.IndexOf(command.Parameters)); break;
+                        case 0x6001: //LoopAnimation
+                            f.AddShort((short)info.AnimationNames.IndexOf(command.Parameters)); break;
                     }
                 }
             }

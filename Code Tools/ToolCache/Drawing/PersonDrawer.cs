@@ -8,7 +8,7 @@ using ToolCache.Equipment;
 namespace ToolCache.Drawing {
     public class PersonDrawer {
 
-        public static Boolean Draw(Graphics g, Point p, Direction d, String s, EquipmentItem shadow, EquipmentItem head, EquipmentItem face, EquipmentItem body, EquipmentItem pants, EquipmentItem weapon, bool drawWaist) {
+        public static Boolean Draw(Graphics g, Point p, Direction d, EquipmentItem shadow, EquipmentItem head, EquipmentItem face, EquipmentItem body, EquipmentItem pants, EquipmentItem weapon, bool drawWaist) {
             if (g == null) return false;
             if (p == null) return false;
 
@@ -30,12 +30,12 @@ namespace ToolCache.Drawing {
             Point h_offset = head == null ? Point.Empty : head.Offset(d);
 
             //The centers
-            Point shadowCenter = shadow.GetCenter(s, d);
-            Point pantsCenter = pants.GetCenter(s, d);
-            Point bodyCenter = body.GetCenter(s, d);
-            Point faceCenter = face.GetCenter(s, d);
-            Point headCenter = head == null ? Point.Empty : head.GetCenter(s, d);
-            Point weaponCenter = weapon == null ? Point.Empty : weapon.GetCenter(s, d);
+            Point shadowCenter = shadow.GetCenter(d);
+            Point pantsCenter = pants.GetCenter(d);
+            Point bodyCenter = body.GetCenter(d);
+            Point faceCenter = face.GetCenter(d);
+            Point headCenter = head == null ? Point.Empty : head.GetCenter("Default", d);
+            Point weaponCenter = weapon == null ? Point.Empty : weapon.GetCenter("Default", d);
 
             short WaistHeight = (short)(p.Y - p_offset.X);
 
@@ -74,43 +74,43 @@ namespace ToolCache.Drawing {
             if(drawWaist) g.DrawLine(Pens.Red, p.X - 20, WaistHeight, p.X + 20, WaistHeight);
 
             //Draw Shadow
-            shadow.DisplayAnimation(s, d, 0).Draw(g, shadowPosition.X, shadowPosition.Y, 1);
+            shadow.DisplayAnimation(d, 0).Draw(g, shadowPosition.X, shadowPosition.Y, 1);
 
             //Draw Back Weapon
             if (weapon != null) {
-                weapon.DisplayAnimation(s, d, 1).Draw(g, weaponLink.X, weaponLink.Y, 1);
+                weapon.DisplayAnimation(d, 1).Draw(g, weaponLink.X, weaponLink.Y, 1);
             }
 
             //Draw Legs
-            pants.DisplayAnimation(s, d, 0).Draw(g, legsPosition.X, legsPosition.Y, 1);
+            pants.DisplayAnimation(d, 0).Draw(g, legsPosition.X, legsPosition.Y, 1);
 
             //Draw Body Back
-            body.DisplayAnimation(s, d, 1).Draw(g, bodyLink.X, bodyLink.Y, 1);
+            body.DisplayAnimation(d, 1).Draw(g, bodyLink.X, bodyLink.Y, 1);
 
             //Draw Head
-            face.DisplayAnimation(s, d, 0).Draw(g, headLink.X, headLink.Y, 1);
+            face.DisplayAnimation(d, 0).Draw(g, headLink.X, headLink.Y, 1);
 
             if (d == Direction.Down) { //when heading down the layers are flipped
                 //Draw Body Front
-                body.DisplayAnimation(s, d, 0).Draw(g, bodyLink.X, bodyLink.Y, 1);
+                body.DisplayAnimation(d, 0).Draw(g, bodyLink.X, bodyLink.Y, 1);
 
                 //Draw Headgear
                 if (head != null) {
-                    head.DisplayAnimation(s, d, 0).Draw(g, headgearLink.X, headgearLink.Y, 1);
+                    head.DisplayAnimation(d, 0).Draw(g, headgearLink.X, headgearLink.Y, 1);
                 }
             } else {
                 //Draw Headgear
                 if (head != null) {
-                    head.DisplayAnimation(s, d, 0).Draw(g, headgearLink.X, headgearLink.Y, 1);
+                    head.DisplayAnimation(d, 0).Draw(g, headgearLink.X, headgearLink.Y, 1);
                 }
 
                 //Draw Body Front
-                body.DisplayAnimation(s, d, 0).Draw(g, bodyLink.X, bodyLink.Y, 1);
+                body.DisplayAnimation(d, 0).Draw(g, bodyLink.X, bodyLink.Y, 1);
             }
 
             //Draw Weapon Front
             if (weapon != null) {
-                weapon.DisplayAnimation(s, d, 0).Draw(g, weaponLink.X, weaponLink.Y, 1);
+                weapon.DisplayAnimation(d, 0).Draw(g, weaponLink.X, weaponLink.Y, 1);
             }
 
             return true;

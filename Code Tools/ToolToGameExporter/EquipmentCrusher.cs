@@ -43,6 +43,18 @@ namespace ToolToGameExporter {
 
                 //Now throw the equipment into the file as well..?
                 foreach (EquipmentItem ei in EquipmentManager.TypeLists[et]) {
+
+                    //Calculate animations
+                    List<String> AnimationOrder = new List<String>();
+                    foreach (String s in ei.Animations.Keys) {
+                        if (s == "Default") {
+                            AnimationOrder.Insert(0, s);
+                        } else if (ei.Animations[s].TotalFrames() > 0) {
+                            AnimationOrder.Add(s);
+                        }
+                    }
+
+                    //Start adding stuff to the file
                     f.AddString(ei.Name);
                     f.AddByte((byte)((ei.isAvailableAtStart?1:0) + (ei.OffsetsLocked?2:0)));
 
@@ -61,7 +73,10 @@ namespace ToolToGameExporter {
                     }
 
                     //Even if the script is empty, need to add the "end of script" tag
-                    ScriptCrusher.ProcessScript(new ScriptInfo("Equipment:" + ei.Name, ScriptTypes.Equipment), ei.OnAttackScript, f);
+                    ScriptInfo Info = new ScriptInfo("Equipment:" + ei.Name, ScriptTypes.Equipment);
+                    Info.AnimationNames.AddRange(AnimationOrder);
+
+                    ScriptCrusher.ProcessScript(Info, ei.OnAttackScript, f);
 
                     int rows, cols;
                     Size size = GetSizeOf(ei, out rows, out cols);
@@ -69,7 +84,7 @@ namespace ToolToGameExporter {
                     f.AddByte((byte)size.Height);
 
                     if (size.Height > 255 || size.Width > 255) {
-                        MessageBox.Show("Size overflow in Equipment crusher. Alert a tool programmer.");
+                        Processor.Errors.Add(new ProcessingError("Equipment", ei.Name, "Size overflow in Equipment crusher. Alert a tool programmer."));
                     }
 
                     if (rows != 0 && cols != 0) {
@@ -82,10 +97,12 @@ namespace ToolToGameExporter {
 
                     ei.VerifyAnimationSets();
 
-                    f.AddByte((byte)ei.Animations.Count);
+                    f.AddByte((byte)AnimationOrder.Count);
 
                     //build an atlas of the frame counts
-                    foreach (String s in ei.Animations.Keys) {
+                    int counter = AnimationOrder.Count;
+                    while (--counter > -1) {
+                        string s = AnimationOrder[counter];
                         int stateData = 0;
                         int stateOffset = 0;
 
@@ -94,7 +111,7 @@ namespace ToolToGameExporter {
                                 if (ei.Animations[s].GetAnimation(d, l).Frames.Count < 16) {
                                     stateData |= ((ei.Animations[s].GetAnimation(d, l).Frames.Count & 0xF) << stateOffset);
                                 } else {
-                                    MessageBox.Show("Can no longer have 16 frame limit on equipment. this will be bad.");
+                                    Processor.Errors.Add(new ProcessingError("Equipment", ei.Name + ":" + s + ":" + d + "." + l, "Can no longer have 16 frame limit on equipment. This will be bad."));
                                 }
 
                                 stateOffset += 4;

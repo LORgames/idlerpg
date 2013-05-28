@@ -73,7 +73,7 @@ namespace ToolCache.Equipment {
             return eas;
         }
 
-        internal int TotalFrames() {
+        public int TotalFrames() {
             int frames = 0;
 
             frames += Left_0.Frames.Count;

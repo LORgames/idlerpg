@@ -45,6 +45,7 @@ namespace CityTools {
 
             //Prepare Script Box
             txtScript.Setup(ToolCache.Scripting.ScriptTypes.Equipment);
+            txtScript.BeforeParse += new EventHandler<Components.ScriptInfoArgs>(txtScript_BeforeParse);
 
             CreateNew();
 
@@ -228,7 +229,7 @@ namespace CityTools {
                 p.Y = pbEquipmentDisplay.Height - 40;
 
                 //Need a better way to do this with the states?
-                PersonDrawer.Draw(e.Graphics, p, (Direction)i, "Default", shad, head, face, body, legs, weap, ckbDrawWaist.Checked);
+                PersonDrawer.Draw(e.Graphics, p, (Direction)i, shad, head, face, body, legs, weap, ckbDrawWaist.Checked);
             }
         }
 
@@ -591,8 +592,7 @@ namespace CityTools {
 
                 Direction d = (Direction)r.Next(4);
 
-                PersonDrawer.Draw(buffer.gfx, new Point(xPos, yPos), d, "Default",
-                    shadow, head, face, body, legs, weapon, false);
+                PersonDrawer.Draw(buffer.gfx, new Point(xPos, yPos), d, shadow, head, face, body, legs, weapon, false);
             }
 
             buffer.gfx.Dispose();
@@ -604,6 +604,10 @@ namespace CityTools {
             if (e.KeyChar == (char)Keys.Return) {
                 this.Focus();
             }
+        }
+
+        void txtScript_BeforeParse(object sender, Components.ScriptInfoArgs e) {
+            e.Info.AnimationNames.AddRange(currentEquipment.Animations.Keys);
         }
     }
 }

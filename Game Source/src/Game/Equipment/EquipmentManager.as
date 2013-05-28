@@ -94,10 +94,14 @@ package Game.Equipment {
 			e.Center = new Point(e.SizeX / 2, e.SizeY / 2);
 			
 			//Read in the animation frame counts (4bit snippets for each direction and layer (32bits per state)
-			e.Frames_Default = b.readInt();
-			e.Frames_Walking = b.readInt();
-			e.Frames_Attacking = b.readInt();
-			e.Frames_Dancing = b.readInt();
+			var totalStates:int = b.readByte();
+			
+			e.FrameCounts = new Vector.<int>(totalStates, true);
+			e.SpriteSheetYOffsets = new Vector.<int>(totalStates * 4 * 2, true); //4 directions per state, 2 layers per direction
+			
+			while(--totalStates > -1) {
+				e.FrameCounts[totalStates] = b.readInt();
+			}
 			
 			//Figure out where each layer is on the spritesheet
 			e.ProcessSpriteSheetOffsets();

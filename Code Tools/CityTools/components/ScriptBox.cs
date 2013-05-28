@@ -11,6 +11,7 @@ using ToolCache.Scripting;
 
 namespace CityTools.Components {
     public partial class ScriptBox : UserControl {
+        public event EventHandler<ScriptInfoArgs> BeforeParse;
 
         //Property for the internal script stuff, this will do formatting and stuff later
         public string Script {
@@ -47,12 +48,19 @@ namespace CityTools.Components {
 
         private void btnParse_Click(object sender, EventArgs e) {
             ScriptInfo info = new ScriptInfo("IParseString", ScriptType);
+
+            BeforeParse(this, new ScriptInfoArgs(info));
+
             Parser.Parse(Script, info);
 
-            string errors = String.Format("Errors {0}:\n", info.Errors.Count);
+            string errors = String.Format("{0} Errors.", info.Errors.Count);
 
-            foreach (String s in info.Errors) {
-                errors += "\n" + s;
+            if (info.Errors.Count > 0) {
+                errors += "\n";
+
+                foreach (String s in info.Errors) {
+                    errors += "\n" + s;
+                }
             }
 
             MessageBox.Show(errors);

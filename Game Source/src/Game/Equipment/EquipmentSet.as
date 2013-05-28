@@ -10,14 +10,12 @@ package Game.Equipment {
 	 * @author Paul
 	 */
 	public class EquipmentSet extends Sprite implements IObjectLayer {
-		public var Shadow:EquipmentItem = new EquipmentItem();
-		public var Legs:EquipmentItem = new EquipmentItem();
-		public var Body1:EquipmentItem = new EquipmentItem();
-		public var Body2:EquipmentItem = new EquipmentItem();
-		public var Face:EquipmentItem = new EquipmentItem();
-		public var Headgear:EquipmentItem = new EquipmentItem();
-		public var Weapon1:EquipmentItem = new EquipmentItem();
-		public var Weapon2:EquipmentItem = new EquipmentItem();
+		public var Shadow:EquipmentItem;
+		public var Legs:EquipmentItem;
+		public var Body:EquipmentItem;
+		public var Face:EquipmentItem;
+		public var Headgear:EquipmentItem;
+		public var Weapon:EquipmentItem;
 		
 		public var Owner:Person;
 		
@@ -26,81 +24,85 @@ package Game.Equipment {
 		public function EquipmentSet(owner:Person) {
 			this.Owner = owner;
 			
-			this.addChild(Shadow);
-			this.addChild(Weapon2);
-			this.addChild(Legs);
-			this.addChild(Body2);
-			this.addChild(Face);
-			this.addChild(Body1);
-			this.addChild(Headgear);
-			this.addChild(Weapon1);
+			Shadow = new EquipmentItem(this);
+			Legs = new EquipmentItem(this);
+			Body = new EquipmentItem(this, true);
+			Face = new EquipmentItem(this);
+			Headgear = new EquipmentItem(this);
+			Weapon = new EquipmentItem(this, true);
+			
+			this.addChild(Shadow.Layer);
+			this.addChild(Weapon.Layer2);
+			this.addChild(Legs.Layer);
+			this.addChild(Body.Layer2);
+			this.addChild(Face.Layer);
+			this.addChild(Body.Layer);
+			this.addChild(Headgear.Layer);
+			this.addChild(Weapon.Layer);
 		}
 		
 		public function UpdateSet():void {
             //The linking offsets
 			Shadow.Offset(Direction);
             var p_offset:Point = Legs.Offset(Direction);
-            var b_offset:Point = Body1.Offset(Direction);
+            var b_offset:Point = Body.Offset(Direction);
             var f_offset:Point = Face.Offset(Direction);
-            var w_offset:Point = Weapon1.Offset(Direction);
+            var w_offset:Point = Weapon.Offset(Direction);
             var h_offset:Point = Headgear.Offset(Direction);
 			
 			Shadow.SetDirection(Direction);
 			Legs.SetDirection(Direction);
-			Body1.SetDirection(Direction);
-			Body2.SetDirection(Direction);
+			Body.SetDirection(Direction);
 			Headgear.SetDirection(Direction);
 			Face.SetDirection(Direction);
-			Weapon1.SetDirection(Direction);
-			Weapon2.SetDirection(Direction);
+			Weapon.SetDirection(Direction);
 			
             //The centers
             var shadowCenter:Point = Shadow.GetCenter();
             var pantsCenter:Point = Legs.GetCenter();
-            var bodyCenter:Point = Body1.GetCenter();
+            var bodyCenter:Point = Body.GetCenter();
             var faceCenter:Point = Face.GetCenter();
             var headCenter:Point = Headgear.GetCenter();
-            var weaponCenter:Point = Weapon1.GetCenter();
+            var weaponCenter:Point = Weapon.GetCenter();
 			
             var WaistHeight:int = -p_offset.x;
 			
             //Calculate shadow position
-            Shadow.x = -shadowCenter.x;
-            Shadow.y = -shadowCenter.y;
+            Shadow.Layer.x = -shadowCenter.x;
+            Shadow.Layer.y = -shadowCenter.y;
 			
             //Calculate pants position
-            Legs.x = - pantsCenter.x;
-            Legs.y = + p_offset.y;
+            Legs.Layer.x = - pantsCenter.x;
+            Legs.Layer.y = + p_offset.y;
 			
             //Solve body position
-            Body1.x = - bodyCenter.x - b_offset.x;
-            Body1.y = WaistHeight - b_offset.y - bodyCenter.y;
+            Body.Layer.x = - bodyCenter.x - b_offset.x;
+            Body.Layer.y = WaistHeight - b_offset.y - bodyCenter.y;
 			
-            //Solve body position
-            Body2.x = Body1.x;
-            Body2.y = Body1.y;
+			Body.Layer2.x = Body.Layer.x;
+			Body.Layer2.y = Body.Layer.y;
 			
             //Solve head position
-            Face.x = - f_offset.x - faceCenter.x;
-            Face.y = WaistHeight - f_offset.y - faceCenter.y;
+            Face.Layer.x = - f_offset.x - faceCenter.x;
+            Face.Layer.y = WaistHeight - f_offset.y - faceCenter.y;
 			
 			//Solve headgear if possible
-            Headgear.x = - h_offset.x - headCenter.x;
-            Headgear.y = WaistHeight - h_offset.y - headCenter.y;
+            Headgear.Layer.x = - h_offset.x - headCenter.x;
+            Headgear.Layer.y = WaistHeight - h_offset.y - headCenter.y;
 			
             //Solve weapon if possible
-            Weapon1.x = - w_offset.x - weaponCenter.x;
-            Weapon1.y = WaistHeight - w_offset.y - weaponCenter.y;
+            Weapon.Layer.x = - w_offset.x - weaponCenter.x;
+            Weapon.Layer.y = WaistHeight - w_offset.y - weaponCenter.y;
 			
-            Weapon2.x = Weapon1.x;
-            Weapon2.y = Weapon1.y;
+            Weapon.Layer2.x = Weapon.Layer.x;
+            Weapon.Layer2.y = Weapon.Layer.y;
 		}
 		
 		public function ChangeDirection(newDirection:int):void {
 			if (Direction == 3 && newDirection != 3) {
-				this.swapChildren(Body1, Headgear);
+				this.swapChildren(Body.Layer, Headgear.Layer);
 			} else if (Direction != 3 && newDirection == 3) {
-				this.swapChildren(Body1, Headgear);
+				this.swapChildren(Body.Layer, Headgear.Layer);
 			}
 			
 			Direction = newDirection;
@@ -111,22 +113,17 @@ package Game.Equipment {
 			if ((newState == 1 && fromState == 0) || (newState == 0 && fromState == 1)) { //Walking
 				Legs.SetState(newState);
 			} else if (newState == 2) { //Attacking
-				Weapon1.SetState(newState, false);
-				Weapon2.SetState(newState, false);
-				
-				Weapon1.Info.MyScript.Run(Script.Attack, Owner);
+				Weapon.Info.MyScript.Run(Script.Attack, Weapon, Owner);
 			}
 		}
 		
 		public function Equip(shadowID:int, pantsID:int, bodyID:int, faceID:int, headgearID:int, weaponID:int):void {
 			Shadow.SetInformation(EquipmentManager.I.Shadows[shadowID]);
 			Legs.SetInformation(EquipmentManager.I.Legs[pantsID]);
-			Body1.SetInformation(EquipmentManager.I.Bodies[bodyID]);
-			Body2.SetInformation(EquipmentManager.I.Bodies[bodyID], 1);
+			Body.SetInformation(EquipmentManager.I.Bodies[bodyID]);
 			Face.SetInformation(EquipmentManager.I.Heads[faceID]);
 			Headgear.SetInformation(EquipmentManager.I.Headgear[headgearID]);
-			Weapon1.SetInformation(EquipmentManager.I.Weapons[weaponID]);
-			Weapon2.SetInformation(EquipmentManager.I.Weapons[weaponID], 1);
+			Weapon.SetInformation(EquipmentManager.I.Weapons[weaponID]);
 			
 			ChangeDirection(3);
 		}
@@ -145,9 +142,8 @@ package Game.Equipment {
 					} break;
 				case 2: //Body
 					if(EquipmentManager.I.Bodies.length > equipmentID) {
-						Body1.SetInformation(EquipmentManager.I.Bodies[equipmentID]);
-						Body2.SetInformation(EquipmentManager.I.Bodies[equipmentID], 1);
-						Body1.Info.MyScript.Run(Script.Equip, Owner);
+						Body.SetInformation(EquipmentManager.I.Bodies[equipmentID]);
+						Body.Info.MyScript.Run(Script.Equip, Owner);
 					} break;
 				case 3: //Face
 					if(EquipmentManager.I.Heads.length > equipmentID) {
@@ -161,9 +157,8 @@ package Game.Equipment {
 					} break;
 				case 5: //Weapon
 					if(EquipmentManager.I.Weapons.length > equipmentID) {
-						Weapon1.SetInformation(EquipmentManager.I.Weapons[equipmentID]);
-						Weapon2.SetInformation(EquipmentManager.I.Weapons[equipmentID], 1);
-						Weapon1.Info.MyScript.Run(Script.Equip, Owner);
+						Weapon.SetInformation(EquipmentManager.I.Weapons[equipmentID]);
+						Weapon.Info.MyScript.Run(Script.Equip, Owner);
 					} break;
 			}
 			

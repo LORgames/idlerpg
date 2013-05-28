@@ -13,7 +13,8 @@ namespace ToolCache.Scripting {
             "Attacked",
             "Use",
             "Equip",
-            "MinionDied"
+            "MinionDied",
+            "AnimationEnded"
         };
     }
 }

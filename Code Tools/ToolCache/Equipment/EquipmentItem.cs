@@ -133,6 +133,10 @@ namespace ToolCache.Equipment {
             f.AddString(OnAttackScript);
         }
 
+        internal AnimatedObject DisplayAnimation(Direction d, int p) {
+            return DisplayAnimation("Default", d, p);
+        }
+
         public AnimatedObject DisplayAnimation(String s, Direction d, int layer) {
             if (Animations.ContainsKey(s)) {
                 AnimatedObject anim = Animations[s].GetAnimation(d, layer);
@@ -164,6 +168,10 @@ namespace ToolCache.Equipment {
             }
 
             return _p;
+        }
+
+        internal Point GetCenter(Direction d, int layer = 2) {
+            return GetCenter("Default", d, layer);
         }
 
         internal Point GetCenter(String s, Direction d, int layer = 2) {

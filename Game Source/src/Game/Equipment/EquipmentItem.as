@@ -3,56 +3,47 @@ package Game.Equipment {
 	import flash.display.BitmapData;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import Game.General.Script;
 	import RenderSystem.IAnimated;
 	import RenderSystem.Renderman;
 	/**
 	 * ...
 	 * @author Paul
 	 */
-	public class EquipmentItem extends Bitmap implements IAnimated {
+	public class EquipmentItem {
 		public var Info:EquipmentInfo;
+		public var Owner:EquipmentSet;
 		
-		public var Layer:int = 0;
-		public var Direction:int = 0;
+		public var Layer:EquipmentItemLayer;
+		public var Layer2:EquipmentItemLayer;
 		
-		public var LoopState:Boolean = true;
-		public var State:int = 0;
-		
-		public var TotalFrames:int = 0;
-		public var Frame:int = 0;
-		public var FrameDT:Number = 0;
-		
-		public var CopyRect:Rectangle = new Rectangle();
 		public var DestPoint:Point = new Point();
 		
-		public function EquipmentItem() {
-			Renderman.AnimatedObjects.push(this);
+		public function EquipmentItem(owner:EquipmentSet, requiresSecondLayer:Boolean = false) {
+			Owner = owner;
+			
+			Layer = new EquipmentItemLayer(this);
+			
+			if(requiresSecondLayer) {
+				Layer2 = new EquipmentItemLayer(this, 1);
+			}
 		}
 		
-		public function SetInformation(equipment:EquipmentInfo, layer:int = 0):void {
+		public function SetInformation(equipment:EquipmentInfo):void {
 			Info = equipment;
 			Info.LoadIfRequired();
 			
-			Layer = layer;
-			this.bitmapData = new BitmapData(Info.SizeX, Info.SizeY);
-			
-			CopyRect.width = Info.SizeX;
-			CopyRect.height = Info.SizeY;
+			Layer.SetInformation(equipment);
 		}
 		
 		public function SetState(newState:int, loop:Boolean = true):void {
-			State = newState;
-			Frame = 0;
-			
-			LoopState = loop;
-			
-			Recalculate();
+			Layer.SetState(newState, loop);
+			if (Layer2 != null) Layer2.SetState(newState, loop);
 		}
 		
 		public function SetDirection(newDirection:int):void {
-			Direction = newDirection;
-			if(LoopState) Frame = 0;
-			Recalculate();
+			Layer.SetDirection(newDirection);
+			if (Layer2 != null) Layer2.SetDirection(newDirection);
 		}
 		
 		public function Offset(direction:int = 0):Point {
@@ -66,46 +57,8 @@ package Game.Equipment {
 			}
 		}
 		
-		public function Recalculate():void {
-			if (Info != null && Info.FrameCount(0, Direction, Layer) > 0) {
-				this.visible = true;
-				
-				CopyRect.y = Info.GetSpriteSheetOffset(State, Direction, Layer);
-				CopyRect.x = Frame * Info.SizeX;
-				
-				TotalFrames = Info.FrameCount(State, Direction, Layer);
-				
-				if (TotalFrames == 0) {
-					TotalFrames = Info.FrameCount(0, Direction, Layer);
-				}
-			} else {
-				this.visible = false;
-			}
-		}
-		
 		public function GetCenter():Point {
 			return Info.Center;
-		}
-		
-		public function UpdateAnimation(dt:Number):void {
-			if(TotalFrames > 1) {
-				FrameDT += dt;
-				
-				if (FrameDT > Info.AnimationSpeed) {
-					FrameDT -= Info.AnimationSpeed;
-					Frame++;
-					if (Frame == TotalFrames) {
-						if (LoopState) Frame = 0;
-						else SetState(0);
-					}
-					
-					CopyRect.x = Frame * Info.SizeX;
-				}
-			}
-			
-			if (Info != null && Info.Image != null && TotalFrames > 0) {
-				this.bitmapData.copyPixels(Info.Image, CopyRect, DestPoint);
-			}
 		}
 	}
 

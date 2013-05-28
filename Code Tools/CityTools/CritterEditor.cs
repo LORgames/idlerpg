@@ -363,7 +363,7 @@ namespace CityTools {
         private void pbHumanoidDisplay_Paint(object sender, PaintEventArgs e) {
             e.Graphics.Clear(Color.Beige);
 
-            PersonDrawer.Draw(e.Graphics, new Point(e.ClipRectangle.Width / 2, e.ClipRectangle.Height - 20), Direction.Down, "Default",
+            PersonDrawer.Draw(e.Graphics, new Point(e.ClipRectangle.Width / 2, e.ClipRectangle.Height - 20), Direction.Down,
                 cbHumanoidShadow.SelectedItem as EquipmentItem,
                 cbHumanoidHeadgear.SelectedItem as EquipmentItem,
                 cbHumanoidFace.SelectedItem as EquipmentItem,

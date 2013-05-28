@@ -3,6 +3,7 @@ package Game.General {
 	import flash.geom.PerspectiveProjection;
 	import flash.utils.ByteArray;
 	import Game.Critter.Person;
+	import Game.Equipment.EquipmentItem;
 	import SoundSystem.EffectsPlayer;
 	/**
 	 * ...
@@ -17,7 +18,8 @@ package Game.General {
 		public static const Use:uint = 5;
 		public static const Equip:uint = 6;
 		public static const MinionDied:uint = 7;
-		public static const TOTAL_EVENT_TYPES:uint = 8;
+		public static const AnimationEnded:uint = 8;
+		public static const TOTAL_EVENT_TYPES:uint = 9;
 		
 		private var EventScripts:Vector.<ByteArray>;
 		
@@ -33,9 +35,11 @@ package Game.General {
 			}
 			
 			if (EventScripts[event] == null) {
-				trace("Event type not on this object.");
+				trace("Event type not on this object. [" + invoker + " => " + event + "]");
 				return;
 			}
+			
+			trace(invoker + " => " + target + " @" + event);
 			
 			if (target == null && invoker != null) {
 				target = invoker;
@@ -56,10 +60,27 @@ package Game.General {
 					case 0x1001: //Play sound effect
 						EffectsPlayer.Play(EventScript.readShort());
 						break;
-					case 0x4001: //Equip item on the invoker
+					case 0x1002: //Spawn Critter
+						var critterID:int = EventScript.readShort();
+						break;
+					case 0x4001: //Equip item on the target
 						if (target is Person) {
 							var person:Person = (target as Person);
 							person.equipment.EquipSlot(EventScript.readShort(), EventScript.readShort());
+						} break;
+					case 0x6000: //Play Animation
+						if (invoker is EquipmentItem) {
+							(invoker as EquipmentItem).SetState(EventScript.readShort(), false);
+						} else {
+							trace("Unknown Invoker for 0x6000:PlayAnimation");
+							EventScript.readShort();
+						} break;
+					case 0x6001: //Loop Animation
+						if (invoker is EquipmentItem) {
+							(invoker as EquipmentItem).SetState(EventScript.readShort(), true);
+						} else {
+							trace("Unknown Invoker for 0x6001:LoopAnimation");
+							EventScript.readShort();
 						} break;
 				}
 			}
@@ -103,9 +124,17 @@ package Game.General {
 						activeScript.writeShort(command);
 						
 						switch(command) {
-							case 0x1001: //Play sound effect
-								activeScript.writeShort(b.readShort()); // The sound ID
+							
+							//1 extra short
+							case 0x1001: // Play sound effect
+							case 0x1002: // Spawn
+							case 0x6000: // Play Animation
+							case 0x6001: // Loop animation
+								activeScript.writeShort(b.readShort());
+								trace(command.toString(16));
 								break;
+							
+							//2 Extra Shorts
 							case 0x4001: //Equip item on the invoker
 								activeScript.writeShort(b.readShort());
 								activeScript.writeShort(b.readShort());

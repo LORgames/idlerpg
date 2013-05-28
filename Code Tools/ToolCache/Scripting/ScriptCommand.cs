@@ -64,17 +64,29 @@ namespace ToolCache.Scripting {
                     if (!SoundDatabase.HasEffect(Parameters)) {
                         info.Errors.Add("Cannot find sound effect: '" + Parameters + "'");
                     } break;
+                case "spawn":
+                    CommandID = 0x1002;
+
+                    if (!CritterManager.HasCritter(Parameters)) {
+                        info.Errors.Add("Cannot find Critter: " + Parameters);
+                    } break;
                 case "equip":
                     CommandID = 0x4001;
 
                     if (!EquipmentManager.Equipment.ContainsKey(Parameters)) {
                         info.Errors.Add("Cannot find equipment item: '" + Parameters + "'");
                     } break;
-                case "spawn":
-                    CommandID = 0x1002;
+                case "playanimation":
+                    CommandID = 0x6000;
 
-                    if (!CritterManager.HasCritter(Parameters)) {
-                        info.Errors.Add("Cannot find Critter: " + Parameters);
+                    if (!info.AnimationNames.Contains(Parameters)) {
+                        info.Errors.Add("Cannot find animation: " + Parameters);
+                    } break;
+                case "loopanimation":
+                    CommandID = 0x6001;
+
+                    if (!info.AnimationNames.Contains(Parameters)) {
+                        info.Errors.Add("Cannot find animation: " + Parameters);
                     } break;
                 case "else":
                     Parameters = ""; break;
