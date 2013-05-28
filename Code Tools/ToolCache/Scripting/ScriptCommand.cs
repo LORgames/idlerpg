@@ -57,9 +57,7 @@ namespace ToolCache.Scripting {
                 Parameters = "";
             }
 
-            if (Trimmed.Substring(0, 2) == "//") {
-                System.Windows.Forms.MessageBox.Show("Found a comment:\n"+Trimmed);
-            } else {
+            if (Trimmed.Substring(0, 2) != "//") { //Make sure its not a comment
                 switch (Action) {
                     case "playsound":
                         CommandID = 0x1001;
