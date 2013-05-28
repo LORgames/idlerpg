@@ -11,12 +11,12 @@ package Game.Critter
 	 * @author Paul
 	 */
 	public class Person extends BaseCritter {
-		public var equipment:EquipmentSet;
+		public var Equipment:EquipmentSet;
 		
 		public function Person() {
-			equipment = new EquipmentSet(this);
+			Equipment = new EquipmentSet(this);
 			
-			Main.OrderedLayer.addChild(equipment);
+			Main.OrderedLayer.addChild(Equipment);
 			Main.Updatables.push(this);
 			
 			MyRect.width = 24;
@@ -26,8 +26,8 @@ package Game.Critter
 		public override function Update(dt:Number):void {
 			super.Update(dt);
 			
-			equipment.x = this.X;
-			equipment.y = this.Y;
+			Equipment.x = this.X;
+			Equipment.y = this.Y;
 			
 			//Need to make sure there is a map for more advanced checks
 			if (CurrentMap == null) return;
@@ -64,20 +64,20 @@ package Game.Critter
 			super.RequestMove(xSpeed, ySpeed);
 			
 			if (_d != direction) {
-				equipment.ChangeDirection(direction);
+				Equipment.ChangeDirection(direction);
 			}
 			
 			if (_m != isMoving) {
 				if (isMoving) {
-					equipment.ChangeState(1, 0);
+					Equipment.ChangeState(1, 0);
 				} else {
-					equipment.ChangeState(0, 1);
+					Equipment.ChangeState(0, 1);
 				}
 			}
 		}
 		
 		override public function RequestBasicAttack():void {
-			equipment.ChangeState(2, 0);
+			Equipment.ChangeState(2, 0);
 		}
 		
 	}

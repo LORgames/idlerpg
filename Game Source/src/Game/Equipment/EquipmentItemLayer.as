@@ -27,11 +27,13 @@ package Game.Equipment {
 		public var CopyRect:Rectangle = new Rectangle();
 		public static var DestPoint:Point = new Point();
 		
-		public function EquipmentItemLayer(ei:EquipmentItem, layer:int = 0) {
+		public function EquipmentItemLayer(ei:EquipmentItem, _layer:int = 0) {
 			Renderman.AnimatedObjects.push(this);
 			Owner = ei;
 			
-			Layer = layer;
+			Layer = _layer;
+			
+			if(ei.Info != null) trace(ei.Info.Name + ": L" + Layer);
 		}
 		
 		public function SetInformation(equipment:EquipmentInfo):void {
@@ -62,6 +64,8 @@ package Game.Equipment {
 		}
 		
 		public function Recalculate():void {
+			if(Info != null) trace("Recalc: " + Info.Name + "; D" + Direction + " L" + Layer + " F" + Info.FrameCount(0, Direction, Layer));
+			
 			if (Info != null && Info.FrameCount(0, Direction, Layer) > 0) {
 				this.visible = true;
 				
@@ -73,9 +77,15 @@ package Game.Equipment {
 				if (TotalFrames == 0) {
 					TotalFrames = Info.FrameCount(0, Direction, Layer);
 				}
+				
+				if (TotalFrames == 1) {
+					if (Info.Image != null)
+						this.bitmapData.copyPixels(Info.Image, CopyRect, DestPoint);
+				}
 			} else {
 				this.visible = false;
 			}
+			trace("--------------------------------------------------------------");
 		}
 		
 		public function UpdateAnimation(dt:Number):void {

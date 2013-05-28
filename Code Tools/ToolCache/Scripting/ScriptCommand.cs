@@ -57,49 +57,53 @@ namespace ToolCache.Scripting {
                 Parameters = "";
             }
 
-            switch (Action) {
-                case "playsound":
-                    CommandID = 0x1001;
+            if (Trimmed.Substring(0, 2) == "//") {
+                System.Windows.Forms.MessageBox.Show("Found a comment:\n"+Trimmed);
+            } else {
+                switch (Action) {
+                    case "playsound":
+                        CommandID = 0x1001;
 
-                    if (!SoundDatabase.HasEffect(Parameters)) {
-                        info.Errors.Add("Cannot find sound effect: '" + Parameters + "'");
-                    } break;
-                case "spawn":
-                    CommandID = 0x1002;
+                        if (!SoundDatabase.HasEffect(Parameters)) {
+                            info.Errors.Add("Cannot find sound effect: '" + Parameters + "'");
+                        } break;
+                    case "spawn":
+                        CommandID = 0x1002;
 
-                    if (!CritterManager.HasCritter(Parameters)) {
-                        info.Errors.Add("Cannot find Critter: " + Parameters);
-                    } break;
-                case "equip":
-                    CommandID = 0x4001;
+                        if (!CritterManager.HasCritter(Parameters)) {
+                            info.Errors.Add("Cannot find Critter: " + Parameters);
+                        } break;
+                    case "equip":
+                        CommandID = 0x4001;
 
-                    if (!EquipmentManager.Equipment.ContainsKey(Parameters)) {
-                        info.Errors.Add("Cannot find equipment item: '" + Parameters + "'");
-                    } break;
-                case "playanimation":
-                    CommandID = 0x6000;
+                        if (!EquipmentManager.Equipment.ContainsKey(Parameters)) {
+                            info.Errors.Add("Cannot find equipment item: '" + Parameters + "'");
+                        } break;
+                    case "playanimation":
+                        CommandID = 0x6000;
 
-                    if (!info.AnimationNames.Contains(Parameters)) {
-                        info.Errors.Add("Cannot find animation: " + Parameters);
-                    } break;
-                case "loopanimation":
-                    CommandID = 0x6001;
+                        if (!info.AnimationNames.Contains(Parameters)) {
+                            info.Errors.Add("Cannot find animation: " + Parameters);
+                        } break;
+                    case "loopanimation":
+                        CommandID = 0x6001;
 
-                    if (!info.AnimationNames.Contains(Parameters)) {
-                        info.Errors.Add("Cannot find animation: " + Parameters);
-                    } break;
-                case "else":
-                    Parameters = ""; break;
-                case "if":
-                    break;
-                default:
-                    if (Parameters != "") {
-                        info.Errors.Add("Unknown command: " + Action + " & " + Parameters);
-                    } else {
-                        info.Errors.Add("Unknown command: " + Action);
-                    }
+                        if (!info.AnimationNames.Contains(Parameters)) {
+                            info.Errors.Add("Cannot find animation: " + Parameters);
+                        } break;
+                    case "else":
+                        Parameters = ""; break;
+                    case "if":
+                        break;
+                    default:
+                        if (Parameters != "") {
+                            info.Errors.Add("Unknown command: " + Action + " & " + Parameters);
+                        } else {
+                            info.Errors.Add("Unknown command: " + Action);
+                        }
 
-                    break;
+                        break;
+                }
             }
         }
 

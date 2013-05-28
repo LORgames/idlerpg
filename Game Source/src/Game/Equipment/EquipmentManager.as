@@ -49,7 +49,7 @@ package Game.Equipment {
 			i = Weapons.length; while ( --i > -1) ReadEquipmentInfo(b, Weapons, Weapons.length - (i+1));
 			
 			//Then for some reason we set the player equipment up..?
-			WorldData.ME.equipment.Equip(0, 1, 2, 3, 5, 2);
+			WorldData.ME.Equipment.Equip(0, 0, 2, 3, 5, 2);
 			
 			//And reset the loading total while some images load
 			Global.LoadingTotal--;
@@ -97,7 +97,7 @@ package Game.Equipment {
 			var totalStates:int = b.readByte();
 			
 			e.FrameCounts = new Vector.<int>(totalStates, true);
-			e.SpriteSheetYOffsets = new Vector.<int>(totalStates * 4 * 2, true); //4 directions per state, 2 layers per direction
+			e.SpriteSheetYOffsets = new Vector.<int>(totalStates * 8, true); //4 directions per state, 2 layers per state = x8
 			
 			while(--totalStates > -1) {
 				e.FrameCounts[totalStates] = b.readInt();

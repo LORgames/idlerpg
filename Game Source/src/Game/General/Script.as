@@ -39,8 +39,6 @@ package Game.General {
 				return;
 			}
 			
-			trace(invoker + " => " + target + " @" + event);
-			
 			if (target == null && invoker != null) {
 				target = invoker;
 			}
@@ -66,7 +64,7 @@ package Game.General {
 					case 0x4001: //Equip item on the target
 						if (target is Person) {
 							var person:Person = (target as Person);
-							person.equipment.EquipSlot(EventScript.readShort(), EventScript.readShort());
+							person.Equipment.EquipSlot(EventScript.readShort(), EventScript.readShort());
 						} break;
 					case 0x6000: //Play Animation
 						if (invoker is EquipmentItem) {

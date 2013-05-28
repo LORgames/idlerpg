@@ -83,10 +83,12 @@ package Game.Equipment {
 		}
 		
 		public function FrameCount(state:int, direction:int, layer:int):int {
-			var sData:int = 0;
+			var sData:int = FrameCounts[state];
 			
 			var o:int = 4 * direction + 16 * layer;
-			var s:int = (FrameCounts[state] & (0xF << o)) >> o;
+			var s:int = (sData & (0xF << o)) >> o;
+			
+			trace(MathsEx.ZeroPad(sData, 8, 16) + "\t" + o + " => " + s);
 			
 			return s;
 		}
