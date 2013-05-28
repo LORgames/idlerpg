@@ -68,6 +68,12 @@ namespace CityTools.Components {
 
         private void txtScript_TextChanged(object sender, EventArgs e) {
             this.OnTextChanged(e);
+
+            QuickParseText();
+        }
+
+        private void QuickParseText() {
+            //throw new NotImplementedException();
         }
     }
 }
