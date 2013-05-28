@@ -2,8 +2,11 @@ package Game.General {
 	import adobe.utils.CustomActions;
 	import flash.geom.PerspectiveProjection;
 	import flash.utils.ByteArray;
+	import Game.Critter.BaseCritter;
+	import Game.Critter.CritterManager;
 	import Game.Critter.Person;
 	import Game.Equipment.EquipmentItem;
+	import Game.Map.WorldData;
 	import SoundSystem.EffectsPlayer;
 	/**
 	 * ...
@@ -60,6 +63,24 @@ package Game.General {
 						break;
 					case 0x1002: //Spawn Critter
 						var critterID:int = EventScript.readShort();
+						
+						var spawnX:int = 0;
+						var spawnY:int = 0;
+						
+						if (target is BaseCritter) {
+							var bc:BaseCritter = (target as BaseCritter);
+							
+							var critter:BaseCritter = CritterManager.I.CritterInfo[critterID].CreateCritter(bc.CurrentMap, bc.X, bc.Y);
+						
+							if(critter != null) {
+								//critter.RequestTeleport(WorldData.ME.CurrentMap, WorldData.ME.CurrentMap.Portals[0]);
+							} else {
+								trace("Script error: Could not spawn CritterID=" + critterID + ": critter is null.");
+							}
+						} else {
+							trace("Only Critter types can spawn things: " + target + " & " + invoker);
+						}
+						
 						break;
 					case 0x4001: //Equip item on the target
 						if (target is Person) {

@@ -3,6 +3,7 @@ package Game.Critter {
 	import Game.General.BinaryLoader;
 	import Game.General.Script;
 	import Game.Items.LootDrop;
+	import Game.Map.MapData;
 	/**
 	 * ...
 	 * @author Paul
@@ -35,7 +36,7 @@ package Game.Critter {
 			AICommands = Script.ReadScript(b);
 		}
 		
-		public function CreateCritter():BaseCritter {
+		public function CreateCritter(map:MapData, x:int, y:int):BaseCritter {
 			trace("CritterInfoBase cannot accurately create a critter!");
 			return null;
 		}
