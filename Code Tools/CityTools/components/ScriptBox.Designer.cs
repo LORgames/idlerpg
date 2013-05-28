@@ -27,6 +27,7 @@
             this.txtScript = new System.Windows.Forms.RichTextBox();
             this.scriptContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.btnParse = new System.Windows.Forms.ToolStripMenuItem();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.scriptContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,6 +58,12 @@
             this.btnParse.Text = "Parse";
             this.btnParse.Click += new System.EventHandler(this.btnParse_Click);
             // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 2500;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // ScriptBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -74,5 +81,6 @@
         private System.Windows.Forms.RichTextBox txtScript;
         private System.Windows.Forms.ContextMenuStrip scriptContextMenu;
         private System.Windows.Forms.ToolStripMenuItem btnParse;
+        private System.Windows.Forms.Timer timer1;
     }
 }

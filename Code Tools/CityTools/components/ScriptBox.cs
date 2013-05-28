@@ -68,12 +68,40 @@ namespace CityTools.Components {
 
         private void txtScript_TextChanged(object sender, EventArgs e) {
             this.OnTextChanged(e);
-
-            QuickParseText();
         }
 
         private void QuickParseText() {
-            //Script
+            if (txtScript.SelectionLength == 0) {
+                int x = txtScript.SelectionStart;
+
+                txtScript.SelectAll();
+                txtScript.SelectionColor = Color.Black;
+
+                int startPoint = 0;
+                int endPoint = 0;
+
+                while (startPoint != -1 && endPoint != -1) {
+                    startPoint = txtScript.Text.IndexOf("//", endPoint);
+                    if (startPoint == -1) break;
+
+                    endPoint = txtScript.Text.IndexOf("\n", startPoint);
+
+                    if (endPoint != -1) {
+                        txtScript.Select(startPoint, endPoint-startPoint);
+                    } else {
+                        txtScript.Select(startPoint, txtScript.TextLength - startPoint);
+                    }
+
+                    txtScript.SelectionColor = Color.Green;
+                }
+
+                txtScript.SelectionStart = x;
+                txtScript.SelectionLength = 0;
+            }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e) {
+            QuickParseText();
         }
     }
 }

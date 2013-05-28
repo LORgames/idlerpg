@@ -23,18 +23,22 @@ namespace ToolCache.Scripting {
             string trimmedStart = line.TrimStart('\t');
             Indent = (byte)(line.Length - trimmedStart.Length);
 
+            //Truncate comments
+            if (line.IndexOf("//") > -1) {
+                line = line.Substring(0, line.IndexOf("//"));
+            }
+
+            //Continue processing
             Default = line;
             Trimmed = line.Trim();
 
             if (Trimmed.Length > 2) {
-                if (Trimmed.Substring(0, 2) != "//") { //Make sure its not a comment
-                    if (Indent == 0) {
-                        //Process this as an Event
-                        ProcessEvent(info);
-                    } else {
-                        //Process this as an action
-                        ProcessAction(info);
-                    }
+                if (Indent == 0) {
+                    //Process this as an Event
+                    ProcessEvent(info);
+                } else {
+                    //Process this as an action
+                    ProcessAction(info);
                 }
             }
         }
