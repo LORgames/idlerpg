@@ -55,5 +55,8 @@ namespace ToolCache.Critters {
             return anim;
         }
 
+        public List<string> AnimationNames() {
+            return Animations.Keys.ToList<String>();
+        }
     }
 }

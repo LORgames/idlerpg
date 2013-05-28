@@ -234,6 +234,12 @@ namespace CityTools {
                 cbBeastState.Text = "Default";
                 ccBeastAnimations.ChangeToAnimation(beast.GetAnimation("Default").GetDirection(direction));
                 numBeastFPS.Value = (decimal)beast.playbackSpeed;
+
+                cbBeastState.Items.Clear();
+
+                foreach(String s in beast.AnimationNames()) {
+                    cbBeastState.Items.Add(s);
+                }
             }
 
             PopulateLootList();
