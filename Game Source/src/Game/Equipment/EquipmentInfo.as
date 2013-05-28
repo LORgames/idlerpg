@@ -70,7 +70,7 @@ package Game.Equipment {
 			}
 		}
 		
-		public function GetSpriteSheetOffset(state:int, direction:int, layer:int):int {
+		public function GetSpriteSheetOffset(state:int, direction:int, layer:int):int {	
 			var _t:int = SpriteSheetYOffsets[direction + 4 * state];
 			
 			if (layer == 0) {
@@ -87,8 +87,6 @@ package Game.Equipment {
 			
 			var o:int = 4 * direction + 16 * layer;
 			var s:int = (sData & (0xF << o)) >> o;
-			
-			trace(MathsEx.ZeroPad(sData, 8, 16) + "\t" + o + " => " + s);
 			
 			return s;
 		}

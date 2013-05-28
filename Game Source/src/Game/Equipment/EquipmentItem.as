@@ -34,6 +34,7 @@ package Game.Equipment {
 			Info.LoadIfRequired();
 			
 			Layer.SetInformation(equipment);
+			if (Layer2 != null) Layer2.SetInformation(equipment);
 		}
 		
 		public function SetState(newState:int, loop:Boolean = true):void {

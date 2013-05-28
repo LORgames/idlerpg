@@ -129,7 +129,6 @@ package Game.General {
 							case 0x6000: // Play Animation
 							case 0x6001: // Loop animation
 								activeScript.writeShort(b.readShort());
-								trace(command.toString(16));
 								break;
 							
 							//2 Extra Shorts

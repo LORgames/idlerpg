@@ -64,28 +64,31 @@ package Game.Equipment {
 		}
 		
 		public function Recalculate():void {
-			if(Info != null) trace("Recalc: " + Info.Name + "; D" + Direction + " L" + Layer + " F" + Info.FrameCount(0, Direction, Layer));
-			
-			if (Info != null && Info.FrameCount(0, Direction, Layer) > 0) {
-				this.visible = true;
+			if (Info != null) {
+				var _frames:int = Info.FrameCount(0, Direction, Layer);
 				
-				CopyRect.y = Info.GetSpriteSheetOffset(State, Direction, Layer);
-				CopyRect.x = Frame * Info.SizeX;
-				
-				TotalFrames = Info.FrameCount(State, Direction, Layer);
-				
-				if (TotalFrames == 0) {
-					TotalFrames = Info.FrameCount(0, Direction, Layer);
-				}
-				
-				if (TotalFrames == 1) {
-					if (Info.Image != null)
-						this.bitmapData.copyPixels(Info.Image, CopyRect, DestPoint);
+				if(_frames > 0) {
+					this.visible = true;
+					
+					CopyRect.y = Info.GetSpriteSheetOffset(State, Direction, Layer);
+					CopyRect.x = Frame * Info.SizeX;
+					
+					TotalFrames = Info.FrameCount(State, Direction, Layer);
+					
+					if (TotalFrames == 0) {
+						TotalFrames = _frames;
+					}
+					
+					if (TotalFrames == 1) {
+						if (Info.Image != null)
+							this.bitmapData.copyPixels(Info.Image, CopyRect, DestPoint);
+					}
+				} else {
+					this.visible = false;
 				}
 			} else {
 				this.visible = false;
 			}
-			trace("--------------------------------------------------------------");
 		}
 		
 		public function UpdateAnimation(dt:Number):void {
