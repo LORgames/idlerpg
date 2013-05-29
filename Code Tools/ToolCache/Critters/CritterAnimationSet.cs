@@ -72,5 +72,16 @@ namespace ToolCache.Critters {
             Up.PlaybackSpeed = AnimationSpeed;
             Down.PlaybackSpeed = AnimationSpeed;
         }
+
+        public int TotalFrames() {
+            int i = 0;
+
+            i += Left.Frames.Count;
+            i += Right.Frames.Count;
+            i += Up.Frames.Count;
+            i += Down.Frames.Count;
+
+            return i;
+        }
     }
 }

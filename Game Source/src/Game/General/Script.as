@@ -143,7 +143,6 @@ package Game.General {
 						activeScript.writeShort(command);
 						
 						switch(command) {
-							
 							//1 extra short
 							case 0x1001: // Play sound effect
 							case 0x1002: // Spawn

@@ -3,6 +3,7 @@ package Game.Map {
 	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;
 	import Game.Critter.BaseCritter;
+	import Game.Critter.Person;
 	import Game.General.BinaryLoader;
 	import SoundSystem.MusicPlayer;
 	/**
@@ -99,6 +100,10 @@ package Game.Map {
 			while (--i > -1) {
 				if (Main.OrderedLayer.getChildAt(i) is ObjectInstance) {
 					Main.OrderedLayer.removeChildAt(i);
+				} else if (Main.OrderedLayer.getChildAt(i) is BaseCritter) {
+					if ((Main.OrderedLayer.getChildAt(i) as Person) != WorldData.ME) {
+						Main.OrderedLayer.removeChildAt(i);
+					}
 				}
 			}
 			

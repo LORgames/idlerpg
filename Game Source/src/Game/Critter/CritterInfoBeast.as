@@ -16,6 +16,8 @@ package Game.Critter
 		
 		public function CritterInfoBeast(b:ByteArray) {
 			LoadBasicInfo(b);
+			
+			
 		}
 		
 	}

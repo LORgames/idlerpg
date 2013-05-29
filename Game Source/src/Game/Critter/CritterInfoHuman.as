@@ -1,5 +1,6 @@
 package Game.Critter {
 	import flash.utils.ByteArray;
+	import Game.General.Script;
 	import Game.Map.MapData;
 	/**
 	 * ...
@@ -35,6 +36,8 @@ package Game.Critter {
 			p.Y = y;
 			
 			p.Update(0);
+			
+			AICommands.Run(Script.Spawn, p);
 			
 			return p;
 		}

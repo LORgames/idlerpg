@@ -71,6 +71,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScriptCrusher.cs" />
     <Compile Include="SoundCrusher.cs" />
+    <Compile Include="SpriteSheetHelper.cs" />
     <Compile Include="TileCrusher.cs" />
     <EmbeddedResource Include="FinishedDisplay.resx">
       <DependentUpon>FinishedDisplay.cs</DependentUpon>

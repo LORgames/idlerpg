@@ -5,6 +5,8 @@ using System.Text;
 using ToolCache.Critters;
 using ToolCache.General;
 using ToolCache.Scripting;
+using ToolCache.Animation;
+using System.Drawing;
 
 namespace ToolToGameExporter {
     public class CritterCrusher {
@@ -49,11 +51,41 @@ namespace ToolToGameExporter {
                     f.AddShort(EquipmentCrusher.MappedEquipmentIDs[ch.Headgear]);
                     f.AddShort(EquipmentCrusher.MappedEquipmentIDs[ch.Weapon]);
                 } else {
-                    
+                    CritterBeast cb = (c as CritterBeast);
+
+                    List<CritterAnimationSet> Animations;
+
+                    List<String> AnimationSets = new List<string>();
+                    List<short> TotalFrames = new List<short>();
+
+                    try {
+                        Animations = cb.GetValidAnimations();
+
+                        f.AddByte((byte)Animations.Count);
+
+                        foreach (CritterAnimationSet cas in Animations) {
+                            EncodeCritterList(cas.Left, AnimationSets, TotalFrames);
+                            EncodeCritterList(cas.Right, AnimationSets, TotalFrames);
+                            EncodeCritterList(cas.Up, AnimationSets, TotalFrames);
+                            EncodeCritterList(cas.Down, AnimationSets, TotalFrames);
+                        }
+
+                        Size FrameSize = SpriteSheetHelper.GetFrameSizeOf(AnimationSets);
+                        SpriteSheetHelper.PackAnimationsLinear(AnimationSets, FrameSize, new Size(2048, 1024), "Critter_" + RemappedCritterIDs[c.ID]);
+
+                        
+                    } catch (Exception ex) {
+                        Processor.Errors.Add(new ProcessingError("Critter", cb.Name, ex.Message));
+                    }
                 }
             }
 
             f.Encode(Global.EXPORT_DIRECTORY + "/CritterInfo.bin");
+        }
+
+        private static void EncodeCritterList(AnimatedObject anim, List<string> AnimationSets, List<short> totalFrames) {
+            totalFrames.Add((short)anim.Frames.Count);
+            AnimationSets.AddRange(anim.Frames);
         }
     }
 }

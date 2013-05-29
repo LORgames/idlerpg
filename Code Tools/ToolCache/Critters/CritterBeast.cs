@@ -58,5 +58,39 @@ namespace ToolCache.Critters {
         public List<string> AnimationNames() {
             return Animations.Keys.ToList<String>();
         }
+
+        public List<CritterAnimationSet> GetValidAnimations() {
+            List<CritterAnimationSet> usableSets = new List<CritterAnimationSet>();
+
+            foreach (CritterAnimationSet anim in Animations.Values) {
+                if (anim.TotalFrames() > 0) {
+                    usableSets.Add(anim);
+                }
+            }
+
+            if(usableSets.Count == 0) return usableSets;
+
+            if (usableSets[0].State != "Default") {
+                bool switched = false;
+                CritterAnimationSet cas_0 = usableSets[0];
+
+                for (int i = 1; i < usableSets.Count; i++) {
+                    if (usableSets[i].State == "Default") {
+                        switched = true;
+
+                        usableSets[0] = usableSets[i];
+                        usableSets[i] = cas_0;
+
+                        break;
+                    }
+                }
+
+                if (!switched) {
+                    throw new Exception("No default animation!");
+                }
+            }
+
+            return usableSets;
+        }
     }
 }

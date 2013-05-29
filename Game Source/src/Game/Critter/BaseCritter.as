@@ -2,6 +2,7 @@ package Game.Critter {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.geom.Rectangle;
+	import Game.General.Script;
 	import Game.Map.MapData;
 	import Game.Map.Portal;
 	import Game.Map.TileHelper;
@@ -30,6 +31,8 @@ package Game.Critter {
 		public var X:int = 0;
 		public var Y:int = 0;
 		public var MyRect:Rect = new Rect(0, 0, 0, 0);
+		
+		public var MyScript:Script;
 		
 		public function BaseCritter() {
 			
