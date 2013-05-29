@@ -42,6 +42,11 @@ namespace ToolCache.World {
         public int CompareTo(Portal other) {
             return this.ID.CompareTo(other.ID);
         }
+
+        public void Move(int x, int y) {
+            ExitPoint.Offset(x, y);
+            EntryPoint.Offset(x, y);
+        }
     }
 
     public class Portals {

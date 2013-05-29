@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using ToolCache.General;
 using ToolCache.Map.Objects;
+using ToolCache.World;
+using ToolCache.Map.Regions;
 
 namespace ToolCache.Map.Tiles {
     public class TileMap {
@@ -87,8 +89,8 @@ namespace ToolCache.Map.Tiles {
 
             for (int i = 0; i < newSizeW; i++) {
                 for (int j = 0; j < newSizeH; j++) {
-                    effectiveX = (extendX == 0) ? i : (extendX == 2 ? i - (oldTotalTilesX - 1) : i - sizeDifX / 2);
-                    effectiveY = (extendY == 0) ? j : (extendY == 2 ? j - (oldTotalTilesY - 1) : j - sizeDifY / 2);
+                    effectiveX = (extendX == 0) ? i : (extendX == 2 ? i - sizeDifX : i - sizeDifX / 2);
+                    effectiveY = (extendY == 0) ? j : (extendY == 2 ? j - sizeDifY : j - sizeDifY / 2);
 
                     if (effectiveX >= 0 && effectiveX < oldTotalTilesX && effectiveY >= 0 && effectiveY < oldTotalTilesY) {
                         newTiles[i, j] = new TileInstance(Data[effectiveX, effectiveY].TileID, i, j);
@@ -99,13 +101,21 @@ namespace ToolCache.Map.Tiles {
             }
 
             //Loop over objects and move them
-            int offsetX = (extendX == 0) ? 0 : (extendX == 2 ? TileTemplate.PIXELS_X * (oldTotalTilesX - 1) : TileTemplate.PIXELS_X * sizeDifX / 2);
-            int offsetY = (extendY == 0) ? 0 : (extendY == 2 ? TileTemplate.PIXELS_Y * (oldTotalTilesY - 1) : TileTemplate.PIXELS_Y * sizeDifY / 2);
+            int offsetX = (extendX == 0) ? 0 : (extendX == 2 ? TileTemplate.PIXELS_X * sizeDifX : TileTemplate.PIXELS_X * sizeDifX / 2);
+            int offsetY = (extendY == 0) ? 0 : (extendY == 2 ? TileTemplate.PIXELS_Y * sizeDifY : TileTemplate.PIXELS_Y * sizeDifY / 2);
 
             Data = newTiles;
 
-            foreach(BaseObject o in Map.Objects) {
+            foreach (BaseObject o in Map.Objects) {
                 o.Move(offsetX, offsetY, false);
+            }
+
+            foreach (Portal o in Map.Portals) {
+                o.Move(offsetX, offsetY);
+            }
+
+            foreach (SpawnRegion o in Map.Spawns) {
+                o.Move(offsetX, offsetY);
             }
 
             Map.WorldRectangle = new System.Drawing.Rectangle(0, 0, numTilesX * TileTemplate.PIXELS_X, numTilesY * TileTemplate.PIXELS_Y);

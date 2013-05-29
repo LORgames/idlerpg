@@ -64,5 +64,9 @@ namespace ToolCache.Map.Regions {
         public override string ToString() {
             return Name;
         }
+
+        public void Move(int x, int y) {
+            Area.Offset(x, y);
+        }
     }
 }
