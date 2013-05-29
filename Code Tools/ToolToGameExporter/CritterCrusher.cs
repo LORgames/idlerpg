@@ -61,7 +61,7 @@ namespace ToolToGameExporter {
                     try {
                         Animations = cb.GetValidAnimations();
 
-                        f.AddByte((byte)Animations.Count);
+                        //f.AddByte((byte)Animations.Count);
 
                         foreach (CritterAnimationSet cas in Animations) {
                             EncodeCritterList(cas.Left, AnimationSets, TotalFrames);
