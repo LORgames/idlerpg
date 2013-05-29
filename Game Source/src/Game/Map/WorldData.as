@@ -3,7 +3,7 @@ package Game.Map {
 	import flash.display.BitmapData;
 	import flash.utils.ByteArray;
 	import Game.Critter.BaseCritter;
-	import Game.Critter.Person;
+	import Game.Critter.CritterHuman;
 	import Game.General.BinaryLoader;
 	import Game.General.ImageLoader;
 	import SoundSystem.MusicPlayer;
@@ -19,7 +19,7 @@ package Game.Map {
 		
 		public static var TileSheet:BitmapData;
 		
-		public static var ME:Person = new Person();
+		public static var ME:CritterHuman = new CritterHuman();
 		
 		public static function Initialize(loadReq:String):void {
 			RequestedMapLoad = loadReq;

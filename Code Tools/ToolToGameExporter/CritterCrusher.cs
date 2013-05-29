@@ -61,7 +61,8 @@ namespace ToolToGameExporter {
                     try {
                         Animations = cb.GetValidAnimations();
 
-                        //f.AddByte((byte)Animations.Count);
+                        f.AddFloat(cb.playbackSpeed);
+                        f.AddByte((byte)Animations.Count);
 
                         foreach (CritterAnimationSet cas in Animations) {
                             EncodeCritterList(cas.Left, AnimationSets, TotalFrames);
@@ -71,9 +72,20 @@ namespace ToolToGameExporter {
                         }
 
                         Size FrameSize = SpriteSheetHelper.GetFrameSizeOf(AnimationSets);
-                        SpriteSheetHelper.PackAnimationsLinear(AnimationSets, FrameSize, new Size(2048, 1024), "Critter_" + RemappedCritterIDs[c.ID]);
 
-                        
+                        int totalPixels = FrameSize.Width * FrameSize.Height * AnimationSets.Count;
+
+                        //Generate the spritesheet
+                        int sizeW = 0; int sizeH = 0;
+                        CalculateCanvasSize(AnimationSets, FrameSize, ref sizeW, ref sizeH);
+
+                        SpriteSheetHelper.PackAnimationsLinear(AnimationSets, FrameSize, new Size(sizeW, sizeH), "Critter_" + RemappedCritterIDs[c.ID]);
+
+                        //Add all the frame lengths
+                        //TODO: Make this 1 short per animation 4bits per direction. Much better memory usage.
+                        foreach (short frameCount in TotalFrames) {
+                            f.AddShort(frameCount);
+                        }
                     } catch (Exception ex) {
                         Processor.Errors.Add(new ProcessingError("Critter", cb.Name, ex.Message));
                     }
@@ -81,6 +93,30 @@ namespace ToolToGameExporter {
             }
 
             f.Encode(Global.EXPORT_DIRECTORY + "/CritterInfo.bin");
+        }
+
+        private static void CalculateCanvasSize(List<String> AnimationSets, Size FrameSize, ref int sizeW, ref int sizeH) {
+            int nextSize = 7;
+
+            while (true) {
+                sizeW = (int)Math.Pow(2, nextSize);
+
+                int totalColumns = (sizeW / FrameSize.Width);
+
+                if (totalColumns > 0) {
+                    int requiredRows = (int)Math.Ceiling(1.0 * AnimationSets.Count / totalColumns);
+
+                    int totalHeight = FrameSize.Height * requiredRows;
+
+                    if (sizeW >= totalHeight) {
+                        sizeH = sizeW;
+                        if (sizeW / 2 >= totalHeight) sizeH = sizeW / 2;
+                        break;
+                    }
+                }
+
+                nextSize++;
+            }
         }
 
         private static void EncodeCritterList(AnimatedObject anim, List<string> AnimationSets, List<short> totalFrames) {

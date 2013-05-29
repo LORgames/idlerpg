@@ -1,7 +1,7 @@
 package Game.Equipment {
 	import flash.display.Sprite;
 	import flash.geom.Point;
-	import Game.Critter.Person;
+	import Game.Critter.CritterHuman;
 	import Game.General.Script;
 	import Interfaces.IObjectLayer;
 	import RenderSystem.IAnimated;
@@ -17,11 +17,11 @@ package Game.Equipment {
 		public var Headgear:EquipmentItem;
 		public var Weapon:EquipmentItem;
 		
-		public var Owner:Person;
+		public var Owner:CritterHuman;
 		
 		public var Direction:int = 0;
 		
-		public function EquipmentSet(owner:Person) {
+		public function EquipmentSet(owner:CritterHuman) {
 			this.Owner = owner;
 			
 			Shadow = new EquipmentItem(this);

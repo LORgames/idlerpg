@@ -32,14 +32,12 @@ package Game.Equipment {
 			Owner = ei;
 			
 			Layer = _layer;
-			
-			if(ei.Info != null) trace(ei.Info.Name + ": L" + Layer);
 		}
 		
 		public function SetInformation(equipment:EquipmentInfo):void {
 			Info = equipment;
 			
-			this.bitmapData = new BitmapData(Info.SizeX, Info.SizeY);
+			this.bitmapData = new BitmapData(Info.SizeX, Info.SizeY, true, 0x00FF0000);
 			
 			CopyRect.width = Info.SizeX;
 			CopyRect.height = Info.SizeY;

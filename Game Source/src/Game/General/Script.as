@@ -4,7 +4,7 @@ package Game.General {
 	import flash.utils.ByteArray;
 	import Game.Critter.BaseCritter;
 	import Game.Critter.CritterManager;
-	import Game.Critter.Person;
+	import Game.Critter.CritterHuman;
 	import Game.Equipment.EquipmentItem;
 	import Game.Map.WorldData;
 	import SoundSystem.EffectsPlayer;
@@ -83,8 +83,8 @@ package Game.General {
 						
 						break;
 					case 0x4001: //Equip item on the target
-						if (target is Person) {
-							var person:Person = (target as Person);
+						if (target is CritterHuman) {
+							var person:CritterHuman = (target as CritterHuman);
 							person.Equipment.EquipSlot(EventScript.readShort(), EventScript.readShort());
 						} break;
 					case 0x6000: //Play Animation
