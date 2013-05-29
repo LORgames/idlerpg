@@ -140,6 +140,10 @@ package Game.Critter {
 			if(xSpeed != 0 || ySpeed != 0) {
 				direction = SpeedToDirection(xSpeed, ySpeed);
 				
+				// normalise speed vector
+				xSpeed = xSpeed / Math.sqrt(Math.pow(xSpeed, 2) + Math.pow(ySpeed, 2));
+				ySpeed = ySpeed / Math.sqrt(Math.pow(xSpeed, 2) + Math.pow(ySpeed, 2));
+				
 				moveSpeedX = xSpeed * MovementSpeed;
 				
 				if(ySpeed < 0) moveSpeedY = ySpeed * MovementSpeed * 0.707;
