@@ -13,6 +13,10 @@ package Game.Critter
 	public class Person extends BaseCritter {
 		public var Equipment:EquipmentSet;
 		
+		private var isPortaling:Boolean = true;
+		private var portalTimer:Number = 0;
+		private const PORTAL_LOCK_TIME:int = 2; // in seconds
+		
 		public function Person() {
 			Equipment = new EquipmentSet(this);
 			
@@ -33,7 +37,7 @@ package Game.Critter
 			if (CurrentMap == null) return;
 			
 			//Check to see if this object can portal
-			if(CurrentMap.Portals != null) {
+			if (CurrentMap.Portals != null) {
 				var j:int = CurrentMap.Portals.length;
 				while (--j > -1) {
 					if (CurrentMap.Portals[j].Entry.intersects(MyRect)) {
@@ -50,9 +54,20 @@ package Game.Critter
 						} else {
 							Global.MapPortalID = exitID;
 							Main.I.Renderer.FadeToBlack(WorldData.UpdatePlayerPosition);
+							RequestMove(0, 0);
+							isPortaling = true;
 						}
 						break;
 					}
+				}
+			}
+			
+			if (isPortaling) {
+				if (portalTimer < PORTAL_LOCK_TIME) {
+					portalTimer += dt;
+				} else {
+					portalTimer = 0;
+					isPortaling = false;
 				}
 			}
 		}
@@ -61,23 +76,25 @@ package Game.Critter
 			var _d:int = direction;
 			var _m:Boolean = isMoving;
 			
-			super.RequestMove(xSpeed, ySpeed);
-			
-			if (_d != direction) {
-				Equipment.ChangeDirection(direction);
-			}
-			
-			if (_m != isMoving) {
-				if (isMoving) {
-					Equipment.ChangeState(1, 0);
-				} else {
-					Equipment.ChangeState(0, 1);
+			if (!isPortaling) {
+				super.RequestMove(xSpeed, ySpeed);
+				
+				if (_d != direction) {
+					Equipment.ChangeDirection(direction);
+				}
+				
+				if (_m != isMoving) {
+					if (isMoving) {
+						Equipment.ChangeState(1, 0);
+					} else {
+						Equipment.ChangeState(0, 1);
+					}
 				}
 			}
 		}
 		
 		override public function RequestBasicAttack():void {
-			Equipment.ChangeState(2, 0);
+			if (!isPortaling) Equipment.ChangeState(2, 0);
 		}
 		
 	}
