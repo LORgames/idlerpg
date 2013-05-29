@@ -8,6 +8,9 @@ package InputSystems {
 	 * @author Paul
 	 */
 	public class KeyboardInput implements IInputSystem {
+		protected var xSpeed:int = 0;
+		protected var ySpeed:int = 0;
+		
 		//Earlier LORgames games used a generic input system. This game is much more specific for speed reasons
 		private static var downKeys:Vector.<Boolean> = new Vector.<Boolean>(256, true);
 		
@@ -25,15 +28,12 @@ package InputSystems {
 			if(!downKeys[ke.keyCode]) {
 				downKeys[ke.keyCode] = true;
 				
-				if (ke.keyCode == Keyboard.W) {
-					WorldData.ME.RequestMove(0, -1);
-				} else if (ke.keyCode == Keyboard.S) {
-					WorldData.ME.RequestMove(0, 1);
-				} else if (ke.keyCode == Keyboard.A) {
-					WorldData.ME.RequestMove(-1, 0);
-				} else if (ke.keyCode == Keyboard.D) {
-					WorldData.ME.RequestMove(1, 0);
-				}
+				if (ke.keyCode == Keyboard.W) ySpeed -= 1;
+				if (ke.keyCode == Keyboard.S) ySpeed += 1;
+				if (ke.keyCode == Keyboard.A) xSpeed -= 1;
+				if (ke.keyCode == Keyboard.D) xSpeed += 1;
+				
+				WorldData.ME.RequestMove(xSpeed, ySpeed);
 				
 				if (ke.keyCode == Keyboard.SPACE) {
 					WorldData.ME.RequestBasicAttack();
@@ -45,7 +45,12 @@ package InputSystems {
 			downKeys[ke.keyCode] = false;
 			
 			if(ke.keyCode != Keyboard.SPACE) {
-				WorldData.ME.RequestMove(0, 0);
+				if (ke.keyCode == Keyboard.W) ySpeed += 1;
+				if (ke.keyCode == Keyboard.S) ySpeed -= 1;
+				if (ke.keyCode == Keyboard.A) xSpeed += 1;
+				if (ke.keyCode == Keyboard.D) xSpeed -= 1;
+				
+				WorldData.ME.RequestMove(xSpeed, ySpeed);
 			}
 		}
 		

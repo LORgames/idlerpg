@@ -150,10 +150,11 @@ package Game.Critter {
 				if(ySpeed > 0) moveSpeedY = ySpeed * MovementSpeed * 0.900;
 				
 				isMoving = true;
-			} else {
-				moveSpeedX = 0;
-				moveSpeedY = 0;
-				
+			} 
+			if (xSpeed == 0) moveSpeedX = 0;
+			if (ySpeed == 0) moveSpeedY = 0;
+			
+			if ((moveSpeedX == 0) && (moveSpeedY == 0)) {
 				isMoving = false;
 			}
 		}
