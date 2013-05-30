@@ -28,6 +28,19 @@ package  {
 			//return !(this.x > b.x + (b.width - 1) || this.x + (this.width - 1) < b.x || this.y > b.y + (b.height - 1) || this.y + (this.height - 1) < b.y);
 		}
 		
+		public function intersectEdge(b:Rect):int {
+			var sides:int = 0;
+			
+			if (this.x > b.x + b.width) sides |= 1;
+			if (this.y > b.y + b.height) sides |= 2;
+			if (this.x + this.width < b.x) sides |= 4;
+			if (this.y + this.height < b.y) sides |= 8;
+			
+			return sides;
+			
+			//return !(this.x > b.x + (b.width - 1) || this.x + (this.width - 1) < b.x || this.y > b.y + (b.height - 1) || this.y + (this.height - 1) < b.y);
+		}
+		
 	}
 
 }

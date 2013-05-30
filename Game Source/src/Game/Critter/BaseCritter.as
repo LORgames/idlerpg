@@ -136,6 +136,15 @@ package Game.Critter {
 				}
 			}
 			
+			//Scan against critters
+			if (!collision) {
+				var totalCritters:int = CurrentMap.Critters.length;
+				
+				while (--totalCritters > -1) {
+					
+				}
+			}
+			
 			if (collision) {
 				//Undo the changes
 				X = prevX;

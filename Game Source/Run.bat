@@ -25,7 +25,7 @@ echo.
 echo (hint: edit 'Run.bat' to test on device or change screen size)
 echo.
 ::adl -screensize %SCREEN_SIZE% "%APP_XML%" "%APP_DIR%"
-adl "%APP_XML%" "%APP_DIR%" -- map=Skylands
+adl "%APP_XML%" "%APP_DIR%" -- map=Town
 if errorlevel 1 goto end
 goto end
 

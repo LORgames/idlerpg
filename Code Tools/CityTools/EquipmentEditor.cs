@@ -106,6 +106,7 @@ namespace CityTools {
             UpdateForm();
         }
 
+        //Unlinks the current equipment AND changes to another equipment
         private void UnlinkCurrentEquipment(EquipmentItem anim) {
             currentEquipment.AnimationsChanged -= new EventHandler(anim_AnimationsChanged);
 
