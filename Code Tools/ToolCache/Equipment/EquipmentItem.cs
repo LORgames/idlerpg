@@ -8,7 +8,8 @@ using ToolCache.Animation;
 
 namespace ToolCache.Equipment {
     public class EquipmentItem {
-        public Dictionary<String, EquipmentAnimationSet> Animations = new Dictionary<String, EquipmentAnimationSet>();
+        public DictionaryEx<String, EquipmentAnimationSet> Animations = new DictionaryEx<String, EquipmentAnimationSet>();
+        public event EventHandler AnimationsChanged;
 
         public EquipmentTypes Type = EquipmentTypes.Body;
         public EquipmentTypes OldType = EquipmentTypes.Body;
@@ -33,6 +34,8 @@ namespace ToolCache.Equipment {
         public string OnAttackScript = "";
 
         public EquipmentItem(bool initialize = true) {
+            Animations.ItemsChanged += new EventHandler(Animations_ItemsChanged);
+
             if (initialize) {
                 VerifyAnimationSets();
             }
@@ -147,6 +150,16 @@ namespace ToolCache.Equipment {
             }
 
             return Animations["Default"].GetAnimation(d, layer);
+        }
+
+        void Animations_ItemsChanged(object sender, EventArgs e) {
+            OnAnimationsChanged(sender, e);
+        }
+
+        private void OnAnimationsChanged(object o, EventArgs e) {
+            if (AnimationsChanged != null) {
+                AnimationsChanged(o, e);
+            }
         }
 
         private Point _p = new Point();

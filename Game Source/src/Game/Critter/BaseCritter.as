@@ -52,6 +52,7 @@ package Game.Critter {
 		}
 		
 		public function RequestTeleport(newMap:MapData, portal:Portal):void {
+			CurrentMap.Critters.splice(CurrentMap.Critters.indexOf(this), 1);
 			CurrentMap = newMap;
 			
 			this.X = portal.ExitPoint.x;

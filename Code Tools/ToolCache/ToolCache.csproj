@@ -60,6 +60,7 @@
     <Compile Include="Equipment\EquipmentItem.cs" />
     <Compile Include="Equipment\EquipmentManager.cs" />
     <Compile Include="General\BinaryIO.cs" />
+    <Compile Include="General\DictionaryEx.cs" />
     <Compile Include="General\ImageCache.cs" />
     <Compile Include="General\Settings.cs" />
     <Compile Include="General\Startup.cs" />

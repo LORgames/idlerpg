@@ -16,7 +16,11 @@ using ToolCache.Animation;
 namespace CityTools {
     public partial class EquipmentEditor : Form {
         private Direction currentDirection = Direction.Left;
-        private EquipmentItem currentEquipment = new EquipmentItem(true);
+
+        private EquipmentItem _ccEQ = new EquipmentItem(true);
+        private EquipmentItem currentEquipment {
+            get { return _ccEQ; }
+        }
 
         private Boolean _hasEquipmentBeenEdited = false; //Is Edited
         private Boolean _isNewEquipmentItem = false;
@@ -97,8 +101,23 @@ namespace CityTools {
             SaveIfRequired();
 
             _isNewEquipmentItem = true;
-            currentEquipment = new EquipmentItem(true);
+
+            UnlinkCurrentEquipment(new EquipmentItem(true));
             UpdateForm();
+        }
+
+        private void UnlinkCurrentEquipment(EquipmentItem anim) {
+            currentEquipment.AnimationsChanged -= new EventHandler(anim_AnimationsChanged);
+
+            _ccEQ = anim;
+
+            UpdateForm();
+
+            anim.AnimationsChanged += new EventHandler(anim_AnimationsChanged);
+        }
+
+        void anim_AnimationsChanged(object sender, EventArgs e) {
+            FillStateBoxes();
         }
 
         private void RefreshTree() {
@@ -405,7 +424,7 @@ namespace CityTools {
             if (ei != null) {
                 if (ei != currentEquipment) {
                     SaveIfRequired();
-                    currentEquipment = ei;
+                    UnlinkCurrentEquipment(ei);
                     _isNewEquipmentItem = false;
                     UpdateForm();
                 }
@@ -602,7 +621,7 @@ namespace CityTools {
 
         private void cbAnimationState_KeyPress(object sender, KeyPressEventArgs e) {
             if (e.KeyChar == (char)Keys.Return) {
-                this.Focus();
+                cbAnimationState_SelectedIndexChanged(sender, e);
             }
         }
 

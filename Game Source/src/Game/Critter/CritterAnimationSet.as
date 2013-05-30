@@ -74,8 +74,6 @@ package Game.Critter
 			StartFrame = MyCritter.AnimationFrameCounts[currentAnimationID];
 			EndFrame = MyCritter.AnimationFrameCounts[currentAnimationID+1];
 			
-			trace(MyCritter.Name + " " + StartFrame + " => " + EndFrame);
-			
 			if (CurrentFrame < StartFrame || CurrentFrame >= EndFrame) CurrentFrame = StartFrame;
 			
 			FrameRect.x = (CurrentFrame % MyCritter.AnimationsPerRow) * width;
