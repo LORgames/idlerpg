@@ -93,10 +93,12 @@ package Game.Critter {
 			var prevX:int = X;
 			var prevY:int = Y;
 			
-			//Process the things
-			X += moveSpeedX * dt / CurrentMovementCost;
-			Y += moveSpeedY * dt / CurrentMovementCost;
-			CurrentMovementCost = 1; //reset to 1 and then update the other things when possible
+			if (!isPortaling) {
+				//Process the things
+				X += moveSpeedX * dt / CurrentMovementCost;
+				Y += moveSpeedY * dt / CurrentMovementCost;
+				CurrentMovementCost = 1; //reset to 1 and then update the other things when possible
+			}
 			
 			MyRect.x = X - MyRect.width / 2;
 			MyRect.y = Y - MyRect.height / 2;
@@ -161,7 +163,6 @@ package Game.Critter {
 						} else {
 							Global.MapPortalID = exitID;
 							Main.I.Renderer.FadeToBlack(WorldData.UpdatePlayerPosition);
-							RequestMove(0, 0);
 							isPortaling = true;
 						}
 						break;
