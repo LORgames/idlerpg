@@ -11,11 +11,17 @@ package  {
 		public var width:int;
 		public var height:int;
 		
+		public var CX:int;
+		public var CY:int;
+		
 		public function Rect(x:int = 0, y:int = 0, w:int = 0, h:int = 0) {
 			this.x = x;
 			this.y = y;
 			this.width = w;
 			this.height = h;
+			
+			this.CX = w * 0.5;
+			this.CY = h * 0.5;
 		}
 		
 		public function intersects(b:Rect):Boolean{
@@ -23,6 +29,7 @@ package  {
 			if (this.y > b.y + b.height) return false;
 			if (this.x + this.width < b.x) return false;
 			if (this.y + this.height < b.y) return false;
+			
 			return true;
 			
 			//return !(this.x > b.x + (b.width - 1) || this.x + (this.width - 1) < b.x || this.y > b.y + (b.height - 1) || this.y + (this.height - 1) < b.y);
@@ -30,15 +37,24 @@ package  {
 		
 		public function intersectEdge(b:Rect):int {
 			var sides:int = 0;
+			var cX0 = x + CX;
+			var cY0 = y + CY;
+			var cX1 = b.x + b.CX;
+			var cY1 = b.y + b.CY;
 			
-			if (this.x > b.x + b.width) sides |= 1;
-			if (this.y > b.y + b.height) sides |= 2;
-			if (this.x + this.width < b.x) sides |= 4;
-			if (this.y + this.height < b.y) sides |= 8;
+			if (cX0 < cX1) {
+				if (x+width < b.x) sides |= 1; // Left
+			} else {
+				if (b.x+b.width < x) sides |= 2; // Right
+			}
+			
+			if (cY0 < cY1) {
+				if (y + height < b.y) sides |= 4; // Up
+			} else {
+				if (b.y+b.height < y) sides |= 8; // Down
+			}
 			
 			return sides;
-			
-			//return !(this.x > b.x + (b.width - 1) || this.x + (this.width - 1) < b.x || this.y > b.y + (b.height - 1) || this.y + (this.height - 1) < b.y);
 		}
 		
 	}
