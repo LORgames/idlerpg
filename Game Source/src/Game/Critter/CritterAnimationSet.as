@@ -101,7 +101,5 @@ package Game.Critter
 				myBitmapData.copyPixels(sprites, FrameRect, Global.ZeroPoint);
 			}
 		}
-		
 	}
-
 }
