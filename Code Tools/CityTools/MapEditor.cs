@@ -71,6 +71,8 @@ namespace CityTools {
             InitializeDrawing();
 
             timerRefresh.Start();
+
+            CacheInterfaces.ToolsInterface.OpenWorldEditor();
         }
 
         private void InitializeDrawing() {

@@ -229,6 +229,11 @@ namespace CityTools {
                 cbHumanoidWeapon.Text = human.Weapon;
 
                 pbHumanoidDisplay.Invalidate();
+                numBeastFPS.Value = (decimal)0.2;
+                ccBeastAnimations.ClearAnimation();
+                cbBeastState.Text = "";
+
+                cbBeastState.Items.Clear();
             } else {
                 CritterBeast beast = (critter as CritterBeast);
                 cbBeastState.Text = "Default";
@@ -240,6 +245,14 @@ namespace CityTools {
                 foreach(String s in beast.AnimationNames()) {
                     cbBeastState.Items.Add(s);
                 }
+
+                cbHumanoidShadow.Text = "";
+                cbHumanoidPants.Text = "";
+                cbHumanoidBody.Text = "";
+                cbHumanoidFace.Text = "";
+                cbHumanoidHeadgear.Text = "";
+                cbHumanoidWeapon.Text = "";
+                pbHumanoidDisplay.Invalidate();
             }
 
             PopulateLootList();
@@ -369,14 +382,16 @@ namespace CityTools {
         private void pbHumanoidDisplay_Paint(object sender, PaintEventArgs e) {
             e.Graphics.Clear(Color.Beige);
 
-            PersonDrawer.Draw(e.Graphics, new Point(e.ClipRectangle.Width / 2, e.ClipRectangle.Height - 20), Direction.Down,
-                cbHumanoidShadow.SelectedItem as EquipmentItem,
-                cbHumanoidHeadgear.SelectedItem as EquipmentItem,
-                cbHumanoidFace.SelectedItem as EquipmentItem,
-                cbHumanoidBody.SelectedItem as EquipmentItem,
-                cbHumanoidPants.SelectedItem as EquipmentItem,
-                cbHumanoidWeapon.SelectedItem as EquipmentItem,
-                false);
+            if (critter is CritterHuman) {
+                PersonDrawer.Draw(e.Graphics, new Point(e.ClipRectangle.Width / 2, e.ClipRectangle.Height - 20), Direction.Down,
+                    cbHumanoidShadow.SelectedItem as EquipmentItem,
+                    cbHumanoidHeadgear.SelectedItem as EquipmentItem,
+                    cbHumanoidFace.SelectedItem as EquipmentItem,
+                    cbHumanoidBody.SelectedItem as EquipmentItem,
+                    cbHumanoidPants.SelectedItem as EquipmentItem,
+                    cbHumanoidWeapon.SelectedItem as EquipmentItem,
+                    false);
+            }
         }
 
         private void ChangedEquipment(object sender, EventArgs e) {
@@ -534,6 +549,36 @@ namespace CityTools {
                 (MainWindow.instance.listRegions.SelectedItem as SpawnRegion).SpawnList.Add(new CritterSpawn(critter.ID));
                 CacheInterfaces.RegionInterface.UpdateGUI();
                 ToolCache.Map.MapPieceCache.CurrentPiece.Edited();
+            }
+        }
+
+        private void btnDuplicate_Click(object sender, EventArgs e) {
+            if (critter != null && treeAllCritters.SelectedNode.Tag != null) {
+                SaveIfRequired();
+
+                critter = critter.Clone();
+                CritterManager.AddCritter(critter);
+
+
+                //Double check its group exists as well
+                if (!GroupNodes.ContainsKey(critter.NodeGroup)) {
+                    GroupNodes.Add(critter.NodeGroup, new TreeNode(critter.NodeGroup));
+                    treeAllCritters.Nodes.Add(GroupNodes[critter.NodeGroup]);
+                    GroupNodes[critter.NodeGroup].Expand();
+                }
+
+                //Now double check the critter is in the right group
+                if (critter.EditorNode.Parent != GroupNodes[critter.NodeGroup]) {
+                    if (critter.EditorNode.Parent != null) {
+                        critter.EditorNode.Parent.Nodes.Remove(critter.EditorNode);
+                    }
+
+                    GroupNodes[critter.NodeGroup].Nodes.Add(critter.EditorNode);
+                }
+
+                UpdateForm();
+
+                treeAllCritters.SelectedNode = critter.EditorNode;
             }
         }
     }

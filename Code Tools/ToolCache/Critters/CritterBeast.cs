@@ -92,5 +92,18 @@ namespace ToolCache.Critters {
 
             return usableSets;
         }
+
+        public override Critter Clone() {
+            CritterBeast temp = new CritterBeast();
+
+            this.CloneX(temp);
+
+            foreach (KeyValuePair<string, CritterAnimationSet> pair in this.Animations) {
+                temp.Animations.Add(pair.Key, pair.Value.Clone());
+            }
+            temp.playbackSpeed = this.playbackSpeed;
+
+            return temp;
+        }
     }
 }

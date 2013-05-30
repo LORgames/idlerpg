@@ -83,7 +83,7 @@ namespace CityTools.CacheInterfaces {
             SoundInterface.PopulateList();
         }
 
-        private static void OpenWorldEditor() {
+        internal static void OpenWorldEditor() {
             WorldEditor t = new WorldEditor();
             t.ShowDialog(MainWindow.instance);
         }

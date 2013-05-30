@@ -33,7 +33,7 @@ namespace CityTools {
             this.btnCreateBeastCritter = new System.Windows.Forms.ToolStripMenuItem();
             this.btnDuplicate = new System.Windows.Forms.ToolStripButton();
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
-            this.numListViewHidden = new System.Windows.Forms.NumericUpDown();
+            this.btnAddToSpawnList = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
             this.cbBaseGroup = new System.Windows.Forms.ComboBox();
             this.pnlBeast = new System.Windows.Forms.Panel();
@@ -48,6 +48,7 @@ namespace CityTools {
             this.btnBeastLeft = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.numListViewHidden = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.btnAddLoot = new System.Windows.Forms.Button();
             this.cbItemList = new System.Windows.Forms.ComboBox();
@@ -83,7 +84,6 @@ namespace CityTools {
             this.label4 = new System.Windows.Forms.Label();
             this.txtMonsterName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.btnAddToSpawnList = new System.Windows.Forms.Button();
             this.ccBeastAnimations = new CityTools.Components.AnimationList();
             this.listLoot = new CityTools.Components.ListViewEx();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -97,10 +97,10 @@ namespace CityTools {
             this.sptFullForm.Panel2.SuspendLayout();
             this.sptFullForm.SuspendLayout();
             this.toolsMainTools.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numListViewHidden)).BeginInit();
             this.pnlBeast.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numBeastFPS)).BeginInit();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numListViewHidden)).BeginInit();
             this.pnlHumanoid.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbHumanoidDisplay)).BeginInit();
             this.panel1.SuspendLayout();
@@ -180,7 +180,7 @@ namespace CityTools {
             // 
             this.btnCreateHumanoidCritter.Image = ((System.Drawing.Image)(resources.GetObject("btnCreateHumanoidCritter.Image")));
             this.btnCreateHumanoidCritter.Name = "btnCreateHumanoidCritter";
-            this.btnCreateHumanoidCritter.Size = new System.Drawing.Size(131, 22);
+            this.btnCreateHumanoidCritter.Size = new System.Drawing.Size(135, 22);
             this.btnCreateHumanoidCritter.Text = "Humanoid";
             this.btnCreateHumanoidCritter.Click += new System.EventHandler(this.btnCreateHumanoidCritter_Click);
             // 
@@ -188,7 +188,7 @@ namespace CityTools {
             // 
             this.btnCreateBeastCritter.Image = ((System.Drawing.Image)(resources.GetObject("btnCreateBeastCritter.Image")));
             this.btnCreateBeastCritter.Name = "btnCreateBeastCritter";
-            this.btnCreateBeastCritter.Size = new System.Drawing.Size(131, 22);
+            this.btnCreateBeastCritter.Size = new System.Drawing.Size(135, 22);
             this.btnCreateBeastCritter.Text = "Beast Man";
             this.btnCreateBeastCritter.Click += new System.EventHandler(this.btnCreateBeastCritter_Click);
             // 
@@ -200,20 +200,22 @@ namespace CityTools {
             this.btnDuplicate.Name = "btnDuplicate";
             this.btnDuplicate.Size = new System.Drawing.Size(23, 22);
             this.btnDuplicate.Text = "Duplicate Selected Critter";
+            this.btnDuplicate.Click += new System.EventHandler(this.btnDuplicate_Click);
             // 
             // toolStripTextBox1
             // 
             this.toolStripTextBox1.Name = "toolStripTextBox1";
             this.toolStripTextBox1.Size = new System.Drawing.Size(90, 25);
             // 
-            // numListViewHidden
+            // btnAddToSpawnList
             // 
-            this.numListViewHidden.Location = new System.Drawing.Point(87, 80);
-            this.numListViewHidden.Name = "numListViewHidden";
-            this.numListViewHidden.Size = new System.Drawing.Size(120, 20);
-            this.numListViewHidden.TabIndex = 19;
-            this.numListViewHidden.TabStop = false;
-            this.numListViewHidden.Visible = false;
+            this.btnAddToSpawnList.Location = new System.Drawing.Point(8, 237);
+            this.btnAddToSpawnList.Name = "btnAddToSpawnList";
+            this.btnAddToSpawnList.Size = new System.Drawing.Size(185, 23);
+            this.btnAddToSpawnList.TabIndex = 19;
+            this.btnAddToSpawnList.Text = "Add To Current Spawn Region";
+            this.btnAddToSpawnList.UseVisualStyleBackColor = true;
+            this.btnAddToSpawnList.Click += new System.EventHandler(this.btnAddToSpawnList_Click);
             // 
             // label15
             // 
@@ -398,6 +400,15 @@ namespace CityTools {
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(290, 309);
             this.panel3.TabIndex = 15;
+            // 
+            // numListViewHidden
+            // 
+            this.numListViewHidden.Location = new System.Drawing.Point(87, 80);
+            this.numListViewHidden.Name = "numListViewHidden";
+            this.numListViewHidden.Size = new System.Drawing.Size(120, 20);
+            this.numListViewHidden.TabIndex = 19;
+            this.numListViewHidden.TabStop = false;
+            this.numListViewHidden.Visible = false;
             // 
             // label3
             // 
@@ -782,16 +793,6 @@ namespace CityTools {
             this.label2.TabIndex = 2;
             this.label2.Text = "Name:";
             // 
-            // btnAddToSpawnList
-            // 
-            this.btnAddToSpawnList.Location = new System.Drawing.Point(8, 237);
-            this.btnAddToSpawnList.Name = "btnAddToSpawnList";
-            this.btnAddToSpawnList.Size = new System.Drawing.Size(185, 23);
-            this.btnAddToSpawnList.TabIndex = 19;
-            this.btnAddToSpawnList.Text = "Add To Current Spawn Region";
-            this.btnAddToSpawnList.UseVisualStyleBackColor = true;
-            this.btnAddToSpawnList.Click += new System.EventHandler(this.btnAddToSpawnList_Click);
-            // 
             // ccBeastAnimations
             // 
             this.ccBeastAnimations.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -876,12 +877,12 @@ namespace CityTools {
             this.sptFullForm.ResumeLayout(false);
             this.toolsMainTools.ResumeLayout(false);
             this.toolsMainTools.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numListViewHidden)).EndInit();
             this.pnlBeast.ResumeLayout(false);
             this.pnlBeast.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numBeastFPS)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numListViewHidden)).EndInit();
             this.pnlHumanoid.ResumeLayout(false);
             this.pnlHumanoid.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbHumanoidDisplay)).EndInit();

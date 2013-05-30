@@ -44,5 +44,20 @@ namespace ToolCache.Critters {
             f.AddString(Headgear);
             f.AddString(Weapon);
         }
+
+        public override Critter Clone() {
+            CritterHuman temp = new CritterHuman();
+            
+            this.CloneX(temp);
+
+            temp.Shadow = this.Shadow;
+            temp.Legs = this.Legs;
+            temp.Body = this.Body;
+            temp.Face = this.Face;
+            temp.Headgear = this.Headgear;
+            temp.Weapon = this.Weapon;
+
+            return temp;
+        }
     }
 }

@@ -83,5 +83,14 @@ namespace ToolCache.Critters {
 
             return i;
         }
+
+        public CritterAnimationSet Clone() {
+            CritterAnimationSet temp = new CritterAnimationSet(true, this.State);
+            temp.Left.Frames.AddRange(this.Left.Frames);
+            temp.Right.Frames.AddRange(this.Right.Frames);
+            temp.Up.Frames.AddRange(this.Up.Frames);
+            temp.Down.Frames.AddRange(this.Down.Frames);
+            return temp;
+        }
     }
 }

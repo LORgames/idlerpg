@@ -86,5 +86,40 @@ namespace ToolCache.Critters {
             NodeGroup = f.GetString();
             AICommands = f.GetString();
         }
+
+
+        public virtual Critter Clone() { throw new NotImplementedException(); }
+
+        public virtual void CloneX(Critter temp) {
+            string newName = this.Name + " - Copy";
+            int count = 0;
+            while (CritterManager.HasCritter(newName)) {
+                if (newName.Substring(newName.LastIndexOf(' '), 4).Contains("(")) {
+                    newName = newName.Substring(0, newName.LastIndexOf(' '));
+                }
+                newName = newName + " (" + count++ + ")";
+            }
+            temp.Name = newName;
+            temp.AIType = this.AIType;
+
+            temp.ExperienceGain = this.ExperienceGain;
+            temp.Health = this.Health;
+            temp.OneOfAKind = this.OneOfAKind;
+
+            temp.NodeGroup = this.NodeGroup;
+            temp.AICommands = this.AICommands;
+
+            temp.Loot.AddRange(this.Loot);
+
+            temp.Groups.AddRange(this.Groups);
+            temp.Types.AddRange(this.Types);
+
+            //Create this critters node
+            TreeNode node = new TreeNode(temp.Name);
+            node.ImageIndex = (int)temp.CritterType;
+            node.Tag = temp;
+
+            temp.EditorNode = node;
+        }
     }
 }

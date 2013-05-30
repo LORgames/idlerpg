@@ -255,6 +255,22 @@ namespace CityTools {
         private void pbMainPanel_MouseLeave(object sender, EventArgs e) {
             isMouseDown = false;
         }
+
+        private void pbMainPanel_DoubleClick(object sender, EventArgs e) {
+            // scan map pieces for map or portal under cursor.
+            foreach (WorldData d in Data) {
+                if (d.rect.Contains(p0)) {
+                    CacheInterfaces.MapInterface.ChangeCurrentPiece(d.myPiece);
+                    this.Close();
+                    break;
+                }
+            }
+        }
+
+        private void btnCreateNewMap_Click(object sender, EventArgs e) {
+            CacheInterfaces.MapInterface.NewPiece();
+            this.Close();
+        }
     }
 
     public class WorldData {
