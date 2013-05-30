@@ -84,8 +84,21 @@ package RenderSystem {
 			
 			if (Global.LoadingTotal > 0) return;
 			
-			Camera.X = -WorldData.ME.X + Main.I.stage.stageWidth/2;
-			Camera.Y = -WorldData.ME.Y + Main.I.stage.stageHeight / 2;
+			if (WorldData.ME.X <= Main.I.stage.stageWidth / 2) {
+				Camera.X = 0;
+			} else if (WorldData.ME.X > WorldData.ME.CurrentMap.SizeX - Main.I.stage.stageWidth / 2) {
+				Camera.X = -WorldData.ME.CurrentMap.SizeX + Main.I.stage.stageWidth;
+			} else {
+				Camera.X = -WorldData.ME.X + Main.I.stage.stageWidth/2;
+			}
+			
+			if (WorldData.ME.Y <= Main.I.stage.stageHeight / 2) {
+				Camera.Y = 0;
+			} else if (WorldData.ME.Y > WorldData.ME.CurrentMap.SizeY - Main.I.stage.stageHeight / 2) {
+				Camera.Y = -WorldData.ME.CurrentMap.SizeY + Main.I.stage.stageHeight;
+			} else {
+				Camera.Y = -WorldData.ME.Y + Main.I.stage.stageHeight / 2;
+			}
 			
 			Main.OrderedLayer.x = Camera.X;
 			Main.OrderedLayer.y = Camera.Y;
