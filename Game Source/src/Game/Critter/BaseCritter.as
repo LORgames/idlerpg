@@ -106,15 +106,22 @@ package Game.Critter {
 			//Now do a quick tile check to see if we hit anything
 			var tiles:Vector.<TileInstance> = TileHelper.GetTiles(MyRect, CurrentMap);
 			var i:int = tiles.length;
-			var collision:Boolean = false;
+			/* collision calculated in base 2
+			 * 0 = None
+			 * 1 = Left
+			 * 2 = Right
+			 * 4 = Up
+			 * 8 = Down
+			 */
+			var collision:int = 0;
 			
 			//Check if the critter tried to leave the map boundaries
 			if (MyRect.x < 0 || MyRect.y < 0 || MyRect.x + MyRect.height > CurrentMap.SizeX || MyRect.y + MyRect.width > CurrentMap.SizeY) {
-				collision = true;
+				collision = 15;
 			}
 			
 			//They didn't leave the map? Lets try solid objects
-			if(!collision) {
+			if(collision == 0) {
 				while (--i > -1) {
 					//Look for collision in the tile.
 					var rs:Vector.<Rect> = tiles[i].SolidRectangles;
@@ -122,12 +129,12 @@ package Game.Critter {
 					
 					while (--j > -1) {
 						if (rs[j].intersects(MyRect)) {
-							collision = true;
+							collision = rs[j].intersectEdge(MyRect);
 							break;
 						}
 					}
 					
-					if (collision) break;
+					if (collision > 0) break;
 					
 					//No collision so lets update the movement speed
 					if (TileTemplate.Tiles[tiles[i].TileID].movementCost > CurrentMovementCost) {
@@ -137,7 +144,7 @@ package Game.Critter {
 			}
 			
 			//Scan against critters
-			if (!collision) {
+			if (collision == 0) {
 				var totalCritters:int = CurrentMap.Critters.length;
 				
 				while (--totalCritters > -1) {
@@ -145,7 +152,7 @@ package Game.Critter {
 				}
 			}
 			
-			if (collision) {
+			if (collision > 0) {
 				//Undo the changes
 				X = prevX;
 				Y = prevY;

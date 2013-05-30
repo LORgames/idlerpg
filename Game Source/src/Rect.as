@@ -37,10 +37,10 @@ package  {
 		
 		public function intersectEdge(b:Rect):int {
 			var sides:int = 0;
-			var cX0 = x + CX;
-			var cY0 = y + CY;
-			var cX1 = b.x + b.CX;
-			var cY1 = b.y + b.CY;
+			var cX0:int = x + CX;
+			var cY0:int = y + CY;
+			var cX1:int = b.x + b.CX;
+			var cY1:int = b.y + b.CY;
 			
 			if (cX0 < cX1) {
 				if (x+width < b.x) sides |= 1; // Left
