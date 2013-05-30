@@ -7,14 +7,14 @@ namespace ToolCache.Scripting {
     public class ValidEventList {
         public static readonly string[] ValidEvents = {
             "Attack",
-            "ModifyAttack",
-            "ModifyDamage",
             "Spawn",
             "Attacked",
             "Use",
             "Equip",
             "MinionDied",
-            "AnimationEnded"
+            "AnimationEnded",
+            "StartMoving",
+            "EndMoving"
         };
     }
 }

@@ -15,7 +15,9 @@ package Game.Critter {
 		public var headgear:int;
 		public var weapon:int;
 		
-		public function CritterInfoHuman(b:ByteArray) {
+		public function CritterInfoHuman(b:ByteArray, critterID:int) {
+			ID = critterID;
+			
 			LoadBasicInfo(b);
 			
 			shadow = b.readShort();
@@ -37,6 +39,7 @@ package Game.Critter {
 			
 			p.Update(0);
 			
+			p.MyScript = AICommands;
 			AICommands.Run(Script.Spawn, p);
 			
 			return p;

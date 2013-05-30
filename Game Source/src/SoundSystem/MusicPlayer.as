@@ -13,7 +13,11 @@ package SoundSystem
 		private static var snd:Sound;
 		private static var channel:SoundChannel;
 		
+		private static var currentlyPlayingID:int = -1;
+		
 		public static function PlaySong(id:int = 0):void {
+			if (id == currentlyPlayingID) return;
+			
 			if (channel) {
 				channel.removeEventListener(Event.SOUND_COMPLETE, FinishedPlaying);
 				channel.stop();
@@ -24,6 +28,8 @@ package SoundSystem
 			
 			snd = new Sound();
 			snd.load(req);
+			
+			currentlyPlayingID = id;
 			
 			FinishedPlaying();
 		}

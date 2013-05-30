@@ -71,6 +71,14 @@ namespace ToolToGameExporter {
                             EncodeCritterList(cas.Down, AnimationSets, TotalFrames);
                         }
 
+                        //Add all frames to binary
+                        if (AnimationSets.Count > 255) {
+                            Processor.Errors.Add(new ProcessingError("Critter", c.Name, "Has more than 255 frames. Critters can have a maximum of 255 frames."));
+                        }
+
+                        f.AddByte((byte)AnimationSets.Count);
+
+                        //Calculate the size of the frames
                         Size FrameSize = SpriteSheetHelper.GetFrameSizeOf(AnimationSets);
 
                         int totalPixels = FrameSize.Width * FrameSize.Height * AnimationSets.Count;
@@ -86,6 +94,11 @@ namespace ToolToGameExporter {
                         foreach (short frameCount in TotalFrames) {
                             f.AddShort(frameCount);
                         }
+
+                        f.AddUnsignedShort((ushort)sizeW);
+                        f.AddUnsignedShort((ushort)sizeH);
+                        f.AddUnsignedShort((ushort)FrameSize.Width);
+                        f.AddUnsignedShort((ushort)FrameSize.Height);
                     } catch (Exception ex) {
                         Processor.Errors.Add(new ProcessingError("Critter", cb.Name, ex.Message));
                     }

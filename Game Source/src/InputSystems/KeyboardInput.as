@@ -54,10 +54,14 @@ package InputSystems {
 			}
 		}
 		
-		private static function WipeKeys(e:Event):void {
+		private function WipeKeys(e:Event):void {
 			for (var key:String in downKeys) {
 				downKeys[key] = false;
 			}
+			
+			ySpeed = 0;
+			xSpeed = 0;
+			WorldData.ME.RequestMove(xSpeed, ySpeed);
 		}
 		
 	}

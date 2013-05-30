@@ -2,6 +2,8 @@ package Game.Critter
 {
 	import flash.display.BitmapData;
 	import flash.utils.ByteArray;
+	import Game.General.ImageLoader;
+	import Game.General.Script;
 	import Game.Map.MapData;
 	/**
 	 * ...
@@ -9,31 +11,52 @@ package Game.Critter
 	 */
 	public class CritterInfoBeast extends CritterInfoBase {
 		
-		public var playbackSpeed:Number;
-		public var totalAnimation:int;
+		public var PlaybackSpeed:Number;
+		public var TotalAnimationStates:int;
 		
-		public var AnimationPlaybackSpeeds:Vector.<int>;
+		public var SpriteWidth:int;
+		public var SpriteHeight:int;
 		
-		public function CritterInfoBeast(b:ByteArray) {
+		public var AnimationFrameCounts:Vector.<int>;
+		public var AnimationsPerRow:int = 0;
+		
+		//Sprite sheet things
+		private var MySpriteSheet:BitmapData;
+		private var SpriteSheetWidth:int;
+		private var SpriteSheetHeight:int;
+		private var TotalUses:int = 0; //How many critters are currently using this spritesheet
+		
+		public function CritterInfoBeast(b:ByteArray, critterID:int) {
+			ID = critterID;
+			
 			LoadBasicInfo(b);
 			
-			playbackSpeed = b.readFloat();
-			totalAnimation = b.readByte();
+			PlaybackSpeed = b.readFloat();
+			TotalAnimationStates = b.readByte();
 			
-			//Each animation has frame information for all 4 directions (just in case really)
-			AnimationPlaybackSpeeds = new Vector.<int>(totalAnimation * 4, true);
+			var TotalFrames:int = b.readByte();
 			
-			var totalFrameCounts:int = totalAnimation * 4;
+			//Each animation has frame information for all 4 directions (just in case really), has 1 more for the total size as the last one for [i+1] checking later
+			AnimationFrameCounts = new Vector.<int>(TotalAnimationStates * 4 +1, true);
 			
-			while (--totalFrameCounts > -1) {
-				AnimationPlaybackSpeeds[totalFrameCounts] = b.readShort();
+			var currentStateIndex:int = TotalAnimationStates * 4;
+			AnimationFrameCounts[currentStateIndex] = TotalFrames;
+			
+			while (--currentStateIndex > -1) {
+				TotalFrames -= b.readShort();
+				AnimationFrameCounts[currentStateIndex] = TotalFrames;
 			}
+			
+			SpriteSheetWidth = b.readUnsignedShort();
+			SpriteSheetHeight = b.readUnsignedShort();
+			SpriteWidth = b.readUnsignedShort();
+			SpriteHeight = b.readUnsignedShort();
+			
+			AnimationsPerRow = SpriteSheetWidth / SpriteWidth;
 		}
 		
-		/*override public function CreateCritter(map:MapData, x:int, y:int):BaseCritter {
-			var p:CritterHuman = new CritterHuman();
-			
-			p.Equipment.Equip(shadow, legs, body, face, headgear, weapon);
+		override public function CreateCritter(map:MapData, x:int, y:int):BaseCritter {
+			var p:CritterBeast = new CritterBeast(this);
 			
 			p.CurrentMap = map;
 			p.X = x;
@@ -41,10 +64,39 @@ package Game.Critter
 			
 			p.Update(0);
 			
+			p.MyScript = AICommands;
 			AICommands.Run(Script.Spawn, p);
 			
 			return p;
-		}*/
+		}
+		
+		public function GetSprites():BitmapData {
+			TotalUses++;
+			
+			if (MySpriteSheet == null) {
+				MySpriteSheet = new BitmapData(SpriteSheetWidth, SpriteSheetHeight, true, 0x40FF00FF);
+				
+				ImageLoader.Load("Data/Critter_" + ID + ".png", LoadedSpriteSheet);
+			}
+			
+			return MySpriteSheet;
+		}
+		
+		public function OneLessInstance():void {
+			TotalUses--;
+			
+			//Can we unload this spritesheet?
+			if (TotalUses == 0) {
+				MySpriteSheet.dispose();
+				MySpriteSheet = null;
+			}
+		}
+		
+		public function LoadedSpriteSheet(e:BitmapData):void {
+			MySpriteSheet.copyPixels(e, e.rect, Global.ZeroPoint);
+			
+			e.dispose();
+		}
 		
 	}
 

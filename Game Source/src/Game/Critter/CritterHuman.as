@@ -12,10 +12,6 @@ package Game.Critter {
 	public class CritterHuman extends BaseCritter {
 		public var Equipment:EquipmentSet;
 		
-		private var isPortaling:Boolean = true;
-		private var portalTimer:Number = 0;
-		private const PORTAL_LOCK_TIME:int = 2; // in seconds
-		
 		public function CritterHuman() {
 			Equipment = new EquipmentSet(this);
 			
@@ -31,69 +27,29 @@ package Game.Critter {
 			
 			Equipment.x = this.X;
 			Equipment.y = this.Y;
-			
-			//Need to make sure there is a map for more advanced checks
-			if (CurrentMap == null) return;
-			
-			//Check to see if this object can portal
-			if (CurrentMap.Portals != null) {
-				var j:int = CurrentMap.Portals.length;
-				while (--j > -1) {
-					if (CurrentMap.Portals[j].Entry.intersects(MyRect)) {
-						var exitID:int = CurrentMap.Portals[j].ExitID;
-						if (WorldData.ME.CurrentMap.Name == WorldData.PortalDestinations[exitID]) {
-							var k:int = CurrentMap.Portals.length;
-							while (--k > -1) {
-								if (CurrentMap.Portals[j].ExitID == CurrentMap.Portals[k].ID) {
-									Global.MapPortalID = k;
-									Main.I.Renderer.FadeToBlack(RequestInMapTeleport);
-								}
-							}
-							break;
-						} else {
-							Global.MapPortalID = exitID;
-							Main.I.Renderer.FadeToBlack(WorldData.UpdatePlayerPosition);
-							RequestMove(0, 0);
-							isPortaling = true;
-						}
-						break;
-					}
-				}
-			}
-			
-			if (isPortaling) {
-				if (portalTimer < PORTAL_LOCK_TIME) {
-					portalTimer += dt;
-				} else {
-					portalTimer = 0;
-					isPortaling = false;
-				}
-			}
 		}
 		
 		override public function RequestMove(xSpeed:Number, ySpeed:Number):void {
 			var _d:int = direction;
 			var _m:Boolean = isMoving;
 			
-			if (!isPortaling) {
-				super.RequestMove(xSpeed, ySpeed);
-				
-				if (_d != direction) {
-					Equipment.ChangeDirection(direction);
-				}
-				
-				if (_m != isMoving) {
-					if (isMoving) {
-						Equipment.ChangeState(1, 0);
-					} else {
-						Equipment.ChangeState(0, 1);
-					}
+			super.RequestMove(xSpeed, ySpeed);
+			
+			if (_d != direction) {
+				Equipment.ChangeDirection(direction);
+			}
+			
+			if (_m != isMoving) {
+				if (isMoving) {
+					Equipment.ChangeState(1, 0);
+				} else {
+					Equipment.ChangeState(0, 1);
 				}
 			}
 		}
 		
 		override public function RequestBasicAttack():void {
-			if (!isPortaling) Equipment.ChangeState(2, 0);
+			if (!ControlsLocked) Equipment.ChangeState(2, 0);
 		}
 		
 	}

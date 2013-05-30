@@ -26,12 +26,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SoundEditor));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabMusic = new System.Windows.Forms.TabPage();
-            this.sndMusic = new CityTools.Components.SoundSelector_Panel();
             this.tabAmbience = new System.Windows.Forms.TabPage();
-            this.sndAmbience = new CityTools.Components.SoundSelector_Panel();
             this.tabEffects = new System.Windows.Forms.TabPage();
-            this.sndEffects = new CityTools.Components.SoundSelector_Panel();
             this.player = new AxWMPLib.AxWindowsMediaPlayer();
+            this.sndMusic = new CityTools.Components.SoundSelector_Panel();
+            this.sndAmbience = new CityTools.Components.SoundSelector_Panel();
+            this.sndEffects = new CityTools.Components.SoundSelector_Panel();
             this.tabControl1.SuspendLayout();
             this.tabMusic.SuspendLayout();
             this.tabAmbience.SuspendLayout();
@@ -54,6 +54,7 @@
             // tabMusic
             // 
             this.tabMusic.Controls.Add(this.sndMusic);
+            this.tabMusic.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabMusic.Location = new System.Drawing.Point(4, 22);
             this.tabMusic.Name = "tabMusic";
             this.tabMusic.Padding = new System.Windows.Forms.Padding(3);
@@ -62,17 +63,10 @@
             this.tabMusic.Text = "Music";
             this.tabMusic.UseVisualStyleBackColor = true;
             // 
-            // sndMusic
-            // 
-            this.sndMusic.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sndMusic.Location = new System.Drawing.Point(3, 3);
-            this.sndMusic.Name = "sndMusic";
-            this.sndMusic.Size = new System.Drawing.Size(477, 421);
-            this.sndMusic.TabIndex = 0;
-            // 
             // tabAmbience
             // 
             this.tabAmbience.Controls.Add(this.sndAmbience);
+            this.tabAmbience.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabAmbience.Location = new System.Drawing.Point(4, 22);
             this.tabAmbience.Name = "tabAmbience";
             this.tabAmbience.Padding = new System.Windows.Forms.Padding(3);
@@ -81,31 +75,16 @@
             this.tabAmbience.Text = "Ambience";
             this.tabAmbience.UseVisualStyleBackColor = true;
             // 
-            // sndAmbience
-            // 
-            this.sndAmbience.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sndAmbience.Location = new System.Drawing.Point(3, 3);
-            this.sndAmbience.Name = "sndAmbience";
-            this.sndAmbience.Size = new System.Drawing.Size(477, 421);
-            this.sndAmbience.TabIndex = 0;
-            // 
             // tabEffects
             // 
             this.tabEffects.Controls.Add(this.sndEffects);
+            this.tabEffects.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabEffects.Location = new System.Drawing.Point(4, 22);
             this.tabEffects.Name = "tabEffects";
             this.tabEffects.Size = new System.Drawing.Size(483, 427);
             this.tabEffects.TabIndex = 2;
             this.tabEffects.Text = "Effects";
             this.tabEffects.UseVisualStyleBackColor = true;
-            // 
-            // sndEffects
-            // 
-            this.sndEffects.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sndEffects.Location = new System.Drawing.Point(0, 0);
-            this.sndEffects.Name = "sndEffects";
-            this.sndEffects.Size = new System.Drawing.Size(483, 427);
-            this.sndEffects.TabIndex = 0;
             // 
             // player
             // 
@@ -116,6 +95,30 @@
             this.player.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("player.OcxState")));
             this.player.Size = new System.Drawing.Size(491, 46);
             this.player.TabIndex = 1;
+            // 
+            // sndMusic
+            // 
+            this.sndMusic.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sndMusic.Location = new System.Drawing.Point(3, 3);
+            this.sndMusic.Name = "sndMusic";
+            this.sndMusic.Size = new System.Drawing.Size(477, 421);
+            this.sndMusic.TabIndex = 0;
+            // 
+            // sndAmbience
+            // 
+            this.sndAmbience.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sndAmbience.Location = new System.Drawing.Point(3, 3);
+            this.sndAmbience.Name = "sndAmbience";
+            this.sndAmbience.Size = new System.Drawing.Size(477, 421);
+            this.sndAmbience.TabIndex = 0;
+            // 
+            // sndEffects
+            // 
+            this.sndEffects.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sndEffects.Location = new System.Drawing.Point(0, 0);
+            this.sndEffects.Name = "sndEffects";
+            this.sndEffects.Size = new System.Drawing.Size(483, 427);
+            this.sndEffects.TabIndex = 0;
             // 
             // SoundEditor
             // 

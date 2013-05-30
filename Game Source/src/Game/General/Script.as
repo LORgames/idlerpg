@@ -14,14 +14,14 @@ package Game.General {
 	 */
 	public class Script {
 		public static const Attack:uint = 0;
-		public static const ModifyAttack:uint = 1;
-		public static const ModifyDamage:uint = 2;
-		public static const Spawn:uint = 3;
-		public static const Attacked:uint = 4;
-		public static const Use:uint = 5;
-		public static const Equip:uint = 6;
-		public static const MinionDied:uint = 7;
-		public static const AnimationEnded:uint = 8;
+		public static const Spawn:uint = 1;
+		public static const Attacked:uint = 2;
+		public static const Use:uint = 3;
+		public static const Equip:uint = 4;
+		public static const MinionDied:uint = 5;
+		public static const AnimationEnded:uint = 6;
+		public static const StartMoving:uint = 7;
+		public static const EndMoving:uint = 8;
 		public static const TOTAL_EVENT_TYPES:uint = 9;
 		
 		private var EventScripts:Vector.<ByteArray>;

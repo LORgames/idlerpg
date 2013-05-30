@@ -18,6 +18,7 @@ package Game.Critter {
 	public class BaseCritter implements IUpdatable {
 		public var direction:int = 3;
 		public var state:int = 0;
+		protected var ControlsLocked:Boolean = false;
 		
 		//Current state information
 		public var isMoving:Boolean = false;
@@ -33,6 +34,11 @@ package Game.Critter {
 		public var MyRect:Rect = new Rect(0, 0, 0, 0);
 		
 		public var MyScript:Script;
+		
+		//Portal Information
+		private var isPortaling:Boolean = true;
+		private var portalTimer:Number = 0;
+		private const PORTAL_LOCK_TIME:int = 2; // in seconds
 		
 		public function BaseCritter() {
 			
@@ -79,6 +85,9 @@ package Game.Critter {
 		public function Update(dt:Number):void {
 			if (CurrentMap == null) return;
 			
+			//Will need these later :)
+			var j:int;
+			
 			//Store these in case
 			var prevX:int = X;
 			var prevY:int = Y;
@@ -104,8 +113,6 @@ package Game.Critter {
 			//They didn't leave the map? Lets try solid objects
 			if(!collision) {
 				while (--i > -1) {
-					var j:int;
-					
 					//Look for collision in the tile.
 					var rs:Vector.<Rect> = tiles[i].SolidRectangles;
 					j = rs.length;
@@ -134,27 +141,66 @@ package Game.Critter {
 				MyRect.x = X - MyRect.width / 2;
 				MyRect.y = Y - MyRect.height / 2;
 			}
+			
+			//Check to see if this object can portal
+			if (CurrentMap.Portals != null) {
+				j = CurrentMap.Portals.length;
+				while (--j > -1) {
+					if (CurrentMap.Portals[j].Entry.intersects(MyRect)) {
+						var exitID:int = CurrentMap.Portals[j].ExitID;
+						if (WorldData.ME.CurrentMap.Name == WorldData.PortalDestinations[exitID]) {
+							var k:int = CurrentMap.Portals.length;
+							while (--k > -1) {
+								if (CurrentMap.Portals[j].ExitID == CurrentMap.Portals[k].ID) {
+									Global.MapPortalID = k;
+									Main.I.Renderer.FadeToBlack(RequestInMapTeleport);
+								}
+							}
+							break;
+						} else {
+							Global.MapPortalID = exitID;
+							Main.I.Renderer.FadeToBlack(WorldData.UpdatePlayerPosition);
+							RequestMove(0, 0);
+							isPortaling = true;
+						}
+						break;
+					}
+				}
+			}
+			
+			if (isPortaling) {
+				if (portalTimer < PORTAL_LOCK_TIME) {
+					portalTimer += dt;
+				} else {
+					portalTimer = 0;
+					isPortaling = false;
+				}
+			}
 		}
 		
 		public function RequestMove(xSpeed:Number, ySpeed:Number):void {
-			if(xSpeed != 0 || ySpeed != 0) {
-				direction = SpeedToDirection(xSpeed, ySpeed);
+			if(!isPortaling) {
+				if(xSpeed != 0 || ySpeed != 0) {
+					direction = SpeedToDirection(xSpeed, ySpeed);
+					
+					// normalise speed vector
+					xSpeed = xSpeed / Math.sqrt(Math.pow(xSpeed, 2) + Math.pow(ySpeed, 2));
+					ySpeed = ySpeed / Math.sqrt(Math.pow(xSpeed, 2) + Math.pow(ySpeed, 2));
+					
+					moveSpeedX = xSpeed * MovementSpeed;
+					
+					if(ySpeed < 0) moveSpeedY = ySpeed * MovementSpeed * 0.707;
+					if(ySpeed > 0) moveSpeedY = ySpeed * MovementSpeed * 0.900;
+					
+					isMoving = true;
+				} 
+				if (xSpeed == 0) moveSpeedX = 0;
+				if (ySpeed == 0) moveSpeedY = 0;
 				
-				// normalise speed vector
-				xSpeed = xSpeed / Math.sqrt(Math.pow(xSpeed, 2) + Math.pow(ySpeed, 2));
-				ySpeed = ySpeed / Math.sqrt(Math.pow(xSpeed, 2) + Math.pow(ySpeed, 2));
-				
-				moveSpeedX = xSpeed * MovementSpeed;
-				
-				if(ySpeed < 0) moveSpeedY = ySpeed * MovementSpeed * 0.707;
-				if(ySpeed > 0) moveSpeedY = ySpeed * MovementSpeed * 0.900;
-				
-				isMoving = true;
-			} 
-			if (xSpeed == 0) moveSpeedX = 0;
-			if (ySpeed == 0) moveSpeedY = 0;
-			
-			if ((moveSpeedX == 0) && (moveSpeedY == 0)) {
+				if ((moveSpeedX == 0) && (moveSpeedY == 0)) {
+					isMoving = false;
+				}
+			} else {
 				isMoving = false;
 			}
 		}

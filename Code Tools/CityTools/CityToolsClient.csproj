@@ -134,6 +134,12 @@
     <Compile Include="EquipmentEditor.Designer.cs">
       <DependentUpon>EquipmentEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="GenerateEquipmentAlternatives.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GenerateEquipmentAlternatives.Designer.cs">
+      <DependentUpon>GenerateEquipmentAlternatives.cs</DependentUpon>
+    </Compile>
     <Compile Include="MapEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -224,6 +230,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EquipmentEditor.resx">
       <DependentUpon>EquipmentEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GenerateEquipmentAlternatives.resx">
+      <DependentUpon>GenerateEquipmentAlternatives.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MapEditor.resx">
       <DependentUpon>MapEditor.cs</DependentUpon>

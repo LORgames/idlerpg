@@ -1,4 +1,5 @@
 package {
+	import flash.geom.Point;
 	/**
 	 * ...
 	 * @author Paul
@@ -10,6 +11,8 @@ package {
 		
 		//Portaling Information
 		public static var MapPortalID:int = -1;
+		
+		public static const ZeroPoint:Point = new Point();
 	}
 
 }
