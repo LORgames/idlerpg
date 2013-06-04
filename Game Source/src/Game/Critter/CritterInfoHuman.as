@@ -34,6 +34,8 @@ package Game.Critter {
 			p.Equipment.Equip(shadow, legs, body, face, headgear, weapon);
 			
 			p.CurrentMap = map;
+			map.Critters.push(p);
+			
 			p.X = x;
 			p.Y = y;
 			

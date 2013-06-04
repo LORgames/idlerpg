@@ -23,8 +23,8 @@ package Game.Critter
 			Main.OrderedLayer.addChild(Animation);
 			Main.Updatables.push(this);
 			
-			MyRect.width = 24;
-			MyRect.height = 12;
+			MyRect.W = 24;
+			MyRect.H = 12;
 		}
 		
 		public override function Update(dt:Number):void {

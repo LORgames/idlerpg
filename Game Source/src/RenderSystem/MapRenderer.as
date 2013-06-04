@@ -4,9 +4,11 @@ package RenderSystem {
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.display.Stage;
+	import flash.events.Event;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;
+	import Game.Map.ObjectInstance;
 	import Game.Map.TileHelper;
 	import Game.Map.TileInstance;
 	import Game.Map.TileTemplate;
@@ -23,7 +25,12 @@ package RenderSystem {
 		public var fullRect:Rectangle = new Rectangle();
 		
 		public function MapRenderer() {
-			
+			this.addEventListener(Event.ADDED_TO_STAGE, StageAdded);
+		}
+		
+		public function StageAdded(e:Event):void {
+			this.removeEventListener(Event.ADDED_TO_STAGE, StageAdded);
+			this.parent.addChild(DebugLayer);
 		}
 		
 		public function Resized():void {
@@ -70,6 +77,29 @@ package RenderSystem {
 					data.copyPixels(tileArt, TileTemplate.Tiles[tileType].Frame, destPoint);
 				}
 			}
+			
+			//TODO: Clean up debug draw things if required
+			/*xPos = WorldData.ME.CurrentMap.Critters.length;
+			
+			DebugLayer.graphics.clear();
+			
+			DebugLayer.graphics.lineStyle(1, 0xFFFF00);
+			
+			while (--xPos > -1) {
+				WorldData.ME.CurrentMap.Critters[xPos].DrawDebugRect(DebugLayer.graphics);
+			}
+			
+			DebugLayer.graphics.lineStyle(1, 0xFF00FF);
+			xPos = WorldData.ME.CurrentMap.Objects.length;
+			
+			while (--xPos > -1) {
+				var objI:ObjectInstance = WorldData.ME.CurrentMap.Objects[xPos];
+				yPos = objI.Template.Bases.length;
+				
+				while (--yPos > -1) {
+					DebugLayer.graphics.drawRect(objI.Template.Bases[yPos].left + objI.x, objI.Template.Bases[yPos].top + objI.y, objI.Template.Bases[yPos].width, objI.Template.Bases[yPos].height);
+				}
+			}*/
 			
 			data.unlock();
 		}

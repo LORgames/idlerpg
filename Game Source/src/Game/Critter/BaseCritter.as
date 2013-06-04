@@ -1,6 +1,9 @@
 package Game.Critter {
+	import CollisionSystem.Rect;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.Graphics;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import Game.General.Script;
 	import Game.Map.MapData;
@@ -31,7 +34,7 @@ package Game.Critter {
 		
 		public var X:int = 0;
 		public var Y:int = 0;
-		public var MyRect:Rect = new Rect(0, 0, 0, 0);
+		public var MyRect:Rect = new Rect(false, 0, 0, 0, 0);
 		
 		public var MyScript:Script;
 		
@@ -45,15 +48,18 @@ package Game.Critter {
 		}
 		
 		public function ShiftMaps(newMap:MapData, location:int = 0):void {
+			if(CurrentMap != null) CurrentMap.Critters.splice(CurrentMap.Critters.indexOf(this), 1);
 			CurrentMap = newMap;
+			CurrentMap.Critters.push(this);
 			
 			this.X = (location % newMap.TileSizeX) * 48;
 			this.Y = (location / newMap.TileSizeX) * 48;
 		}
 		
 		public function RequestTeleport(newMap:MapData, portal:Portal):void {
-			CurrentMap.Critters.splice(CurrentMap.Critters.indexOf(this), 1);
+			if(CurrentMap != null) CurrentMap.Critters.splice(CurrentMap.Critters.indexOf(this), 1);
 			CurrentMap = newMap;
+			CurrentMap.Critters.push(this);
 			
 			this.X = portal.ExitPoint.x;
 			this.Y = portal.ExitPoint.y;
@@ -100,28 +106,26 @@ package Game.Critter {
 				CurrentMovementCost = 1; //reset to 1 and then update the other things when possible
 			}
 			
-			MyRect.x = X - MyRect.width / 2;
-			MyRect.y = Y - MyRect.height / 2;
+			MyRect.X = X - MyRect.W / 2;
+			MyRect.Y = Y - MyRect.H / 2;
 			
 			//Now do a quick tile check to see if we hit anything
 			var tiles:Vector.<TileInstance> = TileHelper.GetTiles(MyRect, CurrentMap);
 			var i:int = tiles.length;
-			/* collision calculated in base 2
-			 * 0 = None
-			 * 1 = Left
-			 * 2 = Right
-			 * 4 = Up
-			 * 8 = Down
-			 */
-			var collision:int = 0;
+			
+			//Collision measures how far into something else we've penetrated
+			var collisionPenetration:Point = new Point();
 			
 			//Check if the critter tried to leave the map boundaries
-			if (MyRect.x < 0 || MyRect.y < 0 || MyRect.x + MyRect.height > CurrentMap.SizeX || MyRect.y + MyRect.width > CurrentMap.SizeY) {
-				collision = 15;
-			}
-			
-			//They didn't leave the map? Lets try solid objects
-			if(collision == 0) {
+			if (MyRect.X < 0 || MyRect.Y < 0 || MyRect.X + MyRect.H > CurrentMap.SizeX || MyRect.Y + MyRect.W > CurrentMap.SizeY) {
+				//Undo the changes: no leaving the map
+				X = prevX;
+				Y = prevY;
+				
+				MyRect.X = X - MyRect.W / 2;
+				MyRect.Y = Y - MyRect.H / 2;
+			} else {
+				//They didn't leave the map? Lets try solid objects
 				while (--i > -1) {
 					//Look for collision in the tile.
 					var rs:Vector.<Rect> = tiles[i].SolidRectangles;
@@ -129,36 +133,52 @@ package Game.Critter {
 					
 					while (--j > -1) {
 						if (rs[j].intersects(MyRect)) {
-							collision = rs[j].intersectEdge(MyRect);
+							MyRect.CalculatePenetration(rs[j], collisionPenetration);
+							
+							//if (collisionPenetration.x != 0 && collisionPenetration.y != 0)
+							//	trace(collisionPenetration + ", " + MyRect + ", " + rs[j]);
+							
 							break;
 						}
 					}
 					
-					if (collision > 0) break;
+					if (collisionPenetration.x != 0 && collisionPenetration.y != 0) break;
 					
 					//No collision so lets update the movement speed
 					if (TileTemplate.Tiles[tiles[i].TileID].movementCost > CurrentMovementCost) {
 						CurrentMovementCost = TileTemplate.Tiles[tiles[i].TileID].movementCost;
 					}
 				}
-			}
-			
-			//Scan against critters
-			if (collision == 0) {
-				var totalCritters:int = CurrentMap.Critters.length;
 				
-				while (--totalCritters > -1) {
+				//Scan against critters
+				if (collisionPenetration.x == 0 || collisionPenetration.y == 0) {
+					var totalCritters:int = CurrentMap.Critters.length;
+					var critter:BaseCritter;
 					
+					while (--totalCritters > -1) {
+						critter = CurrentMap.Critters[totalCritters];
+						
+						if (critter != this) {
+							if (MyRect.intersects(critter.MyRect)) {
+								MyRect.CalculatePenetration(critter.MyRect, collisionPenetration);
+								
+								if (collisionPenetration.x != 0 && collisionPenetration.y != 0) break;
+							}
+						}
+					}
 				}
-			}
-			
-			if (collision > 0) {
-				//Undo the changes
-				X = prevX;
-				Y = prevY;
 				
-				MyRect.x = X - MyRect.width / 2;
-				MyRect.y = Y - MyRect.height / 2;
+				if (collisionPenetration.x != 0 && collisionPenetration.y != 0) {
+					//Undo the changes
+					if(Math.abs(collisionPenetration.x) < Math.abs(collisionPenetration.y)) {
+						X += collisionPenetration.x;
+					} else {
+						Y += collisionPenetration.y;
+					}
+					
+					MyRect.X = X - MyRect.W / 2;
+					MyRect.Y = Y - MyRect.H / 2;
+				}
 			}
 			
 			//Check to see if this object can portal
@@ -225,6 +245,10 @@ package Game.Critter {
 		
 		public function RequestBasicAttack():void {
 			//need to deal with a few things here, incl state management
+		}
+		
+		public function DrawDebugRect(gfx:Graphics):void {
+			gfx.drawRect(MyRect.X, MyRect.Y, MyRect.W, MyRect.H);
 		}
 		
 	}

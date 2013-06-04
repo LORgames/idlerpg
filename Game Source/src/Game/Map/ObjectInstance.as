@@ -1,4 +1,5 @@
 package Game.Map {
+	import CollisionSystem.Rect;
 	import flash.display.Bitmap;
 	import flash.geom.Rectangle;
 	import Interfaces.IObjectLayer;
@@ -38,7 +39,7 @@ package Game.Map {
 			
 			if (Template.isSolid) {
 				while (--totalRects > -1) {
-					var rect:Rect = new Rect(this.x + Template.Bases[totalRects].x, this.y + Template.Bases[totalRects].y, Template.Bases[totalRects].width, Template.Bases[totalRects].height);
+					var rect:Rect = new Rect(true, this.x + Template.Bases[totalRects].x, this.y + Template.Bases[totalRects].y, Template.Bases[totalRects].width, Template.Bases[totalRects].height);
 					
 					tiles = TileHelper.GetTiles(rect, Map);
 					i = tiles.length;

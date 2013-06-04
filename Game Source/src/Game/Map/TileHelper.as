@@ -1,4 +1,5 @@
 package Game.Map {
+	import CollisionSystem.Rect;
 	import flash.geom.Rectangle;
 	/**
 	 * ...
@@ -11,10 +12,10 @@ package Game.Map {
 		public static function GetTiles(r:Rect, Map:MapData, b:Boolean = false):Vector.<TileInstance> {
 			var retVal:Vector.<TileInstance> = new Vector.<TileInstance>();
 			
-			var xTilePosL:int = r.x / TILE_SIZE;
-			var yTilePosL:int = r.y / TILE_SIZE;
-			var xTilePosU:int = (r.x + r.width) / TILE_SIZE;
-			var yTilePosU:int = (r.y + r.height) / TILE_SIZE;
+			var xTilePosL:int = r.X / TILE_SIZE;
+			var yTilePosL:int = r.Y / TILE_SIZE;
+			var xTilePosU:int = (r.X + r.W) / TILE_SIZE;
+			var yTilePosU:int = (r.Y + r.H) / TILE_SIZE;
 			
 			if (xTilePosL < 0) xTilePosL = 0;
 			if (yTilePosL < 0) yTilePosL = 0;

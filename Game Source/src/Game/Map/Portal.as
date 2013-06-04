@@ -1,5 +1,6 @@
 package Game.Map 
 {
+	import CollisionSystem.Rect;
 	import flash.geom.Point;
 	import flash.utils.ByteArray;
 	/**
@@ -7,7 +8,7 @@ package Game.Map
 	 * @author Paul
 	 */
 	public class Portal {
-		public var Entry:Rect = new Rect();
+		public var Entry:Rect = new Rect(true);
 		public var ExitPoint:Point = new Point();
 		
 		public var ID:int;
@@ -25,10 +26,10 @@ package Game.Map
 			ExitPoint.y = b.readShort();
 			
 			//read exit
-			Entry.x = b.readShort();
-			Entry.y = b.readShort();
-			Entry.width = b.readShort();
-			Entry.height = b.readShort();
+			Entry.X = b.readShort();
+			Entry.Y = b.readShort();
+			Entry.W = b.readShort();
+			Entry.H = b.readShort();
 		}
 		
 	}

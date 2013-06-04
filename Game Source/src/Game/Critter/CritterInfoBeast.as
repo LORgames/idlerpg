@@ -37,7 +37,7 @@ package Game.Critter
 			var TotalFrames:int = b.readByte();
 			
 			//Each animation has frame information for all 4 directions (just in case really), has 1 more for the total size as the last one for [i+1] checking later
-			AnimationFrameCounts = new Vector.<int>(TotalAnimationStates * 4 +1, true);
+			AnimationFrameCounts = new Vector.<int>(TotalAnimationStates * 4 + 1, true);
 			
 			var currentStateIndex:int = TotalAnimationStates * 4;
 			AnimationFrameCounts[currentStateIndex] = TotalFrames;
@@ -59,6 +59,8 @@ package Game.Critter
 			var p:CritterBeast = new CritterBeast(this);
 			
 			p.CurrentMap = map;
+			map.Critters.push(p);
+			
 			p.X = x;
 			p.Y = y;
 			

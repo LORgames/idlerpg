@@ -1,4 +1,5 @@
 package Game.Map {
+	import CollisionSystem.Rect;
 	/**
 	 * ...
 	 * @author Paul
@@ -13,7 +14,7 @@ package Game.Map {
 			
 			while (--i > -1) {
 				var c:Rect = rectsToCopy[i];
-				var r:Rect = new Rect(c.x + tileX * 48, c.y + tileY * 48, c.width, c.height);
+				var r:Rect = new Rect(true, c.X + tileX * 48, c.Y + tileY * 48, c.W, c.H);
 				SolidRectangles.push(r);
 			}
 		}
