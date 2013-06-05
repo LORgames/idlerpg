@@ -36,7 +36,7 @@ package Game.Map {
 		
 		public function MapData(mapname:String, portalID:int = -1) {
 			Name = mapname;
-			
+			Main.I.MapText.UpdateText(Name);
 			this.ExpectedAtPortalID = portalID;
 			if (portalID != -1) firstload = true;
 			

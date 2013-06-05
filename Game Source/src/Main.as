@@ -1,12 +1,14 @@
 package {
 	import flash.desktop.NativeApplication;
 	import flash.display.NativeWindow;
+	import flash.display.Screen;
 	import flash.events.Event;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.InvokeEvent;
 	import flash.events.TouchEvent;
+	import flash.text.TextField;
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
 	import Game.Critter.CritterManager;
@@ -21,6 +23,7 @@ package {
 	import Interfaces.IUpdatable;
 	import RenderSystem.Renderman;
 	import SoundSystem.MusicPlayer;
+	import WindowSystem.ScreenText;
 	
 	/**
 	 * ...
@@ -34,6 +37,8 @@ package {
 		public static var Updatables:Vector.<IUpdatable> = new Vector.<IUpdatable>();
 		
 		public static var Input:IInputSystem;
+		
+		public var MapText:ScreenText;
 		
 		//Some other important things
 		public var Renderer:Renderman;
@@ -83,6 +88,9 @@ package {
 			
 			new EquipmentManager();
 			new CritterManager();
+			
+			MapText = new ScreenText();
+			stage.addChild(MapText);
 			
 			stage.addEventListener(Event.RESIZE, Resized);
 			stage.addEventListener(Event.ENTER_FRAME, Cycle);
