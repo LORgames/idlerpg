@@ -12,6 +12,7 @@ using System.IO;
 using ToolCache.Drawing;
 using ToolCache.Equipment;
 using ToolCache.Animation;
+using ToolCache.Items;
 
 namespace CityTools {
     public partial class EquipmentEditor : Form {
@@ -628,6 +629,41 @@ namespace CityTools {
 
         void txtScript_BeforeParse(object sender, Components.ScriptInfoArgs e) {
             e.Info.AnimationNames.AddRange(currentEquipment.Animations.Keys);
+        }
+
+        private void btnCreateAsItem_Click(object sender, EventArgs e) {
+            SaveIfRequired();
+
+            Item i = new Item();
+
+            i.ID = ItemDatabase.NextItemID;
+            i.Name = currentEquipment.Name;
+            i.Category = currentEquipment.Type.ToString();
+            i.Description = "An amazing " + i.Name;
+            i.MaxInStack = 1;
+            i.ConsumeEffect = "Use\n\tequip " + i.Name + "\n";
+
+            if (currentEquipment.GetAnimation("Default").GetAnimation(Direction.Down, 0).Frames.Count > 0) {
+                Image temp = Image.FromFile(currentEquipment.GetAnimation("Default").GetAnimation(Direction.Down, 0).Frames[0]);
+
+                if (temp != null) {
+                    Bitmap bmp = new Bitmap(48, 48);
+                    Graphics g = Graphics.FromImage(bmp);
+
+                    g.DrawImage(temp, 0, 0, 48, 48);
+                    g.Dispose();
+
+                    Bitmap clone = new Bitmap(bmp);
+                    bmp.Dispose();
+
+                    clone.Save("Icons/" + i.Name + ".png");
+
+                    i.IconName = "Icons/" + i.Name + ".png";
+                }
+            }
+
+            ItemDatabase.AddItem(i);
+            ItemDatabase.SaveDatabase();
         }
     }
 }

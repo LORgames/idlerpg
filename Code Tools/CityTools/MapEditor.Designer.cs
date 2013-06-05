@@ -74,6 +74,9 @@
             this.numSpawnMax = new System.Windows.Forms.NumericUpDown();
             this.label18 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
+            this.listCritterSpawns = new CityTools.Components.ListViewEx();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label16 = new System.Windows.Forms.Label();
             this.btnRegionResize = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
@@ -127,9 +130,8 @@
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.timerRedrawAll = new System.Windows.Forms.Timer(this.components);
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.listCritterSpawns = new CityTools.Components.ListViewEx();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.lblHighlightedCell = new System.Windows.Forms.ToolStripLabel();
             ((System.ComponentModel.ISupportInitialize)(this.main_splitter)).BeginInit();
             this.main_splitter.Panel1.SuspendLayout();
             this.main_splitter.Panel2.SuspendLayout();
@@ -197,7 +199,9 @@
             this.toolStripSeparator2,
             this.btnExport,
             this.toolStripSeparator3,
-            this.btnViewMenu});
+            this.btnViewMenu,
+            this.toolStripSeparator4,
+            this.lblHighlightedCell});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(680, 25);
@@ -638,6 +642,30 @@
             this.label17.Size = new System.Drawing.Size(71, 13);
             this.label17.TabIndex = 42;
             this.label17.Text = "Timeout (sec)";
+            // 
+            // listCritterSpawns
+            // 
+            this.listCritterSpawns.AllowColumnReorder = true;
+            this.listCritterSpawns.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2});
+            this.listCritterSpawns.DoubleClickActivation = false;
+            this.listCritterSpawns.FullRowSelect = true;
+            this.listCritterSpawns.Location = new System.Drawing.Point(14, 576);
+            this.listCritterSpawns.Name = "listCritterSpawns";
+            this.listCritterSpawns.Size = new System.Drawing.Size(195, 103);
+            this.listCritterSpawns.TabIndex = 41;
+            this.listCritterSpawns.UseCompatibleStateImageBehavior = false;
+            this.listCritterSpawns.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Critter";
+            this.columnHeader1.Width = 130;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Spawn%";
             // 
             // label16
             // 
@@ -1124,29 +1152,16 @@
             this.colorDialog.FullOpen = true;
             this.colorDialog.SolidColorOnly = true;
             // 
-            // listCritterSpawns
+            // toolStripSeparator4
             // 
-            this.listCritterSpawns.AllowColumnReorder = true;
-            this.listCritterSpawns.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2});
-            this.listCritterSpawns.DoubleClickActivation = false;
-            this.listCritterSpawns.FullRowSelect = true;
-            this.listCritterSpawns.Location = new System.Drawing.Point(14, 576);
-            this.listCritterSpawns.Name = "listCritterSpawns";
-            this.listCritterSpawns.Size = new System.Drawing.Size(195, 103);
-            this.listCritterSpawns.TabIndex = 41;
-            this.listCritterSpawns.UseCompatibleStateImageBehavior = false;
-            this.listCritterSpawns.View = System.Windows.Forms.View.Details;
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
             // 
-            // columnHeader1
+            // lblHighlightedCell
             // 
-            this.columnHeader1.Text = "Critter";
-            this.columnHeader1.Width = 130;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Spawn%";
+            this.lblHighlightedCell.Name = "lblHighlightedCell";
+            this.lblHighlightedCell.Size = new System.Drawing.Size(27, 22);
+            this.lblHighlightedCell.Text = "Cell";
             // 
             // MainWindow
             // 
@@ -1291,6 +1306,8 @@
         internal System.Windows.Forms.ComboBox cbBackgroundType;
         private System.Windows.Forms.ColorDialog colorDialog;
         private System.Windows.Forms.Button btnChangeBackground;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripLabel lblHighlightedCell;
     }
 }
 

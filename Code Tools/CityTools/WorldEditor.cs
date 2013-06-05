@@ -10,6 +10,7 @@ using ToolCache.Map;
 using ToolCache.Drawing;
 using CityTools.Core;
 using ToolCache.World;
+using CityTools.Properties;
 
 namespace CityTools {
     internal enum WorldEditMode {
@@ -285,7 +286,7 @@ namespace CityTools {
 
         public WorldData(MapPiece piece) {
             if (portalIcon == null) {
-                portalIcon = Image.FromFile("Icons/PortalIcon.png");
+                portalIcon = Resources.PortalIcon;
             }
 
             image = Image.FromFile("Maps/Thumbs/" + piece.Name + ".png");

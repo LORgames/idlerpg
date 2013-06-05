@@ -49,20 +49,20 @@ namespace CityTools {
             }
 
             foreach (Item i in ItemDatabase.Items) {
-                if (File.Exists(i.IconName)) {
-                    TreeNode n = new TreeNode(i.Name);
-                    n.Tag = i.ID;
+                TreeNode n = new TreeNode(i.Name);
+                n.Tag = i.ID;
 
+                if (File.Exists(i.IconName)) {
                     n.ImageIndex = LoadedImageListIndices.IndexOf(i.IconName);
                     n.SelectedImageIndex = n.ImageIndex;
-
-                    if (!categories.ContainsKey(i.Category)) {
-                        categories.Add(i.Category, new TreeNode(i.Category));
-                        treeItemHeirachy.Nodes.Add(categories[i.Category]);
-                    }
-
-                    categories[i.Category].Nodes.Add(n);
                 }
+
+                if (!categories.ContainsKey(i.Category)) {
+                    categories.Add(i.Category, new TreeNode(i.Category));
+                    treeItemHeirachy.Nodes.Add(categories[i.Category]);
+                }
+
+                categories[i.Category].Nodes.Add(n);
             }
 
             treeItemHeirachy.ResumeLayout();

@@ -84,6 +84,7 @@ namespace CityTools {
             this.txtScript = new CityTools.Components.ScriptBox();
             this.label18 = new System.Windows.Forms.Label();
             this.btnExportMany = new System.Windows.Forms.Button();
+            this.btnCreateAsItem = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbEquipmentDisplay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numOffsetX_0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numOffsetY_0)).BeginInit();
@@ -98,16 +99,16 @@ namespace CityTools {
             // 
             // treeEquipmentList
             // 
-            this.treeEquipmentList.Location = new System.Drawing.Point(12, 170);
+            this.treeEquipmentList.Location = new System.Drawing.Point(12, 201);
             this.treeEquipmentList.Name = "treeEquipmentList";
-            this.treeEquipmentList.Size = new System.Drawing.Size(198, 437);
+            this.treeEquipmentList.Size = new System.Drawing.Size(198, 406);
             this.treeEquipmentList.TabIndex = 1;
             this.treeEquipmentList.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeEquipmentList_AfterSelect);
             // 
             // cbItemType
             // 
             this.cbItemType.FormattingEnabled = true;
-            this.cbItemType.Location = new System.Drawing.Point(216, 217);
+            this.cbItemType.Location = new System.Drawing.Point(216, 188);
             this.cbItemType.Name = "cbItemType";
             this.cbItemType.Size = new System.Drawing.Size(112, 21);
             this.cbItemType.TabIndex = 2;
@@ -211,7 +212,7 @@ namespace CityTools {
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(216, 201);
+            this.label4.Location = new System.Drawing.Point(216, 172);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(84, 13);
             this.label4.TabIndex = 15;
@@ -220,7 +221,7 @@ namespace CityTools {
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(216, 241);
+            this.label5.Location = new System.Drawing.Point(216, 212);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(88, 13);
             this.label5.TabIndex = 16;
@@ -228,7 +229,7 @@ namespace CityTools {
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(216, 257);
+            this.txtName.Location = new System.Drawing.Point(216, 228);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(112, 20);
             this.txtName.TabIndex = 17;
@@ -237,7 +238,7 @@ namespace CityTools {
             // ckbAvailableAtStart
             // 
             this.ckbAvailableAtStart.AutoSize = true;
-            this.ckbAvailableAtStart.Location = new System.Drawing.Point(216, 283);
+            this.ckbAvailableAtStart.Location = new System.Drawing.Point(216, 254);
             this.ckbAvailableAtStart.Name = "ckbAvailableAtStart";
             this.ckbAvailableAtStart.Size = new System.Drawing.Size(85, 17);
             this.ckbAvailableAtStart.TabIndex = 18;
@@ -284,9 +285,9 @@ namespace CityTools {
             // 
             // btnCreateNew
             // 
-            this.btnCreateNew.Location = new System.Drawing.Point(217, 171);
+            this.btnCreateNew.Location = new System.Drawing.Point(116, 172);
             this.btnCreateNew.Name = "btnCreateNew";
-            this.btnCreateNew.Size = new System.Drawing.Size(111, 23);
+            this.btnCreateNew.Size = new System.Drawing.Size(94, 23);
             this.btnCreateNew.TabIndex = 25;
             this.btnCreateNew.Text = "Create New";
             this.btnCreateNew.UseVisualStyleBackColor = true;
@@ -394,7 +395,7 @@ namespace CityTools {
             // 
             // numOffsetX_0
             // 
-            this.numOffsetX_0.Location = new System.Drawing.Point(254, 340);
+            this.numOffsetX_0.Location = new System.Drawing.Point(254, 311);
             this.numOffsetX_0.Maximum = new decimal(new int[] {
             250,
             0,
@@ -413,7 +414,7 @@ namespace CityTools {
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(262, 326);
+            this.label1.Location = new System.Drawing.Point(262, 297);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(14, 13);
             this.label1.TabIndex = 44;
@@ -422,7 +423,7 @@ namespace CityTools {
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(303, 326);
+            this.label11.Location = new System.Drawing.Point(303, 297);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(14, 13);
             this.label11.TabIndex = 46;
@@ -430,7 +431,7 @@ namespace CityTools {
             // 
             // numOffsetY_0
             // 
-            this.numOffsetY_0.Location = new System.Drawing.Point(292, 340);
+            this.numOffsetY_0.Location = new System.Drawing.Point(292, 311);
             this.numOffsetY_0.Maximum = new decimal(new int[] {
             250,
             0,
@@ -490,7 +491,7 @@ namespace CityTools {
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(224, 344);
+            this.label13.Location = new System.Drawing.Point(224, 315);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(25, 13);
             this.label13.TabIndex = 51;
@@ -499,7 +500,7 @@ namespace CityTools {
             // lbl3489
             // 
             this.lbl3489.AutoSize = true;
-            this.lbl3489.Location = new System.Drawing.Point(217, 366);
+            this.lbl3489.Location = new System.Drawing.Point(217, 337);
             this.lbl3489.Name = "lbl3489";
             this.lbl3489.Size = new System.Drawing.Size(32, 13);
             this.lbl3489.TabIndex = 54;
@@ -507,7 +508,7 @@ namespace CityTools {
             // 
             // numOffsetY_1
             // 
-            this.numOffsetY_1.Location = new System.Drawing.Point(292, 361);
+            this.numOffsetY_1.Location = new System.Drawing.Point(292, 332);
             this.numOffsetY_1.Maximum = new decimal(new int[] {
             250,
             0,
@@ -525,7 +526,7 @@ namespace CityTools {
             // 
             // numOffsetX_1
             // 
-            this.numOffsetX_1.Location = new System.Drawing.Point(254, 361);
+            this.numOffsetX_1.Location = new System.Drawing.Point(254, 332);
             this.numOffsetX_1.Maximum = new decimal(new int[] {
             250,
             0,
@@ -544,7 +545,7 @@ namespace CityTools {
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(228, 384);
+            this.label15.Location = new System.Drawing.Point(228, 355);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(21, 13);
             this.label15.TabIndex = 57;
@@ -552,7 +553,7 @@ namespace CityTools {
             // 
             // numOffsetY_2
             // 
-            this.numOffsetY_2.Location = new System.Drawing.Point(292, 382);
+            this.numOffsetY_2.Location = new System.Drawing.Point(292, 353);
             this.numOffsetY_2.Maximum = new decimal(new int[] {
             250,
             0,
@@ -570,7 +571,7 @@ namespace CityTools {
             // 
             // numOffsetX_2
             // 
-            this.numOffsetX_2.Location = new System.Drawing.Point(254, 382);
+            this.numOffsetX_2.Location = new System.Drawing.Point(254, 353);
             this.numOffsetX_2.Maximum = new decimal(new int[] {
             250,
             0,
@@ -589,7 +590,7 @@ namespace CityTools {
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(214, 405);
+            this.label16.Location = new System.Drawing.Point(214, 376);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(35, 13);
             this.label16.TabIndex = 60;
@@ -597,7 +598,7 @@ namespace CityTools {
             // 
             // numOffsetY_3
             // 
-            this.numOffsetY_3.Location = new System.Drawing.Point(292, 403);
+            this.numOffsetY_3.Location = new System.Drawing.Point(292, 374);
             this.numOffsetY_3.Maximum = new decimal(new int[] {
             250,
             0,
@@ -615,7 +616,7 @@ namespace CityTools {
             // 
             // numOffsetX_3
             // 
-            this.numOffsetX_3.Location = new System.Drawing.Point(254, 403);
+            this.numOffsetX_3.Location = new System.Drawing.Point(254, 374);
             this.numOffsetX_3.Maximum = new decimal(new int[] {
             250,
             0,
@@ -636,7 +637,7 @@ namespace CityTools {
             this.ckbLockOffsets.AutoSize = true;
             this.ckbLockOffsets.Checked = true;
             this.ckbLockOffsets.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ckbLockOffsets.Location = new System.Drawing.Point(216, 306);
+            this.ckbLockOffsets.Location = new System.Drawing.Point(216, 277);
             this.ckbLockOffsets.Name = "ckbLockOffsets";
             this.ckbLockOffsets.Size = new System.Drawing.Size(115, 17);
             this.ckbLockOffsets.TabIndex = 61;
@@ -736,11 +737,22 @@ namespace CityTools {
             this.btnExportMany.UseVisualStyleBackColor = true;
             this.btnExportMany.Click += new System.EventHandler(this.btnExportMany_Click);
             // 
+            // btnCreateAsItem
+            // 
+            this.btnCreateAsItem.Location = new System.Drawing.Point(216, 400);
+            this.btnCreateAsItem.Name = "btnCreateAsItem";
+            this.btnCreateAsItem.Size = new System.Drawing.Size(112, 23);
+            this.btnCreateAsItem.TabIndex = 68;
+            this.btnCreateAsItem.Text = "Create As Item";
+            this.btnCreateAsItem.UseVisualStyleBackColor = true;
+            this.btnCreateAsItem.Click += new System.EventHandler(this.btnCreateAsItem_Click);
+            // 
             // EquipmentEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(674, 619);
+            this.Controls.Add(this.btnCreateAsItem);
             this.Controls.Add(this.btnExportMany);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.txtScript);
@@ -875,5 +887,6 @@ namespace CityTools {
         private Components.ScriptBox txtScript;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Button btnExportMany;
+        private System.Windows.Forms.Button btnCreateAsItem;
     }
 }
