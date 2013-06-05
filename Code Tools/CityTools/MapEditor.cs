@@ -192,6 +192,12 @@ namespace CityTools {
             if (ActiveForm == this) {
                 mapViewPanel.Focus();
             }
+
+            Point tilePos = Point.Empty;
+            tilePos.X = (int)((Camera.Offset.X + e.X / Camera.ZoomLevel) / TileTemplate.PIXELS_X);  // Doesn't work in negative tilePos
+            tilePos.Y = (int)((Camera.Offset.Y + e.Y / Camera.ZoomLevel) / TileTemplate.PIXELS_Y);  // Doesn't work in negative tilePos
+
+            lblHighlightedCell.Text = "(" + tilePos.X + "," + tilePos.Y + ")";
             
             if(paintMode == PaintMode.Objects) {
                 ScenicPlacementHelper.UpdateMouse(e, input_buffer);

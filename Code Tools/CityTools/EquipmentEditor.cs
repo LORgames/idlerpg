@@ -34,6 +34,8 @@ namespace CityTools {
         private EquipmentItem weap = EquipmentManager.TypeLists[EquipmentTypes.Weapon].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Weapon][0] : null;
         private EquipmentItem shad = EquipmentManager.TypeLists[EquipmentTypes.Shadow].Count > 0 ? EquipmentManager.TypeLists[EquipmentTypes.Shadow][0] : null;
 
+        private Dictionary<string, TreeNode> GroupNodes = new Dictionary<string, TreeNode>();
+
         public EquipmentEditor() {
             InitializeComponent();
 
@@ -123,21 +125,40 @@ namespace CityTools {
         }
 
         private void RefreshTree() {
-            treeEquipmentList.Nodes.Clear();
+            //treeEquipmentList.Nodes.Clear();
+
+            bool populated = treeEquipmentList.Nodes.Count != 0;
 
             foreach (EquipmentTypes s in Enum.GetValues(typeof(EquipmentTypes))) {
-                TreeNode n = new TreeNode(Enum.GetName(typeof(EquipmentTypes), s));
-
-                foreach (EquipmentItem ei in EquipmentManager.TypeLists[s]) {
-                    TreeNode m = new TreeNode(ei.Name);
-                    m.Tag = ei;
-                    n.Nodes.Add(m);
+                TreeNode node;
+                string typeName = Enum.GetName(typeof(EquipmentTypes), s);
+                if (!GroupNodes.ContainsKey(typeName)) {
+                    node = new TreeNode(typeName);
+                    GroupNodes.Add(typeName, node);
+                    treeEquipmentList.Nodes.Add(node);
+                    node.Expand();
+                } else {
+                    node = GroupNodes[typeName];
                 }
 
-                treeEquipmentList.Nodes.Add(n);
+                foreach (EquipmentItem ei in EquipmentManager.TypeLists[s]) {
+                    bool exists = false;
+                    foreach (TreeNode item in node.Nodes) {
+                        if (item.Text == ei.Name) {
+                            exists = true;
+                        }
+                    }
+                    if (!exists) {
+                        TreeNode m = new TreeNode(ei.Name);
+                        m.Tag = ei;
+                        node.Nodes.Add(m);
+                        if (populated) {
+                            treeEquipmentList.SelectedNode = m;
+                            treeEquipmentList.Focus();
+                        }
+                    }
+                }
             }
-
-            treeEquipmentList.ExpandAll();
 
             cbDispBody.Items.Clear();
             cbDispFace.Items.Clear();
@@ -664,6 +685,23 @@ namespace CityTools {
 
             ItemDatabase.AddItem(i);
             ItemDatabase.SaveDatabase();
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e) {
+            if (EquipmentManager.Equipment.ContainsKey(txtSearch.Text)) {
+                for (int i = 0; i < treeEquipmentList.Nodes.Count; i++) {
+                    for (int j = 0; j < treeEquipmentList.Nodes[i].Nodes.Count; j++) {
+                        if (treeEquipmentList.Nodes[i].Nodes[j].Text == txtSearch.Text) {
+                            treeEquipmentList.SelectedNode = treeEquipmentList.Nodes[i].Nodes[j];
+                            treeEquipmentList.Focus();
+                        }
+                    }
+                }
+            }
+        }
+
+        private void btnDuplicate_Click(object sender, EventArgs e) {
+            // TODO: this function
         }
     }
 }

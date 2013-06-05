@@ -79,12 +79,16 @@ namespace CityTools {
             this.label14 = new System.Windows.Forms.Label();
             this.numAnimSpeed = new System.Windows.Forms.NumericUpDown();
             this.label17 = new System.Windows.Forms.Label();
-            this.ccAnimationBack = new CityTools.Components.AnimationList();
-            this.ccAnimationFront = new CityTools.Components.AnimationList();
-            this.txtScript = new CityTools.Components.ScriptBox();
             this.label18 = new System.Windows.Forms.Label();
             this.btnExportMany = new System.Windows.Forms.Button();
             this.btnCreateAsItem = new System.Windows.Forms.Button();
+            this.txtScript = new CityTools.Components.ScriptBox();
+            this.ccAnimationBack = new CityTools.Components.AnimationList();
+            this.ccAnimationFront = new CityTools.Components.AnimationList();
+            this.label19 = new System.Windows.Forms.Label();
+            this.txtSearch = new System.Windows.Forms.TextBox();
+            this.btnSearch = new System.Windows.Forms.Button();
+            this.btnDuplicate = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbEquipmentDisplay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numOffsetX_0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numOffsetY_0)).BeginInit();
@@ -99,9 +103,9 @@ namespace CityTools {
             // 
             // treeEquipmentList
             // 
-            this.treeEquipmentList.Location = new System.Drawing.Point(12, 201);
+            this.treeEquipmentList.Location = new System.Drawing.Point(12, 244);
             this.treeEquipmentList.Name = "treeEquipmentList";
-            this.treeEquipmentList.Size = new System.Drawing.Size(198, 406);
+            this.treeEquipmentList.Size = new System.Drawing.Size(198, 363);
             this.treeEquipmentList.TabIndex = 1;
             this.treeEquipmentList.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeEquipmentList_AfterSelect);
             // 
@@ -285,9 +289,9 @@ namespace CityTools {
             // 
             // btnCreateNew
             // 
-            this.btnCreateNew.Location = new System.Drawing.Point(116, 172);
+            this.btnCreateNew.Location = new System.Drawing.Point(90, 215);
             this.btnCreateNew.Name = "btnCreateNew";
-            this.btnCreateNew.Size = new System.Drawing.Size(94, 23);
+            this.btnCreateNew.Size = new System.Drawing.Size(85, 23);
             this.btnCreateNew.TabIndex = 25;
             this.btnCreateNew.Text = "Create New";
             this.btnCreateNew.UseVisualStyleBackColor = true;
@@ -692,32 +696,6 @@ namespace CityTools {
             this.label17.TabIndex = 64;
             this.label17.Text = "Playback:";
             // 
-            // ccAnimationBack
-            // 
-            this.ccAnimationBack.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ccAnimationBack.Location = new System.Drawing.Point(444, 507);
-            this.ccAnimationBack.Name = "ccAnimationBack";
-            this.ccAnimationBack.Size = new System.Drawing.Size(218, 100);
-            this.ccAnimationBack.TabIndex = 21;
-            // 
-            // ccAnimationFront
-            // 
-            this.ccAnimationFront.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ccAnimationFront.Location = new System.Drawing.Point(217, 507);
-            this.ccAnimationFront.Name = "ccAnimationFront";
-            this.ccAnimationFront.Size = new System.Drawing.Size(221, 100);
-            this.ccAnimationFront.TabIndex = 6;
-            // 
-            // txtScript
-            // 
-            this.txtScript.Location = new System.Drawing.Point(334, 187);
-            this.txtScript.Name = "txtScript";
-            this.txtScript.Script = "";
-            this.txtScript.ScriptType = ToolCache.Scripting.ScriptTypes.Unknown;
-            this.txtScript.Size = new System.Drawing.Size(312, 236);
-            this.txtScript.TabIndex = 65;
-            this.txtScript.TextChanged += new System.EventHandler(this.ValueChanged);
-            // 
             // label18
             // 
             this.label18.AutoSize = true;
@@ -747,11 +725,77 @@ namespace CityTools {
             this.btnCreateAsItem.UseVisualStyleBackColor = true;
             this.btnCreateAsItem.Click += new System.EventHandler(this.btnCreateAsItem_Click);
             // 
+            // txtScript
+            // 
+            this.txtScript.Location = new System.Drawing.Point(334, 187);
+            this.txtScript.Name = "txtScript";
+            this.txtScript.Script = "";
+            this.txtScript.ScriptType = ToolCache.Scripting.ScriptTypes.Unknown;
+            this.txtScript.Size = new System.Drawing.Size(312, 236);
+            this.txtScript.TabIndex = 65;
+            this.txtScript.TextChanged += new System.EventHandler(this.ValueChanged);
+            // 
+            // ccAnimationBack
+            // 
+            this.ccAnimationBack.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ccAnimationBack.Location = new System.Drawing.Point(444, 507);
+            this.ccAnimationBack.Name = "ccAnimationBack";
+            this.ccAnimationBack.Size = new System.Drawing.Size(218, 100);
+            this.ccAnimationBack.TabIndex = 21;
+            // 
+            // ccAnimationFront
+            // 
+            this.ccAnimationFront.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ccAnimationFront.Location = new System.Drawing.Point(217, 507);
+            this.ccAnimationFront.Name = "ccAnimationFront";
+            this.ccAnimationFront.Size = new System.Drawing.Size(221, 100);
+            this.ccAnimationFront.TabIndex = 6;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(12, 172);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(72, 13);
+            this.label19.TabIndex = 69;
+            this.label19.Text = "Search Name";
+            // 
+            // txtSearch
+            // 
+            this.txtSearch.Location = new System.Drawing.Point(15, 189);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(195, 20);
+            this.txtSearch.TabIndex = 70;
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.Location = new System.Drawing.Point(12, 215);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(72, 23);
+            this.btnSearch.TabIndex = 71;
+            this.btnSearch.Text = "Search";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
+            // btnDuplicate
+            // 
+            this.btnDuplicate.Image = global::CityTools.Properties.Resources.arrow_divide;
+            this.btnDuplicate.Location = new System.Drawing.Point(181, 215);
+            this.btnDuplicate.Name = "btnDuplicate";
+            this.btnDuplicate.Size = new System.Drawing.Size(29, 23);
+            this.btnDuplicate.TabIndex = 72;
+            this.btnDuplicate.UseVisualStyleBackColor = true;
+            this.btnDuplicate.Click += new System.EventHandler(this.btnDuplicate_Click);
+            // 
             // EquipmentEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(674, 619);
+            this.Controls.Add(this.btnDuplicate);
+            this.Controls.Add(this.btnSearch);
+            this.Controls.Add(this.txtSearch);
+            this.Controls.Add(this.label19);
             this.Controls.Add(this.btnCreateAsItem);
             this.Controls.Add(this.btnExportMany);
             this.Controls.Add(this.label18);
@@ -888,5 +932,9 @@ namespace CityTools {
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Button btnExportMany;
         private System.Windows.Forms.Button btnCreateAsItem;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.TextBox txtSearch;
+        private System.Windows.Forms.Button btnSearch;
+        private System.Windows.Forms.Button btnDuplicate;
     }
 }
