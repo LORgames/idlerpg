@@ -20,12 +20,15 @@ package Game.Map {
         public var SpawnOnLoad:int = 1;
         public var MaxSpawn:int = 10;
         public var Timeout:int = 60;
+		
+		public var Critters:Vector.<BaseCritter>;
 
 		public function SpawnRegion(map:MapData, MaxSpawn:int, SpawnAtLoad:int, Timeout:int) {
 			this.Map = map;
 			this.MaxSpawn = MaxSpawn;
 			this.SpawnOnLoad = SpawnAtLoad;
 			this.Timeout = Timeout;
+			this.Critters = new Vector.<BaseCritter>();
 		}
 		
 		/**
@@ -34,7 +37,10 @@ package Game.Map {
 		private function PreSpawn():void {
 			while (--SpawnOnLoad > -1) {
 				var critterID:int = GetNextCritterID();
-				var critter:BaseCritter = CritterManager.I.CritterInfo[critterID].CreateCritter(Map, Area[0].X, Area[0].Y);
+				var randArea:int = Math.floor(Math.random() * (Area.length));
+				var randX:int = Area[randArea].X + Math.floor(Math.random() * Area[randArea].W);
+				var randY:int = Area[randArea].Y + Math.floor(Math.random() * Area[randArea].H);
+				Critters.push(CritterManager.I.CritterInfo[critterID].CreateCritter(Map, randX, randY));
 			}
 		}
 		

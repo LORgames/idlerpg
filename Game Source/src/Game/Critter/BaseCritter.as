@@ -217,28 +217,24 @@ package Game.Critter {
 		}
 		
 		public function RequestMove(xSpeed:Number, ySpeed:Number):void {
-			if(!isPortaling) {
-				if(xSpeed != 0 || ySpeed != 0) {
-					direction = SpeedToDirection(xSpeed, ySpeed);
-					
-					// normalise speed vector
-					xSpeed = xSpeed / Math.sqrt(Math.pow(xSpeed, 2) + Math.pow(ySpeed, 2));
-					ySpeed = ySpeed / Math.sqrt(Math.pow(xSpeed, 2) + Math.pow(ySpeed, 2));
-					
-					moveSpeedX = xSpeed * MovementSpeed;
-					
-					if(ySpeed < 0) moveSpeedY = ySpeed * MovementSpeed * 0.707;
-					if(ySpeed > 0) moveSpeedY = ySpeed * MovementSpeed * 0.900;
-					
-					isMoving = true;
-				} 
-				if (xSpeed == 0) moveSpeedX = 0;
-				if (ySpeed == 0) moveSpeedY = 0;
+			if (xSpeed != 0 || ySpeed != 0) {
+				direction = SpeedToDirection(xSpeed, ySpeed);
 				
-				if ((moveSpeedX == 0) && (moveSpeedY == 0)) {
-					isMoving = false;
-				}
-			} else {
+				// normalise speed vector
+				xSpeed = xSpeed / Math.sqrt(Math.pow(xSpeed, 2) + Math.pow(ySpeed, 2));
+				ySpeed = ySpeed / Math.sqrt(Math.pow(xSpeed, 2) + Math.pow(ySpeed, 2));
+				
+				moveSpeedX = xSpeed * MovementSpeed;
+				
+				if(ySpeed < 0) moveSpeedY = ySpeed * MovementSpeed * 0.707;
+				if(ySpeed > 0) moveSpeedY = ySpeed * MovementSpeed * 0.900;
+				
+				isMoving = true;
+			} 
+			if (xSpeed == 0) moveSpeedX = 0;
+			if (ySpeed == 0) moveSpeedY = 0;
+			
+			if ((moveSpeedX == 0) && (moveSpeedY == 0)) {
 				isMoving = false;
 			}
 		}

@@ -136,6 +136,7 @@ package Game.Map {
 			if (firstload) {
 				firstload = false;
 				if (Portals.length > 0) {
+					Critters.push(WorldData.ME);
 					WorldData.ME.RequestTeleport(this, Portals[_pID]);
 				} else {
 					WorldData.ME.ShiftMaps(this, 281);
