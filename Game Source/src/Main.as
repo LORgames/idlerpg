@@ -38,8 +38,6 @@ package {
 		
 		public static var Input:IInputSystem;
 		
-		public var MapText:ScreenText;
-		
 		//Some other important things
 		public var Renderer:Renderman;
 		
@@ -88,9 +86,6 @@ package {
 			
 			new EquipmentManager();
 			new CritterManager();
-			
-			MapText = new ScreenText();
-			stage.addChild(MapText);
 			
 			stage.addEventListener(Event.RESIZE, Resized);
 			stage.addEventListener(Event.ENTER_FRAME, Cycle);

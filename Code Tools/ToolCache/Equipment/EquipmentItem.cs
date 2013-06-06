@@ -91,7 +91,6 @@ namespace ToolCache.Equipment {
             foreach(KeyValuePair<String, EquipmentAnimationSet> kvp in Animations) {
                 if (kvp.Value.StateName != "Default" && kvp.Value.TotalFrames() == 0) {
                     removeKeys.Add(kvp.Key);
-                    System.Diagnostics.Debug.WriteLine(Name + ": Removed Animation: " + kvp.Key); 
                 }
             }
 

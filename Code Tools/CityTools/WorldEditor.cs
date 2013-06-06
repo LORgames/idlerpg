@@ -72,8 +72,6 @@ namespace CityTools {
                     int x2 = portal1.Map.WorldPosition.X + portal1.ExitPoint.X / 10 + Offset.X;
                     int y2 = portal1.Map.WorldPosition.Y + portal1.ExitPoint.Y / 10 + Offset.Y;
 
-                    System.Diagnostics.Debug.WriteLine(x1 + ", " + y2 + " => " + x2 + ", " + y2);
-
                     if (portal1.ExitID == portal0.ID) {
                         buffer.gfx.DrawLine(PortalPen_TwoWay, x1, y1, x2, y2);
                     } else {

@@ -19,7 +19,6 @@ using ToolCache.Map.Objects;
 using ToolCache.Combat.Elements;
 using ToolCache.Items;
 using ToolCache.Equipment;
-using System.Diagnostics;
 using System.Threading;
 using CityTools.Terrain;
 using System.Drawing.Imaging;

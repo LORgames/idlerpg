@@ -17,7 +17,7 @@ namespace ToolCache.Animation {
 
         public List<String> Frames = new List<string>();
 
-        public Point p = new Point(-1, -1); //Center point
+        private Point p = new Point(-1, -1); //Center point
 
         public Point Center {
             get {
@@ -63,8 +63,6 @@ namespace ToolCache.Animation {
 
             int frameID = (int)(totalTime / PlaybackSpeed);
             Image im = ImageCache.RequestImage(Frames[frameID % Frames.Count]);
-
-            if(PlaybackSpeed < 0.1) System.Diagnostics.Debug.WriteLine(frameID);
 
             if (alpha >= 0.95f) {
                 gfx.DrawImage(im, xPos, yPos, im.Width * scale, im.Height * scale);

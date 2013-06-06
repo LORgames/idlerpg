@@ -26,9 +26,9 @@ package Game.Map {
 		
 		public var TotalObjects:int = 0;
 		public var Objects:Vector.<ObjectInstance>;
+		public var Spawns:Vector.<SpawnRegion>;
 		
 		public var Portals:Vector.<Portal>;
-		
 		public var Critters:Vector.<BaseCritter> = new Vector.<BaseCritter>();
 		
 		private static var firstload:Boolean = true;
@@ -36,7 +36,6 @@ package Game.Map {
 		
 		public function MapData(mapname:String, portalID:int = -1) {
 			Name = mapname;
-			Main.I.MapText.UpdateText(Name);
 			this.ExpectedAtPortalID = portalID;
 			if (portalID != -1) firstload = true;
 			
@@ -121,6 +120,13 @@ package Game.Map {
 				o.SetInformation(this, id, _x, _y);
 				
 				Objects[i] = o;
+			}
+			
+			//Spawn things
+			TotalObjects = b.readByte();
+			Spawns = new Vector.<SpawnRegion>(TotalObjects);
+			while (--TotalObjects > -1) {
+				Spawns[TotalObjects] = SpawnRegion.LoadFromBinary(this, b);
 			}
 			
 			Global.LoadingTotal--;

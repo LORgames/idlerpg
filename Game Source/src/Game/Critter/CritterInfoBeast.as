@@ -16,6 +16,8 @@ package Game.Critter
 		
 		public var SpriteWidth:int;
 		public var SpriteHeight:int;
+		public var CollisionWidth:int;
+		public var CollisionHeight:int;
 		
 		public var AnimationFrameCounts:Vector.<int>;
 		public var AnimationsPerRow:int = 0;
@@ -32,6 +34,10 @@ package Game.Critter
 			LoadBasicInfo(b);
 			
 			PlaybackSpeed = b.readFloat();
+			
+			CollisionWidth = b.readShort();
+			CollisionHeight = b.readShort();
+			
 			TotalAnimationStates = b.readByte();
 			
 			var TotalFrames:int = b.readByte();
@@ -59,7 +65,6 @@ package Game.Critter
 			var p:CritterBeast = new CritterBeast(this);
 			
 			p.CurrentMap = map;
-			map.Critters.push(p);
 			
 			p.X = x;
 			p.Y = y;
@@ -68,6 +73,8 @@ package Game.Critter
 			
 			p.MyScript = AICommands;
 			AICommands.Run(Script.Spawn, p);
+			
+			map.Critters.push(p);
 			
 			return p;
 		}

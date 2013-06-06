@@ -10,6 +10,9 @@ namespace ToolCache.Critters {
         private Dictionary<string, CritterAnimationSet> Animations = new Dictionary<string, CritterAnimationSet>();
         public float playbackSpeed = 0.2f;
 
+        public short rectWidth = 0;
+        public short rectHeight = 0;
+
         public CritterBeast() {
             CritterType = CritterTypes.NonHumanoid;
         }
@@ -22,6 +25,9 @@ namespace ToolCache.Critters {
 
             //Load playback speed
             c.playbackSpeed = f.GetFloat();
+
+            c.rectWidth = f.GetShort();
+            c.rectHeight = f.GetShort();
 
             //Now load more complex information (there will probably be a lot of this kind of stuff
             short totalAnimations = f.GetByte();
@@ -38,6 +44,10 @@ namespace ToolCache.Critters {
             base.PackIntoBinaryIO(f);
 
             f.AddFloat(playbackSpeed);
+
+            f.AddShort(rectWidth);
+            f.AddShort(rectHeight);
+
             f.AddByte((byte)Animations.Count);
 
             foreach (CritterAnimationSet animation in Animations.Values) {
@@ -101,7 +111,10 @@ namespace ToolCache.Critters {
             foreach (KeyValuePair<string, CritterAnimationSet> pair in this.Animations) {
                 temp.Animations.Add(pair.Key, pair.Value.Clone());
             }
+
             temp.playbackSpeed = this.playbackSpeed;
+            temp.rectWidth = this.rectWidth;
+            temp.rectHeight = this.rectHeight;
 
             return temp;
         }

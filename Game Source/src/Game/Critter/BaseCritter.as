@@ -192,13 +192,13 @@ package Game.Critter {
 							while (--k > -1) {
 								if (CurrentMap.Portals[j].ExitID == CurrentMap.Portals[k].ID) {
 									Global.MapPortalID = k;
-									Main.I.Renderer.FadeToBlack(RequestInMapTeleport);
+									Main.I.Renderer.FadeToBlack(RequestInMapTeleport, "zaaaappp!");
 								}
 							}
 							break;
 						} else {
 							Global.MapPortalID = exitID;
-							Main.I.Renderer.FadeToBlack(WorldData.UpdatePlayerPosition);
+							Main.I.Renderer.FadeToBlack(WorldData.UpdatePlayerPosition, WorldData.PortalDestinations[exitID]);
 							isPortaling = true;
 						}
 						break;

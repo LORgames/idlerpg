@@ -1,5 +1,6 @@
 package RenderSystem {
 	import adobe.utils.CustomActions;
+	import CollisionSystem.Rect;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
@@ -8,7 +9,9 @@ package RenderSystem {
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;
+	import Game.Critter.BaseCritter;
 	import Game.Map.ObjectInstance;
+	import Game.Map.SpawnRegion;
 	import Game.Map.TileHelper;
 	import Game.Map.TileInstance;
 	import Game.Map.TileTemplate;
@@ -79,17 +82,19 @@ package RenderSystem {
 			}
 			
 			//TODO: Clean up debug draw things if required
-			/*xPos = WorldData.ME.CurrentMap.Critters.length;
+			xPos = WorldData.ME.CurrentMap.Critters.length;
 			
 			DebugLayer.graphics.clear();
 			
-			DebugLayer.graphics.lineStyle(1, 0xFFFF00);
+			//Draw the main character
+			DebugLayer.graphics.lineStyle(1, 0xFF00FF);
 			
 			while (--xPos > -1) {
 				WorldData.ME.CurrentMap.Critters[xPos].DrawDebugRect(DebugLayer.graphics);
 			}
 			
-			DebugLayer.graphics.lineStyle(1, 0xFF00FF);
+			//Draw all the objects
+			DebugLayer.graphics.lineStyle(1, 0x00FFFF);
 			xPos = WorldData.ME.CurrentMap.Objects.length;
 			
 			while (--xPos > -1) {
@@ -99,7 +104,32 @@ package RenderSystem {
 				while (--yPos > -1) {
 					DebugLayer.graphics.drawRect(objI.Template.Bases[yPos].left + objI.x, objI.Template.Bases[yPos].top + objI.y, objI.Template.Bases[yPos].width, objI.Template.Bases[yPos].height);
 				}
-			}*/
+			}
+			
+			//Draw all the Critters
+			DebugLayer.graphics.lineStyle(1, 0xFF0000);
+			xPos = WorldData.ME.CurrentMap.Critters.length;
+			trace("Critters: " + xPos);
+			
+			while (--xPos > -1) {
+				if(WorldData.ME.CurrentMap.Critters[xPos] != WorldData.ME) {
+					var objC:Rect = WorldData.ME.CurrentMap.Critters[xPos].MyRect;
+					DebugLayer.graphics.drawRect(objC.X, objC.Y, objC.W, objC.H);
+				}
+			}
+			
+			//Draw all the spawn regions
+			DebugLayer.graphics.lineStyle(1, 0x0000FF);
+			xPos = WorldData.ME.CurrentMap.Spawns.length;
+			
+			while (--xPos > -1) {
+				var objX:SpawnRegion = WorldData.ME.CurrentMap.Spawns[xPos];
+				yPos = objX.Area.length;
+				
+				while (--yPos > -1) {
+					DebugLayer.graphics.drawRect(objX.Area[yPos].X, objX.Area[yPos].Y, objX.Area[yPos].W, objX.Area[yPos].H);
+				}
+			}
 			
 			data.unlock();
 		}

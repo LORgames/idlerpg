@@ -13,6 +13,7 @@ using ToolCache.Equipment;
 using ToolCache.Drawing;
 using System.IO;
 using ToolCache.Map.Regions;
+using ToolCache.Animation;
 
 namespace CityTools {
     public partial class CritterEditor : Form {
@@ -228,8 +229,11 @@ namespace CityTools {
                 cbHumanoidHeadgear.Text = human.Headgear;
                 cbHumanoidWeapon.Text = human.Weapon;
 
-                pbHumanoidDisplay.Invalidate();
+                pbPreviewDisplay.Invalidate();
                 numBeastFPS.Value = (decimal)0.2;
+                numBeastRectWidth.Value = 0;
+                numBeastRectHeight.Value = 0;
+
                 ccBeastAnimations.ClearAnimation();
                 cbBeastState.Text = "";
 
@@ -239,6 +243,8 @@ namespace CityTools {
                 cbBeastState.Text = "Default";
                 ccBeastAnimations.ChangeToAnimation(beast.GetAnimation("Default").GetDirection(direction));
                 numBeastFPS.Value = (decimal)beast.playbackSpeed;
+                numBeastRectWidth.Value = (decimal)beast.rectWidth;
+                numBeastRectHeight.Value = (decimal)beast.rectHeight;
 
                 cbBeastState.Items.Clear();
 
@@ -252,7 +258,7 @@ namespace CityTools {
                 cbHumanoidFace.Text = "";
                 cbHumanoidHeadgear.Text = "";
                 cbHumanoidWeapon.Text = "";
-                pbHumanoidDisplay.Invalidate();
+                pbPreviewDisplay.Invalidate();
             }
 
             PopulateLootList();
@@ -332,6 +338,8 @@ namespace CityTools {
             } else {
                 CritterBeast beast = critter as CritterBeast;
                 beast.playbackSpeed = (float)numBeastFPS.Value;
+                beast.rectWidth = (short)numBeastRectWidth.Value;
+                beast.rectHeight = (short)numBeastRectHeight.Value;
             }
 
             if (_isNewCritter) {
@@ -379,8 +387,10 @@ namespace CityTools {
             }
         }
 
-        private void pbHumanoidDisplay_Paint(object sender, PaintEventArgs e) {
+        private void pbPreviewDisplay_Paint(object sender, PaintEventArgs e) {
             e.Graphics.Clear(Color.Beige);
+
+            e.Graphics.DrawString("Preview", new Font("Verdana", 10), Brushes.Black, Point.Empty);
 
             if (critter is CritterHuman) {
                 PersonDrawer.Draw(e.Graphics, new Point(e.ClipRectangle.Width / 2, e.ClipRectangle.Height - 20), Direction.Down,
@@ -391,6 +401,23 @@ namespace CityTools {
                     cbHumanoidPants.SelectedItem as EquipmentItem,
                     cbHumanoidWeapon.SelectedItem as EquipmentItem,
                     false);
+            } else if (critter is CritterBeast) {
+                CritterBeast cb = (critter as CritterBeast);
+
+                if (cb.GetAnimation(cbBeastState.Text) != null) {
+                    if (cb.GetAnimation(cbBeastState.Text).GetDirection(direction) != null) {
+                        AnimatedObject anim = cb.GetAnimation(cbBeastState.Text).GetDirection(direction);
+
+                        float xPos = e.ClipRectangle.Width/2 - anim.Center.X;
+                        float yPos = e.ClipRectangle.Height - 20 - (anim.Center.Y*2);
+
+                        System.Diagnostics.Debug.WriteLine(xPos + ", " + yPos);
+
+                        anim.Draw(e.Graphics, xPos, yPos, 1);
+
+                        e.Graphics.DrawRectangle(Pens.Red, (e.ClipRectangle.Width - (int)numBeastRectWidth.Value) / 2, e.ClipRectangle.Height - 20 - ((int)numBeastRectHeight.Value), (int)numBeastRectWidth.Value, (int)numBeastRectHeight.Value);
+                    }
+                }
             }
         }
 
@@ -398,7 +425,7 @@ namespace CityTools {
             if (_isUpdatingForm) return;
 
             _isCritterEdited = true;
-            pbHumanoidDisplay.Invalidate();
+            pbPreviewDisplay.Invalidate();
         }
 
         private void ValueChanged(object sender, EventArgs e) {
@@ -463,6 +490,8 @@ namespace CityTools {
             if (critter is CritterBeast) {
                 ccBeastAnimations.ChangeToAnimation((critter as CritterBeast).GetAnimation(cbBeastState.Text).GetDirection(direction));
             }
+
+            pbPreviewDisplay.Invalidate();
         }
 
         private void btnBeastDirection_DragEnter(object sender, DragEventArgs e) {
@@ -580,6 +609,11 @@ namespace CityTools {
 
                 treeAllCritters.SelectedNode = critter.EditorNode;
             }
+        }
+
+        private void BeastRectValueChanged(object sender, EventArgs e) {
+            pbPreviewDisplay.Invalidate();
+            ValueChanged(sender, e);
         }
     }
 }

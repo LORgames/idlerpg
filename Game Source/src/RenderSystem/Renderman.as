@@ -4,6 +4,7 @@ package RenderSystem {
 	import flash.geom.Rectangle;
 	import Game.Map.MapData;
 	import Game.Map.WorldData;
+	import WindowSystem.ScreenText;
 	
 	/**
 	 * ...
@@ -18,6 +19,7 @@ package RenderSystem {
 		private var fading:Boolean = false;
 		private var fadeToBlack:Boolean = false;
 		private var fadeCallback:Function = null;
+		public var MapText:ScreenText;
 		
 		private var loadScreen:LoadScreen;
 		
@@ -32,12 +34,19 @@ package RenderSystem {
 			Main.I.addChild(loadScreen);
 			
 			Main.I.addChild(map.DebugLayer);
+			
+			MapText = new ScreenText(60);
+			Main.I.addChild(MapText);
 		}
 		
-		public function FadeToBlack(callbackIfRequired:Function = null):void {
+		public function FadeToBlack(callbackIfRequired:Function = null, message:String = ""):void {
 			fadeToBlack = true;
 			fading = true;
 			fadeCallback = callbackIfRequired;
+			
+			MapText.UpdateText(message);
+			MapText.x = (Main.I.stage.stageWidth - MapText.width) / 2;
+			MapText.y = (Main.I.stage.stageHeight - MapText.height) / 2;
 		}
 		
 		public function FadeToWorld(callbackIfRequired:Function = null):void {
@@ -78,6 +87,7 @@ package RenderSystem {
 					}
 				}
 				
+				MapText.alpha = fadeAlpha / 255.0;
 				loadScreen.RealAlpha = fadeAlpha;
 				loadScreen.Draw();
 			}

@@ -23,15 +23,17 @@ package Game.Critter
 			Main.OrderedLayer.addChild(Animation);
 			Main.Updatables.push(this);
 			
-			MyRect.W = 24;
-			MyRect.H = 12;
+			MyRect.W = MyInfo.CollisionWidth;
+			MyRect.H = MyInfo.CollisionHeight;
+			MyRect.HalfWidth = MyRect.W * 0.5;
+			MyRect.HalfHeight = MyRect.H * 0.5;
 		}
 		
 		public override function Update(dt:Number):void {
 			super.Update(dt);
 			
-			Animation.x = this.X;
-			Animation.y = this.Y;
+			Animation.x = this.X - Animation.width/2;
+			Animation.y = this.Y - Animation.height;
 		}
 		
 		override public function RequestMove(xSpeed:Number, ySpeed:Number):void {
