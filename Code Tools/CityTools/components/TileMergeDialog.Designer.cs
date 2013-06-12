@@ -51,6 +51,7 @@
             this.btnMerge.TabIndex = 2;
             this.btnMerge.Text = "K Merge";
             this.btnMerge.UseVisualStyleBackColor = true;
+            this.btnMerge.Click += new System.EventHandler(this.btnMerge_Click);
             // 
             // panel1
             // 
