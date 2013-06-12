@@ -84,7 +84,7 @@ package RenderSystem {
 			//TODO: Clean up debug draw things if required
 			xPos = WorldData.ME.CurrentMap.Critters.length;
 			
-			DebugLayer.graphics.clear();
+			/*DebugLayer.graphics.clear();
 			
 			//Draw the main character
 			DebugLayer.graphics.lineStyle(1, 0xFF00FF);
@@ -129,7 +129,7 @@ package RenderSystem {
 				while (--yPos > -1) {
 					DebugLayer.graphics.drawRect(objX.Area[yPos].X, objX.Area[yPos].Y, objX.Area[yPos].W, objX.Area[yPos].H);
 				}
-			}
+			}*/
 			
 			data.unlock();
 		}
