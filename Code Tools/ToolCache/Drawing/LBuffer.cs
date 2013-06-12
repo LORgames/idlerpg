@@ -11,6 +11,11 @@ namespace ToolCache.Drawing {
         public Size size;
 
         public LBuffer(Size size) {
+            if (size.Width == 0 || size.Height == 0) {
+                size.Width = 1;
+                size.Height = 1;
+            }
+
             bmp = new Bitmap(size.Width, size.Height, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
             gfx = Graphics.FromImage(bmp);
 
