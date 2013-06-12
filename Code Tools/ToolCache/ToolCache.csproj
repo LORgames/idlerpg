@@ -91,7 +91,7 @@
     <Compile Include="Scripting\ScriptCommand.cs" />
     <Compile Include="Scripting\ScriptInfo.cs" />
     <Compile Include="Scripting\ScriptTypes.cs" />
-    <Compile Include="Scripting\ValidEventList.cs" />
+    <Compile Include="Scripting\ValidScripting.cs" />
     <Compile Include="Sound\SoundData.cs" />
     <Compile Include="Sound\SoundDatabase.cs" />
     <Compile Include="World\Portal.cs" />

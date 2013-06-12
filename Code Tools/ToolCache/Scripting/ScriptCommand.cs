@@ -5,6 +5,7 @@ using System.Text;
 using ToolCache.Equipment;
 using ToolCache.Sound;
 using ToolCache.Critters;
+using System.Text.RegularExpressions;
 
 namespace ToolCache.Scripting {
     public class ScriptCommand {
@@ -44,10 +45,12 @@ namespace ToolCache.Scripting {
         }
 
         public void ProcessEvent(ScriptInfo info) {
-            if (!ValidEventList.ValidEvents.Contains(Trimmed)) {
+            ValidEvents EventID;
+
+            if (!Enum.TryParse<ValidEvents>(Trimmed, out EventID)) {
                 info.Errors.Add("Invalid event: " + Trimmed);
             } else {
-                CommandID = (ushort)Array.IndexOf(ValidEventList.ValidEvents, Trimmed);
+                CommandID = (ushort)EventID;
                 info.EventFlags |= (0x1 << CommandID);
                 info.EventCount++;
             }
@@ -149,6 +152,7 @@ namespace ToolCache.Scripting {
 
         internal void Parse(ScriptInfo Info) {
             int index = Info.Commands.IndexOf(this);
+            int i2 = 0;
 
             if (Indent != ExpectedIndent) {
                 Info.Errors.Add("Unexpected Indent! " + Trimmed);
@@ -157,11 +161,7 @@ namespace ToolCache.Scripting {
             if (Action != "") {
                 switch (Action) {
                     case "if":
-                        int i2 = index+1;
-                        while (Info.Commands.Count > i2 && Info.Commands[i2].Indent > Indent) {
-                            Info.Commands[i2].ExpectedIndent = (byte)(Indent + 1);
-                            i2++;
-                        }
+                        i2 = IndentBelow(Info, index);
                         if (Info.Commands.Count > i2 && Info.Commands[i2].Action == "else") {
                             CommandID = 0x8001;
                             Info.Commands[i2].Parameters = "PAIRED";
@@ -169,15 +169,48 @@ namespace ToolCache.Scripting {
                             CommandID = 0x8000;
                         } break;
                     case "else":
-                        if (Parameters != "") Info.Errors.Add("Unpaired else!"); break;
+                        if (Parameters != "") Info.Errors.Add("Unpaired else!");
+                        break;
+                    case "foreach":
+                        if (Parameters == "") Info.Errors.Add("Empty foreach");
+
+                        string[] bits = Regex.Split(Parameters, " in ");
+
+                        if (bits.Length == 2) {
+                            //Process the type first
+                            ValidTypes scriptType;
+                            if (!Enum.TryParse<ValidTypes>(bits[0], out scriptType)) {
+                                Info.Errors.Add(bits[0] + " is not a valid scripting type!");
+                            }
+
+                            //Process the other stuff
+                            //Process
+                        } else {
+                            Info.Errors.Add("foreach should be:- foreach <type> in <set>");
+                        }
+
+                        //Indent stuff
+                        IndentBelow(Info, index);
+
+                        break;
                 }
             } else if (Indent == 0) {
-                int i2 = index + 1;
+                i2 = index + 1;
                 while (Info.Commands.Count > i2 && Info.Commands[i2].Indent > 0) {
                     Info.Commands[i2].ExpectedIndent = (byte)1;
                     i2++;
                 }
             }
+        }
+
+        private int IndentBelow(ScriptInfo Info, int index) {
+            int i2 = index + 1;
+            while (Info.Commands.Count > i2 && Info.Commands[i2].Indent > Indent) {
+                Info.Commands[i2].ExpectedIndent = (byte)(Indent + 1);
+                i2++;
+            }
+
+            return i2;
         }
     }
 }
