@@ -54,6 +54,10 @@ namespace ToolCache.Scripting {
         }
 
         public void ProcessAction(ScriptInfo info) {
+            short param0;
+            short param1;
+            string paramPiece;
+
             //Figure out what this command does...
             if (Trimmed.IndexOf(' ') > -1) {
                 Action = Trimmed.Substring(0, Trimmed.IndexOf(' ')).ToLowerInvariant();
@@ -77,6 +81,36 @@ namespace ToolCache.Scripting {
                     if (!CritterManager.HasCritter(Parameters)) {
                         info.Errors.Add("Cannot find Critter: " + Parameters);
                     } break;
+                case "damage":
+                    CommandID = 0x1003;
+
+                    if (!short.TryParse(Parameters, out param0)) {
+                        info.Errors.Add("Cannot convert '" + Parameters + "' into a number.");
+                    } break;
+                case "knockback":
+                    CommandID = 0x1004;
+
+                    if (!short.TryParse(Parameters, out param0)) {
+                        info.Errors.Add("Cannot convert '" + Parameters + "' into a number.");
+                    } break;
+                case "damagepercent":
+                    CommandID = 0x1005;
+
+                    if (!short.TryParse(Parameters, out param0)) {
+                        info.Errors.Add("Cannot convert '" + Parameters + "' into a number.");
+                    } break;
+                case "dot":
+                    CommandID = 0x1006;
+
+                    if (Parameters.Split(' ').Length == 2) {
+                        if (!short.TryParse(Parameters.Split(' ')[0], out param0)) {
+                            info.Errors.Add("Cannot convert '" + Parameters + "' into a number.");
+                        } else if (!short.TryParse(Parameters.Split(' ')[1], out param1)) {
+                            info.Errors.Add("Cannot convert '" + Parameters + "' into a number.");
+                        }
+                    } else {
+                        info.Errors.Add("Requires both damage per second and total seconds (1 tick per second).");
+                    } break;
                 case "equip":
                     CommandID = 0x4001;
 
@@ -95,9 +129,12 @@ namespace ToolCache.Scripting {
                     if (!info.AnimationNames.Contains(Parameters)) {
                         info.Errors.Add("Cannot find animation: " + Parameters);
                     } break;
+                case "if":
+                    break;
                 case "else":
                     Parameters = ""; break;
-                case "if":
+                case "foreach":
+                    CommandID = 0x8002;
                     break;
                 default:
                     if (Parameters != "") {

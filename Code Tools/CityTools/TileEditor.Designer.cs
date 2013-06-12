@@ -34,6 +34,7 @@ namespace CityTools {
             this.btnNewTile = new System.Windows.Forms.ToolStripButton();
             this.btnDeleteTile = new System.Windows.Forms.ToolStripButton();
             this.btnSave = new System.Windows.Forms.ToolStripButton();
+            this.btnMerge = new System.Windows.Forms.ToolStripButton();
             this.lblTileID = new System.Windows.Forms.ToolStripLabel();
             this.lblTileName = new System.Windows.Forms.Label();
             this.lblGroup = new System.Windows.Forms.Label();
@@ -97,6 +98,7 @@ namespace CityTools {
             this.btnNewTile,
             this.btnDeleteTile,
             this.btnSave,
+            this.btnMerge,
             this.lblTileID});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
@@ -107,7 +109,7 @@ namespace CityTools {
             // btnNewTile
             // 
             this.btnNewTile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnNewTile.Image = ((System.Drawing.Image)(resources.GetObject("btnNewTile.Image")));
+            this.btnNewTile.Image = global::CityTools.Properties.Resources.add;
             this.btnNewTile.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnNewTile.Name = "btnNewTile";
             this.btnNewTile.Size = new System.Drawing.Size(23, 22);
@@ -117,7 +119,7 @@ namespace CityTools {
             // btnDeleteTile
             // 
             this.btnDeleteTile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnDeleteTile.Image = ((System.Drawing.Image)(resources.GetObject("btnDeleteTile.Image")));
+            this.btnDeleteTile.Image = global::CityTools.Properties.Resources.delete;
             this.btnDeleteTile.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnDeleteTile.Name = "btnDeleteTile";
             this.btnDeleteTile.Size = new System.Drawing.Size(23, 22);
@@ -127,17 +129,27 @@ namespace CityTools {
             // btnSave
             // 
             this.btnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnSave.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.Image")));
+            this.btnSave.Image = global::CityTools.Properties.Resources.disk;
             this.btnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(23, 22);
             this.btnSave.Text = "toolStripButton1";
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // btnMerge
+            // 
+            this.btnMerge.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnMerge.Image = global::CityTools.Properties.Resources.arrow_merge;
+            this.btnMerge.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMerge.Name = "btnMerge";
+            this.btnMerge.Size = new System.Drawing.Size(23, 22);
+            this.btnMerge.Text = "Merge";
+            this.btnMerge.Click += new System.EventHandler(this.btnMerge_Click);
+            // 
             // lblTileID
             // 
             this.lblTileID.Name = "lblTileID";
-            this.lblTileID.Size = new System.Drawing.Size(40, 22);
+            this.lblTileID.Size = new System.Drawing.Size(41, 22);
             this.lblTileID.Text = "<TID>";
             // 
             // lblTileName
@@ -474,5 +486,6 @@ namespace CityTools {
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.CheckBox ckbShowCollisions;
         private System.Windows.Forms.Button btnClearCollisions;
+        private System.Windows.Forms.ToolStripButton btnMerge;
     }
 }

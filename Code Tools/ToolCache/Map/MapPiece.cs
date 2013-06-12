@@ -71,6 +71,7 @@ namespace ToolCache.Map {
 
             isLoaded = true;
             Objects = new List<BaseObject>();
+            Spawns = new List<SpawnRegion>();
 
             //First load the terrain
             Tiles.LoadMapFromFile(f);

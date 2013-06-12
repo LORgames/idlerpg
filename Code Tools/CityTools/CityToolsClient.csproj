@@ -114,6 +114,12 @@
     <Compile Include="Components\ObjectCacheControl.Designer.cs">
       <DependentUpon>ObjectCacheControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\TileMergeDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Components\TileMergeDialog.Designer.cs">
+      <DependentUpon>TileMergeDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Core\Camera.cs" />
     <Compile Include="Core\DrawingHelper.cs" />
     <Compile Include="CritterEditor.cs">
@@ -221,6 +227,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Components\ObjectCacheControl.resx">
       <DependentUpon>ObjectCacheControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\TileMergeDialog.resx">
+      <DependentUpon>TileMergeDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CritterEditor.resx">
       <DependentUpon>CritterEditor.cs</DependentUpon>
@@ -354,6 +363,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\PortalIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\disk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_merge.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

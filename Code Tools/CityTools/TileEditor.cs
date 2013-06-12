@@ -10,6 +10,7 @@ using ToolCache.Combat.Elements;
 using ToolCache.Map;
 using ToolCache.Map.Tiles;
 using ToolCache.General;
+using CityTools.Components;
 
 namespace CityTools {
     public partial class TileEditor : Form {
@@ -253,6 +254,11 @@ namespace CityTools {
             if (e.Button == System.Windows.Forms.MouseButtons.Left) {
                 p1 = e.Location;
             }
+        }
+
+        private void btnMerge_Click(object sender, EventArgs e) {
+            TileMergeDialog tmd = new TileMergeDialog();
+            tmd.ShowDialog();
         }
     }
 }
