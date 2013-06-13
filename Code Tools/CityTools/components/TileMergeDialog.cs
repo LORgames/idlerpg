@@ -38,8 +38,10 @@ namespace CityTools.Components {
         }
 
         private void cbTileName_SelectedIndexChanged(object sender, EventArgs e) {
-            (listLayers.SelectedItem as MergeStruct).Tile = (cbTileName.SelectedItem as TileTemplate);
-            TileRedraw();
+            if (listLayers.SelectedItem != null) {
+                (listLayers.SelectedItem as MergeStruct).Tile = (cbTileName.SelectedItem as TileTemplate);
+                TileRedraw();
+            }
         }
 
         private void TileRedraw() {
