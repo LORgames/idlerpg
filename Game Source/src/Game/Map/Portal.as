@@ -43,6 +43,10 @@ package Game.Map
 			return Entry.intersects(other);
 		}
 		
+		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IMapObject):void {
+			
+		}
+		
 	}
 
 }

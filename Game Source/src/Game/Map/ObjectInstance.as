@@ -2,6 +2,7 @@ package Game.Map {
 	import CollisionSystem.Rect;
 	import flash.display.Bitmap;
 	import flash.geom.Rectangle;
+	import Game.General.Script;
 	import Interfaces.IObjectLayer;
 	import Interfaces.IMapObject;
 	/**
@@ -82,6 +83,10 @@ package Game.Map {
 		
 		public override function toString():String {
 			return "[OBJ=" + Template.ObjectID + "]";
+		}
+		
+		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IMapObject):void {
+			Template.MyScript.Run(Script.Attacked, attacker, this);
 		}
 		
 	}

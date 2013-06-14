@@ -62,6 +62,10 @@ package Game.Map {
 			return false;
 		}
 		
+		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IMapObject):void {
+			
+		}
+		
 		////////////////////////////////////////
 		//Static methods
 		///////////////////////////////////////

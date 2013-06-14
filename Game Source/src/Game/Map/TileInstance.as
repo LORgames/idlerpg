@@ -27,5 +27,9 @@ package Game.Map {
 		public function HasPerfectCollision(other:Rect):Boolean {
 			return false;
 		}
+		
+		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IMapObject):void {
+			
+		}
 	}
 }

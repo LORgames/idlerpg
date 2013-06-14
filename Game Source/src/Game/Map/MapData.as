@@ -6,6 +6,7 @@ package Game.Map {
 	import Game.Critter.BaseCritter;
 	import Game.Critter.CritterHuman;
 	import Game.General.BinaryLoader;
+	import Interfaces.IMapObject;
 	import SoundSystem.MusicPlayer;
 	/**
 	 * ...
@@ -147,7 +148,7 @@ package Game.Map {
 			Main.I.Renderer.FadeToWorld();
 		}
 		
-		public function GetObjectsInArea(rect:Rect, objects:Vector.<Object>):void {
+		public function GetObjectsInArea(rect:Rect, objects:Vector.<IMapObject>):void {
 			var _tiles:Vector.<TileInstance> = TileHelper.GetTiles(rect, this);
 			
 			var _tt:int = _tiles.length;

@@ -10,6 +10,7 @@ package Game.General {
 	import Game.Equipment.EquipmentItem;
 	import Game.Map.ObjectInstance;
 	import Game.Map.WorldData;
+	import Interfaces.IMapObject;
 	import Interfaces.IObjectLayer;
 	import RenderSystem.DebugDrawingHelper;
 	import SoundSystem.EffectsPlayer;
@@ -130,7 +131,7 @@ package Game.General {
 			var dim1:int;
 			var rect:Rect = new Rect(false, null);
 			
-			var Objects:Vector.<Object> = new Vector.<Object>();
+			var Objects:Vector.<IMapObject> = new Vector.<IMapObject>();
 			
 			while(arrayType != 0xF0FD) {
 				switch(arrayType) {
@@ -183,7 +184,7 @@ package Game.General {
 			
 			var obji:int = Objects.length;
 			while(--obji > -1) {
-				var obj:Object = Objects[obji];
+				var obj:IMapObject = Objects[obji];
 				
 				var command:int = eventScript.readUnsignedShort();
 				
@@ -191,6 +192,7 @@ package Game.General {
 					switch(command) {
 						case 0x1003: //Damage
 							dim0 = eventScript.readUnsignedShort();
+							obj.ScriptAttack(false, false, dim0, (target as IMapObject));
 							trace("FlatDamage: " + dim0);
 							break;
 					}
@@ -198,7 +200,6 @@ package Game.General {
 					command = eventScript.readUnsignedShort();
 				}
 				
-				trace("PROC: " + obj);
 				eventScript.position = startIndex;
 			}
 			

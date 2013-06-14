@@ -6,6 +6,7 @@ using ToolCache.Map.Objects;
 using ToolCache.General;
 using System.Drawing;
 using System.Drawing.Imaging;
+using ToolCache.Scripting;
 
 namespace ToolToGameExporter {
     public class ObjectCrusher {
@@ -28,6 +29,9 @@ namespace ToolToGameExporter {
                 f.AddByte((byte)t.Animation.Frames.Count);
 
                 f.AddShort((short)t.OffsetY);
+
+                ScriptInfo info = new ScriptInfo(t.ObjectName, ScriptTypes.Object);
+                ScriptCrusher.ProcessScript(info, t.Script, f);
 
                 f.AddByte((byte)t.Blocks.Count);
                 i = t.Blocks.Count;

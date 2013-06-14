@@ -6,6 +6,7 @@ package Game.Map {
 	import flash.utils.ByteArray;
 	import Game.General.BinaryLoader;
 	import Game.General.ImageLoader;
+	import Game.General.Script;
 	import RenderSystem.IAnimated;
 	import RenderSystem.Renderman;
 	/**
@@ -18,6 +19,8 @@ package Game.Map {
 		public var TotalFrames:int;
 		public var PlaybackSpeed:Number;
 		public var Bases:Vector.<Rectangle>;
+		
+		public var MyScript:Script;
 		
 		public var isSolid:Boolean;
 		public var OffsetHeight:int;
@@ -85,6 +88,8 @@ package Game.Map {
 				obj.TotalFrames = e.readByte();
 				
 				obj.OffsetHeight = e.readShort();
+				
+				obj.MyScript = Script.ReadScript(e);
 				
 				totalRects = e.readByte();
 				
