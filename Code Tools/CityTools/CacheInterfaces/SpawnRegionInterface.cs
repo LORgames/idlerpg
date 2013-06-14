@@ -9,7 +9,13 @@ using ToolCache.Map.Regions;
 using CityTools.MiscHelpers;
 
 namespace CityTools.CacheInterfaces {
-    internal class RegionInterface {
+    /// <summary>
+    /// Responsible for controlling spawn regions.
+    /// </summary>
+    internal class SpawnRegionInterface {
+        /// <summary>
+        /// Hooks into the GUI and sets up all the event handlers
+        /// </summary>
         internal static void Initialize() {
             MainWindow.instance.btnAddRegion.Click += new EventHandler(btnAddRegion_Click);
             MainWindow.instance.btnDeleteRegion.Click += new EventHandler(btnDeleteRegions_Click);
@@ -27,6 +33,11 @@ namespace CityTools.CacheInterfaces {
             MainWindow.instance.numSpawnMax.ValueChanged += new EventHandler(numValueChanged);
         }
 
+        /// <summary>
+        /// One of the spawn numbercounter things was modified
+        /// </summary>
+        /// <param name="sender">Not Important, Can be null.</param>
+        /// <param name="e">Not Important, Can be null.</param>
         static void numValueChanged(object sender, EventArgs e) {
             if (MainWindow.instance.listRegions.SelectedItem != null) {
                 if (sender == MainWindow.instance.numSpawnTimer) {
@@ -39,6 +50,9 @@ namespace CityTools.CacheInterfaces {
             }
         }
 
+        /// <summary>
+        /// Updates all of the Spawn related GUI
+        /// </summary>
         internal static void UpdateGUI() {
             if (MainWindow.instance.listRegions.SelectedItems.Count != 1) {
                 MainWindow.instance.txtRegionName.Enabled = false;
@@ -62,6 +76,9 @@ namespace CityTools.CacheInterfaces {
             }
         }
 
+        /// <summary>
+        /// Updates the critter list for the current selected spawn region.
+        /// </summary>
         private static void UpdateSpawnList() {
             MainWindow.instance.listCritterSpawns.Items.Clear();
 
@@ -72,6 +89,9 @@ namespace CityTools.CacheInterfaces {
             }
         }
 
+        /// <summary>
+        /// Updates the list of spawn areas on the map editor panel.
+        /// </summary>
         internal static void UpdateRegionList() {
             //Fix the region list
             MainWindow.instance.listRegions.Items.Clear();
@@ -84,6 +104,9 @@ namespace CityTools.CacheInterfaces {
             UpdateGUI();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private static void UpdateRegionDrawList() {
             RegionHelper.DrawList.Clear();
 
@@ -98,6 +121,11 @@ namespace CityTools.CacheInterfaces {
             }
         }
 
+        /// <summary>
+        /// A different spawn region was clicked.
+        /// </summary>
+        /// <param name="sender">Not Important, Can be null.</param>
+        /// <param name="e">Not Important, Can be null.</param>
         private static void listRegions_SelectedIndexChanged(object sender, EventArgs e) {
             if (MainWindow.instance.listRegions.SelectedItems.Count == 1) {
                 RegionHelper.selectedRegion = MainWindow.instance.listRegions.SelectedItems[0] as SpawnRegion;
@@ -107,6 +135,11 @@ namespace CityTools.CacheInterfaces {
             UpdateRegionDrawList();
         }
 
+        /// <summary>
+        /// The name of the region was changed
+        /// </summary>
+        /// <param name="sender">Not Important, Can be null.</param>
+        /// <param name="e">Not Important, Can be null.</param>
         private static void txtRegionName_TextChanged(object sender, EventArgs e) {
             if (MainWindow.instance.listRegions.SelectedItems.Count == 1) {
                 if ((MainWindow.instance.listRegions.SelectedItem as SpawnRegion).Name != MainWindow.instance.txtRegionName.Text) {
@@ -116,10 +149,21 @@ namespace CityTools.CacheInterfaces {
             }
         }
 
+        /// <summary>
+        /// Updates the region list when the name has changed
+        /// </summary>
+        /// <param name="sender">Not Important, Can be null.</param>
+        /// <param name="e">Not Important, Can be null.</param>
         private static void txtRegionName_LostFocus(object sender, EventArgs e) {
             UpdateRegionList();
         }
 
+
+        /// <summary>
+        /// Sets the control system to Region painting and sets the current region in the helper to the selected one
+        /// </summary>
+        /// <param name="sender">Not Important, Can be null.</param>
+        /// <param name="e">Not Important, Can be null.</param>
         private static void btnRegionResize_Click(object sender, EventArgs e) {
             if(MainWindow.instance.listRegions.SelectedItem != null) {
                 MainWindow.instance.paintMode = PaintMode.Regions;
@@ -127,11 +171,21 @@ namespace CityTools.CacheInterfaces {
             }
         }
 
+        /// <summary>
+        /// Adds a new region to the region list.
+        /// </summary>
+        /// <param name="sender">Not Important, Can be null.</param>
+        /// <param name="e">Not Important, Can be null.</param>
         private static void btnAddRegion_Click(object sender, EventArgs e) {
             MapPieceCache.CurrentPiece.Spawns.Add(new SpawnRegion());
             UpdateRegionList();
         }
 
+        /// <summary>
+        /// Deletes the currently selected regions.
+        /// </summary>
+        /// <param name="sender">Not Important, Can be null.</param>
+        /// <param name="e">Not Important, Can be null.</param>
         private static void btnDeleteRegions_Click(object sender, EventArgs e) {
             int totalItems = MapPieceCache.CurrentPiece.Spawns.Count;
 
@@ -148,6 +202,11 @@ namespace CityTools.CacheInterfaces {
             UpdateRegionList();
         }
 
+        /// <summary>
+        /// The all regions checkbox has changed.
+        /// </summary>
+        /// <param name="sender">Not Important, Can be null.</param>
+        /// <param name="e">Not Important, Can be null.</param>
         private static void ckDrawRegions_CheckedChanged(object sender, EventArgs e) {
             UpdateRegionDrawList();
         }
