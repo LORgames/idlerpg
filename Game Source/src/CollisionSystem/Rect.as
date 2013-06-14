@@ -1,5 +1,6 @@
 package CollisionSystem {
 	import flash.geom.Point;
+	import Interfaces.IMapObject;
 	/**
 	 * ...
 	 * @author Paul
@@ -12,19 +13,17 @@ package CollisionSystem {
 		public var W:int;
 		public var H:int;
 		
-		public var HalfWidth:int;
-		public var HalfHeight:int;
-		
 		public var IsStatic:Boolean = false;
+		public var Owner:IMapObject;
 		
-		public function Rect(isStatic:Boolean, x:int = 0, y:int = 0, w:int = 0, h:int = 0) {
+		public function Rect(isStatic:Boolean, owner:IMapObject, x:int = 0, y:int = 0, w:int = 0, h:int = 0) {
 			this.X = x;
 			this.Y = y;
 			this.W = w;
 			this.H = h;
 			
-			this.HalfWidth = w * 0.5;
-			this.HalfHeight = h * 0.5;
+			Owner = owner;
+			IsStatic = isStatic;
 		}
 		
 		public function intersects(b:Rect):Boolean{

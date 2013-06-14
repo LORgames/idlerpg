@@ -1,18 +1,24 @@
 package Game.General {
 	import adobe.utils.CustomActions;
+	import CollisionSystem.Rect;
+	import flash.display.Sprite;
 	import flash.geom.PerspectiveProjection;
 	import flash.utils.ByteArray;
 	import Game.Critter.BaseCritter;
 	import Game.Critter.CritterManager;
 	import Game.Critter.CritterHuman;
 	import Game.Equipment.EquipmentItem;
+	import Game.Map.ObjectInstance;
 	import Game.Map.WorldData;
+	import Interfaces.IObjectLayer;
+	import RenderSystem.DebugDrawingHelper;
 	import SoundSystem.EffectsPlayer;
 	/**
 	 * ...
 	 * @author Paul
 	 */
 	public class Script {
+		//EVENT TYPES
 		public static const Attack:uint = 0;
 		public static const Spawn:uint = 1;
 		public static const Attacked:uint = 2;
@@ -23,6 +29,16 @@ package Game.General {
 		public static const StartMoving:uint = 7;
 		public static const EndMoving:uint = 8;
 		public static const TOTAL_EVENT_TYPES:uint = 9;
+		
+		//SCRIPT TYPES
+		public static const CRITTER:int = 0xA000;
+		public static const ENEMY:int = 0xA001;
+		public static const ATTACKABLE:int = 0xA002;
+		public static const ALLY:int = 0xA003;
+		
+		//SCRIPT ARRAYS
+		public static const FRONT:int = 0x9000;
+		public static const AOE:int = 0x9001;
 		
 		private var EventScripts:Vector.<ByteArray>;
 		
@@ -72,13 +88,9 @@ package Game.General {
 							
 							var critter:BaseCritter = CritterManager.I.CritterInfo[critterID].CreateCritter(bc.CurrentMap, bc.X, bc.Y);
 						
-							if(critter != null) {
-								//critter.RequestTeleport(WorldData.ME.CurrentMap, WorldData.ME.CurrentMap.Portals[0]);
-							} else {
+							if(critter == null) {
 								trace("Script error: Could not spawn CritterID=" + critterID + ": critter is null.");
 							}
-						} else {
-							trace("Only Critter types can spawn things: " + target + " & " + invoker);
 						}
 						
 						break;
@@ -101,8 +113,97 @@ package Game.General {
 							trace("Unknown Invoker for 0x6001:LoopAnimation");
 							EventScript.readShort();
 						} break;
+					case 0x8002: //Foreach
+						Process_ForEach(EventScript, invoker, target);
+						break;
+					default:
+						trace("Unknown Command: 0x" + command.toString(16));
 				}
 			}
+		}
+		
+		private function Process_ForEach(eventScript:ByteArray, invoker:Object, target:Object):void {
+			var eType:int = eventScript.readUnsignedShort();
+			var arrayType:int = eventScript.readUnsignedShort();
+			
+			var dim0:int;
+			var dim1:int;
+			var rect:Rect = new Rect(false, null);
+			
+			var Objects:Vector.<Object> = new Vector.<Object>();
+			
+			while(arrayType != 0xF0FD) {
+				switch(arrayType) {
+					case FRONT:
+						dim0 = eventScript.readUnsignedShort() * 24;
+						dim1 = eventScript.readUnsignedShort() * 24;
+						
+						trace("FRONT: " + dim0 + "x" + dim1);
+						
+						if (target is BaseCritter) {
+							var obj0:BaseCritter = (target as BaseCritter);
+							
+							if (obj0.direction < 2) { //Left or right
+								rect.X = (obj0.direction == 1)? obj0.X : obj0.X - dim0; //if right center else offcenter
+								rect.Y = obj0.Y - dim1 / 2;
+								rect.W = dim0;
+								rect.H = dim1;
+							} else {
+								rect.X = obj0.X - dim1 / 2;
+								rect.Y = (obj0.direction == 3)? obj0.Y : obj0.Y - dim0; //if down center else offcenter
+								rect.W = dim1;
+								rect.H = dim0;
+							}
+							
+							obj0.CurrentMap.GetObjectsInArea(rect, Objects);
+							
+							DebugDrawingHelper.AddDebugRect(rect);
+						} else {
+							trace("FRONT is not available to non-critter systems.");
+						}
+						
+						break;
+					case AOE:
+						dim0 = eventScript.readUnsignedShort() * 24;
+						dim1 = dim0;
+						
+						trace("AOE: " + dim0 + "x" + dim1);
+						
+						break;
+					default:
+						trace("Unknown ArrayType.");
+						break;
+				}
+				
+				arrayType = eventScript.readUnsignedShort();
+			}
+			
+			//Now we're in the loop bit :)
+			var startIndex:int = eventScript.position;
+			
+			var obji:int = Objects.length;
+			while(--obji > -1) {
+				var obj:Object = Objects[obji];
+				
+				var command:int = eventScript.readUnsignedShort();
+				
+				while (command != 0xF0FE) {
+					switch(command) {
+						case 0x1003: //Damage
+							dim0 = eventScript.readUnsignedShort();
+							trace("FlatDamage: " + dim0);
+							break;
+					}
+					
+					command = eventScript.readUnsignedShort();
+				}
+				
+				trace("PROC: " + obj);
+				eventScript.position = startIndex;
+			}
+			
+			ReadUntilBalancedClose(eventScript);
+			
 		}
 		
 		//This function is responsible for reading scripts in and creating script objects
@@ -128,7 +229,7 @@ package Game.General {
 					}
 					
 					activeEvent = command;
-						
+					
 					if (activeEvent < TOTAL_EVENT_TYPES) {
 						commandBlock[activeEvent] = new ByteArray();
 						activeScript = commandBlock[activeEvent];
@@ -139,24 +240,8 @@ package Game.General {
 					if (command == 0xFFFF) {
 						if(activeScript != null) activeScript.writeShort(0xFFFF);
 						break; //Exit early if script has ended
-					} else { //Must be an action
-						activeScript.writeShort(command);
-						
-						switch(command) {
-							//1 extra short
-							case 0x1001: // Play sound effect
-							case 0x1002: // Spawn
-							case 0x6000: // Play Animation
-							case 0x6001: // Loop animation
-								activeScript.writeShort(b.readShort());
-								break;
-							
-							//2 Extra Shorts
-							case 0x4001: //Equip item on the invoker
-								activeScript.writeShort(b.readShort());
-								activeScript.writeShort(b.readShort());
-								break;
-						}
+					} else if (command == 0xF0FD) {
+						WriteUntilBalancedCloseBlock(b, activeScript);
 					}
 				}
 			}
@@ -164,6 +249,40 @@ package Game.General {
 			return new Script(commandBlock);
 		}
 		
+		static private function WriteUntilBalancedCloseBlock(b:ByteArray, activeScript:ByteArray):void {
+			//This function should only get called after reading this...
+			activeScript.writeShort(0xF0FD);
+			
+			var i:int = 0;
+			var level:int = 1;
+			
+			while (level != 0) {
+				i = b.readUnsignedShort();
+				
+				if (i == 0xF0FD) { //Open block
+					level++;
+				} else if (i == 0xF0FE) { //Close block
+					level--;
+				}
+				
+				activeScript.writeShort(i);
+			}
+		}
+		
+		private function ReadUntilBalancedClose(b:ByteArray):void {
+			var i:int = 0;
+			var level:int = 1;
+			
+			while (level != 0) {
+				i = b.readUnsignedShort();
+				
+				if (i == 0xF0FD) { //Open block
+					level++;
+				} else if (i == 0xF0FE) { //Close block
+					level--;
+				}
+			}
+		}
 	}
 
 }

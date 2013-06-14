@@ -52,6 +52,11 @@ package Game.Critter {
 			if (!ControlsLocked) Equipment.ChangeState(2, 0);
 		}
 		
+		public function toString():String {
+			if (this == WorldData.ME) return "[PLAYER CHARACTER]";
+			return "[CRITTER HUMAN]";
+		}
+		
 	}
 
 }

@@ -30,7 +30,7 @@
             this.btnAddItem = new System.Windows.Forms.ToolStripButton();
             this.btnDuplicateItem = new System.Windows.Forms.ToolStripButton();
             this.txtSearchBox = new System.Windows.Forms.ToolStripTextBox();
-            this.txtConsumeEffect = new Components.ScriptBox();
+            this.scriptConsumeEffect = new CityTools.Components.ScriptBox();
             this.txtName = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
@@ -80,7 +80,7 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.txtConsumeEffect);
+            this.splitContainer1.Panel2.Controls.Add(this.scriptConsumeEffect);
             this.splitContainer1.Panel2.Controls.Add(this.txtName);
             this.splitContainer1.Panel2.Controls.Add(this.label15);
             this.splitContainer1.Panel2.Controls.Add(this.label14);
@@ -155,13 +155,15 @@
             this.txtSearchBox.Name = "txtSearchBox";
             this.txtSearchBox.Size = new System.Drawing.Size(95, 25);
             // 
-            // txtConsumeEffect
+            // scriptConsumeEffect
             // 
-            this.txtConsumeEffect.Location = new System.Drawing.Point(13, 214);
-            this.txtConsumeEffect.Name = "txtConsumeEffect";
-            this.txtConsumeEffect.Size = new System.Drawing.Size(151, 65);
-            this.txtConsumeEffect.TabIndex = 31;
-            this.txtConsumeEffect.TextChanged += new System.EventHandler(this.FormEdited);
+            this.scriptConsumeEffect.Location = new System.Drawing.Point(13, 214);
+            this.scriptConsumeEffect.Name = "scriptConsumeEffect";
+            this.scriptConsumeEffect.Script = "";
+            this.scriptConsumeEffect.ScriptType = ToolCache.Scripting.ScriptTypes.Item;
+            this.scriptConsumeEffect.Size = new System.Drawing.Size(151, 65);
+            this.scriptConsumeEffect.TabIndex = 31;
+            this.scriptConsumeEffect.TextChanged += new System.EventHandler(this.FormEdited);
             // 
             // txtName
             // 
@@ -467,6 +469,6 @@
         private System.Windows.Forms.ToolStripTextBox txtSearchBox;
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.ToolStripButton btnDuplicateItem;
-        private Components.ScriptBox txtConsumeEffect;
+        private Components.ScriptBox scriptConsumeEffect;
     }
 }

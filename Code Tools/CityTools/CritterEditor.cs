@@ -576,7 +576,7 @@ namespace CityTools {
         private void btnAddToSpawnList_Click(object sender, EventArgs e) {
             if (MainWindow.instance.listRegions.SelectedItems.Count == 1) {
                 (MainWindow.instance.listRegions.SelectedItem as SpawnRegion).SpawnList.Add(new CritterSpawn(critter.ID));
-                CacheInterfaces.RegionInterface.UpdateGUI();
+                CacheInterfaces.SpawnRegionInterface.UpdateGUI();
                 ToolCache.Map.MapPieceCache.CurrentPiece.Edited();
             }
         }

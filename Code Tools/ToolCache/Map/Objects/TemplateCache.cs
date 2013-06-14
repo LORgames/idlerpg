@@ -48,6 +48,8 @@ namespace ToolCache.Map.Objects {
                     string ObjectName = f.GetString();
                     string ObjectGroup = f.GetString();
 
+                    string Script = f.GetString();
+
                     int totalRectangles = f.GetByte();
                     List<Rectangle> _rects = new List<Rectangle>();
 
@@ -64,7 +66,7 @@ namespace ToolCache.Map.Objects {
                     bool isSolid = f.GetByte() == 1;
                     int OffsetY = f.GetShort();
 
-                    ObjectTypes.Add(ObjectID, new Template(ObjectID, ObjectName, ObjectGroup, animation, OffsetY, _rects, isSolid));
+                    ObjectTypes.Add(ObjectID, new Template(ObjectID, ObjectName, ObjectGroup, animation, OffsetY, _rects, isSolid, Script));
 
                     if (!GroupsToObjectUUIDS.ContainsKey(ObjectGroup)) {
                         GroupsToObjectUUIDS.Add(ObjectGroup, new List<short>());
@@ -91,6 +93,8 @@ namespace ToolCache.Map.Objects {
 
                 f.AddString(kvp.Value.ObjectName);
                 f.AddString(kvp.Value.ObjectGroup);
+
+                f.AddString(kvp.Value.Script);
 
                 f.AddByte((byte)kvp.Value.Blocks.Count);
 

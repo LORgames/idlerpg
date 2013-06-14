@@ -11,6 +11,8 @@ namespace ToolCache.Map.Objects {
         public string ObjectName;
         public string ObjectGroup;
 
+        public string Script;
+
         public AnimatedObject Animation;
         public List<Rectangle> Blocks;
 
@@ -18,7 +20,7 @@ namespace ToolCache.Map.Objects {
 
         public bool isSolid;
 
-        public Template(short typeID, string name, string group, AnimatedObject animation, int OffsetY, List<Rectangle> _blocks, bool isSolid) {
+        public Template(short typeID, string name, string group, AnimatedObject animation, int OffsetY, List<Rectangle> _blocks, bool isSolid, string script) {
             ObjectID = typeID;
 
             ObjectName = name;
@@ -29,6 +31,8 @@ namespace ToolCache.Map.Objects {
 
             this.OffsetY = OffsetY;
             this.isSolid = isSolid;
+
+            this.Script = script;
         }
     }
 }

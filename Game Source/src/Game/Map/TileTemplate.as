@@ -71,7 +71,7 @@ package Game.Map {
 				tt.Collisions = new Vector.<Rect>(__t, true);
 				
 				while (--__t > -1) {
-					tt.Collisions[__t] = new Rect(true, e.readShort(), e.readShort(), e.readShort(), e.readShort());
+					tt.Collisions[__t] = new Rect(true, null, e.readShort(), e.readShort(), e.readShort(), e.readShort());
 				}
 				
 				var j:int = tt.TotalFrames;

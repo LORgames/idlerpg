@@ -5,11 +5,12 @@ package Game.Map {
 	import flash.utils.ByteArray;
 	import Game.Critter.BaseCritter;
 	import Game.Critter.CritterManager;
+	import Interfaces.IMapObject;
 	/**
 	 * ...
 	 * @author Paul
 	 */
-	public class SpawnRegion {
+	public class SpawnRegion implements IMapObject {
 		
 		public var Map:MapData;
 		public var Area:Vector.<Rect>;
@@ -52,6 +53,15 @@ package Game.Map {
 			return SpawnID[0];
 		}
 		
+		
+		public function GetUnion():Rect {
+			return null;
+		}
+		
+		public function HasPerfectCollision(other:Rect):Boolean {
+			return false;
+		}
+		
 		////////////////////////////////////////
 		//Static methods
 		///////////////////////////////////////
@@ -65,7 +75,7 @@ package Game.Map {
 
 			// Rectangle0 (needs to be extended)
 			while (--totalRects > -1) {
-				s.Area[totalRects] = new Rect(true, b.readShort(), b.readShort(), b.readShort(), b.readShort());
+				s.Area[totalRects] = new Rect(true, s, b.readShort(), b.readShort(), b.readShort(), b.readShort());
 			}
 			
 			// Add what critters are here and what percents

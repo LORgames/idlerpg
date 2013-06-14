@@ -7,8 +7,13 @@ using CityTools.Components;
 using System.IO;
 
 namespace CityTools.CacheInterfaces {
+    /// <summary>
+    /// Responsible for interfacing with the object database in the ToolCache library.
+    /// </summary>
     public class ObjectInterface {
-
+        /// <summary>
+        /// Initializes the object system by hooking into the GUI wherever may be required and loading any additional databases that might be required
+        /// </summary>
         internal static void Initialize() {
             MainWindow.instance.pnlObjectScenicCache.Controls.Add(new ObjectCacheControl());
 
@@ -16,6 +21,9 @@ namespace CityTools.CacheInterfaces {
             UpdateObjectPage();
         }
 
+        /// <summary>
+        /// Updates the object tab to display any item groups that might have been added or modified
+        /// </summary>
         public static void UpdateObjectTab() {
             MainWindow.instance.cbScenicCacheSelector.Items.Clear();
             List<String> groups = TemplateCache.GetGroups();
@@ -25,6 +33,9 @@ namespace CityTools.CacheInterfaces {
             }
         }
 
+        /// <summary>
+        /// Updates the object tab to display any updated items that might not currently be displayed and to remove any older items that may have been deleted
+        /// </summary>
         internal static void UpdateObjectPage() {
             (MainWindow.instance.pnlObjectScenicCache.Controls[0] as ObjectCacheControl).Deactivate();
 
@@ -37,6 +48,9 @@ namespace CityTools.CacheInterfaces {
             }
         }
 
+        /// <summary>
+        /// Completely flushes the MapEditor GUI and recreates it from empty.
+        /// </summary>
         internal static void ReloadAll() {
             UpdateObjectPage();
             UpdateObjectTab();

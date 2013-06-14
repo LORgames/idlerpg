@@ -37,7 +37,6 @@ namespace CityTools {
             this.lblName = new System.Windows.Forms.Label();
             this.cbTemplateGroup = new System.Windows.Forms.ComboBox();
             this.txtTemplateName = new System.Windows.Forms.TextBox();
-            this.ccAnimation = new CityTools.Components.AnimationList();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.numOffsetHeight = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
@@ -49,6 +48,8 @@ namespace CityTools {
             this.treeTemplateNames = new System.Windows.Forms.TreeView();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
+            this.ccAnimation = new CityTools.Components.AnimationList();
+            this.scriptBox1 = new CityTools.Components.ScriptBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbExampleBase)).BeginInit();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numOffsetHeight)).BeginInit();
@@ -73,7 +74,7 @@ namespace CityTools {
             this.pbExampleBase.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pbExampleBase.Location = new System.Drawing.Point(0, 0);
             this.pbExampleBase.Name = "pbExampleBase";
-            this.pbExampleBase.Size = new System.Drawing.Size(519, 417);
+            this.pbExampleBase.Size = new System.Drawing.Size(410, 417);
             this.pbExampleBase.TabIndex = 0;
             this.pbExampleBase.TabStop = false;
             this.pbExampleBase.Paint += new System.Windows.Forms.PaintEventHandler(this.pbExampleBase_Paint);
@@ -127,7 +128,7 @@ namespace CityTools {
             // lblTemplateID
             // 
             this.lblTemplateID.Name = "lblTemplateID";
-            this.lblTemplateID.Size = new System.Drawing.Size(40, 22);
+            this.lblTemplateID.Size = new System.Drawing.Size(41, 22);
             this.lblTemplateID.Text = "<TID>";
             // 
             // lblGroup
@@ -164,15 +165,6 @@ namespace CityTools {
             this.txtTemplateName.Size = new System.Drawing.Size(121, 20);
             this.txtTemplateName.TabIndex = 7;
             this.txtTemplateName.Text = "<Unnamed>";
-            // 
-            // ccAnimation
-            // 
-            this.ccAnimation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ccAnimation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ccAnimation.Location = new System.Drawing.Point(0, 0);
-            this.ccAnimation.Name = "ccAnimation";
-            this.ccAnimation.Size = new System.Drawing.Size(261, 120);
-            this.ccAnimation.TabIndex = 11;
             // 
             // timer1
             // 
@@ -262,7 +254,7 @@ namespace CityTools {
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(784, 541);
+            this.splitContainer1.Size = new System.Drawing.Size(912, 541);
             this.splitContainer1.SplitterDistance = 261;
             this.splitContainer1.TabIndex = 18;
             // 
@@ -290,7 +282,8 @@ namespace CityTools {
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.pbExampleBase);
-            this.splitContainer2.Size = new System.Drawing.Size(519, 541);
+            this.splitContainer2.Panel2.Controls.Add(this.scriptBox1);
+            this.splitContainer2.Size = new System.Drawing.Size(647, 541);
             this.splitContainer2.SplitterDistance = 120;
             this.splitContainer2.TabIndex = 18;
             // 
@@ -317,15 +310,34 @@ namespace CityTools {
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.ccAnimation);
-            this.splitContainer3.Size = new System.Drawing.Size(519, 120);
+            this.splitContainer3.Size = new System.Drawing.Size(647, 120);
             this.splitContainer3.SplitterDistance = 254;
             this.splitContainer3.TabIndex = 0;
+            // 
+            // ccAnimation
+            // 
+            this.ccAnimation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ccAnimation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ccAnimation.Location = new System.Drawing.Point(0, 0);
+            this.ccAnimation.Name = "ccAnimation";
+            this.ccAnimation.Size = new System.Drawing.Size(389, 120);
+            this.ccAnimation.TabIndex = 11;
+            // 
+            // scriptBox1
+            // 
+            this.scriptBox1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.scriptBox1.Location = new System.Drawing.Point(410, 0);
+            this.scriptBox1.Name = "scriptBox1";
+            this.scriptBox1.Script = "";
+            this.scriptBox1.ScriptType = ToolCache.Scripting.ScriptTypes.Object;
+            this.scriptBox1.Size = new System.Drawing.Size(237, 417);
+            this.scriptBox1.TabIndex = 1;
             // 
             // TemplateEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 541);
+            this.ClientSize = new System.Drawing.Size(912, 541);
             this.Controls.Add(this.splitContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "TemplateEditor";
@@ -377,5 +389,6 @@ namespace CityTools {
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.TreeView treeTemplateNames;
+        private ScriptBox scriptBox1;
     }
 }

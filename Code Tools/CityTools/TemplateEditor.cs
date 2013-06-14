@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using ToolCache.Map.Objects;
 using ToolCache.General;
+using CityTools.Components;
 
 namespace CityTools {
     public partial class TemplateEditor : Form {
@@ -28,6 +29,8 @@ namespace CityTools {
             ccAnimation.SetSaveLocation("Objects");
             ccAnimation.ClearAnimation();
             ccAnimation.AnimationChanged += AnimationChanged;
+
+            scriptBox1.ScriptUpdated += ValueChanged;
 
             UpdateObjectNames();
             ChangeTo(-1);
@@ -54,6 +57,7 @@ namespace CityTools {
                 numOffsetHeight.Value = TemplateCache.G(objectID).OffsetY;
                 ckbIsSolid.Checked = TemplateCache.G(objectID).isSolid;
                 _bases = TemplateCache.G(objectID).Blocks;
+                scriptBox1.Script = TemplateCache.G(objectID).Script;
                 this.objectID = objectID;
             } else {
                 _new = true;
@@ -61,6 +65,7 @@ namespace CityTools {
                 ccAnimation.ClearAnimation();
                 cbTemplateGroup.Text = "Unknown";
                 txtTemplateName.Text = "<Unknown>";
+                scriptBox1.Script = "";
                 _bases = new List<Rectangle>();
             }
 
@@ -82,8 +87,9 @@ namespace CityTools {
                 TemplateCache.G(objectID).Blocks = _bases;
                 TemplateCache.G(objectID).OffsetY = (int)numOffsetHeight.Value;
                 TemplateCache.G(objectID).isSolid = ckbIsSolid.Checked;
+                TemplateCache.G(objectID).Script = scriptBox1.Script;
             } else {
-                Template t = new Template(objectID, txtTemplateName.Text, cbTemplateGroup.Text, ccAnimation.GetAnimation(), (int)numOffsetHeight.Value, _bases, ckbIsSolid.Checked);
+                Template t = new Template(objectID, txtTemplateName.Text, cbTemplateGroup.Text, ccAnimation.GetAnimation(), (int)numOffsetHeight.Value, _bases, ckbIsSolid.Checked, scriptBox1.Script);
                 TemplateCache.AddObject(t);
             }
 

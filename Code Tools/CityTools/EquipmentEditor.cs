@@ -50,9 +50,7 @@ namespace CityTools {
             //Setup the animations
             SetupAnimations();
 
-            //Prepare Script Box
-            txtScript.Setup(ToolCache.Scripting.ScriptTypes.Equipment);
-            txtScript.BeforeParse += new EventHandler<Components.ScriptInfoArgs>(txtScript_BeforeParse);
+            txtScript.ScriptUpdated += ValueChanged;
 
             CreateNew();
 

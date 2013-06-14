@@ -1,10 +1,10 @@
 package Game.Equipment {
+	import CollisionSystem.Rect;
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	import Game.Critter.CritterHuman;
 	import Game.General.Script;
 	import Interfaces.IObjectLayer;
-	import RenderSystem.IAnimated;
 	/**
 	 * ...
 	 * @author Paul

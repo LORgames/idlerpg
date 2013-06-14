@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 
 namespace ToolCache.Scripting {
+    /// <summary>
+    /// A list of the events
+    /// </summary>
     enum ValidEvents {
         Attack = 0x0000,
         Spawn = 0x0001,
@@ -16,6 +19,9 @@ namespace ToolCache.Scripting {
         EndMoving = 0x0008
     }
 
+    /// <summary>
+    /// Types that can be called from within the scripts
+    /// </summary>
     enum ValidTypes {
         Critter = 0xA000,
         Enemy = 0xA001,

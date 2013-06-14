@@ -25,8 +25,6 @@ package Game.Critter
 			
 			MyRect.W = MyInfo.CollisionWidth;
 			MyRect.H = MyInfo.CollisionHeight;
-			MyRect.HalfWidth = MyRect.W * 0.5;
-			MyRect.HalfHeight = MyRect.H * 0.5;
 		}
 		
 		public override function Update(dt:Number):void {
@@ -57,6 +55,10 @@ package Game.Critter
 		
 		override public function RequestBasicAttack():void {
 			if (!ControlsLocked) MyScript.Run(Script.Attack, this);
+		}
+		
+		public function toString():String {
+			return "[" + Info.Name + "]";
 		}
 		
 	}

@@ -1,4 +1,5 @@
 package Interfaces {
+	import CollisionSystem.Rect;
 	/**
 	 * ...
 	 * @author Paul
@@ -6,5 +7,4 @@ package Interfaces {
 	public interface IObjectLayer {
 		function GetTrueY():int;
 	}
-
 }

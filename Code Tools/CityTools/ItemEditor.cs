@@ -25,7 +25,7 @@ namespace CityTools {
 
             if (!Directory.Exists("Icons")) Directory.CreateDirectory("Icons");
 
-            txtConsumeEffect.Setup(ToolCache.Scripting.ScriptTypes.Item);
+            scriptConsumeEffect.ScriptUpdated += FormEdited;
 
             CreateNew();
             LoadItemList();
@@ -102,7 +102,7 @@ namespace CityTools {
 
             currentItem.MaxInStack = (short)numStackSize.Value;
 
-            currentItem.ConsumeEffect = txtConsumeEffect.Text;
+            currentItem.ConsumeEffect = scriptConsumeEffect.Text;
 
             currentItem.Description = txtDescription.Text;
 
@@ -133,7 +133,7 @@ namespace CityTools {
             numMonetaryBuy.Value = (decimal)currentItem.BuyPrice;
             numMonetarySell.Value = (decimal)currentItem.SellPrice;
 
-            txtConsumeEffect.Text = currentItem.ConsumeEffect;
+            scriptConsumeEffect.Text = currentItem.ConsumeEffect;
             numStackSize.Value = (decimal)currentItem.MaxInStack;
 
             txtDescription.Text = currentItem.Description;

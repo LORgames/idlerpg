@@ -148,6 +148,7 @@ namespace CityTools.ObjectSystem {
         }
 
         public static void DrawObjects(LBuffer buffer) {
+            //Commented this out 
             //drawList.Clear();
 
             //TODO: Figure out what to draw instead of just drawing everything

@@ -1,4 +1,5 @@
 package Game.Map {
+	import CollisionSystem.Rect;
 	import flash.display.IDrawCommand;
 	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;
@@ -144,6 +145,36 @@ package Game.Map {
 			}
 			
 			Main.I.Renderer.FadeToWorld();
+		}
+		
+		public function GetObjectsInArea(rect:Rect, objects:Vector.<Object>):void {
+			var _tiles:Vector.<TileInstance> = TileHelper.GetTiles(rect, this);
+			
+			var _tt:int = _tiles.length;
+			var r:Rect;
+			
+			while (--_tt > -1) {
+				var _tr:int = _tiles[_tt].SolidRectangles.length;
+				
+				while (--_tr > -1) {
+					r = _tiles[_tt].SolidRectangles[_tr];
+					
+					if (r.Owner != null) {
+						if(objects.indexOf(r.Owner) == -1) {
+							objects.push(r.Owner);
+						}
+					}
+				}
+			}
+			
+			_tt = Critters.length;
+			while (--_tt > -1) {
+				if (Critters[_tt].MyRect.intersects(rect)) {
+					if(objects.indexOf(Critters[_tt]) == -1) {
+							objects.push(Critters[_tt]);
+						}
+				}
+			}
 		}
 	}
 

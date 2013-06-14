@@ -90,7 +90,7 @@ namespace CityTools {
             CacheInterfaces.ObjectInterface.Initialize();
             CacheInterfaces.SoundInterface.PopulateList();
             CacheInterfaces.ToolsInterface.Initialize();
-            CacheInterfaces.RegionInterface.Initialize();
+            CacheInterfaces.SpawnRegionInterface.Initialize();
         }
 
         private void CreateBuffers() {

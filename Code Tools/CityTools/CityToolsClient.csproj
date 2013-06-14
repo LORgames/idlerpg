@@ -62,7 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CacheInterfaces\RegionInterface.cs" />
+    <Compile Include="CacheInterfaces\SpawnRegionInterface.cs" />
     <Compile Include="CacheInterfaces\MapInterface.cs" />
     <Compile Include="CacheInterfaces\ObjectInterface.cs" />
     <Compile Include="CacheInterfaces\PortalInterface.cs" />

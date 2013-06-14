@@ -14,11 +14,12 @@ package Game.Critter {
 	import Game.Map.WorldData;
 	import Interfaces.IObjectLayer;
 	import Interfaces.IUpdatable;
+	import Interfaces.IMapObject;
 	/**
 	 * ...
 	 * @author Paul
 	 */
-	public class BaseCritter implements IUpdatable {
+	public class BaseCritter implements IUpdatable, IMapObject {
 		public var direction:int = 3;
 		public var state:int = 0;
 		protected var ControlsLocked:Boolean = false;
@@ -34,7 +35,7 @@ package Game.Critter {
 		
 		public var X:int = 0;
 		public var Y:int = 0;
-		public var MyRect:Rect = new Rect(false, 0, 0, 0, 0);
+		public var MyRect:Rect;
 		
 		public var MyScript:Script;
 		
@@ -44,7 +45,7 @@ package Game.Critter {
 		private const PORTAL_LOCK_TIME:int = 2; // in seconds
 		
 		public function BaseCritter() {
-			
+			MyRect = new Rect(false, this, 0, 0, 0, 0);
 		}
 		
 		public function ShiftMaps(newMap:MapData, location:int = 0):void {
@@ -245,6 +246,14 @@ package Game.Critter {
 		
 		public function DrawDebugRect(gfx:Graphics):void {
 			gfx.drawRect(MyRect.X, MyRect.Y, MyRect.W, MyRect.H);
+		}
+		
+		public function GetUnion():Rect {
+			return MyRect;
+		}
+		
+		public function HasPerfectCollision(other:Rect):Boolean {
+			return MyRect.intersects(other);
 		}
 		
 	}

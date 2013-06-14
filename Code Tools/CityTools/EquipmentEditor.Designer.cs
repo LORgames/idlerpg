@@ -730,9 +730,10 @@ namespace CityTools {
             this.txtScript.Location = new System.Drawing.Point(334, 187);
             this.txtScript.Name = "txtScript";
             this.txtScript.Script = "";
-            this.txtScript.ScriptType = ToolCache.Scripting.ScriptTypes.Unknown;
+            this.txtScript.ScriptType = ToolCache.Scripting.ScriptTypes.Equipment;
             this.txtScript.Size = new System.Drawing.Size(312, 236);
             this.txtScript.TabIndex = 65;
+            this.txtScript.BeforeParse += new System.EventHandler<CityTools.Components.ScriptInfoArgs>(this.txtScript_BeforeParse);
             this.txtScript.TextChanged += new System.EventHandler(this.ValueChanged);
             // 
             // ccAnimationBack

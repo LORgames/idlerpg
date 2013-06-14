@@ -1,5 +1,6 @@
 package Game.Critter 
 {
+	import CollisionSystem.Rect;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.geom.Rectangle;

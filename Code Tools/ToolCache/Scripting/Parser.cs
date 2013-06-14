@@ -6,6 +6,11 @@ using System.Text;
 namespace ToolCache.Scripting {
     public class Parser {
 
+        /// <summary>
+        /// Parse a script.
+        /// </summary>
+        /// <param name="script">The raw script to parse</param>
+        /// <param name="info">The ScriptInfo to store the parsed script in</param>
         public static void Parse(string script, ScriptInfo info) {
             if (info.ScriptType == ScriptTypes.Unknown) {
                 info.Errors.Add("Script type is unknown!");
@@ -15,7 +20,13 @@ namespace ToolCache.Scripting {
             CleanAndDivideScript(script, info);
         }
 
-        public static void CleanAndDivideScript(string script, ScriptInfo scriptInfo) {
+        /// <summary>
+        /// Removes all the \r characters from the script.
+        /// Splits the script up based on the new line character.
+        /// </summary>
+        /// <param name="script">The raw script to begin processing</param>
+        /// <param name="scriptInfo">The scriptinfo to inject the parsed script into</param>
+        private static void CleanAndDivideScript(string script, ScriptInfo scriptInfo) {
             int i = 0;
 
             //Strip \r characters from the script

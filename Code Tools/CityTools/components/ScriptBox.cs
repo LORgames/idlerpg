@@ -12,6 +12,7 @@ using ToolCache.Scripting;
 namespace CityTools.Components {
     public partial class ScriptBox : UserControl {
         public event EventHandler<ScriptInfoArgs> BeforeParse;
+        public event EventHandler<EventArgs> ScriptUpdated;
 
         //Property for the internal script stuff, this will do formatting and stuff later
         public string Script {
@@ -49,7 +50,7 @@ namespace CityTools.Components {
         private void btnParse_Click(object sender, EventArgs e) {
             ScriptInfo info = new ScriptInfo("IParseString", ScriptType);
 
-            BeforeParse(this, new ScriptInfoArgs(info));
+            if(BeforeParse != null) BeforeParse(this, new ScriptInfoArgs(info));
 
             Parser.Parse(Script, info);
 
@@ -68,6 +69,7 @@ namespace CityTools.Components {
 
         private void txtScript_TextChanged(object sender, EventArgs e) {
             this.OnTextChanged(e);
+            if(ScriptUpdated != null) this.ScriptUpdated(this, e);
         }
 
         private void QuickParseText() {
