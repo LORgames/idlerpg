@@ -23,6 +23,8 @@ package Game.Critter {
 		
         public var Loot:Vector.<LootDrop>;
 		
+		public function CritterInfoBase() {}
+		
 		protected function LoadBasicInfo(b:ByteArray):void {
 			Name = BinaryLoader.GetString(b);
 			

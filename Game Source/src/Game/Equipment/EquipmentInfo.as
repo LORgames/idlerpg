@@ -33,6 +33,10 @@ package Game.Equipment {
 		
 		public var MyScript:Script;
 		
+		public function EquipmentInfo() {
+			
+		}
+		
 		public function LoadIfRequired():void {
 			if (Image == null && !Loading) {
 				Loading = true;

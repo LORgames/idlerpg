@@ -2,6 +2,7 @@ package {
 	import flash.desktop.NativeApplication;
 	import flash.display.NativeWindow;
 	import flash.display.Screen;
+	import flash.display.StageQuality;
 	import flash.events.Event;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
@@ -46,6 +47,8 @@ package {
 			
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
+			stage.quality = StageQuality.LOW;
+			
 			stage.addEventListener(Event.DEACTIVATE, deactivate);
 			
 			NativeApplication.nativeApplication.addEventListener(InvokeEvent.INVOKE, OnInvoke);

@@ -35,6 +35,10 @@ package Game.Map {
 		
 		public const EmptyPoint:Point = new Point();
 		
+		public function ObjectTemplate() {
+			
+		}
+		
 		public function GetBitmap():BitmapData {
 			if (!isLoading) {
 				isLoading = true;

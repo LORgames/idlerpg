@@ -9,6 +9,10 @@ package Game.Map {
 		public var TileID:int = 0;
 		public var SolidRectangles:Vector.<Rect> = new Vector.<Rect>();
 		
+		public function TileInstance() {
+			
+		}
+		
 		public function RecalculateRectangles(tileX:int = 0, tileY:int = 0):void {
 			var rectsToCopy:Vector.<Rect> = TileTemplate.Tiles[TileID].Collisions;
 			var i:int = rectsToCopy.length;

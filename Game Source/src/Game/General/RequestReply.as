@@ -10,6 +10,8 @@ package Game.General {
 		public var FailureCallback:Function;
 		public var ProgressCallback:Function;
 		
+		public function RequestReply() {}
+		
 		public function Clear():void {
 			Filename = "";
 			SuccessCallback = null;

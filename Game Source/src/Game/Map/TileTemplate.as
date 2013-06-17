@@ -28,6 +28,10 @@ package Game.Map {
 		private var timeout:Number = 0;
 		private var currentFrame:int = 0;
 		
+		public function TileTemplate() {
+			
+		}
+		
 		public function UpdateAnimation(dt:Number):void {
 			timeout += dt;
 			if (timeout > PlaybackSpeed) {

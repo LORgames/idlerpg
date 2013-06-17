@@ -28,20 +28,19 @@ package RenderSystem {
 		public var fullRect:Rectangle = new Rectangle();
 		
 		public function MapRenderer() {
-			this.addEventListener(Event.ADDED_TO_STAGE, StageAdded);
-		}
-		
-		public function StageAdded(e:Event):void {
-			this.removeEventListener(Event.ADDED_TO_STAGE, StageAdded);
-			this.parent.addChild(DebugLayer);
+			
 		}
 		
 		public function Resized():void {
+			this.bitmapData = null;
+			if(data != null) data.dispose();
 			data = new BitmapData(Main.I.stage.stageWidth, Main.I.stage.stageHeight, false);
 			this.bitmapData = data;
 			
 			fullRect.width = data.width;
 			fullRect.height = data.height;
+			
+			trace(fullRect + " => " + data.width + ", " + data.height);
 		}
 		
 		public function Draw():void {
@@ -81,10 +80,12 @@ package RenderSystem {
 				}
 			}
 			
+			data.unlock();
+			
 			//TODO: Clean up debug draw things if required
 			xPos = WorldData.ME.CurrentMap.Critters.length;
 			
-			/*DebugLayer.graphics.clear();
+			DebugLayer.graphics.clear();
 			
 			//Draw the main character
 			DebugLayer.graphics.lineStyle(1, 0xFF00FF);
@@ -109,7 +110,6 @@ package RenderSystem {
 			//Draw all the Critters
 			DebugLayer.graphics.lineStyle(1, 0xFF0000);
 			xPos = WorldData.ME.CurrentMap.Critters.length;
-			trace("Critters: " + xPos);
 			
 			while (--xPos > -1) {
 				if(WorldData.ME.CurrentMap.Critters[xPos] != WorldData.ME) {
@@ -129,11 +129,8 @@ package RenderSystem {
 				while (--yPos > -1) {
 					DebugLayer.graphics.drawRect(objX.Area[yPos].X, objX.Area[yPos].Y, objX.Area[yPos].W, objX.Area[yPos].H);
 				}
-			}*/
-			
-			data.unlock();
+			}
 		}
-		
 	}
 	
 }
