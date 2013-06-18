@@ -258,7 +258,13 @@ package Game.Critter {
 		
 		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IMapObject):void {
 			//TODO: This should do something :)
-			trace("ugh");
+			if (isPercent) {
+				
+			}
+		}
+		
+		public function Died():void {
+			
 		}
 		
 	}
