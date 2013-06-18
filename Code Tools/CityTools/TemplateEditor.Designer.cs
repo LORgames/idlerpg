@@ -128,7 +128,7 @@ namespace CityTools {
             // lblTemplateID
             // 
             this.lblTemplateID.Name = "lblTemplateID";
-            this.lblTemplateID.Size = new System.Drawing.Size(41, 22);
+            this.lblTemplateID.Size = new System.Drawing.Size(40, 22);
             this.lblTemplateID.Text = "<TID>";
             // 
             // lblGroup
@@ -178,6 +178,11 @@ namespace CityTools {
             0,
             0,
             0});
+            this.numOffsetHeight.Minimum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            -2147483648});
             this.numOffsetHeight.Name = "numOffsetHeight";
             this.numOffsetHeight.Size = new System.Drawing.Size(67, 20);
             this.numOffsetHeight.TabIndex = 12;

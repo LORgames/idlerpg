@@ -55,7 +55,7 @@ package Game.Critter
 				myBitmapData = null;
 			}
 			
-			myBitmapData = new BitmapData(Info.SpriteWidth, Info.SpriteHeight, true, 0x1000FF00);
+			myBitmapData = new BitmapData(Info.SpriteWidth, Info.SpriteHeight, true, 0x0000FF00);
 			this.bitmapData = myBitmapData;
 			
 			CurrentPlaybackSpeed = MyCritter.PlaybackSpeed;
