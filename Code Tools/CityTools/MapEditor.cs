@@ -344,5 +344,14 @@ namespace CityTools {
                 MessageBox.Show("Unknown background type!");
             }
         }
+
+        public void ObjectTemplateSaved(object sender, short objectID) {
+            for (int i = 0; i < ScenicHelper.drawList.Count; i++) {
+                if (ScenicHelper.drawList[i].ObjectTemplate.ObjectID == objectID) {
+                    ScenicHelper.drawList[i].UnlinkFromTiles();
+                    ScenicHelper.drawList[i].RecalculatePosition();
+                }
+            }
+        }
     }
 }

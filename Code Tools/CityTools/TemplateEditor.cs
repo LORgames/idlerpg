@@ -12,6 +12,9 @@ using CityTools.Components;
 
 namespace CityTools {
     public partial class TemplateEditor : Form {
+        public delegate void SaveEventHandler(object source, short objectID);
+        public event SaveEventHandler OnSave;
+
         short objectID = 0;
 
         Point p0 = Point.Empty;
@@ -168,6 +171,10 @@ namespace CityTools {
                 r.Height = Math.Abs(p1.Y - p0.Y);
 
                 _bases.Add(r);
+
+                if (OnSave != null) {
+                    OnSave(this, objectID);
+                }
             }
         }
 
@@ -215,6 +222,10 @@ namespace CityTools {
 
         private void btnRemoveBoxes_Click(object sender, EventArgs e) {
             _bases.Clear();
+
+            if (OnSave != null) {
+                OnSave(this, objectID);
+            }
         }
     }
 }
