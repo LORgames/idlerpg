@@ -25,6 +25,7 @@ package {
 	import EngineTiming.IUpdatable;
 	import RenderSystem.Renderman;
 	import SoundSystem.MusicPlayer;
+	import WindowSystem.HUD;
 	import WindowSystem.ScreenText;
 	
 	/**
@@ -93,6 +94,8 @@ package {
 			Clock.I.Start(stage);
 			
 			stage.addEventListener(Event.RESIZE, Resized);
+			
+			this.addChild(new HUD());
 			
 			Resized();
 		}

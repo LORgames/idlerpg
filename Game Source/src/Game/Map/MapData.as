@@ -145,19 +145,22 @@ package Game.Map {
 			var _tt:int = _tiles.length;
 			var r:Rect;
 			
-			while (--_tt > -1) {
-				var _tr:int = _tiles[_tt].SolidRectangles.length;
-				
-				while (--_tr > -1) {
-					r = _tiles[_tt].SolidRectangles[_tr];
+			if(type == 0xA002 || type == 0xA004) {
+				while (--_tt > -1) {
+					var _tr:int = _tiles[_tt].SolidRectangles.length;
 					
-					if (r.Owner != null) {
-						if(objects.indexOf(r.Owner) == -1) {
-							objects.push(r.Owner);
+					while (--_tr > -1) {
+						r = _tiles[_tt].SolidRectangles[_tr];
+						
+						if (r.Owner != null) {
+							if(objects.indexOf(r.Owner) == -1) {
+								objects.push(r.Owner);
+							}
 						}
 					}
 				}
 			}
+			
 			
 			_tt = Critters.length;
 			while (--_tt > -1) {
