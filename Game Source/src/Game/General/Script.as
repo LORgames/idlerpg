@@ -139,8 +139,6 @@ package Game.General {
 						dim0 = eventScript.readUnsignedShort() * 24;
 						dim1 = eventScript.readUnsignedShort() * 24;
 						
-						trace("FRONT: " + dim0 + "x" + dim1);
-						
 						if (target is BaseCritter) {
 							var obj0:BaseCritter = (target as BaseCritter);
 							
@@ -157,8 +155,6 @@ package Game.General {
 							}
 							
 							obj0.CurrentMap.GetObjectsInArea(rect, Objects);
-							
-							DebugDrawingHelper.AddDebugRect(rect);
 						} else {
 							trace("FRONT is not available to non-critter systems.");
 						}

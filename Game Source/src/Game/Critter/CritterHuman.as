@@ -55,6 +55,13 @@ package Game.Critter {
 			return "[CRITTER HUMAN]";
 		}
 		
+		public override function CleanUp():void {
+			Equipment.CleanUp();
+			Equipment = null;
+			
+			super.CleanUp();
+		}
+		
 	}
 
 }

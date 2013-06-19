@@ -53,15 +53,15 @@ package RenderSystem {
 			
 			if (xTilePosL < 0) xTilePosL = 0;
 			if (yTilePosL < 0) yTilePosL = 0;
-			if (xTilePosU >= WorldData.ME.CurrentMap.TileSizeX) xTilePosU = WorldData.ME.CurrentMap.TileSizeX - 1;
-			if (yTilePosU >= WorldData.ME.CurrentMap.TileSizeY) yTilePosU = WorldData.ME.CurrentMap.TileSizeY - 1;
+			if (xTilePosU >= WorldData.CurrentMap.TileSizeX) xTilePosU = WorldData.CurrentMap.TileSizeX - 1;
+			if (yTilePosU >= WorldData.CurrentMap.TileSizeY) yTilePosU = WorldData.CurrentMap.TileSizeY - 1;
 			
-			var tiles:Vector.<TileInstance> = WorldData.ME.CurrentMap.Tiles;
+			var tiles:Vector.<TileInstance> = WorldData.CurrentMap.Tiles;
 			var tileArt:BitmapData = WorldData.TileSheet;
 			
 			var xPos:int = xTilePosU+1;
 			var yPos:int = 0;
-			var xSize:int = WorldData.ME.CurrentMap.TileSizeX;
+			var xSize:int = WorldData.CurrentMap.TileSizeX;
 			
 			data.lock();
 			
@@ -83,7 +83,7 @@ package RenderSystem {
 			data.unlock();
 			
 			//TODO: Clean up debug draw things if required
-			xPos = WorldData.ME.CurrentMap.Critters.length;
+			xPos = WorldData.CurrentMap.Critters.length;
 			
 			DebugLayer.graphics.clear();
 			
@@ -91,15 +91,15 @@ package RenderSystem {
 			DebugLayer.graphics.lineStyle(1, 0xFF00FF);
 			
 			while (--xPos > -1) {
-				WorldData.ME.CurrentMap.Critters[xPos].DrawDebugRect(DebugLayer.graphics);
+				WorldData.CurrentMap.Critters[xPos].DrawDebugRect(DebugLayer.graphics);
 			}
 			
 			//Draw all the objects
 			DebugLayer.graphics.lineStyle(1, 0x00FFFF);
-			xPos = WorldData.ME.CurrentMap.Objects.length;
+			xPos = WorldData.CurrentMap.Objects.length;
 			
 			while (--xPos > -1) {
-				var objI:ObjectInstance = WorldData.ME.CurrentMap.Objects[xPos];
+				var objI:ObjectInstance = WorldData.CurrentMap.Objects[xPos];
 				yPos = objI.Template.Bases.length;
 				
 				while (--yPos > -1) {
@@ -109,21 +109,22 @@ package RenderSystem {
 			
 			//Draw all the Critters
 			DebugLayer.graphics.lineStyle(1, 0xFF0000);
-			xPos = WorldData.ME.CurrentMap.Critters.length;
+			xPos = WorldData.CurrentMap.Critters.length;
 			
 			while (--xPos > -1) {
-				if(WorldData.ME.CurrentMap.Critters[xPos] != WorldData.ME) {
-					var objC:Rect = WorldData.ME.CurrentMap.Critters[xPos].MyRect;
+				if(WorldData.CurrentMap.Critters[xPos] != WorldData.ME) {
+					var objC:Rect = WorldData.CurrentMap.Critters[xPos].MyRect;
+					if (objC == null) continue;
 					DebugLayer.graphics.drawRect(objC.X, objC.Y, objC.W, objC.H);
 				}
 			}
 			
 			//Draw all the spawn regions
 			DebugLayer.graphics.lineStyle(1, 0x0000FF);
-			xPos = WorldData.ME.CurrentMap.Spawns.length;
+			xPos = WorldData.CurrentMap.Spawns.length;
 			
 			while (--xPos > -1) {
-				var objX:SpawnRegion = WorldData.ME.CurrentMap.Spawns[xPos];
+				var objX:SpawnRegion = WorldData.CurrentMap.Spawns[xPos];
 				yPos = objX.Area.length;
 				
 				while (--yPos > -1) {

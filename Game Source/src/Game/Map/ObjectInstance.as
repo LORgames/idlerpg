@@ -92,6 +92,8 @@ package Game.Map {
 		public function CleanUp():void {
 			if (parent != null)
 				this.parent.removeChild(this);
+				
+			Template.OneLessInstance();
 			
 			Template = null;
 			Map = null;

@@ -38,7 +38,7 @@ package Game.Map {
 		private var ExpectedAtPortalID:int = -1;
 		
 		public function MapData() {
-			Clock.I.Updatables.push(this);
+			
 		}
 		
 		public function LoadMap(mapname:String, portalID:int = -1):void {
@@ -139,7 +139,7 @@ package Game.Map {
 			Main.I.Renderer.FadeToWorld();
 		}
 		
-		public function GetObjectsInArea(rect:Rect, objects:Vector.<IMapObject>):void {
+		public function GetObjectsInArea(rect:Rect, objects:Vector.<IMapObject>, type:int = 0xA004, scanner:BaseCritter = null):void {
 			var _tiles:Vector.<TileInstance> = TileHelper.GetTiles(rect, this);
 			
 			var _tt:int = _tiles.length;

@@ -1,5 +1,4 @@
-package Game.Critter 
-{
+package Game.Critter {
 	import Game.Equipment.EquipmentSet;
 	import Game.General.Script;
 	import Game.Map.MapData;
@@ -23,6 +22,8 @@ package Game.Critter
 			
 			MyRect.W = MyInfo.CollisionWidth;
 			MyRect.H = MyInfo.CollisionHeight;
+			
+			CurrentHP = MyInfo.Health;
 		}
 		
 		public override function Update(dt:Number):void {
@@ -67,7 +68,5 @@ package Game.Critter
 			
 			Info = null;
 		}
-		
 	}
-
 }

@@ -15,6 +15,8 @@ package Game.Map {
 			var j:int = 0;
 			var MyRect:Rect = WorldData.ME.MyRect;
 			
+			if (MyRect == null) return;
+			
 			//Check to see if this object can portal
 			if (CurrentMap.Portals != null) {
 				j = CurrentMap.Portals.length;
@@ -38,15 +40,6 @@ package Game.Map {
 					}
 				}
 			}
-			
-			/*if (isPortaling) {
-				if (portalTimer < PORTAL_CONTROL_LOCK_TIME) {
-					portalTimer += dt;
-				} else {
-					portalTimer = 0;
-					isPortaling = false;
-				}
-			}*/
 		}
 		
 	}

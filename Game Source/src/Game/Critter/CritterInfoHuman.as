@@ -42,6 +42,9 @@ package Game.Critter {
 			p.Update(0);
 			
 			p.MyScript = AICommands;
+			
+			p.CurrentHP = Health;
+			
 			AICommands.Run(Script.Spawn, p);
 			
 			return p;

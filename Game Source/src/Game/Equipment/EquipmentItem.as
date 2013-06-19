@@ -61,6 +61,17 @@ package Game.Equipment {
 		public function GetCenter():Point {
 			return Info.Center;
 		}
+		
+		public function CleanUp():void {
+			Info = null;
+			Owner = null;
+			
+			Layer.CleanUp();
+			if (Layer2 != null) Layer2.CleanUp();
+			
+			Layer = null;
+			Layer2 = null;
+		}
 	}
 
 }

@@ -101,6 +101,7 @@ package Game.Equipment {
 							Frame = 0;
 						} else {
 							Info.MyScript.Run(Script.AnimationEnded, Owner, Owner.Owner.Owner);
+
 							Owner.SetState(0);
 						}
 					}
@@ -122,7 +123,5 @@ package Game.Equipment {
 			CopyRect = null;
 			DestPoint = null;
 		}
-		
 	}
-
 }

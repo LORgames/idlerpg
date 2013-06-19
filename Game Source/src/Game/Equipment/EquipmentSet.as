@@ -168,6 +168,36 @@ package Game.Equipment {
 		public function GetTrueY():int {
 			return this.y;
 		}
+		
+		public function CleanUp():void {
+			Owner = null;
+			
+			this.removeChild(Shadow.Layer);
+			this.removeChild(Weapon.Layer2);
+			this.removeChild(Legs.Layer);
+			this.removeChild(Body.Layer2);
+			this.removeChild(Face.Layer);
+			this.removeChild(Body.Layer);
+			this.removeChild(Headgear.Layer);
+			this.removeChild(Weapon.Layer);
+			
+			Shadow.CleanUp();
+			Legs.CleanUp();
+			Body.CleanUp();
+			Face.CleanUp();
+			Headgear.CleanUp();
+			Weapon.CleanUp();
+			
+			Shadow = null;
+			Legs = null;
+			Body = null;
+			Face = null;
+			Headgear = null;
+			Weapon = null;
+			
+			if (this.parent != null)
+				this.parent.removeChild(this);
+		}
 	}
 
 }

@@ -106,23 +106,24 @@ package RenderSystem {
 			}
 			
 			if (Global.LoadingTotal > 0) return;
+			if (WorldData.CurrentMap == null) return;
 			
-			if (WorldData.ME.CurrentMap.SizeX <= Main.I.stage.stageWidth) {
-				Camera.X = (Main.I.stage.stageWidth - WorldData.ME.CurrentMap.SizeX)/2;
+			if (WorldData.CurrentMap.SizeX <= Main.I.stage.stageWidth) {
+				Camera.X = (Main.I.stage.stageWidth - WorldData.CurrentMap.SizeX)/2;
 			} else if (WorldData.ME.X <= Main.I.stage.stageWidth / 2) {
 				Camera.X = 0;
-			} else if (WorldData.ME.X > WorldData.ME.CurrentMap.SizeX - Main.I.stage.stageWidth / 2) {
-				Camera.X = -WorldData.ME.CurrentMap.SizeX + Main.I.stage.stageWidth;
+			} else if (WorldData.ME.X > WorldData.CurrentMap.SizeX - Main.I.stage.stageWidth / 2) {
+				Camera.X = -WorldData.CurrentMap.SizeX + Main.I.stage.stageWidth;
 			} else {
 				Camera.X = -WorldData.ME.X + Main.I.stage.stageWidth/2;
 			}
 			
-			if (WorldData.ME.CurrentMap.SizeY <= Main.I.stage.stageHeight) {
-				Camera.Y = (Main.I.stage.stageHeight - WorldData.ME.CurrentMap.SizeY)/2;
+			if (WorldData.CurrentMap.SizeY <= Main.I.stage.stageHeight) {
+				Camera.Y = (Main.I.stage.stageHeight - WorldData.CurrentMap.SizeY)/2;
 			} else if (WorldData.ME.Y <= Main.I.stage.stageHeight / 2) {
 				Camera.Y = 0;
-			} else if (WorldData.ME.Y > WorldData.ME.CurrentMap.SizeY - Main.I.stage.stageHeight / 2) {
-				Camera.Y = -WorldData.ME.CurrentMap.SizeY + Main.I.stage.stageHeight;
+			} else if (WorldData.ME.Y > WorldData.CurrentMap.SizeY - Main.I.stage.stageHeight / 2) {
+				Camera.Y = -WorldData.CurrentMap.SizeY + Main.I.stage.stageHeight;
 			} else {
 				Camera.Y = -WorldData.ME.Y + Main.I.stage.stageHeight / 2;
 			}
@@ -157,7 +158,11 @@ package RenderSystem {
 			var i:int = AnimatedObjects.indexOf(animation);
 			
 			if (i > -1) {
+				trace("From: " + AnimatedObjects.length + animation + " @" + i);
 				AnimatedObjects.splice(i, 1);
+				trace("\t=> " + AnimatedObjects.length);
+			} else {
+				trace(animation + " is not in the queue");
 			}
 		}
 	}

@@ -1,6 +1,7 @@
 package EngineTiming {
 	import flash.display.Stage;
 	import flash.events.Event;
+	import Game.Map.WorldData;
 	/**
 	 * ...
 	 * @author Paul
@@ -14,6 +15,8 @@ package EngineTiming {
 		
 		private var ExpectedFrameRate:Number = 0;
 		
+		public static var CleanUpList:Vector.<ICleanUp> = new Vector.<ICleanUp>();
+		
 		public function Clock() {
 			
 		}
@@ -23,9 +26,17 @@ package EngineTiming {
 			ExpectedFrameRate = s.frameRate;
 		}
 		
+		public function Remove(x:IUpdatable):void {
+			if (Updatables.indexOf(x) > -1) {
+				Updatables.splice(Updatables.indexOf(x), 1);
+			}
+		}
+		
 		public function Tick(e:Event):void {
 			var dt:Number = 1.0 / ExpectedFrameRate;
 			var i:int;
+			
+			WorldData.CurrentMap.Update(dt);
 			
 			//Update what we need to update
 			i = Updatables.length;
@@ -34,6 +45,11 @@ package EngineTiming {
 			}
 			
 			Main.I.Renderer.Render(dt);
+			
+			while (CleanUpList.length > 0) {
+				var x:ICleanUp = CleanUpList.pop();
+				x.CleanUp();
+			}
 		}
 		
 	}

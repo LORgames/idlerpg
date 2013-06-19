@@ -56,10 +56,15 @@ package Game.Map {
 			Instances--;
 			
 			if (Instances == 0) {
-				bitmapCopy.dispose();
-				fullBitmap.dispose();
-				bitmapCopy = null;
-				fullBitmap = null;
+				if (fullBitmap != null) {
+					fullBitmap.dispose();
+					fullBitmap = null;
+				}
+				
+				if(bitmapCopy != null) {
+					bitmapCopy.dispose();
+					bitmapCopy = null;
+				}
 			}
 			
 			if (TotalFrames > 1) {

@@ -16,11 +16,12 @@ package Game.Critter {
 	import RenderSystem.IObjectLayer;
 	import EngineTiming.IUpdatable;
 	import Interfaces.IMapObject;
+	import EngineTiming.ICleanUp;
 	/**
 	 * ...
 	 * @author Paul
 	 */
-	public class BaseCritter implements IUpdatable, IMapObject {
+	public class BaseCritter implements IUpdatable, IMapObject, ICleanUp {
 		public var direction:int = 3;
 		public var state:int = 0;
 		protected var ControlsLocked:Boolean = false;
@@ -40,6 +41,9 @@ package Game.Critter {
 		
 		public var MyScript:Script;
 		
+		//Critter information
+		public var CurrentHP:int = 0;
+		
 		public function BaseCritter() {
 			MyRect = new Rect(false, this, 0, 0, 0, 0);
 			
@@ -47,7 +51,12 @@ package Game.Critter {
 		}
 		
 		public function ShiftMaps(newMap:MapData, location:int = 0):void {
-			if(CurrentMap != null) CurrentMap.Critters.splice(CurrentMap.Critters.indexOf(this), 1);
+			if (CurrentMap != null) {
+				if(CurrentMap.Critters.indexOf(this) > -1) {
+					CurrentMap.Critters.splice(CurrentMap.Critters.indexOf(this), 1);
+				}
+			}
+			
 			CurrentMap = newMap;
 			CurrentMap.Critters.push(this);
 			
@@ -56,7 +65,11 @@ package Game.Critter {
 		}
 		
 		public function RequestTeleport(newMap:MapData, portal:Portal):void {
-			if(CurrentMap != null) CurrentMap.Critters.splice(CurrentMap.Critters.indexOf(this), 1);
+			if (CurrentMap != null) {
+				if(CurrentMap.Critters.indexOf(this) > -1) {
+					CurrentMap.Critters.splice(CurrentMap.Critters.indexOf(this), 1);
+				}
+			}
 			CurrentMap = newMap;
 			CurrentMap.Critters.push(this);
 			
@@ -156,6 +169,7 @@ package Game.Critter {
 						critter = CurrentMap.Critters[totalCritters];
 						
 						if (critter != this) {
+							if (critter.MyRect == null) continue;
 							if (MyRect.intersects(critter.MyRect)) {
 								MyRect.CalculatePenetration(critter.MyRect, collisionPenetration);
 								
@@ -207,6 +221,7 @@ package Game.Critter {
 		}
 		
 		public function DrawDebugRect(gfx:Graphics):void {
+			if (MyRect == null) return;
 			gfx.drawRect(MyRect.X, MyRect.Y, MyRect.W, MyRect.H);
 		}
 		
@@ -227,7 +242,13 @@ package Game.Critter {
 			} else if (isDOT) {
 				
 			} else {
+				//Flat damage
+				CurrentHP -= amount;
 				
+				if (CurrentHP < 1) {
+					Died();
+					Clock.CleanUpList.push(this);
+				}
 			}
 		}
 		
@@ -237,10 +258,10 @@ package Game.Critter {
 		
 		public function CleanUp():void {
 			CurrentMap = null;
-			MyRect = null;
+			//MyRect = null;
 			MyScript = null;
+			
+			Clock.I.Remove(this);
 		}
-		
 	}
-
 }
