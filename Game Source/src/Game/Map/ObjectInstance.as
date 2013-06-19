@@ -89,6 +89,12 @@ package Game.Map {
 			Template.MyScript.Run(Script.Attacked, attacker, this);
 		}
 		
+		public function CleanUp():void {
+			Template = null;
+			Map = null;
+			FullBase = null;
+		}
+		
 	}
 
 }

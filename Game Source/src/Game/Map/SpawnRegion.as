@@ -66,6 +66,33 @@ package Game.Map {
 			
 		}
 		
+		public function CleanUp():void {
+			var i:int = 0;
+			
+			Map = null;
+			
+			i = Area.length;
+			while (--i > -1) {
+				Area[i] = null;
+			}
+			Area = null;
+			
+			i = SpawnChance.length;
+			while (--i > -1) {
+				SpawnChance[i] = null;
+				SpawnID[i] = null;
+			}
+			SpawnChance = null;
+			SpawnID = null;
+			
+			i = Critters.length;
+			while (--i > -1) {
+				Critters[i].CleanUp();
+				Critters[i] = null;
+			}
+			Critters = null;
+		}
+		
 		////////////////////////////////////////
 		//Static methods
 		///////////////////////////////////////

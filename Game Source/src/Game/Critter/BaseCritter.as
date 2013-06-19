@@ -267,6 +267,10 @@ package Game.Critter {
 			
 		}
 		
+		public function CleanUp():void {
+			
+		}
+		
 	}
 
 }

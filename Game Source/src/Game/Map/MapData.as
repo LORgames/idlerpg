@@ -177,6 +177,45 @@ package Game.Map {
 				}
 			}
 		}
+		
+		public function CleanUp():void {
+			var i:int = 0;
+			
+			i = Tiles.length;
+			while (--i > 0) {
+				Tiles[i].CleanUp();
+				Tiles[i] = null;
+			}
+			Tiles = null;
+			
+			i = Objects.length;
+			while (--i > -1) {
+				Objects[i].CleanUp();
+				Objects[i] = null;
+			}
+			Objects = null;
+			
+			i = Spawns.length;
+			while (--i > -1) {
+				Spawns[i].CleanUp();
+				Objects[i] = null;
+			}
+			Spawns = null;
+			
+			i = Spawns.length;
+			while (--i > -1) {
+				Portals[i].CleanUp();
+				Portals[i] = null;
+			}
+			Portals = null;
+			
+			i = Critters.length;
+			while (--i > -1) {
+				Critters[i].CleanUp();
+				Critters[i] = null;
+			}
+			Critters = null;
+		}
 	}
 
 }

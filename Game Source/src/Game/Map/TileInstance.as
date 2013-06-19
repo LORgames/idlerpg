@@ -35,5 +35,15 @@ package Game.Map {
 		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IMapObject):void {
 			
 		}
+		
+		public function CleanUp():void {
+			var i:int = SolidRectangles.length;
+			
+			while (--i > -1) {
+				SolidRectangles[i] = null;
+			}
+			
+			SolidRectangles = null;
+		}
 	}
 }

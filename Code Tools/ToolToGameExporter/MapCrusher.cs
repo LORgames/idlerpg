@@ -31,7 +31,7 @@ namespace ToolToGameExporter {
                 } else {
                     f.AddShort(0);
 
-                    if(map.Music != "") Processor.Errors.Add(new ProcessingError("Map", map.Name, "Music (" + map.Music + ") doesn't exist."));
+                    if (map.Music != "") Processor.Errors.Add(new ProcessingError("Map", map.Name, "Music (" + map.Music + ") doesn't exist."));
                 }
 
                 f.AddByte((byte)map.Portals.Count);
