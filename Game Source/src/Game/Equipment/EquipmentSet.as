@@ -4,7 +4,7 @@ package Game.Equipment {
 	import flash.geom.Point;
 	import Game.Critter.CritterHuman;
 	import Game.General.Script;
-	import Interfaces.IObjectLayer;
+	import RenderSystem.IObjectLayer;
 	/**
 	 * ...
 	 * @author Paul

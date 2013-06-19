@@ -4,7 +4,6 @@ package Game.Critter
 	import Game.General.Script;
 	import Game.Map.MapData;
 	import Game.Map.WorldData;
-	import Interfaces.IUpdatable;
 	import RenderSystem.Camera;
 	import RenderSystem.Renderman;
 	/**
@@ -21,7 +20,6 @@ package Game.Critter
 			Animation = new CritterAnimationSet(this);
 			
 			Main.OrderedLayer.addChild(Animation);
-			Main.Updatables.push(this);
 			
 			MyRect.W = MyInfo.CollisionWidth;
 			MyRect.H = MyInfo.CollisionHeight;
@@ -31,7 +29,7 @@ package Game.Critter
 			super.Update(dt);
 			
 			Animation.x = this.X - Animation.width/2;
-			Animation.y = this.Y - Animation.height;
+			Animation.y = this.Y - Animation.height + MyRect.H/2;
 		}
 		
 		override public function RequestMove(xSpeed:Number, ySpeed:Number):void {

@@ -20,6 +20,7 @@ package Game.Map {
 		public static var TileSheet:BitmapData;
 		
 		public static var ME:CritterHuman = new CritterHuman();
+		public static var CurrentMap:MapData = new MapData();
 		
 		public static function Initialize(loadReq:String):void {
 			RequestedMapLoad = loadReq;
@@ -65,7 +66,7 @@ package Game.Map {
             }
 			
 			if (totalMaps > 0) {
-				ME.CurrentMap = new MapData(Maps[loadMapID]);
+				CurrentMap.LoadMap(Maps[loadMapID]);
 			}
 			
 			Global.LoadingTotal--;
@@ -77,8 +78,8 @@ package Game.Map {
 		}
 		
 		public static function UpdatePlayerPosition():void {
-			ME.CurrentMap = new MapData(PortalDestinations[Global.MapPortalID], Global.MapPortalID);
-			Main.I.Renderer.FadeToWorld();
+			CurrentMap.CleanUp();
+			CurrentMap.LoadMap(PortalDestinations[Global.MapPortalID], Global.MapPortalID);
 		}
 		
 	}

@@ -1,6 +1,7 @@
 package RenderSystem {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.Sprite;
 	import flash.geom.Rectangle;
 	import Game.Map.MapData;
 	import Game.Map.WorldData;
@@ -65,6 +66,17 @@ package RenderSystem {
 		}
 		
 		public function Render(dt:Number):void {
+			//Sort the children
+			i = Main.OrderedLayer.numChildren;
+			while(--i > 4) {
+				TrySwap(i-4);
+				TrySwap(i-3);
+				TrySwap(i-2);
+				TrySwap(i-1);
+				TrySwap(i-0);
+			}
+			
+			//Update the fading
 			if (fading) {
 				if (fadeToBlack) {
 					fadeAlpha += 13;
@@ -125,6 +137,14 @@ package RenderSystem {
 			
 			while (--i > -1) {
 				AnimatedObjects[i].UpdateAnimation(dt);
+			}
+		}
+		
+		private function TrySwap(i:int):void {
+			var OrderedLayer:Sprite = Main.OrderedLayer;
+			
+			if ((IObjectLayer)(OrderedLayer.getChildAt(i)).GetTrueY() < (IObjectLayer)(OrderedLayer.getChildAt(i-1)).GetTrueY()) {
+				OrderedLayer.swapChildrenAt(i, i-1);
 			}
 		}
 	}

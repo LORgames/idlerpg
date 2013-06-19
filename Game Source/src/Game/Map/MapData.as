@@ -1,5 +1,7 @@
 package Game.Map {
 	import CollisionSystem.Rect;
+	import EngineTiming.Clock;
+	import EngineTiming.IUpdatable;
 	import flash.display.IDrawCommand;
 	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;
@@ -12,8 +14,7 @@ package Game.Map {
 	 * ...
 	 * @author Paul
 	 */
-	public class MapData {
-		
+	public class MapData implements IUpdatable {
 		public var Name:String = "";
 		public var Music:int = 0;
 		
@@ -36,7 +37,11 @@ package Game.Map {
 		private static var firstload:Boolean = true;
 		private var ExpectedAtPortalID:int = -1;
 		
-		public function MapData(mapname:String, portalID:int = -1) {
+		public function MapData() {
+			Clock.I.Updatables.push(this);
+		}
+		
+		public function LoadMap(mapname:String, portalID:int = -1):void {
 			Name = mapname;
 			this.ExpectedAtPortalID = portalID;
 			if (portalID != -1) firstload = true;
@@ -94,21 +99,7 @@ package Game.Map {
 				}
 			}
 			
-			//Now objects
-			
-			//First get rid of a lot of the objects already on the stage (theres probably a lot?)
-			i = Main.OrderedLayer.numChildren;
-			while (--i > -1) {
-				if (Main.OrderedLayer.getChildAt(i) is ObjectInstance) {
-					Main.OrderedLayer.removeChildAt(i);
-				} else if (Main.OrderedLayer.getChildAt(i) is BaseCritter) {
-					if ((Main.OrderedLayer.getChildAt(i) as CritterHuman) != WorldData.ME) {
-						Main.OrderedLayer.removeChildAt(i);
-					}
-				}
-			}
-			
-			//Now we can load the new objects
+			//load the objects
 			TotalObjects = b.readShort();
 			Objects = new Vector.<ObjectInstance>(TotalObjects, true);
 			
@@ -172,21 +163,14 @@ package Game.Map {
 			while (--_tt > -1) {
 				if (Critters[_tt].MyRect.intersects(rect)) {
 					if(objects.indexOf(Critters[_tt]) == -1) {
-							objects.push(Critters[_tt]);
-						}
+						objects.push(Critters[_tt]);
+					}
 				}
 			}
 		}
 		
 		public function CleanUp():void {
 			var i:int = 0;
-			
-			i = Tiles.length;
-			while (--i > 0) {
-				Tiles[i].CleanUp();
-				Tiles[i] = null;
-			}
-			Tiles = null;
 			
 			i = Objects.length;
 			while (--i > -1) {
@@ -198,11 +182,11 @@ package Game.Map {
 			i = Spawns.length;
 			while (--i > -1) {
 				Spawns[i].CleanUp();
-				Objects[i] = null;
+				Spawns[i] = null;
 			}
 			Spawns = null;
 			
-			i = Spawns.length;
+			i = Portals.length;
 			while (--i > -1) {
 				Portals[i].CleanUp();
 				Portals[i] = null;
@@ -215,6 +199,19 @@ package Game.Map {
 				Critters[i] = null;
 			}
 			Critters = null;
+			
+			i = Tiles.length;
+			while (--i > 0) {
+				Tiles[i].CleanUp();
+				Tiles[i] = null;
+			}
+			Tiles = null;
+		}
+		
+		/* INTERFACE EngineTiming.IUpdatable */
+		
+		public function Update(dt:Number):void {
+			PortalHelper.CheckForPortalling(this, WorldData.ME);
 		}
 	}
 

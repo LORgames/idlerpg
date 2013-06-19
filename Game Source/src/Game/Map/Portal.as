@@ -44,7 +44,13 @@ package Game.Map
 		}
 		
 		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IMapObject):void {
-			
+			trace("Why you retarded!");
+		}
+		
+		public function CleanUp():void {
+			Entry = null;
+			ExitPoint = null;
+			MapName = 0;
 		}
 		
 	}

@@ -87,7 +87,7 @@ package Game.Map {
 			
 			i = Critters.length;
 			while (--i > -1) {
-				Critters[i].CleanUp();
+				//Critters[i].CleanUp();
 				Critters[i] = null;
 			}
 			Critters = null;

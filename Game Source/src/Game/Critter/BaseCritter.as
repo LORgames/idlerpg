@@ -1,5 +1,6 @@
 package Game.Critter {
 	import CollisionSystem.Rect;
+	import EngineTiming.Clock;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Graphics;
@@ -12,8 +13,8 @@ package Game.Critter {
 	import Game.Map.TileInstance;
 	import Game.Map.TileTemplate;
 	import Game.Map.WorldData;
-	import Interfaces.IObjectLayer;
-	import Interfaces.IUpdatable;
+	import RenderSystem.IObjectLayer;
+	import EngineTiming.IUpdatable;
 	import Interfaces.IMapObject;
 	/**
 	 * ...
@@ -39,13 +40,10 @@ package Game.Critter {
 		
 		public var MyScript:Script;
 		
-		//Portal Information
-		private var isPortaling:Boolean = true;
-		private var portalTimer:Number = 0;
-		private const PORTAL_LOCK_TIME:int = 2; // in seconds
-		
 		public function BaseCritter() {
 			MyRect = new Rect(false, this, 0, 0, 0, 0);
+			
+			Clock.I.Updatables.push(this);
 		}
 		
 		public function ShiftMaps(newMap:MapData, location:int = 0):void {
@@ -100,12 +98,10 @@ package Game.Critter {
 			var prevX:int = X;
 			var prevY:int = Y;
 			
-			if (!isPortaling) {
-				//Process the things
-				X += moveSpeedX * dt / CurrentMovementCost;
-				Y += moveSpeedY * dt / CurrentMovementCost;
-				CurrentMovementCost = 1; //reset to 1 and then update the other things when possible
-			}
+			//Process the things
+			X += moveSpeedX * dt / CurrentMovementCost;
+			Y += moveSpeedY * dt / CurrentMovementCost;
+			CurrentMovementCost = 1; //reset to 1 and then update the other things when possible
 			
 			MyRect.X = X - MyRect.W / 2;
 			MyRect.Y = Y - MyRect.H / 2;
@@ -181,40 +177,6 @@ package Game.Critter {
 					MyRect.Y = Y - MyRect.H / 2;
 				}
 			}
-			
-			//Check to see if this object can portal
-			if (CurrentMap.Portals != null) {
-				j = CurrentMap.Portals.length;
-				while (--j > -1) {
-					if (CurrentMap.Portals[j].Entry.intersects(MyRect)) {
-						var exitID:int = CurrentMap.Portals[j].ExitID;
-						if (WorldData.ME.CurrentMap.Name == WorldData.PortalDestinations[exitID]) {
-							var k:int = CurrentMap.Portals.length;
-							while (--k > -1) {
-								if (CurrentMap.Portals[j].ExitID == CurrentMap.Portals[k].ID) {
-									Global.MapPortalID = k;
-									Main.I.Renderer.FadeToBlack(RequestInMapTeleport, "zaaaappp!");
-								}
-							}
-							break;
-						} else {
-							Global.MapPortalID = exitID;
-							Main.I.Renderer.FadeToBlack(WorldData.UpdatePlayerPosition, WorldData.PortalDestinations[exitID]);
-							isPortaling = true;
-						}
-						break;
-					}
-				}
-			}
-			
-			if (isPortaling) {
-				if (portalTimer < PORTAL_LOCK_TIME) {
-					portalTimer += dt;
-				} else {
-					portalTimer = 0;
-					isPortaling = false;
-				}
-			}
 		}
 		
 		public function RequestMove(xSpeed:Number, ySpeed:Number):void {
@@ -258,7 +220,13 @@ package Game.Critter {
 		
 		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IMapObject):void {
 			//TODO: This should do something :)
-			if (isPercent) {
+			if (isDOT && isPercent) {
+				
+			} else if (isPercent) {
+				
+			} else if (isDOT) {
+				
+			} else {
 				
 			}
 		}
@@ -268,7 +236,9 @@ package Game.Critter {
 		}
 		
 		public function CleanUp():void {
-			
+			CurrentMap = null;
+			MyRect = null;
+			MyScript = null;
 		}
 		
 	}

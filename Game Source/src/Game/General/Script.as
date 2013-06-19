@@ -11,7 +11,7 @@ package Game.General {
 	import Game.Map.ObjectInstance;
 	import Game.Map.WorldData;
 	import Interfaces.IMapObject;
-	import Interfaces.IObjectLayer;
+	import RenderSystem.IObjectLayer;
 	import RenderSystem.DebugDrawingHelper;
 	import SoundSystem.EffectsPlayer;
 	/**

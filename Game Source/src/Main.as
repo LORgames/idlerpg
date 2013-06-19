@@ -1,4 +1,5 @@
 package {
+	import EngineTiming.Clock;
 	import flash.desktop.NativeApplication;
 	import flash.display.NativeWindow;
 	import flash.display.Screen;
@@ -20,8 +21,8 @@ package {
 	import InputSystems.IInputSystem;
 	import InputSystems.KeyboardInput;
 	import InputSystems.TouchInput;
-	import Interfaces.IObjectLayer;
-	import Interfaces.IUpdatable;
+	import RenderSystem.IObjectLayer;
+	import EngineTiming.IUpdatable;
 	import RenderSystem.Renderman;
 	import SoundSystem.MusicPlayer;
 	import WindowSystem.ScreenText;
@@ -35,7 +36,6 @@ package {
 		public static var I:Main;
 		
 		public static var OrderedLayer:Sprite = new Sprite();
-		public static var Updatables:Vector.<IUpdatable> = new Vector.<IUpdatable>();
 		
 		public static var Input:IInputSystem;
 		
@@ -90,8 +90,9 @@ package {
 			new EquipmentManager();
 			new CritterManager();
 			
+			Clock.I.Start(stage);
+			
 			stage.addEventListener(Event.RESIZE, Resized);
-			stage.addEventListener(Event.ENTER_FRAME, Cycle);
 			
 			Resized();
 		}
@@ -100,46 +101,6 @@ package {
 			// auto-close if mobile device :)
 			if (Multitouch.supportsTouchEvents && Multitouch.maxTouchPoints > 1) {
 				NativeApplication.nativeApplication.exit();
-			}
-		}
-		
-		private function Cycle(e:* = null):void {
-			var dt:Number = 1.0 / stage.frameRate;
-			var i:int;
-			
-			//Update what we need to update
-			i = Updatables.length;
-			while (--i > -1) {
-				Updatables[i].Update(dt);
-			}
-			
-			//Sort the children
-			i = OrderedLayer.numChildren;
-			while(--i > 4) {
-				TrySwap(i-4);
-				TrySwap(i-3);
-				TrySwap(i-2);
-				TrySwap(i-1);
-				TrySwap(i-0);
-			}
-			
-			//Do some fading?
-			if (Global.PrevLoadingTotal == 0 && Global.LoadingTotal != 0) {
-				//fade out
-				Renderer.FadeToBlack();
-			} else if (Global.PrevLoadingTotal > 0 && Global.LoadingTotal == 0) {
-				//fade in
-				Renderer.FadeToWorld();
-			}
-			
-			Global.PrevLoadingTotal = Global.LoadingTotal;
-			
-			Renderer.Render(dt);
-		}
-		
-		private function TrySwap(i:int):void {
-			if ((IObjectLayer)(OrderedLayer.getChildAt(i)).GetTrueY() < (IObjectLayer)(OrderedLayer.getChildAt(i-1)).GetTrueY()) {
-				OrderedLayer.swapChildrenAt(i, i-1);
 			}
 		}
 		

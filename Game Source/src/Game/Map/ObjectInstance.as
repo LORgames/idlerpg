@@ -3,7 +3,7 @@ package Game.Map {
 	import flash.display.Bitmap;
 	import flash.geom.Rectangle;
 	import Game.General.Script;
-	import Interfaces.IObjectLayer;
+	import RenderSystem.IObjectLayer;
 	import Interfaces.IMapObject;
 	/**
 	 * ...
@@ -90,6 +90,9 @@ package Game.Map {
 		}
 		
 		public function CleanUp():void {
+			if (parent != null)
+				this.parent.removeChild(this);
+			
 			Template = null;
 			Map = null;
 			FullBase = null;

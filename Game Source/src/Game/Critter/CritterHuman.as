@@ -2,7 +2,6 @@ package Game.Critter {
 	import Game.Equipment.EquipmentSet;
 	import Game.Map.MapData;
 	import Game.Map.WorldData;
-	import Interfaces.IUpdatable;
 	import RenderSystem.Camera;
 	import RenderSystem.Renderman;
 	/**
@@ -16,7 +15,6 @@ package Game.Critter {
 			Equipment = new EquipmentSet(this);
 			
 			Main.OrderedLayer.addChild(Equipment);
-			Main.Updatables.push(this);
 			
 			MyRect.W = 24;
 			MyRect.H = 12;
