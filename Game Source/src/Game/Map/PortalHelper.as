@@ -39,14 +39,14 @@ package Game.Map {
 				}
 			}
 			
-			if (isPortaling) {
+			/*if (isPortaling) {
 				if (portalTimer < PORTAL_CONTROL_LOCK_TIME) {
 					portalTimer += dt;
 				} else {
 					portalTimer = 0;
 					isPortaling = false;
 				}
-			}
+			}*/
 		}
 		
 	}

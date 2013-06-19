@@ -59,6 +59,15 @@ package Game.Critter
 			return "[" + Info.Name + "]";
 		}
 		
+		override public function CleanUp():void {
+			super.CleanUp();
+			
+			Animation.CleanUp();
+			Animation = null;
+			
+			Info = null;
+		}
+		
 	}
 
 }

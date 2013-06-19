@@ -3,6 +3,7 @@ package RenderSystem {
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
+	import Game.Critter.CritterAnimationSet;
 	import Game.Map.MapData;
 	import Game.Map.WorldData;
 	import WindowSystem.ScreenText;
@@ -14,7 +15,7 @@ package RenderSystem {
 	public class Renderman {
 		private var map:MapRenderer;
 		
-		public static var AnimatedObjects:Vector.<IAnimated> = new Vector.<IAnimated>();
+		private static var AnimatedObjects:Vector.<IAnimated> = new Vector.<IAnimated>();
 		
 		private var fadeAlpha:int = 255;
 		private var fading:Boolean = false;
@@ -145,6 +146,18 @@ package RenderSystem {
 			
 			if ((IObjectLayer)(OrderedLayer.getChildAt(i)).GetTrueY() < (IObjectLayer)(OrderedLayer.getChildAt(i-1)).GetTrueY()) {
 				OrderedLayer.swapChildrenAt(i, i-1);
+			}
+		}
+		
+		static public function AnimatedObjectsPush(animation:IAnimated):void {
+			AnimatedObjects.push(animation);
+		}
+		
+		static public function AnimatedObjectsRemove(animation:IAnimated):void {
+			var i:int = AnimatedObjects.indexOf(animation);
+			
+			if (i > -1) {
+				AnimatedObjects.splice(i, 1);
 			}
 		}
 	}

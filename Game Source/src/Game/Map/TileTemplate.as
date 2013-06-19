@@ -85,7 +85,9 @@ package Game.Map {
 				tt.StartingFrame = runningTileCount;
 				tt.currentFrame = tt.StartingFrame;
 				
-				if (tt.TotalFrames > 1) Renderman.AnimatedObjects.push(tt);
+				if (tt.TotalFrames > 1) {
+					Renderman.AnimatedObjectsPush(tt);
+				}
 				
 				Tiles[i] = tt;
 				runningTileCount += tt.TotalFrames;

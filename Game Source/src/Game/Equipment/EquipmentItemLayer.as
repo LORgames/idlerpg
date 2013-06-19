@@ -28,7 +28,7 @@ package Game.Equipment {
 		public static var DestPoint:Point = new Point();
 		
 		public function EquipmentItemLayer(ei:EquipmentItem, _layer:int = 0) {
-			Renderman.AnimatedObjects.push(this);
+			Renderman.AnimatedObjectsPush(this);
 			Owner = ei;
 			
 			Layer = _layer;
@@ -112,6 +112,15 @@ package Game.Equipment {
 			if (Info != null && Info.Image != null && TotalFrames > 0) {
 				this.bitmapData.copyPixels(Info.Image, CopyRect, DestPoint);
 			}
+		}
+		
+		public function CleanUp():void {
+			Renderman.AnimatedObjectsRemove(this);
+			Owner = null;
+			Info = null;
+			
+			CopyRect = null;
+			DestPoint = null;
 		}
 		
 	}

@@ -33,6 +33,8 @@ package Game.Map {
 		private var currentFrame:int = 0;
 		private var frameSize:Rectangle = new Rectangle();
 		
+		private var Instances:int = 0;
+		
 		public const EmptyPoint:Point = new Point();
 		
 		public function ObjectTemplate() {
@@ -40,6 +42,8 @@ package Game.Map {
 		}
 		
 		public function GetBitmap():BitmapData {
+			Instances++;
+			
 			if (!isLoading) {
 				isLoading = true;
 				ImageLoader.Load("Data/Object_" + ObjectID + ".png", LoadedBitmap);
@@ -48,11 +52,26 @@ package Game.Map {
 			return bitmapCopy;
 		}
 		
+		public function OneLessInstance():void {
+			Instances--;
+			
+			if (Instances == 0) {
+				bitmapCopy.dispose();
+				fullBitmap.dispose();
+				bitmapCopy = null;
+				fullBitmap = null;
+			}
+			
+			if (TotalFrames > 1) {
+				Renderman.AnimatedObjectsRemove(this);
+			}
+		}
+		
 		private function LoadedBitmap(e:BitmapData):void {
 			bitmapCopy.copyPixels(e, frameSize, EmptyPoint);
 			
 			if (TotalFrames > 1) {
-				Renderman.AnimatedObjects.push(this);
+				Renderman.AnimatedObjectsPush(this);
 				fullBitmap = e;
 			}
 		}

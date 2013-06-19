@@ -31,7 +31,7 @@ package Game.Critter
 		private var CurrentFrame:int = 0;
 		
 		public function CritterAnimationSet(owner:CritterBeast) {
-			Renderman.AnimatedObjects.push(this);
+			Renderman.AnimatedObjectsPush(this);
 			
 			Owner = owner;
 			ChangeCritterInfo(Owner.Info);
@@ -68,7 +68,7 @@ package Game.Critter
 		}
 		
 		public function GetTrueY():int {
-			return y;
+			return y; //this is wrong
 		}
 		
 		public function UpdateInfo():void {
@@ -98,6 +98,19 @@ package Game.Critter
 				FrameRect.y = int(CurrentFrame / MyCritter.AnimationsPerRow) * height;
 				
 				myBitmapData.copyPixels(sprites, FrameRect, Global.ZeroPoint);
+			}
+		}
+		
+		public function CleanUp():void {
+			if (this.parent != null)
+				this.parent.removeChild(this);
+			
+			MyCritter.OneLessInstance();
+			FrameRect = null;
+			
+			if (myBitmapData != null) {
+				myBitmapData.dispose();
+				myBitmapData = null;
 			}
 		}
 	}

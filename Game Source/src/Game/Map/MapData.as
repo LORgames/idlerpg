@@ -194,11 +194,9 @@ package Game.Map {
 			Portals = null;
 			
 			i = Critters.length;
-			while (--i > -1) {
-				Critters[i].CleanUp();
-				Critters[i] = null;
+			while (Critters.length > 0) {
+				Critters.pop().CleanUp();
 			}
-			Critters = null;
 			
 			i = Tiles.length;
 			while (--i > 0) {
@@ -208,10 +206,8 @@ package Game.Map {
 			Tiles = null;
 		}
 		
-		/* INTERFACE EngineTiming.IUpdatable */
-		
 		public function Update(dt:Number):void {
-			PortalHelper.CheckForPortalling(this, WorldData.ME);
+			PortalHelper.CheckForPortalling(this);
 		}
 	}
 
