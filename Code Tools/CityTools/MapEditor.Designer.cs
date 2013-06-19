@@ -60,6 +60,8 @@
             this.ckbViewportEnabled = new System.Windows.Forms.ToolStripMenuItem();
             this.txtViewportWidth = new System.Windows.Forms.ToolStripTextBox();
             this.txtViewportHeight = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.lblHighlightedCell = new System.Windows.Forms.ToolStripLabel();
             this.mapViewPanel = new System.Windows.Forms.PictureBox();
             this.toolpanel_splitter = new System.Windows.Forms.SplitContainer();
             this.tabFirstLevel = new System.Windows.Forms.TabControl();
@@ -118,6 +120,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtPieceName = new System.Windows.Forms.TextBox();
             this.tabTerrain = new System.Windows.Forms.TabPage();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.pnlTiles = new System.Windows.Forms.Panel();
             this.cbTileGroups = new System.Windows.Forms.ComboBox();
             this.tabPalette = new System.Windows.Forms.TabPage();
@@ -130,8 +133,8 @@
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.timerRedrawAll = new System.Windows.Forms.Timer(this.components);
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.lblHighlightedCell = new System.Windows.Forms.ToolStripLabel();
+            this.label22 = new System.Windows.Forms.Label();
+            this.numBrushSize = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.main_splitter)).BeginInit();
             this.main_splitter.Panel1.SuspendLayout();
             this.main_splitter.Panel2.SuspendLayout();
@@ -148,6 +151,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numSpawnTimer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSpawnMax)).BeginInit();
             this.tabTerrain.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.tabPalette.SuspendLayout();
             this.tabObjectTools.SuspendLayout();
             this.tabObjects.SuspendLayout();
@@ -155,6 +159,7 @@
             this.obj_splitter.Panel1.SuspendLayout();
             this.obj_splitter.Panel2.SuspendLayout();
             this.obj_splitter.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numBrushSize)).BeginInit();
             this.SuspendLayout();
             // 
             // main_splitter
@@ -273,55 +278,55 @@
             this.btnWorldEditor});
             this.btnOtherToolsMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnOtherToolsMenu.Name = "btnOtherToolsMenu";
-            this.btnOtherToolsMenu.Size = new System.Drawing.Size(82, 22);
+            this.btnOtherToolsMenu.Size = new System.Drawing.Size(76, 22);
             this.btnOtherToolsMenu.Text = "Other Tools";
             // 
             // btnTileEditorTool
             // 
             this.btnTileEditorTool.Name = "btnTileEditorTool";
-            this.btnTileEditorTool.Size = new System.Drawing.Size(216, 22);
+            this.btnTileEditorTool.Size = new System.Drawing.Size(203, 22);
             this.btnTileEditorTool.Text = "Tile Editor (T)";
             // 
             // btnObjectEditor
             // 
             this.btnObjectEditor.Name = "btnObjectEditor";
-            this.btnObjectEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnObjectEditor.Size = new System.Drawing.Size(203, 22);
             this.btnObjectEditor.Text = "Object Template Editor (O)";
             // 
             // btnElementalEditor
             // 
             this.btnElementalEditor.Name = "btnElementalEditor";
-            this.btnElementalEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnElementalEditor.Size = new System.Drawing.Size(203, 22);
             this.btnElementalEditor.Text = "Elemental Editor (R)";
             // 
             // btnItemEditor
             // 
             this.btnItemEditor.Name = "btnItemEditor";
-            this.btnItemEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnItemEditor.Size = new System.Drawing.Size(203, 22);
             this.btnItemEditor.Text = "Item Editor (I)";
             // 
             // btnEquipmentEditor
             // 
             this.btnEquipmentEditor.Name = "btnEquipmentEditor";
-            this.btnEquipmentEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnEquipmentEditor.Size = new System.Drawing.Size(203, 22);
             this.btnEquipmentEditor.Text = "Equipment Editor (U)";
             // 
             // btnCritterEditor
             // 
             this.btnCritterEditor.Name = "btnCritterEditor";
-            this.btnCritterEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnCritterEditor.Size = new System.Drawing.Size(203, 22);
             this.btnCritterEditor.Text = "Critter Editor (C)";
             // 
             // btnSoundEditor
             // 
             this.btnSoundEditor.Name = "btnSoundEditor";
-            this.btnSoundEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnSoundEditor.Size = new System.Drawing.Size(203, 22);
             this.btnSoundEditor.Text = "Sound Editor (Z)";
             // 
             // btnWorldEditor
             // 
             this.btnWorldEditor.Name = "btnWorldEditor";
-            this.btnWorldEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnWorldEditor.Size = new System.Drawing.Size(203, 22);
             this.btnWorldEditor.Text = "World Editor (X)";
             // 
             // toolStripSeparator2
@@ -332,7 +337,7 @@
             // btnExport
             // 
             this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(56, 22);
+            this.btnExport.Size = new System.Drawing.Size(55, 22);
             this.btnExport.Text = "Test (F5)";
             // 
             // toolStripSeparator3
@@ -350,7 +355,7 @@
             this.btnViewMenu.Image = ((System.Drawing.Image)(resources.GetObject("btnViewMenu.Image")));
             this.btnViewMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnViewMenu.Name = "btnViewMenu";
-            this.btnViewMenu.Size = new System.Drawing.Size(45, 22);
+            this.btnViewMenu.Size = new System.Drawing.Size(42, 22);
             this.btnViewMenu.Text = "View";
             // 
             // mnuShowGrids
@@ -360,28 +365,28 @@
             this.ckbShowObjectBases,
             this.ckbShowTileBases});
             this.mnuShowGrids.Name = "mnuShowGrids";
-            this.mnuShowGrids.Size = new System.Drawing.Size(121, 22);
+            this.mnuShowGrids.Size = new System.Drawing.Size(116, 22);
             this.mnuShowGrids.Text = "Grids";
             // 
             // ckbShowTileGrid
             // 
             this.ckbShowTileGrid.CheckOnClick = true;
             this.ckbShowTileGrid.Name = "ckbShowTileGrid";
-            this.ckbShowTileGrid.Size = new System.Drawing.Size(190, 22);
+            this.ckbShowTileGrid.Size = new System.Drawing.Size(183, 22);
             this.ckbShowTileGrid.Text = "Show Outlines (1)";
             // 
             // ckbShowObjectBases
             // 
             this.ckbShowObjectBases.CheckOnClick = true;
             this.ckbShowObjectBases.Name = "ckbShowObjectBases";
-            this.ckbShowObjectBases.Size = new System.Drawing.Size(190, 22);
+            this.ckbShowObjectBases.Size = new System.Drawing.Size(183, 22);
             this.ckbShowObjectBases.Text = "Show Object Bases (2)";
             // 
             // ckbShowTileBases
             // 
             this.ckbShowTileBases.CheckOnClick = true;
             this.ckbShowTileBases.Name = "ckbShowTileBases";
-            this.ckbShowTileBases.Size = new System.Drawing.Size(190, 22);
+            this.ckbShowTileBases.Size = new System.Drawing.Size(183, 22);
             this.ckbShowTileBases.Text = "Show Tile Bases (3)";
             // 
             // viewportToolStripMenuItem
@@ -391,7 +396,7 @@
             this.txtViewportWidth,
             this.txtViewportHeight});
             this.viewportToolStripMenuItem.Name = "viewportToolStripMenuItem";
-            this.viewportToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.viewportToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.viewportToolStripMenuItem.Text = "Viewport";
             // 
             // ckbViewportEnabled
@@ -405,16 +410,27 @@
             // 
             this.txtViewportWidth.AutoToolTip = true;
             this.txtViewportWidth.Name = "txtViewportWidth";
-            this.txtViewportWidth.Size = new System.Drawing.Size(100, 23);
+            this.txtViewportWidth.Size = new System.Drawing.Size(100, 21);
             this.txtViewportWidth.Text = "800";
             this.txtViewportWidth.ToolTipText = "Viewport Width";
             // 
             // txtViewportHeight
             // 
             this.txtViewportHeight.Name = "txtViewportHeight";
-            this.txtViewportHeight.Size = new System.Drawing.Size(100, 23);
+            this.txtViewportHeight.Size = new System.Drawing.Size(100, 21);
             this.txtViewportHeight.Text = "600";
             this.txtViewportHeight.ToolTipText = "Viewport Height";
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            // 
+            // lblHighlightedCell
+            // 
+            this.lblHighlightedCell.Name = "lblHighlightedCell";
+            this.lblHighlightedCell.Size = new System.Drawing.Size(24, 22);
+            this.lblHighlightedCell.Text = "Cell";
             // 
             // mapViewPanel
             // 
@@ -1027,6 +1043,7 @@
             // tabTerrain
             // 
             this.tabTerrain.Controls.Add(this.pnlTiles);
+            this.tabTerrain.Controls.Add(this.panel1);
             this.tabTerrain.Controls.Add(this.cbTileGroups);
             this.tabTerrain.Location = new System.Drawing.Point(4, 22);
             this.tabTerrain.Name = "tabTerrain";
@@ -1036,12 +1053,22 @@
             this.tabTerrain.Text = "Terrain";
             this.tabTerrain.UseVisualStyleBackColor = true;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.numBrushSize);
+            this.panel1.Controls.Add(this.label22);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(3, 24);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(227, 33);
+            this.panel1.TabIndex = 2;
+            // 
             // pnlTiles
             // 
             this.pnlTiles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlTiles.Location = new System.Drawing.Point(3, 24);
+            this.pnlTiles.Location = new System.Drawing.Point(3, 57);
             this.pnlTiles.Name = "pnlTiles";
-            this.pnlTiles.Size = new System.Drawing.Size(227, 716);
+            this.pnlTiles.Size = new System.Drawing.Size(227, 683);
             this.pnlTiles.TabIndex = 1;
             // 
             // cbTileGroups
@@ -1152,16 +1179,36 @@
             this.colorDialog.FullOpen = true;
             this.colorDialog.SolidColorOnly = true;
             // 
-            // toolStripSeparator4
+            // label22
             // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(3, 8);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(84, 13);
+            this.label22.TabIndex = 0;
+            this.label22.Text = "Paint Brush Size";
             // 
-            // lblHighlightedCell
+            // numBrushSize
             // 
-            this.lblHighlightedCell.Name = "lblHighlightedCell";
-            this.lblHighlightedCell.Size = new System.Drawing.Size(27, 22);
-            this.lblHighlightedCell.Text = "Cell";
+            this.numBrushSize.Location = new System.Drawing.Point(93, 6);
+            this.numBrushSize.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numBrushSize.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numBrushSize.Name = "numBrushSize";
+            this.numBrushSize.Size = new System.Drawing.Size(129, 20);
+            this.numBrushSize.TabIndex = 1;
+            this.numBrushSize.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // MainWindow
             // 
@@ -1193,6 +1240,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numSpawnTimer)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSpawnMax)).EndInit();
             this.tabTerrain.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.tabPalette.ResumeLayout(false);
             this.tabObjectTools.ResumeLayout(false);
             this.tabObjects.ResumeLayout(false);
@@ -1200,6 +1249,7 @@
             this.obj_splitter.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.obj_splitter)).EndInit();
             this.obj_splitter.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numBrushSize)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1308,6 +1358,9 @@
         private System.Windows.Forms.Button btnChangeBackground;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripLabel lblHighlightedCell;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label22;
+        internal System.Windows.Forms.NumericUpDown numBrushSize;
     }
 }
 

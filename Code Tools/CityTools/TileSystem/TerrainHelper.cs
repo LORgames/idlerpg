@@ -21,6 +21,7 @@ namespace CityTools.Terrain {
         private static Brush Walkable = new SolidBrush(Color.FromArgb(128, Color.LimeGreen));
 
         public static bool MouseMoveOrDown(MouseEventArgs e, LBuffer input_buffer) {
+            drawSize = (int)MainWindow.instance.numBrushSize.Value;
             input_buffer.gfx.Clear(Color.Transparent);
 
             Point m = e.Location;
@@ -29,7 +30,11 @@ namespace CityTools.Terrain {
             tilePos.X = (int)((Camera.Offset.X + m.X / Camera.ZoomLevel) / TileTemplate.PIXELS_X);
             tilePos.Y = (int)((Camera.Offset.Y + m.Y / Camera.ZoomLevel) / TileTemplate.PIXELS_Y);
 
-            TileCache.G(currentTile).Animation.Draw(input_buffer.gfx, (tilePos.X * TileTemplate.PIXELS_X - Camera.Offset.X) * Camera.ZoomLevel, (tilePos.Y * TileTemplate.PIXELS_X - Camera.Offset.Y) * Camera.ZoomLevel, Camera.ZoomLevel);
+            for (int i = 0; i < drawSize; i++) {
+                for (int j = 0; j < drawSize; j++) {
+                    TileCache.G(currentTile).Animation.Draw(input_buffer.gfx, ((tilePos.X + i) * TileTemplate.PIXELS_X - Camera.Offset.X) * Camera.ZoomLevel, ((tilePos.Y + j) * TileTemplate.PIXELS_X - Camera.Offset.Y) * Camera.ZoomLevel, Camera.ZoomLevel);
+                }
+            }
 
             if (e.Button == MouseButtons.Left) {
                 bool updated = false;
