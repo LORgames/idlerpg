@@ -25,7 +25,9 @@ namespace ToolCache.Scripting {
     enum ValidTypes {
         Critter = 0xA000,
         Enemy = 0xA001,
-        Attackable = 0xA002,
-        Ally = 0xA003
+        Object = 0xA002,
+        Ally = 0xA003,
+        NotCritter = 0xA005,
+        NotMe = 0xA006
     }
 }

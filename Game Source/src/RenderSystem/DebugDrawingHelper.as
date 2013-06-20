@@ -16,7 +16,7 @@ package RenderSystem
 			spr.graphics.clear();
 			spr.graphics.lineStyle(1, 0xFF0000);
 			spr.graphics.drawRect(r.X, r.Y, r.W, r.H);
-			Main.I.addChild(spr);
+			//Main.I.addChild(spr);
 		}
 		
 	}

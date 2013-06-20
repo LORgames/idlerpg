@@ -39,6 +39,7 @@ package Game.General {
 		
 		//SCRIPT ARRAYS
 		public static const FRONT:int = 0x9000;
+		public static const FRONTOFFSET:int = 0x9002;
 		public static const AOE:int = 0x9001;
 		
 		private var EventScripts:Vector.<ByteArray>;
@@ -127,8 +128,11 @@ package Game.General {
 			var eType:int = eventScript.readUnsignedShort();
 			var arrayType:int = eventScript.readUnsignedShort();
 			
+			trace("Looking for: 0x" + eType.toString(16));
+			
 			var dim0:int;
 			var dim1:int;
+			var dim2:int;
 			var rect:Rect = new Rect(false, null);
 			
 			var Objects:Vector.<IMapObject> = new Vector.<IMapObject>();
@@ -136,8 +140,10 @@ package Game.General {
 			while(arrayType != 0xF0FD) {
 				switch(arrayType) {
 					case FRONT:
+					case FRONTOFFSET:
 						dim0 = eventScript.readUnsignedShort() * 24;
 						dim1 = eventScript.readUnsignedShort() * 24;
+						dim2 = (arrayType == FRONTOFFSET)?eventScript.readShort() : 0;
 						
 						if (target is BaseCritter) {
 							var obj0:BaseCritter = (target as BaseCritter);
@@ -147,14 +153,29 @@ package Game.General {
 								rect.Y = obj0.Y - dim1 / 2;
 								rect.W = dim0;
 								rect.H = dim1;
+								
+								/*if (obj0.direction == 0) { //Left
+									rect.Y += dim2;
+								} else { //right
+									rect.Y -= dim2;
+								}*/
 							} else {
 								rect.X = obj0.X - dim1 / 2;
 								rect.Y = (obj0.direction == 3)? obj0.Y : obj0.Y - dim0; //if down center else offcenter
 								rect.W = dim1;
 								rect.H = dim0;
+								
+								if (obj0.direction == 2) { //Up
+									rect.X += dim2;
+								} else { //Down
+									rect.X -= dim2;
+								}
 							}
 							
-							obj0.CurrentMap.GetObjectsInArea(rect, Objects);
+							obj0.CurrentMap.GetObjectsInArea(rect, Objects, eType, target);
+							
+							trace(dim2);
+							DebugDrawingHelper.AddDebugRect(rect);
 						} else {
 							trace("FRONT is not available to non-critter systems.");
 						}
@@ -200,7 +221,6 @@ package Game.General {
 			}
 			
 			ReadUntilBalancedClose(eventScript);
-			
 		}
 		
 		//This function is responsible for reading scripts in and creating script objects

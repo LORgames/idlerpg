@@ -61,10 +61,7 @@ package Game.Map {
 					fullBitmap = null;
 				}
 				
-				if(bitmapCopy != null) {
-					bitmapCopy.dispose();
-					bitmapCopy = null;
-				}
+				isLoading = false;
 			}
 			
 			if (TotalFrames > 1) {

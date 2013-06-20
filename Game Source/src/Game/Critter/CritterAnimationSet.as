@@ -106,7 +106,10 @@ package Game.Critter
 				this.parent.removeChild(this);
 			
 			MyCritter.OneLessInstance();
+			MyCritter = null;
 			FrameRect = null;
+			
+			Renderman.AnimatedObjectsRemove(this);
 			
 			if (myBitmapData != null) {
 				myBitmapData.dispose();

@@ -61,6 +61,7 @@ package Game.Critter {
 		}
 		
 		override public function CleanUp():void {
+			if (Persistent) return;
 			super.CleanUp();
 			
 			Animation.CleanUp();

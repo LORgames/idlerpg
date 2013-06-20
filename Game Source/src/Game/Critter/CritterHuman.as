@@ -56,6 +56,8 @@ package Game.Critter {
 		}
 		
 		public override function CleanUp():void {
+			if (Persistent) return;
+			
 			Equipment.CleanUp();
 			Equipment = null;
 			

@@ -23,6 +23,8 @@ package Game.Map {
 		public static var CurrentMap:MapData = new MapData();
 		
 		public static function Initialize(loadReq:String):void {
+			ME.Persistent = true;
+			
 			RequestedMapLoad = loadReq;
 			
 			BinaryLoader.Load("Data/MapInfo.bin", ParseWorldFile);

@@ -239,8 +239,14 @@ namespace ToolCache.Scripting {
 
                     switch (arrayValue) {
                         case "front":
-                            this.AdditionalBytecode.Add((ushort)0x9000);
-                            VerifyCommaSeperatedShorts(arrayParam, 2, Info);
+                            int totalBits = arrayParam.Split(',').Length;
+                            if (totalBits == 2) {
+                                this.AdditionalBytecode.Add((ushort)0x9000);
+                                VerifyCommaSeperatedShorts(arrayParam, 2, Info);
+                            } else if (totalBits == 3) {
+                                this.AdditionalBytecode.Add((ushort)0x9002);
+                                VerifyCommaSeperatedShorts(arrayParam, 3, Info);
+                            }
                             break;
                         case "aoe":
                             this.AdditionalBytecode.Add((ushort)0x9001);

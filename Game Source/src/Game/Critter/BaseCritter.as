@@ -26,6 +26,8 @@ package Game.Critter {
 		public var state:int = 0;
 		protected var ControlsLocked:Boolean = false;
 		
+		public var Persistent:Boolean = false;
+		
 		//Current state information
 		public var isMoving:Boolean = false;
 		public var moveSpeedX:int = 0;
@@ -52,13 +54,10 @@ package Game.Critter {
 		
 		public function ShiftMaps(newMap:MapData, location:int = 0):void {
 			if (CurrentMap != null) {
-				if(CurrentMap.Critters.indexOf(this) > -1) {
-					CurrentMap.Critters.splice(CurrentMap.Critters.indexOf(this), 1);
-				}
+				CurrentMap.CritterPop(this);
 			}
 			
-			CurrentMap = newMap;
-			CurrentMap.Critters.push(this);
+			newMap.CritterPush(this);
 			
 			this.X = (location % newMap.TileSizeX) * 48;
 			this.Y = (location / newMap.TileSizeX) * 48;
@@ -66,12 +65,10 @@ package Game.Critter {
 		
 		public function RequestTeleport(newMap:MapData, portal:Portal):void {
 			if (CurrentMap != null) {
-				if(CurrentMap.Critters.indexOf(this) > -1) {
-					CurrentMap.Critters.splice(CurrentMap.Critters.indexOf(this), 1);
-				}
+				CurrentMap.CritterPop(this);
 			}
-			CurrentMap = newMap;
-			CurrentMap.Critters.push(this);
+			
+			newMap.CritterPush(this);
 			
 			this.X = portal.ExitPoint.x;
 			this.Y = portal.ExitPoint.y;
@@ -257,8 +254,10 @@ package Game.Critter {
 		}
 		
 		public function CleanUp():void {
-			CurrentMap = null;
-			//MyRect = null;
+			if (Persistent) return;
+			
+			if(CurrentMap != null) CurrentMap.CritterPop(this);
+			MyRect = null;
 			MyScript = null;
 			
 			Clock.I.Remove(this);

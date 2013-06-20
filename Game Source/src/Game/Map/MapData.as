@@ -139,17 +139,24 @@ package Game.Map {
 			Main.I.Renderer.FadeToWorld();
 		}
 		
-		public function GetObjectsInArea(rect:Rect, objects:Vector.<IMapObject>, type:int = 0xA004, scanner:BaseCritter = null):void {
+		public function GetObjectsInArea(rect:Rect, objects:Vector.<IMapObject>, type:int = 0xA004, scanner:Object = null):void {
 			var _tiles:Vector.<TileInstance> = TileHelper.GetTiles(rect, this);
 			
 			var _tt:int = _tiles.length;
 			var r:Rect;
 			
-			if(type == 0xA002 || type == 0xA004) {
+			//Look at the objects
+			if(type == 0xA002 || type == 0xA005 || type == 0xA006) {
 				while (--_tt > -1) {
 					var _tr:int = _tiles[_tt].SolidRectangles.length;
 					
 					while (--_tr > -1) {
+						if (type == 0xA006) {
+							if (_tiles[_tt].SolidRectangles[_tr].Owner == scanner) {
+								continue;
+							}
+						}
+						
 						r = _tiles[_tt].SolidRectangles[_tr];
 						
 						if (r.Owner != null) {
@@ -161,12 +168,20 @@ package Game.Map {
 				}
 			}
 			
-			
-			_tt = Critters.length;
-			while (--_tt > -1) {
-				if (Critters[_tt].MyRect.intersects(rect)) {
-					if(objects.indexOf(Critters[_tt]) == -1) {
-						objects.push(Critters[_tt]);
+			//Look at the critters
+			if(type != 0xA005) {
+				_tt = Critters.length;
+				while (--_tt > -1) {
+					if (type == 0xA006) {
+						if (Critters[_tt] == scanner) {
+							continue;
+						}
+					}
+					
+					if (Critters[_tt].MyRect.intersects(rect)) {
+						if(objects.indexOf(Critters[_tt]) == -1) {
+							objects.push(Critters[_tt]);
+						}
 					}
 				}
 			}
@@ -211,6 +226,21 @@ package Game.Map {
 		
 		public function Update(dt:Number):void {
 			PortalHelper.CheckForPortalling(this);
+		}
+		
+		public function CritterPush(baseCritter:BaseCritter):void {
+			Critters.push(baseCritter);
+			baseCritter.CurrentMap = this;
+		}
+		
+		public function CritterPop(baseCritter:BaseCritter):void {
+			var i:int = Critters.indexOf(baseCritter);
+			
+			if (i > -1) {
+				Critters.splice(i, 1);
+			}
+			
+			baseCritter.CurrentMap = null;
 		}
 	}
 
