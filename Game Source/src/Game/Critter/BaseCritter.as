@@ -21,7 +21,7 @@ package Game.Critter {
 	 * ...
 	 * @author Paul
 	 */
-	public class BaseCritter implements IUpdatable, IMapObject, ICleanUp {
+	public class BaseCritter implements IUpdatable, IMapObject, ICleanUp, ICritterOwner {
 		public var direction:int = 3;
 		public var state:int = 0;
 		protected var ControlsLocked:Boolean = false;
@@ -103,6 +103,31 @@ package Game.Critter {
 			
 			//Will need these later :)
 			var j:int;
+			
+			//// AI  AI  AI  AI ///////////////////////////////////////////////////////// AI
+			
+			if (WorldData.ME != this) {
+				var me:BaseCritter = WorldData.ME;
+				
+				var dx:Number = (this.X - me.X);
+				var dy:Number = (this.Y - me.Y) * 0.85;
+				
+				if (Math.abs(dx) > Math.abs(dy)) {
+					if (dx > 0) { // Right
+						direction = 0;
+					} else { // Left
+						direction = 1;
+					}
+				} else {
+					if (dy > 0) { // Up
+						direction = 2;
+					} else { // Down
+						direction = 3;
+					}
+				}
+			}
+			
+			////////////////////////////////////////////////////////////////////////////////
 			
 			//Store these in case
 			var prevX:int = X;
@@ -250,8 +275,6 @@ package Game.Critter {
 		}
 		
 		public function Died():void {
-			trace("Died!");
-			
 			if (Owner != null) {
 				Owner.AlertMinionDeath(this);
 			}
@@ -265,6 +288,10 @@ package Game.Critter {
 			MyScript = null;
 			
 			Clock.I.Remove(this);
+		}
+		
+		public function AlertMinionDeath(minion:BaseCritter):void {
+			MyScript.Run(Script.MinionDied, this, minion);
 		}
 	}
 }

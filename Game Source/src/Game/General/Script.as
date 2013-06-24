@@ -89,9 +89,11 @@ package Game.General {
 							var bc:BaseCritter = (target as BaseCritter);
 							
 							var critter:BaseCritter = CritterManager.I.CritterInfo[critterID].CreateCritter(bc.CurrentMap, bc.X, bc.Y);
-						
+							
 							if(critter == null) {
 								trace("Script error: Could not spawn CritterID=" + critterID + ": critter is null.");
+							} else {
+								critter.Owner = bc;
 							}
 						}
 						

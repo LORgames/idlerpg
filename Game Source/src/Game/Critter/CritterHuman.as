@@ -21,15 +21,21 @@ package Game.Critter {
 		}
 		
 		public override function Update(dt:Number):void {
+			var _d:int = direction;
+			
 			super.Update(dt);
+			
+			if (_d != direction) {
+				Equipment.ChangeDirection(direction);
+			}
 			
 			Equipment.x = this.X;
 			Equipment.y = this.Y;
 		}
 		
 		override public function RequestMove(xSpeed:Number, ySpeed:Number):void {
-			var _d:int = direction;
 			var _m:Boolean = isMoving;
+			var _d:int = direction;
 			
 			super.RequestMove(xSpeed, ySpeed);
 			
