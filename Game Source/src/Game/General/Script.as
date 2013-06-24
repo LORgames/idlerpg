@@ -154,6 +154,7 @@ package Game.General {
 								rect.W = dim0;
 								rect.H = dim1;
 								
+								//calculate offsets
 								/*if (obj0.direction == 0) { //Left
 									rect.Y += dim2;
 								} else { //right
@@ -165,6 +166,7 @@ package Game.General {
 								rect.W = dim1;
 								rect.H = dim0;
 								
+								//calculate offsets
 								if (obj0.direction == 2) { //Up
 									rect.X += dim2;
 								} else { //Down

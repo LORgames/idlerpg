@@ -4,9 +4,9 @@ call bat\SetupSDK.bat
 call bat\SetupApplication.bat
 
 :target
-::goto desktop
+goto desktop
 ::goto android-debug
-goto android-test
+::goto android-test
 ::goto windows-package
 set INTERPRETER=-interpreter
 ::goto ios-debug
@@ -25,7 +25,7 @@ echo.
 echo (hint: edit 'Run.bat' to test on device or change screen size)
 echo.
 ::adl -screensize %SCREEN_SIZE% "%APP_XML%" "%APP_DIR%"
-adl "%APP_XML%" "%APP_DIR%" -- map=Twinblade Arena
+adl "%APP_XML%" "%APP_DIR%" -- map=Field 2
 if errorlevel 1 goto end
 goto end
 

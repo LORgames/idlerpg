@@ -101,7 +101,6 @@ package Game.Equipment {
 							Frame = 0;
 						} else {
 							Info.MyScript.Run(Script.AnimationEnded, Owner, Owner.Owner.Owner);
-
 							Owner.SetState(0);
 						}
 					}
@@ -116,12 +115,13 @@ package Game.Equipment {
 		}
 		
 		public function CleanUp():void {
-			Renderman.AnimatedObjectsRemove(this);
+  			Renderman.AnimatedObjectsRemove(this);
 			Owner = null;
 			Info = null;
 			
 			CopyRect = null;
-			DestPoint = null;
+			
+			this.bitmapData.dispose();
 		}
 	}
 }

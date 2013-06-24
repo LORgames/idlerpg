@@ -62,10 +62,10 @@ package Game.Map {
 				}
 				
 				isLoading = false;
-			}
-			
-			if (TotalFrames > 1) {
-				Renderman.AnimatedObjectsRemove(this);
+				
+				if (TotalFrames > 1) {
+					Renderman.AnimatedObjectsRemove(this);
+				}
 			}
 		}
 		
@@ -74,12 +74,13 @@ package Game.Map {
 			
 			if (TotalFrames > 1) {
 				Renderman.AnimatedObjectsPush(this);
-				fullBitmap = e;
+				fullBitmap = e.clone();
 			}
 		}
 		
 		public function UpdateAnimation(dt:Number):void {
 			timeout += dt;
+			
 			if (timeout > PlaybackSpeed) {
 				while(timeout > PlaybackSpeed) {
 					timeout -= PlaybackSpeed;

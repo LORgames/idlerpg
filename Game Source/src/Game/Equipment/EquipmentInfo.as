@@ -45,7 +45,7 @@ package Game.Equipment {
 		}
 		
 		public function LoadedImage(e:BitmapData):void {
-			Image = e;
+			Image = e.clone();
 		}
 		
 		public function ProcessSpriteSheetOffsets():void {

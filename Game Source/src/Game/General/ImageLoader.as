@@ -39,6 +39,7 @@ package Game.General {
 		private static function Event_LoadingCompleted(e:Event):void {
 			var image:Bitmap = Bitmap(loader.content); 
 			currentInfo.SuccessCallback(image.bitmapData);
+			image.bitmapData.dispose();
 			
 			CurrentLoadingEnded();
 		}

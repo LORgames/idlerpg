@@ -1,16 +1,19 @@
 package Game.Map {
 	import adobe.utils.CustomActions;
 	import CollisionSystem.Rect;
+	import EngineTiming.Clock;
+	import EngineTiming.IOneSecondUpdate;
 	import flash.display.BitmapData;
 	import flash.utils.ByteArray;
 	import Game.Critter.BaseCritter;
 	import Game.Critter.CritterManager;
 	import Interfaces.IMapObject;
+	import Game.Critter.ICritterOwner;
 	/**
 	 * ...
 	 * @author Paul
 	 */
-	public class SpawnRegion implements IMapObject {
+	public class SpawnRegion implements IMapObject, IOneSecondUpdate, ICritterOwner {
 		
 		public var Map:MapData;
 		public var Area:Vector.<Rect>;
@@ -22,6 +25,8 @@ package Game.Map {
         public var MaxSpawn:int = 10;
         public var Timeout:int = 60;
 		
+		private var UsedTimeout:int;
+		
 		public var Critters:Vector.<BaseCritter>;
 
 		public function SpawnRegion(map:MapData, MaxSpawn:int, SpawnAtLoad:int, Timeout:int) {
@@ -30,6 +35,11 @@ package Game.Map {
 			this.SpawnOnLoad = SpawnAtLoad;
 			this.Timeout = Timeout;
 			this.Critters = new Vector.<BaseCritter>();
+			
+			if (MaxSpawn > 0) {
+				UsedTimeout = Math.random() * Timeout;
+				Clock.I.OneSecond.push(this);
+			}
 		}
 		
 		/**
@@ -37,12 +47,20 @@ package Game.Map {
 		 */
 		private function PreSpawn():void {
 			while (--SpawnOnLoad > -1) {
-				var critterID:int = GetNextCritterID();
-				var randArea:int = Math.floor(Math.random() * (Area.length));
-				var randX:int = Area[randArea].X + Math.floor(Math.random() * Area[randArea].W);
-				var randY:int = Area[randArea].Y + Math.floor(Math.random() * Area[randArea].H);
-				Critters.push(CritterManager.I.CritterInfo[critterID].CreateCritter(Map, randX, randY));
+				Spawn();
 			}
+		}
+		
+		private function Spawn():void {
+			var critterID:int = GetNextCritterID();
+			var randArea:int = Math.floor(Math.random() * (Area.length));
+			var randX:int = Area[randArea].X + Math.floor(Math.random() * Area[randArea].W);
+			var randY:int = Area[randArea].Y + Math.floor(Math.random() * Area[randArea].H);
+			
+			var newCritter:BaseCritter = CritterManager.I.CritterInfo[critterID].CreateCritter(Map, randX, randY);
+			newCritter.Owner = this;
+			
+			Critters.push(newCritter);
 		}
 		
 		/**
@@ -52,7 +70,6 @@ package Game.Map {
 		private function GetNextCritterID():int {
 			return SpawnID[0];
 		}
-		
 		
 		public function GetUnion():Rect {
 			return null;
@@ -87,10 +104,11 @@ package Game.Map {
 			
 			i = Critters.length;
 			while (--i > -1) {
-				//Critters[i].CleanUp();
 				Critters[i] = null;
 			}
 			Critters = null;
+			
+			Clock.I.Remove1(this);
 		}
 		
 		////////////////////////////////////////
@@ -124,6 +142,32 @@ package Game.Map {
 			
             return s;
         }
+		
+		/* INTERFACE EngineTiming.IOneSecondUpdate */
+		
+		public function UpdateOneSecond():void {
+			UsedTimeout++;
+			
+			if (UsedTimeout >= Timeout) {
+				UsedTimeout = 0;
+				
+				if (MaxSpawn > Critters.length) {
+					Spawn();
+				}
+			}
+		}
+		
+		/* INTERFACE Game.Critter.ICritterOwner */
+		
+		public function AlertMinionDeath(minion:BaseCritter):void {
+			var i:int = Critters.indexOf(minion);
+			
+			if (i > -1) {
+				Critters.splice(i, 1);
+			} else {
+				trace("Being alerted of unexpected critter death!");
+			}
+		}
 		
 	}
 

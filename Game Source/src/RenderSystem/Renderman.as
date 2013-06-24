@@ -136,7 +136,6 @@ package RenderSystem {
 			map.Draw();
 			
 			var i:int = AnimatedObjects.length;
-			
 			while (--i > -1) {
 				AnimatedObjects[i].UpdateAnimation(dt);
 			}
@@ -158,9 +157,7 @@ package RenderSystem {
 			var i:int = AnimatedObjects.indexOf(animation);
 			
 			if (i > -1) {
-				trace("From: " + AnimatedObjects.length + animation + " @" + i);
 				AnimatedObjects.splice(i, 1);
-				trace("\t=> " + AnimatedObjects.length);
 			} else {
 				trace(animation + " is not in the queue");
 			}

@@ -1,6 +1,8 @@
 package Game.Map {
 	import flash.desktop.NativeApplication;
+	import flash.desktop.SystemIdleMode;
 	import flash.display.BitmapData;
+	import flash.system.System;
 	import flash.utils.ByteArray;
 	import Game.Critter.BaseCritter;
 	import Game.Critter.CritterHuman;
@@ -75,7 +77,7 @@ package Game.Map {
 		}
 		
 		public static function LoadedTileSet(e:BitmapData):void {
-			TileSheet = e;
+			TileSheet = e.clone();
 			Global.LoadingTotal--;
 		}
 		

@@ -27,6 +27,7 @@ package Game.Critter {
 		protected var ControlsLocked:Boolean = false;
 		
 		public var Persistent:Boolean = false;
+		public var Owner:ICritterOwner;
 		
 		//Current state information
 		public var isMoving:Boolean = false;
@@ -48,7 +49,6 @@ package Game.Critter {
 		
 		public function BaseCritter() {
 			MyRect = new Rect(false, this, 0, 0, 0, 0);
-			
 			Clock.I.Updatables.push(this);
 		}
 		
@@ -250,7 +250,11 @@ package Game.Critter {
 		}
 		
 		public function Died():void {
+			trace("Died!");
 			
+			if (Owner != null) {
+				Owner.AlertMinionDeath(this);
+			}
 		}
 		
 		public function CleanUp():void {
