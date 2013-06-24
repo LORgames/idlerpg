@@ -68,7 +68,8 @@ package Game.Map {
 		 * @return Returns the CritterID of the monster to spawn
 		 */
 		private function GetNextCritterID():int {
-			return SpawnID[0];
+			var x:int = Math.random() * SpawnID.length;
+			return SpawnID[x];
 		}
 		
 		public function GetUnion():Rect {
