@@ -49,6 +49,12 @@
   <ItemGroup>
     <Compile Include="CritterCrusher.cs" />
     <Compile Include="EquipmentCrusher.cs" />
+    <Compile Include="ExportProgressForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExportProgressForm.Designer.cs">
+      <DependentUpon>ExportProgressForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FinishedDisplay.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,6 +79,9 @@
     <Compile Include="SoundCrusher.cs" />
     <Compile Include="SpriteSheetHelper.cs" />
     <Compile Include="TileCrusher.cs" />
+    <EmbeddedResource Include="ExportProgressForm.resx">
+      <DependentUpon>ExportProgressForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FinishedDisplay.resx">
       <DependentUpon>FinishedDisplay.cs</DependentUpon>
     </EmbeddedResource>
