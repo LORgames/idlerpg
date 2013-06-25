@@ -16,5 +16,4 @@ package {
 		
 		public static const ZeroPoint:Point = new Point();
 	}
-
 }

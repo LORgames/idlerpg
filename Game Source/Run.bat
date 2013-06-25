@@ -4,7 +4,7 @@ call bat\SetupSDK.bat
 call bat\SetupApplication.bat
 
 :target
-goto desktop
+goto desktop-run
 ::goto android-debug
 ::goto android-test
 ::goto windows-package
@@ -12,20 +12,13 @@ set INTERPRETER=-interpreter
 ::goto ios-debug
 ::goto ios-test
 
-:desktop
-:: http://help.adobe.com/en_US/air/build/WSfffb011ac560372f-6fa6d7e0128cca93d31-8000.html
-
-::set SCREEN_SIZE=NexusOne
-set SCREEN_SIZE=iPhone5Retina
-
 :desktop-run
 echo.
 echo Starting AIR Debug Launcher.
 echo.
 echo (hint: edit 'Run.bat' to test on device or change screen size)
 echo.
-::adl -screensize %SCREEN_SIZE% "%APP_XML%" "%APP_DIR%"
-adl "%APP_XML%" "%APP_DIR%" -- map=Tortuga Pirate City
+adl "%APP_XML%" "%APP_DIR%" -- map=Field 2
 
 if errorlevel 1 goto end
 goto end

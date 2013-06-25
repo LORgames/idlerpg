@@ -53,9 +53,9 @@ package Game.Map {
 		
 		private function Spawn():void {
 			var critterID:int = GetNextCritterID();
-			var randArea:int = Math.floor(Math.random() * (Area.length));
-			var randX:int = Area[randArea].X + Math.floor(Math.random() * Area[randArea].W);
-			var randY:int = Area[randArea].Y + Math.floor(Math.random() * Area[randArea].H);
+			var randArea:int = Math.random() * (Area.length);
+			var randX:int = Area[randArea].X + Math.random() * Area[randArea].W;
+			var randY:int = Area[randArea].Y + Math.random() * Area[randArea].H;
 			
 			var newCritter:BaseCritter = CritterManager.I.CritterInfo[critterID].CreateCritter(Map, randX, randY);
 			newCritter.Owner = this;
