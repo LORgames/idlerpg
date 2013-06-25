@@ -73,6 +73,9 @@ package Game.Critter {
 			
 			this.X = portal.ExitPoint.x;
 			this.Y = portal.ExitPoint.y;
+			
+			Update(0);
+			Global.DisablePortals = false;
 		}
 		
 		public function RequestInMapTeleport():void {

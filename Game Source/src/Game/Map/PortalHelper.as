@@ -12,6 +12,8 @@ package Game.Map {
 		private static const IsLocked:int = 0;
 		
 		public static function CheckForPortalling(CurrentMap:MapData):void {
+			if (Global.DisablePortals) return;
+			
 			var j:int = 0;
 			var MyRect:Rect = WorldData.ME.MyRect;
 			
@@ -29,12 +31,14 @@ package Game.Map {
 								if (CurrentMap.Portals[j].ExitID == CurrentMap.Portals[k].ID) {
 									Global.MapPortalID = k;
 									Main.I.Renderer.FadeToBlack(WorldData.ME.RequestInMapTeleport, "zaaaappp!");
+									Global.DisablePortals = true;
 								}
 							}
 							break;
 						} else {
 							Global.MapPortalID = exitID;
 							Main.I.Renderer.FadeToBlack(WorldData.UpdatePlayerPosition, WorldData.PortalDestinations[exitID]);
+							Global.DisablePortals = true;
 						}
 						break;
 					}

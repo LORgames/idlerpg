@@ -25,6 +25,7 @@ namespace ToolToGameExporter {
 
             foreach (Template t in TemplateCache.ObjectTypes.Values) {
                 RealignedItemIndexes.Add(t.ObjectID, highestIndex);
+                f.AddString(t.ObjectName);
 
                 f.AddByte((byte)t.Animation.Frames.Count);
 

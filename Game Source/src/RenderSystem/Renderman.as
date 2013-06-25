@@ -118,7 +118,6 @@ package RenderSystem {
 					FadeToWorld();
 				}
 			}
-			Global.PrevLoadingTotal = Global.LoadingTotal;
 			
 			if (Global.LoadingTotal > 0) return;
 			if (WorldData.CurrentMap == null) return;

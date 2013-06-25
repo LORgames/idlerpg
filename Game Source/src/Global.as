@@ -12,6 +12,7 @@ package {
 		
 		//Portaling Information
 		public static var MapPortalID:int = -1;
+		public static var DisablePortals:Boolean = true;
 		
 		public static const ZeroPoint:Point = new Point();
 	}

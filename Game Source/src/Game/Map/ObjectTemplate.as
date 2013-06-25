@@ -16,6 +16,8 @@ package Game.Map {
 	public class ObjectTemplate implements IAnimated {
 		
 		public var ObjectID:int;
+		public var Name:String;
+		
 		public var TotalFrames:int;
 		public var PlaybackSpeed:Number;
 		public var Bases:Vector.<Rectangle>;
@@ -104,8 +106,8 @@ package Game.Map {
 			Global.LoadingTotal++;
 		}
 		
-		private static function LoadedObjects(e:ByteArray):void {
-			TotalObjects = e.readShort();
+		private static function LoadedObjects(b:ByteArray):void {
+			TotalObjects = b.readShort();
 			Objects = new Vector.<ObjectTemplate>(TotalObjects, true);
 			var totalRects:int = 0;
 			
@@ -113,30 +115,31 @@ package Game.Map {
 				var obj:ObjectTemplate = new ObjectTemplate();
 				
 				obj.ObjectID = i;
-				obj.TotalFrames = e.readByte();
+				obj.Name = BinaryLoader.GetString(b);
+				obj.TotalFrames = b.readByte();
 				
-				obj.OffsetHeight = e.readShort();
+				obj.OffsetHeight = b.readShort();
 				
-				obj.MyScript = Script.ReadScript(e);
+				obj.MyScript = Script.ReadScript(b);
 				
-				totalRects = e.readByte();
+				totalRects = b.readByte();
 				
 				obj.Bases = new Vector.<Rectangle>(totalRects, true);
 				
 				while(--totalRects > -1) {
-					var _x:int = e.readShort();
-					var _y:int = e.readShort();
-					var _w:int = e.readShort();
-					var _h:int = e.readShort();
+					var _x:int = b.readShort();
+					var _y:int = b.readShort();
+					var _w:int = b.readShort();
+					var _h:int = b.readShort();
 					
 					obj.Bases[totalRects] = new Rectangle(_x, _y, _w, _h);
 				}
 				
-				obj.isSolid = (e.readByte() == 1);
+				obj.isSolid = (b.readByte() == 1);
 				
-				obj.frameSize.width = e.readShort();
-				obj.frameSize.height = e.readShort();
-				obj.PlaybackSpeed = e.readFloat();
+				obj.frameSize.width = b.readShort();
+				obj.frameSize.height = b.readShort();
+				obj.PlaybackSpeed = b.readFloat();
 				
 				obj.bitmapCopy = new BitmapData(obj.frameSize.width, obj.frameSize.height, true, 0x608080FF);
 				

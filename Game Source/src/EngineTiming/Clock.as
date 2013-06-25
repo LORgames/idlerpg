@@ -37,35 +37,38 @@ package EngineTiming {
 		}
 		
 		public function Tick(e:Event):void {
-			var dt:Number = 1.0 / ExpectedFrameRate;
-			var i:int;
+			if (Global.LoadingTotal == 0) {
 			
-   			Sec_01_Count += dt;
-			Sec_15_Count += dt;
-			
-			WorldData.CurrentMap.Update(dt);
-			
-			//Update what we need to update
-			i = Updatables.length;
-			while (--i > -1) {
-				Updatables[i].Update(dt);
-			}
-			
-			if (Sec_01_Count > 1) {
-				Sec_01_Count -= 1;
+				var dt:Number = 1.0 / ExpectedFrameRate;
+				var i:int;
 				
-				i = OneSecond.length;
+				Sec_01_Count += dt;
+				Sec_15_Count += dt;
+				
+				WorldData.CurrentMap.Update(dt);
+				
+				//Update what we need to update
+				i = Updatables.length;
 				while (--i > -1) {
-					OneSecond[i].UpdateOneSecond();
+					Updatables[i].Update(dt);
 				}
-			}
-			
-			if (Sec_15_Count > 15) {
-				Sec_15_Count -= 15;
 				
-				i = FifteenSecond.length;
-				while (--i > -1) {
-					FifteenSecond[i].UpdateFifteenSecond();
+				if (Sec_01_Count > 1) {
+					Sec_01_Count -= 1;
+					
+					i = OneSecond.length;
+					while (--i > -1) {
+						OneSecond[i].UpdateOneSecond();
+					}
+				}
+				
+				if (Sec_15_Count > 15) {
+					Sec_15_Count -= 15;
+					
+					i = FifteenSecond.length;
+					while (--i > -1) {
+						FifteenSecond[i].UpdateFifteenSecond();
+					}
 				}
 			}
 			
@@ -75,6 +78,8 @@ package EngineTiming {
 				var x:ICleanUp = CleanUpList.pop();
 				x.CleanUp();
 			}
+			
+			Global.PrevLoadingTotal = Global.LoadingTotal;
 		}
 		
 		public function Remove1(item:IOneSecondUpdate):void {

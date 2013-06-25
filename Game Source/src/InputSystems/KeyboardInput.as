@@ -33,6 +33,8 @@ package InputSystems {
 				if (ke.keyCode == Keyboard.A) xSpeed -= 1;
 				if (ke.keyCode == Keyboard.D) xSpeed += 1;
 				
+				if (ke.keyCode == Keyboard.P) Global.DisablePortals = false;
+				
 				WorldData.ME.RequestMove(xSpeed, ySpeed);
 				
 				if (ke.keyCode == Keyboard.SPACE) {
