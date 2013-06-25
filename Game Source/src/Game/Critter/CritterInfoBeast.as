@@ -18,6 +18,8 @@ package Game.Critter
 		public var SpriteHeight:int;
 		public var CollisionWidth:int;
 		public var CollisionHeight:int;
+		public var CollisionOffsetX:int;
+		public var CollisionOffsetY:int;
 		
 		public var AnimationFrameCounts:Vector.<int>;
 		public var AnimationsPerRow:int = 0;
@@ -37,6 +39,8 @@ package Game.Critter
 			
 			CollisionWidth = b.readShort();
 			CollisionHeight = b.readShort();
+			CollisionOffsetX = b.readShort();
+			CollisionOffsetY = b.readShort();
 			
 			TotalAnimationStates = b.readByte();
 			
@@ -72,6 +76,8 @@ package Game.Critter
 			p.Update(0);
 			
 			p.MyScript = AICommands;
+			p.MyAIType = AIType;
+			
 			AICommands.Run(Script.Spawn, p);
 			
 			map.Critters.push(p);

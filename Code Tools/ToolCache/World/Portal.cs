@@ -81,8 +81,6 @@ namespace ToolCache.World {
             p.ExitID = f.GetShort();
             p.Direction = f.GetByte();
 
-            System.Diagnostics.Debug.WriteLine("PORTAL: " + p.ID);
-
             p.ExitPoint.X = f.GetShort();
             p.ExitPoint.Y = f.GetShort();
             p.EntryPoint.X = f.GetShort();

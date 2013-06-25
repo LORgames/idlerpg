@@ -67,6 +67,8 @@ namespace ToolToGameExporter {
                         f.AddFloat(cb.playbackSpeed);
                         f.AddShort(cb.rectWidth);
                         f.AddShort(cb.rectHeight);
+                        f.AddShort(cb.rectOffsetX);
+                        f.AddShort(cb.rectOffsetY);
 
                         f.AddByte((byte)Animations.Count);
 

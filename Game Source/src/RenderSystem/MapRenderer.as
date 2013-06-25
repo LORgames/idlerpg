@@ -82,55 +82,57 @@ package RenderSystem {
 			
 			data.unlock();
 			
-			//TODO: Clean up debug draw things if required
-			/*xPos = WorldData.CurrentMap.Critters.length;
-			
-			DebugLayer.graphics.clear();
-			
-			//Draw the main character
-			DebugLayer.graphics.lineStyle(1, 0xFF00FF);
-			
-			while (--xPos > -1) {
-				WorldData.CurrentMap.Critters[xPos].DrawDebugRect(DebugLayer.graphics);
-			}
-			
-			//Draw all the objects
-			DebugLayer.graphics.lineStyle(1, 0x00FFFF);
-			xPos = WorldData.CurrentMap.Objects.length;
-			
-			while (--xPos > -1) {
-				var objI:ObjectInstance = WorldData.CurrentMap.Objects[xPos];
-				yPos = objI.Template.Bases.length;
+			if (Global.DebugRender) {
+				//TODO: Clean up debug draw things if required
+				xPos = WorldData.CurrentMap.Critters.length;
 				
-				while (--yPos > -1) {
-					DebugLayer.graphics.drawRect(objI.Template.Bases[yPos].left + objI.x, objI.Template.Bases[yPos].top + objI.y, objI.Template.Bases[yPos].width, objI.Template.Bases[yPos].height);
-				}
-			}
-			
-			//Draw all the Critters
-			DebugLayer.graphics.lineStyle(1, 0xFF0000);
-			xPos = WorldData.CurrentMap.Critters.length;
-			
-			while (--xPos > -1) {
-				if(WorldData.CurrentMap.Critters[xPos] != WorldData.ME) {
-					var objC:Rect = WorldData.CurrentMap.Critters[xPos].MyRect;
-					if (objC == null) continue;
-					DebugLayer.graphics.drawRect(objC.X, objC.Y, objC.W, objC.H);
-				}
-			}
-			
-			//Draw all the spawn regions
-			DebugLayer.graphics.lineStyle(1, 0x0000FF);
-			xPos = WorldData.CurrentMap.Spawns.length;
-			
-			while (--xPos > -1) {
-				var objX:SpawnRegion = WorldData.CurrentMap.Spawns[xPos];
-				yPos = objX.Area.length;
+				DebugLayer.graphics.clear();
 				
-				while (--yPos > -1) {
-					DebugLayer.graphics.drawRect(objX.Area[yPos].X, objX.Area[yPos].Y, objX.Area[yPos].W, objX.Area[yPos].H);
+				//Draw the main character
+				DebugLayer.graphics.lineStyle(1, 0xFF00FF);
+				
+				while (--xPos > -1) {
+					WorldData.CurrentMap.Critters[xPos].DrawDebugRect(DebugLayer.graphics);
 				}
-			}*/
+				
+				//Draw all the objects
+				DebugLayer.graphics.lineStyle(1, 0x00FFFF);
+				xPos = WorldData.CurrentMap.Objects.length;
+				
+				while (--xPos > -1) {
+					var objI:ObjectInstance = WorldData.CurrentMap.Objects[xPos];
+					yPos = objI.Template.Bases.length;
+					
+					while (--yPos > -1) {
+						DebugLayer.graphics.drawRect(objI.Template.Bases[yPos].left + objI.x, objI.Template.Bases[yPos].top + objI.y, objI.Template.Bases[yPos].width, objI.Template.Bases[yPos].height);
+					}
+				}
+				
+				//Draw all the Critters
+				DebugLayer.graphics.lineStyle(1, 0xFF0000);
+				xPos = WorldData.CurrentMap.Critters.length;
+				
+				while (--xPos > -1) {
+					if(WorldData.CurrentMap.Critters[xPos] != WorldData.ME) {
+						var objC:Rect = WorldData.CurrentMap.Critters[xPos].MyRect;
+						if (objC == null) continue;
+						DebugLayer.graphics.drawRect(objC.X, objC.Y, objC.W, objC.H);
+					}
+				}
+				
+				//Draw all the spawn regions
+				DebugLayer.graphics.lineStyle(1, 0x0000FF);
+				xPos = WorldData.CurrentMap.Spawns.length;
+				
+				while (--xPos > -1) {
+					var objX:SpawnRegion = WorldData.CurrentMap.Spawns[xPos];
+					yPos = objX.Area.length;
+					
+					while (--yPos > -1) {
+						DebugLayer.graphics.drawRect(objX.Area[yPos].X, objX.Area[yPos].Y, objX.Area[yPos].W, objX.Area[yPos].H);
+					}
+				}
+			}
 		}
 	}
 	

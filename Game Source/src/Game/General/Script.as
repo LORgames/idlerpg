@@ -1,6 +1,7 @@
 package Game.General {
 	import adobe.utils.CustomActions;
 	import CollisionSystem.Rect;
+	import Debug.Drawer;
 	import flash.display.Sprite;
 	import flash.geom.PerspectiveProjection;
 	import flash.utils.ByteArray;
@@ -12,7 +13,6 @@ package Game.General {
 	import Game.Map.WorldData;
 	import Interfaces.IMapObject;
 	import RenderSystem.IObjectLayer;
-	import RenderSystem.DebugDrawingHelper;
 	import SoundSystem.EffectsPlayer;
 	/**
 	 * ...
@@ -179,7 +179,7 @@ package Game.General {
 							obj0.CurrentMap.GetObjectsInArea(rect, Objects, eType, target);
 							
 							trace(dim2);
-							DebugDrawingHelper.AddDebugRect(rect);
+							Drawer.AddDebugRect(rect);
 						} else {
 							trace("FRONT is not available to non-critter systems.");
 						}

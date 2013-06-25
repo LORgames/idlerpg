@@ -37,6 +37,8 @@ namespace CityTools {
             this.label15 = new System.Windows.Forms.Label();
             this.cbBaseGroup = new System.Windows.Forms.ComboBox();
             this.pnlBeast = new System.Windows.Forms.Panel();
+            this.label21 = new System.Windows.Forms.Label();
+            this.numBeastOffsetY = new System.Windows.Forms.NumericUpDown();
             this.label20 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.numBeastRectHeight = new System.Windows.Forms.NumericUpDown();
@@ -102,6 +104,7 @@ namespace CityTools {
             this.sptFullForm.SuspendLayout();
             this.toolsMainTools.SuspendLayout();
             this.pnlBeast.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numBeastOffsetY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBeastRectHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBeastRectWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBeastFPS)).BeginInit();
@@ -245,6 +248,8 @@ namespace CityTools {
             // pnlBeast
             // 
             this.pnlBeast.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlBeast.Controls.Add(this.label21);
+            this.pnlBeast.Controls.Add(this.numBeastOffsetY);
             this.pnlBeast.Controls.Add(this.label20);
             this.pnlBeast.Controls.Add(this.label19);
             this.pnlBeast.Controls.Add(this.numBeastRectHeight);
@@ -265,10 +270,27 @@ namespace CityTools {
             this.pnlBeast.Size = new System.Drawing.Size(226, 309);
             this.pnlBeast.TabIndex = 16;
             // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(112, 271);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(45, 13);
+            this.label21.TabIndex = 29;
+            this.label21.Text = "OffsetY:";
+            // 
+            // numBeastOffsetY
+            // 
+            this.numBeastOffsetY.Location = new System.Drawing.Point(159, 269);
+            this.numBeastOffsetY.Name = "numBeastOffsetY";
+            this.numBeastOffsetY.Size = new System.Drawing.Size(62, 20);
+            this.numBeastOffsetY.TabIndex = 28;
+            this.numBeastOffsetY.ValueChanged += new System.EventHandler(this.BeastRectValueChanged);
+            // 
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(50, 271);
+            this.label20.Location = new System.Drawing.Point(112, 245);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(41, 13);
             this.label20.TabIndex = 27;
@@ -277,7 +299,7 @@ namespace CityTools {
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(50, 245);
+            this.label19.Location = new System.Drawing.Point(3, 245);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(38, 13);
             this.label19.TabIndex = 26;
@@ -285,17 +307,17 @@ namespace CityTools {
             // 
             // numBeastRectHeight
             // 
-            this.numBeastRectHeight.Location = new System.Drawing.Point(135, 269);
+            this.numBeastRectHeight.Location = new System.Drawing.Point(159, 243);
             this.numBeastRectHeight.Name = "numBeastRectHeight";
-            this.numBeastRectHeight.Size = new System.Drawing.Size(86, 20);
+            this.numBeastRectHeight.Size = new System.Drawing.Size(62, 20);
             this.numBeastRectHeight.TabIndex = 25;
             this.numBeastRectHeight.ValueChanged += new System.EventHandler(this.BeastRectValueChanged);
             // 
             // numBeastRectWidth
             // 
-            this.numBeastRectWidth.Location = new System.Drawing.Point(135, 243);
+            this.numBeastRectWidth.Location = new System.Drawing.Point(47, 243);
             this.numBeastRectWidth.Name = "numBeastRectWidth";
-            this.numBeastRectWidth.Size = new System.Drawing.Size(86, 20);
+            this.numBeastRectWidth.Size = new System.Drawing.Size(62, 20);
             this.numBeastRectWidth.TabIndex = 24;
             this.numBeastRectWidth.ValueChanged += new System.EventHandler(this.BeastRectValueChanged);
             // 
@@ -714,7 +736,7 @@ namespace CityTools {
             this.txtScript.Location = new System.Drawing.Point(3, 25);
             this.txtScript.Name = "txtScript";
             this.txtScript.Script = "";
-            this.txtScript.ScriptType = ToolCache.Scripting.ScriptTypes.Unknown;
+            this.txtScript.ScriptType = ToolCache.Scripting.ScriptTypes.Critter;
             this.txtScript.Size = new System.Drawing.Size(289, 225);
             this.txtScript.TabIndex = 19;
             this.txtScript.BeforeParse += new System.EventHandler<CityTools.Components.ScriptInfoArgs>(this.txtScript_BeforeParse);
@@ -925,6 +947,7 @@ namespace CityTools {
             this.toolsMainTools.PerformLayout();
             this.pnlBeast.ResumeLayout(false);
             this.pnlBeast.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numBeastOffsetY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBeastRectHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBeastRectWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBeastFPS)).EndInit();
@@ -1015,5 +1038,7 @@ namespace CityTools {
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.NumericUpDown numBeastRectHeight;
         private System.Windows.Forms.NumericUpDown numBeastRectWidth;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.NumericUpDown numBeastOffsetY;
     }
 }

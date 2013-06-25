@@ -47,8 +47,6 @@ namespace CityTools {
             FillEquipmentBoxes();
 
             FillTree();
-
-            txtScript.Setup(ToolCache.Scripting.ScriptTypes.Critter);
         }
 
         private void FillTree() {
@@ -245,6 +243,7 @@ namespace CityTools {
                 numBeastFPS.Value = (decimal)beast.playbackSpeed;
                 numBeastRectWidth.Value = (decimal)beast.rectWidth;
                 numBeastRectHeight.Value = (decimal)beast.rectHeight;
+                numBeastOffsetY.Value = (decimal)beast.rectOffsetY;
 
                 cbBeastState.Items.Clear();
 
@@ -340,6 +339,7 @@ namespace CityTools {
                 beast.playbackSpeed = (float)numBeastFPS.Value;
                 beast.rectWidth = (short)numBeastRectWidth.Value;
                 beast.rectHeight = (short)numBeastRectHeight.Value;
+                beast.rectOffsetY = (short)numBeastOffsetY.Value;
             }
 
             if (_isNewCritter) {
@@ -415,7 +415,7 @@ namespace CityTools {
 
                         anim.Draw(e.Graphics, xPos, yPos, 1);
 
-                        e.Graphics.DrawRectangle(Pens.Red, (e.ClipRectangle.Width - (int)numBeastRectWidth.Value) / 2, e.ClipRectangle.Height - 20 - ((int)numBeastRectHeight.Value), (int)numBeastRectWidth.Value, (int)numBeastRectHeight.Value);
+                        e.Graphics.DrawRectangle(Pens.Red, (e.ClipRectangle.Width - (int)numBeastRectWidth.Value) / 2, e.ClipRectangle.Height - 20 - ((int)numBeastRectHeight.Value) - (int)numBeastOffsetY.Value, (int)numBeastRectWidth.Value, (int)numBeastRectHeight.Value);
                     }
                 }
             }
@@ -430,7 +430,6 @@ namespace CityTools {
 
         private void ValueChanged(object sender, EventArgs e) {
             if (_isUpdatingForm) return;
-
             _isCritterEdited = true;
         }
 

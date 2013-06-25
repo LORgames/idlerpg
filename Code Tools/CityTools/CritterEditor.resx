@@ -124,8 +124,8 @@
   <data name="btnCreateHumanoidCritter.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAAK/gAA
-        Cv4B5iV4ZgAAARVJREFUOE+FUysOwkAQXQ7RgkM0EAyehATFARokVwBTgcXhkL0CEsVRiiGkAlfKIQbe
+        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAAK+wAA
+        CvsBy58dkAAAARVJREFUOE+FUysOwkAQXQ7RgkM0EAyehATFARokVwBTgcXhkL0CEsVRiiGkAlfKIQbe
         Jm8yLUtpMtn5vPdmutnpiYjj149jGSWJGw4G7lFVmofD3L0s3bOue1qEACyOIpnPZmrrNA36wABLXpAM
         0D7LVMD6bEKRRmcA28SuGCIqQOA4SQSGTvRtbKdrCJBwPa50dBARtwXtb+gEBFOA8etyEJitU1AnsEV2
         xEmyPZEn5kuAwF9kW0fTL4HP48Cr8gaw3M7e4NtaYwIEUMKZ5/lfAWAsx9mgKAqZLLfe2hMwD0xDAN13
@@ -136,8 +136,8 @@
   <data name="btnCreateBeastCritter.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAAK/gAA
-        Cv4B5iV4ZgAAAh9JREFUOE99k89rE0EUxyegUIW0qUmaZDf7d4iCghVqsBaDtikeFI1tUYzVkDR1NZtN
+        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAAK+wAA
+        CvsBy58dkAAAAh9JREFUOE99k89rE0EUxyegUIW0qUmaZDf7d4iCghVqsBaDtikeFI1tUYzVkDR1NZtN
         6mbTdpMqUVQo2ItKD/UHVPGgXvQkHuvZYwv25NGDfJ152x2zRlz4srNv5n3mO+/NBgAw79HUMPv54xfb
         FdzLNrc2WTQ6gO3t7wFVVfmSgFznG0QiUQgJkFBkT6/75rF87pKcU5UB9i/Rwmbjth/CY3rxOkx9huJq
         IsySiV6uvi4RIDdxES3bhXTq8tQFxENBcqf5kkMcJNTHCJA5MUyyaxUCNK0KZvNXJMw7nqrE+DFiO8n9
