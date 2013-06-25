@@ -15,6 +15,6 @@ package {
 		public static var DisablePortals:Boolean = true;
 		
 		public static const ZeroPoint:Point = new Point();
-		public static const DebugRender:Boolean = true;
+		public static const DebugRender:Boolean = false;
 	}
 }

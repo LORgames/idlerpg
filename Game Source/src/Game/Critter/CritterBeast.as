@@ -37,7 +37,7 @@ package Game.Critter {
 			}
 			
 			Animation.x = this.X - Animation.width/2;
-			Animation.y = this.Y - Animation.height + MyRect.H / 2;
+			Animation.y = this.Y - Animation.height + MyRect.H / 2 + Info.CollisionOffsetY;
 			
 			Renderman.DirtyObjects.push(Animation);
 		}

@@ -8,8 +8,9 @@ package Debug {
 	 * @author Paul
 	 */
 	public class Drawer implements IUpdatable {
-		public static var DrawingObjects:Vector.<DebugSprite> = new Vector.<DebugSprite>();
+		public static var DrawingObjects:Vector.<Sprite> = new Vector.<Sprite>();
 		private static var NotReady:Boolean = true;
+		private static var Empty:Sprite = new Sprite();
 		
 		public static function Initialize():void {
 			Clock.I.Updatables.push(new Drawer());
@@ -24,10 +25,15 @@ package Debug {
 			GetSprite().graphics.drawEllipse(x-r, y-r*0.85, r*2, r*2*0.85);
 		}
 		
-		private static function GetSprite():DebugSprite {
+		private static function GetSprite():Sprite {
+			if (!Global.DebugRender) {
+				Empty.graphics.clear();
+				return Empty;
+			}
+			
 			if (NotReady) Initialize();
 			
-			var spr:DebugSprite = new DebugSprite();
+			var spr:Sprite = new Sprite();
 			spr.x = Main.OrderedLayer.x;
 			spr.y = Main.OrderedLayer.y;
 			
@@ -46,7 +52,7 @@ package Debug {
 			var i:int = DrawingObjects.length;
 			
 			while (--i > -1) {
-				var spr:DebugSprite = DrawingObjects[i];
+				var spr:Sprite = DrawingObjects[i];
 				spr.alpha -= 0.075;
 				
 				if (spr.alpha <= 0) {
