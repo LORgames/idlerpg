@@ -82,6 +82,7 @@ package {
 			
 			//Set up some other things
 			Renderer = new Renderman();
+			Renderer.FadeToBlack(null, loadMap==""?"Tutorial":loadMap);
 			
 			BinaryLoader.Initialize();
 			ImageLoader.Initialize();

@@ -40,7 +40,10 @@ namespace ToolToGameExporter {
                 f.AddInt(c.ExperienceGain);
                 f.AddInt(c.Health);
 
-                ScriptCrusher.ProcessScript(new ScriptInfo("Critter:AI:" + c.Name, ScriptTypes.Critter), c.AICommands, f);
+                ScriptInfo script = new ScriptInfo("Critter:AI:" + c.Name, ScriptTypes.Critter);
+                script.AnimationNames = (c.CritterType == CritterTypes.NonHumanoid) ? (c as CritterBeast).AnimationNames() : null;
+
+                ScriptCrusher.ProcessScript(script, c.AICommands, f);
 
                 if (c.CritterType == CritterTypes.Humanoid) {
                     CritterHuman ch = (c as CritterHuman);
@@ -67,11 +70,14 @@ namespace ToolToGameExporter {
 
                         f.AddByte((byte)Animations.Count);
 
-                        foreach (CritterAnimationSet cas in Animations) {
-                            EncodeCritterList(cas.Left, AnimationSets, TotalFrames);
-                            EncodeCritterList(cas.Right, AnimationSets, TotalFrames);
-                            EncodeCritterList(cas.Up, AnimationSets, TotalFrames);
+                        int i = Animations.Count;
+
+                        while (--i > -1) {
+                            CritterAnimationSet cas = Animations[i];
                             EncodeCritterList(cas.Down, AnimationSets, TotalFrames);
+                            EncodeCritterList(cas.Up, AnimationSets, TotalFrames);
+                            EncodeCritterList(cas.Right, AnimationSets, TotalFrames);
+                            EncodeCritterList(cas.Left, AnimationSets, TotalFrames);
                         }
 
                         //Add all frames to binary
@@ -90,7 +96,7 @@ namespace ToolToGameExporter {
                         int sizeW = 0; int sizeH = 0;
                         CalculateCanvasSize(AnimationSets, FrameSize, ref sizeW, ref sizeH);
 
-                        SpriteSheetHelper.PackAnimationsLinear(AnimationSets, FrameSize, new Size(sizeW, sizeH), "Critter_" + RemappedCritterIDs[c.ID]);
+                        SpriteSheetHelper.PackAnimationsLinear(AnimationSets, FrameSize, new Size(sizeW, sizeH), "Critter_" + RemappedCritterIDs[c.ID], true);
 
                         //Add all the frame lengths
                         //TODO: Make this 1 short per animation 4bits per direction. Much better memory usage.

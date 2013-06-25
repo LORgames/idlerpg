@@ -136,7 +136,7 @@ package Game.Map {
 				}
 			}
 			
-			Main.I.Renderer.FadeToWorld();
+			//Main.I.Renderer.FadeToWorld();
 		}
 		
 		public function GetObjectsInArea(rect:Rect, objects:Vector.<IMapObject>, type:int = 0xA004, scanner:Object = null):void {

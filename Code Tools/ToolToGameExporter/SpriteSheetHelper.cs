@@ -23,7 +23,7 @@ namespace ToolToGameExporter {
             return s;
         }
 
-        public static void PackAnimationsLinear(List<String> Frames, Size size, Size textureSize, string filename) {
+        public static void PackAnimationsLinear(List<String> Frames, Size size, Size textureSize, string filename, Boolean InvertedList) {
             Bitmap bmp = new Bitmap(textureSize.Width, textureSize.Height, PixelFormat.Format32bppPArgb);
             Graphics gfx = Graphics.FromImage(bmp);
             gfx.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
@@ -36,6 +36,16 @@ namespace ToolToGameExporter {
 
             int i = 0;
             int j = 0;
+
+            if (InvertedList) {
+                if (Frames.Count % 2 == 1) {
+                    i = (Frames.Count-1) % cols;
+                    j = (Frames.Count-1) / cols;
+                } else {
+                    i = Frames.Count % cols;
+                    j = Frames.Count / cols;
+                }
+            }
 
             foreach (String s in Frames) {
                 im = Image.FromFile(s);
@@ -50,10 +60,18 @@ namespace ToolToGameExporter {
 
                 im.Dispose();
 
-                i++;
-                if (i == cols) {
-                    i = 0;
-                    j++;
+                if (!InvertedList) {
+                    i++;
+                    if (i == cols) {
+                        i = 0;
+                        j++;
+                    }
+                } else {
+                    i--;
+                    if (i == -1) {
+                        i = cols - 1;
+                        j--;
+                    }
                 }
             }
 

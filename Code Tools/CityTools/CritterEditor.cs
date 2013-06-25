@@ -615,5 +615,11 @@ namespace CityTools {
             pbPreviewDisplay.Invalidate();
             ValueChanged(sender, e);
         }
+
+        private void txtScript_BeforeParse(object sender, Components.ScriptInfoArgs e) {
+            if(critter is CritterBeast) {
+                e.Info.AnimationNames = (critter as CritterBeast).AnimationNames();
+            }
+        }
     }
 }

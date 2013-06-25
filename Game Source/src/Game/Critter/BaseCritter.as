@@ -17,6 +17,7 @@ package Game.Critter {
 	import EngineTiming.IUpdatable;
 	import Interfaces.IMapObject;
 	import EngineTiming.ICleanUp;
+	import RenderSystem.Renderman;
 	/**
 	 * ...
 	 * @author Paul

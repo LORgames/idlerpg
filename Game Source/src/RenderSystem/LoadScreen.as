@@ -26,7 +26,7 @@ package RenderSystem {
 		}
 		
 		public function Resized():void {
-			data = new BitmapData(Main.I.stage.stageWidth, Main.I.stage.stageHeight, true);
+			data = new BitmapData(Main.I.stage.stageWidth, Main.I.stage.stageHeight, true, 0x000000 | RealAlpha << 24);
 			this.bitmapData = data;
 		}
 		

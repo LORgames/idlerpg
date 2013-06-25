@@ -40,11 +40,13 @@ package Game.Equipment {
 		public function LoadIfRequired():void {
 			if (Image == null && !Loading) {
 				Loading = true;
+				Global.LoadingTotal++;
 				ImageLoader.Load("Data/Equipment_" + Name + ".png", LoadedImage);
 			}
 		}
 		
 		public function LoadedImage(e:BitmapData):void {
+			Global.LoadingTotal--;
 			Image = e.clone();
 		}
 		

@@ -17,6 +17,7 @@ package Game.Critter {
 			Info = MyInfo;
 			
 			Animation = new CritterAnimationSet(this);
+			Animation.ChangeState(0);
 			
 			Main.OrderedLayer.addChild(Animation);
 			
@@ -27,10 +28,18 @@ package Game.Critter {
 		}
 		
 		public override function Update(dt:Number):void {
+			var _d:int = direction;
+			
 			super.Update(dt);
 			
+			if (_d != direction) {
+				Animation.ChangeDirection(direction);
+			}
+			
 			Animation.x = this.X - Animation.width/2;
-			Animation.y = this.Y - Animation.height + MyRect.H/2;
+			Animation.y = this.Y - Animation.height + MyRect.H / 2;
+			
+			Renderman.DirtyObjects.push(Animation);
 		}
 		
 		override public function RequestMove(xSpeed:Number, ySpeed:Number):void {

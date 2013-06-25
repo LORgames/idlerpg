@@ -46,6 +46,7 @@ package Game.Map {
 			
 			if (!isLoading) {
 				isLoading = true;
+				Global.LoadingTotal++;
 				ImageLoader.Load("Data/Object_" + ObjectID + ".png", LoadedBitmap);
 			}
 			
@@ -71,6 +72,7 @@ package Game.Map {
 		
 		private function LoadedBitmap(e:BitmapData):void {
 			bitmapCopy.copyPixels(e, frameSize, EmptyPoint);
+			Global.LoadingTotal--;
 			
 			if (TotalFrames > 1) {
 				Renderman.AnimatedObjectsPush(this);

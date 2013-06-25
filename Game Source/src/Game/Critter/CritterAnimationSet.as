@@ -64,11 +64,23 @@ package Game.Critter
 		}
 		
 		public function ChangeDirection(newDirection:int):void {
-			//TODO: this function
+			currentDirection = newDirection;
+			UpdateFrameEnds();
+		}
+		
+		public function ChangeState(newState:int):void {
+			currentAnimationID = newState;
+			UpdateFrameEnds();
+		}
+		
+		private function UpdateFrameEnds():void {
+			StartFrame = Owner.Info.AnimationFrameCounts[currentAnimationID*4+currentDirection]
+			EndFrame = Owner.Info.AnimationFrameCounts[currentAnimationID*4+currentDirection+1];
+			CurrentFrame = StartFrame;
 		}
 		
 		public function GetTrueY():int {
-			return y; //this is wrong
+			return Owner.Y;
 		}
 		
 		public function UpdateInfo():void {

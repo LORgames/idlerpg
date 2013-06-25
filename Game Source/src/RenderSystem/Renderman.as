@@ -1,6 +1,7 @@
 package RenderSystem {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
 	import Game.Critter.CritterAnimationSet;
@@ -16,6 +17,7 @@ package RenderSystem {
 		private var map:MapRenderer;
 		
 		private static var AnimatedObjects:Vector.<IAnimated> = new Vector.<IAnimated>();
+		public static var DirtyObjects:Vector.<IObjectLayer> = new Vector.<IObjectLayer>();
 		
 		private var fadeAlpha:int = 255;
 		private var fading:Boolean = false;
@@ -69,12 +71,20 @@ package RenderSystem {
 		public function Render(dt:Number):void {
 			//Sort the children
 			i = Main.OrderedLayer.numChildren;
-			while(--i > 4) {
-				TrySwap(i-4);
-				TrySwap(i-3);
-				TrySwap(i-2);
-				TrySwap(i-1);
-				TrySwap(i-0);
+			
+			//Sort out all the dirty objects
+			while (DirtyObjects.length > 0) {
+				var obj:IObjectLayer = DirtyObjects.pop();
+				
+				i = Main.OrderedLayer.getChildIndex(obj as DisplayObject);
+				
+				if (i > 0 && TrySwap(i)) {
+					i--;
+					while (TrySwap(i--)) { }
+				} else {
+					i++;
+					while (TrySwap(i++)) { }
+				}
 			}
 			
 			//Update the fading
@@ -103,7 +113,12 @@ package RenderSystem {
 				MapText.alpha = fadeAlpha / 255.0;
 				loadScreen.RealAlpha = fadeAlpha;
 				loadScreen.Draw();
+			} else if(Global.PrevLoadingTotal > 0 && Global.FadeOnLoad) {
+				if (Global.LoadingTotal == 0) {
+					FadeToWorld();
+				}
 			}
+			Global.PrevLoadingTotal = Global.LoadingTotal;
 			
 			if (Global.LoadingTotal > 0) return;
 			if (WorldData.CurrentMap == null) return;
@@ -141,12 +156,18 @@ package RenderSystem {
 			}
 		}
 		
-		private function TrySwap(i:int):void {
+		private function TrySwap(i:int):Boolean {
 			var OrderedLayer:Sprite = Main.OrderedLayer;
 			
+			if (i < 1) return false;
+			if (i >= OrderedLayer.numChildren) return false;
+			
 			if ((IObjectLayer)(OrderedLayer.getChildAt(i)).GetTrueY() < (IObjectLayer)(OrderedLayer.getChildAt(i-1)).GetTrueY()) {
-				OrderedLayer.swapChildrenAt(i, i-1);
+				OrderedLayer.swapChildrenAt(i, i - 1);
+				return true;
 			}
+			
+			return false;
 		}
 		
 		static public function AnimatedObjectsPush(animation:IAnimated):void {

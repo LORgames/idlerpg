@@ -8,6 +8,7 @@ package {
 		//Loading information
 		public static var LoadingTotal:int = 0;
 		public static var PrevLoadingTotal:int = 0;
+		public static var FadeOnLoad:Boolean = true;
 		
 		//Portaling Information
 		public static var MapPortalID:int = -1;

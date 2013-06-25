@@ -31,6 +31,8 @@ package Game.Critter {
 			
 			Equipment.x = this.X;
 			Equipment.y = this.Y;
+			
+			Renderman.DirtyObjects.push(Equipment);
 		}
 		
 		override public function RequestMove(xSpeed:Number, ySpeed:Number):void {
