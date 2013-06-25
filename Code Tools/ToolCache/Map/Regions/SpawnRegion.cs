@@ -7,7 +7,7 @@ using ToolCache.General;
 
 namespace ToolCache.Map.Regions {
     public class SpawnRegion {
-        public Rectangle Area = new Rectangle();
+        public List<Rectangle> Areas = new List<Rectangle>();
         public List<CritterSpawn> SpawnList = new List<CritterSpawn>();
         public string Name = "Unnamed Spawn";
 
@@ -24,12 +24,16 @@ namespace ToolCache.Map.Regions {
             s.MaxSpawn = f.GetByte();
             s.Timeout = f.GetShort();
 
-            f.GetByte(); //How many rectangles
+            int totalAreas = f.GetByte(); //How many rectangles
 
-            s.Area.X = f.GetShort();
-            s.Area.Y = f.GetShort();
-            s.Area.Width = f.GetShort();
-            s.Area.Height = f.GetShort();
+            while (--totalAreas > -1) {
+                Rectangle area = new Rectangle();
+                area.X = f.GetShort();
+                area.Y = f.GetShort();
+                area.Width = f.GetShort();
+                area.Height = f.GetShort();
+                s.Areas.Add(area);
+            }
 
             int totalSpawns = (int)f.GetByte();
 
@@ -47,12 +51,14 @@ namespace ToolCache.Map.Regions {
             f.AddByte(MaxSpawn);
             f.AddShort(Timeout);
 
-            f.AddByte(1); //How many rectangles?
+            f.AddByte((byte)Areas.Count); //How many rectangles?
 
-            f.AddShort((short)Area.X);
-            f.AddShort((short)Area.Y);
-            f.AddShort((short)Area.Width);
-            f.AddShort((short)Area.Height);
+            foreach (Rectangle r in Areas) {
+                f.AddShort((short)r.X);
+                f.AddShort((short)r.Y);
+                f.AddShort((short)r.Width);
+                f.AddShort((short)r.Height);
+            }
 
             f.AddByte((byte)SpawnList.Count);
 
@@ -66,7 +72,9 @@ namespace ToolCache.Map.Regions {
         }
 
         public void Move(int x, int y) {
-            Area.Offset(x, y);
+            foreach (Rectangle Area in Areas) {
+                Area.Offset(x, y);
+            }
         }
     }
 }

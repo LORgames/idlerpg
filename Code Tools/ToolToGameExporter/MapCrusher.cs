@@ -7,6 +7,7 @@ using ToolCache.General;
 using ToolCache.Map.Objects;
 using ToolCache.World;
 using ToolCache.Map.Regions;
+using System.Drawing;
 
 namespace ToolToGameExporter {
     public class MapCrusher {
@@ -90,14 +91,16 @@ namespace ToolToGameExporter {
                     f.AddShort((short)sr.Timeout);
 
                     // Rectangles
-                    if (1 > 255) Processor.Errors.Add(new ProcessingError("Map", map.Name + ":Spawn Zones", "Can only have upto 255 zones per spawn. Surpassed in " + sr.Name));
-                    f.AddByte((byte)1); // How many rectangles we have
+                    if (sr.Areas.Count > 255) Processor.Errors.Add(new ProcessingError("Map", map.Name + ":Spawn Zones", "Can only have upto 255 zones per spawn. Surpassed in " + sr.Name));
+                    f.AddByte((byte)sr.Areas.Count); // How many rectangles we have
 
                     // Rectangle0 (needs to be extended)
-                    f.AddShort((short)sr.Area.Left);
-                    f.AddShort((short)sr.Area.Top);
-                    f.AddShort((short)sr.Area.Width);
-                    f.AddShort((short)sr.Area.Height);
+                    foreach (Rectangle Area in sr.Areas) {
+                        f.AddShort((short)Area.Left);
+                        f.AddShort((short)Area.Top);
+                        f.AddShort((short)Area.Width);
+                        f.AddShort((short)Area.Height);
+                    }
                     
                     // Add what critters are here and what percents
                     if (sr.SpawnList.Count > 255) Processor.Errors.Add(new ProcessingError("Map", map.Name + ":Spawn List", "Can only have upto 255 critters in the spawn list. Surpassed in " + sr.Name));

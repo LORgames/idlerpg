@@ -38,9 +38,12 @@ namespace CityTools.MiscHelpers {
                 Point p0a = new Point(Math.Min(p0.X, p1.X), Math.Min(p0.Y, p1.Y));
                 Point p1a = new Point(Math.Max(p0.X, p1.X), Math.Max(p0.Y, p1.Y));
 
-                selectedRegion.Area.Location = p0a;
-                selectedRegion.Area.Width = p1a.X - p0a.X;
-                selectedRegion.Area.Height = p1a.Y - p0a.Y;
+                Rectangle Area = new Rectangle();
+                Area.Location = p0a;
+                Area.Width = p1a.X - p0a.X;
+                Area.Height = p1a.Y - p0a.Y;
+
+                selectedRegion.Areas.Add(Area);
 
                 MapPieceCache.CurrentPiece.Edited();
             }
@@ -70,12 +73,14 @@ namespace CityTools.MiscHelpers {
 
         public static void Draw(LBuffer buffer) {
             foreach (SpawnRegion p in DrawList) {
-                int x = (int)((p.Area.X - Camera.ViewArea.Left) * Camera.ZoomLevel);
-                int y = (int)((p.Area.Y - Camera.ViewArea.Top) * Camera.ZoomLevel);
-                int w = p.Area.Width;
-                int h = p.Area.Height;
+                foreach (Rectangle Area in p.Areas) {
+                    int x = (int)((Area.X - Camera.ViewArea.Left) * Camera.ZoomLevel);
+                    int y = (int)((Area.Y - Camera.ViewArea.Top) * Camera.ZoomLevel);
+                    int w = Area.Width;
+                    int h = Area.Height;
 
-                buffer.gfx.DrawRectangle(Pens.Fuchsia, x, y, w, h);
+                    buffer.gfx.DrawRectangle(Pens.Fuchsia, x, y, w, h);
+                }
             }
         }
     }

@@ -27,6 +27,7 @@ namespace CityTools.CacheInterfaces {
             MainWindow.instance.txtRegionName.LostFocus += new EventHandler(txtRegionName_LostFocus);
 
             MainWindow.instance.btnRegionResize.Click += new EventHandler(btnRegionResize_Click);
+            MainWindow.instance.btnSpawnRegionClearAreas.Click += new EventHandler(btnSpawnRegionClearAreas_Click);
 
             MainWindow.instance.numSpawnTimer.ValueChanged += new EventHandler(numValueChanged);
             MainWindow.instance.numSpawnLoad.ValueChanged += new EventHandler(numValueChanged);
@@ -172,12 +173,25 @@ namespace CityTools.CacheInterfaces {
         }
 
         /// <summary>
+        /// Clears the spawn region for the current spawn
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        static void btnSpawnRegionClearAreas_Click(object sender, EventArgs e) {
+            if (MainWindow.instance.listRegions.SelectedItem != null) {
+                (MainWindow.instance.listRegions.SelectedItem as SpawnRegion).Areas.Clear();
+                MapPieceCache.CurrentPiece.Edited();
+            }
+        }
+
+        /// <summary>
         /// Adds a new region to the region list.
         /// </summary>
         /// <param name="sender">Not Important, Can be null.</param>
         /// <param name="e">Not Important, Can be null.</param>
         private static void btnAddRegion_Click(object sender, EventArgs e) {
             MapPieceCache.CurrentPiece.Spawns.Add(new SpawnRegion());
+            MapPieceCache.CurrentPiece.Edited();
             UpdateRegionList();
         }
 
