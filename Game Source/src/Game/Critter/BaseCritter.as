@@ -14,6 +14,7 @@ package Game.Critter {
 	import Game.Map.TileInstance;
 	import Game.Map.TileTemplate;
 	import Game.Map.WorldData;
+	import InputSystems.IInputSystem;
 	import RenderSystem.IObjectLayer;
 	import EngineTiming.IUpdatable;
 	import Interfaces.IMapObject;
@@ -116,40 +117,48 @@ package Game.Critter {
 				//AI AGENTS
 				var me:BaseCritter = WorldData.ME;
 				var dx:Number = (this.X - me.X);
-				var dy:Number = (this.Y - me.Y) * 0.85;
+				var dy:Number = (this.Y - me.Y) / 0.85;
 				
 				var range:int = dx * dx + dy * dy;
+				var effectiveRange:int = range;
 				
-				Drawer.AddDebugCircle(X, Y, Math.sqrt(150000));
+				Drawer.AddDebugCircle(X, Y, Math.sqrt(100000));
 				
-				if (MyAIType & AITypes.Aggressive > 0) {
-					range /= 4; //Doubles the effective range of Aggressive monsters
+				if ((MyAIType & AITypes.Hunting) > 0) {
+					effectiveRange /= 25; //5x effective range for hunting type monsters
 				}
 				
-				if (MyAIType & AITypes.Hunting > 0) {
-					range /= 25; //5x effective range for hunting type monsters
-				}
+				Drawer.AddDebugCircle(X, Y, Math.sqrt(range));
 				
-				if (range < 150000) {
-					//Look at the player character
-					if (Math.abs(dx) > Math.abs(dy)) {
-						if (dx > 0) { // Right
-							direction = 0;
-						} else { // Left
-							direction = 1;
-						}
+				if (effectiveRange < 100000) {
+					if (range < 2500) {
+						RequestBasicAttack();
+						moveSpeedX = 0;
+						moveSpeedY = 0;
+					} else if ((MyAIType & AITypes.Aggressive)) {
+						moveSpeedX = -dx;
+						moveSpeedY = -dy;
 					} else {
-						if (dy > 0) { // Up
-							direction = 2;
-						} else { // Down
-							direction = 3;
+						//Look at the player character
+						if (Math.abs(dx) > Math.abs(dy)) {
+							if (dx > 0) { // Right
+								direction = 0;
+							} else { // Left
+								direction = 1;
+							}
+						} else {
+							if (dy > 0) { // Up
+								direction = 2;
+							} else { // Down
+								direction = 3;
+							}
 						}
 					}
 				} else {
 					trace(range);
 					
-					if (MyAIType & AITypes.Wonder > 0) {
-						
+					if ((MyAIType & AITypes.Wonder) > 0) {
+						trace("WONDAR");
 					}
 				}
 			}
