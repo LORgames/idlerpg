@@ -7,7 +7,6 @@ using System.Drawing.Imaging;
 
 namespace ToolToGameExporter {
     public class SpriteSheetHelper {
-
         public static Size GetFrameSizeOf(List<String> frames) {
             Size s = Size.Empty;
 
@@ -43,13 +42,13 @@ namespace ToolToGameExporter {
             int j = 0;
 
             if (InvertedList) {
-                if (Frames.Count % 2 == 1) {
+                //if (Frames.Count % 2 == 1) {
                     i = (Frames.Count-1) % cols;
                     j = (Frames.Count-1) / cols;
-                } else {
-                    i = Frames.Count % cols;
-                    j = Frames.Count / cols;
-                }
+                //} else {
+                //    i = Frames.Count % cols;
+                //    j = Frames.Count / cols;
+                //}
             }
 
             foreach (String s in Frames) {

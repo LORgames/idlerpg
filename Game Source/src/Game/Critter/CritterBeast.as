@@ -13,18 +13,27 @@ package Game.Critter {
 		public var Info:CritterInfoBeast;
 		public var Animation:CritterAnimationSet;
 		
-		public function CritterBeast(MyInfo:CritterInfoBeast) {
+		public function CritterBeast(MyInfo:CritterInfoBeast, map:MapData, x:int, y:int) {
 			Info = MyInfo;
 			
 			Animation = new CritterAnimationSet(this);
-			Animation.ChangeState(0);
-			
+			Animation.ChangeState(0, true);
 			Main.OrderedLayer.addChild(Animation);
+			
+			CurrentMap = map;
+			
+			X = x;
+			Y = y;
 			
 			MyRect.W = MyInfo.CollisionWidth;
 			MyRect.H = MyInfo.CollisionHeight;
 			
 			CurrentHP = MyInfo.Health;
+			
+			MyScript = Info.AICommands;
+			MyAIType = Info.AIType;
+			
+			MyScript.Run(Script.Spawn, this, Animation);
 		}
 		
 		public override function Update(dt:Number):void {
@@ -54,15 +63,15 @@ package Game.Critter {
 			
 			if (_m != isMoving) {
 				if (isMoving) {
-					MyScript.Run(Script.StartMoving, this);
+					MyScript.Run(Script.StartMoving, this, Animation);
 				} else {
-					MyScript.Run(Script.EndMoving, this);
+					MyScript.Run(Script.EndMoving, this, Animation);
 				}
 			}
 		}
 		
 		override public function RequestBasicAttack():void {
-			if (!ControlsLocked) MyScript.Run(Script.Attack, this);
+			if (!ControlsLocked) MyScript.Run(Script.Attack, this, Animation);
 		}
 		
 		public function toString():String {

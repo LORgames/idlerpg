@@ -66,19 +66,8 @@ package Game.Critter
 		}
 		
 		override public function CreateCritter(map:MapData, x:int, y:int):BaseCritter {
-			var p:CritterBeast = new CritterBeast(this);
-			
-			p.CurrentMap = map;
-			
-			p.X = x;
-			p.Y = y;
-			
+			var p:CritterBeast = new CritterBeast(this, map, x, y);
 			p.Update(0);
-			
-			p.MyScript = AICommands;
-			p.MyAIType = AIType;
-			
-			AICommands.Run(Script.Spawn, p);
 			
 			map.Critters.push(p);
 			

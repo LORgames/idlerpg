@@ -4,6 +4,7 @@ package Game.Critter
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.geom.Rectangle;
+	import Game.General.Script;
 	import RenderSystem.IObjectLayer;
 	import RenderSystem.IAnimated;
 	import RenderSystem.Renderman;
@@ -29,6 +30,7 @@ package Game.Critter
 		private var FrameDT:Number = 0;
 		private var CurrentPlaybackSpeed:Number = 0;
 		private var CurrentFrame:int = 0;
+		private var CurrentAnimationLooping:Boolean = false;
 		
 		public function CritterAnimationSet(owner:CritterBeast) {
 			Renderman.AnimatedObjectsPush(this);
@@ -68,8 +70,9 @@ package Game.Critter
 			UpdateFrameEnds();
 		}
 		
-		public function ChangeState(newState:int):void {
+		public function ChangeState(newState:int, isLooping:Boolean):void {
 			currentAnimationID = newState;
+			CurrentAnimationLooping = isLooping;
 			UpdateFrameEnds();
 		}
 		
@@ -103,7 +106,11 @@ package Game.Critter
 				CurrentFrame++;
 				
 				if (CurrentFrame >= EndFrame) {
-					CurrentFrame = StartFrame;
+					if(CurrentAnimationLooping) {
+						CurrentFrame = StartFrame;
+					} else {
+						Owner.MyScript.Run(Script.AnimationEnded, this, Owner);
+					}
 				}
 				
 				FrameRect.x = (CurrentFrame % MyCritter.AnimationsPerRow) * width;

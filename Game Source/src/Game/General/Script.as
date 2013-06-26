@@ -6,6 +6,7 @@ package Game.General {
 	import flash.geom.PerspectiveProjection;
 	import flash.utils.ByteArray;
 	import Game.Critter.BaseCritter;
+	import Game.Critter.CritterAnimationSet;
 	import Game.Critter.CritterManager;
 	import Game.Critter.CritterHuman;
 	import Game.Equipment.EquipmentItem;
@@ -106,6 +107,8 @@ package Game.General {
 					case 0x6000: //Play Animation
 						if (invoker is EquipmentItem) {
 							(invoker as EquipmentItem).SetState(EventScript.readShort(), false);
+						} else if (target is CritterAnimationSet) { 
+							(target as CritterAnimationSet).ChangeState(EventScript.readShort(), false);
 						} else {
 							trace("Unknown Invoker for 0x6000:PlayAnimation");
 							EventScript.readShort();
@@ -113,6 +116,8 @@ package Game.General {
 					case 0x6001: //Loop Animation
 						if (invoker is EquipmentItem) {
 							(invoker as EquipmentItem).SetState(EventScript.readShort(), true);
+						} else if (target is CritterAnimationSet) { 
+							(target as CritterAnimationSet).ChangeState(EventScript.readShort(), true);
 						} else {
 							trace("Unknown Invoker for 0x6001:LoopAnimation");
 							EventScript.readShort();
@@ -121,7 +126,9 @@ package Game.General {
 						Process_ForEach(EventScript, invoker, target);
 						break;
 					default:
-						trace("Unknown Command: 0x" + command.toString(16));
+						if(command != 0xF0FD && command != 0xF0FE) {
+							trace("Unknown Command: 0x" + command.toString(16));
+						} break;
 				}
 			}
 		}
