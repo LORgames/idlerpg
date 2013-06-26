@@ -100,7 +100,7 @@ package Game.Equipment {
 						if (LoopState) {
 							Frame = 0;
 						} else {
-							Info.MyScript.Run(Script.AnimationEnded, Owner, Owner.Owner.Owner);
+							Info.MyScript.Run(Script.AnimationEnded, Owner.Owner.Owner, Owner);
 							Owner.SetState(0);
 						}
 					}

@@ -122,13 +122,9 @@ package Game.Critter {
 				var range:int = dx * dx + dy * dy;
 				var effectiveRange:int = range;
 				
-				Drawer.AddDebugCircle(X, Y, Math.sqrt(100000));
-				
 				if ((MyAIType & AITypes.Hunting) > 0) {
 					effectiveRange /= 25; //5x effective range for hunting type monsters
 				}
-				
-				Drawer.AddDebugCircle(X, Y, Math.sqrt(range));
 				
 				if (effectiveRange < 100000) {
 					if (range < 2500) {

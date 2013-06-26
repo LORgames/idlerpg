@@ -49,7 +49,7 @@ package Game.Equipment {
 			i = Weapons.length; while ( --i > -1) ReadEquipmentInfo(b, Weapons, Weapons.length - (i+1));
 			
 			//Then for some reason we set the player equipment up..?
-			WorldData.ME.Equipment.Equip(0, 1, 2, 3, 5, 5);
+			WorldData.ME.Equipment.Equip(0, 0, 2, 3, 5, 5);
 			
 			//And reset the loading total while some images load
 			Global.LoadingTotal--;
@@ -87,8 +87,8 @@ package Game.Equipment {
 			e.MyScript = Script.ReadScript(b);
 			
 			//What size is each frame?
-			e.SizeX = b.readByte();
-			e.SizeY = b.readByte();
+			e.SizeX = b.readUnsignedByte();
+			e.SizeY = b.readUnsignedByte();
 			
 			//Calculate the center point of the frame
 			e.Center = new Point(e.SizeX / 2, e.SizeY / 2);

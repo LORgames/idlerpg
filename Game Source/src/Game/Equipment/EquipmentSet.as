@@ -113,6 +113,11 @@ package Game.Equipment {
 			if ((newState == 1 && fromState == 0) || (newState == 0 && fromState == 1)) { //Walking
 				Legs.SetState(newState);
 			} else if (newState == 2) { //Attacking
+				Face.Info.MyScript.Run(Script.Attack, Owner, Face);
+				Headgear.Info.MyScript.Run(Script.Attack, Owner, Headgear);
+				Body.Info.MyScript.Run(Script.Attack, Owner, Body);
+				Legs.Info.MyScript.Run(Script.Attack, Owner, Legs);
+				Shadow.Info.MyScript.Run(Script.Attack, Owner, Shadow);
 				Weapon.Info.MyScript.Run(Script.Attack, Owner, Weapon);
 			}
 		}

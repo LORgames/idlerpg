@@ -285,7 +285,7 @@ package Game.General {
 							trace(dim2);
 							Drawer.AddDebugRect(rect);
 						} else {
-							trace("FRONT is not available to non-critter systems.");
+ 							trace("FRONT is not available to non-critter systems.");
 						}
 						
 						break;
