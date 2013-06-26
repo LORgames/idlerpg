@@ -19,6 +19,8 @@ package Game.Equipment {
 		
 		public var DestPoint:Point = new Point();
 		
+		public var currentState:int = 0;
+		
 		public function EquipmentItem(owner:EquipmentSet, requiresSecondLayer:Boolean = false) {
 			Owner = owner;
 			
@@ -38,6 +40,7 @@ package Game.Equipment {
 		}
 		
 		public function SetState(newState:int, loop:Boolean = true):void {
+			currentState = newState;
 			Layer.SetState(newState, loop);
 			if (Layer2 != null) Layer2.SetState(newState, loop);
 		}

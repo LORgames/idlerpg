@@ -109,7 +109,7 @@ package Game.Critter
 					if(CurrentAnimationLooping) {
 						CurrentFrame = StartFrame;
 					} else {
-						Owner.MyScript.Run(Script.AnimationEnded, this, Owner);
+						Owner.MyScript.Run(Script.AnimationEnded, Owner, this);
 					}
 				}
 				
@@ -118,6 +118,10 @@ package Game.Critter
 				
 				myBitmapData.copyPixels(sprites, FrameRect, Global.ZeroPoint);
 			}
+		}
+		
+		public function CurrentAnim():int {
+			return currentAnimationID;
 		}
 		
 		public function CleanUp():void {

@@ -113,7 +113,7 @@ package Game.Equipment {
 			if ((newState == 1 && fromState == 0) || (newState == 0 && fromState == 1)) { //Walking
 				Legs.SetState(newState);
 			} else if (newState == 2) { //Attacking
-				Weapon.Info.MyScript.Run(Script.Attack, Weapon, Owner);
+				Weapon.Info.MyScript.Run(Script.Attack, Owner, Weapon);
 			}
 		}
 		
@@ -133,32 +133,32 @@ package Game.Equipment {
 				case 0: //Shadow
 					if(EquipmentManager.I.Shadows.length > equipmentID) {
 						Shadow.SetInformation(EquipmentManager.I.Shadows[equipmentID]);
-						Shadow.Info.MyScript.Run(Script.Equip, Owner);
+						Shadow.Info.MyScript.Run(Script.Equip, Owner, Shadow);
 					} break;
 				case 1: //Legs
 					if(EquipmentManager.I.Legs.length > equipmentID) {
 						Legs.SetInformation(EquipmentManager.I.Legs[equipmentID]);
-						Legs.Info.MyScript.Run(Script.Equip, Owner);
+						Legs.Info.MyScript.Run(Script.Equip, Owner, Legs);
 					} break;
 				case 2: //Body
 					if(EquipmentManager.I.Bodies.length > equipmentID) {
 						Body.SetInformation(EquipmentManager.I.Bodies[equipmentID]);
-						Body.Info.MyScript.Run(Script.Equip, Owner);
+						Body.Info.MyScript.Run(Script.Equip, Owner, Body);
 					} break;
 				case 3: //Face
 					if(EquipmentManager.I.Heads.length > equipmentID) {
 						Face.SetInformation(EquipmentManager.I.Heads[equipmentID]);
-						Face.Info.MyScript.Run(Script.Equip, Owner);
+						Face.Info.MyScript.Run(Script.Equip, Owner, Face);
 					} break;
 				case 4: //Headgear
 					if(EquipmentManager.I.Headgear.length > equipmentID) {
 						Headgear.SetInformation(EquipmentManager.I.Headgear[equipmentID]);
-						Headgear.Info.MyScript.Run(Script.Equip, Owner);
+						Headgear.Info.MyScript.Run(Script.Equip, Owner, Headgear);
 					} break;
 				case 5: //Weapon
 					if(EquipmentManager.I.Weapons.length > equipmentID) {
 						Weapon.SetInformation(EquipmentManager.I.Weapons[equipmentID]);
-						Weapon.Info.MyScript.Run(Script.Equip, Owner);
+						Weapon.Info.MyScript.Run(Script.Equip, Owner, Weapon);
 					} break;
 			}
 			

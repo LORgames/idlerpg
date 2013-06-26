@@ -58,6 +58,9 @@ namespace ToolToGameExporter {
                     //Update the expected indentation if we're adding foreach, if etc
                     if ((command.CommandID & 0x8000) == 0x8000) {
                         expectedIndentation++;
+
+                        //Start the code block
+                        f.AddUnsignedShort(0xF0FD);
                     }
                 }
             }

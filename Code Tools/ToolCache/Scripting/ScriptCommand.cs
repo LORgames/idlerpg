@@ -167,7 +167,12 @@ namespace ToolCache.Scripting {
                             Info.Commands[i2].Parameters = "PAIRED";
                         } else {
                             CommandID = 0x8000;
-                        } break;
+                        }
+
+                        if (Parameters == "") Info.Errors.Add("Empty if");
+                        ProcessParametersOfIf(Info);
+                        
+                        break;
                     case "else":
                         if (Parameters != "") Info.Errors.Add("Unpaired else!");
                         break;
@@ -188,9 +193,6 @@ namespace ToolCache.Scripting {
 
                         //Indent stuff
                         IndentBelow(Info, index);
-
-                        //Add the character to start a block
-                        AdditionalBytecode.Add(0xF0FD);
 
                         break;
                 }
@@ -215,6 +217,72 @@ namespace ToolCache.Scripting {
             } else {
                 AdditionalBytecode.Add((ushort)scriptType);
             }
+        }
+
+        /// <summary>
+        /// Processes the advanced conditional types of foreach
+        /// </summary>
+        /// <param name="Info">The global script object</param>
+        private void ProcessParametersOfIf(ScriptInfo Info) {
+            List<String> paramBits = new List<string>();
+            int param0;
+
+            //First lets get rid of the 'and' and 'or' joins
+            string regex = "( or )|( and )|(not )";
+            MatchCollection mc = Regex.Matches(Parameters, regex);
+
+            int endOfLast = 0;
+            for (int i = 0; i < mc.Count; i++) {
+                Match m = mc[i];
+                paramBits.Add(Parameters.Substring(endOfLast, m.Index - endOfLast).Trim());
+                paramBits.Add(m.Groups[0].Value.Trim());
+
+                endOfLast = m.Index + m.Length;
+            }
+
+            paramBits.Add(Parameters.Substring(endOfLast));
+
+            AdditionalBytecode.Add(0xF0FD); //Start the param block
+
+            //Now we process each component
+            foreach (String pb in paramBits) {
+                if (pb.Trim().Length == 0) continue;
+
+                String trueCommand = pb;
+                String additionalInfo = "";
+
+                if (trueCommand.IndexOf('(') > -1) {
+                    trueCommand = pb.Substring(0, pb.IndexOf('('));
+                    additionalInfo = pb.Substring(pb.IndexOf('(') + 1, pb.Length - (pb.IndexOf('(') + 2));
+                }
+                trueCommand = trueCommand.ToLower();
+
+                switch (trueCommand) {
+                    case "and": AdditionalBytecode.Add(0x7000); break;
+                    case "or": AdditionalBytecode.Add(0x7001); break;
+                    case "not": AdditionalBytecode.Add(0x7002); break;
+                    case "random":
+                        AdditionalBytecode.Add(0x7003);
+                        VerifyCommaSeperatedShorts(additionalInfo, 1, Info);
+                        break;
+                    case "isalive": AdditionalBytecode.Add(0x7004); break;
+                    case "equipped":
+                        AdditionalBytecode.Add(0x7005);
+                        Info.Errors.Add("We currently do not support the 'equipped(<item>)' IF conditional!");
+                        break;
+                    case "animation":
+                        param0 = Info.AnimationNames.IndexOf(additionalInfo);
+                        AdditionalBytecode.Add(0x7006);
+                        AdditionalBytecode.Add((ushort)(param0 > -1 ? param0 : 0x0));
+                        if (param0 < 0) Info.Errors.Add("Animation does not exist: " + additionalInfo);
+                        break;
+                    default:
+                        Info.Errors.Add("IF param unknown: " + trueCommand); break;
+                }
+            }
+
+            //End the param block :)
+            AdditionalBytecode.Add(0xF0FE); //End the parametre block
         }
 
         /// <summary>
@@ -266,25 +334,23 @@ namespace ToolCache.Scripting {
         /// <param name="csvShorts">The list of shorts to process</param>
         /// <param name="expectedFloats">How many shorts we're expecting to find</param>
         /// <param name="Info">The scriptinfo object to inject the shorts into.</param>
-        private bool VerifyCommaSeperatedShorts(string csvShorts, int expectedFloats, ScriptInfo Info) {
+        private void VerifyCommaSeperatedShorts(string csvShorts, int expectedFloats, ScriptInfo Info) {
             string[] values = csvShorts.Split(',');
             short value;
 
             if (values.Length != expectedFloats) {
                 Info.Errors.Add("Expecting " + expectedFloats + " values but got " + values.Length);
-                return false;
+                return;
             }
 
             foreach (string s in values) {
                 if (!short.TryParse(s, out value)) {
                     Info.Errors.Add("Cannot turn " + s + " into a number.");
-                    return false;
+                    return;
                 } else {
                     this.AdditionalBytecode.Add((ushort)value);
                 }
             }
-
-            return true;
         }
 
         /// <summary>

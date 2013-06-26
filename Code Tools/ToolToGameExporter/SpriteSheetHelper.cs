@@ -19,7 +19,7 @@ namespace ToolToGameExporter {
 
                     im.Dispose();
                     im = null;
-                } catch (Exception ex) {
+                } catch {
                     throw new Exception("Could not open file. (" + frame + ") Image may be corrupt. Or the system is out of memory.");
                 }
             }
@@ -42,13 +42,8 @@ namespace ToolToGameExporter {
             int j = 0;
 
             if (InvertedList) {
-                //if (Frames.Count % 2 == 1) {
-                    i = (Frames.Count-1) % cols;
-                    j = (Frames.Count-1) / cols;
-                //} else {
-                //    i = Frames.Count % cols;
-                //    j = Frames.Count / cols;
-                //}
+                i = (Frames.Count-1) % cols;
+                j = (Frames.Count-1) / cols;
             }
 
             foreach (String s in Frames) {

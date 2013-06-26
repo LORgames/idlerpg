@@ -153,8 +153,6 @@ package Game.Critter {
 						}
 					}
 				} else {
-					trace(range);
-					
 					if ((MyAIType & AITypes.Wonder) > 0) {
 						trace("WONDAR");
 					}

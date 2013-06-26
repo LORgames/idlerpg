@@ -86,8 +86,8 @@ package Game.General {
 						var spawnX:int = 0;
 						var spawnY:int = 0;
 						
-						if (target is BaseCritter) {
-							var bc:BaseCritter = (target as BaseCritter);
+						if (invoker is BaseCritter) {
+							var bc:BaseCritter = (invoker as BaseCritter);
 							
 							var critter:BaseCritter = CritterManager.I.CritterInfo[critterID].CreateCritter(bc.CurrentMap, bc.X, bc.Y);
 							
@@ -100,13 +100,13 @@ package Game.General {
 						
 						break;
 					case 0x4001: //Equip item on the target
-						if (target is CritterHuman) {
-							var person:CritterHuman = (target as CritterHuman);
+						if (invoker is CritterHuman) {
+							var person:CritterHuman = (invoker as CritterHuman);
 							person.Equipment.EquipSlot(EventScript.readShort(), EventScript.readShort());
 						} break;
 					case 0x6000: //Play Animation
-						if (invoker is EquipmentItem) {
-							(invoker as EquipmentItem).SetState(EventScript.readShort(), false);
+						if (target is EquipmentItem) {
+							(target as EquipmentItem).SetState(EventScript.readShort(), false);
 						} else if (target is CritterAnimationSet) { 
 							(target as CritterAnimationSet).ChangeState(EventScript.readShort(), false);
 						} else {
@@ -114,13 +114,23 @@ package Game.General {
 							EventScript.readShort();
 						} break;
 					case 0x6001: //Loop Animation
-						if (invoker is EquipmentItem) {
-							(invoker as EquipmentItem).SetState(EventScript.readShort(), true);
+						if (target is EquipmentItem) {
+							(target as EquipmentItem).SetState(EventScript.readShort(), true);
 						} else if (target is CritterAnimationSet) { 
 							(target as CritterAnimationSet).ChangeState(EventScript.readShort(), true);
 						} else {
-							trace("Unknown Invoker for 0x6001:LoopAnimation");
+							trace("Unknown Invoker for 0x6001:LoopAnimation @" + event);
 							EventScript.readShort();
+						} break;
+					case 0x8000: //IF without ELSE
+						trace("IF: @0x8000");
+						var validIF:Boolean = CanIf(EventScript, invoker, target);
+						if (EventScript.readUnsignedShort() != 0xF0FD) {
+							trace("CRITICAL EXPORTER ERROR!");
+						}
+						
+						if (!validIF) {
+							ReadUntilBalancedClose(EventScript);
 						} break;
 					case 0x8002: //Foreach
 						Process_ForEach(EventScript, invoker, target);
@@ -129,8 +139,95 @@ package Game.General {
 						if(command != 0xF0FD && command != 0xF0FE) {
 							trace("Unknown Command: 0x" + command.toString(16));
 						} break;
+						break;
 				}
 			}
+		}
+		
+		/**
+		 * Processes the conditionals for an IF block and returns true or false if that IF is processable
+		 * @param	eventScript	The current scriptblock we're processing.
+		 * @param	invoker	The current object running the script
+		 * @param	target	The target of the script if any
+		 * @return	How the IF evaluated, true or false.
+		 */
+		private function CanIf(eventScript:ByteArray, invoker:Object, target:Object):Boolean {
+			//Running values
+			var currentCalculatedValue:Boolean = true;
+			var currentUnprocessedValue:Boolean = true;
+			
+			//Which operation to perform: 0 for AND, 1 for OR
+			var currentOperation:int = 0;
+			var isNOTblock:Boolean = false;
+			
+			//The current command, need to remove the top of the stack here because its 0xFF0D
+			var command:int = eventScript.readUnsignedShort();
+			var ended:Boolean = false;
+			var param0:int;
+			
+			while (!ended) {
+				command = eventScript.readUnsignedShort();
+				currentUnprocessedValue = true;
+				
+				switch(command) {
+					case 0xF0FE:
+						ended = true;
+						break;
+					case 0xF0FD:
+						currentUnprocessedValue = CanIf(eventScript, invoker, target);
+						trace("\nNested IF:" + currentUnprocessedValue);
+						break;
+					case 0x7000: currentOperation = 0; break; //AND
+					case 0x7001: currentOperation = 1; break; //OR
+					case 0x7002: isNOTblock = true; break; //NOT
+					case 0x7003: //Random chance
+						param0 = eventScript.readUnsignedShort();
+						currentUnprocessedValue = Math.random() * 100 < param0;
+						trace("\t@0x7003: Random: " + currentUnprocessedValue + " (" + param0 + ")");
+						break;
+					case 0x7004: //Is the script owner alive
+						if (invoker is BaseCritter) {
+							currentUnprocessedValue = (invoker as BaseCritter).CurrentHP > 0;
+							trace("\t@0x7004: Alive: " + currentUnprocessedValue);
+						} else {
+							trace("Unknown Invoker for 'Alive'");
+						} break;
+					case 0x7005: //Is an item equipped
+						currentUnprocessedValue = true;
+						break;
+					case 0x7006: //Is an animation playing
+						param0 = eventScript.readUnsignedShort();
+						if (target is CritterAnimationSet) {
+							currentUnprocessedValue = (target as CritterAnimationSet).CurrentAnim() == param0;
+							trace("\t@0x7006: Animation: " + currentUnprocessedValue + " (" + param0 + ")");
+						} else if (target is EquipmentItem) {
+							currentUnprocessedValue = (target as EquipmentItem).currentState == param0;
+							trace("\t@0x7006: Animation: " + currentUnprocessedValue + " (" + param0 + ")");
+						} else {
+							trace("\t@0x7006: Unknown target for Animation(playing)");
+						} break;
+					default:
+						trace("@0x"+command.toString(16)+": Unknown Conditional.");
+				}
+				
+				if (command != 0xF0FE && command != 0x7000 && command != 0x7001 && command != 0x7002) { //if not operation
+					if (isNOTblock) {
+						trace("\tNOT " + currentUnprocessedValue);
+						currentUnprocessedValue = !currentUnprocessedValue;
+						isNOTblock = false;
+					}
+					
+					if (currentOperation == 0) { //AND
+						trace("\tAND (" + currentCalculatedValue + " && " + currentUnprocessedValue + ") = " +(currentCalculatedValue && currentUnprocessedValue));
+						currentCalculatedValue = (currentCalculatedValue && currentUnprocessedValue);
+					} else if (currentOperation == 1) { //OR
+						trace("\tOR (" + currentCalculatedValue + " || " + currentUnprocessedValue + ") = " + (currentCalculatedValue || currentUnprocessedValue));
+						currentCalculatedValue = (currentCalculatedValue || currentUnprocessedValue);
+					}
+				}
+			}
+			
+			return currentCalculatedValue;
 		}
 		
 		private function Process_ForEach(eventScript:ByteArray, invoker:Object, target:Object):void {
@@ -154,8 +251,8 @@ package Game.General {
 						dim1 = eventScript.readUnsignedShort() * 24;
 						dim2 = (arrayType == FRONTOFFSET)?eventScript.readShort() : 0;
 						
-						if (target is BaseCritter) {
-							var obj0:BaseCritter = (target as BaseCritter);
+						if (invoker is BaseCritter) {
+							var obj0:BaseCritter = (invoker as BaseCritter);
 							
 							if (obj0.direction < 2) { //Left or right
 								rect.X = (obj0.direction == 1)? obj0.X : obj0.X - dim0; //if right center else offcenter

@@ -104,10 +104,14 @@ namespace ToolToGameExporter {
         }
 
         private static void UpdateEPF(ExportProgressForm epf, string progressLabel, int percent) {
-            epf.Invoke((MethodInvoker)delegate {
-                epf.lblExportTask.Text = progressLabel;
-                epf.progress.Value = percent;
-            });
+            try {
+                epf.Invoke((MethodInvoker)delegate {
+                    epf.lblExportTask.Text = progressLabel;
+                    epf.progress.Value = percent;
+                });
+            } catch {
+                //DO nothing, its just in case the EPF isn't created yet.
+            }
         }
     }
 

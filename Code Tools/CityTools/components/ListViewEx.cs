@@ -24,11 +24,13 @@ namespace CityTools.Components {
 		/// <summary>
 		/// MessageHeader for WM_NOTIFY
 		/// </summary>
+#pragma warning disable 0649
 		private struct NMHDR { 
 			public IntPtr hwndFrom; 
 			public Int32  idFrom; 
 			public Int32  code; 
 		}
+#pragma warning restore 0649
 
 
 		[DllImport("user32.dll")]
