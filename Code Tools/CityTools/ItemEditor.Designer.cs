@@ -30,15 +30,10 @@
             this.btnAddItem = new System.Windows.Forms.ToolStripButton();
             this.btnDuplicateItem = new System.Windows.Forms.ToolStripButton();
             this.txtSearchBox = new System.Windows.Forms.ToolStripTextBox();
-            this.scriptConsumeEffect = new CityTools.Components.ScriptBox();
             this.txtName = new System.Windows.Forms.TextBox();
-            this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
             this.numStackSize = new System.Windows.Forms.NumericUpDown();
             this.label11 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.numMonetarySell = new System.Windows.Forms.NumericUpDown();
             this.label8 = new System.Windows.Forms.Label();
@@ -55,6 +50,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.pbItemIcon = new System.Windows.Forms.PictureBox();
             this.txtDescription = new System.Windows.Forms.TextBox();
+            this.scriptConsumeEffect = new CityTools.Components.ScriptBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -82,13 +78,9 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.scriptConsumeEffect);
             this.splitContainer1.Panel2.Controls.Add(this.txtName);
-            this.splitContainer1.Panel2.Controls.Add(this.label15);
             this.splitContainer1.Panel2.Controls.Add(this.label14);
-            this.splitContainer1.Panel2.Controls.Add(this.label13);
-            this.splitContainer1.Panel2.Controls.Add(this.label12);
             this.splitContainer1.Panel2.Controls.Add(this.numStackSize);
             this.splitContainer1.Panel2.Controls.Add(this.label11);
-            this.splitContainer1.Panel2.Controls.Add(this.label10);
             this.splitContainer1.Panel2.Controls.Add(this.label9);
             this.splitContainer1.Panel2.Controls.Add(this.numMonetarySell);
             this.splitContainer1.Panel2.Controls.Add(this.label8);
@@ -155,63 +147,26 @@
             this.txtSearchBox.Name = "txtSearchBox";
             this.txtSearchBox.Size = new System.Drawing.Size(95, 25);
             // 
-            // scriptConsumeEffect
-            // 
-            this.scriptConsumeEffect.Location = new System.Drawing.Point(13, 214);
-            this.scriptConsumeEffect.Name = "scriptConsumeEffect";
-            this.scriptConsumeEffect.Script = "";
-            this.scriptConsumeEffect.ScriptType = ToolCache.Scripting.ScriptTypes.Item;
-            this.scriptConsumeEffect.Size = new System.Drawing.Size(151, 65);
-            this.scriptConsumeEffect.TabIndex = 31;
-            this.scriptConsumeEffect.TextChanged += new System.EventHandler(this.FormEdited);
-            // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(35, 8);
+            this.txtName.Location = new System.Drawing.Point(38, 8);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(121, 20);
+            this.txtName.Size = new System.Drawing.Size(146, 20);
             this.txtName.TabIndex = 30;
             this.txtName.TextChanged += new System.EventHandler(this.FormEdited);
-            // 
-            // label15
-            // 
-            this.label15.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label15.Location = new System.Drawing.Point(7, 188);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(158, 2);
-            this.label15.TabIndex = 28;
             // 
             // label14
             // 
             this.label14.AutoSize = true;
             this.label14.Location = new System.Drawing.Point(10, 292);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(63, 13);
+            this.label14.Size = new System.Drawing.Size(106, 13);
             this.label14.TabIndex = 26;
-            this.label14.Text = "Description:";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(7, 198);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(60, 13);
-            this.label13.TabIndex = 25;
-            this.label13.Text = "Use Effect:";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(220, 196);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(83, 26);
-            this.label12.TabIndex = 24;
-            this.label12.Text = "Item Tags Here!\r\n(Just Not Yet!)";
-            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label14.Text = "Description / Tooltip:";
             // 
             // numStackSize
             // 
-            this.numStackSize.Location = new System.Drawing.Point(13, 157);
+            this.numStackSize.Location = new System.Drawing.Point(257, 8);
             this.numStackSize.Maximum = new decimal(new int[] {
             32767,
             0,
@@ -223,7 +178,7 @@
             0,
             0});
             this.numStackSize.Name = "numStackSize";
-            this.numStackSize.Size = new System.Drawing.Size(151, 20);
+            this.numStackSize.Size = new System.Drawing.Size(93, 20);
             this.numStackSize.TabIndex = 22;
             this.numStackSize.Value = new decimal(new int[] {
             1000,
@@ -235,31 +190,23 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(7, 141);
+            this.label11.Location = new System.Drawing.Point(190, 10);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(96, 13);
+            this.label11.Size = new System.Drawing.Size(61, 13);
             this.label11.TabIndex = 21;
-            this.label11.Text = "Amount Per Stack:";
-            // 
-            // label10
-            // 
-            this.label10.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label10.Location = new System.Drawing.Point(170, 136);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(2, 143);
-            this.label10.TabIndex = 20;
+            this.label11.Text = "Stack Size:";
             // 
             // label9
             // 
             this.label9.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label9.Location = new System.Drawing.Point(7, 133);
+            this.label9.Location = new System.Drawing.Point(7, 119);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(337, 2);
+            this.label9.Size = new System.Drawing.Size(337, 1);
             this.label9.TabIndex = 19;
             // 
             // numMonetarySell
             // 
-            this.numMonetarySell.Location = new System.Drawing.Point(261, 110);
+            this.numMonetarySell.Location = new System.Drawing.Point(261, 96);
             this.numMonetarySell.Maximum = new decimal(new int[] {
             999999999,
             0,
@@ -273,7 +220,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(201, 112);
+            this.label8.Location = new System.Drawing.Point(201, 98);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(54, 13);
             this.label8.TabIndex = 17;
@@ -281,7 +228,7 @@
             // 
             // numMonetaryBuy
             // 
-            this.numMonetaryBuy.Location = new System.Drawing.Point(261, 84);
+            this.numMonetaryBuy.Location = new System.Drawing.Point(261, 70);
             this.numMonetaryBuy.Maximum = new decimal(new int[] {
             999999999,
             0,
@@ -295,7 +242,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(200, 86);
+            this.label7.Location = new System.Drawing.Point(200, 72);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(55, 13);
             this.label7.TabIndex = 15;
@@ -304,7 +251,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(159, 99);
+            this.label6.Location = new System.Drawing.Point(159, 85);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(23, 13);
             this.label6.TabIndex = 14;
@@ -312,7 +259,7 @@
             // 
             // numMonetaryValue
             // 
-            this.numMonetaryValue.Location = new System.Drawing.Point(66, 96);
+            this.numMonetaryValue.Location = new System.Drawing.Point(66, 82);
             this.numMonetaryValue.Maximum = new decimal(new int[] {
             999999999,
             0,
@@ -326,9 +273,9 @@
             // sepVOR
             // 
             this.sepVOR.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.sepVOR.Location = new System.Drawing.Point(170, 82);
+            this.sepVOR.Location = new System.Drawing.Point(170, 68);
             this.sepVOR.Name = "sepVOR";
-            this.sepVOR.Size = new System.Drawing.Size(2, 50);
+            this.sepVOR.Size = new System.Drawing.Size(2, 49);
             this.sepVOR.TabIndex = 12;
             // 
             // label5
@@ -350,7 +297,7 @@
             "Rare",
             "Ultra Rare",
             "Mythical"});
-            this.cbRarity.Location = new System.Drawing.Point(238, 45);
+            this.cbRarity.Location = new System.Drawing.Point(257, 37);
             this.cbRarity.Name = "cbRarity";
             this.cbRarity.Size = new System.Drawing.Size(93, 21);
             this.cbRarity.TabIndex = 10;
@@ -359,7 +306,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(195, 48);
+            this.label4.Location = new System.Drawing.Point(214, 40);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(37, 13);
             this.label4.TabIndex = 9;
@@ -368,24 +315,24 @@
             // sepValue
             // 
             this.sepValue.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.sepValue.Location = new System.Drawing.Point(10, 79);
+            this.sepValue.Location = new System.Drawing.Point(10, 65);
             this.sepValue.Name = "sepValue";
-            this.sepValue.Size = new System.Drawing.Size(337, 2);
+            this.sepValue.Size = new System.Drawing.Size(337, 1);
             this.sepValue.TabIndex = 8;
             // 
             // cbCategory
             // 
             this.cbCategory.FormattingEnabled = true;
-            this.cbCategory.Location = new System.Drawing.Point(66, 45);
+            this.cbCategory.Location = new System.Drawing.Point(66, 32);
             this.cbCategory.Name = "cbCategory";
-            this.cbCategory.Size = new System.Drawing.Size(93, 21);
+            this.cbCategory.Size = new System.Drawing.Size(118, 21);
             this.cbCategory.TabIndex = 7;
             this.cbCategory.TextUpdate += new System.EventHandler(this.FormEdited);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 48);
+            this.label3.Location = new System.Drawing.Point(10, 35);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(52, 13);
             this.label3.TabIndex = 6;
@@ -409,6 +356,16 @@
             this.txtDescription.Size = new System.Drawing.Size(334, 129);
             this.txtDescription.TabIndex = 2;
             this.txtDescription.TextChanged += new System.EventHandler(this.FormEdited);
+            // 
+            // scriptConsumeEffect
+            // 
+            this.scriptConsumeEffect.Location = new System.Drawing.Point(10, 123);
+            this.scriptConsumeEffect.Name = "scriptConsumeEffect";
+            this.scriptConsumeEffect.Script = "";
+            this.scriptConsumeEffect.ScriptType = ToolCache.Scripting.ScriptTypes.Item;
+            this.scriptConsumeEffect.Size = new System.Drawing.Size(334, 166);
+            this.scriptConsumeEffect.TabIndex = 31;
+            this.scriptConsumeEffect.TextChanged += new System.EventHandler(this.FormEdited);
             // 
             // ItemEditor
             // 
@@ -461,10 +418,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.NumericUpDown numStackSize;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.ToolStripTextBox txtSearchBox;
         private System.Windows.Forms.TextBox txtName;

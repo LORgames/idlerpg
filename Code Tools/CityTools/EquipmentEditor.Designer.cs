@@ -79,7 +79,6 @@ namespace CityTools {
             this.label14 = new System.Windows.Forms.Label();
             this.numAnimSpeed = new System.Windows.Forms.NumericUpDown();
             this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
             this.btnExportMany = new System.Windows.Forms.Button();
             this.btnCreateAsItem = new System.Windows.Forms.Button();
             this.txtScript = new CityTools.Components.ScriptBox();
@@ -696,15 +695,6 @@ namespace CityTools {
             this.label17.TabIndex = 64;
             this.label17.Text = "Playback:";
             // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(334, 171);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(87, 13);
-            this.label18.TabIndex = 66;
-            this.label18.Text = "Equipment Script";
-            // 
             // btnExportMany
             // 
             this.btnExportMany.Location = new System.Drawing.Point(566, 137);
@@ -727,11 +717,11 @@ namespace CityTools {
             // 
             // txtScript
             // 
-            this.txtScript.Location = new System.Drawing.Point(334, 187);
+            this.txtScript.Location = new System.Drawing.Point(334, 170);
             this.txtScript.Name = "txtScript";
             this.txtScript.Script = "";
             this.txtScript.ScriptType = ToolCache.Scripting.ScriptTypes.Equipment;
-            this.txtScript.Size = new System.Drawing.Size(312, 236);
+            this.txtScript.Size = new System.Drawing.Size(312, 253);
             this.txtScript.TabIndex = 65;
             this.txtScript.BeforeParse += new System.EventHandler<CityTools.Components.ScriptInfoArgs>(this.txtScript_BeforeParse);
             this.txtScript.TextChanged += new System.EventHandler(this.ValueChanged);
@@ -799,7 +789,6 @@ namespace CityTools {
             this.Controls.Add(this.label19);
             this.Controls.Add(this.btnCreateAsItem);
             this.Controls.Add(this.btnExportMany);
-            this.Controls.Add(this.label18);
             this.Controls.Add(this.txtScript);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.numAnimSpeed);
@@ -930,7 +919,6 @@ namespace CityTools {
         private System.Windows.Forms.NumericUpDown numAnimSpeed;
         private System.Windows.Forms.Label label17;
         private Components.ScriptBox txtScript;
-        private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Button btnExportMany;
         private System.Windows.Forms.Button btnCreateAsItem;
         private System.Windows.Forms.Label label19;

@@ -12,12 +12,17 @@ namespace ToolToGameExporter {
             Size s = Size.Empty;
 
             foreach (String frame in frames) {
-                Image im = Image.FromFile(frame);
+                try {
+                    Image im = Image.FromFile(frame);
 
-                if (s.Width < im.Width) s.Width = im.Width;
-                if (s.Height < im.Height) s.Height = im.Height;
+                    if (s.Width < im.Width) s.Width = im.Width;
+                    if (s.Height < im.Height) s.Height = im.Height;
 
-                im.Dispose();
+                    im.Dispose();
+                    im = null;
+                } catch (Exception ex) {
+                    throw new Exception("Could not open file. (" + frame + ") Image may be corrupt. Or the system is out of memory.");
+                }
             }
 
             return s;

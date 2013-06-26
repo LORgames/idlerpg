@@ -133,11 +133,9 @@ package Game.Critter {
 				if (effectiveRange < 100000) {
 					if (range < 2500) {
 						RequestBasicAttack();
-						moveSpeedX = 0;
-						moveSpeedY = 0;
+						RequestMove(0, 0);
 					} else if ((MyAIType & AITypes.Aggressive)) {
-						moveSpeedX = -dx;
-						moveSpeedY = -dy;
+						RequestMove( -dx, -dy);
 					} else {
 						//Look at the player character
 						if (Math.abs(dx) > Math.abs(dy)) {

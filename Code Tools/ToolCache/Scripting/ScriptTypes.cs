@@ -13,7 +13,7 @@ namespace ToolCache.Scripting {
         Critter,
         Item,
         Equipment,
-        Skill,
-        Object
+        Object,
+        Effect
     }
 }

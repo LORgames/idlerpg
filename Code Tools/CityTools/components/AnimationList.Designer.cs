@@ -1,4 +1,5 @@
-﻿namespace CityTools.Components {
+﻿using System;
+namespace CityTools.Components {
     partial class AnimationList {
         /// <summary> 
         /// Required designer variable.
