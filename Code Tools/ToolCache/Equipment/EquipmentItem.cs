@@ -116,8 +116,10 @@ namespace ToolCache.Equipment {
             f.AddFloat(AnimationSpeed);
             f.AddShort((short)Animations.Count);
 
+            Animations["Default"].SaveToBinaryIO(f);
             foreach (EquipmentAnimationSet kvp in Animations.Values) {
-                kvp.SaveToBinaryIO(f);
+                if(kvp.StateName != "Default")
+                    kvp.SaveToBinaryIO(f);
             }
 
             f.AddShort((short)OffsetX);
