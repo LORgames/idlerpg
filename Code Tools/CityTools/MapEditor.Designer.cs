@@ -66,6 +66,7 @@
             this.toolpanel_splitter = new System.Windows.Forms.SplitContainer();
             this.tabFirstLevel = new System.Windows.Forms.TabControl();
             this.tabOptions = new System.Windows.Forms.TabPage();
+            this.btnSpawnRegionClearAreas = new System.Windows.Forms.Button();
             this.btnChangeBackground = new System.Windows.Forms.Button();
             this.numSpawnLoad = new System.Windows.Forms.NumericUpDown();
             this.label21 = new System.Windows.Forms.Label();
@@ -120,11 +121,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtPieceName = new System.Windows.Forms.TextBox();
             this.tabTerrain = new System.Windows.Forms.TabPage();
-            this.pnlTiles = new System.Windows.Forms.Panel();
+            this.treeTiles = new System.Windows.Forms.TreeView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.numBrushSize = new System.Windows.Forms.NumericUpDown();
             this.label22 = new System.Windows.Forms.Label();
-            this.cbTileGroups = new System.Windows.Forms.ComboBox();
             this.tabPalette = new System.Windows.Forms.TabPage();
             this.tabObjectTools = new System.Windows.Forms.TabControl();
             this.tabObjects = new System.Windows.Forms.TabPage();
@@ -135,7 +135,6 @@
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.timerRedrawAll = new System.Windows.Forms.Timer(this.components);
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.btnSpawnRegionClearAreas = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.main_splitter)).BeginInit();
             this.main_splitter.Panel1.SuspendLayout();
             this.main_splitter.Panel2.SuspendLayout();
@@ -285,49 +284,49 @@
             // btnTileEditorTool
             // 
             this.btnTileEditorTool.Name = "btnTileEditorTool";
-            this.btnTileEditorTool.Size = new System.Drawing.Size(214, 22);
+            this.btnTileEditorTool.Size = new System.Drawing.Size(203, 22);
             this.btnTileEditorTool.Text = "Tile Editor (T)";
             // 
             // btnObjectEditor
             // 
             this.btnObjectEditor.Name = "btnObjectEditor";
-            this.btnObjectEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnObjectEditor.Size = new System.Drawing.Size(203, 22);
             this.btnObjectEditor.Text = "Object Template Editor (O)";
             // 
             // btnElementalEditor
             // 
             this.btnElementalEditor.Name = "btnElementalEditor";
-            this.btnElementalEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnElementalEditor.Size = new System.Drawing.Size(203, 22);
             this.btnElementalEditor.Text = "Elemental Editor (R)";
             // 
             // btnItemEditor
             // 
             this.btnItemEditor.Name = "btnItemEditor";
-            this.btnItemEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnItemEditor.Size = new System.Drawing.Size(203, 22);
             this.btnItemEditor.Text = "Item Editor (I)";
             // 
             // btnEquipmentEditor
             // 
             this.btnEquipmentEditor.Name = "btnEquipmentEditor";
-            this.btnEquipmentEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnEquipmentEditor.Size = new System.Drawing.Size(203, 22);
             this.btnEquipmentEditor.Text = "Equipment Editor (U)";
             // 
             // btnCritterEditor
             // 
             this.btnCritterEditor.Name = "btnCritterEditor";
-            this.btnCritterEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnCritterEditor.Size = new System.Drawing.Size(203, 22);
             this.btnCritterEditor.Text = "Critter Editor (C)";
             // 
             // btnSoundEditor
             // 
             this.btnSoundEditor.Name = "btnSoundEditor";
-            this.btnSoundEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnSoundEditor.Size = new System.Drawing.Size(203, 22);
             this.btnSoundEditor.Text = "Sound Editor (Z)";
             // 
             // btnWorldEditor
             // 
             this.btnWorldEditor.Name = "btnWorldEditor";
-            this.btnWorldEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnWorldEditor.Size = new System.Drawing.Size(203, 22);
             this.btnWorldEditor.Text = "World Editor (X)";
             // 
             // toolStripSeparator2
@@ -366,28 +365,28 @@
             this.ckbShowObjectBases,
             this.ckbShowTileBases});
             this.mnuShowGrids.Name = "mnuShowGrids";
-            this.mnuShowGrids.Size = new System.Drawing.Size(127, 22);
+            this.mnuShowGrids.Size = new System.Drawing.Size(116, 22);
             this.mnuShowGrids.Text = "Grids";
             // 
             // ckbShowTileGrid
             // 
             this.ckbShowTileGrid.CheckOnClick = true;
             this.ckbShowTileGrid.Name = "ckbShowTileGrid";
-            this.ckbShowTileGrid.Size = new System.Drawing.Size(194, 22);
+            this.ckbShowTileGrid.Size = new System.Drawing.Size(183, 22);
             this.ckbShowTileGrid.Text = "Show Outlines (1)";
             // 
             // ckbShowObjectBases
             // 
             this.ckbShowObjectBases.CheckOnClick = true;
             this.ckbShowObjectBases.Name = "ckbShowObjectBases";
-            this.ckbShowObjectBases.Size = new System.Drawing.Size(194, 22);
+            this.ckbShowObjectBases.Size = new System.Drawing.Size(183, 22);
             this.ckbShowObjectBases.Text = "Show Object Bases (2)";
             // 
             // ckbShowTileBases
             // 
             this.ckbShowTileBases.CheckOnClick = true;
             this.ckbShowTileBases.Name = "ckbShowTileBases";
-            this.ckbShowTileBases.Size = new System.Drawing.Size(194, 22);
+            this.ckbShowTileBases.Size = new System.Drawing.Size(183, 22);
             this.ckbShowTileBases.Text = "Show Tile Bases (3)";
             // 
             // viewportToolStripMenuItem
@@ -397,7 +396,7 @@
             this.txtViewportWidth,
             this.txtViewportHeight});
             this.viewportToolStripMenuItem.Name = "viewportToolStripMenuItem";
-            this.viewportToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.viewportToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.viewportToolStripMenuItem.Text = "Viewport";
             // 
             // ckbViewportEnabled
@@ -538,6 +537,15 @@
             this.tabOptions.TabIndex = 3;
             this.tabOptions.Text = "Options";
             this.tabOptions.UseVisualStyleBackColor = true;
+            // 
+            // btnSpawnRegionClearAreas
+            // 
+            this.btnSpawnRegionClearAreas.Location = new System.Drawing.Point(162, 508);
+            this.btnSpawnRegionClearAreas.Name = "btnSpawnRegionClearAreas";
+            this.btnSpawnRegionClearAreas.Size = new System.Drawing.Size(47, 23);
+            this.btnSpawnRegionClearAreas.TabIndex = 52;
+            this.btnSpawnRegionClearAreas.Text = "Clear";
+            this.btnSpawnRegionClearAreas.UseVisualStyleBackColor = true;
             // 
             // btnChangeBackground
             // 
@@ -1044,9 +1052,8 @@
             // 
             // tabTerrain
             // 
-            this.tabTerrain.Controls.Add(this.pnlTiles);
+            this.tabTerrain.Controls.Add(this.treeTiles);
             this.tabTerrain.Controls.Add(this.panel1);
-            this.tabTerrain.Controls.Add(this.cbTileGroups);
             this.tabTerrain.Location = new System.Drawing.Point(4, 22);
             this.tabTerrain.Name = "tabTerrain";
             this.tabTerrain.Padding = new System.Windows.Forms.Padding(3);
@@ -1055,20 +1062,21 @@
             this.tabTerrain.Text = "Terrain";
             this.tabTerrain.UseVisualStyleBackColor = true;
             // 
-            // pnlTiles
+            // treeTiles
             // 
-            this.pnlTiles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlTiles.Location = new System.Drawing.Point(3, 57);
-            this.pnlTiles.Name = "pnlTiles";
-            this.pnlTiles.Size = new System.Drawing.Size(227, 683);
-            this.pnlTiles.TabIndex = 1;
+            this.treeTiles.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeTiles.Location = new System.Drawing.Point(3, 36);
+            this.treeTiles.Name = "treeTiles";
+            this.treeTiles.Size = new System.Drawing.Size(227, 704);
+            this.treeTiles.TabIndex = 3;
+            this.treeTiles.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeTiles_AfterSelect);
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.numBrushSize);
             this.panel1.Controls.Add(this.label22);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(3, 24);
+            this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(227, 33);
             this.panel1.TabIndex = 2;
@@ -1103,16 +1111,6 @@
             this.label22.Size = new System.Drawing.Size(84, 13);
             this.label22.TabIndex = 0;
             this.label22.Text = "Paint Brush Size";
-            // 
-            // cbTileGroups
-            // 
-            this.cbTileGroups.Dock = System.Windows.Forms.DockStyle.Top;
-            this.cbTileGroups.FormattingEnabled = true;
-            this.cbTileGroups.Location = new System.Drawing.Point(3, 3);
-            this.cbTileGroups.Name = "cbTileGroups";
-            this.cbTileGroups.Size = new System.Drawing.Size(227, 21);
-            this.cbTileGroups.TabIndex = 0;
-            this.cbTileGroups.SelectedIndexChanged += new System.EventHandler(this.cbTile_SelectedIndexChanged);
             // 
             // tabPalette
             // 
@@ -1212,15 +1210,6 @@
             this.colorDialog.FullOpen = true;
             this.colorDialog.SolidColorOnly = true;
             // 
-            // btnSpawnRegionClearAreas
-            // 
-            this.btnSpawnRegionClearAreas.Location = new System.Drawing.Point(162, 508);
-            this.btnSpawnRegionClearAreas.Name = "btnSpawnRegionClearAreas";
-            this.btnSpawnRegionClearAreas.Size = new System.Drawing.Size(47, 23);
-            this.btnSpawnRegionClearAreas.TabIndex = 52;
-            this.btnSpawnRegionClearAreas.Text = "Clear";
-            this.btnSpawnRegionClearAreas.UseVisualStyleBackColor = true;
-            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1286,9 +1275,7 @@
         private System.Windows.Forms.SplitContainer obj_splitter;
         private System.Windows.Forms.Button btnObjectSelector;
         internal System.Windows.Forms.Panel pnlObjectScenicCache;
-        internal System.Windows.Forms.ComboBox cbTileGroups;
         private System.Windows.Forms.Timer timerRefresh;
-        internal System.Windows.Forms.Panel pnlTiles;
         private System.Windows.Forms.ToolStripDropDownButton btnViewMenu;
         internal System.Windows.Forms.ToolStripMenuItem mnuShowGrids;
         private System.Windows.Forms.ToolStripMenuItem viewportToolStripMenuItem;
@@ -1373,6 +1360,7 @@
         private System.Windows.Forms.Label label22;
         internal System.Windows.Forms.NumericUpDown numBrushSize;
         internal System.Windows.Forms.Button btnSpawnRegionClearAreas;
+        internal System.Windows.Forms.TreeView treeTiles;
     }
 }
 

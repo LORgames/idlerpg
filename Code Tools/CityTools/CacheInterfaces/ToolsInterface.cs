@@ -48,7 +48,6 @@ namespace CityTools.CacheInterfaces {
         private static void OpenTileEditor() {
             TileEditor t = new TileEditor();
             t.ShowDialog(MainWindow.instance);
-            TileInterface.ReloadAll();
         }
 
         private static void OpenTemplateEditor() {

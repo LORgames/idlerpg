@@ -298,11 +298,6 @@ namespace CityTools {
             CacheInterfaces.MapInterface.Duplicate();
         }
 
-        private void cbTile_SelectedIndexChanged(object sender, EventArgs e) {
-            (pnlTiles.Controls[0] as ObjectCacheControl).Deactivate();
-            CacheInterfaces.TileInterface.UpdateTilePage();
-        }
-
         private void timerRefresh_Tick(object sender, EventArgs e) {
             ToolCache.Animation.AnimatedObject.Update(0.05);
             mapViewPanel.Invalidate();
@@ -351,6 +346,12 @@ namespace CityTools {
                     ScenicHelper.drawList[i].UnlinkFromTiles();
                     ScenicHelper.drawList[i].RecalculatePosition();
                 }
+            }
+        }
+
+        private void treeTiles_AfterSelect(object sender, TreeViewEventArgs e) {
+            if (e.Node.Tag != null) {
+                DrawWithObject((e.Node.Tag as TileTemplate).TileID.ToString());
             }
         }
     }

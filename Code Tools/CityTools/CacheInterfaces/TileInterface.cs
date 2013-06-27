@@ -4,40 +4,35 @@ using System.Linq;
 using System.Text;
 using ToolCache.Map.Tiles;
 using CityTools.Components;
+using System.Windows.Forms;
+using ToolCache.General;
 
 namespace CityTools.CacheInterfaces {
     public class TileInterface {
+        public static Dictionary<string, TreeNode> groupNodes = new Dictionary<string, TreeNode>();
 
         public static void Initialize() {
-            MainWindow.instance.pnlTiles.Controls.Add(new ObjectCacheControl());
-            ReloadAll();
-        }
-
-        public static void UpdateTileTab() {
-            MainWindow.instance.cbTileGroups.Items.Clear();
-
-            short id = TileCache.NextID();
-
-            foreach (string cache in TileCache.GetGroups()) {
-                MainWindow.instance.cbTileGroups.Items.Add(cache);
-            }
-        }
-
-        internal static void UpdateTilePage() {
-            (MainWindow.instance.pnlTiles.Controls[0] as ObjectCacheControl).Deactivate();
-
-            foreach(TileTemplate t in TileCache.GetTilesInGroup(MainWindow.instance.cbTileGroups.Text)) {
-                if(t.Animation.Frames.Count > 0) {
-                    CachedObject co = new CachedObject(t.Animation.Frames[0], "", t.TileID.ToString());
-                    
-                    (MainWindow.instance.pnlTiles.Controls[0] as ObjectCacheControl).pnlInternal.Controls.Add(co);
+            foreach (string group in TileCache.GetGroups()) {
+                groupNodes.Add(group, new TreeNode(group, -1, -1));
+                foreach (TileTemplate tile in TileCache.GetTilesInGroup(group)) {
+                    if (MainWindow.instance.treeTiles.ImageList == null) {
+                        MainWindow.instance.treeTiles.ImageList = new ImageList();
+                    }
+                    if (tile.Animation.Frames.Count != 0) {
+                        MainWindow.instance.treeTiles.ImageList.Images.Add(tile.Animation.Frames[0], ImageCache.RequestImage(tile.Animation.Frames[0]));
+                        int imageIndex = MainWindow.instance.treeTiles.ImageList.Images.IndexOfKey(tile.Animation.Frames[0]);
+                        if (groupNodes[group].ImageIndex == -1) {
+                            groupNodes[group].ImageIndex = imageIndex;
+                            groupNodes[group].SelectedImageIndex = imageIndex;
+                        }
+                        TreeNode temp = new TreeNode(tile.TileName, imageIndex, imageIndex);
+                        temp.Tag = tile;
+                        groupNodes[group].Nodes.Add(temp);
+                    }
                 }
+                MainWindow.instance.treeTiles.Nodes.Add(groupNodes[group]);
+                
             }
-        }
-
-        internal static void ReloadAll() {
-            UpdateTilePage();
-            UpdateTileTab();
         }
     }
 }
