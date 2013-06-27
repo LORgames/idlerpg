@@ -33,7 +33,7 @@ package Game.Critter {
 			Equipment.y = this.Y;
 			
 			Renderman.DirtyObjects.push(Equipment);
-		}
+ 		}
 		
 		override public function RequestMove(xSpeed:Number, ySpeed:Number):void {
 			var _m:Boolean = isMoving;
@@ -66,8 +66,10 @@ package Game.Critter {
 		public override function CleanUp():void {
 			if (Persistent) return;
 			
-			Equipment.CleanUp();
-			Equipment = null;
+			if(Equipment != null) {
+				Equipment.CleanUp();
+				Equipment = null;
+			}
 			
 			super.CleanUp();
 		}

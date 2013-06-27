@@ -91,6 +91,9 @@ namespace ToolCache.Map {
                 p.ID = Portals.GetNextID();
             }
 
+            mp.WorldPosition.X = 0;
+            mp.WorldPosition.Y = 0;
+
             mp.Save();
 
             Pieces.Add(mp);

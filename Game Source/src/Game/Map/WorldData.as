@@ -26,6 +26,7 @@ package Game.Map {
 		
 		public static function Initialize(loadReq:String):void {
 			ME.Persistent = true;
+			ME.MovementSpeed = 150;
 			
 			RequestedMapLoad = loadReq;
 			

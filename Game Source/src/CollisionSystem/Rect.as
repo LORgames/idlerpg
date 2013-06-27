@@ -38,27 +38,46 @@ package CollisionSystem {
 		}
 		
 		public function CalculatePenetration(b:Rect, p:Point):void {
-			if(X <= b.X && b.X < X + W){
+			/*if (X <= b.X && b.X < X + W) {
 				p.x = -(X + W - b.X);
 			}
-
-			if(b.X <= X && X < b.X+b.W){
+			
+			if (b.X <= X && X < b.X + b.W) {
 				p.x = (b.X + b.W - X);
 			}
-
-			if(Y <= b.Y && b.Y < Y+H){
+			
+			if (Y <= b.Y && b.Y < Y + H) {
 				p.y = -(Y + H - b.Y);
 			}
-
-			if(b.Y <= Y && Y < b.Y+b.H){
+			
+			if (b.Y <= Y && Y < b.Y + b.H) {
 				p.y = (b.Y + b.H - Y);
+			}*/
+			
+			var x0:int = -(X + W - b.X);
+			var x1:int = (b.X + b.W - X);
+			var y0:int = -(Y + H - b.Y);
+			var y1:int = (b.Y + b.H - Y);
+			
+			var xr:int = (x0 < 0? -x0 : x0) < (x1 < 0? -x1 : x1)? x0 : x1;
+			var yr:int = (y0 < 0? -y0 : y0) < (y1 < 0? -y1 : y1)? y0 : y1;
+			
+			if ((xr < 0 && p.x > 0) || (xr > 0 && p.x < 0)) {
+				p.x = 0;
+			} else {
+				p.x = xr;
+			}
+			
+			
+			if ((yr < 0 && p.y > 0) || (yr > 0 && p.y < 0)) {
+				p.y = 0;
+			} else {
+				p.y += yr;
 			}
 		}
 		
 		public function toString():String {
 			return "[R: " + X + ", " + Y + " @" + W + "x" + H + "]";
 		}
-		
 	}
-
 }

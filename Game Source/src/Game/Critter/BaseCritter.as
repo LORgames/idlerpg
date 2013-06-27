@@ -36,7 +36,7 @@ package Game.Critter {
 		public var isMoving:Boolean = false;
 		public var moveSpeedX:int = 0;
 		public var moveSpeedY:int = 0;
-		public var MovementSpeed:int = 150;
+		public var MovementSpeed:int = 125;
 		public var CurrentMovementCost:Number = 1;
 		
 		public var CurrentMap:MapData;
@@ -123,10 +123,10 @@ package Game.Critter {
 				var effectiveRange:int = range;
 				
 				if ((MyAIType & AITypes.Hunting) > 0) {
-					effectiveRange /= 25; //5x effective range for hunting type monsters
+					effectiveRange /= 9; //3x effective range for hunting type monsters
 				}
 				
-				if (effectiveRange < 100000) {
+				if (effectiveRange < 20000) { //was 100000
 					if (range < 2500) {
 						RequestBasicAttack();
 						RequestMove(0, 0);
@@ -150,7 +150,7 @@ package Game.Critter {
 					}
 				} else {
 					if ((MyAIType & AITypes.Wonder) > 0) {
-						trace("WONDAR");
+						//trace("WONDAR");
 					}
 				}
 			}
@@ -175,6 +175,7 @@ package Game.Critter {
 			
 			//Collision measures how far into something else we've penetrated
 			var collisionPenetration:Point = new Point();
+			var collisionTotal:int = 0;
 			
 			//Check if the critter tried to leave the map boundaries
 			if (MyRect.X < 0 || MyRect.Y < 0 || MyRect.X + MyRect.H > CurrentMap.SizeX || MyRect.Y + MyRect.W > CurrentMap.SizeY) {
@@ -194,15 +195,9 @@ package Game.Critter {
 					while (--j > -1) {
 						if (rs[j].intersects(MyRect)) {
 							MyRect.CalculatePenetration(rs[j], collisionPenetration);
-							
-							//if (collisionPenetration.x != 0 && collisionPenetration.y != 0)
-							//	trace(collisionPenetration + ", " + MyRect + ", " + rs[j]);
-							
-							break;
+							collisionTotal++;
 						}
 					}
-					
-					if (collisionPenetration.x != 0 && collisionPenetration.y != 0) break;
 					
 					//No collision so lets update the movement speed
 					if (TileTemplate.Tiles[tiles[i].TileID].movementCost > CurrentMovementCost) {
@@ -222,14 +217,14 @@ package Game.Critter {
 							if (critter.MyRect == null) continue;
 							if (MyRect.intersects(critter.MyRect)) {
 								MyRect.CalculatePenetration(critter.MyRect, collisionPenetration);
-								
-								if (collisionPenetration.x != 0 && collisionPenetration.y != 0) break;
+								collisionTotal++;
 							}
 						}
 					}
 				}
 				
-				if (collisionPenetration.x != 0 && collisionPenetration.y != 0) {
+				trace(collisionTotal);
+				if (collisionPenetration.x != 0 || collisionPenetration.y != 0) {
 					//Undo the changes
 					if(Math.abs(collisionPenetration.x) < Math.abs(collisionPenetration.y)) {
 						X += collisionPenetration.x;
@@ -248,8 +243,9 @@ package Game.Critter {
 				direction = SpeedToDirection(xSpeed, ySpeed);
 				
 				// normalise speed vector
-				xSpeed = xSpeed / Math.sqrt(Math.pow(xSpeed, 2) + Math.pow(ySpeed, 2));
-				ySpeed = ySpeed / Math.sqrt(Math.pow(xSpeed, 2) + Math.pow(ySpeed, 2));
+				var mSpeed:Number = Math.sqrt((xSpeed * xSpeed) + (ySpeed * ySpeed));
+				xSpeed = xSpeed / mSpeed;
+				ySpeed = ySpeed / mSpeed;
 				
 				moveSpeedX = xSpeed * MovementSpeed;
 				
@@ -257,7 +253,8 @@ package Game.Critter {
 				if(ySpeed > 0) moveSpeedY = ySpeed * MovementSpeed * 0.900;
 				
 				isMoving = true;
-			} 
+			}
+			
 			if (xSpeed == 0) moveSpeedX = 0;
 			if (ySpeed == 0) moveSpeedY = 0;
 			
