@@ -103,5 +103,9 @@ namespace ToolCache.World {
 
             return p;
         }
+
+        internal static short GetNextID() {
+            return NextID++;
+        }
     }
 }

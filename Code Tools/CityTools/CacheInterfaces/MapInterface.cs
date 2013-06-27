@@ -88,8 +88,14 @@ namespace CityTools.CacheInterfaces {
         /// <param name="sender">Not important, can be null</param>
         /// <param name="e">Not important, can be null</param>
         private static void txtPieceName_TextChanged(object sender, EventArgs e) {
-            if(MainWindow.instance.txtPieceName.Text != MapPieceCache.CurrentPiece.Name)
-                MapPieceCache.CurrentPiece.ChangeName(MainWindow.instance.txtPieceName.Text);
+            if (MainWindow.instance.txtPieceName.Text != MapPieceCache.CurrentPiece.Name) {
+                if (MapPieceCache.GetMapByName(MainWindow.instance.txtPieceName.Text) != null) {
+                    MessageBox.Show("Sorry! A map is already named that! Map names must be unique.");
+                    MainWindow.instance.txtPieceName.Text = MapPieceCache.CurrentPiece.Name;
+                } else {
+                    MapPieceCache.CurrentPiece.ChangeName(MainWindow.instance.txtPieceName.Text);
+                }
+            }
         }
 
         /// <summary>

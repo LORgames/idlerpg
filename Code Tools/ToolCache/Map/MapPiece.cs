@@ -156,7 +156,20 @@ namespace ToolCache.Map {
         }
 
         public void ChangeName(string p) {
+            string OldName = Name;
             Name = p;
+
+            string OldFilename = Filename;
+            Filename = ".\\Maps\\" + p + ".map";
+
+            if (File.Exists(OldFilename)) {
+                File.Move(OldFilename, Filename);
+            }
+
+            if (File.Exists(".\\Maps\\Thumbs\\" + OldName + ".png")) {
+                File.Move(".\\Maps\\Thumbs\\" + OldName + ".png", ".\\Maps\\Thumbs\\" + p + ".png");
+            }
+
             Edited();
         }
 

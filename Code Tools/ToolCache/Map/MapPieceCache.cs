@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using System.Windows.Forms;
 using ToolCache.Map.Tiles;
+using ToolCache.World;
 
 namespace ToolCache.Map {
     public class MapPieceCache {
@@ -67,21 +68,54 @@ namespace ToolCache.Map {
 
         public static void Duplicate() {
             MapPieceCache.SaveIfRequired();
-            File.Copy(CurrentPiece.Filename, GetNextFilename());
+
+            //Get the filename of this map
+            int nextID = 0;
+            while (GetMapByName(CurrentPiece.Name + " COPY " + nextID) != null) {
+                nextID++;
+            }
+
+            string filename = ".\\Maps\\" + CurrentPiece.Name + " COPY " + nextID + ".map";
+            File.Copy(CurrentPiece.Filename, filename);
+
+            MapPiece mp = new MapPiece(filename, 0);
+            mp.Load(true);
+
+            mp.Name = CurrentPiece.Name + " COPY " + nextID;
+
+            if (File.Exists(".\\Maps\\Thumbs\\" + CurrentPiece.Name + ".png")) {
+                File.Copy(".\\Maps\\Thumbs\\" + CurrentPiece.Name + ".png", ".\\Maps\\Thumbs\\" + CurrentPiece.Name + " COPY " + nextID + ".png");
+            }
+
+            foreach(Portal p in mp.Portals) {
+                p.ID = Portals.GetNextID();
+            }
+
+            mp.Save();
+
+            Pieces.Add(mp);
         }
 
         internal static string GetNextFilename() {
-            String[] files = Directory.GetFiles(PIECES_DIRECTORY, Environment.UserName + ".*");
-            Array.Sort(files, new SortFilenames());
+            String[] files = Directory.GetFiles(PIECES_DIRECTORY, ".map");
+            Random r = new Random();
+            int randomKey = r.Next();
 
-            if (files.Length > 0) {
-                string fs = files[files.Length - 1];
-                fs = fs.Split('.')[1];
-
-                return PIECES_DIRECTORY + "/" + Environment.UserName + "." + (int.Parse(fs) + 1);
-            } else {
-                return PIECES_DIRECTORY + "/" + Environment.UserName + ".0";
+            while (File.Exists(".\\Maps\\X" + randomKey + ".map")) {
+                randomKey = r.Next();
             }
+
+            return ".\\Maps\\X" + randomKey + ".map";
+        }
+
+        public static MapPiece GetMapByName(string p) {
+            foreach (MapPiece mp in Pieces) {
+                if (mp.Name == p) {
+                    return mp;
+                }
+            }
+
+            return null;
         }
     }
 

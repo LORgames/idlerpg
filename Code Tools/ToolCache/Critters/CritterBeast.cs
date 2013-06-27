@@ -58,7 +58,7 @@ namespace ToolCache.Critters {
 
             Animations["Default"].SaveToBinaryIO(f);
             foreach (CritterAnimationSet animation in Animations.Values) {
-                if (animation.State == "Default") {
+                if (animation.State != "Default") {
                     animation.SaveToBinaryIO(f);
                 }
             }
