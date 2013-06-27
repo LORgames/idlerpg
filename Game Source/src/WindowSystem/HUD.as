@@ -19,7 +19,7 @@ package WindowSystem
 		}
 		
 		public function LoadedExperienceArt(e:BitmapData):void {
-			expBar = new Bitmap(e);
+			expBar = new Bitmap(e.clone());
 			this.addChild(expBar);
 			
 			expBar.x = (this.stage.stageWidth - expBar.width) / 2;
@@ -27,7 +27,7 @@ package WindowSystem
 		}
 		
 		public function LoadedButtonsArt(e:BitmapData):void {
-			butnsX = new Bitmap(e);
+			butnsX = new Bitmap(e.clone());
 			this.addChild(butnsX);
 			
 			butnsX.x = this.stage.stageWidth - (butnsX.width + 5);
