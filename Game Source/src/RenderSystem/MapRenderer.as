@@ -6,6 +6,7 @@ package RenderSystem {
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.Event;
+	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;
@@ -28,19 +29,23 @@ package RenderSystem {
 		public var fullRect:Rectangle = new Rectangle();
 		
 		public function MapRenderer() {
-			
+			this.cacheAsBitmapMatrix = new Matrix(1, 0, 0, 1, 0, 0);
 		}
 		
 		public function Resized():void {
 			this.bitmapData = null;
 			if(data != null) data.dispose();
-			data = new BitmapData(Main.I.stage.stageWidth, Main.I.stage.stageHeight, false);
+			data = new BitmapData(Main.I.stage.stageWidth/Camera.Z, Main.I.stage.stageHeight/Camera.Z, false);
 			this.bitmapData = data;
 			
 			fullRect.width = data.width;
 			fullRect.height = data.height;
 			
-			trace(fullRect + " => " + data.width + ", " + data.height);
+			this.scaleX = Camera.Z;
+			this.scaleY = Camera.Z;
+			
+			DebugLayer.scaleX = Camera.Z;
+			DebugLayer.scaleY = Camera.Z;
 		}
 		
 		public function Draw():void {

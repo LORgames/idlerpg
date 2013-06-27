@@ -226,7 +226,7 @@ package Game.Critter {
 				trace(collisionTotal);
 				if (collisionPenetration.x != 0 || collisionPenetration.y != 0) {
 					//Undo the changes
-					if(Math.abs(collisionPenetration.x) < Math.abs(collisionPenetration.y)) {
+					if((Math.abs(collisionPenetration.x) < Math.abs(collisionPenetration.y)  && collisionPenetration.x != 0) || collisionPenetration.y == 0) {
 						X += collisionPenetration.x;
 					} else {
 						Y += collisionPenetration.y;

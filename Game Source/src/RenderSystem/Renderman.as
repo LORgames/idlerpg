@@ -66,6 +66,9 @@ package RenderSystem {
 		public function Resized():void {
 			map.Resized();
 			loadScreen.Resized();
+			
+			Main.OrderedLayer.scaleX = Camera.Z;
+			Main.OrderedLayer.scaleY = Camera.Z;
 		}
 		
 		public function Render(dt:Number):void {
@@ -122,30 +125,33 @@ package RenderSystem {
 			if (Global.LoadingTotal > 0) return;
 			if (WorldData.CurrentMap == null) return;
 			
-			if (WorldData.CurrentMap.SizeX <= Main.I.stage.stageWidth) {
-				Camera.X = (Main.I.stage.stageWidth - WorldData.CurrentMap.SizeX)/2;
-			} else if (WorldData.ME.X <= Main.I.stage.stageWidth / 2) {
+			var MyX:int = WorldData.ME.X;
+			var MyY:int = WorldData.ME.Y;
+			
+			if (WorldData.CurrentMap.SizeX <= map.fullRect.width) {
+				Camera.X = (map.fullRect.width - WorldData.CurrentMap.SizeX) / 2;
+			} else if (MyX <= map.fullRect.width / 2) {
 				Camera.X = 0;
-			} else if (WorldData.ME.X > WorldData.CurrentMap.SizeX - Main.I.stage.stageWidth / 2) {
-				Camera.X = -WorldData.CurrentMap.SizeX + Main.I.stage.stageWidth;
+			} else if (MyX > WorldData.CurrentMap.SizeX - map.fullRect.width / 2) {
+				Camera.X = -WorldData.CurrentMap.SizeX + map.fullRect.width;
 			} else {
-				Camera.X = -WorldData.ME.X + Main.I.stage.stageWidth/2;
+				Camera.X = -MyX + map.fullRect.width / 2;
 			}
 			
-			if (WorldData.CurrentMap.SizeY <= Main.I.stage.stageHeight) {
-				Camera.Y = (Main.I.stage.stageHeight - WorldData.CurrentMap.SizeY)/2;
-			} else if (WorldData.ME.Y <= Main.I.stage.stageHeight / 2) {
+			if (WorldData.CurrentMap.SizeY <= map.fullRect.height) {
+				Camera.Y = (map.fullRect.height - WorldData.CurrentMap.SizeY) / 2;
+			} else if (MyY <= map.fullRect.height / 2) {
 				Camera.Y = 0;
-			} else if (WorldData.ME.Y > WorldData.CurrentMap.SizeY - Main.I.stage.stageHeight / 2) {
-				Camera.Y = -WorldData.CurrentMap.SizeY + Main.I.stage.stageHeight;
+			} else if (MyY > WorldData.CurrentMap.SizeY - map.fullRect.height / 2) {
+				Camera.Y = -WorldData.CurrentMap.SizeY + map.fullRect.height;
 			} else {
-				Camera.Y = -WorldData.ME.Y + Main.I.stage.stageHeight / 2;
+				Camera.Y = -MyY + map.fullRect.height / 2;
 			}
 			
-			Main.OrderedLayer.x = Camera.X;
-			Main.OrderedLayer.y = Camera.Y;
-			map.DebugLayer.x = Camera.X;
-			map.DebugLayer.y = Camera.Y;
+			Main.OrderedLayer.x = Camera.X * Camera.Z;
+			Main.OrderedLayer.y = Camera.Y * Camera.Z;
+			map.DebugLayer.x = Camera.X * Camera.Z;
+			map.DebugLayer.y = Camera.Y * Camera.Z;
 			
 			map.Draw();
 			

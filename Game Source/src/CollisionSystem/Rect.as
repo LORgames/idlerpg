@@ -27,10 +27,10 @@ package CollisionSystem {
 		}
 		
 		public function intersects(b:Rect):Boolean{
-			if (this.X > b.X + b.W) return false;
-			if (this.Y > b.Y + b.H) return false;
-			if (this.X + this.W < b.X) return false;
-			if (this.Y + this.H < b.Y) return false;
+			if (this.X > b.X + b.W - 1) return false;
+			if (this.Y > b.Y + b.H - 1) return false;
+			if (this.X + this.W - 1 < b.X) return false;
+			if (this.Y + this.H - 1 < b.Y) return false;
 			
 			return true;
 			
