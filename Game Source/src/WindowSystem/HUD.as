@@ -12,10 +12,13 @@ package WindowSystem
 		
 		private var expBar:Bitmap;
 		private var butnsX:Bitmap;
+		private var stick:Bitmap;
 		
 		public function HUD() {
 			ImageLoader.Load("OtherUI/exp bar.png", LoadedExperienceArt);
 			ImageLoader.Load("OtherUI/Buttons.png", LoadedButtonsArt);
+			ImageLoader.Load("OtherUI/Stick.png", LoadedStickArt);
+			ImageLoader.Load("OtherUI/Thumb.png", LoadedThumbArt);
 		}
 		
 		public function LoadedExperienceArt(e:BitmapData):void {
@@ -34,6 +37,25 @@ package WindowSystem
 			butnsX.y = this.stage.stageHeight - (butnsX.height + 5);
 		}
 		
+		public function LoadedStickArt(e:BitmapData):void {
+			stick = new Bitmap(e.clone());
+			this.addChild(stick);
+			
+			stick.x = 0;
+			stick.y = this.stage.stageHeight - (stick.height + 5);
+			Global.touchArea.X = stick.x;
+			Global.touchArea.Y = stick.y;
+			Global.touchArea.W = stick.width;
+			Global.touchArea.H = stick.height;
+		}
+		
+		public function LoadedThumbArt(e:BitmapData):void {
+			Global.thumb = new Bitmap(e.clone());
+			this.addChild(Global.thumb);
+			
+			Global.thumb.x = stick.width*0.5 - Global.thumb.width*0.5;
+			Global.thumb.y = this.stage.stageHeight - ((stick.height - Global.thumb.height*0.5) + 5);
+		}
 	}
 
 }

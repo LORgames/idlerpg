@@ -27,10 +27,15 @@ package InputSystems {
 		}
 		
 		private function TouchDown(te:TouchEvent):void {
-			if (MovementTouch == -1 && te.stageX < Main.I.stage.stageWidth / 2) {
-				MovementTouch = te.touchPointID;
-				MovementTouchX = te.stageX;
-				MovementTouchY = te.stageY;
+			if ((te.stageX > Global.touchArea.X && te.stageX < Global.touchArea.X + Global.touchArea.W)
+				&& (te.stageY > Global.touchArea.Y && te.stageY < Global.touchArea.Y + Global.touchArea.H)) {
+				if (MovementTouch == -1) {
+					MovementTouch = te.touchPointID;
+					MovementTouchX = te.stageX;
+					MovementTouchY = te.stageY;
+					Global.thumb.x = MovementTouchX;
+					Global.thumb.y = MovementTouchY;
+				}
 			} else if (te.stageX > Main.I.stage.stageWidth / 2) {
 				WorldData.ME.RequestBasicAttack();
 			}
@@ -57,6 +62,13 @@ package InputSystems {
 				} else {
 					dX /= aY;
 					dY /= aY;
+				}
+				
+				if (te.stageX > Global.touchArea.X && te.stageX < Global.touchArea.X + Global.touchArea.W) {
+					Global.thumb.x = te.stageX;
+				}
+				if (te.stageY > Global.touchArea.Y && te.stageY < Global.touchArea.Y + Global.touchArea.H) {
+					Global.thumb.y = te.stageY;
 				}
 				
 				WorldData.ME.RequestMove(dX, dY);

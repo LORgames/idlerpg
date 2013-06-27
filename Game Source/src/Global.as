@@ -1,4 +1,6 @@
 package {
+	import CollisionSystem.Rect;
+	import flash.display.Bitmap;
 	import flash.geom.Point;
 	/**
 	 * ...
@@ -16,5 +18,9 @@ package {
 		
 		public static const ZeroPoint:Point = new Point();
 		public static const DebugRender:Boolean = false;
+		
+		//Touch information
+		public static var touchArea:Rect = new Rect(true, null, 0, 0, 0, 0);
+		public static var thumb:Bitmap;
 	}
 }
