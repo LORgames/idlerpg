@@ -200,6 +200,9 @@ namespace CityTools {
             ckbOneOfAKind.Checked = critter.OneOfAKind;
             cbBaseGroup.Text = critter.NodeGroup;
 
+            numMovementSpeed.Value = critter.movementSpeed;
+            numRange.Value = critter.range;
+
             txtScript.Script = critter.AICommands;
 
             //Now we do groups
@@ -283,6 +286,8 @@ namespace CityTools {
             critter.ExperienceGain = (int)numExperience.Value;
             critter.Health = (int)numHealth.Value;
             critter.OneOfAKind = ckbOneOfAKind.Checked;
+            critter.movementSpeed = (short)numMovementSpeed.Value;
+            critter.range = (short)numRange.Value;
 
             critter.NodeGroup = cbBaseGroup.Text;
             critter.AICommands = txtScript.Script;
@@ -619,6 +624,16 @@ namespace CityTools {
             if(critter is CritterBeast) {
                 e.Info.AnimationNames = (critter as CritterBeast).AnimationNames();
             }
+        }
+
+        private void numMovementSpeed_ValueChanged(object sender, EventArgs e) {
+            if (_isUpdatingForm) return;
+            _isCritterEdited = true;
+        }
+
+        private void numRange_ValueChanged(object sender, EventArgs e) {
+            if (_isUpdatingForm) return;
+            _isCritterEdited = true;
         }
     }
 }
