@@ -141,5 +141,21 @@ namespace ToolCache.Equipment {
             Down_1.PlaybackSpeed = AnimationSpeed;
             Down_0.PlaybackSpeed = AnimationSpeed;
         }
+
+        internal EquipmentAnimationSet Clone() {
+            EquipmentAnimationSet temp = new EquipmentAnimationSet();
+
+            temp.Down_0 = Down_0.Clone();
+            temp.Down_1 = Down_1.Clone();
+            temp.Left_0 = Left_0.Clone();
+            temp.Left_1 = Left_1.Clone();
+            temp.Right_0 = Right_0.Clone();
+            temp.Right_1 = Right_1.Clone();
+            temp.StateName = StateName;
+            temp.Up_0 = Up_0.Clone();
+            temp.Up_1 = Up_1.Clone();
+
+            return temp;
+        }
     }
 }

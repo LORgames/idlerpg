@@ -91,5 +91,16 @@ namespace ToolCache.Animation {
         public static void Update(double dt) {
             totalTime += dt;
         }
+
+        internal AnimatedObject Clone() {
+            AnimatedObject temp = new AnimatedObject();
+
+            temp.Frames.AddRange(Frames);
+            temp.p = p;
+            temp.PlaybackSpeed = PlaybackSpeed;
+            temp.TotalFrames = TotalFrames;
+
+            return temp;
+        }
     }
 }

@@ -700,6 +700,17 @@ namespace CityTools {
 
         private void btnDuplicate_Click(object sender, EventArgs e) {
             // TODO: this function
+            if (currentEquipment != null && treeEquipmentList.SelectedNode.Tag != null) {
+                SaveIfRequired();
+
+                _ccEQ = currentEquipment.Clone();
+                UnlinkCurrentEquipment(_ccEQ);
+
+                _isNewEquipmentItem = true;
+                _hasEquipmentBeenEdited = true;
+                SaveIfRequired();
+                UpdateForm();
+            }
         }
     }
 }

@@ -222,5 +222,42 @@ namespace ToolCache.Equipment {
             Animations.Add(state, eas);
             return eas;
         }
+
+        public EquipmentItem Clone() {
+            EquipmentItem temp = new EquipmentItem();
+
+            string newName = this.Name + " - Copy";
+            int count = 0;
+            while (EquipmentManager.Equipment.ContainsKey(newName)) {
+                if (newName.Substring(newName.LastIndexOf(' '), 4).Contains("(")) {
+                    newName = newName.Substring(0, newName.LastIndexOf(' '));
+                }
+                newName = newName + " (" + count++ + ")";
+            }
+            temp.Name = newName;
+            temp._p = _p;
+
+            temp.Animations = new DictionaryEx<string, EquipmentAnimationSet>();
+            foreach (KeyValuePair<string, EquipmentAnimationSet> pair in Animations) {
+                temp.Animations.Add(pair.Key, pair.Value.Clone());
+            }
+            temp.AnimationSpeed = AnimationSpeed;
+            temp.isAvailableAtStart = isAvailableAtStart;
+            temp.OffsetsLocked = OffsetsLocked;
+            temp.OffsetX = OffsetX;
+            temp.OffsetX_1 = OffsetX_1;
+            temp.OffsetX_2 = OffsetX_2;
+            temp.OffsetX_3 = OffsetX_3;
+            temp.OffsetY = OffsetY;
+            temp.OffsetY_1 = OffsetY_1;
+            temp.OffsetY_2 = OffsetY_2;
+            temp.OffsetY_3 = OffsetY_3;
+            temp.OldName = OldName;
+            temp.OldType = OldType;
+            temp.OnAttackScript = OnAttackScript;
+            temp.Type = Type;
+
+            return temp;
+        }
     }
 }
