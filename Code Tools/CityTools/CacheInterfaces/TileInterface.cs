@@ -17,7 +17,10 @@ namespace CityTools.CacheInterfaces {
                 foreach (TileTemplate tile in TileCache.GetTilesInGroup(group)) {
                     if (MainWindow.instance.treeTiles.ImageList == null) {
                         MainWindow.instance.treeTiles.ImageList = new ImageList();
+                        MainWindow.instance.treeTiles.ImageList.ImageSize = new System.Drawing.Size(48, 48);
+                        MainWindow.instance.treeTiles.ImageList.ColorDepth = ColorDepth.Depth32Bit;
                     }
+
                     if (tile.Animation.Frames.Count != 0) {
                         MainWindow.instance.treeTiles.ImageList.Images.Add(tile.Animation.Frames[0], ImageCache.RequestImage(tile.Animation.Frames[0]));
                         int imageIndex = MainWindow.instance.treeTiles.ImageList.Images.IndexOfKey(tile.Animation.Frames[0]);

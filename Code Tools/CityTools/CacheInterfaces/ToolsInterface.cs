@@ -6,6 +6,7 @@ using ToolCache.Map;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+using CityTools.Components;
 
 namespace CityTools.CacheInterfaces {
     public class ToolsInterface {
@@ -19,6 +20,8 @@ namespace CityTools.CacheInterfaces {
             MainWindow.instance.btnSoundEditor.Click += new EventHandler(btnSoundEditor_Click);
             MainWindow.instance.btnTileEditorTool.Click += new EventHandler(btnTileEditorTool_Click);
             MainWindow.instance.btnWorldEditor.Click += new EventHandler(btnWorldEditor_Click);
+            MainWindow.instance.btnShadowTool.Click += new EventHandler(btnShadowTool_Click);
+            MainWindow.instance.btnTileMerger.Click += new EventHandler(btnTileMerger_Click);
         }
 
         public static bool ProcessKeys(Keys keyData) {
@@ -88,6 +91,16 @@ namespace CityTools.CacheInterfaces {
             t.ShowDialog(MainWindow.instance);
         }
 
+        private static void OpenTileMerger() {
+            TileMergeDialog t = new TileMergeDialog();
+            t.ShowDialog(MainWindow.instance);
+        }
+
+        private static void OpenShadowEditor() {
+            ShadowCreator t = new ShadowCreator();
+            t.ShowDialog();
+        }
+
         private static void ExportAndRun() {
             string args = "map=" + MapPieceCache.CurrentPiece.Name;
 
@@ -141,6 +154,14 @@ namespace CityTools.CacheInterfaces {
 
         private static void btnWorldEditor_Click(object sender, EventArgs e) {
             OpenWorldEditor();
+        }
+
+        private static void btnTileMerger_Click(object sender, EventArgs e) {
+            OpenTileMerger();
+        }
+
+        private static void btnShadowTool_Click(object sender, EventArgs e) {
+            OpenShadowEditor();
         }
     }
 }

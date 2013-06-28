@@ -194,6 +194,12 @@
     <Compile Include="SaveFileEditor.Designer.cs">
       <DependentUpon>SaveFileEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="ShadowCreator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShadowCreator.Designer.cs">
+      <DependentUpon>ShadowCreator.cs</DependentUpon>
+    </Compile>
     <Compile Include="SoundEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -285,6 +291,9 @@
     </Compile>
     <EmbeddedResource Include="SaveFileEditor.resx">
       <DependentUpon>SaveFileEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShadowCreator.resx">
+      <DependentUpon>ShadowCreator.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SoundEditor.resx">
       <DependentUpon>SoundEditor.cs</DependentUpon>
