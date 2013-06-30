@@ -47,6 +47,8 @@ namespace ToolCache.Critters {
         internal override void PackIntoBinaryIO(General.BinaryIO f) {
             base.PackIntoBinaryIO(f);
 
+            ValidateAnimations();
+
             f.AddFloat(playbackSpeed);
 
             f.AddShort(rectWidth);
@@ -61,6 +63,27 @@ namespace ToolCache.Critters {
                 if (animation.State != "Default") {
                     animation.SaveToBinaryIO(f);
                 }
+            }
+        }
+
+        private void ValidateAnimations() {
+            List<string> BadAnimations = new List<string>();
+
+            foreach (CritterAnimationSet cas in Animations.Values) {
+                if (cas.Left.Frames.Count == 0) {
+                    if (cas.Right.Frames.Count == 0) {
+                        if (cas.Up.Frames.Count == 0) {
+                            if (cas.Down.Frames.Count == 0) {
+                                BadAnimations.Add(cas.State);
+                            }
+                        }
+                    }
+                }
+            }
+
+            while (BadAnimations.Count > 0) {
+                Animations.Remove(BadAnimations[0]);
+                BadAnimations.RemoveAt(0);
             }
         }
 
