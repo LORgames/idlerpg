@@ -45,10 +45,10 @@ package InputSystems {
 			downKeys[ke.keyCode] = false;
 			
 			if(ke.keyCode != Keyboard.SPACE) {
-				if (ke.keyCode == Keyboard.W) ySpeed += 1;
-				if (ke.keyCode == Keyboard.S) ySpeed -= 1;
-				if (ke.keyCode == Keyboard.A) xSpeed += 1;
-				if (ke.keyCode == Keyboard.D) xSpeed -= 1;
+				if (ke.keyCode == Keyboard.W || ke.keyCode == Keyboard.UP) ySpeed += 1;
+				if (ke.keyCode == Keyboard.S || ke.keyCode == Keyboard.DOWN) ySpeed -= 1;
+				if (ke.keyCode == Keyboard.A || ke.keyCode == Keyboard.LEFT) xSpeed += 1;
+				if (ke.keyCode == Keyboard.D || ke.keyCode == Keyboard.RIGHT) xSpeed -= 1;
 				
 				WorldData.ME.RequestMove(xSpeed, ySpeed);
 			}
