@@ -145,7 +145,11 @@ namespace ToolToGameExporter {
 
         private static void EncodeCritterList(AnimatedObject anim, List<string> AnimationSets, List<short> totalFrames) {
             totalFrames.Add((short)anim.Frames.Count);
-            AnimationSets.AddRange(anim.Frames);
+
+            int x = anim.Frames.Count;
+            while (--x > -1) {
+                AnimationSets.Add(anim.Frames[x]);
+            }
         }
     }
 }

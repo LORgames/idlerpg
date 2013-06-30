@@ -36,6 +36,7 @@ package Game.Critter
 			Renderman.AnimatedObjectsPush(this);
 			
 			Owner = owner;
+			currentDirection = 3;
 			ChangeCritterInfo(Owner.Info);
 		}
 		

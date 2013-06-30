@@ -70,19 +70,36 @@ package {
 		}
 		
 		private function OnInvoke(e:InvokeEvent):void {
-			var loadMap:String = "Star Shrine";//"Tutorial Fair";
+			var loadMap:String = "Tutorial Fair";
 			
 			if (e.arguments.length > 0) {
-				var args:Array = e.arguments.join(" ").split("|");
+				var args:Array = e.arguments.join(" ").split("+");
 				
-				if ((args[0] as String).indexOf("map=") == 0) {
-					loadMap = (args[0] as String).substr(4);
+				for (var i:int = 0; i < args.length; i++) {
+					var arg:String = args[i];
+					if(arg.indexOf("=") == -1) continue;
+					
+					var param:String = arg.split("=")[0];
+					
+					switch(param) {
+						case "map":
+							loadMap = arg.substr(4);
+							break;
+						case "debug":
+							if (arg.substr(6) == "Yes") {
+								Global.DebugRender = true;
+							} else {
+								Global.DebugRender = false;
+							} break;
+						default:
+							trace("Unknown Param: " + arg);
+					}
 				}
 			}
 			
 			//Set up some other things
 			Renderer = new Renderman();
-			Renderer.FadeToBlack(null, loadMap==""?"Tutorial":loadMap);
+			Renderer.FadeToBlack(null, loadMap);
 			
 			BinaryLoader.Initialize();
 			ImageLoader.Initialize();
