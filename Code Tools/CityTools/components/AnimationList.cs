@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using ToolCache.Animation;
+using ToolCache.General;
 
 namespace CityTools.Components {
     public partial class AnimationList : UserControl {
@@ -69,6 +70,7 @@ namespace CityTools.Components {
                                 }
 
                                 OnAnimationChanged(this, null);
+                                ImageCache.ForceCache(nFilename);
                                 _anim.Frames.Add(nFilename);
                             }
                         }

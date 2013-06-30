@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using CityTools.Components;
+using ToolCache.General;
 
 namespace CityTools.Components {
     public partial class AnimationFrame : UserControl {
@@ -19,7 +20,8 @@ namespace CityTools.Components {
         }
 
         internal void SetFrame(string p) {
-            pbThisFrame.LoadAsync(p);
+            //pbThisFrame.LoadAsync(p);
+            pbThisFrame.Image = ImageCache.RequestImage(p);
         }
 
         private void btnDeleteFrame_Click(object sender, EventArgs e) {

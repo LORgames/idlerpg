@@ -37,5 +37,13 @@ namespace ToolCache.General {
                 }
             }
         }
+
+        public static void Release(String s) {
+            if (img_store.ContainsKey(s)) {
+                img_store[s].Dispose();
+                img_store[s] = null;
+                img_store.Remove(s);
+            }
+        }
     }
 }

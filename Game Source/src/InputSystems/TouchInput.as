@@ -65,10 +65,10 @@ package InputSystems {
 				}
 				
 				if (te.stageX > Global.touchArea.X && te.stageX < Global.touchArea.X + Global.touchArea.W) {
-					Global.thumb.x = te.stageX;
+					Global.thumb.x = te.stageX - Global.thumb.width/2;
 				}
 				if (te.stageY > Global.touchArea.Y && te.stageY < Global.touchArea.Y + Global.touchArea.H) {
-					Global.thumb.y = te.stageY;
+					Global.thumb.y = te.stageY - Global.thumb.height/2;
 				}
 				
 				WorldData.ME.RequestMove(dX, dY);

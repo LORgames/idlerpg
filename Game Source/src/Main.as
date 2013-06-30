@@ -70,7 +70,7 @@ package {
 		}
 		
 		private function OnInvoke(e:InvokeEvent):void {
-			var loadMap:String = "Tutorial Fair";
+			var loadMap:String = "Star Shrine";//"Tutorial Fair";
 			
 			if (e.arguments.length > 0) {
 				var args:Array = e.arguments.join(" ").split("|");
