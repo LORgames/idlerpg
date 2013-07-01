@@ -34,6 +34,8 @@ package Game.Map.Objects {
 			this.y = _y;
 			
 			AttachToTiles();
+			
+			Template.MyScript.Run(Script.Spawn, this);
 		}
 		
 		public function AttachToTiles():void {

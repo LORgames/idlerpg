@@ -72,12 +72,12 @@ package Game.Map.Objects {
 		}
 		
 		private function LoadedBitmap(e:BitmapData):void {
+			SpriteAtlas = e.clone();
 			bitmapCopy.copyPixels(e, FrameSize, Global.ZeroPoint);
 			Global.LoadingTotal--;
 			
 			if (TotalFrames > 1) {
 				Renderman.AnimatedObjectsPush(this);
-				SpriteAtlas = e.clone();
 			}
 		}
 		

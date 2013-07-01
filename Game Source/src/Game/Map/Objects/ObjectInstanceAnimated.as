@@ -24,12 +24,21 @@ package Game.Map.Objects {
 		}
 		
 		override public function SetInformation(map:MapData, id:int, _x:int, _y:int):void {
-			super.SetInformation(map, id, _x, _y);
+			Map = map;
+			ID = id;
+			Template = ObjectTemplate.Objects[ID];
 			
 			CopyRect.x = 0;
 			CopyRect.y = 0;
 			CopyRect.width = Template.FrameSize.width;
 			CopyRect.height = Template.FrameSize.height;
+			
+			PlaybackSpeed = Template.PlaybackSpeed;
+			StartFrame = 0;
+			EndFrame = Template.TotalFrames;
+			FrameTimeout = Math.random();
+			
+			super.SetInformation(map, id, _x, _y);
 			
 			this.bitmapData = new BitmapData(CopyRect.width, CopyRect.height, true, 0x40FFFF00);
 		}
@@ -51,7 +60,10 @@ package Game.Map.Objects {
 				}
 				
 				CopyRect.x = CurrentFrame * CopyRect.width;
-				this.bitmapData.copyPixels(Template.SpriteAtlas, CopyRect, Global.ZeroPoint);
+				
+				if(Template.SpriteAtlas != null) {
+					this.bitmapData.copyPixels(Template.SpriteAtlas, CopyRect, Global.ZeroPoint);
+				}
 			}
 		}
 	}
