@@ -50,6 +50,7 @@ namespace CityTools {
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.ccAnimation = new CityTools.Components.AnimationList();
             this.scriptBox1 = new CityTools.Components.ScriptBox();
+            this.ckIndividualAnimations = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbExampleBase)).BeginInit();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numOffsetHeight)).BeginInit();
@@ -128,7 +129,7 @@ namespace CityTools {
             // lblTemplateID
             // 
             this.lblTemplateID.Name = "lblTemplateID";
-            this.lblTemplateID.Size = new System.Drawing.Size(40, 22);
+            this.lblTemplateID.Size = new System.Drawing.Size(41, 22);
             this.lblTemplateID.Text = "<TID>";
             // 
             // lblGroup
@@ -301,6 +302,7 @@ namespace CityTools {
             // 
             // splitContainer3.Panel1
             // 
+            this.splitContainer3.Panel1.Controls.Add(this.ckIndividualAnimations);
             this.splitContainer3.Panel1.Controls.Add(this.lblGroup);
             this.splitContainer3.Panel1.Controls.Add(this.lblName);
             this.splitContainer3.Panel1.Controls.Add(this.numOffsetHeight);
@@ -338,14 +340,24 @@ namespace CityTools {
             this.scriptBox1.Size = new System.Drawing.Size(237, 417);
             this.scriptBox1.TabIndex = 1;
             // 
-            // TemplateEditor
+            // ckIndividualAnimations
+            // 
+            this.ckIndividualAnimations.AutoSize = true;
+            this.ckIndividualAnimations.Location = new System.Drawing.Point(121, 74);
+            this.ckIndividualAnimations.Name = "ckIndividualAnimations";
+            this.ckIndividualAnimations.Size = new System.Drawing.Size(125, 17);
+            this.ckIndividualAnimations.TabIndex = 18;
+            this.ckIndividualAnimations.Text = "Individual Animations";
+            this.ckIndividualAnimations.UseVisualStyleBackColor = true;
+            // 
+            // ObjectEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(912, 541);
             this.Controls.Add(this.splitContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "TemplateEditor";
+            this.Name = "ObjectEditor";
             this.Text = "Object Template Editor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TemplateEditor_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.pbExampleBase)).EndInit();
@@ -395,5 +407,6 @@ namespace CityTools {
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.TreeView treeTemplateNames;
         private ScriptBox scriptBox1;
+        private System.Windows.Forms.CheckBox ckIndividualAnimations;
     }
 }

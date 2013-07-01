@@ -30,6 +30,7 @@
             this.btnAddItem = new System.Windows.Forms.ToolStripButton();
             this.btnDuplicateItem = new System.Windows.Forms.ToolStripButton();
             this.txtSearchBox = new System.Windows.Forms.ToolStripTextBox();
+            this.scriptConsumeEffect = new CityTools.Components.ScriptBox();
             this.txtName = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.numStackSize = new System.Windows.Forms.NumericUpDown();
@@ -50,7 +51,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.pbItemIcon = new System.Windows.Forms.PictureBox();
             this.txtDescription = new System.Windows.Forms.TextBox();
-            this.scriptConsumeEffect = new CityTools.Components.ScriptBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -97,8 +97,8 @@
             this.splitContainer1.Panel2.Controls.Add(this.label3);
             this.splitContainer1.Panel2.Controls.Add(this.pbItemIcon);
             this.splitContainer1.Panel2.Controls.Add(this.txtDescription);
-            this.splitContainer1.Size = new System.Drawing.Size(539, 452);
-            this.splitContainer1.SplitterDistance = 179;
+            this.splitContainer1.Size = new System.Drawing.Size(652, 452);
+            this.splitContainer1.SplitterDistance = 280;
             this.splitContainer1.TabIndex = 0;
             // 
             // treeItemHeirachy
@@ -106,7 +106,7 @@
             this.treeItemHeirachy.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeItemHeirachy.Location = new System.Drawing.Point(0, 25);
             this.treeItemHeirachy.Name = "treeItemHeirachy";
-            this.treeItemHeirachy.Size = new System.Drawing.Size(179, 427);
+            this.treeItemHeirachy.Size = new System.Drawing.Size(280, 427);
             this.treeItemHeirachy.TabIndex = 1;
             this.treeItemHeirachy.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeItemHeirachy_AfterSelect);
             // 
@@ -118,7 +118,7 @@
             this.txtSearchBox});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(179, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(280, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "Tree Header";
             // 
@@ -147,11 +147,21 @@
             this.txtSearchBox.Name = "txtSearchBox";
             this.txtSearchBox.Size = new System.Drawing.Size(95, 25);
             // 
+            // scriptConsumeEffect
+            // 
+            this.scriptConsumeEffect.Location = new System.Drawing.Point(10, 123);
+            this.scriptConsumeEffect.Name = "scriptConsumeEffect";
+            this.scriptConsumeEffect.Script = "";
+            this.scriptConsumeEffect.ScriptType = ToolCache.Scripting.ScriptTypes.Item;
+            this.scriptConsumeEffect.Size = new System.Drawing.Size(334, 166);
+            this.scriptConsumeEffect.TabIndex = 31;
+            this.scriptConsumeEffect.TextChanged += new System.EventHandler(this.FormEdited);
+            // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(38, 8);
+            this.txtName.Location = new System.Drawing.Point(68, 8);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(146, 20);
+            this.txtName.Size = new System.Drawing.Size(120, 20);
             this.txtName.TabIndex = 30;
             this.txtName.TextChanged += new System.EventHandler(this.FormEdited);
             // 
@@ -166,7 +176,7 @@
             // 
             // numStackSize
             // 
-            this.numStackSize.Location = new System.Drawing.Point(257, 8);
+            this.numStackSize.Location = new System.Drawing.Point(261, 8);
             this.numStackSize.Maximum = new decimal(new int[] {
             32767,
             0,
@@ -190,7 +200,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(190, 10);
+            this.label11.Location = new System.Drawing.Point(194, 10);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(61, 13);
             this.label11.TabIndex = 21;
@@ -297,7 +307,7 @@
             "Rare",
             "Ultra Rare",
             "Mythical"});
-            this.cbRarity.Location = new System.Drawing.Point(257, 37);
+            this.cbRarity.Location = new System.Drawing.Point(263, 34);
             this.cbRarity.Name = "cbRarity";
             this.cbRarity.Size = new System.Drawing.Size(93, 21);
             this.cbRarity.TabIndex = 10;
@@ -306,7 +316,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(214, 40);
+            this.label4.Location = new System.Drawing.Point(220, 40);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(37, 13);
             this.label4.TabIndex = 9;
@@ -323,16 +333,16 @@
             // cbCategory
             // 
             this.cbCategory.FormattingEnabled = true;
-            this.cbCategory.Location = new System.Drawing.Point(66, 32);
+            this.cbCategory.Location = new System.Drawing.Point(123, 34);
             this.cbCategory.Name = "cbCategory";
-            this.cbCategory.Size = new System.Drawing.Size(118, 21);
+            this.cbCategory.Size = new System.Drawing.Size(91, 21);
             this.cbCategory.TabIndex = 7;
             this.cbCategory.TextUpdate += new System.EventHandler(this.FormEdited);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 35);
+            this.label3.Location = new System.Drawing.Point(65, 40);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(52, 13);
             this.label3.TabIndex = 6;
@@ -343,7 +353,7 @@
             this.pbItemIcon.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pbItemIcon.Location = new System.Drawing.Point(13, 9);
             this.pbItemIcon.Name = "pbItemIcon";
-            this.pbItemIcon.Size = new System.Drawing.Size(16, 16);
+            this.pbItemIcon.Size = new System.Drawing.Size(48, 48);
             this.pbItemIcon.TabIndex = 4;
             this.pbItemIcon.TabStop = false;
             this.pbItemIcon.Click += new System.EventHandler(this.pbItemIcon_Click);
@@ -357,21 +367,11 @@
             this.txtDescription.TabIndex = 2;
             this.txtDescription.TextChanged += new System.EventHandler(this.FormEdited);
             // 
-            // scriptConsumeEffect
-            // 
-            this.scriptConsumeEffect.Location = new System.Drawing.Point(10, 123);
-            this.scriptConsumeEffect.Name = "scriptConsumeEffect";
-            this.scriptConsumeEffect.Script = "";
-            this.scriptConsumeEffect.ScriptType = ToolCache.Scripting.ScriptTypes.Item;
-            this.scriptConsumeEffect.Size = new System.Drawing.Size(334, 166);
-            this.scriptConsumeEffect.TabIndex = 31;
-            this.scriptConsumeEffect.TextChanged += new System.EventHandler(this.FormEdited);
-            // 
             // ItemEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(539, 452);
+            this.ClientSize = new System.Drawing.Size(652, 452);
             this.Controls.Add(this.splitContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ItemEditor";

@@ -18,7 +18,7 @@ echo Starting AIR Debug Launcher.
 echo.
 echo (hint: edit 'Run.bat' to test on device or change screen size)
 echo.
-adl "%APP_XML%" "%APP_DIR%" -- map=Pirate Road 1+debug=Yes
+adl "%APP_XML%" "%APP_DIR%" -- map=Tinton Quarry+debug=Yes
 
 if errorlevel 1 goto end
 goto end

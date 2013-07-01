@@ -35,9 +35,11 @@ namespace CityTools {
             treeItemHeirachy.SuspendLayout();
 
             treeItemHeirachy.ImageList = new ImageList();
+            treeItemHeirachy.ImageList.ImageSize = new System.Drawing.Size(48, 48);
+            treeItemHeirachy.ImageList.ColorDepth = ColorDepth.Depth32Bit;
 
             foreach(String s in Directory.GetFiles("Icons", "*.png")) {
-                treeItemHeirachy.ImageList.Images.Add(Image.FromFile(s));
+                treeItemHeirachy.ImageList.Images.Add(s.Replace('\\', '/'), Image.FromFile(s));
                 LoadedImageListIndices.Add(s);
             }
 
@@ -53,8 +55,8 @@ namespace CityTools {
                 n.Tag = i.ID;
 
                 if (File.Exists(i.IconName)) {
-                    n.ImageIndex = LoadedImageListIndices.IndexOf(i.IconName);
-                    n.SelectedImageIndex = n.ImageIndex;
+                    n.ImageKey = i.IconName;
+                    n.SelectedImageKey = n.ImageKey;
                 }
 
                 if (!categories.ContainsKey(i.Category)) {

@@ -42,42 +42,8 @@ namespace ToolCache.Map.Objects {
 
                 //This is where we load the BASIC information
                 for (int i = 0; i < totalObjects; i++) {
-                    short ObjectID = f.GetShort();
-                    AnimatedObject animation = AnimatedObject.UnpackFromBinaryIO(f);
-
-                    string ObjectName = f.GetString();
-                    string ObjectGroup = f.GetString();
-
-                    string Script = f.GetString();
-
-                    int totalRectangles = f.GetByte();
-                    List<Rectangle> _rects = new List<Rectangle>();
-
-                    while (--totalRectangles > -1) {
-                        int BaseLeft = f.GetShort();
-                        int BaseTop = f.GetShort();
-                        int BaseWidth = f.GetShort();
-                        int BaseHeight = f.GetShort();
-
-                        Rectangle _base = new Rectangle(BaseLeft, BaseTop, BaseWidth, BaseHeight);
-                        _rects.Add(_base);
-                    }
-
-                    bool isSolid = f.GetByte() == 1;
-                    int OffsetY = f.GetShort();
-
-                    ObjectTypes.Add(ObjectID, new MapObject(ObjectID, ObjectName, ObjectGroup, animation, OffsetY, _rects, isSolid, Script));
-
-                    if (!GroupsToObjectUUIDS.ContainsKey(ObjectGroup)) {
-                        GroupsToObjectUUIDS.Add(ObjectGroup, new List<short>());
-                    }
-
-                    GroupsToObjectUUIDS[ObjectGroup].Add(ObjectID);
-
-                    if (nextObjectID <= ObjectID) {
-                        nextObjectID = ObjectID;
-                        nextObjectID++;
-                    }
+                    MapObject m = MapObject.LoadFromBinaryIO(f);
+                    AddObject(m);
                 }
             }
         }
@@ -87,50 +53,31 @@ namespace ToolCache.Map.Objects {
             f.AddInt(ObjectTypes.Count);
 
             foreach (KeyValuePair<short, MapObject> kvp in ObjectTypes) {
-                f.AddShort(kvp.Key);
-
-                kvp.Value.Animation.PackIntoBinaryIO(f);
-
-                f.AddString(kvp.Value.ObjectName);
-                f.AddString(kvp.Value.ObjectGroup);
-
-                f.AddString(kvp.Value.Script);
-
-                f.AddByte((byte)kvp.Value.Blocks.Count);
-
-                foreach (Rectangle r in kvp.Value.Blocks) {
-                    f.AddShort((short)r.Left);
-                    f.AddShort((short)r.Top);
-                    f.AddShort((short)r.Width);
-                    f.AddShort((short)r.Height);
-                }
-
-                f.AddByte((kvp.Value.isSolid ? (byte)1 : (byte)0));
-                f.AddShort((short)kvp.Value.OffsetY);
+                kvp.Value.WriteToBinaryIO(f);
             }
 
             f.Encode(RESOLVED_DATABASE_FILENAME);
         }
 
-        public static void AddObject(MapObject t) {
-            if (ObjectTypes.ContainsKey(t.ObjectID)) {
-                GroupsToObjectUUIDS[ObjectTypes[t.ObjectID].ObjectGroup].Remove(t.ObjectID);
+        public static void AddObject(MapObject m) {
+            if (ObjectTypes.ContainsKey(m.ObjectID)) {
+                GroupsToObjectUUIDS[ObjectTypes[m.ObjectID].ObjectGroup].Remove(m.ObjectID);
 
-                if (GroupsToObjectUUIDS[ObjectTypes[t.ObjectID].ObjectGroup].Count == 0) {
-                    GroupsToObjectUUIDS.Remove(ObjectTypes[t.ObjectID].ObjectGroup);
+                if (GroupsToObjectUUIDS[ObjectTypes[m.ObjectID].ObjectGroup].Count == 0) {
+                    GroupsToObjectUUIDS.Remove(ObjectTypes[m.ObjectID].ObjectGroup);
                 }
             }
 
-            ObjectTypes.Add(t.ObjectID, t);
+            ObjectTypes.Add(m.ObjectID, m);
 
-            if (!GroupsToObjectUUIDS.ContainsKey(t.ObjectGroup)) {
-                GroupsToObjectUUIDS.Add(t.ObjectGroup, new List<short>());
+            if (!GroupsToObjectUUIDS.ContainsKey(m.ObjectGroup)) {
+                GroupsToObjectUUIDS.Add(m.ObjectGroup, new List<short>());
             }
 
-            GroupsToObjectUUIDS[t.ObjectGroup].Add(t.ObjectID);
+            GroupsToObjectUUIDS[m.ObjectGroup].Add(m.ObjectID);
 
-            if (t.ObjectID >= nextObjectID) {
-                nextObjectID = t.ObjectID;
+            if (m.ObjectID >= nextObjectID) {
+                nextObjectID = m.ObjectID;
                 nextObjectID++;
             }
         }
@@ -139,17 +86,17 @@ namespace ToolCache.Map.Objects {
             return GroupsToObjectUUIDS.Keys.ToList<String>();
         }
 
-        public static void Delete(short objectID) {
-            if (ObjectTypes.ContainsKey(objectID)) {
-                if (GroupsToObjectUUIDS.ContainsKey(ObjectTypes[objectID].ObjectGroup)) {
-                    GroupsToObjectUUIDS[ObjectTypes[objectID].ObjectGroup].Remove(objectID);
+        public static void Delete(MapObject mapObject) {
+            if (ObjectTypes.ContainsKey(mapObject.ObjectID)) {
+                if (GroupsToObjectUUIDS.ContainsKey(ObjectTypes[mapObject.ObjectID].ObjectGroup)) {
+                    GroupsToObjectUUIDS[ObjectTypes[mapObject.ObjectID].ObjectGroup].Remove(mapObject.ObjectID);
 
-                    if (GroupsToObjectUUIDS[ObjectTypes[objectID].ObjectGroup].Count == 0) {
-                        GroupsToObjectUUIDS.Remove(ObjectTypes[objectID].ObjectGroup);
+                    if (GroupsToObjectUUIDS[ObjectTypes[mapObject.ObjectID].ObjectGroup].Count == 0) {
+                        GroupsToObjectUUIDS.Remove(ObjectTypes[mapObject.ObjectID].ObjectGroup);
                     }
                 }
 
-                ObjectTypes.Remove(objectID);
+                ObjectTypes.Remove(mapObject.ObjectID);
             }
         }
 
