@@ -104,6 +104,14 @@ namespace CityTools.CacheInterfaces {
         private static void ExportAndRun() {
             string args = "map=" + MapPieceCache.CurrentPiece.Name;
 
+            if (MainWindow.instance.ckbExportDebugRender.Checked) {
+                args = args + "+debug=Yes";
+            }
+
+            if (MainWindow.instance.ckbExportShowFPS.Checked) {
+                args = args + "+showfps=Yes";
+            }
+
             //try {
                 if (ToolToGameExporter.Processor.Go("Build/Data/", true)) {
                     if (File.Exists("./Build/iRPG.exe")) {

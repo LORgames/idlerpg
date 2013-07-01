@@ -41,15 +41,16 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btnOtherToolsMenu = new System.Windows.Forms.ToolStripDropDownButton();
             this.btnTileEditorTool = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnTileMerger = new System.Windows.Forms.ToolStripMenuItem();
             this.btnObjectEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.btnElementalEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.btnItemEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.btnEquipmentEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.btnCritterEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnShadowTool = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSoundEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.btnWorldEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnExport = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.btnViewMenu = new System.Windows.Forms.ToolStripDropDownButton();
             this.mnuShowGrids = new System.Windows.Forms.ToolStripMenuItem();
@@ -132,8 +133,9 @@
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.timerRedrawAll = new System.Windows.Forms.Timer(this.components);
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.btnTileMerger = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnShadowTool = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnExport = new System.Windows.Forms.ToolStripSplitButton();
+            this.ckbExportDebugRender = new System.Windows.Forms.ToolStripMenuItem();
+            this.ckbExportShowFPS = new System.Windows.Forms.ToolStripMenuItem();
             this.listCritterSpawns = new CityTools.Components.ListViewEx();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -291,6 +293,12 @@
             this.btnTileEditorTool.Size = new System.Drawing.Size(216, 22);
             this.btnTileEditorTool.Text = "Tile Editor (T)";
             // 
+            // btnTileMerger
+            // 
+            this.btnTileMerger.Name = "btnTileMerger";
+            this.btnTileMerger.Size = new System.Drawing.Size(134, 22);
+            this.btnTileMerger.Text = "Tile Merger";
+            // 
             // btnObjectEditor
             // 
             this.btnObjectEditor.Name = "btnObjectEditor";
@@ -323,6 +331,12 @@
             this.btnCritterEditor.Size = new System.Drawing.Size(216, 22);
             this.btnCritterEditor.Text = "Critter Editor (C)";
             // 
+            // btnShadowTool
+            // 
+            this.btnShadowTool.Name = "btnShadowTool";
+            this.btnShadowTool.Size = new System.Drawing.Size(143, 22);
+            this.btnShadowTool.Text = "Shadow Tool";
+            // 
             // btnSoundEditor
             // 
             this.btnSoundEditor.Name = "btnSoundEditor";
@@ -339,12 +353,6 @@
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-            // 
-            // btnExport
-            // 
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(56, 22);
-            this.btnExport.Text = "Test (F5)";
             // 
             // toolStripSeparator3
             // 
@@ -539,7 +547,7 @@
             this.tabOptions.Location = new System.Drawing.Point(4, 22);
             this.tabOptions.Name = "tabOptions";
             this.tabOptions.Padding = new System.Windows.Forms.Padding(3);
-            this.tabOptions.Size = new System.Drawing.Size(233, 743);
+            this.tabOptions.Size = new System.Drawing.Size(279, 743);
             this.tabOptions.TabIndex = 3;
             this.tabOptions.Text = "Options";
             this.tabOptions.UseVisualStyleBackColor = true;
@@ -1100,7 +1108,7 @@
             this.tabPalette.Location = new System.Drawing.Point(4, 22);
             this.tabPalette.Margin = new System.Windows.Forms.Padding(0);
             this.tabPalette.Name = "tabPalette";
-            this.tabPalette.Size = new System.Drawing.Size(233, 743);
+            this.tabPalette.Size = new System.Drawing.Size(279, 743);
             this.tabPalette.TabIndex = 1;
             this.tabPalette.Text = "Objects";
             this.tabPalette.UseVisualStyleBackColor = true;
@@ -1113,7 +1121,7 @@
             this.tabObjectTools.Margin = new System.Windows.Forms.Padding(0);
             this.tabObjectTools.Name = "tabObjectTools";
             this.tabObjectTools.SelectedIndex = 0;
-            this.tabObjectTools.Size = new System.Drawing.Size(233, 743);
+            this.tabObjectTools.Size = new System.Drawing.Size(279, 743);
             this.tabObjectTools.TabIndex = 1;
             // 
             // tabObjects
@@ -1122,7 +1130,7 @@
             this.tabObjects.Location = new System.Drawing.Point(4, 22);
             this.tabObjects.Margin = new System.Windows.Forms.Padding(0);
             this.tabObjects.Name = "tabObjects";
-            this.tabObjects.Size = new System.Drawing.Size(225, 717);
+            this.tabObjects.Size = new System.Drawing.Size(271, 717);
             this.tabObjects.TabIndex = 1;
             this.tabObjects.Text = "Scenary";
             this.tabObjects.UseVisualStyleBackColor = true;
@@ -1145,7 +1153,7 @@
             // 
             this.obj_splitter.Panel2.Controls.Add(this.pnlObjectScenicCache);
             this.obj_splitter.Panel2.Controls.Add(this.cbScenicCacheSelector);
-            this.obj_splitter.Size = new System.Drawing.Size(225, 717);
+            this.obj_splitter.Size = new System.Drawing.Size(271, 717);
             this.obj_splitter.SplitterDistance = 30;
             this.obj_splitter.TabIndex = 0;
             // 
@@ -1164,7 +1172,7 @@
             this.pnlObjectScenicCache.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlObjectScenicCache.Location = new System.Drawing.Point(0, 21);
             this.pnlObjectScenicCache.Name = "pnlObjectScenicCache";
-            this.pnlObjectScenicCache.Size = new System.Drawing.Size(225, 662);
+            this.pnlObjectScenicCache.Size = new System.Drawing.Size(271, 662);
             this.pnlObjectScenicCache.TabIndex = 1;
             // 
             // cbScenicCacheSelector
@@ -1173,7 +1181,7 @@
             this.cbScenicCacheSelector.FormattingEnabled = true;
             this.cbScenicCacheSelector.Location = new System.Drawing.Point(0, 0);
             this.cbScenicCacheSelector.Name = "cbScenicCacheSelector";
-            this.cbScenicCacheSelector.Size = new System.Drawing.Size(225, 21);
+            this.cbScenicCacheSelector.Size = new System.Drawing.Size(271, 21);
             this.cbScenicCacheSelector.TabIndex = 0;
             this.cbScenicCacheSelector.SelectedIndexChanged += new System.EventHandler(this.obj_scenary_cache_CB_SelectionChangeCommitted);
             // 
@@ -1192,17 +1200,35 @@
             this.colorDialog.FullOpen = true;
             this.colorDialog.SolidColorOnly = true;
             // 
-            // btnTileMerger
+            // btnExport
             // 
-            this.btnTileMerger.Name = "btnTileMerger";
-            this.btnTileMerger.Size = new System.Drawing.Size(134, 22);
-            this.btnTileMerger.Text = "Tile Merger";
+            this.btnExport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ckbExportDebugRender,
+            this.ckbExportShowFPS});
+            this.btnExport.Image = ((System.Drawing.Image)(resources.GetObject("btnExport.Image")));
+            this.btnExport.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(65, 22);
+            this.btnExport.Text = "Test (F5)";
             // 
-            // btnShadowTool
+            // ckbExportDebugRender
             // 
-            this.btnShadowTool.Name = "btnShadowTool";
-            this.btnShadowTool.Size = new System.Drawing.Size(152, 22);
-            this.btnShadowTool.Text = "Shadow Tool";
+            this.ckbExportDebugRender.CheckOnClick = true;
+            this.ckbExportDebugRender.Name = "ckbExportDebugRender";
+            this.ckbExportDebugRender.Size = new System.Drawing.Size(152, 22);
+            this.ckbExportDebugRender.Text = "Debug Render";
+            this.ckbExportDebugRender.ToolTipText = "Draw Debug Rectangles?";
+            // 
+            // ckbExportShowFPS
+            // 
+            this.ckbExportShowFPS.Checked = true;
+            this.ckbExportShowFPS.CheckOnClick = true;
+            this.ckbExportShowFPS.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ckbExportShowFPS.Name = "ckbExportShowFPS";
+            this.ckbExportShowFPS.Size = new System.Drawing.Size(152, 22);
+            this.ckbExportShowFPS.Text = "Show FPS";
+            this.ckbExportShowFPS.ToolTipText = "Show an FPS Display in the Top Left corner?";
             // 
             // listCritterSpawns
             // 
@@ -1312,7 +1338,6 @@
         internal System.Windows.Forms.ToolStripMenuItem btnCritterEditor;
         private System.Windows.Forms.Timer timerRedrawAll;
         internal System.Windows.Forms.ToolStripMenuItem ckbShowTileBases;
-        internal System.Windows.Forms.ToolStripButton btnExport;
         internal System.Windows.Forms.ToolStripMenuItem btnSoundEditor;
         private System.Windows.Forms.TabPage tabOptions;
         private System.Windows.Forms.Label border_1;
@@ -1381,6 +1406,9 @@
         internal System.Windows.Forms.TreeView treeTiles;
         internal System.Windows.Forms.ToolStripMenuItem btnTileMerger;
         internal System.Windows.Forms.ToolStripMenuItem btnShadowTool;
+        internal System.Windows.Forms.ToolStripSplitButton btnExport;
+        internal System.Windows.Forms.ToolStripMenuItem ckbExportDebugRender;
+        internal System.Windows.Forms.ToolStripMenuItem ckbExportShowFPS;
     }
 }
 

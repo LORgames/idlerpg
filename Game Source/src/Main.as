@@ -79,7 +79,7 @@ package {
 					var arg:String = args[i];
 					if(arg.indexOf("=") == -1) continue;
 					
-					var param:String = arg.split("=")[0];
+					var param:String = (arg.split("=")[0] as String).toLowerCase();
 					
 					switch(param) {
 						case "map":
@@ -90,6 +90,12 @@ package {
 								Global.DebugRender = true;
 							} else {
 								Global.DebugRender = false;
+							} break;
+						case "showfps":
+							if (arg.substr(8) == "Yes") {
+								Global.DebugFPS = true;
+							} else {
+								Global.DebugFPS = false;
 							} break;
 						default:
 							trace("Unknown Param: " + arg);

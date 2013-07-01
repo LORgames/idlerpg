@@ -17,7 +17,10 @@ package {
 		public static var DisablePortals:Boolean = true;
 		
 		public static const ZeroPoint:Point = new Point();
+		
+		//Debug information
 		public static var DebugRender:Boolean = false;
+		static public var DebugFPS:Boolean = false;
 		
 		//Touch information
 		public static var touchArea:Rect = new Rect(true, null, 0, 0, 0, 0);

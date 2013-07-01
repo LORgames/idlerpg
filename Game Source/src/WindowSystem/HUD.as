@@ -20,7 +20,7 @@ package WindowSystem
 			ImageLoader.Load("OtherUI/Stick.png", LoadedStickArt);
 			ImageLoader.Load("OtherUI/Thumb.png", LoadedThumbArt);
 			
-			if(Global.DebugRender) {
+			if(Global.DebugFPS) {
 				this.addChild(new FPSCounter());
 				this.graphics.beginFill(0xFFFF00, 0.8);
 				this.graphics.drawRect(0, 0, 100, 25);
