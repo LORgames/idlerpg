@@ -206,11 +206,11 @@
     <Compile Include="SoundEditor.Designer.cs">
       <DependentUpon>SoundEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="TemplateEditor.cs">
+    <Compile Include="ObjectEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TemplateEditor.Designer.cs">
-      <DependentUpon>TemplateEditor.cs</DependentUpon>
+    <Compile Include="ObjectEditor.Designer.cs">
+      <DependentUpon>ObjectEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="TileEditor.cs">
       <SubType>Form</SubType>
@@ -298,8 +298,8 @@
     <EmbeddedResource Include="SoundEditor.resx">
       <DependentUpon>SoundEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TemplateEditor.resx">
-      <DependentUpon>TemplateEditor.cs</DependentUpon>
+    <EmbeddedResource Include="ObjectEditor.resx">
+      <DependentUpon>ObjectEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TileEditor.resx">
       <DependentUpon>TileEditor.cs</DependentUpon>

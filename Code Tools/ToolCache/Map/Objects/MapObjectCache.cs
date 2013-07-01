@@ -8,10 +8,10 @@ using ToolCache.Animation;
 using System.Drawing;
 
 namespace ToolCache.Map.Objects {
-    public class TemplateCache {
+    public class MapObjectCache {
         public const string RESOLVED_DATABASE_FILENAME = Settings.Database + "Objects.bin";
 
-        public static Dictionary<short, Template> ObjectTypes = new Dictionary<short, Template>();
+        public static Dictionary<short, MapObject> ObjectTypes = new Dictionary<short, MapObject>();
         private static Dictionary<string, List<short>> GroupsToObjectUUIDS = new Dictionary<string, List<short>>();
 
         private static short nextObjectID = 0;
@@ -25,7 +25,7 @@ namespace ToolCache.Map.Objects {
             ReadDatabase();
         }
 
-        public static Template G(short id) {
+        public static MapObject G(short id) {
             if (ObjectTypes.ContainsKey(id)) {
                 return ObjectTypes[id];
             }
@@ -66,7 +66,7 @@ namespace ToolCache.Map.Objects {
                     bool isSolid = f.GetByte() == 1;
                     int OffsetY = f.GetShort();
 
-                    ObjectTypes.Add(ObjectID, new Template(ObjectID, ObjectName, ObjectGroup, animation, OffsetY, _rects, isSolid, Script));
+                    ObjectTypes.Add(ObjectID, new MapObject(ObjectID, ObjectName, ObjectGroup, animation, OffsetY, _rects, isSolid, Script));
 
                     if (!GroupsToObjectUUIDS.ContainsKey(ObjectGroup)) {
                         GroupsToObjectUUIDS.Add(ObjectGroup, new List<short>());
@@ -86,7 +86,7 @@ namespace ToolCache.Map.Objects {
             BinaryIO f = new BinaryIO();
             f.AddInt(ObjectTypes.Count);
 
-            foreach (KeyValuePair<short, Template> kvp in ObjectTypes) {
+            foreach (KeyValuePair<short, MapObject> kvp in ObjectTypes) {
                 f.AddShort(kvp.Key);
 
                 kvp.Value.Animation.PackIntoBinaryIO(f);
@@ -112,7 +112,7 @@ namespace ToolCache.Map.Objects {
             f.Encode(RESOLVED_DATABASE_FILENAME);
         }
 
-        public static void AddObject(Template t) {
+        public static void AddObject(MapObject t) {
             if (ObjectTypes.ContainsKey(t.ObjectID)) {
                 GroupsToObjectUUIDS[ObjectTypes[t.ObjectID].ObjectGroup].Remove(t.ObjectID);
 
@@ -153,8 +153,8 @@ namespace ToolCache.Map.Objects {
             }
         }
 
-        public static List<Template> GetObjectsInGroup(string p) {
-            List<Template> retList = new List<Template>();
+        public static List<MapObject> GetObjectsInGroup(string p) {
+            List<MapObject> retList = new List<MapObject>();
 
             if (GroupsToObjectUUIDS.ContainsKey(p)) {
                 foreach (short id in GroupsToObjectUUIDS[p]) {

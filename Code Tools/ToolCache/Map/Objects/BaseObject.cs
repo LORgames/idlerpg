@@ -15,7 +15,7 @@ namespace ToolCache.Map.Objects {
         public Point Location;
         public short ObjectType;
 
-        public Template ObjectTemplate;
+        public MapObject ObjectTemplate;
 
         public int ActualY;
         public int ActualX;
@@ -27,7 +27,7 @@ namespace ToolCache.Map.Objects {
             this.ObjectType = ObjectType;
             Location = initialLocation;
 
-            ObjectTemplate = TemplateCache.G(ObjectType);
+            ObjectTemplate = MapObjectCache.G(ObjectType);
 
             RecalculatePosition();
         }

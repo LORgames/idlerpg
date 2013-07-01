@@ -11,22 +11,23 @@ using ToolCache.General;
 using CityTools.Components;
 
 namespace CityTools {
-    public partial class TemplateEditor : Form {
+    public partial class ObjectEditor : Form {
         public delegate void SaveEventHandler(object source, short objectID);
         public event SaveEventHandler OnSave;
 
-        short objectID = 0;
+        private short objectID = 0;
+        private MapObject CurrentObject = null;
 
-        Point p0 = Point.Empty;
-        Point p1 = Point.Empty;
+        private Point p0 = new Point(-1, 0);
+        private Point p1 = Point.Empty;
 
-        List<Rectangle> _bases = new List<Rectangle>();
+        private List<Rectangle> _bases = new List<Rectangle>();
 
-        Boolean _iE = false; //is edited
-        Boolean _new = false; //Is it new?
-        Boolean _updating = false; //Is it updating?
+        private Boolean _isEdited = false; //is edited
+        private Boolean _isNew = false; //Is it new?
+        private Boolean _isUpdating = false; //Is it updating?
 
-        public TemplateEditor() {
+        public ObjectEditor() {
             InitializeComponent();
 
             ccAnimation.SetSaveLocation("Objects");
@@ -42,29 +43,29 @@ namespace CityTools {
         }
 
         private void ChangeTo(short objectID) {
-            if (_iE) {
-                if (_new && MessageBox.Show("Do you want to keep this object?", "Caption?", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+            if (_isEdited) {
+                if (_isNew && MessageBox.Show("Do you want to keep this object?", "Caption?", MessageBoxButtons.YesNo) == DialogResult.Yes) {
                     Save();
-                } else if (!_new) {
+                } else if (!_isNew) {
                     Save();
                 }
             }
 
-            _updating = true;
+            _isUpdating = true;
 
-            if (TemplateCache.G(objectID) != null) {
-                _new = false;
-                ccAnimation.ChangeToAnimation(TemplateCache.G(objectID).Animation);
-                cbTemplateGroup.Text = TemplateCache.G(objectID).ObjectGroup;
-                txtTemplateName.Text = TemplateCache.G(objectID).ObjectName;
-                numOffsetHeight.Value = TemplateCache.G(objectID).OffsetY;
-                ckbIsSolid.Checked = TemplateCache.G(objectID).isSolid;
-                _bases = TemplateCache.G(objectID).Blocks;
-                scriptBox1.Script = TemplateCache.G(objectID).Script;
+            if (MapObjectCache.G(objectID) != null) {
+                _isNew = false;
+                ccAnimation.ChangeToAnimation(MapObjectCache.G(objectID).Animation);
+                cbTemplateGroup.Text = MapObjectCache.G(objectID).ObjectGroup;
+                txtTemplateName.Text = MapObjectCache.G(objectID).ObjectName;
+                numOffsetHeight.Value = MapObjectCache.G(objectID).OffsetY;
+                ckbIsSolid.Checked = MapObjectCache.G(objectID).isSolid;
+                _bases = MapObjectCache.G(objectID).Blocks;
+                scriptBox1.Script = MapObjectCache.G(objectID).Script;
                 this.objectID = objectID;
             } else {
-                _new = true;
-                this.objectID = TemplateCache.NextID();
+                _isNew = true;
+                this.objectID = MapObjectCache.NextID();
                 ccAnimation.ClearAnimation();
                 cbTemplateGroup.Text = "Unknown";
                 txtTemplateName.Text = "<Unknown>";
@@ -74,8 +75,8 @@ namespace CityTools {
 
             lblTemplateID.Text = "N:" + this.objectID;
 
-            _updating = false;
-            _iE = false;
+            _isUpdating = false;
+            _isEdited = false;
         }
 
         private void btnSave_Click(object sender, EventArgs e) {
@@ -83,27 +84,27 @@ namespace CityTools {
         }
 
         private void Save() {
-            if (TemplateCache.G(objectID) != null) {
-                TemplateCache.G(objectID).Animation = ccAnimation.GetAnimation();
-                TemplateCache.G(objectID).ObjectGroup = cbTemplateGroup.Text;
-                TemplateCache.G(objectID).ObjectName = txtTemplateName.Text;
-                TemplateCache.G(objectID).Blocks = _bases;
-                TemplateCache.G(objectID).OffsetY = (int)numOffsetHeight.Value;
-                TemplateCache.G(objectID).isSolid = ckbIsSolid.Checked;
-                TemplateCache.G(objectID).Script = scriptBox1.Script;
+            if (MapObjectCache.G(objectID) != null) {
+                MapObjectCache.G(objectID).Animation = ccAnimation.GetAnimation();
+                MapObjectCache.G(objectID).ObjectGroup = cbTemplateGroup.Text;
+                MapObjectCache.G(objectID).ObjectName = txtTemplateName.Text;
+                MapObjectCache.G(objectID).Blocks = _bases;
+                MapObjectCache.G(objectID).OffsetY = (int)numOffsetHeight.Value;
+                MapObjectCache.G(objectID).isSolid = ckbIsSolid.Checked;
+                MapObjectCache.G(objectID).Script = scriptBox1.Script;
             } else {
-                Template t = new Template(objectID, txtTemplateName.Text, cbTemplateGroup.Text, ccAnimation.GetAnimation(), (int)numOffsetHeight.Value, _bases, ckbIsSolid.Checked, scriptBox1.Script);
-                TemplateCache.AddObject(t);
+                MapObject t = new MapObject(objectID, txtTemplateName.Text, cbTemplateGroup.Text, ccAnimation.GetAnimation(), (int)numOffsetHeight.Value, _bases, ckbIsSolid.Checked, scriptBox1.Script);
+                MapObjectCache.AddObject(t);
             }
 
-            _new = false;
-            _iE = false;
+            _isNew = false;
+            _isEdited = false;
 
             UpdateObjectNames();
         }
 
         private void btnDeleteTemplate_Click(object sender, EventArgs e) {
-            TemplateCache.Delete(objectID);
+            MapObjectCache.Delete(objectID);
             UpdateObjectNames();
         }
 
@@ -113,15 +114,15 @@ namespace CityTools {
         }
 
         private void TemplateEditor_FormClosing(object sender, FormClosingEventArgs e) {
-            if (_iE) {
-                if (_new && MessageBox.Show("Do you want to keep this object?", "Save Object?", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+            if (_isEdited) {
+                if (_isNew && MessageBox.Show("Do you want to keep this object?", "Save Object?", MessageBoxButtons.YesNo) == DialogResult.Yes) {
                     Save();
-                } else if (!_new) {
+                } else if (!_isNew) {
                     Save();
                 }
             }
 
-            TemplateCache.WriteDatabase();
+            MapObjectCache.WriteDatabase();
         }
 
         private void UpdateObjectNames() {
@@ -129,7 +130,7 @@ namespace CityTools {
             treeTemplateNames.Nodes.Clear();
 
             Dictionary<string, TreeNode> rootNodes = new Dictionary<string, TreeNode>();
-            List<string> groups = TemplateCache.GetGroups();
+            List<string> groups = MapObjectCache.GetGroups();
 
             foreach (String groupName in groups) {
                 rootNodes.Add(groupName, new TreeNode(groupName));
@@ -138,7 +139,7 @@ namespace CityTools {
                 cbTemplateGroup.Items.Add(groupName);
             }
 
-            foreach (KeyValuePair<short, Template> kvp in TemplateCache.ObjectTypes) {
+            foreach (KeyValuePair<short, MapObject> kvp in MapObjectCache.ObjectTypes) {
                 TreeNode node = new TreeNode(kvp.Value.ObjectName);
                 node.Tag = kvp.Key;
 
@@ -149,14 +150,14 @@ namespace CityTools {
         }
 
         private void pbExampleBase_MouseDown(object sender, MouseEventArgs e) {
-            if (e.Button == System.Windows.Forms.MouseButtons.Left) {
+            if (e.Button == MouseButtons.Left) {
                 p0 = e.Location;
                 p1 = e.Location;
             }
         }
 
         private void pbExampleBase_MouseUp(object sender, MouseEventArgs e) {
-            if (e.Button == System.Windows.Forms.MouseButtons.Left) {
+            if (e.Button == MouseButtons.Left && p0.X > -1) {
                 p1 = e.Location;
 
                 if (p0.X < 0) p0.X = 0;
@@ -175,12 +176,15 @@ namespace CityTools {
                 if (OnSave != null) {
                     OnSave(this, objectID);
                 }
+
+                p0.X = -1;
             }
         }
 
         private void pbExampleBase_MouseMove(object sender, MouseEventArgs e) {
-            if (e.Button == System.Windows.Forms.MouseButtons.Left) {
+            if (e.Button == MouseButtons.Left && p0.X > -1) {
                 p1 = e.Location;
+                pbExampleBase.Invalidate();
             }
         }
 
@@ -200,6 +204,15 @@ namespace CityTools {
             if (ckbDrawOffset.Checked) {
                 e.Graphics.DrawLine(Pens.Red, 0, (int)numOffsetHeight.Value, pbExampleBase.Width, (int)numOffsetHeight.Value);
             }
+
+            //Draw the mouse rect if there is one
+            if (p0.X > -1) {
+                if (p0.X < 0) p0.X = 0; if (p0.Y < 0) p0.Y = 0; if (p1.X < 0) p1.X = 0; if (p1.Y < 0) p1.Y = 0;
+                Rectangle r = new Rectangle();
+                r.X = Math.Min(p0.X, p1.X); r.Y = Math.Min(p0.Y, p1.Y);
+                r.Width = Math.Abs(p1.X - p0.X); r.Height = Math.Abs(p1.Y - p0.Y);
+                e.Graphics.DrawRectangle(Pens.Magenta, r);
+            }
         }
 
         private void treeTemplateNames_AfterSelect(object sender, TreeViewEventArgs e) {
@@ -209,11 +222,15 @@ namespace CityTools {
         }
 
         private void ValueChanged(object sender, EventArgs e) {
-            if(!_updating) _iE = true;
+            Edited();
+        }
+
+        private void Edited() {
+            if (!_isUpdating) _isEdited = true;
         }
 
         private void AnimationChanged(object sender, EventArgs e) {
-            if (!_updating) _iE = true;
+            Edited();
 
             foreach (String s in ccAnimation.GetAnimation().Frames) {
                 ImageCache.ForceCache(s);

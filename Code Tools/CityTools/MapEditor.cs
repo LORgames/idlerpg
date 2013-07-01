@@ -257,7 +257,7 @@ namespace CityTools {
         public void DrawWithObject(String objectName) {
             if (tabFirstLevel.SelectedTab == tabPalette) {
                 short objectID = short.Parse(objectName);
-                paintingAnimation = TemplateCache.G(objectID).Animation;
+                paintingAnimation = MapObjectCache.G(objectID).Animation;
 
                 if (tabObjectTools.SelectedTab == tabObjects) {
                     ScenicPlacementHelper.object_index = objectID;

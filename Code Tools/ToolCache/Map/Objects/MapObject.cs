@@ -6,7 +6,7 @@ using ToolCache.Animation;
 using System.Drawing;
 
 namespace ToolCache.Map.Objects {
-    public class Template {
+    public class MapObject {
         public short ObjectID;
         public string ObjectName;
         public string ObjectGroup;
@@ -20,7 +20,7 @@ namespace ToolCache.Map.Objects {
 
         public bool isSolid;
 
-        public Template(short typeID, string name, string group, AnimatedObject animation, int OffsetY, List<Rectangle> _blocks, bool isSolid, string script) {
+        public MapObject(short typeID, string name, string group, AnimatedObject animation, int OffsetY, List<Rectangle> _blocks, bool isSolid, string script) {
             ObjectID = typeID;
 
             ObjectName = name;

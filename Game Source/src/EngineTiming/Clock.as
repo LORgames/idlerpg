@@ -1,6 +1,8 @@
 package EngineTiming {
 	import flash.display.Stage;
 	import flash.events.Event;
+	import flash.text.TextField;
+	import flash.utils.getTimer;
 	import Game.Map.SpawnRegion;
 	import Game.Map.WorldData;
 	/**
@@ -18,6 +20,10 @@ package EngineTiming {
 		private var Sec_15_Count:Number = 0;
 		
 		private var ExpectedFrameRate:Number = 0;
+		
+		public static var FPSTF:TextField;
+        private var last:uint = getTimer();
+        private var ticks:uint = 0;
 		
 		public static var CleanUpList:Vector.<ICleanUp> = new Vector.<ICleanUp>();
 		
@@ -37,6 +43,19 @@ package EngineTiming {
 		}
 		
 		public function Tick(e:Event):void {
+			if (FPSTF != null) {
+				ticks++;
+				var now:uint = getTimer();
+				var delta:uint = now - last;
+				if (delta >= 1000) {
+					//trace(ticks / delta * 1000+" ticks:"+ticks+" delta:"+delta);
+					var fps:Number = ticks / delta * 1000;
+					FPSTF.text = "FPS:" + fps.toFixed(1);
+					ticks = 0;
+					last = now;
+				}
+			}
+			
 			if (Global.LoadingTotal == 0) {
 			
 				var dt:Number = 1.0 / ExpectedFrameRate;

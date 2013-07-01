@@ -19,11 +19,11 @@ namespace ToolToGameExporter {
             short highestIndex = 0;
 
             BinaryIO f = new BinaryIO();
-            f.AddShort((short)TemplateCache.ObjectTypes.Count);
+            f.AddShort((short)MapObjectCache.ObjectTypes.Count);
 
             int i = 0;
 
-            foreach (Template t in TemplateCache.ObjectTypes.Values) {
+            foreach (MapObject t in MapObjectCache.ObjectTypes.Values) {
                 RealignedItemIndexes.Add(t.ObjectID, highestIndex);
                 f.AddString(t.ObjectName);
 

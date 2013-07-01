@@ -129,7 +129,7 @@ namespace CityTools {
         }
 
         private void listShadows_SelectedIndexChanged(object sender, EventArgs e) {
-            if (listShadows.SelectedIndex != null) {
+            if (listShadows.SelectedItem != null) {
                 UpdateShadowInfo();
             }
         }

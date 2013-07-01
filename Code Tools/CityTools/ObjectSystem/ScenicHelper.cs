@@ -162,7 +162,7 @@ namespace CityTools.ObjectSystem {
                 float y = (obj.Location.Y - Camera.Offset.Y) * Camera.ZoomLevel;
 
                 if (MainWindow.instance.ckbShowObjectBases.Checked) {
-                    foreach (Rectangle b in TemplateCache.G(obj.ObjectType).Blocks) {
+                    foreach (Rectangle b in MapObjectCache.G(obj.ObjectType).Blocks) {
                         Rectangle r = new Rectangle();
 
                         r.X = (int)(x + b.X * Camera.ZoomLevel);
@@ -177,9 +177,9 @@ namespace CityTools.ObjectSystem {
                         }
                     }
 
-                    TemplateCache.G(obj.ObjectType).Animation.Draw(buffer.gfx, x, y, Camera.ZoomLevel, 0.33f);
+                    MapObjectCache.G(obj.ObjectType).Animation.Draw(buffer.gfx, x, y, Camera.ZoomLevel, 0.33f);
                 } else {
-                    TemplateCache.G(obj.ObjectType).Animation.Draw(buffer.gfx, x, y, Camera.ZoomLevel);
+                    MapObjectCache.G(obj.ObjectType).Animation.Draw(buffer.gfx, x, y, Camera.ZoomLevel);
                 }
 
                 

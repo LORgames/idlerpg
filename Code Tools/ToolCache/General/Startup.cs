@@ -20,7 +20,7 @@ namespace ToolCache.General {
             Factions.Initialize();
 
             //Tier 1 Loading:
-            TemplateCache.Initialize();
+            MapObjectCache.Initialize();
             TileCache.Initialize();
             EquipmentManager.Initialize();
 

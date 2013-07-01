@@ -1,7 +1,7 @@
 ﻿using CityTools.Components;
 
 namespace CityTools {
-    partial class TemplateEditor {
+    partial class ObjectEditor {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -26,7 +26,7 @@ namespace CityTools {
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TemplateEditor));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ObjectEditor));
             this.pbExampleBase = new System.Windows.Forms.PictureBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnNewTemplate = new System.Windows.Forms.ToolStripButton();

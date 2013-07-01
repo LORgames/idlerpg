@@ -26,7 +26,7 @@ namespace CityTools.CacheInterfaces {
         /// </summary>
         public static void UpdateObjectTab() {
             MainWindow.instance.cbScenicCacheSelector.Items.Clear();
-            List<String> groups = TemplateCache.GetGroups();
+            List<String> groups = MapObjectCache.GetGroups();
 
             foreach (String s in groups) {
                 MainWindow.instance.cbScenicCacheSelector.Items.Add(s);
@@ -39,7 +39,7 @@ namespace CityTools.CacheInterfaces {
         internal static void UpdateObjectPage() {
             (MainWindow.instance.pnlObjectScenicCache.Controls[0] as ObjectCacheControl).Deactivate();
 
-            foreach (Template t in TemplateCache.GetObjectsInGroup(MainWindow.instance.cbScenicCacheSelector.Text)) {
+            foreach (MapObject t in MapObjectCache.GetObjectsInGroup(MainWindow.instance.cbScenicCacheSelector.Text)) {
                 if (t.Animation.Frames.Count > 0) {
                     CachedObject co = new CachedObject(t.Animation.Frames[0], (t.isSolid ? "S" : "P"), t.ObjectID.ToString());
 

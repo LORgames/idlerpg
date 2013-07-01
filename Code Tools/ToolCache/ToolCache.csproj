@@ -71,7 +71,7 @@
     <Compile Include="Map\Background\BackgroundTypes.cs" />
     <Compile Include="Map\Background\IBackground.cs" />
     <Compile Include="Map\MapPieceCache.cs" />
-    <Compile Include="Map\Objects\Template.cs" />
+    <Compile Include="Map\Objects\MapObject.cs" />
     <Compile Include="Map\Regions\CritterSpawn.cs" />
     <Compile Include="Map\Regions\SpawnRegion.cs" />
     <Compile Include="Map\Background\SolidBackground.cs" />
@@ -79,7 +79,7 @@
     <Compile Include="Map\Tiles\TileMap.cs" />
     <Compile Include="Map\MapPiece.cs" />
     <Compile Include="Map\Objects\BaseObject.cs" />
-    <Compile Include="Map\Objects\TemplateCache.cs" />
+    <Compile Include="Map\Objects\MapObjectCache.cs" />
     <Compile Include="Map\Tiles\TileTemplate.cs" />
     <Compile Include="Map\Tiles\TileCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

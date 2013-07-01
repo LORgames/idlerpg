@@ -54,8 +54,8 @@ namespace CityTools.CacheInterfaces {
         }
 
         private static void OpenTemplateEditor() {
-            TemplateEditor t = new TemplateEditor();
-            t.OnSave += new TemplateEditor.SaveEventHandler(MainWindow.instance.ObjectTemplateSaved);
+            ObjectEditor t = new ObjectEditor();
+            t.OnSave += new ObjectEditor.SaveEventHandler(MainWindow.instance.ObjectTemplateSaved);
             t.ShowDialog(MainWindow.instance);
             ObjectInterface.ReloadAll();
         }

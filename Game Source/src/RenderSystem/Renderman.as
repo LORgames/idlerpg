@@ -7,6 +7,7 @@ package RenderSystem {
 	import Game.Critter.CritterAnimationSet;
 	import Game.Map.MapData;
 	import Game.Map.WorldData;
+	import WindowSystem.Fonts;
 	import WindowSystem.ScreenText;
 	
 	/**
@@ -39,7 +40,7 @@ package RenderSystem {
 			
 			Main.I.addChild(map.DebugLayer);
 			
-			MapText = new ScreenText(60);
+			MapText = new ScreenText(60, Fonts.Header);
 			Main.I.addChild(MapText);
 		}
 		
