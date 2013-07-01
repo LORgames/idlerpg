@@ -49,7 +49,10 @@ namespace ToolCache.Map.Objects {
                 m.Blocks.Add(_base);
             }
 
-            m.isSolid = f.GetByte() == 1;
+            byte booleanData = f.GetByte();
+            m.isSolid = (booleanData & (byte)0x1) == 0x1;
+            m.IndividualAnimations = (booleanData & (byte)0x2) == 0x2;
+
             m.OffsetY = f.GetShort();
 
             return m;
@@ -74,8 +77,16 @@ namespace ToolCache.Map.Objects {
                 f.AddShort((short)r.Height);
             }
 
-            f.AddByte((isSolid ? (byte)1 : (byte)0));
+            f.AddByte(GetBooleanData());
             f.AddShort((short)OffsetY);
+        }
+
+        public byte GetBooleanData() {
+            byte booleanData = 0;
+            booleanData |= (isSolid ? (byte)1 : (byte)0);
+            booleanData |= (IndividualAnimations ? (byte)2 : (byte)0);
+
+            return booleanData;
         }
     }
 }

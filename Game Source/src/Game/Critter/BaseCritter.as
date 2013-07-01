@@ -1,25 +1,18 @@
 package Game.Critter {
 	import CollisionSystem.Rect;
-	import Debug.Drawer;
 	import EngineTiming.Clock;
-	import flash.display.Bitmap;
-	import flash.display.BitmapData;
+	import EngineTiming.ICleanUp;
+	import EngineTiming.IUpdatable;
 	import flash.display.Graphics;
 	import flash.geom.Point;
-	import flash.geom.Rectangle;
 	import Game.General.Script;
 	import Game.Map.MapData;
-	import Game.Map.Portal;
-	import Game.Map.TileHelper;
-	import Game.Map.TileInstance;
-	import Game.Map.TileTemplate;
+	import Game.Map.Portals.Portal;
+	import Game.Map.Tiles.TileHelper;
+	import Game.Map.Tiles.TileInstance;
+	import Game.Map.Tiles.TileTemplate;
 	import Game.Map.WorldData;
-	import InputSystems.IInputSystem;
-	import RenderSystem.IObjectLayer;
-	import EngineTiming.IUpdatable;
 	import Interfaces.IMapObject;
-	import EngineTiming.ICleanUp;
-	import RenderSystem.Renderman;
 	/**
 	 * ...
 	 * @author Paul

@@ -1,5 +1,7 @@
-package Game.Map {
+package Game.Map.Portals {
 	import CollisionSystem.Rect;
+	import Game.Map.MapData;
+	import Game.Map.WorldData;
 	/**
 	 * ...
 	 * @author Paul

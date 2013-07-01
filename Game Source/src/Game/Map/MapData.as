@@ -8,8 +8,16 @@ package Game.Map {
 	import Game.Critter.BaseCritter;
 	import Game.Critter.CritterHuman;
 	import Game.General.BinaryLoader;
+	import Game.Map.Objects.ObjectInstanceAnimated;
+	import Game.Map.Objects.ObjectTemplate;
 	import Interfaces.IMapObject;
 	import SoundSystem.MusicPlayer;
+	import Game.Map.Objects.ObjectInstance;
+	import Game.Map.Tiles.TileInstance;
+	import Game.Map.Spawns.SpawnRegion;
+	import Game.Map.Portals.Portal;
+	import Game.Map.Tiles.TileHelper;
+	import Game.Map.Portals.PortalHelper;
 	/**
 	 * ...
 	 * @author Paul
@@ -104,14 +112,19 @@ package Game.Map {
 			Objects = new Vector.<ObjectInstance>(TotalObjects, true);
 			
 			for (i = 0; i < TotalObjects; i++) {
-				var o:ObjectInstance = new ObjectInstance();
-				
 				var id:int = b.readShort();
 				var _x:int = b.readShort();
 				var _y:int = b.readShort();
 				
-				o.SetInformation(this, id, _x, _y);
+				var o:ObjectInstance;
 				
+				if (ObjectTemplate.Objects[id].IndividualAnimations) {
+					o = new ObjectInstanceAnimated();
+				} else {
+					o = new ObjectInstance();
+				}
+				
+				o.SetInformation(this, id, _x, _y);
 				Objects[i] = o;
 			}
 			

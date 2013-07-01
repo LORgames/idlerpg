@@ -1,4 +1,4 @@
-package Game.Map {
+package Game.Map.Tiles {
 	import CollisionSystem.Rect;
 	import Interfaces.IMapObject;
 	/**

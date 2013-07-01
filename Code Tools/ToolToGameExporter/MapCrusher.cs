@@ -73,7 +73,7 @@ namespace ToolToGameExporter {
                 for (int i = 0; i < map.Objects.Count; i++) {
                     BaseObject obj = map.Objects[i];
 
-                    f.AddShort(ObjectCrusher.RealignedItemIndexes[obj.ObjectType]);
+                    f.AddShort(MapObjectCrusher.RealignedItemIndexes[obj.ObjectType]);
                     f.AddShort((short)obj.Location.X);
                     f.AddShort((short)obj.Location.Y);
                 }

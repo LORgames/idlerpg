@@ -9,7 +9,7 @@ using System.Drawing.Imaging;
 using ToolCache.Scripting;
 
 namespace ToolToGameExporter {
-    public class ObjectCrusher {
+    public class MapObjectCrusher {
 
         public static Dictionary<short, short> RealignedItemIndexes = new Dictionary<short, short>();
 
@@ -44,7 +44,7 @@ namespace ToolToGameExporter {
                     f.AddShort((short)(t.Blocks[i].Height));
                 }
 
-                f.AddByte((byte)(t.isSolid ? 1 : 0));
+                f.AddByte(t.GetBooleanData());
 
                 if (t.Animation.Frames.Count > 0) {
                     Image im = Image.FromFile(t.Animation.Frames[0]);

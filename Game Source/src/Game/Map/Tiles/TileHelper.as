@@ -1,6 +1,7 @@
-package Game.Map {
+package Game.Map.Tiles {
 	import CollisionSystem.Rect;
 	import flash.geom.Rectangle;
+	import Game.Map.MapData;
 	/**
 	 * ...
 	 * @author Paul

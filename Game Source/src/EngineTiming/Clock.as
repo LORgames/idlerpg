@@ -3,7 +3,6 @@ package EngineTiming {
 	import flash.events.Event;
 	import flash.text.TextField;
 	import flash.utils.getTimer;
-	import Game.Map.SpawnRegion;
 	import Game.Map.WorldData;
 	/**
 	 * ...

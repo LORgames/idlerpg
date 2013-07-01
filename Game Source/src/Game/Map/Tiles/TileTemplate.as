@@ -1,4 +1,4 @@
-package Game.Map {
+package Game.Map.Tiles {
 	import adobe.utils.CustomActions;
 	import CollisionSystem.Rect;
 	import flash.geom.Rectangle;

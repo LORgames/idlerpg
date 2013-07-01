@@ -10,6 +10,8 @@ package WindowSystem
 		
 		public static const Header:String = "_Gabriola";
 		public static const Debug:String = "Courier";
+		
+		public function Fonts() { };
 	}
 
 }

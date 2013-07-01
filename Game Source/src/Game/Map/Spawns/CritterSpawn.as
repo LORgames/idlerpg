@@ -1,4 +1,4 @@
-package Game.Map {
+package Game.Map.Spawns {
 	/**
 	 * ...
 	 * @author Paul

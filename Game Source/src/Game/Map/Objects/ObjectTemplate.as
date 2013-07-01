@@ -1,4 +1,4 @@
-package Game.Map {
+package Game.Map.Objects {
 	import adobe.utils.CustomActions;
 	import flash.display.BitmapData;
 	import flash.geom.Point;
@@ -20,6 +20,7 @@ package Game.Map {
 		
 		public var TotalFrames:int;
 		public var PlaybackSpeed:Number;
+		public var IndividualAnimations:Boolean = false;
 		public var Bases:Vector.<Rectangle>;
 		
 		public var MyScript:Script;
@@ -29,15 +30,13 @@ package Game.Map {
 		
 		private var isLoading:Boolean = false;
 		private var bitmapCopy:BitmapData;
-		private var fullBitmap:BitmapData;
+		public var SpriteAtlas:BitmapData;
 		
 		private var timeout:Number = 0;
 		private var currentFrame:int = 0;
-		private var frameSize:Rectangle = new Rectangle();
+		public var FrameSize:Rectangle = new Rectangle();
 		
 		private var Instances:int = 0;
-		
-		public const EmptyPoint:Point = new Point();
 		
 		public function ObjectTemplate() {
 			
@@ -59,9 +58,9 @@ package Game.Map {
 			Instances--;
 			
 			if (Instances == 0) {
-				if (fullBitmap != null) {
-					fullBitmap.dispose();
-					fullBitmap = null;
+				if (SpriteAtlas != null) {
+					SpriteAtlas.dispose();
+					SpriteAtlas = null;
 				}
 				
 				isLoading = false;
@@ -73,12 +72,12 @@ package Game.Map {
 		}
 		
 		private function LoadedBitmap(e:BitmapData):void {
-			bitmapCopy.copyPixels(e, frameSize, EmptyPoint);
+			bitmapCopy.copyPixels(e, FrameSize, Global.ZeroPoint);
 			Global.LoadingTotal--;
 			
 			if (TotalFrames > 1) {
 				Renderman.AnimatedObjectsPush(this);
-				fullBitmap = e.clone();
+				SpriteAtlas = e.clone();
 			}
 		}
 		
@@ -92,8 +91,8 @@ package Game.Map {
 					if (currentFrame == TotalFrames) currentFrame = 0;
 				}
 				
-				frameSize.x = currentFrame * frameSize.width;
-				bitmapCopy.copyPixels(fullBitmap, frameSize, EmptyPoint);
+				FrameSize.x = currentFrame * FrameSize.width;
+				bitmapCopy.copyPixels(SpriteAtlas, FrameSize, Global.ZeroPoint);
 			}
 		}
 		
@@ -135,13 +134,15 @@ package Game.Map {
 					obj.Bases[totalRects] = new Rectangle(_x, _y, _w, _h);
 				}
 				
-				obj.isSolid = (b.readByte() == 1);
+				var extraData:uint = b.readUnsignedByte();
+				obj.isSolid = (extraData & 0x1) == 0x1;
+				obj.IndividualAnimations = (extraData & 0x2) == 0x2;
 				
-				obj.frameSize.width = b.readShort();
-				obj.frameSize.height = b.readShort();
+				obj.FrameSize.width = b.readShort();
+				obj.FrameSize.height = b.readShort();
 				obj.PlaybackSpeed = b.readFloat();
 				
-				obj.bitmapCopy = new BitmapData(obj.frameSize.width, obj.frameSize.height, true, 0x608080FF);
+				obj.bitmapCopy = new BitmapData(obj.FrameSize.width, obj.FrameSize.height, true, 0x608080FF);
 				
 				Objects[i] = obj;
 			}

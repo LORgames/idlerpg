@@ -69,7 +69,7 @@
     </Compile>
     <Compile Include="Global.cs" />
     <Compile Include="MapCrusher.cs" />
-    <Compile Include="ObjectCrusher.cs" />
+    <Compile Include="MapObjectCrusher.cs" />
     <Compile Include="PortalCrusher.cs" />
     <Compile Include="ProcessingError.cs" />
     <Compile Include="Processor.cs" />

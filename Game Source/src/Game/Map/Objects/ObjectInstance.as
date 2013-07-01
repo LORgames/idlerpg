@@ -1,10 +1,12 @@
-package Game.Map {
+package Game.Map.Objects {
 	import CollisionSystem.Rect;
 	import flash.display.Bitmap;
-	import flash.geom.Rectangle;
 	import Game.General.Script;
-	import RenderSystem.IObjectLayer;
 	import Interfaces.IMapObject;
+	import RenderSystem.IObjectLayer;
+	import Game.Map.MapData;
+	import Game.Map.Tiles.TileInstance;
+	import Game.Map.Tiles.TileHelper;
 	/**
 	 * ...
 	 * @author Paul
@@ -14,7 +16,7 @@ package Game.Map {
 		public var Template:ObjectTemplate;
 		public var Map:MapData;
 		
-		private var FullBase:Rect
+		protected var FullBase:Rect
 		
 		public function ObjectInstance() {
 			Main.OrderedLayer.addChild(this);
@@ -90,9 +92,10 @@ package Game.Map {
 		}
 		
 		public function CleanUp():void {
-			if (parent != null)
+			if (parent != null) {
 				this.parent.removeChild(this);
-				
+			}
+			
 			Template.OneLessInstance();
 			
 			Template = null;

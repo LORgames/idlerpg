@@ -1,21 +1,15 @@
 package RenderSystem {
-	import adobe.utils.CustomActions;
 	import CollisionSystem.Rect;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
-	import flash.display.Stage;
-	import flash.events.Event;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import flash.utils.ByteArray;
-	import Game.Critter.BaseCritter;
-	import Game.Map.ObjectInstance;
-	import Game.Map.SpawnRegion;
-	import Game.Map.TileHelper;
-	import Game.Map.TileInstance;
-	import Game.Map.TileTemplate;
+	import Game.Map.Objects.ObjectInstance;
+	import Game.Map.Spawns.SpawnRegion;
+	import Game.Map.Tiles.TileInstance;
+	import Game.Map.Tiles.TileTemplate;
 	import Game.Map.WorldData;
 	
 	/**

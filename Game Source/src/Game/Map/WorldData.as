@@ -9,6 +9,8 @@ package Game.Map {
 	import Game.General.BinaryLoader;
 	import Game.General.ImageLoader;
 	import SoundSystem.MusicPlayer;
+	import Game.Map.Tiles.TileTemplate;
+	import Game.Map.Objects.ObjectTemplate;
 	/**
 	 * ...
 	 * @author Paul

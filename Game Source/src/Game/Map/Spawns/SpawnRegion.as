@@ -1,4 +1,4 @@
-package Game.Map {
+package Game.Map.Spawns {
 	import adobe.utils.CustomActions;
 	import CollisionSystem.Rect;
 	import EngineTiming.Clock;
@@ -7,6 +7,7 @@ package Game.Map {
 	import flash.utils.ByteArray;
 	import Game.Critter.BaseCritter;
 	import Game.Critter.CritterManager;
+	import Game.Map.MapData;
 	import Interfaces.IMapObject;
 	import Game.Critter.ICritterOwner;
 	/**

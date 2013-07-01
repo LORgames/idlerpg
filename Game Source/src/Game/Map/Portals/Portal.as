@@ -1,4 +1,4 @@
-package Game.Map 
+package Game.Map.Portals 
 {
 	import CollisionSystem.Rect;
 	import flash.geom.Point;

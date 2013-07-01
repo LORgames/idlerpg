@@ -48,9 +48,9 @@ namespace CityTools {
             this.treeTemplateNames = new System.Windows.Forms.TreeView();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
+            this.ckIndividualAnimations = new System.Windows.Forms.CheckBox();
             this.ccAnimation = new CityTools.Components.AnimationList();
             this.scriptBox1 = new CityTools.Components.ScriptBox();
-            this.ckIndividualAnimations = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbExampleBase)).BeginInit();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numOffsetHeight)).BeginInit();
@@ -321,6 +321,17 @@ namespace CityTools {
             this.splitContainer3.SplitterDistance = 254;
             this.splitContainer3.TabIndex = 0;
             // 
+            // ckIndividualAnimations
+            // 
+            this.ckIndividualAnimations.AutoSize = true;
+            this.ckIndividualAnimations.Location = new System.Drawing.Point(121, 74);
+            this.ckIndividualAnimations.Name = "ckIndividualAnimations";
+            this.ckIndividualAnimations.Size = new System.Drawing.Size(125, 17);
+            this.ckIndividualAnimations.TabIndex = 18;
+            this.ckIndividualAnimations.Text = "Individual Animations";
+            this.ckIndividualAnimations.UseVisualStyleBackColor = true;
+            this.ckIndividualAnimations.CheckedChanged += new System.EventHandler(this.ValueChanged);
+            // 
             // ccAnimation
             // 
             this.ccAnimation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -339,16 +350,6 @@ namespace CityTools {
             this.scriptBox1.ScriptType = ToolCache.Scripting.ScriptTypes.Object;
             this.scriptBox1.Size = new System.Drawing.Size(237, 417);
             this.scriptBox1.TabIndex = 1;
-            // 
-            // ckIndividualAnimations
-            // 
-            this.ckIndividualAnimations.AutoSize = true;
-            this.ckIndividualAnimations.Location = new System.Drawing.Point(121, 74);
-            this.ckIndividualAnimations.Name = "ckIndividualAnimations";
-            this.ckIndividualAnimations.Size = new System.Drawing.Size(125, 17);
-            this.ckIndividualAnimations.TabIndex = 18;
-            this.ckIndividualAnimations.Text = "Individual Animations";
-            this.ckIndividualAnimations.UseVisualStyleBackColor = true;
             // 
             // ObjectEditor
             // 

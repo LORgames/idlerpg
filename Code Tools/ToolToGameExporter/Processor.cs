@@ -51,7 +51,7 @@ namespace ToolToGameExporter {
                 UpdateEPF(epf, "Amplyfying Sounds...", 20);
                 SoundCrusher.Go();
                 UpdateEPF(epf, "Smashing Objects...", 30);
-                ObjectCrusher.Go();
+                MapObjectCrusher.Go();
                 UpdateEPF(epf, "Processing Tiles...", 40);
                 TileCrusher.Go();
                 UpdateEPF(epf, "Crushing Portal...", 50);

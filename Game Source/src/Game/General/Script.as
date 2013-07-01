@@ -10,7 +10,7 @@ package Game.General {
 	import Game.Critter.CritterManager;
 	import Game.Critter.CritterHuman;
 	import Game.Equipment.EquipmentItem;
-	import Game.Map.ObjectInstance;
+	import Game.Map.Objects.ObjectInstance;
 	import Game.Map.WorldData;
 	import Interfaces.IMapObject;
 	import RenderSystem.IObjectLayer;
