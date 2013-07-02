@@ -1,4 +1,5 @@
 package Game.Map {
+	import EngineTiming.Clock;
 	import flash.desktop.NativeApplication;
 	import flash.desktop.SystemIdleMode;
 	import flash.display.BitmapData;
@@ -89,6 +90,8 @@ package Game.Map {
 			CurrentMap.LoadMap(PortalDestinations[Global.MapPortalID], Global.MapPortalID);
 		}
 		
+		public static function YouAreDied():void {
+			Clock.Stop();
+		}
 	}
-
 }

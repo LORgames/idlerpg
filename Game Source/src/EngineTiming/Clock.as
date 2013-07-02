@@ -115,6 +115,10 @@ package EngineTiming {
 				FifteenSecond.splice(i, 1);
 			}
 		}
+		
+		static public function Stop():void {
+			
+		}
 	}
 
 }

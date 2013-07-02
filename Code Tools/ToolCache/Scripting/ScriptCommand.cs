@@ -62,6 +62,8 @@ namespace ToolCache.Scripting {
             ushort param0;
             ushort param1;
             string paramPiece;
+            string[] paramBits;
+            float fparam;
 
             //Figure out what this command does...
             if (Trimmed.IndexOf(' ') > -1) {
@@ -74,7 +76,7 @@ namespace ToolCache.Scripting {
 
             
             switch (Action) {
-                case "playsound":
+                case "soundplay":
                     CommandID = 0x1001;
 
                     if (!SoundDatabase.HasEffect(Parameters)) {
@@ -104,23 +106,84 @@ namespace ToolCache.Scripting {
                     } else {
                         info.Errors.Add("Requires both damage per second and total seconds (1 tick per second).");
                     } break;
+                case "destroy":
+                    CommandID = 0x1007;
+                    break;
                 case "equip":
                     CommandID = 0x4001;
 
                     if (!EquipmentManager.Equipment.ContainsKey(Parameters)) {
                         info.Errors.Add("Cannot find equipment item: '" + Parameters + "'");
                     } break;
-                case "playanimation":
+                case "animationplay":
                     CommandID = 0x6000;
+
+                    if (info.ScriptType == ScriptTypes.Item) {
+                        info.Errors.Add("Loop animation only applies to objects with state based animation.");
+                        break;
+                    } else if (info.ScriptType == ScriptTypes.Object) {
+                        info.Errors.Add("Loop animation only applies to objects with state based animation. Use AnimationRange for objects.");
+                        break;
+                    }
 
                     if (!info.AnimationNames.Contains(Parameters)) {
                         info.Errors.Add("Cannot find animation: " + Parameters);
                     } break;
-                case "loopanimation":
+                case "animationloop":
                     CommandID = 0x6001;
+
+                    if (info.ScriptType == ScriptTypes.Item) {
+                        info.Errors.Add("Loop animation only applies to objects with state based animation.");
+                        break;
+                    } else if (info.ScriptType == ScriptTypes.Object) {
+                        info.Errors.Add("Loop animation only applies to objects with state based animation. Use AnimationRange for objects.");
+                        break;
+                    }
 
                     if (!info.AnimationNames.Contains(Parameters)) {
                         info.Errors.Add("Cannot find animation: " + Parameters);
+                    } break;
+                case "animationspeed":
+                    CommandID = 0x6002;
+
+                    if (info.ScriptType != ScriptTypes.Equipment && info.ScriptType != ScriptTypes.Critter && info.ScriptType != ScriptTypes.Object) {
+                        info.Errors.Add("AnimationSpeed only applies to objects with direct control of thier animations.");
+                        break;
+                    }
+
+                    if (float.TryParse(Parameters, out fparam)) {
+                        if (fparam > 0.049) {
+                            AdditionalBytecode.Add((ushort)(fparam * 20));
+                        } else {
+                            info.Errors.Add("Expected a value above 0.05 after AnimationSpeed");
+                        }
+                    } else {
+                        info.Errors.Add("Expected a value above 0.05 after AnimationSpeed");
+                    } break;
+                case "animationrangeloop":
+                case "animationrangeplay":
+                    if (Action == "animationrangeloop") {
+                        CommandID = 0x6004;
+                    } else {
+                        CommandID = 0x6003;
+                    }
+
+                    if (info.ScriptType != ScriptTypes.Object) {
+                        info.Errors.Add("AnimationRange[Loop/Play] only apply to Map Objects. Other scripts should use the state based solution: AnimationPlay or AnimationLoop.");
+                        break;
+                    }
+
+                    paramBits = Parameters.Split(' ');
+
+                    if (paramBits.Length == 2) {
+                        if (ushort.TryParse(paramBits[0], out param0) && ushort.TryParse(paramBits[1], out param1)) {
+                            AdditionalBytecode.Add(param0);
+                            AdditionalBytecode.Add(param1);
+                        } else {
+                            info.Errors.Add("Could not convert '" + Parameters + "' to 2 positive values.");
+                        }
+                    } else {
+                        info.Errors.Add("Expecting 2 positive integers to represent the frame range.");
                     } break;
                 case "if":
                     break;
@@ -174,7 +237,9 @@ namespace ToolCache.Scripting {
                         
                         break;
                     case "else":
-                        if (Parameters != "") Info.Errors.Add("Unpaired else!");
+                        CommandID = 0x8003;
+                        if (Parameters == "") Info.Errors.Add("Unpaired else!");
+                        IndentBelow(Info, index);
                         break;
                     case "foreach":
                         if (Parameters == "") Info.Errors.Add("Empty foreach");

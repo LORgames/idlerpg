@@ -82,8 +82,10 @@ package Game.Critter {
 			if (Persistent) return;
 			super.CleanUp();
 			
-			Animation.CleanUp();
-			Animation = null;
+			if(Animation != null) {
+				Animation.CleanUp();
+				Animation = null;
+			}
 			
 			Info = null;
 		}

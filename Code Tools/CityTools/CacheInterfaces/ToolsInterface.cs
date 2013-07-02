@@ -11,7 +11,7 @@ using CityTools.Components;
 namespace CityTools.CacheInterfaces {
     public class ToolsInterface {
         public static void Initialize() {
-            MainWindow.instance.btnExport.Click += new EventHandler(btnExport_Click);
+            MainWindow.instance.btnExport.ButtonClick += new EventHandler(btnExport_Click);
             MainWindow.instance.btnCritterEditor.Click += new EventHandler(btnCritterEditor_Click);
             MainWindow.instance.btnElementalEditor.Click += new EventHandler(btnElementalEditor_Click);
             MainWindow.instance.btnEquipmentEditor.Click += new EventHandler(btnEquipmentEditor_Click);

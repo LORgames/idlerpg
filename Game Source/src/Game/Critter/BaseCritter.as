@@ -13,6 +13,7 @@ package Game.Critter {
 	import Game.Map.Tiles.TileTemplate;
 	import Game.Map.WorldData;
 	import Interfaces.IMapObject;
+	import RenderSystem.Renderman;
 	/**
 	 * ...
 	 * @author Paul
@@ -42,7 +43,7 @@ package Game.Critter {
 		
 		//Critter information
 		public var MyAIType:int;
-		public var CurrentHP:int = 0;
+		public var CurrentHP:int = 1000;
 		
 		public function BaseCritter() {
 			MyRect = new Rect(false, this, 0, 0, 0, 0);
@@ -216,7 +217,6 @@ package Game.Critter {
 					}
 				}
 				
-				trace(collisionTotal);
 				if (collisionPenetration.x != 0 || collisionPenetration.y != 0) {
 					//Undo the changes
 					if((Math.abs(collisionPenetration.x) < Math.abs(collisionPenetration.y)  && collisionPenetration.x != 0) || collisionPenetration.y == 0) {
@@ -296,6 +296,10 @@ package Game.Critter {
 			if (Owner != null) {
 				Owner.AlertMinionDeath(this);
 			}
+			
+			if (this == WorldData.ME) {
+				Main.I.Renderer.FadeToBlack(null, "You are died.");
+			}
 		}
 		
 		public function CleanUp():void {
@@ -309,7 +313,9 @@ package Game.Critter {
 		}
 		
 		public function AlertMinionDeath(minion:BaseCritter):void {
-			MyScript.Run(Script.MinionDied, this, minion);
+			if(CurrentHP > 0) {
+				MyScript.Run(Script.MinionDied, this, minion);
+			}
 		}
 	}
 }

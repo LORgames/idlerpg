@@ -2,6 +2,7 @@ package Game.General {
 	import adobe.utils.CustomActions;
 	import CollisionSystem.Rect;
 	import Debug.Drawer;
+	import EngineTiming.Clock;
 	import flash.display.Sprite;
 	import flash.geom.PerspectiveProjection;
 	import flash.utils.ByteArray;
@@ -11,6 +12,7 @@ package Game.General {
 	import Game.Critter.CritterHuman;
 	import Game.Equipment.EquipmentItem;
 	import Game.Map.Objects.ObjectInstance;
+	import Game.Map.Objects.ObjectInstanceAnimated;
 	import Game.Map.WorldData;
 	import Interfaces.IMapObject;
 	import RenderSystem.IObjectLayer;
@@ -57,7 +59,7 @@ package Game.General {
 			}
 			
 			if (EventScripts[event] == null) {
-				trace("Event type not on this object. [" + invoker + " => " + event + "]");
+				//trace("Event type not on this object. [" + invoker + " => " + event + "]");
 				return;
 			}
 			
@@ -70,6 +72,8 @@ package Game.General {
 			
 			//Some required variables
 			var command:uint = 0;
+			var CallStack:Vector.<Boolean> = new Vector.<Boolean>();
+			var bParam:Boolean;
 			
 			while (true) {
 				command = EventScript.readUnsignedShort();
@@ -99,6 +103,16 @@ package Game.General {
 						}
 						
 						break;
+					case 0x1007: //Destroy
+						if (invoker is ObjectInstance) {
+							Clock.CleanUpList.push(invoker);
+							//(invoker as ObjectInstance).CleanUp();
+						} else if (invoker is BaseCritter) {
+							(invoker as BaseCritter).CleanUp();
+						} else {
+							trace("Unknown Type for Destroy!");
+						}
+						break;
 					case 0x4001: //Equip item on the target
 						if (invoker is CritterHuman) {
 							var person:CritterHuman = (invoker as CritterHuman);
@@ -122,19 +136,58 @@ package Game.General {
 							trace("Unknown Invoker for 0x6001:LoopAnimation @" + event);
 							EventScript.readShort();
 						} break;
-					case 0x8000: //IF without ELSE
-						trace("IF: @0x8000");
-						var validIF:Boolean = CanIf(EventScript, invoker, target);
-						if (EventScript.readUnsignedShort() != 0xF0FD) {
-							trace("CRITICAL EXPORTER ERROR!");
-						}
+					case 0x6002: //Animation Speed
+						var speedUI:uint = EventScript.readUnsignedShort();
+						var speedNU:Number = (speedUI * 0.05);
 						
-						if (!validIF) {
+						if (invoker is ObjectInstanceAnimated) {
+							(target as ObjectInstanceAnimated).PlaybackSpeed = speedNU;
+						} else if (invoker is ObjectInstance) {
+							(invoker as ObjectInstance).Template.PlaybackSpeed = speedNU;
+						} else {
+							trace("Unknown invoker for AnimationSpeed");
+						} break;
+					case 0x6003: //Animation Range Play
+					case 0x6004: //Animation Range Loop
+						var startFrame:int = EventScript.readUnsignedShort();
+						var totalFrames:int = EventScript.readUnsignedShort();
+						
+						if (invoker is ObjectInstanceAnimated) {
+							(invoker as ObjectInstanceAnimated).StartFrame = startFrame;
+							(invoker as ObjectInstanceAnimated).EndFrame = totalFrames+startFrame;
+							(invoker as ObjectInstanceAnimated).CurrentFrame = startFrame;
+							
+							if (command == 0x6003) {
+								(invoker as ObjectInstanceAnimated).IsLooping = false;
+							} else {
+								(invoker as ObjectInstanceAnimated).IsLooping = true;
+							}
+						} else {
+							trace("Unknown invoker for AnimationRnage[Play/Loop]");
+						} break;
+					case 0x8000: //IF without ELSE
+						bParam = CanIf(EventScript, invoker, target);
+						if (!bParam) {
 							ReadUntilBalancedClose(EventScript);
+						} break;
+					case 0x8001: //IF with ELSE
+						bParam = CanIf(EventScript, invoker, target);
+						if (bParam) {
+							CallStack.push(true);
+						} else {
+							EventScript.readUnsignedShort(); //Just pop the 0xF0FD off
+							ReadUntilBalancedClose(EventScript);
+							CallStack.push(false);
 						} break;
 					case 0x8002: //Foreach
 						Process_ForEach(EventScript, invoker, target);
 						break;
+					case 0x8003: //ELSE
+						bParam = CallStack.pop();
+						if (bParam) {
+							EventScript.readUnsignedShort(); //Just pop the 0xF0FD off
+							ReadUntilBalancedClose(EventScript);
+						} break;
 					default:
 						if(command != 0xF0FD && command != 0xF0FE) {
 							trace("Unknown Command: 0x" + command.toString(16));
@@ -183,12 +236,10 @@ package Game.General {
 					case 0x7003: //Random chance
 						param0 = eventScript.readUnsignedShort();
 						currentUnprocessedValue = Math.random() * 100 < param0;
-						trace("\t@0x7003: Random: " + currentUnprocessedValue + " (" + param0 + ")");
 						break;
 					case 0x7004: //Is the script owner alive
 						if (invoker is BaseCritter) {
 							currentUnprocessedValue = (invoker as BaseCritter).CurrentHP > 0;
-							trace("\t@0x7004: Alive: " + currentUnprocessedValue);
 						} else {
 							trace("Unknown Invoker for 'Alive'");
 						} break;
@@ -199,29 +250,28 @@ package Game.General {
 						param0 = eventScript.readUnsignedShort();
 						if (target is CritterAnimationSet) {
 							currentUnprocessedValue = (target as CritterAnimationSet).CurrentAnim() == param0;
-							trace("\t@0x7006: Animation: " + currentUnprocessedValue + " (" + param0 + ")");
 						} else if (target is EquipmentItem) {
 							currentUnprocessedValue = (target as EquipmentItem).currentState == param0;
-							trace("\t@0x7006: Animation: " + currentUnprocessedValue + " (" + param0 + ")");
 						} else {
-							trace("\t@0x7006: Unknown target for Animation(playing)");
+							//trace("\t@0x7006: Unknown target for Animation(playing)");
 						} break;
 					default:
-						trace("@0x"+command.toString(16)+": Unknown Conditional.");
+						trace("@0x" + command.toString(16) + ": Unknown Conditional.");
+						break;
 				}
 				
 				if (command != 0xF0FE && command != 0x7000 && command != 0x7001 && command != 0x7002) { //if not operation
 					if (isNOTblock) {
-						trace("\tNOT " + currentUnprocessedValue);
+						//trace("\tNOT " + currentUnprocessedValue);
 						currentUnprocessedValue = !currentUnprocessedValue;
 						isNOTblock = false;
 					}
 					
 					if (currentOperation == 0) { //AND
-						trace("\tAND (" + currentCalculatedValue + " && " + currentUnprocessedValue + ") = " +(currentCalculatedValue && currentUnprocessedValue));
+						//trace("\tAND (" + currentCalculatedValue + " && " + currentUnprocessedValue + ") = " +(currentCalculatedValue && currentUnprocessedValue));
 						currentCalculatedValue = (currentCalculatedValue && currentUnprocessedValue);
 					} else if (currentOperation == 1) { //OR
-						trace("\tOR (" + currentCalculatedValue + " || " + currentUnprocessedValue + ") = " + (currentCalculatedValue || currentUnprocessedValue));
+						//trace("\tOR (" + currentCalculatedValue + " || " + currentUnprocessedValue + ") = " + (currentCalculatedValue || currentUnprocessedValue));
 						currentCalculatedValue = (currentCalculatedValue || currentUnprocessedValue);
 					}
 				}
@@ -233,8 +283,6 @@ package Game.General {
 		private function Process_ForEach(eventScript:ByteArray, invoker:Object, target:Object):void {
 			var eType:int = eventScript.readUnsignedShort();
 			var arrayType:int = eventScript.readUnsignedShort();
-			
-			trace("Looking for: 0x" + eType.toString(16));
 			
 			var dim0:int;
 			var dim1:int;
@@ -280,7 +328,7 @@ package Game.General {
 								}
 							}
 							
-							obj0.CurrentMap.GetObjectsInArea(rect, Objects, eType, target);
+							obj0.CurrentMap.GetObjectsInArea(rect, Objects, eType, invoker);
 							
 							trace(dim2);
 							Drawer.AddDebugRect(rect);
@@ -317,8 +365,7 @@ package Game.General {
 					switch(command) {
 						case 0x1003: //Damage
 							dim0 = eventScript.readUnsignedShort();
-							obj.ScriptAttack(false, false, dim0, (target as IMapObject));
-							trace("FlatDamage: " + dim0);
+							obj.ScriptAttack(false, false, dim0, (invoker as IMapObject));
 							break;
 					}
 					

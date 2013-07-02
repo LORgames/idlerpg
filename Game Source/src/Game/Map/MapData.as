@@ -1,4 +1,5 @@
 package Game.Map {
+	import adobe.utils.CustomActions;
 	import CollisionSystem.Rect;
 	import EngineTiming.Clock;
 	import EngineTiming.IUpdatable;
@@ -44,6 +45,7 @@ package Game.Map {
 		
 		private static var firstload:Boolean = true;
 		private var ExpectedAtPortalID:int = -1;
+		public var Dying:Boolean = false;
 		
 		public function MapData() {
 			
@@ -186,7 +188,7 @@ package Game.Map {
 				_tt = Critters.length;
 				while (--_tt > -1) {
 					if (type == 0xA006) {
-						if (Critters[_tt] == scanner) {
+ 						if (Critters[_tt] == scanner) {
 							continue;
 						}
 					}
@@ -201,6 +203,8 @@ package Game.Map {
 		}
 		
 		public function CleanUp():void {
+			Dying = true;
+			
 			var i:int = 0;
 			
 			i = Objects.length;
@@ -235,6 +239,8 @@ package Game.Map {
 				Tiles[i] = null;
 			}
 			Tiles = null;
+			
+			Dying = false;
 		}
 		
 		public function Update(dt:Number):void {
@@ -254,6 +260,20 @@ package Game.Map {
 			}
 			
 			baseCritter.CurrentMap = null;
+		}
+		
+		public function RemoveObject(objectInstance:ObjectInstance):void {
+			var i:int = Objects.indexOf(objectInstance);
+			
+			if (i > -1) {
+				Objects.splice(i, 1);
+			}
+			
+			objectInstance.DetachFromTiles();
+			
+			Dying = true;
+			objectInstance.CleanUp();
+			Dying = false;
 		}
 	}
 

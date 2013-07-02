@@ -20,7 +20,7 @@ package {
 		
 		//Debug information
 		public static var DebugRender:Boolean = false;
-		static public var DebugFPS:Boolean = false;
+		static public var DebugFPS:Boolean = true;
 		
 		//Touch information
 		public static var touchArea:Rect = new Rect(true, null, 0, 0, 0, 0);

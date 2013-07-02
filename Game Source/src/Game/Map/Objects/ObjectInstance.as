@@ -1,5 +1,6 @@
 package Game.Map.Objects {
 	import CollisionSystem.Rect;
+	import EngineTiming.ICleanUp;
 	import flash.display.Bitmap;
 	import Game.General.Script;
 	import Interfaces.IMapObject;
@@ -11,7 +12,7 @@ package Game.Map.Objects {
 	 * ...
 	 * @author Paul
 	 */
-	public class ObjectInstance extends Bitmap implements IObjectLayer, IMapObject {
+	public class ObjectInstance extends Bitmap implements IObjectLayer, IMapObject, ICleanUp {
 		public var ID:int = -1;
 		public var Template:ObjectTemplate;
 		public var Map:MapData;
@@ -64,6 +65,38 @@ package Game.Map.Objects {
 			}
 		}
 		
+		public function DetachFromTiles():void {
+			if (ID == -1) return;
+			
+			var totalRects:int = Template.Bases.length;
+			var tiles:Vector.<TileInstance>;
+			var i:int = 0;
+			var j:int = 0;
+			
+			FullBase.X = this.x;
+			FullBase.Y = this.y;
+			FullBase.W = 0;
+			FullBase.H = 0;
+			
+			if (Template.isSolid) {
+				while (--totalRects > -1) {
+					var rect:Rect = new Rect(true, this, this.x + Template.Bases[totalRects].x, this.y + Template.Bases[totalRects].y, Template.Bases[totalRects].width, Template.Bases[totalRects].height);
+					
+					tiles = TileHelper.GetTiles(rect, Map);
+					i = tiles.length;
+					
+					while (--i > -1) {
+						j = tiles[i].SolidRectangles.length;
+						while (--j > -1) {
+							if (tiles[i].SolidRectangles[j].Owner == this) {
+								tiles[i].SolidRectangles.splice(j, 1);
+							}
+						}
+					}
+				}
+			}
+		}
+		
 		public function GetTrueY():int {
 			return this.y + Template.OffsetHeight;
 		}
@@ -86,23 +119,30 @@ package Game.Map.Objects {
 		}
 		
 		public override function toString():String {
+			if (Template == null) {
+				return "[OBJ=NULL]";
+			}
 			return "[OBJ=" + Template.ObjectID + "]";
 		}
 		
 		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IMapObject):void {
-			Template.MyScript.Run(Script.Attacked, attacker, this);
+			Template.MyScript.Run(Script.Attacked, this, attacker);
 		}
 		
 		public function CleanUp():void {
-			if (parent != null) {
-				this.parent.removeChild(this);
+			if (!Map.Dying) {
+				Map.RemoveObject(this);
+			} else {
+				if (parent != null) {
+					this.parent.removeChild(this);
+				}
+				
+				Template.OneLessInstance();
+				
+				Template = null;
+				Map = null;
+				FullBase = null;
 			}
-			
-			Template.OneLessInstance();
-			
-			Template = null;
-			Map = null;
-			FullBase = null;
 		}
 		
 	}

@@ -2,7 +2,9 @@ package Game.Map.Objects {
 	import flash.display.BitmapData;
 	import flash.display3D.textures.RectangleTexture;
 	import flash.geom.Rectangle;
+	import Game.General.Script;
 	import Game.Map.MapData;
+	import Interfaces.IMapObject;
 	import RenderSystem.IAnimated;
 	import RenderSystem.Renderman;
 	/**
@@ -13,10 +15,11 @@ package Game.Map.Objects {
 		
 		public var StartFrame:int = 0;
 		public var EndFrame:int = 0;
-		private var CurrentFrame:int = 0;
+		public var CurrentFrame:int = 0;
 		private var FrameTimeout:Number = 0;
 		public var PlaybackSpeed:Number = 0;
 		public var CopyRect:Rectangle = new Rectangle();
+		public var IsLooping:Boolean = true;
 		
 		public function ObjectInstanceAnimated() {
 			super();
@@ -45,8 +48,11 @@ package Game.Map.Objects {
 		
 		override public function CleanUp():void {
 			super.CleanUp();
-			this.bitmapData.dispose();
-			Renderman.AnimatedObjectsRemove(this);
+			
+			if(Template == null) {
+				this.bitmapData.dispose();
+				Renderman.AnimatedObjectsRemove(this);
+			}
 		}
 		
 		public function UpdateAnimation(dt:Number):void {
@@ -56,7 +62,15 @@ package Game.Map.Objects {
 				while(FrameTimeout > PlaybackSpeed) {
 					FrameTimeout -= PlaybackSpeed;
 					CurrentFrame++;
-					if (CurrentFrame == EndFrame) CurrentFrame = StartFrame;
+					
+					if(CurrentFrame == EndFrame) {
+						if(IsLooping) {
+							CurrentFrame = StartFrame;
+						} else {
+							Template.MyScript.Run(Script.AnimationEnded, this);
+							return;
+						}
+					}
 				}
 				
 				CopyRect.x = CurrentFrame * CopyRect.width;
@@ -65,6 +79,12 @@ package Game.Map.Objects {
 					this.bitmapData.copyPixels(Template.SpriteAtlas, CopyRect, Global.ZeroPoint);
 				}
 			}
+		}
+		
+		override public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IMapObject):void {
+
+			Template.MyScript.Run(Script.Attacked, this, attacker);
+			trace(Template.Name + " attacked.");
 		}
 	}
 }
