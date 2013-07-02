@@ -19,7 +19,7 @@ namespace CityTools.Core {
         }
 
         public static bool ProcessKeys(Keys keyData) {
-            if (keyData == Keys.W || keyData == Keys.A || keyData == Keys.S || keyData == Keys.D || keyData == Keys.Q || keyData == Keys.E) {
+            if (keyData == Keys.W || keyData == Keys.A || keyData == Keys.S || keyData == Keys.D || keyData == Keys.Subtract || keyData == Keys.Add) {
                 if (keyData == Keys.W) {
                     Offset.Y -= 100 / ZoomLevel;
                 } else if (keyData == Keys.A) {
@@ -28,9 +28,9 @@ namespace CityTools.Core {
                     Offset.Y += 100 / ZoomLevel;
                 } else if (keyData == Keys.D) {
                     Offset.X += 100 / ZoomLevel;
-                } else if (keyData == Keys.Q) {
+                } else if (keyData == Keys.Subtract) {
                     ZoomLevel *= 0.98f;
-                } else if (keyData == Keys.E) {
+                } else if (keyData == Keys.Add) {
                     ZoomLevel *= 1.02f;
                 }
 

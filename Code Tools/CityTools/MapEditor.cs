@@ -150,6 +150,9 @@ namespace CityTools {
                 ckbShowTileGrid.Checked = !ckbShowTileGrid.Checked;
             } else if (keyData == Keys.D2) {
                 ckbShowObjectBases.Checked = !ckbShowObjectBases.Checked;
+                if (ckbShowObjectBases.Checked) {
+                    paintMode = PaintMode.ObjectSelector;
+                }
             } else if (keyData == Keys.D3) {
                 ckbShowTileBases.Checked = !ckbShowTileBases.Checked;
             } else if (CacheInterfaces.ToolsInterface.ProcessKeys(keyData)) {
@@ -267,11 +270,6 @@ namespace CityTools {
                 paintMode = PaintMode.Terrain;
                 Terrain.TerrainHelper.SetCurrentTile(short.Parse(objectName));
             }
-        }
-
-        private void obj_select_btn_Click(object sender, EventArgs e) {
-            paintMode = PaintMode.ObjectSelector;
-            ckbShowObjectBases.Checked = true;
         }
 
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e) {

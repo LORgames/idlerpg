@@ -15,6 +15,8 @@ package WindowSystem
 		private var stick:Bitmap;
 		
 		public function HUD() {
+			return;
+			
 			ImageLoader.Load("OtherUI/exp bar.png", LoadedExperienceArt);
 			ImageLoader.Load("OtherUI/Buttons.png", LoadedButtonsArt);
 			ImageLoader.Load("OtherUI/Stick.png", LoadedStickArt);

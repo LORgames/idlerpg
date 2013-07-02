@@ -43,14 +43,17 @@
             this.btnTileEditorTool = new System.Windows.Forms.ToolStripMenuItem();
             this.btnTileMerger = new System.Windows.Forms.ToolStripMenuItem();
             this.btnObjectEditor = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnElementalEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.btnItemEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.btnEquipmentEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.btnCritterEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.btnShadowTool = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSoundEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.btnWorldEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnUIEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnExport = new System.Windows.Forms.ToolStripSplitButton();
+            this.ckbExportDebugRender = new System.Windows.Forms.ToolStripMenuItem();
+            this.ckbExportShowFPS = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.btnViewMenu = new System.Windows.Forms.ToolStripDropDownButton();
             this.mnuShowGrids = new System.Windows.Forms.ToolStripMenuItem();
@@ -78,6 +81,9 @@
             this.numSpawnMax = new System.Windows.Forms.NumericUpDown();
             this.label18 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
+            this.listCritterSpawns = new CityTools.Components.ListViewEx();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label16 = new System.Windows.Forms.Label();
             this.btnRegionResize = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
@@ -127,18 +133,11 @@
             this.tabObjectTools = new System.Windows.Forms.TabControl();
             this.tabObjects = new System.Windows.Forms.TabPage();
             this.obj_splitter = new System.Windows.Forms.SplitContainer();
-            this.btnObjectSelector = new System.Windows.Forms.Button();
             this.pnlObjectScenicCache = new System.Windows.Forms.Panel();
             this.cbScenicCacheSelector = new System.Windows.Forms.ComboBox();
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.timerRedrawAll = new System.Windows.Forms.Timer(this.components);
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.btnExport = new System.Windows.Forms.ToolStripSplitButton();
-            this.ckbExportDebugRender = new System.Windows.Forms.ToolStripMenuItem();
-            this.ckbExportShowFPS = new System.Windows.Forms.ToolStripMenuItem();
-            this.listCritterSpawns = new CityTools.Components.ListViewEx();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.main_splitter)).BeginInit();
             this.main_splitter.Panel1.SuspendLayout();
             this.main_splitter.Panel2.SuspendLayout();
@@ -161,7 +160,6 @@
             this.tabObjectTools.SuspendLayout();
             this.tabObjects.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.obj_splitter)).BeginInit();
-            this.obj_splitter.Panel1.SuspendLayout();
             this.obj_splitter.Panel2.SuspendLayout();
             this.obj_splitter.SuspendLayout();
             this.SuspendLayout();
@@ -274,15 +272,15 @@
             this.btnOtherToolsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnTileEditorTool,
             this.btnObjectEditor,
-            this.btnElementalEditor,
             this.btnItemEditor,
             this.btnEquipmentEditor,
             this.btnCritterEditor,
             this.btnSoundEditor,
-            this.btnWorldEditor});
+            this.btnWorldEditor,
+            this.btnUIEditor});
             this.btnOtherToolsMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnOtherToolsMenu.Name = "btnOtherToolsMenu";
-            this.btnOtherToolsMenu.Size = new System.Drawing.Size(82, 22);
+            this.btnOtherToolsMenu.Size = new System.Drawing.Size(76, 22);
             this.btnOtherToolsMenu.Text = "Other Tools";
             // 
             // btnTileEditorTool
@@ -290,69 +288,99 @@
             this.btnTileEditorTool.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnTileMerger});
             this.btnTileEditorTool.Name = "btnTileEditorTool";
-            this.btnTileEditorTool.Size = new System.Drawing.Size(216, 22);
+            this.btnTileEditorTool.Size = new System.Drawing.Size(214, 22);
             this.btnTileEditorTool.Text = "Tile Editor (T)";
             // 
             // btnTileMerger
             // 
             this.btnTileMerger.Name = "btnTileMerger";
-            this.btnTileMerger.Size = new System.Drawing.Size(134, 22);
+            this.btnTileMerger.Size = new System.Drawing.Size(138, 22);
             this.btnTileMerger.Text = "Tile Merger";
             // 
             // btnObjectEditor
             // 
             this.btnObjectEditor.Name = "btnObjectEditor";
-            this.btnObjectEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnObjectEditor.Size = new System.Drawing.Size(214, 22);
             this.btnObjectEditor.Text = "Object Template Editor (O)";
-            // 
-            // btnElementalEditor
-            // 
-            this.btnElementalEditor.Name = "btnElementalEditor";
-            this.btnElementalEditor.Size = new System.Drawing.Size(216, 22);
-            this.btnElementalEditor.Text = "Elemental Editor (R)";
             // 
             // btnItemEditor
             // 
             this.btnItemEditor.Name = "btnItemEditor";
-            this.btnItemEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnItemEditor.Size = new System.Drawing.Size(214, 22);
             this.btnItemEditor.Text = "Item Editor (I)";
             // 
             // btnEquipmentEditor
             // 
             this.btnEquipmentEditor.Name = "btnEquipmentEditor";
-            this.btnEquipmentEditor.Size = new System.Drawing.Size(216, 22);
-            this.btnEquipmentEditor.Text = "Equipment Editor (U)";
+            this.btnEquipmentEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnEquipmentEditor.Text = "Equipment Editor (E)";
             // 
             // btnCritterEditor
             // 
             this.btnCritterEditor.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnShadowTool});
             this.btnCritterEditor.Name = "btnCritterEditor";
-            this.btnCritterEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnCritterEditor.Size = new System.Drawing.Size(214, 22);
             this.btnCritterEditor.Text = "Critter Editor (C)";
             // 
             // btnShadowTool
             // 
             this.btnShadowTool.Name = "btnShadowTool";
-            this.btnShadowTool.Size = new System.Drawing.Size(143, 22);
+            this.btnShadowTool.Size = new System.Drawing.Size(146, 22);
             this.btnShadowTool.Text = "Shadow Tool";
             // 
             // btnSoundEditor
             // 
             this.btnSoundEditor.Name = "btnSoundEditor";
-            this.btnSoundEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnSoundEditor.Size = new System.Drawing.Size(214, 22);
             this.btnSoundEditor.Text = "Sound Editor (Z)";
             // 
             // btnWorldEditor
             // 
             this.btnWorldEditor.Name = "btnWorldEditor";
-            this.btnWorldEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnWorldEditor.Size = new System.Drawing.Size(214, 22);
             this.btnWorldEditor.Text = "World Editor (X)";
+            // 
+            // btnUIEditor
+            // 
+            this.btnUIEditor.Name = "btnUIEditor";
+            this.btnUIEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnUIEditor.Text = "UI Editor (U)";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnExport
+            // 
+            this.btnExport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ckbExportDebugRender,
+            this.ckbExportShowFPS});
+            this.btnExport.Image = ((System.Drawing.Image)(resources.GetObject("btnExport.Image")));
+            this.btnExport.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(67, 22);
+            this.btnExport.Text = "Test (F5)";
+            // 
+            // ckbExportDebugRender
+            // 
+            this.ckbExportDebugRender.CheckOnClick = true;
+            this.ckbExportDebugRender.Name = "ckbExportDebugRender";
+            this.ckbExportDebugRender.Size = new System.Drawing.Size(154, 22);
+            this.ckbExportDebugRender.Text = "Debug Render";
+            this.ckbExportDebugRender.ToolTipText = "Draw Debug Rectangles?";
+            // 
+            // ckbExportShowFPS
+            // 
+            this.ckbExportShowFPS.Checked = true;
+            this.ckbExportShowFPS.CheckOnClick = true;
+            this.ckbExportShowFPS.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ckbExportShowFPS.Name = "ckbExportShowFPS";
+            this.ckbExportShowFPS.Size = new System.Drawing.Size(154, 22);
+            this.ckbExportShowFPS.Text = "Show FPS";
+            this.ckbExportShowFPS.ToolTipText = "Show an FPS Display in the Top Left corner?";
             // 
             // toolStripSeparator3
             // 
@@ -369,7 +397,7 @@
             this.btnViewMenu.Image = ((System.Drawing.Image)(resources.GetObject("btnViewMenu.Image")));
             this.btnViewMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnViewMenu.Name = "btnViewMenu";
-            this.btnViewMenu.Size = new System.Drawing.Size(45, 22);
+            this.btnViewMenu.Size = new System.Drawing.Size(42, 22);
             this.btnViewMenu.Text = "View";
             // 
             // mnuShowGrids
@@ -379,28 +407,28 @@
             this.ckbShowObjectBases,
             this.ckbShowTileBases});
             this.mnuShowGrids.Name = "mnuShowGrids";
-            this.mnuShowGrids.Size = new System.Drawing.Size(121, 22);
+            this.mnuShowGrids.Size = new System.Drawing.Size(127, 22);
             this.mnuShowGrids.Text = "Grids";
             // 
             // ckbShowTileGrid
             // 
             this.ckbShowTileGrid.CheckOnClick = true;
             this.ckbShowTileGrid.Name = "ckbShowTileGrid";
-            this.ckbShowTileGrid.Size = new System.Drawing.Size(190, 22);
+            this.ckbShowTileGrid.Size = new System.Drawing.Size(194, 22);
             this.ckbShowTileGrid.Text = "Show Outlines (1)";
             // 
             // ckbShowObjectBases
             // 
             this.ckbShowObjectBases.CheckOnClick = true;
             this.ckbShowObjectBases.Name = "ckbShowObjectBases";
-            this.ckbShowObjectBases.Size = new System.Drawing.Size(190, 22);
+            this.ckbShowObjectBases.Size = new System.Drawing.Size(194, 22);
             this.ckbShowObjectBases.Text = "Show Object Bases (2)";
             // 
             // ckbShowTileBases
             // 
             this.ckbShowTileBases.CheckOnClick = true;
             this.ckbShowTileBases.Name = "ckbShowTileBases";
-            this.ckbShowTileBases.Size = new System.Drawing.Size(190, 22);
+            this.ckbShowTileBases.Size = new System.Drawing.Size(194, 22);
             this.ckbShowTileBases.Text = "Show Tile Bases (3)";
             // 
             // viewportToolStripMenuItem
@@ -410,7 +438,7 @@
             this.txtViewportWidth,
             this.txtViewportHeight});
             this.viewportToolStripMenuItem.Name = "viewportToolStripMenuItem";
-            this.viewportToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.viewportToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.viewportToolStripMenuItem.Text = "Viewport";
             // 
             // ckbViewportEnabled
@@ -424,14 +452,14 @@
             // 
             this.txtViewportWidth.AutoToolTip = true;
             this.txtViewportWidth.Name = "txtViewportWidth";
-            this.txtViewportWidth.Size = new System.Drawing.Size(100, 23);
+            this.txtViewportWidth.Size = new System.Drawing.Size(100, 21);
             this.txtViewportWidth.Text = "800";
             this.txtViewportWidth.ToolTipText = "Viewport Width";
             // 
             // txtViewportHeight
             // 
             this.txtViewportHeight.Name = "txtViewportHeight";
-            this.txtViewportHeight.Size = new System.Drawing.Size(100, 23);
+            this.txtViewportHeight.Size = new System.Drawing.Size(100, 21);
             this.txtViewportHeight.Text = "600";
             this.txtViewportHeight.ToolTipText = "Viewport Height";
             // 
@@ -443,7 +471,7 @@
             // lblHighlightedCell
             // 
             this.lblHighlightedCell.Name = "lblHighlightedCell";
-            this.lblHighlightedCell.Size = new System.Drawing.Size(27, 22);
+            this.lblHighlightedCell.Size = new System.Drawing.Size(24, 22);
             this.lblHighlightedCell.Text = "Cell";
             // 
             // mapViewPanel
@@ -682,6 +710,30 @@
             this.label17.Size = new System.Drawing.Size(71, 13);
             this.label17.TabIndex = 42;
             this.label17.Text = "Timeout (sec)";
+            // 
+            // listCritterSpawns
+            // 
+            this.listCritterSpawns.AllowColumnReorder = true;
+            this.listCritterSpawns.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2});
+            this.listCritterSpawns.DoubleClickActivation = false;
+            this.listCritterSpawns.FullRowSelect = true;
+            this.listCritterSpawns.Location = new System.Drawing.Point(14, 576);
+            this.listCritterSpawns.Name = "listCritterSpawns";
+            this.listCritterSpawns.Size = new System.Drawing.Size(195, 103);
+            this.listCritterSpawns.TabIndex = 41;
+            this.listCritterSpawns.UseCompatibleStateImageBehavior = false;
+            this.listCritterSpawns.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Critter";
+            this.columnHeader1.Width = 130;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Spawn%";
             // 
             // label16
             // 
@@ -1145,10 +1197,6 @@
             this.obj_splitter.Name = "obj_splitter";
             this.obj_splitter.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
-            // obj_splitter.Panel1
-            // 
-            this.obj_splitter.Panel1.Controls.Add(this.btnObjectSelector);
-            // 
             // obj_splitter.Panel2
             // 
             this.obj_splitter.Panel2.Controls.Add(this.pnlObjectScenicCache);
@@ -1156,16 +1204,6 @@
             this.obj_splitter.Size = new System.Drawing.Size(271, 717);
             this.obj_splitter.SplitterDistance = 30;
             this.obj_splitter.TabIndex = 0;
-            // 
-            // btnObjectSelector
-            // 
-            this.btnObjectSelector.Location = new System.Drawing.Point(3, 0);
-            this.btnObjectSelector.Name = "btnObjectSelector";
-            this.btnObjectSelector.Size = new System.Drawing.Size(209, 23);
-            this.btnObjectSelector.TabIndex = 4;
-            this.btnObjectSelector.Text = "Selectorerer";
-            this.btnObjectSelector.UseVisualStyleBackColor = true;
-            this.btnObjectSelector.Click += new System.EventHandler(this.obj_select_btn_Click);
             // 
             // pnlObjectScenicCache
             // 
@@ -1199,60 +1237,6 @@
             this.colorDialog.AnyColor = true;
             this.colorDialog.FullOpen = true;
             this.colorDialog.SolidColorOnly = true;
-            // 
-            // btnExport
-            // 
-            this.btnExport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ckbExportDebugRender,
-            this.ckbExportShowFPS});
-            this.btnExport.Image = ((System.Drawing.Image)(resources.GetObject("btnExport.Image")));
-            this.btnExport.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(65, 22);
-            this.btnExport.Text = "Test (F5)";
-            // 
-            // ckbExportDebugRender
-            // 
-            this.ckbExportDebugRender.CheckOnClick = true;
-            this.ckbExportDebugRender.Name = "ckbExportDebugRender";
-            this.ckbExportDebugRender.Size = new System.Drawing.Size(152, 22);
-            this.ckbExportDebugRender.Text = "Debug Render";
-            this.ckbExportDebugRender.ToolTipText = "Draw Debug Rectangles?";
-            // 
-            // ckbExportShowFPS
-            // 
-            this.ckbExportShowFPS.Checked = true;
-            this.ckbExportShowFPS.CheckOnClick = true;
-            this.ckbExportShowFPS.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ckbExportShowFPS.Name = "ckbExportShowFPS";
-            this.ckbExportShowFPS.Size = new System.Drawing.Size(152, 22);
-            this.ckbExportShowFPS.Text = "Show FPS";
-            this.ckbExportShowFPS.ToolTipText = "Show an FPS Display in the Top Left corner?";
-            // 
-            // listCritterSpawns
-            // 
-            this.listCritterSpawns.AllowColumnReorder = true;
-            this.listCritterSpawns.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2});
-            this.listCritterSpawns.DoubleClickActivation = false;
-            this.listCritterSpawns.FullRowSelect = true;
-            this.listCritterSpawns.Location = new System.Drawing.Point(14, 576);
-            this.listCritterSpawns.Name = "listCritterSpawns";
-            this.listCritterSpawns.Size = new System.Drawing.Size(195, 103);
-            this.listCritterSpawns.TabIndex = 41;
-            this.listCritterSpawns.UseCompatibleStateImageBehavior = false;
-            this.listCritterSpawns.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "Critter";
-            this.columnHeader1.Width = 130;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Spawn%";
             // 
             // MainWindow
             // 
@@ -1290,7 +1274,6 @@
             this.tabPalette.ResumeLayout(false);
             this.tabObjectTools.ResumeLayout(false);
             this.tabObjects.ResumeLayout(false);
-            this.obj_splitter.Panel1.ResumeLayout(false);
             this.obj_splitter.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.obj_splitter)).EndInit();
             this.obj_splitter.ResumeLayout(false);
@@ -1317,7 +1300,6 @@
         private System.Windows.Forms.TabControl tabObjectTools;
         private System.Windows.Forms.TabPage tabObjects;
         private System.Windows.Forms.SplitContainer obj_splitter;
-        private System.Windows.Forms.Button btnObjectSelector;
         internal System.Windows.Forms.Panel pnlObjectScenicCache;
         private System.Windows.Forms.Timer timerRefresh;
         private System.Windows.Forms.ToolStripDropDownButton btnViewMenu;
@@ -1330,7 +1312,6 @@
         internal System.Windows.Forms.ToolStripMenuItem btnTileEditorTool;
         internal System.Windows.Forms.ToolStripMenuItem btnObjectEditor;
         internal System.Windows.Forms.ComboBox cbScenicCacheSelector;
-        internal System.Windows.Forms.ToolStripMenuItem btnElementalEditor;
         internal System.Windows.Forms.ToolStripMenuItem ckbShowTileGrid;
         internal System.Windows.Forms.ToolStripMenuItem ckbShowObjectBases;
         internal System.Windows.Forms.ToolStripMenuItem btnItemEditor;
@@ -1409,6 +1390,7 @@
         internal System.Windows.Forms.ToolStripSplitButton btnExport;
         internal System.Windows.Forms.ToolStripMenuItem ckbExportDebugRender;
         internal System.Windows.Forms.ToolStripMenuItem ckbExportShowFPS;
+        internal System.Windows.Forms.ToolStripMenuItem btnUIEditor;
     }
 }
 

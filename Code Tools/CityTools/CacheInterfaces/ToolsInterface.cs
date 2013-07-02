@@ -13,7 +13,7 @@ namespace CityTools.CacheInterfaces {
         public static void Initialize() {
             MainWindow.instance.btnExport.ButtonClick += new EventHandler(btnExport_Click);
             MainWindow.instance.btnCritterEditor.Click += new EventHandler(btnCritterEditor_Click);
-            MainWindow.instance.btnElementalEditor.Click += new EventHandler(btnElementalEditor_Click);
+            //MainWindow.instance.btnElementalEditor.Click += new EventHandler(btnElementalEditor_Click);
             MainWindow.instance.btnEquipmentEditor.Click += new EventHandler(btnEquipmentEditor_Click);
             MainWindow.instance.btnItemEditor.Click += new EventHandler(btnItemEditor_Click);
             MainWindow.instance.btnObjectEditor.Click += new EventHandler(btnObjectEditor_Click);
@@ -22,6 +22,7 @@ namespace CityTools.CacheInterfaces {
             MainWindow.instance.btnWorldEditor.Click += new EventHandler(btnWorldEditor_Click);
             MainWindow.instance.btnShadowTool.Click += new EventHandler(btnShadowTool_Click);
             MainWindow.instance.btnTileMerger.Click += new EventHandler(btnTileMerger_Click);
+            MainWindow.instance.btnUIEditor.Click += new EventHandler(btnUIEditor_Click);
         }
 
         public static bool ProcessKeys(Keys keyData) {
@@ -32,10 +33,10 @@ namespace CityTools.CacheInterfaces {
             } else if (keyData == Keys.O) {
                 OpenTemplateEditor(); return true;
             } else if (keyData == Keys.R) {
-                OpenElementEditor(); return true;
+                //OpenElementEditor(); return true;
             } else if (keyData == Keys.I) {
                 OpenItemEditor(); return true;
-            } else if (keyData == Keys.U) {
+            } else if (keyData == Keys.E) {
                 OpenEquipmentEditor(); return true;
             } else if (keyData == Keys.C) {
                 OpenCritterEditor(); return true;
@@ -43,7 +44,9 @@ namespace CityTools.CacheInterfaces {
                 OpenSoundEditor(); return true;
             } else if (keyData == Keys.X) {
                 OpenWorldEditor(); return true;
-            }
+            } else if (keyData == Keys.U) {
+                OpenUIEditor(); return true;
+            } 
 
             return false;
         }
@@ -101,6 +104,11 @@ namespace CityTools.CacheInterfaces {
             t.ShowDialog();
         }
 
+        private static void OpenUIEditor() {
+            UIEditor t = new UIEditor();
+            t.ShowDialog();
+        }
+
         private static void ExportAndRun() {
             string args = "map=" + MapPieceCache.CurrentPiece.Name;
 
@@ -124,7 +132,7 @@ namespace CityTools.CacheInterfaces {
                     MessageBox.Show("Could not export data. Skipping running the build.");
                 }
             //} catch {
-            //    MessageBox.Show("Could not run the build. No idea why.\n\nSuggestions:\n1. Double check you have AIR3.7.\n2. Double check you don't already have the game open.\n\nIf problems continue, let Paul know and he'll look deeper.");
+            //    MessageBox.Show("Could not run the build. No idea why.\n\nSuggestions:\n1. Double check you have AIR3.8.\n2. Double check you don't already have the game open.\n\nIf problems continue, let Paul know and he'll look deeper.");
             //}
         }
 
@@ -170,6 +178,10 @@ namespace CityTools.CacheInterfaces {
 
         private static void btnShadowTool_Click(object sender, EventArgs e) {
             OpenShadowEditor();
+        }
+
+        private static void btnUIEditor_Click(object sender, EventArgs e) {
+            OpenUIEditor();
         }
     }
 }

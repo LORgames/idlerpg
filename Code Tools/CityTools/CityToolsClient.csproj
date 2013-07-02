@@ -219,6 +219,12 @@
       <DependentUpon>TileEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="TileSystem\TerrainHelper.cs" />
+    <Compile Include="UIEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIEditor.Designer.cs">
+      <DependentUpon>UIEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="WorldEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -303,6 +309,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TileEditor.resx">
       <DependentUpon>TileEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIEditor.resx">
+      <DependentUpon>UIEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WorldEditor.resx">
       <DependentUpon>WorldEditor.cs</DependentUpon>
@@ -399,6 +408,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\arrow_merge.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UIExample.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -6,8 +6,8 @@
     <movie input="" />
     <movie path="bin\iRPG.swf" />
     <movie fps="20" />
-    <movie width="480" />
-    <movie height="762" />
+    <movie width="800" />
+    <movie height="600" />
     <movie version="3" />
     <movie minorVersion="4" />
     <movie platform="AIR Mobile" />
@@ -20,7 +20,6 @@
   <!-- Build options -->
   <build>
     <option accessible="False" />
-    <option advancedTelemetry="False" />
     <option allowSourcePathOverlap="False" />
     <option benchmark="False" />
     <option es="False" />
