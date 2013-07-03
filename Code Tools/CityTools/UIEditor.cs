@@ -82,6 +82,8 @@ namespace CityTools {
             } else {
                 pnlUIElement.Enabled = false;
             }
+
+            pnlUILayer.Enabled = false;
         }
 
         private void SwitchLayer() {
