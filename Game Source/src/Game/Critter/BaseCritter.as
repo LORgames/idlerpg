@@ -30,7 +30,10 @@ package Game.Critter {
 		public var isMoving:Boolean = false;
 		public var moveSpeedX:int = 0;
 		public var moveSpeedY:int = 0;
+		
 		public var MovementSpeed:int = 125;
+		public var AlertRange:int = 20000;
+		
 		public var CurrentMovementCost:Number = 1;
 		
 		public var CurrentMap:MapData;
@@ -113,15 +116,10 @@ package Game.Critter {
 				var dx:Number = (this.X - me.X);
 				var dy:Number = (this.Y - me.Y) / 0.85;
 				
-				var range:int = dx * dx + dy * dy;
-				var effectiveRange:int = range;
+				var effectiveRange:int = dx * dx + dy * dy;
 				
-				if ((MyAIType & AITypes.Hunting) > 0) {
-					effectiveRange /= 9; //3x effective range for hunting type monsters
-				}
-				
-				if (effectiveRange < 20000) { //was 100000
-					if (range < 2500) {
+				if (effectiveRange < AlertRange) { //was 100000
+					if (effectiveRange < 2500) {
 						RequestBasicAttack();
 						RequestMove(0, 0);
 					} else if ((MyAIType & AITypes.Aggressive)) {
@@ -145,6 +143,10 @@ package Game.Critter {
 				} else {
 					if ((MyAIType & AITypes.Wonder) > 0) {
 						//trace("WONDAR");
+					} else {
+						if (moveSpeedX != 0 || moveSpeedY != 0) {
+							RequestMove(0, 0);
+						}
 					}
 				}
 			}

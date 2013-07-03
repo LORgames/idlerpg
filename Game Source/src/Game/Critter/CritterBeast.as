@@ -30,6 +30,9 @@ package Game.Critter {
 			
 			CurrentHP = MyInfo.Health;
 			
+			MovementSpeed = MyInfo.MovementSpeed;
+			AlertRange = MyInfo.AlertRange*MyInfo.AlertRange;
+			
 			MyScript = Info.AICommands;
 			MyAIType = Info.AIType;
 			

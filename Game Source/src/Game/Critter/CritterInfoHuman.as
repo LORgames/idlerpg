@@ -46,6 +46,9 @@ package Game.Critter {
 			p.MyAIType = this.AIType;
 			p.CurrentHP = Health;
 			
+			p.AlertRange = AlertRange*AlertRange;
+			p.MovementSpeed = MovementSpeed;
+			
 			AICommands.Run(Script.Spawn, p);
 			
 			return p;

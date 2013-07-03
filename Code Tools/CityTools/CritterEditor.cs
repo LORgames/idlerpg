@@ -200,8 +200,8 @@ namespace CityTools {
             ckbOneOfAKind.Checked = critter.OneOfAKind;
             cbBaseGroup.Text = critter.NodeGroup;
 
-            numMovementSpeed.Value = critter.movementSpeed;
-            numRange.Value = critter.range;
+            numMovementSpeed.Value = critter.MovementSpeed;
+            numRange.Value = critter.AlertRange;
 
             txtScript.Script = critter.AICommands;
 
@@ -286,8 +286,8 @@ namespace CityTools {
             critter.ExperienceGain = (int)numExperience.Value;
             critter.Health = (int)numHealth.Value;
             critter.OneOfAKind = ckbOneOfAKind.Checked;
-            critter.movementSpeed = (short)numMovementSpeed.Value;
-            critter.range = (short)numRange.Value;
+            critter.MovementSpeed = (short)numMovementSpeed.Value;
+            critter.AlertRange = (short)numRange.Value;
 
             critter.NodeGroup = cbBaseGroup.Text;
             critter.AICommands = txtScript.Script;

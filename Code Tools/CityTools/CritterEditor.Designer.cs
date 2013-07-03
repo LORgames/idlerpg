@@ -229,11 +229,11 @@ namespace CityTools {
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(44, 190);
+            this.label22.Location = new System.Drawing.Point(20, 190);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(39, 13);
+            this.label22.Size = new System.Drawing.Size(63, 13);
             this.label22.TabIndex = 23;
-            this.label22.Text = "Range";
+            this.label22.Text = "Alert Range";
             // 
             // label14
             // 

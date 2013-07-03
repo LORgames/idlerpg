@@ -40,6 +40,9 @@ namespace ToolToGameExporter {
                 f.AddInt(c.ExperienceGain);
                 f.AddInt(c.Health);
 
+                f.AddShort(c.MovementSpeed);
+                f.AddShort(c.AlertRange);
+
                 ScriptInfo script = new ScriptInfo("Critter:AI:" + c.Name, ScriptTypes.Critter);
                 script.AnimationNames = (c.CritterType == CritterTypes.NonHumanoid) ? (c as CritterBeast).AnimationNames() : null;
 

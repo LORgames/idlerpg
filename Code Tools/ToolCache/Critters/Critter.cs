@@ -19,8 +19,8 @@ namespace ToolCache.Critters {
         public int ExperienceGain = 0;
         public int Health = 0;
         public bool OneOfAKind = false;
-        public short movementSpeed = 125;
-        public short range = 100;
+        public short MovementSpeed = 125;
+        public short AlertRange = 100;
 
         public string NodeGroup = "";
         public string AICommands = "";
@@ -43,8 +43,8 @@ namespace ToolCache.Critters {
             f.AddInt(ExperienceGain);
             f.AddInt(Health);
             f.AddByte(OneOfAKind ? (byte)1 : (byte)0);
-            f.AddShort(movementSpeed);
-            f.AddShort(range);
+            f.AddShort(MovementSpeed);
+            f.AddShort(AlertRange);
 
             f.AddShort((short)Loot.Count);
             foreach (LootDrop l in Loot) l.Pack(f);
@@ -71,8 +71,8 @@ namespace ToolCache.Critters {
             ExperienceGain = f.GetInt();
             Health = f.GetInt();
             OneOfAKind = f.GetByte()==1;
-            movementSpeed = f.GetShort();
-            range = f.GetShort();
+            MovementSpeed = f.GetShort();
+            AlertRange = f.GetShort();
 
             short Total = f.GetShort();
             while (--Total > -1) {
@@ -111,8 +111,8 @@ namespace ToolCache.Critters {
             temp.ExperienceGain = this.ExperienceGain;
             temp.Health = this.Health;
             temp.OneOfAKind = this.OneOfAKind;
-            temp.movementSpeed = this.movementSpeed;
-            temp.range = this.range;
+            temp.MovementSpeed = this.MovementSpeed;
+            temp.AlertRange = this.AlertRange;
 
             temp.NodeGroup = this.NodeGroup;
             temp.AICommands = this.AICommands;
