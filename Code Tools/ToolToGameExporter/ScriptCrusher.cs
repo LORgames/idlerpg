@@ -10,7 +10,7 @@ namespace ToolToGameExporter {
     /// <summary>
     /// Responsible for compiling scripts.
     /// </summary>
-    public class ScriptCrusher {
+    internal class ScriptCrusher {
 
         /// <summary>
         /// Compiles a script into bytecode.

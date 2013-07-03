@@ -9,7 +9,7 @@ using ToolCache.Animation;
 using System.Drawing;
 
 namespace ToolToGameExporter {
-    public class CritterCrusher {
+    internal class CritterCrusher {
         public static Dictionary<short, short> RemappedCritterIDs = new Dictionary<short, short>();
         public static Dictionary<string, short> NameToRemappedIDs = new Dictionary<string, short>();
 

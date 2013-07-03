@@ -9,7 +9,7 @@ using System.Drawing.Imaging;
 using ToolCache.Scripting;
 
 namespace ToolToGameExporter {
-    public class MapObjectCrusher {
+    internal class MapObjectCrusher {
 
         public static Dictionary<short, short> RealignedItemIndexes = new Dictionary<short, short>();
 

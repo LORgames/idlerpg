@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ToolCache.General;
+using System.Drawing;
 
 namespace ToolCache.UI {
     public enum UIAnchorPoint {
@@ -18,7 +20,97 @@ namespace ToolCache.UI {
 
     public class UIElement {
         public List<UILayer> Layers = new List<UILayer>();
-        public short OffsetX;
-        public short OffsetY;
+        public string Name = "";
+        public short OffsetX = 0;
+        public short OffsetY = 0;
+        public UIAnchorPoint AnchorPoint = UIAnchorPoint.TopLeft;
+        public short SizeX = 0;
+        public short SizeY = 0;
+
+        public static UIElement ReadFromBinaryIO(BinaryIO f) {
+            UIElement ui = new UIElement();
+
+            ui.Name = f.GetString();
+
+            ui.OffsetX = f.GetShort();
+            ui.OffsetY = f.GetShort();
+            ui.SizeX = f.GetShort();
+            ui.SizeY = f.GetShort();
+
+            ui.AnchorPoint = (UIAnchorPoint)f.GetByte();
+
+            short totalLayers = f.GetByte();
+            while (--totalLayers > -1) {
+                ui.Layers.Add(UILayer.ReadFromBinaryIO(f));
+            }
+
+            return ui;
+        }
+
+        internal void WriteToBinaryIO(BinaryIO f) {
+            f.AddString(Name);
+
+            f.AddShort(OffsetX);
+            f.AddShort(OffsetY);
+            f.AddShort(SizeX);
+            f.AddShort(SizeY);
+
+            f.AddByte((byte)AnchorPoint);
+
+            f.AddByte((byte)Layers.Count);
+            foreach (UILayer layer in Layers) {
+                layer.WriteToBinaryIO(f);
+            }
+        }
+
+        public void Draw(Graphics gfx, Rectangle canvasArea, float displayValue) {
+            Rectangle thisArea = new Rectangle(0, 0, SizeX, SizeY);
+
+            //Calculate X
+            switch (AnchorPoint) {
+                case UIAnchorPoint.BottomLeft:
+                case UIAnchorPoint.MiddleLeft:
+                case UIAnchorPoint.TopLeft:
+                    thisArea.X = OffsetX;
+                    break;
+                case UIAnchorPoint.BottomRight:
+                case UIAnchorPoint.MiddleRight:
+                case UIAnchorPoint.TopRight:
+                    thisArea.X = canvasArea.Width - SizeX - OffsetX;
+                    break;
+                default:
+                    thisArea.X = (canvasArea.Width - SizeX) / 2;
+                    break;
+            }
+            
+            //Calculate Y
+            switch (AnchorPoint) {
+                case UIAnchorPoint.BottomLeft:
+                case UIAnchorPoint.BottomCenter:
+                case UIAnchorPoint.BottomRight:
+                    thisArea.Y = canvasArea.Height - SizeY - OffsetY;
+                    break;
+                case UIAnchorPoint.TopLeft:
+                case UIAnchorPoint.TopCenter:
+                case UIAnchorPoint.TopRight:
+                    thisArea.Y = OffsetY;
+                    break;
+                default:
+                    thisArea.Y = (canvasArea.Height - SizeY) / 2;
+                    break;
+            }
+
+            foreach (UILayer layer in Layers) {
+                layer.Draw(gfx, thisArea, this, displayValue);
+            }
+        }
+
+        public override string ToString() {
+            if (Name != "") {
+                return Name;
+            }
+
+            return "[UNNAMED]";
+        }
     }
 }

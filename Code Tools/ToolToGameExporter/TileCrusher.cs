@@ -9,7 +9,7 @@ using System.Drawing.Imaging;
 using ToolCache.General;
 
 namespace ToolToGameExporter {
-    public class TileCrusher {
+    internal class TileCrusher {
 
         public static Dictionary<short, short> RemappedTileIds = new Dictionary<short, short>();
 

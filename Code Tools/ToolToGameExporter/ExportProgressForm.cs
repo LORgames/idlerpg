@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace ToolToGameExporter {
-    public partial class ExportProgressForm : Form {
+    internal partial class ExportProgressForm : Form {
         public ExportProgressForm() {
             InitializeComponent();
         }

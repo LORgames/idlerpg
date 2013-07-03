@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace ToolToGameExporter {
-    public class ProcessingError {
+    internal class ProcessingError {
         public string type = "";
         public string element = "";
         public string error = "";

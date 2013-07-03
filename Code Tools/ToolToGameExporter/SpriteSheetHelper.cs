@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 
 namespace ToolToGameExporter {
-    public class SpriteSheetHelper {
+    internal class SpriteSheetHelper {
         public static Size GetFrameSizeOf(List<String> frames) {
             Size s = Size.Empty;
 

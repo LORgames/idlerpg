@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace ToolToGameExporter {
-    public partial class FinishedDisplay : Form {
+    internal partial class FinishedDisplay : Form {
         public FinishedDisplay(string message, List<ProcessingError> errors) {
             InitializeComponent();
 

@@ -110,6 +110,7 @@ namespace CityTools {
             // 
             // cbItemType
             // 
+            this.cbItemType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbItemType.FormattingEnabled = true;
             this.cbItemType.Location = new System.Drawing.Point(216, 188);
             this.cbItemType.Name = "cbItemType";
@@ -120,6 +121,7 @@ namespace CityTools {
             // 
             // cbTileList
             // 
+            this.cbTileList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTileList.FormattingEnabled = true;
             this.cbTileList.Location = new System.Drawing.Point(16, 139);
             this.cbTileList.Name = "cbTileList";
@@ -303,6 +305,7 @@ namespace CityTools {
             // 
             // cbDispWeapon
             // 
+            this.cbDispWeapon.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbDispWeapon.FormattingEnabled = true;
             this.cbDispWeapon.Location = new System.Drawing.Point(435, 22);
             this.cbDispWeapon.Name = "cbDispWeapon";
@@ -322,6 +325,7 @@ namespace CityTools {
             // 
             // cbDispBody
             // 
+            this.cbDispBody.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbDispBody.FormattingEnabled = true;
             this.cbDispBody.Location = new System.Drawing.Point(15, 22);
             this.cbDispBody.Name = "cbDispBody";
@@ -341,6 +345,7 @@ namespace CityTools {
             // 
             // cbDispFace
             // 
+            this.cbDispFace.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbDispFace.FormattingEnabled = true;
             this.cbDispFace.Location = new System.Drawing.Point(119, 22);
             this.cbDispFace.Name = "cbDispFace";
@@ -360,6 +365,7 @@ namespace CityTools {
             // 
             // cbDispPants
             // 
+            this.cbDispPants.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbDispPants.FormattingEnabled = true;
             this.cbDispPants.Location = new System.Drawing.Point(223, 22);
             this.cbDispPants.Name = "cbDispPants";
@@ -379,6 +385,7 @@ namespace CityTools {
             // 
             // cbDispHeadgear
             // 
+            this.cbDispHeadgear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbDispHeadgear.FormattingEnabled = true;
             this.cbDispHeadgear.Location = new System.Drawing.Point(329, 22);
             this.cbDispHeadgear.Name = "cbDispHeadgear";
@@ -452,6 +459,7 @@ namespace CityTools {
             // 
             // cbDispShadow
             // 
+            this.cbDispShadow.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbDispShadow.FormattingEnabled = true;
             this.cbDispShadow.Location = new System.Drawing.Point(541, 22);
             this.cbDispShadow.Name = "cbDispShadow";

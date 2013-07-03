@@ -33,6 +33,8 @@ namespace CityTools {
             this.btnCreateBeastCritter = new System.Windows.Forms.ToolStripMenuItem();
             this.btnDuplicate = new System.Windows.Forms.ToolStripButton();
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
             this.numRange = new System.Windows.Forms.NumericUpDown();
             this.numMovementSpeed = new System.Windows.Forms.NumericUpDown();
             this.btnAddToSpawnList = new System.Windows.Forms.Button();
@@ -99,8 +101,6 @@ namespace CityTools {
             this.txtMonsterName = new System.Windows.Forms.TextBox();
             this.pbPreviewDisplay = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.sptFullForm)).BeginInit();
             this.sptFullForm.Panel1.SuspendLayout();
             this.sptFullForm.Panel2.SuspendLayout();
@@ -199,7 +199,7 @@ namespace CityTools {
             // 
             this.btnCreateHumanoidCritter.Image = ((System.Drawing.Image)(resources.GetObject("btnCreateHumanoidCritter.Image")));
             this.btnCreateHumanoidCritter.Name = "btnCreateHumanoidCritter";
-            this.btnCreateHumanoidCritter.Size = new System.Drawing.Size(124, 22);
+            this.btnCreateHumanoidCritter.Size = new System.Drawing.Size(135, 22);
             this.btnCreateHumanoidCritter.Text = "Humanoid";
             this.btnCreateHumanoidCritter.Click += new System.EventHandler(this.btnCreateHumanoidCritter_Click);
             // 
@@ -207,7 +207,7 @@ namespace CityTools {
             // 
             this.btnCreateBeastCritter.Image = ((System.Drawing.Image)(resources.GetObject("btnCreateBeastCritter.Image")));
             this.btnCreateBeastCritter.Name = "btnCreateBeastCritter";
-            this.btnCreateBeastCritter.Size = new System.Drawing.Size(124, 22);
+            this.btnCreateBeastCritter.Size = new System.Drawing.Size(135, 22);
             this.btnCreateBeastCritter.Text = "Beast Man";
             this.btnCreateBeastCritter.Click += new System.EventHandler(this.btnCreateBeastCritter_Click);
             // 
@@ -225,6 +225,24 @@ namespace CityTools {
             // 
             this.toolStripTextBox1.Name = "toolStripTextBox1";
             this.toolStripTextBox1.Size = new System.Drawing.Size(90, 25);
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(44, 190);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(39, 13);
+            this.label22.TabIndex = 23;
+            this.label22.Text = "Range";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(26, 164);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(57, 13);
+            this.label14.TabIndex = 22;
+            this.label14.Text = "Movement";
             // 
             // numRange
             // 
@@ -607,6 +625,7 @@ namespace CityTools {
             // 
             this.cbItemList.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.cbItemList.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbItemList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbItemList.FormattingEnabled = true;
             this.cbItemList.Location = new System.Drawing.Point(58, 3);
             this.cbItemList.Name = "cbItemList";
@@ -692,6 +711,7 @@ namespace CityTools {
             // 
             this.cbHumanoidWeapon.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.cbHumanoidWeapon.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbHumanoidWeapon.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbHumanoidWeapon.FormattingEnabled = true;
             this.cbHumanoidWeapon.Location = new System.Drawing.Point(107, 120);
             this.cbHumanoidWeapon.Name = "cbHumanoidWeapon";
@@ -703,6 +723,7 @@ namespace CityTools {
             // 
             this.cbHumanoidHeadgear.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.cbHumanoidHeadgear.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbHumanoidHeadgear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbHumanoidHeadgear.FormattingEnabled = true;
             this.cbHumanoidHeadgear.Location = new System.Drawing.Point(3, 120);
             this.cbHumanoidHeadgear.Name = "cbHumanoidHeadgear";
@@ -714,6 +735,7 @@ namespace CityTools {
             // 
             this.cbHumanoidFace.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.cbHumanoidFace.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbHumanoidFace.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbHumanoidFace.FormattingEnabled = true;
             this.cbHumanoidFace.Location = new System.Drawing.Point(108, 80);
             this.cbHumanoidFace.Name = "cbHumanoidFace";
@@ -725,6 +747,7 @@ namespace CityTools {
             // 
             this.cbHumanoidBody.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.cbHumanoidBody.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbHumanoidBody.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbHumanoidBody.FormattingEnabled = true;
             this.cbHumanoidBody.Location = new System.Drawing.Point(3, 80);
             this.cbHumanoidBody.Name = "cbHumanoidBody";
@@ -736,6 +759,7 @@ namespace CityTools {
             // 
             this.cbHumanoidPants.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.cbHumanoidPants.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbHumanoidPants.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbHumanoidPants.FormattingEnabled = true;
             this.cbHumanoidPants.Location = new System.Drawing.Point(107, 40);
             this.cbHumanoidPants.Name = "cbHumanoidPants";
@@ -747,6 +771,7 @@ namespace CityTools {
             // 
             this.cbHumanoidShadow.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.cbHumanoidShadow.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbHumanoidShadow.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbHumanoidShadow.FormattingEnabled = true;
             this.cbHumanoidShadow.Location = new System.Drawing.Point(3, 40);
             this.cbHumanoidShadow.Name = "cbHumanoidShadow";
@@ -832,6 +857,7 @@ namespace CityTools {
             // 
             this.cbAddGroup.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.cbAddGroup.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbAddGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbAddGroup.FormattingEnabled = true;
             this.cbAddGroup.Location = new System.Drawing.Point(424, 25);
             this.cbAddGroup.Name = "cbAddGroup";
@@ -859,6 +885,7 @@ namespace CityTools {
             // 
             // cbAITypes
             // 
+            this.cbAITypes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbAITypes.FormattingEnabled = true;
             this.cbAITypes.Location = new System.Drawing.Point(298, 24);
             this.cbAITypes.Name = "cbAITypes";
@@ -966,24 +993,6 @@ namespace CityTools {
             this.label2.Size = new System.Drawing.Size(38, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "Name:";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(26, 164);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(57, 13);
-            this.label14.TabIndex = 22;
-            this.label14.Text = "Movement";
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(44, 190);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(39, 13);
-            this.label22.TabIndex = 23;
-            this.label22.Text = "Range";
             // 
             // CritterEditor
             // 

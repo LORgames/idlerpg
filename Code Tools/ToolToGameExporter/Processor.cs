@@ -9,7 +9,7 @@ using System.Threading;
 namespace ToolToGameExporter {
     public class Processor {
 
-        public static List<ProcessingError> Errors = new List<ProcessingError>();
+        internal static List<ProcessingError> Errors = new List<ProcessingError>();
 
         public static bool Go(string p, bool silent = false) {
             Thread t = new Thread(new ParameterizedThreadStart(TaskMon));

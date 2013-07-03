@@ -291,7 +291,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(23, 99);
+            this.label5.Location = new System.Drawing.Point(23, 85);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(37, 13);
             this.label5.TabIndex = 11;
@@ -299,6 +299,7 @@
             // 
             // cbRarity
             // 
+            this.cbRarity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbRarity.FormattingEnabled = true;
             this.cbRarity.Items.AddRange(new object[] {
             "Common",

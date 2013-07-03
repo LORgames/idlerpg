@@ -10,7 +10,7 @@ using ToolCache.Map.Regions;
 using System.Drawing;
 
 namespace ToolToGameExporter {
-    public class MapCrusher {
+    internal class MapCrusher {
 
         public static void Go() {
             BinaryIO m = new BinaryIO();

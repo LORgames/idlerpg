@@ -35,6 +35,8 @@ package Game.Equipment {
 		}
 		
 		public function SetInformation(equipment:EquipmentInfo):void {
+			if (equipment.SizeX == 0 || equipment.SizeY == 0) return;
+			
 			Info = equipment;
 			
 			this.bitmapData = new BitmapData(Info.SizeX, Info.SizeY, true, 0x00FF0000);
@@ -45,9 +47,7 @@ package Game.Equipment {
 		
 		public function SetState(newState:int, loop:Boolean = true):void {
 			State = newState;
-			
 			Frame = 0;
-			
 			LoopState = loop;
 			
 			Recalculate();
@@ -121,7 +121,9 @@ package Game.Equipment {
 			
 			CopyRect = null;
 			
-			this.bitmapData.dispose();
+			if(this.bitmapData != null) {
+				this.bitmapData.dispose();
+			}
 		}
 	}
 }

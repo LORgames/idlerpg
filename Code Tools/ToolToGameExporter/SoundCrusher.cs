@@ -6,7 +6,7 @@ using ToolCache.Sound;
 using System.IO;
 
 namespace ToolToGameExporter {
-    public class SoundCrusher {
+    internal class SoundCrusher {
 
         internal static Dictionary<string, short> MusicConversions = new Dictionary<string, short>();
         internal static Dictionary<string, short> AmbienceConversions = new Dictionary<string, short>();

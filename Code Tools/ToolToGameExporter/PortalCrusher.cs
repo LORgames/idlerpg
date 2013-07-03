@@ -5,7 +5,7 @@ using System.Text;
 using ToolCache.World;
 
 namespace ToolToGameExporter {
-    public class PortalCrusher {
+    internal class PortalCrusher {
         public static Dictionary<short, short> RemappedPortalIDs = new Dictionary<short, short>();
 
         public static void Go() {

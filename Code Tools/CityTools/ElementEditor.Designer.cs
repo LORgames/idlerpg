@@ -91,6 +91,7 @@
             // 
             // cbElementDeleteName
             // 
+            this.cbElementDeleteName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbElementDeleteName.Name = "cbElementDeleteName";
             this.cbElementDeleteName.Size = new System.Drawing.Size(121, 25);
             // 
