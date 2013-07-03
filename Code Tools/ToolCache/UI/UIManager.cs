@@ -7,8 +7,9 @@ using ToolCache.General;
 
 namespace ToolCache.UI {
     public class UIManager {
+        private const string name = General.Settings.Database + "UserInterface.bin";
+
         public static List<UIElement> Elements = new List<UIElement>();
-        public const string name = General.Settings.Database + "UserInterface.bin";
 
         public static void Initialize() {
             Elements.Clear();

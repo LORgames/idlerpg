@@ -341,6 +341,20 @@ namespace ToolCache.Scripting {
                         AdditionalBytecode.Add((ushort)(param0 > -1 ? param0 : 0x0));
                         if (param0 < 0) Info.Errors.Add("Animation does not exist: " + additionalInfo);
                         break;
+                    case "direction":
+                        AdditionalBytecode.Add(0x7007);
+                        if (additionalInfo.Length == 0) {
+                            Info.Errors.Add("No direction specified!");
+                            break;
+                        }
+                        char dl = additionalInfo.ToLower()[0];
+                        switch (dl) {
+                            case 'l': AdditionalBytecode.Add(0x0); break;
+                            case 'r': AdditionalBytecode.Add(0x1); break;
+                            case 'u': AdditionalBytecode.Add(0x2); break;
+                            case 'd': AdditionalBytecode.Add(0x3); break;
+                            default: Info.Errors.Add("Unknown direction: " + additionalInfo); break;
+                        } break;
                     default:
                         Info.Errors.Add("IF param unknown: " + trueCommand); break;
                 }

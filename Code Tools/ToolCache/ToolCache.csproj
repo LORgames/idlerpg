@@ -56,6 +56,8 @@
     <Compile Include="Critters\Factions.cs" />
     <Compile Include="Critters\LootDrop.cs" />
     <Compile Include="Drawing\PersonDrawer.cs" />
+    <Compile Include="Effects\Effect.cs" />
+    <Compile Include="Effects\EffectManager.cs" />
     <Compile Include="Equipment\EquipmentAnimationSet.cs" />
     <Compile Include="Equipment\EquipmentItem.cs" />
     <Compile Include="Equipment\EquipmentManager.cs" />

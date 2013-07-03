@@ -11,6 +11,7 @@ using ToolCache.Map.Tiles;
 using ToolCache.Sound;
 using ToolCache.Critters;
 using ToolCache.UI;
+using ToolCache.Effects;
 
 namespace ToolCache.General {
     public class Startup {
@@ -20,6 +21,7 @@ namespace ToolCache.General {
             ElementManager.Initialize();
             Factions.Initialize();
             UIManager.Initialize();
+            EffectManager.Initialize();
 
             //Tier 1 Loading:
             MapObjectCache.Initialize();

@@ -88,7 +88,7 @@ namespace ToolToGameExporter {
                     }
 
                     if (rows != 0 && cols != 0) {
-                        PackAnimations(ei, nextID, size, rows, cols);
+                        PackAnimations(ei, nextID, size, rows, cols, true, (ei.Type != EquipmentTypes.Legs));
                     } else {
                         Bitmap bmp = new Bitmap(1, 1);
                         bmp.Save(Global.EXPORT_DIRECTORY + "/Equipment_" + ei.Name + ".png");
@@ -128,7 +128,7 @@ namespace ToolToGameExporter {
             f.Encode(Global.EXPORT_DIRECTORY + "/EquipmentInfo.bin");
         }
 
-        private static void PackAnimations(EquipmentItem ei, short nextID, Size size, int rows, int cols) {
+        private static void PackAnimations(EquipmentItem ei, short nextID, Size size, int rows, int cols, bool centerX = true, bool centerY = true) {
             int hI = -1;
 
             Bitmap bmp = new Bitmap(size.Width * cols, size.Height * rows, PixelFormat.Format32bppPArgb);
@@ -152,9 +152,9 @@ namespace ToolToGameExporter {
 
                                 int xPos = size.Width * i;
                                 int yPos = size.Height * hI;
-
-                                if (size.Width > im.Width) xPos += (size.Width - im.Width) / 2;
-                                if (size.Height > im.Height) yPos += (size.Height - im.Height) / 2;
+                                
+                                if (centerX && size.Width > im.Width) xPos += (size.Width - im.Width) / 2;
+                                if (centerY && size.Height > im.Height) yPos += (size.Height - im.Height) / 2;
 
                                 gfx.DrawImage(im, new Rectangle(xPos, yPos, im.Width, im.Height));
                                 
