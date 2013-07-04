@@ -329,8 +329,6 @@ package Game.General {
 							}
 							
 							obj0.CurrentMap.GetObjectsInArea(rect, Objects, eType, invoker);
-							
-							trace(dim2);
 							Drawer.AddDebugRect(rect);
 						} else {
  							trace("FRONT is not available to non-critter systems.");

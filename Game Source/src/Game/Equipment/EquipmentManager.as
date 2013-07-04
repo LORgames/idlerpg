@@ -90,10 +90,6 @@ package Game.Equipment {
 			e.SizeX = b.readUnsignedByte();
 			e.SizeY = b.readUnsignedByte();
 			
-			if (e.Name == "Naga Tail") {
-				trace("Naga Tail: " + e.SizeX + ", " + e.SizeY);
-			}
-			
 			//Calculate the center point of the frame
 			e.Center = new Point(e.SizeX / 2, e.SizeY / 2);
 			

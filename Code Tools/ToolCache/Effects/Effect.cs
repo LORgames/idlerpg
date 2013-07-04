@@ -47,6 +47,8 @@ namespace ToolCache.Effects {
                 e.Animations.Add(animName, anim);
             }
 
+            e.CleanUpAnimations();
+
             return e;
         }
 

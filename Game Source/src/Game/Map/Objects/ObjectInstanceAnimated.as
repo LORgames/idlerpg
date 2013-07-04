@@ -82,7 +82,6 @@ package Game.Map.Objects {
 		}
 		
 		override public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IMapObject):void {
-
 			Template.MyScript.Run(Script.Attacked, this, attacker);
 			trace(Template.Name + " attacked.");
 		}

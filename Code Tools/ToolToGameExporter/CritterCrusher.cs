@@ -98,10 +98,9 @@ namespace ToolToGameExporter {
                         int totalPixels = FrameSize.Width * FrameSize.Height * AnimationSets.Count;
 
                         //Generate the spritesheet
-                        int sizeW = 0; int sizeH = 0;
-                        CalculateCanvasSize(AnimationSets, FrameSize, ref sizeW, ref sizeH);
+                        Size textureSize = SpriteSheetHelper.GetTextureSizeFor(FrameSize, AnimationSets.Count);
 
-                        SpriteSheetHelper.PackAnimationsLinear(AnimationSets, FrameSize, new Size(sizeW, sizeH), "Critter_" + RemappedCritterIDs[c.ID], true);
+                        SpriteSheetHelper.PackAnimationsLinear(AnimationSets, FrameSize, textureSize, "Critter_" + RemappedCritterIDs[c.ID], true);
 
                         //Add all the frame lengths
                         //TODO: Make this 1 short per animation 4bits per direction. Much better memory usage.
@@ -109,8 +108,8 @@ namespace ToolToGameExporter {
                             f.AddShort(frameCount);
                         }
 
-                        f.AddUnsignedShort((ushort)sizeW);
-                        f.AddUnsignedShort((ushort)sizeH);
+                        f.AddUnsignedShort((ushort)textureSize.Width);
+                        f.AddUnsignedShort((ushort)textureSize.Height);
                         f.AddUnsignedShort((ushort)FrameSize.Width);
                         f.AddUnsignedShort((ushort)FrameSize.Height);
                     } catch (Exception ex) {
@@ -120,30 +119,6 @@ namespace ToolToGameExporter {
             }
 
             f.Encode(Global.EXPORT_DIRECTORY + "/CritterInfo.bin");
-        }
-
-        private static void CalculateCanvasSize(List<String> AnimationSets, Size FrameSize, ref int sizeW, ref int sizeH) {
-            int nextSize = 7;
-
-            while (true) {
-                sizeW = (int)Math.Pow(2, nextSize);
-
-                int totalColumns = (sizeW / FrameSize.Width);
-
-                if (totalColumns > 0) {
-                    int requiredRows = (int)Math.Ceiling(1.0 * AnimationSets.Count / totalColumns);
-
-                    int totalHeight = FrameSize.Height * requiredRows;
-
-                    if (sizeW >= totalHeight) {
-                        sizeH = sizeW;
-                        if (sizeW / 2 >= totalHeight) sizeH = sizeW / 2;
-                        break;
-                    }
-                }
-
-                nextSize++;
-            }
         }
 
         private static void EncodeCritterList(AnimatedObject anim, List<string> AnimationSets, List<short> totalFrames) {

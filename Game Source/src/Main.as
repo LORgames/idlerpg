@@ -14,6 +14,7 @@ package {
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
 	import Game.Critter.CritterManager;
+	import Game.Effects.EffectManager;
 	import Game.Equipment.EquipmentManager;
 	import Game.General.BinaryLoader;
 	import Game.General.ImageLoader;
@@ -114,6 +115,7 @@ package {
 			
 			new EquipmentManager();
 			new CritterManager();
+			new EffectManager();
 			
 			Clock.I.Start(stage);
 			

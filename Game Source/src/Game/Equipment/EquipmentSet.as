@@ -200,8 +200,9 @@ package Game.Equipment {
 			Headgear = null;
 			Weapon = null;
 			
-			if (this.parent != null)
+			if (this.parent != null) {
 				this.parent.removeChild(this);
+			}
 		}
 	}
 

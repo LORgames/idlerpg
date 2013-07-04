@@ -77,5 +77,32 @@ namespace ToolToGameExporter {
             bmp.Save(Global.EXPORT_DIRECTORY + "/" + filename + ".png");
             bmp.Dispose();
         }
+
+        internal static Size GetTextureSizeFor(Size frameSize, int totalFrames) {
+            int nextSize = 7;
+            Size s = new Size();
+
+            while (true) {
+                s.Width = (int)Math.Pow(2, nextSize);
+
+                int totalColumns = (s.Width / frameSize.Width);
+
+                if (totalColumns > 0) {
+                    int requiredRows = (int)Math.Ceiling(1.0 * totalFrames / totalColumns);
+
+                    int totalHeight = frameSize.Height * requiredRows;
+
+                    if (s.Width >= totalHeight) {
+                        s.Height = s.Width;
+                        if (s.Width / 2 >= totalHeight) s.Height = s.Width / 2;
+                        break;
+                    }
+                }
+
+                nextSize++;
+            }
+
+            return s;
+        }
     }
 }

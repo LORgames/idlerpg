@@ -42,40 +42,47 @@ namespace ToolToGameExporter {
 
             Directory.CreateDirectory(Global.EXPORT_DIRECTORY);
 
-            //try {
+#if RELEASE
+            try {
+#endif
                 //Precrush. No Dependancies.
-                UpdateEPF(epf, "Counting Monsters...", 10);
+                UpdateEPF(epf, "Counting Monsters...", 1);
                 CritterCrusher.Precrush();
+                UpdateEPF(epf, "Evaluating Projectiles...", 2);
+                EffectCrusher.Precrush();
 
                 //Tier 0  Crushing. No Dependancies.
-                UpdateEPF(epf, "Amplyfying Sounds...", 20);
+                UpdateEPF(epf, "Amplyfying Sounds...", 10);
                 SoundCrusher.Go();
-                UpdateEPF(epf, "Smashing Objects...", 30);
-                MapObjectCrusher.Go();
-                UpdateEPF(epf, "Processing Tiles...", 40);
+                UpdateEPF(epf, "Laying Tiles...", 20);
                 TileCrusher.Go();
-                UpdateEPF(epf, "Crushing Portal...", 50);
+                UpdateEPF(epf, "Entering Portals...", 30);
                 PortalCrusher.Go();
 
                 //Tier 1 Crushing. Tier 0 Dependancies
-                UpdateEPF(epf, "Converting Equipment...", 60);
+                UpdateEPF(epf, "Polishing Equipment...", 40);
                 EquipmentCrusher.Go(); //Requires Sounds.
+                UpdateEPF(epf, "Squishing Objects...", 50);
+                MapObjectCrusher.Go(); //Requires Sounds
+                UpdateEPF(epf, "Firing Arrows...", 60);
+                EffectCrusher.Go(); //Requires Sounds
 
                 //Tier 2 Crushing. Tier 1 Dependancies
-                UpdateEPF(epf, "Exporting Critters...", 70);
+                UpdateEPF(epf, "Breeding Critters...", 70);
                 CritterCrusher.Go(); //Requires Equipment
 
                 //Tier 3 Crushing. Tier 2 Depedancies
-                UpdateEPF(epf, "Exporting Maps...", 80);
+                UpdateEPF(epf, "Navigating Maps...", 80);
                 MapCrusher.Go(); //Requires Portals, Tiles, Sounds and Objects. + Critters
 
-                UpdateEPF(epf, "Copying Data...", 99);
+                UpdateEPF(epf, "Pushing Information...", 99);
                 if (Directory.Exists(p)) {
                     Directory.Delete(p, true);
                 }
 
                 Directory.Move(Global.EXPORT_DIRECTORY, p);
 
+                UpdateEPF(epf, "Complete", 100);
                 if (Errors.Count == 0) {
                     if (!silent) {
                         MessageBox.Show("Exported To Data Folder");
@@ -86,7 +93,8 @@ namespace ToolToGameExporter {
                     fd.ShowDialog();
                     ((InputData)d).result = false;
                 }
-            /*} catch {
+#if RELEASE
+            } catch {
                 if(!silent) MessageBox.Show("Please close the exporter and try again! (Some kind of caching issue occurred)");
 
                 try {
@@ -94,9 +102,8 @@ namespace ToolToGameExporter {
                 } catch { }
 
                 ((InputData)d).result = false;
-            }*/
-
-            UpdateEPF(epf, "", 100);
+            }
+#endif
 
             epf.Invoke((MethodInvoker)delegate {
                 epf.Close();
