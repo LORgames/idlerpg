@@ -6,6 +6,7 @@ package WindowSystem.AdvancedScrollWindow {
 	import Game.General.ImageLoader;
 	import WindowSystem.AdvancedScrollWindow.ScrollPanel.ScrollPanel;
 	import WindowSystem.AdvancedScrollWindow.LeftPanels.EquipmentPanel;
+	import WindowSystem.AdvancedScrollWindow.ScrollPanel.ScrollPanelItem;
 	/**
 	 * ...
 	 * @author Paul
@@ -34,6 +35,8 @@ package WindowSystem.AdvancedScrollWindow {
 			this.addChild(Panel2);
 			Panel2.Resize(this.width / 2, this.height);
 			Panel2.x = this.width / 2;
+			
+			Panel2.AddItem(new ScrollPanelItem(0, "Bow", 0));
 		}
 	}
 }

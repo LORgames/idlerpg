@@ -35,8 +35,8 @@ package {
 		public static var I:Main;
 		
 		public static var OrderedLayer:Sprite = new Sprite();
-		
 		public static var Input:IInputSystem;
+		public var hud:HUD = new HUD();
 		
 		//Some other important things
 		public var Renderer:Renderman;
@@ -130,7 +130,7 @@ package {
 			
 			stage.addEventListener(Event.RESIZE, Resized);
 			
-			this.addChild(new HUD());
+			this.addChild(hud);
 			
 			//var c:CaveLight = new CaveLight();
 			//this.addChild(c);

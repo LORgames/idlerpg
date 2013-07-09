@@ -30,7 +30,9 @@ package WindowSystem.AdvancedScrollWindow.ScrollPanel {
 		}
 		
 		public function AddItem(newItem:ScrollPanelItem):void {
-			
+			this.addChild(newItem);
+			newItem.x = 10;
+			newItem.y = 40;
 		}
 		
 	}
