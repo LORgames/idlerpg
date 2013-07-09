@@ -17,13 +17,12 @@ package RenderSystem {
 	 * @author Paul
 	 */
 	public class MapRenderer extends Bitmap {
-		
 		private var data:BitmapData; // Display thing.
 		public var DebugLayer:Sprite = new Sprite();
 		public var fullRect:Rectangle = new Rectangle();
 		
 		public function MapRenderer() {
-			this.cacheAsBitmapMatrix = new Matrix(1, 0, 0, 1, 0, 0);
+			
 		}
 		
 		public function Resized():void {

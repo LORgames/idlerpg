@@ -1,17 +1,12 @@
 package Game.Map {
 	import EngineTiming.Clock;
-	import flash.desktop.NativeApplication;
-	import flash.desktop.SystemIdleMode;
 	import flash.display.BitmapData;
-	import flash.system.System;
 	import flash.utils.ByteArray;
-	import Game.Critter.BaseCritter;
 	import Game.Critter.CritterHuman;
 	import Game.General.BinaryLoader;
 	import Game.General.ImageLoader;
-	import SoundSystem.MusicPlayer;
-	import Game.Map.Tiles.TileTemplate;
 	import Game.Map.Objects.ObjectTemplate;
+	import Game.Map.Tiles.TileTemplate;
 	/**
 	 * ...
 	 * @author Paul

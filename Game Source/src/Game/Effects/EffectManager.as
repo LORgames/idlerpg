@@ -1,5 +1,4 @@
 package Game.Effects {
-	import adobe.utils.CustomActions;
 	import flash.utils.ByteArray;
 	import Game.General.BinaryLoader;
 	import Game.General.Script;
@@ -46,6 +45,8 @@ package Game.Effects {
 				e.FrameHeight = b.readShort();
 				e.CanvasWidth = b.readShort();
 				e.CanvasHeight = b.readShort();
+				
+				e.SpriteColumns = (e.CanvasWidth / e.FrameWidth);
 				
 				e.MyScript = Script.ReadScript(b);
 				e.FinishedLoadingData();

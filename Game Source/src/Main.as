@@ -1,16 +1,10 @@
 package {
 	import EngineTiming.Clock;
-	import flash.desktop.NativeApplication;
-	import flash.display.NativeWindow;
-	import flash.display.Screen;
-	import flash.display.StageQuality;
-	import flash.events.Event;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
+	import flash.display.StageQuality;
 	import flash.display.StageScaleMode;
-	import flash.events.InvokeEvent;
-	import flash.events.TouchEvent;
-	import flash.text.TextField;
+	import flash.events.Event;
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
 	import Game.Critter.CritterManager;
@@ -22,12 +16,15 @@ package {
 	import InputSystems.IInputSystem;
 	import InputSystems.KeyboardInput;
 	import InputSystems.TouchInput;
-	import RenderSystem.IObjectLayer;
-	import EngineTiming.IUpdatable;
 	import RenderSystem.Renderman;
-	import SoundSystem.MusicPlayer;
 	import WindowSystem.HUD;
-	import WindowSystem.ScreenText;
+	
+	CONFIG::air {
+		import flash.desktop.NativeApplication;
+		import flash.display.NativeWindow;
+		import flash.display.Screen;
+		import flash.events.InvokeEvent;
+	}
 	
 	/**
 	 * ...
@@ -53,14 +50,8 @@ package {
 			
 			stage.addEventListener(Event.DEACTIVATE, deactivate);
 			
-			NativeApplication.nativeApplication.addEventListener(InvokeEvent.INVOKE, OnInvoke);
-			
 			// touch or gesture?
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
-			
-			if (NativeWindow.isSupported && stage.nativeWindow.maximizable) {
-				stage.nativeWindow.maximize();
-			}
 			
 			//Need more logic to adding input system?
 			if(Multitouch.supportsTouchEvents && Multitouch.maxTouchPoints > 1) {
@@ -68,38 +59,56 @@ package {
 			} else {
 				Input = new KeyboardInput();
 			}
+			
+			CONFIG::air {			
+				if (NativeWindow.isSupported && stage.nativeWindow.maximizable) {
+					stage.nativeWindow.maximize();
+				}
+				
+				NativeApplication.nativeApplication.addEventListener(InvokeEvent.INVOKE, OnInvoke);
+			}
+			
+			if(CONFIG::air == false) {
+				if(!stage) {
+					this.addEventListener(Event.ADDED_TO_STAGE, OnInvoke);
+				} else {
+					OnInvoke(null);
+				}
+			}
 		}
 		
-		private function OnInvoke(e:InvokeEvent):void {
+		private function OnInvoke(e:Event):void {
 			var loadMap:String = "Tutorial Fair";
 			
-			if (e.arguments.length > 0) {
-				var args:Array = e.arguments.join(" ").split("+");
-				
-				for (var i:int = 0; i < args.length; i++) {
-					var arg:String = args[i];
-					if(arg.indexOf("=") == -1) continue;
+			CONFIG::air {
+				if ((e as InvokeEvent).arguments.length > 0) {
+					var args:Array = (e as InvokeEvent).arguments.join(" ").split("+");
 					
-					var param:String = (arg.split("=")[0] as String).toLowerCase();
-					
-					switch(param) {
-						case "map":
-							loadMap = arg.substr(4);
-							break;
-						case "debug":
-							if (arg.substr(6) == "Yes") {
-								Global.DebugRender = true;
-							} else {
-								Global.DebugRender = false;
-							} break;
-						case "showfps":
-							if (arg.substr(8) == "Yes") {
-								Global.DebugFPS = true;
-							} else {
-								Global.DebugFPS = false;
-							} break;
-						default:
-							trace("Unknown Param: " + arg);
+					for (var i:int = 0; i < args.length; i++) {
+						var arg:String = args[i];
+						if(arg.indexOf("=") == -1) continue;
+						
+						var param:String = (arg.split("=")[0] as String).toLowerCase();
+						
+						switch(param) {
+							case "map":
+								loadMap = arg.substr(4);
+								break;
+							case "debug":
+								if (arg.substr(6) == "Yes") {
+									Global.DebugRender = true;
+								} else {
+									Global.DebugRender = false;
+								} break;
+							case "showfps":
+								if (arg.substr(8) == "Yes") {
+									Global.DebugFPS = true;
+								} else {
+									Global.DebugFPS = false;
+								} break;
+							default:
+								trace("Unknown Param: " + arg);
+						}
 					}
 				}
 			}
@@ -123,13 +132,19 @@ package {
 			
 			this.addChild(new HUD());
 			
+			//var c:CaveLight = new CaveLight();
+			//this.addChild(c);
+			//c.Reset();
+			
 			Resized();
 		}
 		
 		private function deactivate(e:Event):void {
 			// auto-close if mobile device :)
-			if (Multitouch.supportsTouchEvents && Multitouch.maxTouchPoints > 1) {
-				NativeApplication.nativeApplication.exit();
+			CONFIG::air {
+				if (Multitouch.supportsTouchEvents && Multitouch.maxTouchPoints > 1) {
+					NativeApplication.nativeApplication.exit();
+				}
 			}
 		}
 		

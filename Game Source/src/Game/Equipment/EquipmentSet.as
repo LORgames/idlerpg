@@ -204,6 +204,25 @@ package Game.Equipment {
 				this.parent.removeChild(this);
 			}
 		}
+		
+		public function IsEquipped(slotID:uint, itemID:uint):Boolean {
+			switch (slotID) {
+				case 0: //Shadow
+					return (Shadow.Info.ID == itemID);
+				case 1: //Legs
+					return (Legs.Info.ID == itemID);
+				case 2: //Body
+					return (Body.Info.ID == itemID);
+				case 3: //Face
+					return (Face.Info.ID == itemID);
+				case 4: //Headgear
+					return (Headgear.Info.ID == itemID);
+				case 5: //Weapon
+					return (Weapon.Info.ID == itemID);
+			}
+			
+			return false;
+		}
 	}
 
 }

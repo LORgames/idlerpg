@@ -10,6 +10,7 @@ package Game.General {
 	import Game.Critter.CritterAnimationSet;
 	import Game.Critter.CritterManager;
 	import Game.Critter.CritterHuman;
+	import Game.Effects.EffectInstance;
 	import Game.Equipment.EquipmentItem;
 	import Game.Map.Objects.ObjectInstance;
 	import Game.Map.Objects.ObjectInstanceAnimated;
@@ -123,6 +124,8 @@ package Game.General {
 							(target as EquipmentItem).SetState(EventScript.readShort(), false);
 						} else if (target is CritterAnimationSet) { 
 							(target as CritterAnimationSet).ChangeState(EventScript.readShort(), false);
+						} else if (invoker is EffectInstance) { 
+							(target as EffectInstance).ChangeState(EventScript.readShort(), false);
 						} else {
 							trace("Unknown Invoker for 0x6000:PlayAnimation");
 							EventScript.readShort();
@@ -132,6 +135,8 @@ package Game.General {
 							(target as EquipmentItem).SetState(EventScript.readShort(), true);
 						} else if (target is CritterAnimationSet) { 
 							(target as CritterAnimationSet).ChangeState(EventScript.readShort(), true);
+						} else if (invoker is EffectInstance) { 
+							(target as EffectInstance).ChangeState(EventScript.readShort(), true);
 						} else {
 							trace("Unknown Invoker for 0x6001:LoopAnimation @" + event);
 							EventScript.readShort();
@@ -144,6 +149,8 @@ package Game.General {
 							(target as ObjectInstanceAnimated).PlaybackSpeed = speedNU;
 						} else if (invoker is ObjectInstance) {
 							(invoker as ObjectInstance).Template.PlaybackSpeed = speedNU;
+						} else if (invoker is EffectInstance) { 
+							(target as EffectInstance).PlaybackSpeed = speedNU;
 						} else {
 							trace("Unknown invoker for AnimationSpeed");
 						} break;
@@ -168,6 +175,7 @@ package Game.General {
 					case 0x8000: //IF without ELSE
 						bParam = CanIf(EventScript, invoker, target);
 						if (!bParam) {
+							EventScript.readUnsignedShort(); //Just pop the 0xF0FD off
 							ReadUntilBalancedClose(EventScript);
 						} break;
 					case 0x8001: //IF with ELSE
@@ -244,7 +252,11 @@ package Game.General {
 							trace("Unknown Invoker for 'Alive'");
 						} break;
 					case 0x7005: //Is an item equipped
-						currentUnprocessedValue = true;
+						if (invoker is CritterHuman) {
+							currentUnprocessedValue = (invoker as CritterHuman).Equipment.IsEquipped(eventScript.readUnsignedShort(), eventScript.readUnsignedShort());
+						} else {
+							trace("Unknown invoker for if equipped");
+						}
 						break;
 					case 0x7006: //Is an animation playing
 						param0 = eventScript.readUnsignedShort();
@@ -253,7 +265,25 @@ package Game.General {
 						} else if (target is EquipmentItem) {
 							currentUnprocessedValue = (target as EquipmentItem).currentState == param0;
 						} else {
-							//trace("\t@0x7006: Unknown target for Animation(playing)");
+							trace("\t@0x7006: Unknown target for Animation(playing)");
+						} break;
+					case 0x7007: //What direction am I facing
+						param0 = eventScript.readUnsignedShort();
+						if (invoker is BaseCritter) {
+							currentUnprocessedValue = ((invoker as BaseCritter).direction == param0);
+						} else if (invoker is EffectInstance) {
+							currentUnprocessedValue = ((invoker as EffectInstance).Direction == param0);
+						} else {
+							trace("\t@0x7007: Unknown invoker for Direction(facing)");
+						} break;
+					case 0x7008: //What is the current frame
+						param0 = eventScript.readUnsignedShort();
+						if (invoker is ObjectInstanceAnimated) {
+							currentUnprocessedValue = ((invoker as ObjectInstanceAnimated).CurrentFrame == param0);
+						} else if (invoker is ObjectInstance) {
+							currentUnprocessedValue = ((invoker as ObjectInstance).Template.CurrentFrame == param0);
+						} else {
+							trace("Unknown invoker for 0x7008:CurrentFrame invoker=" + invoker);
 						} break;
 					default:
 						trace("@0x" + command.toString(16) + ": Unknown Conditional.");

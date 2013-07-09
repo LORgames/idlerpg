@@ -333,8 +333,18 @@ namespace ToolCache.Scripting {
                     case "isalive": AdditionalBytecode.Add(0x7004); break;
                     case "equipped":
                         AdditionalBytecode.Add(0x7005);
-                        Info.Errors.Add("We currently do not support the 'equipped(<item>)' IF conditional!");
-                        break;
+                        string unknownError = "Could not find any equipment called:" + additionalInfo;
+
+                        if (Info.RemappedEquipmentIDs != null) {
+                            if (Info.RemappedEquipmentIDs.ContainsKey(additionalInfo)) {
+                                AdditionalBytecode.Add((ushort)EquipmentManager.Equipment[additionalInfo].Type);
+                                AdditionalBytecode.Add((ushort)Info.RemappedEquipmentIDs[additionalInfo]);
+                            } else {
+                                Info.Errors.Add(unknownError);
+                            }
+                        } else if (!EquipmentManager.Equipment.ContainsKey(additionalInfo)) {
+                            Info.Errors.Add(unknownError);
+                        } break;
                     case "animation":
                         param0 = Info.AnimationNames.IndexOf(additionalInfo);
                         AdditionalBytecode.Add(0x7006);
@@ -355,6 +365,10 @@ namespace ToolCache.Scripting {
                             case 'd': AdditionalBytecode.Add(0x3); break;
                             default: Info.Errors.Add("Unknown direction: " + additionalInfo); break;
                         } break;
+                    case "currentframe":
+                        AdditionalBytecode.Add(0x7008);
+                        VerifyCommaSeperatedShorts(additionalInfo, 1, Info);
+                        break;
                     default:
                         Info.Errors.Add("IF param unknown: " + trueCommand); break;
                 }

@@ -108,7 +108,7 @@ package EngineTiming {
 			}
 		}
 		
-		public function Remove15(item:IOneSecondUpdate):void {
+		public function Remove15(item:IFifteenSecondUpdate):void {
 			var i:int = FifteenSecond.indexOf(item);
 			
 			if (i > -1) {

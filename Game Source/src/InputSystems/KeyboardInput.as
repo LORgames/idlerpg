@@ -2,7 +2,10 @@ package InputSystems {
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
+	import Game.Effects.EffectInstance;
+	import Game.Effects.EffectManager;
 	import Game.Map.WorldData;
+	import RenderSystem.Overlays.CaveLight;
 	/**
 	 * ...
 	 * @author Paul
@@ -32,6 +35,7 @@ package InputSystems {
 				if (ke.keyCode == Keyboard.S || ke.keyCode == Keyboard.DOWN) ySpeed += 1;
 				if (ke.keyCode == Keyboard.A || ke.keyCode == Keyboard.LEFT) xSpeed -= 1;
 				if (ke.keyCode == Keyboard.D || ke.keyCode == Keyboard.RIGHT) xSpeed += 1;
+				if (ke.keyCode == Keyboard.K) new EffectInstance(EffectManager.I.Effects[0], WorldData.ME.X, WorldData.ME.Y, WorldData.ME.direction);
 				
 				WorldData.ME.RequestMove(xSpeed, ySpeed);
 				
@@ -44,14 +48,16 @@ package InputSystems {
 		private function KeyUp(ke:KeyboardEvent):void {
 			downKeys[ke.keyCode] = false;
 			
-			if(ke.keyCode != Keyboard.SPACE) {
-				if (ke.keyCode == Keyboard.W || ke.keyCode == Keyboard.UP) ySpeed += 1;
-				if (ke.keyCode == Keyboard.S || ke.keyCode == Keyboard.DOWN) ySpeed -= 1;
-				if (ke.keyCode == Keyboard.A || ke.keyCode == Keyboard.LEFT) xSpeed += 1;
-				if (ke.keyCode == Keyboard.D || ke.keyCode == Keyboard.RIGHT) xSpeed -= 1;
-				
-				WorldData.ME.RequestMove(xSpeed, ySpeed);
+			if (ke.keyCode == Keyboard.W || ke.keyCode == Keyboard.UP) ySpeed += 1;
+			if (ke.keyCode == Keyboard.S || ke.keyCode == Keyboard.DOWN) ySpeed -= 1;
+			if (ke.keyCode == Keyboard.A || ke.keyCode == Keyboard.LEFT) xSpeed += 1;
+			if (ke.keyCode == Keyboard.D || ke.keyCode == Keyboard.RIGHT) xSpeed -= 1;
+			
+			if (ke.keyCode == Keyboard.M) {
+				Main.I.stage.addChild(new CaveLight());
 			}
+				
+			WorldData.ME.RequestMove(xSpeed, ySpeed);
 		}
 		
 		private function WipeKeys(e:Event):void {

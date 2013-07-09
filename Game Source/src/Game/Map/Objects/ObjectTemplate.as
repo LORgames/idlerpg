@@ -33,7 +33,7 @@ package Game.Map.Objects {
 		public var SpriteAtlas:BitmapData;
 		
 		private var timeout:Number = 0;
-		private var currentFrame:int = 0;
+		public var CurrentFrame:int = 0;
 		public var FrameSize:Rectangle = new Rectangle();
 		
 		private var Instances:int = 0;
@@ -87,11 +87,11 @@ package Game.Map.Objects {
 			if (timeout > PlaybackSpeed) {
 				while(timeout > PlaybackSpeed) {
 					timeout -= PlaybackSpeed;
-					currentFrame++;
-					if (currentFrame == TotalFrames) currentFrame = 0;
+					CurrentFrame++;
+					if (CurrentFrame == TotalFrames) CurrentFrame = 0;
 				}
 				
-				FrameSize.x = currentFrame * FrameSize.width;
+				FrameSize.x = CurrentFrame * FrameSize.width;
 				bitmapCopy.copyPixels(SpriteAtlas, FrameSize, Global.ZeroPoint);
 			}
 		}

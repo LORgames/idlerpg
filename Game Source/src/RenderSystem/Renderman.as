@@ -4,6 +4,7 @@ package RenderSystem {
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
+	import flash.text.TextField;
 	import Game.Critter.CritterAnimationSet;
 	import Game.Map.MapData;
 	import Game.Map.WorldData;
@@ -24,7 +25,7 @@ package RenderSystem {
 		private var fading:Boolean = false;
 		private var fadeToBlack:Boolean = false;
 		private var fadeCallback:Function = null;
-		public var MapText:ScreenText;
+		public var MapText:TextField;
 		
 		private var loadScreen:LoadScreen;
 		
@@ -40,7 +41,7 @@ package RenderSystem {
 			
 			Main.I.addChild(map.DebugLayer);
 			
-			MapText = new ScreenText(60, Fonts.Header);
+			MapText = Fonts.GetTextField(60, Fonts.Header);
 			Main.I.addChild(MapText);
 		}
 		
@@ -49,7 +50,7 @@ package RenderSystem {
 			fading = true;
 			fadeCallback = callbackIfRequired;
 			
-			MapText.UpdateText(message);
+			MapText.text = message;
 			MapText.x = (Main.I.stage.stageWidth - MapText.width) / 2;
 			MapText.y = (Main.I.stage.stageHeight - MapText.height) / 2;
 		}
@@ -168,7 +169,7 @@ package RenderSystem {
 			if (i < 1) return false;
 			if (i >= OrderedLayer.numChildren) return false;
 			
-			if ((IObjectLayer)(OrderedLayer.getChildAt(i)).GetTrueY() < (IObjectLayer)(OrderedLayer.getChildAt(i-1)).GetTrueY()) {
+			if ((IObjectLayer)(OrderedLayer.getChildAt(i)).GetTrueY() <= (IObjectLayer)(OrderedLayer.getChildAt(i-1)).GetTrueY()) {
 				OrderedLayer.swapChildrenAt(i, i - 1);
 				return true;
 			}

@@ -27,6 +27,7 @@ namespace CityTools {
 
             if (!Directory.Exists("Effects")) Directory.CreateDirectory("Effects");
             animationList.SetSaveLocation("Effects");
+            animationList.DisablePlaybackSpeed();
         }
 
         private void FillTree() {

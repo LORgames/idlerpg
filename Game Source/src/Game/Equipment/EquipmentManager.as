@@ -58,6 +58,8 @@ package Game.Equipment {
 		public function ReadEquipmentInfo(b:ByteArray, v:Vector.<EquipmentInfo>, index:int):void {
 			var e:EquipmentInfo = new EquipmentInfo();
 			
+			e.ID = index;
+			
 			//Read the name
 			e.Name = BinaryLoader.GetString(b);
 			

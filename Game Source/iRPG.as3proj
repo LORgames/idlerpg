@@ -9,9 +9,10 @@
     <movie width="800" />
     <movie height="600" />
     <movie version="3" />
-    <movie minorVersion="4" />
+    <movie minorVersion="7" />
     <movie platform="AIR Mobile" />
     <movie background="#FFFFFF" />
+    <movie preferredSDK="AIR 3.8.0;3.8.0;" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
@@ -20,6 +21,7 @@
   <!-- Build options -->
   <build>
     <option accessible="False" />
+    <option advancedTelemetry="True" />
     <option allowSourcePathOverlap="False" />
     <option benchmark="False" />
     <option es="False" />
@@ -87,5 +89,8 @@
     <option testMovieCommand="Run.bat" />
   </options>
   <!-- Plugin storage -->
-  <storage />
+  <storage>
+    <entry key="at_enabled"><![CDATA[0]]></entry>
+    <entry key="at_password"><![CDATA[]]></entry>
+  </storage>
 </project>

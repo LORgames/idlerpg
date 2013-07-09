@@ -4,6 +4,7 @@ package WindowSystem
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import Game.General.ImageLoader;
+	import WindowSystem.AdvancedScrollWindow.AdvPanel;
 	/**
 	 * ...
 	 * @author Paul
@@ -15,8 +16,6 @@ package WindowSystem
 		private var stick:Bitmap;
 		
 		public function HUD() {
-			return;
-			
 			ImageLoader.Load("OtherUI/exp bar.png", LoadedExperienceArt);
 			ImageLoader.Load("OtherUI/Buttons.png", LoadedButtonsArt);
 			ImageLoader.Load("OtherUI/Stick.png", LoadedStickArt);
@@ -28,6 +27,8 @@ package WindowSystem
 				this.graphics.drawRect(0, 0, 100, 25);
 				this.graphics.endFill();
 			}
+			
+			this.addChild(new AdvPanel());
 		}
 		
 		public function LoadedExperienceArt(e:BitmapData):void {

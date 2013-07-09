@@ -13,8 +13,10 @@ package Debug {
 		private static var Empty:Sprite = new Sprite();
 		
 		public static function Initialize():void {
-			Clock.I.Updatables.push(new Drawer());
-			NotReady = false;
+			if(Global.DebugRender) {
+				Clock.I.Updatables.push(new Drawer());
+				NotReady = false;
+			}
 		}
 		
 		public static function AddDebugRect(r:Rect):void {

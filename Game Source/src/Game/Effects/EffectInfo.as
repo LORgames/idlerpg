@@ -28,6 +28,7 @@ package Game.Effects
 		
 		public var MyScript:Script;
 		public var SpriteAtlas:BitmapData;
+		public var SpriteColumns:int = 1;
 		
 		public function EffectInfo() { }
 		

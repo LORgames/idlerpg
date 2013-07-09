@@ -32,6 +32,7 @@ package Game.Equipment {
 		public var SpriteSheetYOffsets:Vector.<int>;
 		
 		public var MyScript:Script;
+		public var ID:int;
 		
 		public function EquipmentInfo() {
 			

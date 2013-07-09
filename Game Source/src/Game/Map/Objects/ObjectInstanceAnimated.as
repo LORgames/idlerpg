@@ -1,6 +1,5 @@
 package Game.Map.Objects {
 	import flash.display.BitmapData;
-	import flash.display3D.textures.RectangleTexture;
 	import flash.geom.Rectangle;
 	import Game.General.Script;
 	import Game.Map.MapData;
