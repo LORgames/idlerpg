@@ -10,7 +10,7 @@
     <movie height="600" />
     <movie version="3" />
     <movie minorVersion="7" />
-    <movie platform="AIR Mobile" />
+    <movie platform="AIR" />
     <movie background="#FFFFFF" />
     <movie preferredSDK="AIR 3.8.0;3.8.0;" />
   </output>
