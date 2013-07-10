@@ -73,7 +73,7 @@ namespace CityTools.Components {
         }
 
         private void QuickParseText() {
-            if (txtScript.SelectionLength == 0) {
+            /*if (txtScript.SelectionLength == 0) {
                 int x = txtScript.SelectionStart;
 
                 txtScript.SelectAll();
@@ -99,7 +99,7 @@ namespace CityTools.Components {
 
                 txtScript.SelectionStart = x;
                 txtScript.SelectionLength = 0;
-            }
+            }*/
         }
 
         private void timer1_Tick(object sender, EventArgs e) {
