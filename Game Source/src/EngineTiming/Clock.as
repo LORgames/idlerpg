@@ -4,6 +4,7 @@ package EngineTiming {
 	import flash.text.TextField;
 	import flash.utils.getTimer;
 	import Game.Map.WorldData;
+	import WindowSystem.FPSCounter;
 	/**
 	 * ...
 	 * @author Paul
@@ -20,7 +21,7 @@ package EngineTiming {
 		
 		private var ExpectedFrameRate:Number = 0;
 		
-		public static var FPSTF:TextField;
+		public static var FPSTF:FPSCounter;
         private var last:uint = getTimer();
         private var ticks:uint = 0;
 		
@@ -49,7 +50,7 @@ package EngineTiming {
 				if (delta >= 1000) {
 					//trace(ticks / delta * 1000+" ticks:"+ticks+" delta:"+delta);
 					var fps:Number = ticks / delta * 1000;
-					FPSTF.text = "FPS:" + fps.toFixed(1);
+					FPSTF.UpdateInfo(fps.toFixed(1));
 					ticks = 0;
 					last = now;
 				}

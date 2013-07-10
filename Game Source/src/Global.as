@@ -19,7 +19,7 @@ package {
 		public static const ZeroPoint:Point = new Point();
 		
 		//Debug information
-		public static var DebugRender:Boolean = true;
+		public static var DebugRender:Boolean = false;
 		static public var DebugFPS:Boolean = true;
 	}
 }

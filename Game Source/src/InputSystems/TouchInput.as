@@ -75,16 +75,6 @@ package InputSystems {
 					WorldData.ME.RequestMove((xPos-0.5)*2, (yPos-0.5)*2);
 				}
 			}
-				
-			var spr:Sprite = Drawer.GetSprite();
-			spr.graphics.lineStyle(1, 0xFF0000);
-			spr.graphics.moveTo(PreviousX, PreviousY);
-			spr.graphics.lineTo(te.stageX, te.stageY);
-			spr.x = 0;
-			spr.y = 0;
-			
-			PreviousX = te.stageX;
-			PreviousY = te.stageY;
 		}
 		
 		private function MouseDown(te:MouseEvent):void {
@@ -125,16 +115,6 @@ package InputSystems {
 					WorldData.ME.RequestMove((xPos-0.5)*2, (yPos-0.5)*2);
 				}
 			}
-				
-			var spr:Sprite = Drawer.GetSprite();
-			spr.graphics.lineStyle(1, 0);
-			spr.graphics.moveTo(PreviousX, PreviousY);
-			spr.graphics.lineTo(te.stageX, te.stageY);
-			spr.x = 0;
-			spr.y = 0;
-			
-			PreviousX = te.stageX;
-			PreviousY = te.stageY;
 		}
 		
 	}

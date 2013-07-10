@@ -66,6 +66,7 @@ namespace CityTools {
             ckbIsSolid.Checked = CurrentObject.isSolid;
             scriptBox1.Script = CurrentObject.Script;
             ckIndividualAnimations.Checked = CurrentObject.IndividualAnimations;
+            ckbAnimatedInTool.Checked = CurrentObject.AnimateInTool;
 
             lblTemplateID.Text = "N:" + CurrentObject.ObjectID;
 
@@ -86,6 +87,7 @@ namespace CityTools {
                 CurrentObject.isSolid = ckbIsSolid.Checked;
                 CurrentObject.Script = scriptBox1.Script;
                 CurrentObject.IndividualAnimations = ckIndividualAnimations.Checked;
+                CurrentObject.AnimateInTool = ckbAnimatedInTool.Checked;
 
                 if (_isNew) {
                     MapObjectCache.AddObject(CurrentObject);

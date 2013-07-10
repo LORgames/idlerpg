@@ -21,6 +21,7 @@ namespace ToolCache.Map.Objects {
 
         public bool isSolid = true;
         public bool IndividualAnimations = false;
+        public bool AnimateInTool = true;
 
         public MapObject() {
             
@@ -52,6 +53,9 @@ namespace ToolCache.Map.Objects {
             byte booleanData = f.GetByte();
             m.isSolid = (booleanData & (byte)0x1) == 0x1;
             m.IndividualAnimations = (booleanData & (byte)0x2) == 0x2;
+            m.AnimateInTool = (booleanData & (byte)0x4) != 0x4; //Is backwards compared to the others, 0=true, 4=false
+
+            m.Animation.Paused = m.AnimateInTool;
 
             m.OffsetY = f.GetShort();
 
@@ -85,6 +89,7 @@ namespace ToolCache.Map.Objects {
             byte booleanData = 0;
             booleanData |= (isSolid ? (byte)1 : (byte)0);
             booleanData |= (IndividualAnimations ? (byte)2 : (byte)0);
+            booleanData |= (AnimateInTool ? (byte)0 : (byte)4); //Is backwards compared to the others, 0=true, 4=false
 
             return booleanData;
         }

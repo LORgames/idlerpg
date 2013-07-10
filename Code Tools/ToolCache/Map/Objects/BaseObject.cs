@@ -74,6 +74,7 @@ namespace ToolCache.Map.Objects {
                     tile.AddObject(this);
                 }
             }
+
             OldActualBases.Clear();
             OldActualBases.AddRange(ActualBases);
         }

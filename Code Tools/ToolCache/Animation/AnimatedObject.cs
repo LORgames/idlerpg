@@ -58,10 +58,11 @@ namespace ToolCache.Animation {
             return animation;
         }
 
-        public void Draw(Graphics gfx, int xPos, int yPos, float scale, float alpha = 1.0f) {
+        public void Draw(Graphics gfx, int xPos, int yPos, float scale = 1.0f, float alpha = 1.0f) {
             if (Frames.Count == 0) return;
 
-            int frameID = (int)(totalTime / PlaybackSpeed);
+            int frameID = Paused?0:(int)(totalTime / PlaybackSpeed);
+
             Image im = ImageCache.RequestImage(Frames[frameID % Frames.Count]);
 
             if (alpha >= 0.95f) {
@@ -102,5 +103,7 @@ namespace ToolCache.Animation {
 
             return temp;
         }
+
+        public bool Paused { get; set; }
     }
 }

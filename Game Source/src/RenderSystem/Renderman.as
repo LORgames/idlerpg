@@ -50,7 +50,7 @@ package RenderSystem {
 			fading = true;
 			fadeCallback = callbackIfRequired;
 			
-			MapText.text = Main.I.stage.stageWidth + "x" + Main.I.stage.stageHeight;//message;
+			MapText.text = message;
 			MapText.x = (Main.I.stage.stageWidth - MapText.width) / 2;
 			MapText.y = (Main.I.stage.stageHeight - MapText.height) / 2;
 		}
@@ -71,6 +71,9 @@ package RenderSystem {
 			
 			Main.OrderedLayer.scaleX = Camera.Z;
 			Main.OrderedLayer.scaleY = Camera.Z;
+			
+			MapText.x = (Main.I.stage.stageWidth - MapText.width) / 2;
+			MapText.y = (Main.I.stage.stageHeight - MapText.height) / 2;
 		}
 		
 		public function Render(dt:Number):void {

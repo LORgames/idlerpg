@@ -5,6 +5,8 @@ package {
 	import flash.display.StageQuality;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
+	import flash.system.Capabilities;
+	import RenderSystem.Camera;
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
 	import Game.Critter.CritterManager;
@@ -50,11 +52,10 @@ package {
 			
 			stage.addEventListener(Event.DEACTIVATE, deactivate);
 			
-			// touch or gesture?
-			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
-			
 			//Need more logic to adding input system?
-			if (Multitouch.supportsTouchEvents && Multitouch.maxTouchPoints > 1 || true) {
+			if (Multitouch.supportsTouchEvents && Multitouch.maxTouchPoints > 1) {
+				// touch or gesture?
+				Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 				Input = new TouchInput();//new KeyboardInput();
 			} else {
 				Input = new KeyboardInput();
@@ -64,6 +65,8 @@ package {
 				if (NativeWindow.isSupported && stage.nativeWindow.maximizable) {
 					stage.nativeWindow.maximize();
 				}
+				
+				
 				
 				NativeApplication.nativeApplication.addEventListener(InvokeEvent.INVOKE, OnInvoke);
 			}
@@ -149,6 +152,10 @@ package {
 		}
 		
 		private function Resized(e:* = null):void {
+			if (Capabilities.screenDPI > 250) {
+				Camera.Z = 2;
+			}
+			
 			Renderer.Resized();
 			hud.Resized();
 		}
