@@ -364,6 +364,11 @@
             this.numExpandB.Name = "numExpandB";
             this.numExpandB.Size = new System.Drawing.Size(58, 20);
             this.numExpandB.TabIndex = 3;
+            this.numExpandB.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
             this.numExpandB.ValueChanged += new System.EventHandler(this.SidesChanged);
             // 
             // numExpandT
@@ -380,6 +385,11 @@
             this.numExpandR.Name = "numExpandR";
             this.numExpandR.Size = new System.Drawing.Size(58, 20);
             this.numExpandR.TabIndex = 1;
+            this.numExpandR.Value = new decimal(new int[] {
+            6,
+            0,
+            0,
+            0});
             this.numExpandR.ValueChanged += new System.EventHandler(this.SidesChanged);
             // 
             // numExpandL
@@ -388,6 +398,11 @@
             this.numExpandL.Name = "numExpandL";
             this.numExpandL.Size = new System.Drawing.Size(58, 20);
             this.numExpandL.TabIndex = 0;
+            this.numExpandL.Value = new decimal(new int[] {
+            6,
+            0,
+            0,
+            0});
             this.numExpandL.ValueChanged += new System.EventHandler(this.SidesChanged);
             // 
             // ShadowCreator

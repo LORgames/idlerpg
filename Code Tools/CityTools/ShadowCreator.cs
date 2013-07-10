@@ -30,7 +30,7 @@ namespace CityTools {
                 Image im = ImageCache.RequestImage(listFiles.SelectedItem as String);
                 if(im != null) {
                     Point imOffset = new Point((e.ClipRectangle.Width-im.Width)/2, (e.ClipRectangle.Height-im.Height)/2);
-                    DrawShadows(im.Size, e.Graphics, (e.ClipRectangle.Width-im.Width)/2, (e.ClipRectangle.Height-im.Height)/2);
+                    DrawShadows(e.Graphics, e.ClipRectangle.Width/2, (e.ClipRectangle.Height+im.Height)/2);
                     e.Graphics.DrawImage(im, imOffset);
 
                     int lEdge = imOffset.X - (int)numExpandL.Value;
@@ -38,20 +38,19 @@ namespace CityTools {
                     int tEdge = imOffset.Y - (int)numExpandT.Value;
                     int bEdge = imOffset.Y + im.Height + (int)numExpandB.Value;
 
-                    e.Graphics.FillRectangle(Brushes.SkyBlue, new Rectangle(0, 0, lEdge, bEdge));
-                    e.Graphics.FillRectangle(Brushes.SkyBlue, new Rectangle(lEdge, 0, e.ClipRectangle.Width - lEdge, tEdge));
-                    e.Graphics.FillRectangle(Brushes.SkyBlue, new Rectangle(rEdge, tEdge, lEdge, e.ClipRectangle.Height - tEdge));
-                    e.Graphics.FillRectangle(Brushes.SkyBlue, new Rectangle(0, bEdge, e.ClipRectangle.Width - lEdge, tEdge));
+                    e.Graphics.FillRectangle(Brushes.SkyBlue, new Rectangle(0, 0, lEdge, e.ClipRectangle.Height));
+                    e.Graphics.FillRectangle(Brushes.SkyBlue, new Rectangle(lEdge, 0, rEdge - lEdge, tEdge));
+                    e.Graphics.FillRectangle(Brushes.SkyBlue, new Rectangle(rEdge, 0, e.ClipRectangle.Width-rEdge, e.ClipRectangle.Height));
+                    e.Graphics.FillRectangle(Brushes.SkyBlue, new Rectangle(lEdge, bEdge, rEdge - lEdge, e.ClipRectangle.Height-bEdge));
                 }
             }
         }
 
-        private void DrawShadows(Size size, Graphics gfx, int offsetX, int offsetY) {
-            //Point imOffset = new Point((clipArea.Width - size.Width) / 2, (clipArea.Height - size.Height) / 2);
+        private void DrawShadows(Graphics gfx, int offsetX, int offsetY) {
 
             foreach (ShadowInfo si in Shadows) {
                 Brush shadow = new SolidBrush(Color.FromArgb(si.Alpha, si.Red, si.Green, si.Blue));
-                gfx.FillEllipse(shadow, offsetX+si.Width/2 + si.OffsetX, offsetY+size.Height/2 - si.OffsetY, si.Width, si.Height);
+                gfx.FillEllipse(shadow, offsetX - si.Width/2 + si.OffsetX, offsetY - si.Height/2 - si.OffsetY, si.Width, si.Height);
             }
         }
 
@@ -109,7 +108,7 @@ namespace CityTools {
                 Graphics gfx = Graphics.FromImage(tempBmp);
 
                 Point imOffset = new Point((int)(numExpandL.Value), (int)(numExpandT.Value));
-                DrawShadows(im.Size, gfx, im.Width/2+(int)numExpandL.Value, im.Height/2+(int)numExpandT.Value);
+                DrawShadows(gfx, im.Width/2+(int)numExpandL.Value, im.Height+(int)numExpandT.Value);
                 gfx.DrawImage(im, imOffset);
 
                 gfx.Dispose();
@@ -118,8 +117,8 @@ namespace CityTools {
                 Bitmap saveOut = new Bitmap(tempBmp);
                 tempBmp.Dispose();
 
-                string testname = Path.GetDirectoryName(s) + "\\TEST_" + Path.GetFileName(s);
-                //saveOut.Save();
+                //string testname = Path.GetDirectoryName(s) + "\\TEST_" + Path.GetFileName(s);
+                saveOut.Save(s);
                 saveOut.Dispose();
 
                 ImageCache.ForceCache(s);
@@ -208,7 +207,7 @@ namespace CityTools {
         public int Width = 31;
         public int Height = 14;
         public int OffsetX = 0;
-        public int OffsetY = 14;
+        public int OffsetY = 4;
         public int Alpha = 102;
         public int Red = 32;
         public int Green = 32;
