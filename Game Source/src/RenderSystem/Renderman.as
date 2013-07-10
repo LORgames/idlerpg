@@ -50,7 +50,7 @@ package RenderSystem {
 			fading = true;
 			fadeCallback = callbackIfRequired;
 			
-			MapText.text = message;
+			MapText.text = Main.I.stage.stageWidth + "x" + Main.I.stage.stageHeight;//message;
 			MapText.x = (Main.I.stage.stageWidth - MapText.width) / 2;
 			MapText.y = (Main.I.stage.stageHeight - MapText.height) / 2;
 		}

@@ -19,11 +19,7 @@ package {
 		public static const ZeroPoint:Point = new Point();
 		
 		//Debug information
-		public static var DebugRender:Boolean = false;
+		public static var DebugRender:Boolean = true;
 		static public var DebugFPS:Boolean = true;
-		
-		//Touch information
-		public static var touchArea:Rect = new Rect(true, null, 0, 0, 0, 0);
-		public static var thumb:Bitmap;
 	}
 }

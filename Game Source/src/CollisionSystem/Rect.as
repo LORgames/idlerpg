@@ -79,5 +79,14 @@ package CollisionSystem {
 		public function toString():String {
 			return "[R: " + X + ", " + Y + " @" + W + "x" + H + "]";
 		}
+		
+		public function ContainsPoint(xPos:Number, yPos:Number):Boolean {
+			if (this.X > xPos) return false;
+			if (this.Y > yPos) return false;
+			if (this.X + this.W < xPos) return false;
+			if (this.Y + this.H < yPos) return false;
+			
+			return true;
+		}
 	}
 }

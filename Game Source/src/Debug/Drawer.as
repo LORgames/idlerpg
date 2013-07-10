@@ -27,7 +27,7 @@ package Debug {
 			GetSprite().graphics.drawEllipse(x-r, y-r*0.85, r*2, r*2*0.85);
 		}
 		
-		private static function GetSprite():Sprite {
+		public static function GetSprite():Sprite {
 			if (!Global.DebugRender) {
 				Empty.graphics.clear();
 				return Empty;

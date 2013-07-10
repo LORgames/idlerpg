@@ -83,9 +83,9 @@ package Game.Critter {
 			Main.I.Renderer.FadeToWorld();
 		}
 		
-		protected function SpeedToDirection(xSpeed:int, ySpeed:int):int {
-			var mx:int = xSpeed < 0 ? -xSpeed : xSpeed;
-			var my:int = ySpeed < 0 ? -ySpeed : ySpeed;
+		protected function SpeedToDirection(xSpeed:Number, ySpeed:Number):int {
+			var mx:Number = xSpeed < 0 ? -xSpeed : xSpeed;
+			var my:Number = ySpeed < 0 ? -ySpeed : ySpeed;
 			
 			if (mx > my) {
 				if (xSpeed < 0) {

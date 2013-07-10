@@ -54,7 +54,7 @@ package {
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 			
 			//Need more logic to adding input system?
-			if(Multitouch.supportsTouchEvents && Multitouch.maxTouchPoints > 1) {
+			if (Multitouch.supportsTouchEvents && Multitouch.maxTouchPoints > 1 || true) {
 				Input = new TouchInput();//new KeyboardInput();
 			} else {
 				Input = new KeyboardInput();
@@ -150,6 +150,7 @@ package {
 		
 		private function Resized(e:* = null):void {
 			Renderer.Resized();
+			hud.Resized();
 		}
 		
 	}
