@@ -31,7 +31,11 @@ namespace ToolToGameExporter {
                 if (File.Exists(truefn)) {
                     File.Copy(truefn, Global.EXPORT_DIRECTORY + "/" + prefix + id + ".mp3");
 
-                    indexing.Add(s.Name, id);
+                    try {
+                        indexing.Add(s.Name, id);
+                    } catch {
+                        Processor.Errors.Add(new ProcessingError(folder, s.Name, "There are multiple sounds named the same. This is not allowed. Please rename one of them and try again."));
+                    }
                     id++;
                 }
             }

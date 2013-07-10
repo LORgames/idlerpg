@@ -30,8 +30,7 @@ namespace CityTools.Components {
 
         private void btnDelete_Click(object sender, EventArgs e) {
             Owner.Sounds.Remove(Sound);
-            Owner.Controls.Remove(this);
-            Owner.UpdateBoxes();
+            Owner.pnlContent.Controls.Remove(this);
         }
 
         private void txtSoundName_TextChanged(object sender, EventArgs e) {
