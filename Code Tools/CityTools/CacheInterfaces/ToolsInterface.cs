@@ -128,6 +128,10 @@ namespace CityTools.CacheInterfaces {
                 args = args + "+showfps=Yes";
             }
 
+            if (!MainWindow.instance.ckbExportMusicEnabled.Checked) {
+                args = args + "+music=No";
+            }
+
             //try {
                 if (ToolToGameExporter.Processor.Go("Build/Data/", true)) {
                     if (File.Exists("./Build/iRPG.exe")) {

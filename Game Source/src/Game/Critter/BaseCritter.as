@@ -276,7 +276,11 @@ package Game.Critter {
 		}
 		
 		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IMapObject):void {
-			//TODO: This should do something :)
+			if(MyScript != null) {
+				MyScript.Run(Script.Attacked, this, attacker);
+			}
+			
+			//TODO: This should do something else :)
 			if (isDOT && isPercent) {
 				
 			} else if (isPercent) {

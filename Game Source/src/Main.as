@@ -19,6 +19,7 @@ package {
 	import InputSystems.KeyboardInput;
 	import InputSystems.TouchInput;
 	import RenderSystem.Renderman;
+	import SoundSystem.MusicPlayer;
 	import WindowSystem.HUD;
 	
 	CONFIG::air {
@@ -66,8 +67,6 @@ package {
 					stage.nativeWindow.maximize();
 				}
 				
-				
-				
 				NativeApplication.nativeApplication.addEventListener(InvokeEvent.INVOKE, OnInvoke);
 			}
 			
@@ -109,6 +108,12 @@ package {
 								} else {
 									Global.DebugFPS = false;
 								} break;
+							case "music":
+								if (arg.substr(6) == "Yes") {
+									MusicPlayer.MusicEnabled = true;
+								} else {
+									MusicPlayer.MusicEnabled = false;
+								}
 							default:
 								trace("Unknown Param: " + arg);
 						}

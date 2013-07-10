@@ -3,6 +3,7 @@ package Game.Critter {
 	import Game.General.Script;
 	import Game.Map.MapData;
 	import Game.Map.WorldData;
+	import Interfaces.IMapObject;
 	import RenderSystem.Camera;
 	import RenderSystem.Renderman;
 	/**

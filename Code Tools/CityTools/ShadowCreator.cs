@@ -32,6 +32,16 @@ namespace CityTools {
                     Point imOffset = new Point((e.ClipRectangle.Width-im.Width)/2, (e.ClipRectangle.Height-im.Height)/2);
                     DrawShadows(im.Size, e.Graphics, e.ClipRectangle);
                     e.Graphics.DrawImage(im, imOffset);
+
+                    int lEdge = imOffset.X;
+                    int rEdge = imOffset.X + im.Width;
+                    int tEdge = imOffset.Y;
+                    int bEdge = imOffset.Y + im.Height;
+
+                    e.Graphics.FillRectangle(Brushes.White, new Rectangle(0, 0, lEdge, bEdge));
+                    e.Graphics.FillRectangle(Brushes.White, new Rectangle(lEdge, 0, e.ClipRectangle.Width-lEdge, tEdge));
+                    e.Graphics.FillRectangle(Brushes.White, new Rectangle(rEdge, tEdge, lEdge, e.ClipRectangle.Height-tEdge));
+                    e.Graphics.FillRectangle(Brushes.White, new Rectangle(0, bEdge, e.ClipRectangle.Width-lEdge, tEdge));
                 }
             }
         }

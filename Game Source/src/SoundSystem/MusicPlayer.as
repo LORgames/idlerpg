@@ -12,10 +12,13 @@ package SoundSystem
 		
 		private static var snd:Sound;
 		private static var channel:SoundChannel;
+		public static var MusicEnabled:Boolean = true;
 		
 		private static var currentlyPlayingID:int = -1;
 		
 		public static function PlaySong(id:int = 0):void {
+			if (!MusicEnabled) return;
+			
 			if (id == currentlyPlayingID) return;
 			
 			if (channel) {

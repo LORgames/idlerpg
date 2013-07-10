@@ -4,9 +4,9 @@ call bat\SetupSDK.bat
 call bat\SetupApplication.bat
 
 :target
-::goto desktop-run
+goto desktop-run
 ::goto android-debug
-goto android-test
+::goto android-test
 ::goto windows-package
 set INTERPRETER=-interpreter
 ::goto ios-debug
@@ -18,7 +18,7 @@ echo Starting AIR Debug Launcher.
 echo.
 echo (hint: edit 'Run.bat' to test on device or change screen size)
 echo.
-adl "%APP_XML%" "%APP_DIR%" -- map=Bandit Cave
+adl "%APP_XML%" "%APP_DIR%" -- map=Logger's Retreat
 ::adl "%APP_XML%" "%APP_DIR%"
 
 if errorlevel 1 goto end
