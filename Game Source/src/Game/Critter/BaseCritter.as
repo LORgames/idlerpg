@@ -299,6 +299,10 @@ package Game.Critter {
 		}
 		
 		public function Died():void {
+			if (MyScript != null) {
+				MyScript.Run(Script.Died, this);
+			}
+			
 			if (Owner != null) {
 				Owner.AlertMinionDeath(this);
 			}

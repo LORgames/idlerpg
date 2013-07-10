@@ -46,6 +46,12 @@
             this.btnNewShadow = new System.Windows.Forms.Button();
             this.btnClearShadows = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label9 = new System.Windows.Forms.Label();
+            this.numExpandB = new System.Windows.Forms.NumericUpDown();
+            this.numExpandT = new System.Windows.Forms.NumericUpDown();
+            this.numExpandR = new System.Windows.Forms.NumericUpDown();
+            this.numExpandL = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.previewBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numHeight)).BeginInit();
@@ -54,6 +60,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.previewColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numOffsetY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numOffsetX)).BeginInit();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numExpandB)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numExpandT)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numExpandR)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numExpandL)).BeginInit();
             this.SuspendLayout();
             // 
             // previewBox
@@ -70,7 +81,7 @@
             this.listFiles.FormattingEnabled = true;
             this.listFiles.Location = new System.Drawing.Point(12, 25);
             this.listFiles.Name = "listFiles";
-            this.listFiles.Size = new System.Drawing.Size(264, 407);
+            this.listFiles.Size = new System.Drawing.Size(264, 355);
             this.listFiles.TabIndex = 1;
             this.listFiles.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
@@ -85,7 +96,7 @@
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(12, 438);
+            this.btnClear.Location = new System.Drawing.Point(12, 386);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 3;
@@ -95,7 +106,7 @@
             // 
             // btnGenerate
             // 
-            this.btnGenerate.Location = new System.Drawing.Point(156, 438);
+            this.btnGenerate.Location = new System.Drawing.Point(156, 386);
             this.btnGenerate.Name = "btnGenerate";
             this.btnGenerate.Size = new System.Drawing.Size(120, 23);
             this.btnGenerate.TabIndex = 4;
@@ -106,7 +117,7 @@
             // numWidth
             // 
             this.numWidth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.numWidth.Location = new System.Drawing.Point(119, 10);
+            this.numWidth.Location = new System.Drawing.Point(119, 6);
             this.numWidth.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -130,7 +141,7 @@
             // numHeight
             // 
             this.numHeight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.numHeight.Location = new System.Drawing.Point(119, 36);
+            this.numHeight.Location = new System.Drawing.Point(119, 32);
             this.numHeight.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -155,7 +166,7 @@
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(36, 12);
+            this.label2.Location = new System.Drawing.Point(36, 8);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(77, 13);
             this.label2.TabIndex = 7;
@@ -165,7 +176,7 @@
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(33, 38);
+            this.label3.Location = new System.Drawing.Point(33, 34);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(80, 13);
             this.label3.TabIndex = 8;
@@ -212,7 +223,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(37, 142);
+            this.label8.Location = new System.Drawing.Point(37, 138);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(76, 13);
             this.label8.TabIndex = 16;
@@ -220,7 +231,7 @@
             // 
             // numAlpha
             // 
-            this.numAlpha.Location = new System.Drawing.Point(119, 140);
+            this.numAlpha.Location = new System.Drawing.Point(119, 136);
             this.numAlpha.Maximum = new decimal(new int[] {
             255,
             0,
@@ -233,7 +244,7 @@
             // 
             // previewColor
             // 
-            this.previewColor.Location = new System.Drawing.Point(119, 114);
+            this.previewColor.Location = new System.Drawing.Point(119, 110);
             this.previewColor.Name = "previewColor";
             this.previewColor.Size = new System.Drawing.Size(52, 20);
             this.previewColor.TabIndex = 14;
@@ -244,7 +255,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(40, 117);
+            this.label7.Location = new System.Drawing.Point(40, 113);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(73, 13);
             this.label7.TabIndex = 13;
@@ -254,7 +265,7 @@
             // 
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 90);
+            this.label6.Location = new System.Drawing.Point(6, 86);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(107, 13);
             this.label6.TabIndex = 12;
@@ -264,7 +275,7 @@
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(8, 64);
+            this.label5.Location = new System.Drawing.Point(8, 60);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(105, 13);
             this.label5.TabIndex = 11;
@@ -272,7 +283,7 @@
             // 
             // numOffsetY
             // 
-            this.numOffsetY.Location = new System.Drawing.Point(119, 88);
+            this.numOffsetY.Location = new System.Drawing.Point(119, 84);
             this.numOffsetY.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -290,7 +301,7 @@
             // 
             // numOffsetX
             // 
-            this.numOffsetX.Location = new System.Drawing.Point(119, 62);
+            this.numOffsetX.Location = new System.Drawing.Point(119, 58);
             this.numOffsetX.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -326,12 +337,66 @@
             this.btnClearShadows.UseVisualStyleBackColor = true;
             this.btnClearShadows.Click += new System.EventHandler(this.btnClearShadows_Click);
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.label9);
+            this.panel1.Controls.Add(this.numExpandB);
+            this.panel1.Controls.Add(this.numExpandT);
+            this.panel1.Controls.Add(this.numExpandR);
+            this.panel1.Controls.Add(this.numExpandL);
+            this.panel1.Location = new System.Drawing.Point(12, 415);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(264, 46);
+            this.panel1.TabIndex = 14;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(4, 4);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(198, 13);
+            this.label9.TabIndex = 4;
+            this.label9.Text = "Expansions, Left, Right, Top and Bottom";
+            // 
+            // numExpandB
+            // 
+            this.numExpandB.Location = new System.Drawing.Point(199, 21);
+            this.numExpandB.Name = "numExpandB";
+            this.numExpandB.Size = new System.Drawing.Size(58, 20);
+            this.numExpandB.TabIndex = 3;
+            this.numExpandB.ValueChanged += new System.EventHandler(this.SidesChanged);
+            // 
+            // numExpandT
+            // 
+            this.numExpandT.Location = new System.Drawing.Point(135, 21);
+            this.numExpandT.Name = "numExpandT";
+            this.numExpandT.Size = new System.Drawing.Size(58, 20);
+            this.numExpandT.TabIndex = 2;
+            this.numExpandT.ValueChanged += new System.EventHandler(this.SidesChanged);
+            // 
+            // numExpandR
+            // 
+            this.numExpandR.Location = new System.Drawing.Point(71, 21);
+            this.numExpandR.Name = "numExpandR";
+            this.numExpandR.Size = new System.Drawing.Size(58, 20);
+            this.numExpandR.TabIndex = 1;
+            this.numExpandR.ValueChanged += new System.EventHandler(this.SidesChanged);
+            // 
+            // numExpandL
+            // 
+            this.numExpandL.Location = new System.Drawing.Point(7, 21);
+            this.numExpandL.Name = "numExpandL";
+            this.numExpandL.Size = new System.Drawing.Size(58, 20);
+            this.numExpandL.TabIndex = 0;
+            this.numExpandL.ValueChanged += new System.EventHandler(this.SidesChanged);
+            // 
             // ShadowCreator
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(660, 466);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnClearShadows);
             this.Controls.Add(this.btnNewShadow);
             this.Controls.Add(this.pnlShadowInfo);
@@ -355,6 +420,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.previewColor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numOffsetY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numOffsetX)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numExpandB)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numExpandT)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numExpandR)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numExpandL)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -385,5 +456,11 @@
         private System.Windows.Forms.PictureBox previewColor;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ColorDialog colorDialog1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.NumericUpDown numExpandB;
+        private System.Windows.Forms.NumericUpDown numExpandT;
+        private System.Windows.Forms.NumericUpDown numExpandR;
+        private System.Windows.Forms.NumericUpDown numExpandL;
+        private System.Windows.Forms.Label label9;
     }
 }

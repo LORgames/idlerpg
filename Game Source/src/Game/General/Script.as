@@ -33,7 +33,8 @@ package Game.General {
 		public static const AnimationEnded:uint = 6;
 		public static const StartMoving:uint = 7;
 		public static const EndMoving:uint = 8;
-		public static const TOTAL_EVENT_TYPES:uint = 9;
+		public static const Died:uint = 9;
+		public static const TOTAL_EVENT_TYPES:uint = 10;
 		
 		//SCRIPT TYPES
 		public static const CRITTER:int = 0xA000;

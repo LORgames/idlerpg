@@ -55,7 +55,7 @@ namespace ToolCache.Map.Objects {
             m.IndividualAnimations = (booleanData & (byte)0x2) == 0x2;
             m.AnimateInTool = (booleanData & (byte)0x4) != 0x4; //Is backwards compared to the others, 0=true, 4=false
 
-            m.Animation.Paused = m.AnimateInTool;
+            m.Animation.Paused = !m.AnimateInTool;
 
             m.OffsetY = f.GetShort();
 

@@ -132,7 +132,7 @@ namespace CityTools.CacheInterfaces {
                 args = args + "+music=No";
             }
 
-            //try {
+            try {
                 if (ToolToGameExporter.Processor.Go("Build/Data/", true)) {
                     if (File.Exists("./Build/iRPG.exe")) {
                         Process p = Process.Start(Path.GetFullPath("./Build/iRPG.exe"), args);
@@ -143,9 +143,9 @@ namespace CityTools.CacheInterfaces {
                 } else {
                     MessageBox.Show("Could not export data. Skipping running the build.");
                 }
-            //} catch {
-            //    MessageBox.Show("Could not run the build. No idea why.\n\nSuggestions:\n1. Double check you have AIR3.8.\n2. Double check you don't already have the game open.\n\nIf problems continue, let Paul know and he'll look deeper.");
-            //}
+            } catch {
+                MessageBox.Show("Could not run the build. No idea why.\n\nSuggestions:\n1. Double check you have AIR3.8.\n2. Double check you don't already have the game open.\n\nIf problems continue, let Paul know and he'll look deeper.");
+            }
         }
 
         private static void btnTileEditorTool_Click(object sender, EventArgs e) {

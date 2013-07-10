@@ -87,7 +87,9 @@ namespace CityTools {
                 CurrentObject.isSolid = ckbIsSolid.Checked;
                 CurrentObject.Script = scriptBox1.Script;
                 CurrentObject.IndividualAnimations = ckIndividualAnimations.Checked;
+
                 CurrentObject.AnimateInTool = ckbAnimatedInTool.Checked;
+                CurrentObject.Animation.Paused = !CurrentObject.AnimateInTool;
 
                 if (_isNew) {
                     MapObjectCache.AddObject(CurrentObject);

@@ -16,7 +16,8 @@ namespace ToolCache.Scripting {
         MinionDied = 0x0005,
         AnimationEnded = 0x0006,
         StartMoving = 0x0007,
-        EndMoving = 0x0008
+        EndMoving = 0x0008,
+        Died = 0x0009
     }
 
     /// <summary>
