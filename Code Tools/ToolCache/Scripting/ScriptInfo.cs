@@ -17,6 +17,7 @@ namespace ToolCache.Scripting {
 
         public List<string> AnimationNames = new List<string>();
         public Dictionary<string, short> RemappedEquipmentIDs;
+        public Dictionary<string, short> RemappedEffectIDs;
 
         public ScriptInfo(string Name, ScriptTypes ScriptType) {
             ScriptName = Name;

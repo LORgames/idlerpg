@@ -1,24 +1,23 @@
 package Game.Map {
 	import adobe.utils.CustomActions;
 	import CollisionSystem.Rect;
-	import EngineTiming.Clock;
 	import EngineTiming.IUpdatable;
-	import flash.display.IDrawCommand;
-	import flash.geom.Rectangle;
+	import flash.geom.Vector3D;
 	import flash.utils.ByteArray;
 	import Game.Critter.BaseCritter;
-	import Game.Critter.CritterHuman;
+	import Game.Effects.EffectInstance;
 	import Game.General.BinaryLoader;
+	import Game.Map.Objects.ObjectInstance;
 	import Game.Map.Objects.ObjectInstanceAnimated;
 	import Game.Map.Objects.ObjectTemplate;
+	import Game.Map.Portals.Portal;
+	import Game.Map.Portals.PortalHelper;
+	import Game.Map.Spawns.SpawnRegion;
+	import Game.Map.Tiles.TileHelper;
+	import Game.Map.Tiles.TileInstance;
+	import Game.Scripting.ScriptTypes;
 	import Interfaces.IMapObject;
 	import SoundSystem.MusicPlayer;
-	import Game.Map.Objects.ObjectInstance;
-	import Game.Map.Tiles.TileInstance;
-	import Game.Map.Spawns.SpawnRegion;
-	import Game.Map.Portals.Portal;
-	import Game.Map.Tiles.TileHelper;
-	import Game.Map.Portals.PortalHelper;
 	/**
 	 * ...
 	 * @author Paul
@@ -42,10 +41,12 @@ package Game.Map {
 		
 		public var Portals:Vector.<Portal>;
 		public var Critters:Vector.<BaseCritter> = new Vector.<BaseCritter>();
+		public var Effects:Vector.<EffectInstance> = new Vector.<EffectInstance>;
 		
 		private static var firstload:Boolean = true;
 		private var ExpectedAtPortalID:int = -1;
 		public var Dying:Boolean = false;
+		public var Boundaries:Rect = new Rect(true, null);
 		
 		public function MapData() {
 			
@@ -95,6 +96,9 @@ package Game.Map {
 			
 			SizeX = TileSizeX * 48;
 			SizeY = TileSizeY * 48;
+			
+			Boundaries.W = SizeX;
+			Boundaries.H = SizeY;
 			
 			Tiles = new Vector.<TileInstance>(TotalTiles, true);
 			
@@ -161,12 +165,12 @@ package Game.Map {
 			var r:Rect;
 			
 			//Look at the objects
-			if(type == 0xA002 || type == 0xA005 || type == 0xA006) {
+			if(type == ScriptTypes.MapObject || type == ScriptTypes.NotCritter || type == ScriptTypes.NotMe) {
 				while (--_tt > -1) {
 					var _tr:int = _tiles[_tt].SolidRectangles.length;
 					
 					while (--_tr > -1) {
-						if (type == 0xA006) {
+						if (type == ScriptTypes.NotMe) {
 							if (_tiles[_tt].SolidRectangles[_tr].Owner == scanner) {
 								continue;
 							}
@@ -175,8 +179,10 @@ package Game.Map {
 						r = _tiles[_tt].SolidRectangles[_tr];
 						
 						if (r.Owner != null) {
-							if(objects.indexOf(r.Owner) == -1) {
-								objects.push(r.Owner);
+							if (objects.indexOf(r.Owner) == -1) {
+								if (r.intersects(rect)) {
+									objects.push(r.Owner);
+								}
 							}
 						}
 					}
@@ -184,10 +190,10 @@ package Game.Map {
 			}
 			
 			//Look at the critters
-			if(type != 0xA005) {
+			if(type != ScriptTypes.NotCritter) {
 				_tt = Critters.length;
 				while (--_tt > -1) {
-					if (type == 0xA006) {
+					if (type == ScriptTypes.NotMe) {
  						if (Critters[_tt] == scanner) {
 							continue;
 						}
@@ -240,6 +246,11 @@ package Game.Map {
 			}
 			Tiles = null;
 			
+			i = Effects.length;
+			while (--i > 0) {
+				Effects[i].CleanUp();
+			}
+			
 			Dying = false;
 		}
 		
@@ -274,6 +285,14 @@ package Game.Map {
 			Dying = true;
 			objectInstance.CleanUp();
 			Dying = false;
+		}
+		
+		public function EffectPop(effectInstance:EffectInstance):void {
+			var i:int = Effects.indexOf(effectInstance);
+			
+			if (i > -1) {
+				Effects.splice(i, 1);
+			}
 		}
 	}
 

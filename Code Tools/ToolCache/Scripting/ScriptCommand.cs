@@ -7,6 +7,7 @@ using ToolCache.Sound;
 using ToolCache.Critters;
 using System.Text.RegularExpressions;
 using ToolCache.General;
+using ToolCache.Effects;
 
 namespace ToolCache.Scripting {
     public class ScriptCommand {
@@ -61,6 +62,7 @@ namespace ToolCache.Scripting {
         public void ProcessAction(ScriptInfo info) {
             ushort param0;
             ushort param1;
+            short sparam;
             string paramPiece;
             string[] paramBits;
             float fparam;
@@ -97,10 +99,12 @@ namespace ToolCache.Scripting {
                 case "dot":
                     CommandID = 0x1006;
 
-                    if (Parameters.Split(' ').Length == 2) {
-                        if (!ushort.TryParse(Parameters.Split(' ')[0], out param0)) {
+                    paramBits = Parameters.Split(' ');
+
+                    if (paramBits.Length == 2) {
+                        if (!ushort.TryParse(paramBits[0], out param0)) {
                             info.Errors.Add("Cannot convert '" + Parameters + "' into a number.");
-                        } else if (!ushort.TryParse(Parameters.Split(' ')[1], out param1)) {
+                        } else if (!ushort.TryParse(paramBits[1], out param1)) {
                             info.Errors.Add("Cannot convert '" + Parameters + "' into a number.");
                         }
                     } else {
@@ -109,6 +113,35 @@ namespace ToolCache.Scripting {
                 case "destroy":
                     CommandID = 0x1007;
                     break;
+                case "effectspawn":
+                    CommandID = 0x1008;
+
+                    paramBits = Parameters.Split(' ');
+
+                    if (paramBits.Length >= 1 && paramBits.Length <= 3) {
+                        if (!EffectManager.Effects.ContainsKey(paramBits[0])) {
+                            info.Errors.Add("Cannot find an effect called: " + paramBits[0]);
+                            break;
+                        }
+
+                        if (info.RemappedEffectIDs != null) {
+                            AdditionalBytecode.Add((ushort)info.RemappedEffectIDs[paramBits[0]]);
+                        }
+
+                        if(paramBits.Length >= 2) {
+                            if (short.TryParse(paramBits[1], out sparam)) {
+                                AdditionalBytecode.Add((ushort)sparam);
+                            } else { info.Errors.Add("No idea how to convert: " + paramBits[1] + " into a number?"); }
+                        } else { AdditionalBytecode.Add(0x0); }
+
+                        if (paramBits.Length == 3) {
+                            if (short.TryParse(paramBits[2], out sparam)) {
+                                AdditionalBytecode.Add((ushort)sparam);
+                            } else { info.Errors.Add("No idea how to convert: " + paramBits[2] + " into a number?"); }
+                        } else { AdditionalBytecode.Add(0x0); }
+                    } else {
+                        info.Errors.Add("EffectSpawn expects 1-3 parameters, '<Effect Name> <[OPTIONAL]Offset Forwards> <[OPTIONAL]Offset Sideways>'. NB. Effect name do NOT have spaces in them.");
+                    } break;
                 case "equip":
                     CommandID = 0x4001;
 

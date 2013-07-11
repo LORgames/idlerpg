@@ -5,7 +5,7 @@ package Game.Critter {
 	import EngineTiming.IUpdatable;
 	import flash.display.Graphics;
 	import flash.geom.Point;
-	import Game.General.Script;
+	import Game.Scripting.Script;
 	import Game.Map.MapData;
 	import Game.Map.Portals.Portal;
 	import Game.Map.Tiles.TileHelper;

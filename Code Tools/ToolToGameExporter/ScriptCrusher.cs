@@ -22,6 +22,9 @@ namespace ToolToGameExporter {
             ///////////////////////////////////////////////////////////////////////////////////
             /////// PRECOMPILER
             ///////////////////////////////////////////////////////////////////////////////////
+            info.RemappedEquipmentIDs = EquipmentCrusher.MappedEquipmentIDs;
+            info.RemappedEffectIDs = EffectCrusher.RemappedEffectNames;
+
             Parser.Parse(script, info);
 
             if (info.Errors.Count > 0) {

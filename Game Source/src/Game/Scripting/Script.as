@@ -1,4 +1,4 @@
-package Game.General {
+package Game.Scripting {
 	import adobe.utils.CustomActions;
 	import CollisionSystem.Rect;
 	import Debug.Drawer;
@@ -10,7 +10,9 @@ package Game.General {
 	import Game.Critter.CritterAnimationSet;
 	import Game.Critter.CritterManager;
 	import Game.Critter.CritterHuman;
+	import Game.Effects.EffectInfo;
 	import Game.Effects.EffectInstance;
+	import Game.Effects.EffectManager;
 	import Game.Equipment.EquipmentItem;
 	import Game.Map.Objects.ObjectInstance;
 	import Game.Map.Objects.ObjectInstanceAnimated;
@@ -106,14 +108,40 @@ package Game.General {
 						
 						break;
 					case 0x1007: //Destroy
-						if (invoker is ObjectInstance) {
+						if (invoker is ObjectInstance || invoker is BaseCritter || invoker is EffectInstance) {
 							Clock.CleanUpList.push(invoker);
-							//(invoker as ObjectInstance).CleanUp();
-						} else if (invoker is BaseCritter) {
-							(invoker as BaseCritter).CleanUp();
 						} else {
 							trace("Unknown Type for Destroy!");
 						}
+						break;
+					case 0x1008: //SpawnEffect
+						var effectInfo:EffectInfo = EffectManager.I.Effects[EventScript.readShort()];
+						var xPos:int = 0;
+						var yPos:int = 0;
+						var dir:int = 0;
+						
+						if (invoker is BaseCritter) {
+							xPos = (invoker as BaseCritter).X;
+							yPos = (invoker as BaseCritter).Y;
+							dir = (invoker as BaseCritter).direction;
+							
+							if (dir == 0) {
+								xPos -= EventScript.readShort();
+								yPos += EventScript.readShort();
+							} else if (dir == 1) {
+								xPos += EventScript.readShort();
+								yPos += EventScript.readShort();
+							} else if (dir == 2) {
+								yPos -= EventScript.readShort();
+								xPos += EventScript.readShort();
+							} else if (dir == 3) {
+								yPos += EventScript.readShort();
+								xPos -= EventScript.readShort();
+							}
+						}
+						
+						new EffectInstance(effectInfo, xPos, yPos, dir);
+						
 						break;
 					case 0x4001: //Equip item on the target
 						if (invoker is CritterHuman) {
@@ -330,40 +358,46 @@ package Game.General {
 						dim1 = eventScript.readUnsignedShort() * 24;
 						dim2 = (arrayType == FRONTOFFSET)?eventScript.readShort() : 0;
 						
+						var direction:int = 0;
+						var xPos:int = 0;
+						var yPos:int = 0;
+						
 						if (invoker is BaseCritter) {
 							var obj0:BaseCritter = (invoker as BaseCritter);
-							
-							if (obj0.direction < 2) { //Left or right
-								rect.X = (obj0.direction == 1)? obj0.X : obj0.X - dim0; //if right center else offcenter
-								rect.Y = obj0.Y - dim1 / 2;
-								rect.W = dim0;
-								rect.H = dim1;
-								
-								//calculate offsets
-								/*if (obj0.direction == 0) { //Left
-									rect.Y += dim2;
-								} else { //right
-									rect.Y -= dim2;
-								}*/
-							} else {
-								rect.X = obj0.X - dim1 / 2;
-								rect.Y = (obj0.direction == 3)? obj0.Y : obj0.Y - dim0; //if down center else offcenter
-								rect.W = dim1;
-								rect.H = dim0;
-								
-								//calculate offsets
-								if (obj0.direction == 2) { //Up
-									rect.X += dim2;
-								} else { //Down
-									rect.X -= dim2;
-								}
-							}
-							
-							obj0.CurrentMap.GetObjectsInArea(rect, Objects, eType, invoker);
-							Drawer.AddDebugRect(rect);
+							xPos = obj0.X;
+							yPos = obj0.Y;
+							direction = obj0.direction;
+						} else if (invoker is EffectInstance) {
+							var obj1:EffectInstance = (invoker as EffectInstance);
+							xPos = obj1.X;
+							yPos = obj1.Y;
+							direction = obj1.Direction;
 						} else {
- 							trace("FRONT is not available to non-critter systems.");
+ 							trace("FRONT is not available to this system [" + invoker + "].");
+							break;
 						}
+							
+						if (direction < 2) { //Left or right
+							rect.X = (direction == 1)? xPos : xPos - dim0; //if right center else offcenter
+							rect.Y = yPos - dim1 / 2;
+							rect.W = dim0;
+							rect.H = dim1;
+						} else {
+							rect.X = xPos - dim1 / 2;
+							rect.Y = (direction == 3)? yPos : yPos - dim0; //if down center else offcenter
+							rect.W = dim1;
+							rect.H = dim0;
+							
+							//calculate offsets
+							if (direction == 2) { //Up
+								rect.X += dim2;
+							} else { //Down
+								rect.X -= dim2;
+							}
+						}
+							
+						WorldData.CurrentMap.GetObjectsInArea(rect, Objects, eType, invoker);
+						Drawer.AddDebugRect(rect);
 						
 						break;
 					case AOE:

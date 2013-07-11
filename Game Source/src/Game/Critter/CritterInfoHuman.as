@@ -1,6 +1,6 @@
 package Game.Critter {
 	import flash.utils.ByteArray;
-	import Game.General.Script;
+	import Game.Scripting.Script;
 	import Game.Map.MapData;
 	/**
 	 * ...

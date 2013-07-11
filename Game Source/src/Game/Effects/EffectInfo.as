@@ -2,7 +2,7 @@ package Game.Effects
 {
 	import flash.display.BitmapData;
 	import Game.General.ImageLoader;
-	import Game.General.Script;
+	import Game.Scripting.Script;
 	/**
 	 * ...
 	 * @author Paul
@@ -19,6 +19,8 @@ package Game.Effects
 		public var Y:int;
 		public var W:int;
 		public var H:int;
+		
+		public var IsSolid:Boolean;
 		
 		public var FrameWidth:int;
 		public var FrameHeight:int;

@@ -2,7 +2,7 @@ package Game.Map.Objects {
 	import CollisionSystem.Rect;
 	import EngineTiming.ICleanUp;
 	import flash.display.Bitmap;
-	import Game.General.Script;
+	import Game.Scripting.Script;
 	import Interfaces.IMapObject;
 	import RenderSystem.IObjectLayer;
 	import Game.Map.MapData;

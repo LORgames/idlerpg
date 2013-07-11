@@ -40,12 +40,19 @@ namespace CityTools {
             this.cbGroup = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.numOffsetY = new System.Windows.Forms.NumericUpDown();
+            this.numOffsetX = new System.Windows.Forms.NumericUpDown();
+            this.numSizeY = new System.Windows.Forms.NumericUpDown();
+            this.numSizeX = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.numLifetime = new System.Windows.Forms.NumericUpDown();
             this.numSpeed = new System.Windows.Forms.NumericUpDown();
             this.scriptEffect = new CityTools.Components.ScriptBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.ckbDrawDebug = new System.Windows.Forms.CheckBox();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -53,6 +60,10 @@ namespace CityTools {
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numOffsetY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numOffsetX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numSizeY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numSizeX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLifetime)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSpeed)).BeginInit();
             this.SuspendLayout();
@@ -62,7 +73,7 @@ namespace CityTools {
             this.treeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView.Location = new System.Drawing.Point(0, 25);
             this.treeView.Name = "treeView";
-            this.treeView.Size = new System.Drawing.Size(196, 405);
+            this.treeView.Size = new System.Drawing.Size(196, 450);
             this.treeView.TabIndex = 0;
             this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterSelect);
             // 
@@ -109,7 +120,7 @@ namespace CityTools {
             this.panel1.Controls.Add(this.animationList);
             this.panel1.Controls.Add(this.cbAnimations);
             this.panel1.Controls.Add(this.lblAnimPnlName);
-            this.panel1.Location = new System.Drawing.Point(324, 281);
+            this.panel1.Location = new System.Drawing.Point(324, 321);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(390, 142);
             this.panel1.TabIndex = 4;
@@ -156,7 +167,7 @@ namespace CityTools {
             // 
             this.pictureBox1.Location = new System.Drawing.Point(324, 12);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(390, 263);
+            this.pictureBox1.Size = new System.Drawing.Size(390, 303);
             this.pictureBox1.TabIndex = 6;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
@@ -192,6 +203,13 @@ namespace CityTools {
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.ckbDrawDebug);
+            this.splitContainer1.Panel2.Controls.Add(this.label7);
+            this.splitContainer1.Panel2.Controls.Add(this.label6);
+            this.splitContainer1.Panel2.Controls.Add(this.numOffsetY);
+            this.splitContainer1.Panel2.Controls.Add(this.numOffsetX);
+            this.splitContainer1.Panel2.Controls.Add(this.numSizeY);
+            this.splitContainer1.Panel2.Controls.Add(this.numSizeX);
             this.splitContainer1.Panel2.Controls.Add(this.label4);
             this.splitContainer1.Panel2.Controls.Add(this.label3);
             this.splitContainer1.Panel2.Controls.Add(this.numLifetime);
@@ -204,9 +222,84 @@ namespace CityTools {
             this.splitContainer1.Panel2.Controls.Add(this.pictureBox1);
             this.splitContainer1.Panel2.Controls.Add(this.scriptEffect);
             this.splitContainer1.Panel2.Enabled = false;
-            this.splitContainer1.Size = new System.Drawing.Size(926, 430);
+            this.splitContainer1.Size = new System.Drawing.Size(926, 475);
             this.splitContainer1.SplitterDistance = 196;
             this.splitContainer1.TabIndex = 9;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(91, 95);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(97, 13);
+            this.label7.TabIndex = 18;
+            this.label7.Text = "Collision Box Offset";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(99, 69);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(89, 13);
+            this.label6.TabIndex = 17;
+            this.label6.Text = "Collision Box Size";
+            // 
+            // numOffsetY
+            // 
+            this.numOffsetY.Location = new System.Drawing.Point(259, 93);
+            this.numOffsetY.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numOffsetY.Name = "numOffsetY";
+            this.numOffsetY.Size = new System.Drawing.Size(59, 20);
+            this.numOffsetY.TabIndex = 16;
+            this.numOffsetY.ValueChanged += new System.EventHandler(this.BoxChanged);
+            // 
+            // numOffsetX
+            // 
+            this.numOffsetX.Location = new System.Drawing.Point(194, 93);
+            this.numOffsetX.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numOffsetX.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+            this.numOffsetX.Name = "numOffsetX";
+            this.numOffsetX.Size = new System.Drawing.Size(59, 20);
+            this.numOffsetX.TabIndex = 15;
+            this.numOffsetX.ValueChanged += new System.EventHandler(this.BoxChanged);
+            // 
+            // numSizeY
+            // 
+            this.numSizeY.Location = new System.Drawing.Point(259, 67);
+            this.numSizeY.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numSizeY.Name = "numSizeY";
+            this.numSizeY.Size = new System.Drawing.Size(59, 20);
+            this.numSizeY.TabIndex = 14;
+            this.numSizeY.ValueChanged += new System.EventHandler(this.BoxChanged);
+            // 
+            // numSizeX
+            // 
+            this.numSizeX.Location = new System.Drawing.Point(194, 67);
+            this.numSizeX.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numSizeX.Name = "numSizeX";
+            this.numSizeX.Size = new System.Drawing.Size(59, 20);
+            this.numSizeX.TabIndex = 13;
+            this.numSizeX.ValueChanged += new System.EventHandler(this.BoxChanged);
             // 
             // label4
             // 
@@ -264,11 +357,11 @@ namespace CityTools {
             // 
             // scriptEffect
             // 
-            this.scriptEffect.Location = new System.Drawing.Point(6, 65);
+            this.scriptEffect.Location = new System.Drawing.Point(6, 119);
             this.scriptEffect.Name = "scriptEffect";
             this.scriptEffect.Script = "";
             this.scriptEffect.ScriptType = ToolCache.Scripting.ScriptTypes.Effect;
-            this.scriptEffect.Size = new System.Drawing.Size(315, 358);
+            this.scriptEffect.Size = new System.Drawing.Size(315, 344);
             this.scriptEffect.TabIndex = 5;
             this.scriptEffect.BeforeParse += new System.EventHandler<CityTools.Components.ScriptInfoArgs>(this.scriptEffect_BeforeParse);
             this.scriptEffect.ScriptUpdated += new System.EventHandler<System.EventArgs>(this.ValueChanged);
@@ -278,11 +371,21 @@ namespace CityTools {
             this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // ckbDrawDebug
+            // 
+            this.ckbDrawDebug.AutoSize = true;
+            this.ckbDrawDebug.Location = new System.Drawing.Point(625, 298);
+            this.ckbDrawDebug.Name = "ckbDrawDebug";
+            this.ckbDrawDebug.Size = new System.Drawing.Size(86, 17);
+            this.ckbDrawDebug.TabIndex = 19;
+            this.ckbDrawDebug.Text = "Draw Debug";
+            this.ckbDrawDebug.UseVisualStyleBackColor = true;
+            // 
             // EffectEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(926, 430);
+            this.ClientSize = new System.Drawing.Size(926, 475);
             this.Controls.Add(this.splitContainer1);
             this.Name = "EffectEditor";
             this.Text = "Effect Editor";
@@ -298,6 +401,10 @@ namespace CityTools {
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numOffsetY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numOffsetX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numSizeY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numSizeX)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLifetime)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSpeed)).EndInit();
             this.ResumeLayout(false);
@@ -326,5 +433,12 @@ namespace CityTools {
         private System.Windows.Forms.NumericUpDown numSpeed;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.NumericUpDown numOffsetY;
+        private System.Windows.Forms.NumericUpDown numOffsetX;
+        private System.Windows.Forms.NumericUpDown numSizeY;
+        private System.Windows.Forms.NumericUpDown numSizeX;
+        private System.Windows.Forms.CheckBox ckbDrawDebug;
     }
 }

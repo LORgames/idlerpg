@@ -1,6 +1,8 @@
 package InputSystems {
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
+	import flash.events.MouseEvent;
+	import RenderSystem.Camera;
 	import flash.ui.Keyboard;
 	import Game.Effects.EffectInstance;
 	import Game.Effects.EffectManager;
@@ -17,15 +19,14 @@ package InputSystems {
 		
 		//Earlier LORgames games used a generic input system. This game is much more specific for speed reasons
 		private static var downKeys:Vector.<Boolean> = new Vector.<Boolean>(256, true);
+		private static var CanTeleport:Boolean = false;
 		
 		public function KeyboardInput() {
 			Main.I.stage.addEventListener(KeyboardEvent.KEY_DOWN, KeyDown);
 			Main.I.stage.addEventListener(KeyboardEvent.KEY_UP, KeyUp);
 			Main.I.stage.addEventListener(Event.DEACTIVATE, WipeKeys, false, 0, true);
-		}
-		
-		public function IsSupported():Boolean {
-			return true; //TODO: Make this figure out whats going on?
+			
+			Main.I.stage.addEventListener(MouseEvent.CLICK, Clicked);
 		}
 		
 		private function KeyDown(ke:KeyboardEvent):void {
@@ -36,7 +37,7 @@ package InputSystems {
 				if (ke.keyCode == Keyboard.S || ke.keyCode == Keyboard.DOWN) ySpeed += 1;
 				if (ke.keyCode == Keyboard.A || ke.keyCode == Keyboard.LEFT) xSpeed -= 1;
 				if (ke.keyCode == Keyboard.D || ke.keyCode == Keyboard.RIGHT) xSpeed += 1;
-				if (ke.keyCode == Keyboard.K) new EffectInstance(EffectManager.I.Effects[0], WorldData.ME.X, WorldData.ME.Y, WorldData.ME.direction);
+				if (ke.keyCode == Keyboard.NUMBER_7) CanTeleport = true;
 				
 				WorldData.ME.RequestMove(xSpeed, ySpeed);
 				
@@ -53,6 +54,7 @@ package InputSystems {
 			if (ke.keyCode == Keyboard.S || ke.keyCode == Keyboard.DOWN) ySpeed -= 1;
 			if (ke.keyCode == Keyboard.A || ke.keyCode == Keyboard.LEFT) xSpeed += 1;
 			if (ke.keyCode == Keyboard.D || ke.keyCode == Keyboard.RIGHT) xSpeed -= 1;
+			if (ke.keyCode == Keyboard.NUMBER_7) CanTeleport = false;
 			
 			if (ke.keyCode == Keyboard.M) {
 				Main.I.stage.addChild(new CaveLight());
@@ -75,6 +77,15 @@ package InputSystems {
 			WorldData.ME.RequestMove(xSpeed, ySpeed);
 		}
 		
+		private function Clicked(me:MouseEvent):void {
+			if (CanTeleport) {
+				var xPos:int = me.stageX - Camera.X;//Main.OrderedLayer.x;
+				var yPos:int = me.stageY - Camera.Y;//Main.OrderedLayer.y;
+				
+				WorldData.ME.X = xPos;
+				WorldData.ME.Y = yPos;
+			}
+		}
 	}
 
 }

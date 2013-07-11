@@ -3,7 +3,7 @@ package Game.Critter
 	import flash.display.BitmapData;
 	import flash.utils.ByteArray;
 	import Game.General.ImageLoader;
-	import Game.General.Script;
+	import Game.Scripting.Script;
 	import Game.Map.MapData;
 	/**
 	 * ...

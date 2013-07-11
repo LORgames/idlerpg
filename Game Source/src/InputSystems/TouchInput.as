@@ -32,10 +32,6 @@ package InputSystems {
 			}
 		}
 		
-		public function IsSupported():Boolean {
-			return true; //TODO: Make this figure out whats going on?
-		}
-		
 		private function TouchDown(te:TouchEvent):void {
 			var hud:HUD = Main.I.hud;
 			

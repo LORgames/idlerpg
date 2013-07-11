@@ -6,7 +6,7 @@ package Game.Map.Objects {
 	import flash.utils.ByteArray;
 	import Game.General.BinaryLoader;
 	import Game.General.ImageLoader;
-	import Game.General.Script;
+	import Game.Scripting.Script;
 	import RenderSystem.IAnimated;
 	import RenderSystem.Renderman;
 	/**

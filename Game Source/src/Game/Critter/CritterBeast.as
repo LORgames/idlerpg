@@ -1,6 +1,6 @@
 package Game.Critter {
 	import Game.Equipment.EquipmentSet;
-	import Game.General.Script;
+	import Game.Scripting.Script;
 	import Game.Map.MapData;
 	import Game.Map.WorldData;
 	import Interfaces.IMapObject;

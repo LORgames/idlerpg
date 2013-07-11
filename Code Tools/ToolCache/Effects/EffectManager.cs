@@ -44,6 +44,9 @@ namespace ToolCache.Effects {
         }
 
         public static void AddEffect(Effect e) {
+            //Cannot have spaces in the name
+            e.Name = e.Name.Replace(" ", "");
+
             e.OldName = e.Name;
             e.OldGroup = e.Group;
 
@@ -61,6 +64,8 @@ namespace ToolCache.Effects {
         }
 
         public static void UpdatedEffect(Effect e) {
+            e.Name = e.Name.Replace(" ", "");
+
             if (e.Group != e.OldGroup) {
                 EffectsInGroups[e.OldGroup].Remove(e);
                 VerifyGroup(e.Group);

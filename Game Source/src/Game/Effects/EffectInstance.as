@@ -1,5 +1,7 @@
 package Game.Effects {
+	import adobe.utils.CustomActions;
 	import CollisionSystem.Rect;
+	import Debug.Drawer;
 	import EngineTiming.Clock;
 	import EngineTiming.ICleanUp;
 	import EngineTiming.IUpdatable;
@@ -7,7 +9,10 @@ package Game.Effects {
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
-	import Game.General.Script;
+	import flash.geom.Vector3D;
+	import Game.Scripting.Script;
+	import Game.Map.WorldData;
+	import Game.Scripting.ScriptTypes;
 	import Interfaces.IMapObject;
 	import RenderSystem.IAnimated;
 	import RenderSystem.IObjectLayer;
@@ -33,6 +38,8 @@ package Game.Effects {
 		public var CopyRect:Rectangle = new Rectangle();
 		public var IsLooping:Boolean = true;
 		
+		private var MyLife:int = 0;
+		
 		public function EffectInstance(info:EffectInfo, x:int, y:int, d:int) {
 			this.Info = info;
 			
@@ -55,6 +62,9 @@ package Game.Effects {
 			Clock.I.Updatables.push(this);
 			
 			Info.MyScript.Run(Script.Spawn, this, this);
+			WorldData.CurrentMap.Effects.push(this);
+			
+			MyLife = Info.Life;
 		}
 		
 		public function ChangeState(animationIndex:int, loop:Boolean):void {
@@ -63,7 +73,12 @@ package Game.Effects {
 			this.CurrentFrame = this.StartFrame;
 			this.IsLooping = loop;
 			
-			trace("EFFECT PLAYING: " + this.StartFrame + " to " + this.EndFrame + " looping=" + IsLooping);
+			CopyRect.x = int(CurrentFrame % Info.SpriteColumns) * CopyRect.width;
+			CopyRect.y = int(CurrentFrame / Info.SpriteColumns) * CopyRect.height;
+			
+			if(Info.SpriteAtlas != null) {
+				this.bitmapData.copyPixels(Info.SpriteAtlas, CopyRect, Global.ZeroPoint);
+			}
 		}
 		
 		/* INTERFACE Interfaces.IMapObject */
@@ -83,12 +98,11 @@ package Game.Effects {
 		/* INTERFACE RenderSystem.IAnimated */
 		
 		public function UpdateAnimation(dt:Number):void {
-			Renderman.DirtyObjects.push(this);
 			FrameTimeout += dt;
 			
-			if (FrameTimeout > PlaybackSpeed) {
+			if (FrameTimeout >= PlaybackSpeed) {
 				if (PlaybackSpeed > 0) {
-					while(FrameTimeout > PlaybackSpeed) {
+					while(FrameTimeout >= PlaybackSpeed) {
 						FrameTimeout -= PlaybackSpeed;
 						CurrentFrame++;
 						
@@ -121,9 +135,6 @@ package Game.Effects {
 		/* INTERFACE EngineTiming.IUpdatable */
 		
 		public function Update(dt:Number):void {
-			this.x = X - Info.FrameWidth / 2;
-			this.y = Y - Info.FrameHeight;
-			
 			if (Info.MovementSpeed != 0) {
 				switch(Direction) {
 					case 0:
@@ -140,20 +151,59 @@ package Game.Effects {
 						break;
 				}
 			}
+			
+			this.x = X - Info.FrameWidth * 0.5;
+			this.y = Y - Info.FrameHeight;
+			
+			MyRect.X = X - MyRect.W * 0.5;
+			MyRect.Y = Y - MyRect.H * 0.5;
+			
+			Renderman.DirtyObjects.push(this);
+			
+			if (!WorldData.CurrentMap.Boundaries.ContainsPoint(X, Y)) {
+				Clock.CleanUpList.push(this);
+			} else {
+				//Do some world scans?
+				var objects:Vector.<IMapObject> = new Vector.<IMapObject>();
+				WorldData.CurrentMap.GetObjectsInArea(MyRect, objects, ScriptTypes.NotMe, this);
+				
+				var i:int = objects.length;
+				while (--i > -1) {
+					if (Info.IsSolid) {
+						Info.MyScript.Run(Script.EndMoving, this);
+					} else {
+						
+					}
+				}
+				
+				if (MyLife > 0) {
+					trace(MyLife);
+					
+					MyLife -= dt;
+					if (MyLife <= 0) {
+						Clock.CleanUpList.push(this);
+					}
+				}
+			}
 		}
 		
 		/* INTERFACE EngineTiming.ICleanUp */
 		
 		public function CleanUp():void {
+			if (MyRect != null) {
+				Drawer.AddDebugRect(MyRect);
+			}
+			
 			this.bitmapData.dispose();
 			
 			MyRect = null;
+			Info = null;
+			CopyRect = null;
 			
-			Main.OrderedLayer.removeChild(this);
+			if(this.parent) Main.OrderedLayer.removeChild(this);
 			Renderman.AnimatedObjectsRemove(this);
 			Clock.I.Remove(this);
+			WorldData.CurrentMap.EffectPop(this);
 		}
-		
 	}
-
 }

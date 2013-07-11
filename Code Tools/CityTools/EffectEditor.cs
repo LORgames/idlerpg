@@ -10,6 +10,7 @@ using CityTools.Components;
 using ToolCache.Effects;
 using System.IO;
 using ToolCache.Animation;
+using ToolCache.General;
 
 namespace CityTools {
     public partial class EffectEditor : Form {
@@ -60,6 +61,15 @@ namespace CityTools {
                 if(animationList.GetAnimation() != null) {
                     animationList.GetAnimation().Draw(e.Graphics, 0, 0, 1);
                 }
+
+                if (ckbDrawDebug.Checked) {
+                    Image im = ImageCache.RequestImage(animationList.GetAnimation().Frames[0]);
+                    if(im != null) {
+                        int x = im.Width/2 - (int)(numSizeX.Value/2) + (int)numOffsetX.Value;
+                        int y = im.Height - (int)(numSizeY.Value) - (int)numOffsetY.Value;
+                        e.Graphics.DrawRectangle(Pens.Red, x, y, (int)numSizeX.Value, (int)numSizeY.Value);
+                    }
+                }
             }
         }
 
@@ -79,6 +89,11 @@ namespace CityTools {
 
                 CurrentEffect.MovementSpeed = (short)numSpeed.Value;
                 CurrentEffect.Life = (float)numLifetime.Value;
+
+                CurrentEffect.Area.X = (int)numOffsetX.Value;
+                CurrentEffect.Area.Y = (int)numOffsetY.Value;
+                CurrentEffect.Area.Width = (int)numSizeX.Value;
+                CurrentEffect.Area.Height = (int)numSizeY.Value;
 
                 VerifyGroup(CurrentEffect.Group);
 
@@ -127,6 +142,11 @@ namespace CityTools {
 
                 numSpeed.Value = (decimal)CurrentEffect.MovementSpeed;
                 numLifetime.Value = (decimal)CurrentEffect.Life;
+
+                numOffsetX.Value = CurrentEffect.Area.X;
+                numOffsetY.Value = CurrentEffect.Area.Y;
+                numSizeX.Value = CurrentEffect.Area.Width;
+                numSizeY.Value = CurrentEffect.Area.Height;
 
                 //Add animations
                 UpdateAnimationList();
@@ -245,6 +265,11 @@ namespace CityTools {
 
         private void timer1_Tick(object sender, EventArgs e) {
             pictureBox1.Invalidate();
+        }
+
+        private void BoxChanged(object sender, EventArgs e) {
+            //pictureBox1.Invalidate();
+            EffectEdited = true;
         }
     }
 }

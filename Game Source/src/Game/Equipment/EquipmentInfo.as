@@ -2,7 +2,7 @@ package Game.Equipment {
 	import flash.display.BitmapData;
 	import flash.geom.Point;
 	import Game.General.ImageLoader;
-	import Game.General.Script;
+	import Game.Scripting.Script;
 	/**
 	 * ...
 	 * @author Paul

@@ -1,7 +1,7 @@
 package Game.Effects {
 	import flash.utils.ByteArray;
 	import Game.General.BinaryLoader;
-	import Game.General.Script;
+	import Game.Scripting.Script;
 	/**
 	 * ...
 	 * @author Paul
@@ -40,6 +40,8 @@ package Game.Effects {
 				e.Y = b.readShort();
 				e.W = b.readShort();
 				e.H = b.readShort();
+				
+				e.IsSolid = true;
 				
 				e.FrameWidth = b.readShort();
 				e.FrameHeight = b.readShort();

@@ -6,6 +6,7 @@ package RenderSystem {
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import Game.Effects.EffectInstance;
 	import Game.Map.Objects.ObjectInstance;
 	import Game.Map.Spawns.SpawnRegion;
 	import Game.Map.Tiles.TileInstance;
@@ -81,7 +82,6 @@ package RenderSystem {
 			data.unlock();
 			
 			if (Global.DebugRender) {
-				//TODO: Clean up debug draw things if required
 				xPos = WorldData.CurrentMap.Critters.length;
 				
 				DebugLayer.graphics.clear();
@@ -129,6 +129,15 @@ package RenderSystem {
 					while (--yPos > -1) {
 						DebugLayer.graphics.drawRect(objX.Area[yPos].X, objX.Area[yPos].Y, objX.Area[yPos].W, objX.Area[yPos].H);
 					}
+				}
+				
+				//Draw all the effects
+				DebugLayer.graphics.lineStyle(1, 0x8080FF);
+				xPos = WorldData.CurrentMap.Effects.length;
+				
+				while (--xPos > -1) {
+					var objE:EffectInstance = WorldData.CurrentMap.Effects[xPos];
+					DebugLayer.graphics.drawRect(objE.MyRect.X, objE.MyRect.Y, objE.MyRect.W, objE.MyRect.H);
 				}
 			}
 		}
