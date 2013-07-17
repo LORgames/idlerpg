@@ -64,7 +64,8 @@
     <Compile Include="General\BinaryIO.cs" />
     <Compile Include="General\DictionaryEx.cs" />
     <Compile Include="General\ImageCache.cs" />
-    <Compile Include="General\SaveSystem.cs" />
+    <Compile Include="SaveSystem\SaveInfo.cs" />
+    <Compile Include="SaveSystem\SaveManager.cs" />
     <Compile Include="General\Settings.cs" />
     <Compile Include="General\Startup.cs" />
     <Compile Include="Items\Item.cs" />

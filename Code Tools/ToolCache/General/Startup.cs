@@ -12,6 +12,7 @@ using ToolCache.Sound;
 using ToolCache.Critters;
 using ToolCache.UI;
 using ToolCache.Effects;
+using ToolCache.SaveSystem;
 
 namespace ToolCache.General {
     public class Startup {
@@ -34,6 +35,9 @@ namespace ToolCache.General {
 
             //Tier 3 Loading:
             MapPieceCache.Initialize();
+
+            //Tier 4 Loading:
+            SaveManager.Initialize();
         }
     }
 }
