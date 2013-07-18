@@ -23,33 +23,37 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.listAllSaves = new System.Windows.Forms.ListBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtCharName = new System.Windows.Forms.TextBox();
-            this.txtCharTitle = new System.Windows.Forms.TextBox();
-            this.numCharExperience = new System.Windows.Forms.NumericUpDown();
-            this.label2 = new System.Windows.Forms.Label();
+            this.btnSetSlot3 = new System.Windows.Forms.Button();
+            this.btnSetSlot2 = new System.Windows.Forms.Button();
+            this.btnSetSlot1 = new System.Windows.Forms.Button();
+            this.btnSetSlot0 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.numCharExperience = new System.Windows.Forms.NumericUpDown();
+            this.txtCharTitle = new System.Windows.Forms.TextBox();
+            this.txtCharName = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnDeleteSelectedSaves = new System.Windows.Forms.Button();
+            this.btnCreateNewSave = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabGlobalVars = new System.Windows.Forms.TabPage();
             this.tabStatistics = new System.Windows.Forms.TabPage();
             this.tabEquipment = new System.Windows.Forms.TabPage();
-            this.pbDisplay = new System.Windows.Forms.PictureBox();
-            this.cbEquipmentShadow = new System.Windows.Forms.ComboBox();
-            this.cbEquipmentPants = new System.Windows.Forms.ComboBox();
-            this.cbEquipmentBody = new System.Windows.Forms.ComboBox();
-            this.cbEquipmentFace = new System.Windows.Forms.ComboBox();
-            this.cbEquipmentHeadgear = new System.Windows.Forms.ComboBox();
-            this.cbEquipmentWeapon = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.cbEquipmentWeapon = new System.Windows.Forms.ComboBox();
+            this.cbEquipmentHeadgear = new System.Windows.Forms.ComboBox();
+            this.cbEquipmentFace = new System.Windows.Forms.ComboBox();
+            this.cbEquipmentBody = new System.Windows.Forms.ComboBox();
+            this.cbEquipmentPants = new System.Windows.Forms.ComboBox();
+            this.cbEquipmentShadow = new System.Windows.Forms.ComboBox();
+            this.pbDisplay = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numCharExperience)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -57,77 +61,84 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbDisplay)).BeginInit();
             this.SuspendLayout();
             // 
-            // listBox1
+            // listAllSaves
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(6, 5);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(158, 95);
-            this.listBox1.TabIndex = 1;
+            this.listAllSaves.FormattingEnabled = true;
+            this.listAllSaves.Location = new System.Drawing.Point(6, 5);
+            this.listAllSaves.Name = "listAllSaves";
+            this.listAllSaves.Size = new System.Drawing.Size(158, 95);
+            this.listAllSaves.Sorted = true;
+            this.listAllSaves.TabIndex = 1;
+            this.listAllSaves.SelectedIndexChanged += new System.EventHandler(this.listAllSaves_SelectedIndexChanged);
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnSetSlot3);
+            this.panel1.Controls.Add(this.btnSetSlot2);
+            this.panel1.Controls.Add(this.btnSetSlot1);
+            this.panel1.Controls.Add(this.btnSetSlot0);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.numCharExperience);
             this.panel1.Controls.Add(this.txtCharTitle);
             this.panel1.Controls.Add(this.txtCharName);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.button2);
-            this.panel1.Controls.Add(this.button1);
-            this.panel1.Controls.Add(this.listBox1);
-            this.panel1.Location = new System.Drawing.Point(85, 7);
+            this.panel1.Controls.Add(this.btnDeleteSelectedSaves);
+            this.panel1.Controls.Add(this.btnCreateNewSave);
+            this.panel1.Controls.Add(this.listAllSaves);
+            this.panel1.Location = new System.Drawing.Point(6, 7);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(369, 111);
+            this.panel1.Size = new System.Drawing.Size(525, 111);
             this.panel1.TabIndex = 2;
             // 
-            // button1
+            // btnSetSlot3
             // 
-            this.button1.Location = new System.Drawing.Point(170, 5);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(88, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Create New";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnSetSlot3.Location = new System.Drawing.Point(429, 79);
+            this.btnSetSlot3.Name = "btnSetSlot3";
+            this.btnSetSlot3.Size = new System.Drawing.Size(92, 23);
+            this.btnSetSlot3.TabIndex = 13;
+            this.btnSetSlot3.Text = "Set As Slot 3";
+            this.btnSetSlot3.UseVisualStyleBackColor = true;
+            this.btnSetSlot3.Click += new System.EventHandler(this.btnSelectSlotClicked);
             // 
-            // button2
+            // btnSetSlot2
             // 
-            this.button2.Location = new System.Drawing.Point(264, 5);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(95, 23);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "Delete Selected";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnSetSlot2.Location = new System.Drawing.Point(430, 55);
+            this.btnSetSlot2.Name = "btnSetSlot2";
+            this.btnSetSlot2.Size = new System.Drawing.Size(92, 23);
+            this.btnSetSlot2.TabIndex = 12;
+            this.btnSetSlot2.Text = "Set As Slot 2";
+            this.btnSetSlot2.UseVisualStyleBackColor = true;
+            this.btnSetSlot2.Click += new System.EventHandler(this.btnSelectSlotClicked);
             // 
-            // label1
+            // btnSetSlot1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(170, 34);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(87, 13);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Character Name:";
+            this.btnSetSlot1.Location = new System.Drawing.Point(430, 31);
+            this.btnSetSlot1.Name = "btnSetSlot1";
+            this.btnSetSlot1.Size = new System.Drawing.Size(92, 23);
+            this.btnSetSlot1.TabIndex = 11;
+            this.btnSetSlot1.Text = "Set As Slot 1";
+            this.btnSetSlot1.UseVisualStyleBackColor = true;
+            this.btnSetSlot1.Click += new System.EventHandler(this.btnSelectSlotClicked);
             // 
-            // txtCharName
+            // btnSetSlot0
             // 
-            this.txtCharName.Location = new System.Drawing.Point(263, 31);
-            this.txtCharName.Name = "txtCharName";
-            this.txtCharName.Size = new System.Drawing.Size(96, 20);
-            this.txtCharName.TabIndex = 5;
+            this.btnSetSlot0.Location = new System.Drawing.Point(429, 7);
+            this.btnSetSlot0.Name = "btnSetSlot0";
+            this.btnSetSlot0.Size = new System.Drawing.Size(92, 23);
+            this.btnSetSlot0.TabIndex = 10;
+            this.btnSetSlot0.Text = "Set As Slot 0";
+            this.btnSetSlot0.UseVisualStyleBackColor = true;
+            this.btnSetSlot0.Click += new System.EventHandler(this.btnSelectSlotClicked);
             // 
-            // txtCharTitle
+            // label3
             // 
-            this.txtCharTitle.Location = new System.Drawing.Point(263, 57);
-            this.txtCharTitle.Name = "txtCharTitle";
-            this.txtCharTitle.Size = new System.Drawing.Size(96, 20);
-            this.txtCharTitle.TabIndex = 6;
-            // 
-            // numCharExperience
-            // 
-            this.numCharExperience.Location = new System.Drawing.Point(263, 83);
-            this.numCharExperience.Name = "numCharExperience";
-            this.numCharExperience.Size = new System.Drawing.Size(96, 20);
-            this.numCharExperience.TabIndex = 7;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(170, 85);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(87, 13);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Character Name:";
             // 
             // label2
             // 
@@ -138,14 +149,57 @@
             this.label2.TabIndex = 8;
             this.label2.Text = "Title:";
             // 
-            // label3
+            // numCharExperience
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(170, 85);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(87, 13);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "Character Name:";
+            this.numCharExperience.Enabled = false;
+            this.numCharExperience.Location = new System.Drawing.Point(263, 83);
+            this.numCharExperience.Name = "numCharExperience";
+            this.numCharExperience.Size = new System.Drawing.Size(96, 20);
+            this.numCharExperience.TabIndex = 7;
+            // 
+            // txtCharTitle
+            // 
+            this.txtCharTitle.Enabled = false;
+            this.txtCharTitle.Location = new System.Drawing.Point(263, 57);
+            this.txtCharTitle.Name = "txtCharTitle";
+            this.txtCharTitle.Size = new System.Drawing.Size(96, 20);
+            this.txtCharTitle.TabIndex = 6;
+            // 
+            // txtCharName
+            // 
+            this.txtCharName.Enabled = false;
+            this.txtCharName.Location = new System.Drawing.Point(263, 31);
+            this.txtCharName.Name = "txtCharName";
+            this.txtCharName.Size = new System.Drawing.Size(96, 20);
+            this.txtCharName.TabIndex = 5;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(170, 34);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(87, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Character Name:";
+            // 
+            // btnDeleteSelectedSaves
+            // 
+            this.btnDeleteSelectedSaves.Location = new System.Drawing.Point(264, 5);
+            this.btnDeleteSelectedSaves.Name = "btnDeleteSelectedSaves";
+            this.btnDeleteSelectedSaves.Size = new System.Drawing.Size(95, 23);
+            this.btnDeleteSelectedSaves.TabIndex = 3;
+            this.btnDeleteSelectedSaves.Text = "Delete Selected";
+            this.btnDeleteSelectedSaves.UseVisualStyleBackColor = true;
+            this.btnDeleteSelectedSaves.Click += new System.EventHandler(this.btnDeleteSelectedSaves_Click);
+            // 
+            // btnCreateNewSave
+            // 
+            this.btnCreateNewSave.Location = new System.Drawing.Point(170, 5);
+            this.btnCreateNewSave.Name = "btnCreateNewSave";
+            this.btnCreateNewSave.Size = new System.Drawing.Size(88, 23);
+            this.btnCreateNewSave.TabIndex = 2;
+            this.btnCreateNewSave.Text = "Create New";
+            this.btnCreateNewSave.UseVisualStyleBackColor = true;
             // 
             // tabControl1
             // 
@@ -200,97 +254,14 @@
             this.tabEquipment.Text = "Equipment";
             this.tabEquipment.UseVisualStyleBackColor = true;
             // 
-            // pbDisplay
+            // label9
             // 
-            this.pbDisplay.Location = new System.Drawing.Point(197, 5);
-            this.pbDisplay.Name = "pbDisplay";
-            this.pbDisplay.Size = new System.Drawing.Size(317, 179);
-            this.pbDisplay.TabIndex = 0;
-            this.pbDisplay.TabStop = false;
-            // 
-            // cbEquipmentShadow
-            // 
-            this.cbEquipmentShadow.FormattingEnabled = true;
-            this.cbEquipmentShadow.Location = new System.Drawing.Point(70, 15);
-            this.cbEquipmentShadow.Name = "cbEquipmentShadow";
-            this.cbEquipmentShadow.Size = new System.Drawing.Size(121, 21);
-            this.cbEquipmentShadow.TabIndex = 1;
-            // 
-            // cbEquipmentPants
-            // 
-            this.cbEquipmentPants.FormattingEnabled = true;
-            this.cbEquipmentPants.Location = new System.Drawing.Point(70, 42);
-            this.cbEquipmentPants.Name = "cbEquipmentPants";
-            this.cbEquipmentPants.Size = new System.Drawing.Size(121, 21);
-            this.cbEquipmentPants.TabIndex = 2;
-            // 
-            // cbEquipmentBody
-            // 
-            this.cbEquipmentBody.FormattingEnabled = true;
-            this.cbEquipmentBody.Location = new System.Drawing.Point(70, 69);
-            this.cbEquipmentBody.Name = "cbEquipmentBody";
-            this.cbEquipmentBody.Size = new System.Drawing.Size(121, 21);
-            this.cbEquipmentBody.TabIndex = 3;
-            // 
-            // cbEquipmentFace
-            // 
-            this.cbEquipmentFace.FormattingEnabled = true;
-            this.cbEquipmentFace.Location = new System.Drawing.Point(70, 96);
-            this.cbEquipmentFace.Name = "cbEquipmentFace";
-            this.cbEquipmentFace.Size = new System.Drawing.Size(121, 21);
-            this.cbEquipmentFace.TabIndex = 4;
-            // 
-            // cbEquipmentHeadgear
-            // 
-            this.cbEquipmentHeadgear.FormattingEnabled = true;
-            this.cbEquipmentHeadgear.Location = new System.Drawing.Point(70, 123);
-            this.cbEquipmentHeadgear.Name = "cbEquipmentHeadgear";
-            this.cbEquipmentHeadgear.Size = new System.Drawing.Size(121, 21);
-            this.cbEquipmentHeadgear.TabIndex = 5;
-            // 
-            // cbEquipmentWeapon
-            // 
-            this.cbEquipmentWeapon.FormattingEnabled = true;
-            this.cbEquipmentWeapon.Location = new System.Drawing.Point(70, 150);
-            this.cbEquipmentWeapon.Name = "cbEquipmentWeapon";
-            this.cbEquipmentWeapon.Size = new System.Drawing.Size(121, 21);
-            this.cbEquipmentWeapon.TabIndex = 6;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(18, 18);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(46, 13);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Shadow";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(30, 45);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(34, 13);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "Pants";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(33, 72);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(31, 13);
-            this.label6.TabIndex = 9;
-            this.label6.Text = "Body";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(33, 99);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(31, 13);
-            this.label7.TabIndex = 10;
-            this.label7.Text = "Face";
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(16, 153);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(48, 13);
+            this.label9.TabIndex = 12;
+            this.label9.Text = "Weapon";
             // 
             // label8
             // 
@@ -301,14 +272,116 @@
             this.label8.TabIndex = 11;
             this.label8.Text = "Headgear";
             // 
-            // label9
+            // label7
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(16, 153);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(48, 13);
-            this.label9.TabIndex = 12;
-            this.label9.Text = "Weapon";
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(33, 99);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(31, 13);
+            this.label7.TabIndex = 10;
+            this.label7.Text = "Face";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(33, 72);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(31, 13);
+            this.label6.TabIndex = 9;
+            this.label6.Text = "Body";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(30, 45);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(34, 13);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "Pants";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(18, 18);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(46, 13);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Shadow";
+            // 
+            // cbEquipmentWeapon
+            // 
+            this.cbEquipmentWeapon.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbEquipmentWeapon.FormattingEnabled = true;
+            this.cbEquipmentWeapon.Location = new System.Drawing.Point(70, 150);
+            this.cbEquipmentWeapon.Name = "cbEquipmentWeapon";
+            this.cbEquipmentWeapon.Size = new System.Drawing.Size(121, 21);
+            this.cbEquipmentWeapon.Sorted = true;
+            this.cbEquipmentWeapon.TabIndex = 6;
+            this.cbEquipmentWeapon.SelectedIndexChanged += new System.EventHandler(this.Edited);
+            // 
+            // cbEquipmentHeadgear
+            // 
+            this.cbEquipmentHeadgear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbEquipmentHeadgear.FormattingEnabled = true;
+            this.cbEquipmentHeadgear.Location = new System.Drawing.Point(70, 123);
+            this.cbEquipmentHeadgear.Name = "cbEquipmentHeadgear";
+            this.cbEquipmentHeadgear.Size = new System.Drawing.Size(121, 21);
+            this.cbEquipmentHeadgear.Sorted = true;
+            this.cbEquipmentHeadgear.TabIndex = 5;
+            this.cbEquipmentHeadgear.SelectedIndexChanged += new System.EventHandler(this.Edited);
+            // 
+            // cbEquipmentFace
+            // 
+            this.cbEquipmentFace.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbEquipmentFace.FormattingEnabled = true;
+            this.cbEquipmentFace.Location = new System.Drawing.Point(70, 96);
+            this.cbEquipmentFace.Name = "cbEquipmentFace";
+            this.cbEquipmentFace.Size = new System.Drawing.Size(121, 21);
+            this.cbEquipmentFace.Sorted = true;
+            this.cbEquipmentFace.TabIndex = 4;
+            this.cbEquipmentFace.SelectedIndexChanged += new System.EventHandler(this.Edited);
+            // 
+            // cbEquipmentBody
+            // 
+            this.cbEquipmentBody.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbEquipmentBody.FormattingEnabled = true;
+            this.cbEquipmentBody.Location = new System.Drawing.Point(70, 69);
+            this.cbEquipmentBody.Name = "cbEquipmentBody";
+            this.cbEquipmentBody.Size = new System.Drawing.Size(121, 21);
+            this.cbEquipmentBody.Sorted = true;
+            this.cbEquipmentBody.TabIndex = 3;
+            this.cbEquipmentBody.SelectedIndexChanged += new System.EventHandler(this.Edited);
+            // 
+            // cbEquipmentPants
+            // 
+            this.cbEquipmentPants.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbEquipmentPants.FormattingEnabled = true;
+            this.cbEquipmentPants.Location = new System.Drawing.Point(70, 42);
+            this.cbEquipmentPants.Name = "cbEquipmentPants";
+            this.cbEquipmentPants.Size = new System.Drawing.Size(121, 21);
+            this.cbEquipmentPants.Sorted = true;
+            this.cbEquipmentPants.TabIndex = 2;
+            this.cbEquipmentPants.SelectedIndexChanged += new System.EventHandler(this.Edited);
+            // 
+            // cbEquipmentShadow
+            // 
+            this.cbEquipmentShadow.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbEquipmentShadow.FormattingEnabled = true;
+            this.cbEquipmentShadow.Location = new System.Drawing.Point(70, 15);
+            this.cbEquipmentShadow.Name = "cbEquipmentShadow";
+            this.cbEquipmentShadow.Size = new System.Drawing.Size(121, 21);
+            this.cbEquipmentShadow.Sorted = true;
+            this.cbEquipmentShadow.TabIndex = 1;
+            this.cbEquipmentShadow.SelectedIndexChanged += new System.EventHandler(this.Edited);
+            // 
+            // pbDisplay
+            // 
+            this.pbDisplay.Location = new System.Drawing.Point(197, 5);
+            this.pbDisplay.Name = "pbDisplay";
+            this.pbDisplay.Size = new System.Drawing.Size(317, 166);
+            this.pbDisplay.TabIndex = 0;
+            this.pbDisplay.TabStop = false;
+            this.pbDisplay.Paint += new System.Windows.Forms.PaintEventHandler(this.pbDisplay_Paint);
             // 
             // SaveFileEditor
             // 
@@ -318,7 +391,7 @@
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.panel1);
             this.Name = "SaveFileEditor";
-            this.Text = "Save Editor [TESTING]";
+            this.Text = "Save Editor";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numCharExperience)).EndInit();
@@ -332,11 +405,11 @@
 
         #endregion
 
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox listAllSaves;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnDeleteSelectedSaves;
+        private System.Windows.Forms.Button btnCreateNewSave;
         private System.Windows.Forms.TextBox txtCharTitle;
         private System.Windows.Forms.TextBox txtCharName;
         private System.Windows.Forms.Label label3;
@@ -359,5 +432,9 @@
         private System.Windows.Forms.ComboBox cbEquipmentBody;
         private System.Windows.Forms.ComboBox cbEquipmentPants;
         private System.Windows.Forms.ComboBox cbEquipmentShadow;
+        private System.Windows.Forms.Button btnSetSlot3;
+        private System.Windows.Forms.Button btnSetSlot2;
+        private System.Windows.Forms.Button btnSetSlot1;
+        private System.Windows.Forms.Button btnSetSlot0;
     }
 }

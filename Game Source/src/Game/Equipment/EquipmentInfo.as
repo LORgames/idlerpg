@@ -95,6 +95,10 @@ package Game.Equipment {
 			var o:int = 4 * direction + 16 * layer;
 			var s:int = (sData & (0xF << o)) >> o;
 			
+			if (Name == "Iron Flail") {
+				trace("FLAIL: S" + state + ", D" + direction + ", L" + layer + ", F" + s);
+			}
+			
 			return s;
 		}
 	}

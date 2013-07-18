@@ -3,30 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.ComponentModel;
 
 namespace ToolCache.SaveSystem {
     public class SaveManager {
-        internal static string SaveFolder = "Saves";
-        public static Dictionary<string, SaveInfo> Saves = new Dictionary<string, SaveInfo>();
+        internal const string SaveFolder = "Saves";
+        internal const string DefaultFile = SaveManager.SaveFolder + "/Default.sva";
+
+        public static BindingList<SaveInfo> Saves = new BindingList<SaveInfo>();
 
         internal static void Initialize() {
             Saves.Clear();
+            LoadSaves();
         }
 
         private static void LoadSaves() {
-            if (!Directory.Exists(SaveFolder)) Directory.CreateDirectory("Saves");
+            if (!Directory.Exists(SaveFolder)) Directory.CreateDirectory(SaveFolder);
 
-            string[] SaveFiles = Directory.GetFiles("*.sva");
+            string[] SaveFiles = Directory.GetFiles(SaveFolder, "*.sva");
 
             foreach (string file in SaveFiles) {
-                SaveInfo s = SaveInfo.LoadASCIISaveFile(file);
-                Saves.Add(s.playername, s);
+                Saves.Add(SaveInfo.LoadFromFile(file));
             }
         }
 
         public static void SaveSaves() {
-            foreach (SaveInfo save in Saves.Values) {
-                save.Save();
+            foreach (SaveInfo save in Saves) {
+                save.SaveASCII();
             }
         }
     }

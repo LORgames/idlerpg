@@ -10,8 +10,8 @@ namespace ToolCache.SaveSystem {
     public class SaveInfo {
         //GENERAL
         public string filename = "";
-        public string playername = "$_CHOOSE";
-        public string playerclass = "$_CHOOSE";
+        public string name = "$_CHOOSE";
+        public string title = "$_CHOOSE";
         public uint experienceAmount = 0;
 
         //EQUIPMENT
@@ -25,9 +25,39 @@ namespace ToolCache.SaveSystem {
         //Inventory
 
 
-        public static SaveInfo LoadASCIISaveFile(string filename) {
-            SaveInfo save = new SaveInfo();
 
+        public SaveInfo(string myFilename) {
+            filename = myFilename;
+
+            if (filename == "") {
+                int saveID = 0;
+
+                while (File.Exists(SaveManager.SaveFolder + "/Slot_" + saveID + ".sva")) {
+                    saveID++;
+                }
+
+                filename = SaveManager.SaveFolder + "/Slot_" + saveID + ".sva";
+
+                if (File.Exists(SaveManager.DefaultFile)) {
+                    File.Copy(SaveManager.DefaultFile, filename);
+                } else {
+                    this.SaveASCII();
+                }
+            }
+
+            if (Path.GetExtension(filename) == ".sva") {
+                LoadASCII();
+            } else if (Path.GetExtension(filename) == "svb") {
+                LoadBinary();
+            }
+        }
+
+        private void LoadBinary() {
+            throw new NotImplementedException("Cannot load a binary save file yet!");
+        }
+
+
+        private void LoadASCII() {
             string[] lines = File.ReadAllLines(filename);
             string set = ""; //TODO: When global variables are in, will need to extend saves
 
@@ -36,40 +66,59 @@ namespace ToolCache.SaveSystem {
                 string variableInfo = line.Substring(line.IndexOf('=')+1);
 
                 switch (variableName) {
-                    case "Name": save.playername = variableInfo; break;
-                    case "Class": save.playerclass = variableInfo; break;
-                    case "Experience": save.experienceAmount = uint.Parse(variableInfo); break;
-                    case "Shadow": save.shadow = variableInfo; break;
-                    case "Legs": save.legs = variableInfo; break;
-                    case "Body": save.body = variableInfo; break;
-                    case "Face": save.face = variableInfo; break;
-                    case "Headgear": save.headgear = variableInfo; break;
-                    case "Weapon": save.weapon = variableInfo; break;
+                    case "Name": name = variableInfo; break;
+                    case "Title": title = variableInfo; break;
+                    case "Experience": experienceAmount = uint.Parse(variableInfo); break;
+                    case "Shadow": shadow = variableInfo; break;
+                    case "Legs": legs = variableInfo; break;
+                    case "Body": body = variableInfo; break;
+                    case "Face": face = variableInfo; break;
+                    case "Headgear": headgear = variableInfo; break;
+                    case "Weapon": weapon = variableInfo; break;
                     default:
-                        MessageBox.Show("Unknown variables "+variableName+" in save file: " + filename);
+                        MessageBox.Show("Unknown variable '"+variableName+"' in save file: " + filename);
                         break;
                 }
             }
-
-            return save;
         }
 
-        internal void Save() {
-            if (filename == "") {
-                int saveID = 0;
+        public static SaveInfo LoadFromFile(string filename) {
+            return new SaveInfo(filename);
+        }
 
-                while (File.Exists(SaveManager.SaveFolder + "/" + Environment.UserName + "_" + saveID + ".sva")) {
-                    saveID++;
-                }
-
-                filename = SaveManager.SaveFolder + "/" + Environment.UserName + "_" + saveID + ".sva"'
+        public void Save() {
+            if (Path.GetExtension(filename) == ".sva") {
+                SaveASCII();
+            } else if (Path.GetExtension(filename) == "svb") {
+                SaveBinary();
             }
+        }
 
-            BinaryIO f = new BinaryIO();
+        internal void SaveASCII() {
+            List<string> Lines = new List<string>();
+            Lines.Add("Name=" + name);
+            Lines.Add("Title=" + title);
+            Lines.Add("Experience=" + experienceAmount);
+            Lines.Add("Shadow=" + shadow);
+            Lines.Add("Legs=" + legs);
+            Lines.Add("Body=" + body);
+            Lines.Add("Face=" + face);
+            Lines.Add("Headgear=" + headgear);
+            Lines.Add("Weapon=" + weapon);
 
+            File.WriteAllLines(filename, Lines);
+        }
 
+        internal void SaveBinary() {
+            throw new NotImplementedException("Binary is not YET supported.");
+        }
 
-            f.Encode(filename);
+        public override string  ToString() {
+            return Path.GetFileName(filename);
+        }
+
+        public bool IsDefault() {
+            return filename == SaveManager.DefaultFile;
         }
     }
 }

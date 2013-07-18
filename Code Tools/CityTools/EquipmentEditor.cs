@@ -134,6 +134,7 @@ namespace CityTools {
                     node = new TreeNode(typeName);
                     GroupNodes.Add(typeName, node);
                     treeEquipmentList.Nodes.Add(node);
+                    
                     node.Expand();
                 } else {
                     node = GroupNodes[typeName];

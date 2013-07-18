@@ -24,6 +24,7 @@ namespace CityTools.CacheInterfaces {
             MainWindow.instance.btnTileMerger.Click += new EventHandler(btnTileMerger_Click);
             MainWindow.instance.btnUIEditor.Click += new EventHandler(btnUIEditor_Click);
             MainWindow.instance.btnEffectEditor.Click += new EventHandler(btnEffectEditor_Click);
+            MainWindow.instance.btnSaveEditor.Click += new EventHandler(btnSaveEditor_Click);
         }
 
         public static bool ProcessKeys(Keys keyData) {
@@ -49,6 +50,8 @@ namespace CityTools.CacheInterfaces {
                 OpenUIEditor(); return true;
             } else if (keyData == Keys.F) {
                 OpenEffectEditor(); return true;
+            } else if (keyData == Keys.V) {
+                OpenSaveEditor(); return true;
             }
 
             return false;
@@ -114,6 +117,11 @@ namespace CityTools.CacheInterfaces {
 
         private static void OpenEffectEditor() {
             EffectEditor t = new EffectEditor();
+            t.ShowDialog();
+        }
+
+        private static void OpenSaveEditor() {
+            SaveFileEditor t = new SaveFileEditor();
             t.ShowDialog();
         }
 
@@ -198,6 +206,10 @@ namespace CityTools.CacheInterfaces {
 
         private static void btnEffectEditor_Click(object sender, EventArgs e) {
             OpenEffectEditor();
+        }
+
+        static void btnSaveEditor_Click(object sender, EventArgs e) {
+            OpenSaveEditor();
         }
     }
 }

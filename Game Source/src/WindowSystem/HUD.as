@@ -29,7 +29,7 @@ package WindowSystem
 			ImageLoader.Load("OtherUI/Stick.png", LoadedStickArt);
 			ImageLoader.Load("OtherUI/Thumb.png", LoadedThumbArt); //THUMB MUST LOAD AFTER STICK!!!
 			ImageLoader.Load("OtherUI/Test UI.png", LoadedLowerMiddle);
-			ScrollPanelItem.LoadIcons();
+			//ScrollPanelItem.LoadIcons();
 			
 			if(Global.DebugFPS) this.addChild(new FPSCounter());
 			

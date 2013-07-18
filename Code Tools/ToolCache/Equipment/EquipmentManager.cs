@@ -87,5 +87,13 @@ namespace ToolCache.Equipment {
                 }
             }
         }
+
+        public static EquipmentItem Get(string equipmentName) {
+            if (Equipment.ContainsKey(equipmentName)) {
+                return Equipment[equipmentName];
+            }
+
+            return null;
+        }
     }
 }

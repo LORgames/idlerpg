@@ -1,9 +1,9 @@
-Name=Adventurer
-Title=Farmhand
+Name=$_CHOOSE
+Class=$_CHOOSE
 Experience=0
 Shadow=Shadow
 Legs=Loincloth
 Body=Rags
-Face=_UNKNOWN
+Face=Head 1
 Headgear=A Blank Headgear
 Weapon=A Blank Weapon

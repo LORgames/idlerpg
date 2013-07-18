@@ -126,6 +126,7 @@ namespace CityTools {
             this.cbTileList.Location = new System.Drawing.Point(16, 139);
             this.cbTileList.Name = "cbTileList";
             this.cbTileList.Size = new System.Drawing.Size(94, 21);
+            this.cbTileList.Sorted = true;
             this.cbTileList.TabIndex = 5;
             this.cbTileList.SelectedIndexChanged += new System.EventHandler(this.cbTileList_SelectedIndexChanged);
             // 
@@ -310,6 +311,7 @@ namespace CityTools {
             this.cbDispWeapon.Location = new System.Drawing.Point(435, 22);
             this.cbDispWeapon.Name = "cbDispWeapon";
             this.cbDispWeapon.Size = new System.Drawing.Size(100, 21);
+            this.cbDispWeapon.Sorted = true;
             this.cbDispWeapon.TabIndex = 33;
             this.cbDispWeapon.SelectedIndexChanged += new System.EventHandler(this.changeFullDisplay);
             this.cbDispWeapon.TextUpdate += new System.EventHandler(this.changeFullDisplay);
@@ -330,6 +332,7 @@ namespace CityTools {
             this.cbDispBody.Location = new System.Drawing.Point(15, 22);
             this.cbDispBody.Name = "cbDispBody";
             this.cbDispBody.Size = new System.Drawing.Size(100, 21);
+            this.cbDispBody.Sorted = true;
             this.cbDispBody.TabIndex = 35;
             this.cbDispBody.SelectedIndexChanged += new System.EventHandler(this.changeFullDisplay);
             this.cbDispBody.TextUpdate += new System.EventHandler(this.changeFullDisplay);
@@ -350,6 +353,7 @@ namespace CityTools {
             this.cbDispFace.Location = new System.Drawing.Point(119, 22);
             this.cbDispFace.Name = "cbDispFace";
             this.cbDispFace.Size = new System.Drawing.Size(100, 21);
+            this.cbDispFace.Sorted = true;
             this.cbDispFace.TabIndex = 37;
             this.cbDispFace.SelectedIndexChanged += new System.EventHandler(this.changeFullDisplay);
             this.cbDispFace.TextUpdate += new System.EventHandler(this.changeFullDisplay);
@@ -370,6 +374,7 @@ namespace CityTools {
             this.cbDispPants.Location = new System.Drawing.Point(223, 22);
             this.cbDispPants.Name = "cbDispPants";
             this.cbDispPants.Size = new System.Drawing.Size(100, 21);
+            this.cbDispPants.Sorted = true;
             this.cbDispPants.TabIndex = 39;
             this.cbDispPants.SelectedIndexChanged += new System.EventHandler(this.changeFullDisplay);
             this.cbDispPants.TextUpdate += new System.EventHandler(this.changeFullDisplay);
@@ -390,6 +395,7 @@ namespace CityTools {
             this.cbDispHeadgear.Location = new System.Drawing.Point(329, 22);
             this.cbDispHeadgear.Name = "cbDispHeadgear";
             this.cbDispHeadgear.Size = new System.Drawing.Size(100, 21);
+            this.cbDispHeadgear.Sorted = true;
             this.cbDispHeadgear.TabIndex = 41;
             this.cbDispHeadgear.SelectedIndexChanged += new System.EventHandler(this.changeFullDisplay);
             this.cbDispHeadgear.TextUpdate += new System.EventHandler(this.changeFullDisplay);
@@ -464,6 +470,7 @@ namespace CityTools {
             this.cbDispShadow.Location = new System.Drawing.Point(541, 22);
             this.cbDispShadow.Name = "cbDispShadow";
             this.cbDispShadow.Size = new System.Drawing.Size(100, 21);
+            this.cbDispShadow.Sorted = true;
             this.cbDispShadow.TabIndex = 48;
             this.cbDispShadow.SelectedIndexChanged += new System.EventHandler(this.changeFullDisplay);
             this.cbDispShadow.TextUpdate += new System.EventHandler(this.changeFullDisplay);
