@@ -45,8 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animation\AnimatedObject.cs" />
-    <Compile Include="Combat\Elements\Element.cs" />
-    <Compile Include="Combat\Elements\ElementManager.cs" />
+    <Compile Include="Elements\Element.cs" />
+    <Compile Include="Elements\ElementManager.cs" />
     <Compile Include="Critters\AITypes.cs" />
     <Compile Include="Critters\Critter.cs" />
     <Compile Include="Critters\CritterBeast.cs" />
@@ -111,7 +111,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Combat\Effects\" />
     <Folder Include="ExportCrushers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

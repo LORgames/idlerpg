@@ -16,7 +16,7 @@ using ToolCache.Map;
 using ToolCache.Map.Tiles;
 using ToolCache.Animation;
 using ToolCache.Map.Objects;
-using ToolCache.Combat.Elements;
+using ToolCache.Elements;
 using ToolCache.Items;
 using ToolCache.Equipment;
 using System.Threading;

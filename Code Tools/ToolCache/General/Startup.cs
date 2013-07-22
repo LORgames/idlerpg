@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ToolCache.Combat.Elements;
+using ToolCache.Elements;
 using ToolCache.Items;
 using ToolCache.Equipment;
 using ToolCache.Map.Objects;

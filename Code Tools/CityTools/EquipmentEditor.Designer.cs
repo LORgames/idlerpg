@@ -88,6 +88,7 @@ namespace CityTools {
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.btnSearch = new System.Windows.Forms.Button();
             this.btnDuplicate = new System.Windows.Forms.Button();
+            this.btnUseForTesting = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbEquipmentDisplay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numOffsetX_0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numOffsetY_0)).BeginInit();
@@ -793,11 +794,21 @@ namespace CityTools {
             this.btnDuplicate.UseVisualStyleBackColor = true;
             this.btnDuplicate.Click += new System.EventHandler(this.btnDuplicate_Click);
             // 
+            // btnUseForTesting
+            // 
+            this.btnUseForTesting.Location = new System.Drawing.Point(491, 137);
+            this.btnUseForTesting.Name = "btnUseForTesting";
+            this.btnUseForTesting.Size = new System.Drawing.Size(69, 23);
+            this.btnUseForTesting.TabIndex = 73;
+            this.btnUseForTesting.Text = "Test These";
+            this.btnUseForTesting.UseVisualStyleBackColor = true;
+            // 
             // EquipmentEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(674, 619);
+            this.Controls.Add(this.btnUseForTesting);
             this.Controls.Add(this.btnDuplicate);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.txtSearch);
@@ -940,5 +951,6 @@ namespace CityTools {
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.Button btnDuplicate;
+        private System.Windows.Forms.Button btnUseForTesting;
     }
 }

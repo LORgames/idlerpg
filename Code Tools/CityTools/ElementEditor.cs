@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using ToolCache.Combat.Elements;
+using ToolCache.Elements;
 
 namespace CityTools {
     public partial class ElementEditor : Form {
