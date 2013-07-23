@@ -19,7 +19,7 @@ package Storage.SaveAdv {
 				var files:Array = f.getDirectoryListing();
 				
 				for (var x:String in files) {
-					var saveFile:File = (trace(files[x]) as File);
+					var saveFile:File = (files[x] as File);
 					
 					if (saveFile && saveFile.exists && !saveFile.isDirectory) {
 						var fs:FileStream = new FileStream();
