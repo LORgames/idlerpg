@@ -21,5 +21,6 @@ package {
 		//Debug information
 		public static var DebugRender:Boolean = false;
 		static public var DebugFPS:Boolean = true;
+		static public var IsEditor:Boolean = true;
 	}
 }

@@ -103,7 +103,6 @@ package Game.Equipment {
 						if (LoopState) {
 							Frame = 0;
 						} else {
-							trace(TotalFrames  + " S" + State + ", D" + Direction + ", L" + Layer);
 							Info.MyScript.Run(Script.AnimationEnded, Owner.Owner.Owner, Owner);
 							Owner.SetState(0);
 						}

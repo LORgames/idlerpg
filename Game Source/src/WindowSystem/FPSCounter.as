@@ -18,7 +18,8 @@ package WindowSystem {
 			selectable = false;
 			defaultTextFormat = new TextFormat(Fonts.Debug, 20, 0x000000);
 			
-			this.background = 0xFFFF00;
+			this.background = true;
+			this.backgroundColor = 0xFFFF00;
 			
 			UpdateInfo("0.0");
 			

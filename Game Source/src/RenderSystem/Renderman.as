@@ -9,7 +9,6 @@ package RenderSystem {
 	import Game.Map.MapData;
 	import Game.Map.WorldData;
 	import WindowSystem.Fonts;
-	import WindowSystem.ScreenText;
 	
 	/**
 	 * ...

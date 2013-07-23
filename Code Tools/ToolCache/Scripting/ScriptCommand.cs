@@ -179,7 +179,7 @@ namespace ToolCache.Scripting {
                 case "animationspeed":
                     CommandID = 0x6002;
 
-                    if (info.ScriptType != ScriptTypes.Equipment && info.ScriptType != ScriptTypes.Critter && info.ScriptType != ScriptTypes.Object) {
+                    if (info.ScriptType != ScriptTypes.Equipment && info.ScriptType != ScriptTypes.Critter && info.ScriptType != ScriptTypes.Object && info.ScriptType != ScriptTypes.Effect) {
                         info.Errors.Add("AnimationSpeed only applies to objects with direct control of thier animations.");
                         break;
                     }

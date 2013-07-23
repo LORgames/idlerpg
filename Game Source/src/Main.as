@@ -20,6 +20,7 @@ package {
 	import InputSystems.TouchInput;
 	import RenderSystem.Renderman;
 	import SoundSystem.MusicPlayer;
+	import Storage.SaveManager;
 	import WindowSystem.HUD;
 	
 	CONFIG::air {
@@ -51,7 +52,7 @@ package {
 			stage.align = StageAlign.TOP_LEFT;
 			stage.quality = StageQuality.LOW;
 			
-			stage.addEventListener(Event.DEACTIVATE, deactivate);
+			stage.addEventListener(Event.DEACTIVATE, OnLostFocus);
 			
 			//Need more logic to adding input system?
 			if (Multitouch.supportsTouchEvents && Multitouch.maxTouchPoints > 1) {
@@ -121,6 +122,9 @@ package {
 				}
 			}
 			
+			//Important Things
+			SaveManager.Initialize();
+			
 			//Set up some other things
 			Renderer = new Renderman();
 			Renderer.FadeToBlack(null, loadMap);
@@ -147,7 +151,7 @@ package {
 			Resized();
 		}
 		
-		private function deactivate(e:Event):void {
+		private function OnLostFocus(e:Event):void {
 			// auto-close if mobile device :)
 			CONFIG::air {
 				if (Multitouch.supportsTouchEvents && Multitouch.maxTouchPoints > 1) {
