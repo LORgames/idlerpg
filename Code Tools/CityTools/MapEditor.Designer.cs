@@ -57,7 +57,6 @@
             this.ckbExportDebugRender = new System.Windows.Forms.ToolStripMenuItem();
             this.ckbExportShowFPS = new System.Windows.Forms.ToolStripMenuItem();
             this.ckbExportMusicEnabled = new System.Windows.Forms.ToolStripMenuItem();
-            this.savesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.btnViewMenu = new System.Windows.Forms.ToolStripDropDownButton();
             this.mnuShowGrids = new System.Windows.Forms.ToolStripMenuItem();
@@ -85,9 +84,6 @@
             this.numSpawnMax = new System.Windows.Forms.NumericUpDown();
             this.label18 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
-            this.listCritterSpawns = new CityTools.Components.ListViewEx();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label16 = new System.Windows.Forms.Label();
             this.btnRegionResize = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
@@ -142,6 +138,10 @@
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.timerRedrawAll = new System.Windows.Forms.Timer(this.components);
             this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.cbExportSave = new System.Windows.Forms.ToolStripComboBox();
+            this.listCritterSpawns = new CityTools.Components.ListViewEx();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.main_splitter)).BeginInit();
             this.main_splitter.Panel1.SuspendLayout();
             this.main_splitter.Panel2.SuspendLayout();
@@ -377,7 +377,7 @@
             this.ckbExportDebugRender,
             this.ckbExportShowFPS,
             this.ckbExportMusicEnabled,
-            this.savesToolStripMenuItem});
+            this.cbExportSave});
             this.btnExport.Image = ((System.Drawing.Image)(resources.GetObject("btnExport.Image")));
             this.btnExport.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnExport.Name = "btnExport";
@@ -388,7 +388,7 @@
             // 
             this.ckbExportDebugRender.CheckOnClick = true;
             this.ckbExportDebugRender.Name = "ckbExportDebugRender";
-            this.ckbExportDebugRender.Size = new System.Drawing.Size(154, 22);
+            this.ckbExportDebugRender.Size = new System.Drawing.Size(181, 22);
             this.ckbExportDebugRender.Text = "Debug Render";
             this.ckbExportDebugRender.ToolTipText = "Draw Debug Rectangles?";
             // 
@@ -398,7 +398,7 @@
             this.ckbExportShowFPS.CheckOnClick = true;
             this.ckbExportShowFPS.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ckbExportShowFPS.Name = "ckbExportShowFPS";
-            this.ckbExportShowFPS.Size = new System.Drawing.Size(154, 22);
+            this.ckbExportShowFPS.Size = new System.Drawing.Size(181, 22);
             this.ckbExportShowFPS.Text = "Show FPS";
             this.ckbExportShowFPS.ToolTipText = "Show an FPS Display in the Top Left corner?";
             // 
@@ -408,14 +408,8 @@
             this.ckbExportMusicEnabled.CheckOnClick = true;
             this.ckbExportMusicEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ckbExportMusicEnabled.Name = "ckbExportMusicEnabled";
-            this.ckbExportMusicEnabled.Size = new System.Drawing.Size(154, 22);
+            this.ckbExportMusicEnabled.Size = new System.Drawing.Size(181, 22);
             this.ckbExportMusicEnabled.Text = "Music Enabled";
-            // 
-            // savesToolStripMenuItem
-            // 
-            this.savesToolStripMenuItem.Name = "savesToolStripMenuItem";
-            this.savesToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
-            this.savesToolStripMenuItem.Text = "Saves";
             // 
             // toolStripSeparator3
             // 
@@ -745,30 +739,6 @@
             this.label17.Size = new System.Drawing.Size(71, 13);
             this.label17.TabIndex = 42;
             this.label17.Text = "Timeout (sec)";
-            // 
-            // listCritterSpawns
-            // 
-            this.listCritterSpawns.AllowColumnReorder = true;
-            this.listCritterSpawns.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2});
-            this.listCritterSpawns.DoubleClickActivation = false;
-            this.listCritterSpawns.FullRowSelect = true;
-            this.listCritterSpawns.Location = new System.Drawing.Point(14, 576);
-            this.listCritterSpawns.Name = "listCritterSpawns";
-            this.listCritterSpawns.Size = new System.Drawing.Size(195, 103);
-            this.listCritterSpawns.TabIndex = 41;
-            this.listCritterSpawns.UseCompatibleStateImageBehavior = false;
-            this.listCritterSpawns.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "Critter";
-            this.columnHeader1.Width = 130;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Spawn%";
             // 
             // label16
             // 
@@ -1273,6 +1243,38 @@
             this.colorDialog.FullOpen = true;
             this.colorDialog.SolidColorOnly = true;
             // 
+            // cbExportSave
+            // 
+            this.cbExportSave.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbExportSave.Items.AddRange(new object[] {
+            "No Save"});
+            this.cbExportSave.Name = "cbExportSave";
+            this.cbExportSave.Size = new System.Drawing.Size(121, 21);
+            // 
+            // listCritterSpawns
+            // 
+            this.listCritterSpawns.AllowColumnReorder = true;
+            this.listCritterSpawns.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2});
+            this.listCritterSpawns.DoubleClickActivation = false;
+            this.listCritterSpawns.FullRowSelect = true;
+            this.listCritterSpawns.Location = new System.Drawing.Point(14, 576);
+            this.listCritterSpawns.Name = "listCritterSpawns";
+            this.listCritterSpawns.Size = new System.Drawing.Size(195, 103);
+            this.listCritterSpawns.TabIndex = 41;
+            this.listCritterSpawns.UseCompatibleStateImageBehavior = false;
+            this.listCritterSpawns.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Critter";
+            this.columnHeader1.Width = 130;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Spawn%";
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1428,8 +1430,8 @@
         internal System.Windows.Forms.ToolStripMenuItem btnUIEditor;
         internal System.Windows.Forms.ToolStripMenuItem btnEffectEditor;
         internal System.Windows.Forms.ToolStripMenuItem ckbExportMusicEnabled;
-        private System.Windows.Forms.ToolStripMenuItem savesToolStripMenuItem;
         internal System.Windows.Forms.ToolStripMenuItem btnSaveEditor;
+        internal System.Windows.Forms.ToolStripComboBox cbExportSave;
     }
 }
 

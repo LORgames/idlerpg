@@ -81,6 +81,9 @@ package {
 		}
 		
 		private function OnInvoke(e:Event):void {
+			//Important Things
+			SaveManager.Initialize();
+			
 			var loadMap:String = "Tutorial Fair";
 			
 			CONFIG::air {
@@ -114,16 +117,15 @@ package {
 									MusicPlayer.MusicEnabled = true;
 								} else {
 									MusicPlayer.MusicEnabled = false;
-								}
+								} break;
+							case "save":
+								SaveManager.Load(arg.substr(6)); break;
 							default:
 								trace("Unknown Param: " + arg);
 						}
 					}
 				}
 			}
-			
-			//Important Things
-			SaveManager.Initialize();
 			
 			//Set up some other things
 			Renderer = new Renderman();

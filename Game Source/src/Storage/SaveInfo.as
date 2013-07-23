@@ -19,6 +19,8 @@ package Storage {
         public var weapon:String = "";
 		
 		public function SaveInfo(key:String) {
+			this.key = key;
+			
 			if (key == "") {
 				trace("Cannot have a blank key!");
 			}

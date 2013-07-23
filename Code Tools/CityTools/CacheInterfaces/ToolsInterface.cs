@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using CityTools.Components;
+using ToolCache.SaveSystem;
 
 namespace CityTools.CacheInterfaces {
     public class ToolsInterface {
@@ -138,6 +139,14 @@ namespace CityTools.CacheInterfaces {
 
             if (!MainWindow.instance.ckbExportMusicEnabled.Checked) {
                 args = args + "+music=No";
+            }
+
+            if (MainWindow.instance.cbExportSave.SelectedItem is SaveInfo) {
+                if (Directory.Exists("Build/Saves/")) {
+                    File.Copy((MainWindow.instance.cbExportSave.SelectedItem as SaveInfo).filename, "Build/Saves/" + (MainWindow.instance.cbExportSave.SelectedItem as SaveInfo).ToString());
+                }
+
+                args = args + "+save=" + (MainWindow.instance.cbExportSave.SelectedItem as SaveInfo).ToString();
             }
 
             try {

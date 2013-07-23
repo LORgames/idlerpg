@@ -1,9 +1,9 @@
-Name=$_CHOOSE
-Class=$_CHOOSE
+Name=Adventurer
+Title=Farmhand
 Experience=0
 Shadow=Shadow
 Legs=Loincloth
 Body=Rags
-Face=Head 1
+Face=_CHOOSE
 Headgear=A Blank Headgear
 Weapon=A Blank Weapon

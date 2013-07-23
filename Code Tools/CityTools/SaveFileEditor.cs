@@ -37,6 +37,8 @@ namespace CityTools {
         }
 
         private void Edited(object sender, EventArgs e) {
+            if (isUpdating) return;
+
             pbDisplay.Invalidate();
             isEdited = true;
         }
@@ -63,10 +65,11 @@ namespace CityTools {
             if (listAllSaves.SelectedItems.Count == 1) {
                 currentInfo = (SaveInfo)listAllSaves.SelectedItem;
                 UpdateEnabled(true);
-                UpdateForm();
             } else {
                 UpdateEnabled(false);
             }
+
+            UpdateForm();
 
             isUpdating = false;
         }
@@ -83,13 +86,28 @@ namespace CityTools {
                 cbEquipmentFace.SelectedItem = EquipmentManager.Get(currentInfo.face);
                 cbEquipmentHeadgear.SelectedItem = EquipmentManager.Get(currentInfo.headgear);
                 cbEquipmentWeapon.SelectedItem = EquipmentManager.Get(currentInfo.weapon);
+
+                pbDisplay.Invalidate();
             }
         }
 
         private void SaveIfRequired() {
             if (currentInfo != null && isEdited) {
+                currentInfo.name = txtCharName.Text;
+                currentInfo.title = txtCharTitle.Text;
+                currentInfo.experienceAmount = (uint)numCharExperience.Value;
+
+                currentInfo.shadow = cbEquipmentShadow.Text;
+                currentInfo.legs = cbEquipmentPants.Text;
+                currentInfo.body = cbEquipmentBody.Text;
+                currentInfo.face = cbEquipmentFace.Text;
+                currentInfo.headgear = cbEquipmentHeadgear.Text;
+                currentInfo.weapon = cbEquipmentWeapon.Text;
+
                 currentInfo.Save();
             }
+
+            isEdited = false;
         }
 
         private void UpdateEnabled(bool newState) {
@@ -109,6 +127,14 @@ namespace CityTools {
                     SaveManager.Saves.Remove(x);
                 }
             }
+        }
+
+        private void btnCreateNewSave_Click(object sender, EventArgs e) {
+            SaveManager.Saves.Add(new SaveInfo());
+        }
+
+        private void SaveFileEditor_FormClosing(object sender, FormClosingEventArgs e) {
+            SaveIfRequired();
         }
     }
 }

@@ -156,6 +156,7 @@
             this.numCharExperience.Name = "numCharExperience";
             this.numCharExperience.Size = new System.Drawing.Size(96, 20);
             this.numCharExperience.TabIndex = 7;
+            this.numCharExperience.ValueChanged += new System.EventHandler(this.Edited);
             // 
             // txtCharTitle
             // 
@@ -164,6 +165,7 @@
             this.txtCharTitle.Name = "txtCharTitle";
             this.txtCharTitle.Size = new System.Drawing.Size(96, 20);
             this.txtCharTitle.TabIndex = 6;
+            this.txtCharTitle.TextChanged += new System.EventHandler(this.Edited);
             // 
             // txtCharName
             // 
@@ -172,6 +174,7 @@
             this.txtCharName.Name = "txtCharName";
             this.txtCharName.Size = new System.Drawing.Size(96, 20);
             this.txtCharName.TabIndex = 5;
+            this.txtCharName.TextChanged += new System.EventHandler(this.Edited);
             // 
             // label1
             // 
@@ -200,6 +203,7 @@
             this.btnCreateNewSave.TabIndex = 2;
             this.btnCreateNewSave.Text = "Create New";
             this.btnCreateNewSave.UseVisualStyleBackColor = true;
+            this.btnCreateNewSave.Click += new System.EventHandler(this.btnCreateNewSave_Click);
             // 
             // tabControl1
             // 
@@ -392,6 +396,7 @@
             this.Controls.Add(this.panel1);
             this.Name = "SaveFileEditor";
             this.Text = "Save Editor";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SaveFileEditor_FormClosing);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numCharExperience)).EndInit();
