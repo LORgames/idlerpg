@@ -41,7 +41,7 @@ package Game.Effects {
 		private var MyLife:int = 0;
 		
 		public function EffectInstance(info:EffectInfo, x:int, y:int, d:int) {
-			this.Info = info;
+ 			this.Info = info;
 			
 			CopyRect.width = Info.FrameWidth;
 			CopyRect.height = Info.FrameHeight;

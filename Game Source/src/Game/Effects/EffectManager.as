@@ -23,6 +23,7 @@ package Game.Effects {
 			for (var i:int = 0; i < totalEffects; i++) {
 				var e:EffectInfo = new EffectInfo();
 				Effects[i] = e;
+				e.ID = i;
 				
 				e.Name = BinaryLoader.GetString(b);
 				e.MovementSpeed = b.readShort();
