@@ -10,23 +10,20 @@ namespace ToolCache.SaveSystem {
     public class SaveInfo {
         //GENERAL
         public string filename = "";
-        public string name = "$_CHOOSE";
-        public string title = "$_CHOOSE";
+        public string name = "Adventurer";
+        public string title = "Farmhand";
         public uint experienceAmount = 0;
 
         //EQUIPMENT
-        public string shadow = "$_CHOOSE";
-        public string legs = "$_CHOOSE";
-        public string body = "$_CHOOSE";
-        public string face = "$_CHOOSE";
-        public string headgear = "$_CHOOSE";
-        public string weapon = "$_CHOOSE";
+        public string shadow = "Shadow";
+        public string legs = "Loincloth";
+        public string body = "Rags";
+        public string face = "_UNKNOWN";
+        public string headgear = "";
+        public string weapon = "";
 
         //Inventory
-
-
-
-        public SaveInfo(string myFilename) {
+        public SaveInfo(string myFilename = "") {
             filename = myFilename;
 
             if (filename == "") {
@@ -113,7 +110,7 @@ namespace ToolCache.SaveSystem {
             throw new NotImplementedException("Binary is not YET supported.");
         }
 
-        public override string  ToString() {
+        public override string ToString() {
             return Path.GetFileName(filename);
         }
 

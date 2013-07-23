@@ -83,9 +83,11 @@ package Game.Equipment {
 					}
 				} else {
 					this.visible = false;
+					TotalFrames = 0;
 				}
 			} else {
 				this.visible = false;
+				TotalFrames = 0;
 			}
 		}
 		
@@ -96,10 +98,12 @@ package Game.Equipment {
 				if (FrameDT > Info.AnimationSpeed) {
 					FrameDT -= Info.AnimationSpeed;
 					Frame++;
+					
 					if (Frame == TotalFrames) {
 						if (LoopState) {
 							Frame = 0;
 						} else {
+							trace(TotalFrames  + " S" + State + ", D" + Direction + ", L" + Layer);
 							Info.MyScript.Run(Script.AnimationEnded, Owner.Owner.Owner, Owner);
 							Owner.SetState(0);
 						}

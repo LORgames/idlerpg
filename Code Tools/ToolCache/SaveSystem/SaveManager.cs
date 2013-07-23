@@ -27,7 +27,7 @@ namespace ToolCache.SaveSystem {
             }
         }
 
-        public static void SaveSaves() {
+        public static void WriteDatabase() {
             foreach (SaveInfo save in Saves) {
                 save.SaveASCII();
             }
