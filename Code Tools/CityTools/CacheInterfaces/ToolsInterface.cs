@@ -142,9 +142,11 @@ namespace CityTools.CacheInterfaces {
             }
 
             if (MainWindow.instance.cbExportSave.SelectedItem is SaveInfo) {
-                if (Directory.Exists("Build/Saves/")) {
-                    File.Copy((MainWindow.instance.cbExportSave.SelectedItem as SaveInfo).filename, "Build/Saves/" + (MainWindow.instance.cbExportSave.SelectedItem as SaveInfo).ToString());
+                if (!Directory.Exists("Build/Saves/")) {
+                    Directory.CreateDirectory("Build/Saves/");
                 }
+                
+                File.Copy((MainWindow.instance.cbExportSave.SelectedItem as SaveInfo).filename, "Build/Saves/" + (MainWindow.instance.cbExportSave.SelectedItem as SaveInfo).ToString());
 
                 args = args + "+save=" + (MainWindow.instance.cbExportSave.SelectedItem as SaveInfo).ToString();
             }
