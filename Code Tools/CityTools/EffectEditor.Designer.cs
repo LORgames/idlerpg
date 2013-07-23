@@ -40,6 +40,7 @@ namespace CityTools {
             this.cbGroup = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.ckbIsSolid = new System.Windows.Forms.CheckBox();
             this.ckbDrawDebug = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -205,6 +206,7 @@ namespace CityTools {
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.ckbIsSolid);
             this.splitContainer1.Panel2.Controls.Add(this.ckbDrawDebug);
             this.splitContainer1.Panel2.Controls.Add(this.label7);
             this.splitContainer1.Panel2.Controls.Add(this.label6);
@@ -227,6 +229,17 @@ namespace CityTools {
             this.splitContainer1.Size = new System.Drawing.Size(926, 475);
             this.splitContainer1.SplitterDistance = 196;
             this.splitContainer1.TabIndex = 9;
+            // 
+            // ckbIsSolid
+            // 
+            this.ckbIsSolid.AutoSize = true;
+            this.ckbIsSolid.Location = new System.Drawing.Point(11, 68);
+            this.ckbIsSolid.Name = "ckbIsSolid";
+            this.ckbIsSolid.Size = new System.Drawing.Size(49, 17);
+            this.ckbIsSolid.TabIndex = 20;
+            this.ckbIsSolid.Text = "Solid";
+            this.ckbIsSolid.UseVisualStyleBackColor = true;
+            this.ckbIsSolid.CheckedChanged += new System.EventHandler(this.ValueChanged);
             // 
             // ckbDrawDebug
             // 
@@ -442,5 +455,6 @@ namespace CityTools {
         private System.Windows.Forms.NumericUpDown numSizeY;
         private System.Windows.Forms.NumericUpDown numSizeX;
         private System.Windows.Forms.CheckBox ckbDrawDebug;
+        private System.Windows.Forms.CheckBox ckbIsSolid;
     }
 }

@@ -177,7 +177,7 @@ package Game.Effects {
 				}
 				
 				if (MyLife > 0) {
-					trace(MyLife);
+					trace("MyLife:"+MyLife);
 					
 					MyLife -= dt;
 					if (MyLife <= 0) {

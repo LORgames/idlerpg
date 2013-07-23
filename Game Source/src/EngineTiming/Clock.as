@@ -4,6 +4,7 @@ package EngineTiming {
 	import flash.text.TextField;
 	import flash.utils.getTimer;
 	import Game.Map.WorldData;
+	import Game.Scripting.Script;
 	import WindowSystem.FPSCounter;
 	/**
 	 * ...
@@ -57,7 +58,6 @@ package EngineTiming {
 			}
 			
 			if (Global.LoadingTotal == 0) {
-			
 				var dt:Number = 1.0 / ExpectedFrameRate;
 				var i:int;
 				
@@ -65,6 +65,7 @@ package EngineTiming {
 				Sec_15_Count += dt;
 				
 				WorldData.CurrentMap.Update(dt);
+				Script.ProcessUpdate();
 				
 				//Update what we need to update
 				i = Updatables.length;

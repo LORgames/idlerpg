@@ -115,7 +115,7 @@ package Game.Map {
 			
 			//load the objects
 			TotalObjects = b.readShort();
-			Objects = new Vector.<ObjectInstance>(TotalObjects, true);
+			Objects = new Vector.<ObjectInstance>(TotalObjects, false);
 			
 			for (i = 0; i < TotalObjects; i++) {
 				var id:int = b.readShort();

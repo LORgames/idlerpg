@@ -21,6 +21,7 @@ namespace ToolCache.Effects {
         public string Script = "";
 
         public Rectangle Area = new Rectangle();
+        public Boolean IsSolid = true;
 
         internal static Effect ReadFromBinaryIO(BinaryIO f) {
             Effect e = new Effect();
@@ -38,6 +39,7 @@ namespace ToolCache.Effects {
             e.Area.Y = f.GetShort();
             e.Area.Width = f.GetShort();
             e.Area.Height = f.GetShort();
+            e.IsSolid = (f.GetByte() == 1);
 
             short totalAnimations = f.GetShort();
 
@@ -67,6 +69,7 @@ namespace ToolCache.Effects {
             f.AddShort((short)Area.Y);
             f.AddShort((short)Area.Width);
             f.AddShort((short)Area.Height);
+            f.AddByte((byte)(IsSolid ? 1 : 0));
 
             f.AddShort((short)Animations.Count);
 

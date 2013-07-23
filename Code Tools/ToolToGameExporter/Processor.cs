@@ -50,34 +50,36 @@ namespace ToolToGameExporter {
                 CritterCrusher.Precrush();
                 UpdateEPF(epf, "Evaluating Projectiles...", 2);
                 EffectCrusher.Precrush();
+                UpdateEPF(epf, "Measuring Objects...", 3);
+                MapObjectCrusher.Precrush();
 
                 //Tier 0  Crushing. No Dependancies.
-                UpdateEPF(epf, "Amplyfying Sounds...", 9);
+                UpdateEPF(epf, "Amplyfying Sounds...", 10);
                 SoundCrusher.Go();
-                UpdateEPF(epf, "Laying Tiles...", 18);
+                UpdateEPF(epf, "Laying Tiles...", 20);
                 TileCrusher.Go();
-                UpdateEPF(epf, "Entering Portals...", 27);
+                UpdateEPF(epf, "Entering Portals...", 30);
                 PortalCrusher.Go();
 
                 //Tier 1 Crushing. Tier 0 Dependancies
-                UpdateEPF(epf, "Polishing Equipment...", 36);
+                UpdateEPF(epf, "Polishing Equipment...", 40);
                 EquipmentCrusher.Go(); //Requires Sounds.
-                UpdateEPF(epf, "Squishing Objects...", 45);
+                UpdateEPF(epf, "Squishing Objects...", 50);
                 MapObjectCrusher.Go(); //Requires Sounds
-                UpdateEPF(epf, "Firing Arrows...", 54);
+                UpdateEPF(epf, "Firing Arrows...", 60);
                 EffectCrusher.Go(); //Requires Sounds
-                UpdateEPF(epf, "Stocktaking Inventory...", 63);
+                UpdateEPF(epf, "Stocktaking Inventory...", 70);
                 ItemCrusher.Go();
 
                 //Tier 2 Crushing. Tier 1 Dependancies
-                UpdateEPF(epf, "Breeding Critters...", 72);
+                UpdateEPF(epf, "Breeding Critters...", 80);
                 CritterCrusher.Go(); //Requires Equipment
 
                 //Tier 3 Crushing. Tier 2 Depedancies
-                UpdateEPF(epf, "Navigating Maps...", 81);
+                UpdateEPF(epf, "Navigating Maps...", 90);
                 MapCrusher.Go(); //Requires Portals, Tiles, Sounds and Objects. + Critters
 
-                UpdateEPF(epf, "Pushing Information...", 90);
+                UpdateEPF(epf, "Pushing Information...", 100);
                 if (Directory.Exists(p)) {
                     Directory.Delete(p, true);
                 }

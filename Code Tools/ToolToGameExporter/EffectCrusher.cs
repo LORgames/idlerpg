@@ -36,6 +36,8 @@ namespace ToolToGameExporter {
                 f.AddShort(e.MovementSpeed);
                 f.AddShort((short)Math.Round(e.Life * 20));
 
+                f.AddByte((byte)(e.IsSolid?1:0));
+
                 if(e.Animations.Count > 255) Processor.Errors.Add(new ProcessingError("Effect", e.Name, "Cannot have more than 255 animation sets."));
                 f.AddByte((byte)e.Animations.Count);
 

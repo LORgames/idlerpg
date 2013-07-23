@@ -24,6 +24,7 @@ namespace ToolToGameExporter {
             ///////////////////////////////////////////////////////////////////////////////////
             info.RemappedEquipmentIDs = EquipmentCrusher.MappedEquipmentIDs;
             info.RemappedEffectIDs = EffectCrusher.RemappedEffectNames;
+            info.RemappedObjectIDs = MapObjectCrusher.RemappedItemNameToID;
 
             Parser.Parse(script, info);
 

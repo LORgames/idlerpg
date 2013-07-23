@@ -12,19 +12,33 @@ namespace ToolToGameExporter {
     internal class MapObjectCrusher {
 
         public static Dictionary<short, short> RealignedItemIndexes = new Dictionary<short, short>();
+        public static Dictionary<String, short> RemappedItemNameToID = new Dictionary<string, short>();
 
-        public static void Go() {
+        public static void Precrush() {
             RealignedItemIndexes.Clear();
+            RemappedItemNameToID.Clear();
 
             short highestIndex = 0;
 
+            foreach (MapObject t in MapObjectCache.ObjectTypes.Values) {
+                if (!RemappedItemNameToID.ContainsKey(t.ObjectName)) {
+                    RemappedItemNameToID.Add(t.ObjectName, highestIndex);
+                } else {
+                    RemappedItemNameToID[t.ObjectName] = highestIndex;
+                }
+                RealignedItemIndexes.Add(t.ObjectID, highestIndex);
+
+                highestIndex++;
+            }
+        }
+
+        public static void Go() {
             BinaryIO f = new BinaryIO();
             f.AddShort((short)MapObjectCache.ObjectTypes.Count);
 
             int i = 0;
 
             foreach (MapObject t in MapObjectCache.ObjectTypes.Values) {
-                RealignedItemIndexes.Add(t.ObjectID, highestIndex);
                 f.AddString(t.ObjectName);
 
                 f.AddByte((byte)t.Animation.Frames.Count);
@@ -67,11 +81,9 @@ namespace ToolToGameExporter {
                         im.Dispose();
                     }
 
-                    bmp.Save(Global.EXPORT_DIRECTORY + "/Object_" + highestIndex + ".png");
+                    bmp.Save(Global.EXPORT_DIRECTORY + "/Object_" + RealignedItemIndexes[t.ObjectID] + ".png");
                     bmp.Dispose();
                 }
-                
-                highestIndex++;
             }
 
             f.Encode(Global.EXPORT_DIRECTORY + "/ObjectInfo.bin");

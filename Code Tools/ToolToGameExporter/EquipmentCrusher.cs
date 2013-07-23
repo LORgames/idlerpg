@@ -40,10 +40,8 @@ namespace ToolToGameExporter {
             }
 
             foreach(EquipmentTypes et in equipmenttypes) {
-
                 //Now throw the equipment into the file as well..?
                 foreach (EquipmentItem ei in EquipmentManager.TypeLists[et]) {
-
                     //Calculate animations
                     List<String> AnimationOrder = new List<String>();
                     foreach (String s in ei.Animations.Keys) {

@@ -16,6 +16,7 @@ package Game.Scripting {
 	import Game.Equipment.EquipmentItem;
 	import Game.Map.Objects.ObjectInstance;
 	import Game.Map.Objects.ObjectInstanceAnimated;
+	import Game.Map.Objects.ObjectTemplate;
 	import Game.Map.WorldData;
 	import Interfaces.IMapObject;
 	import RenderSystem.IObjectLayer;
@@ -36,7 +37,8 @@ package Game.Scripting {
 		public static const StartMoving:uint = 7;
 		public static const EndMoving:uint = 8;
 		public static const Died:uint = 9;
-		public static const TOTAL_EVENT_TYPES:uint = 10;
+		public static const Update:uint = 10;
+		public static const TOTAL_EVENT_TYPES:uint = 11;
 		
 		//SCRIPT TYPES
 		public static const CRITTER:int = 0xA000;
@@ -51,6 +53,15 @@ package Game.Scripting {
 		
 		private var EventScripts:Vector.<ByteArray>;
 		
+		
+		private static var UpdateScripts:Vector.<Object> = new Vector.<Object>();
+		public static function ProcessUpdate():void {
+			for (var i:int = 0; i < UpdateScripts.length; i += 3) {
+				var script:Script = Script(UpdateScripts[i]);
+				script.Run(Update, UpdateScripts[i + 1], UpdateScripts[i + 2]);
+			}
+		}
+		
 		public function Script(commandBlock:Vector.<ByteArray>) {
 			EventScripts = commandBlock;
 		}
@@ -60,6 +71,12 @@ package Game.Scripting {
 			if (event >= TOTAL_EVENT_TYPES) {
 				trace("Event Type Unsupported!");
 				return;
+			}
+			
+			if (event == Spawn && EventScripts[Update] != null) {
+				UpdateScripts.push(this);
+				UpdateScripts.push(invoker);
+				UpdateScripts.push(target);
 			}
 			
 			if (EventScripts[event] == null) {
@@ -78,6 +95,9 @@ package Game.Scripting {
 			var command:uint = 0;
 			var CallStack:Vector.<Boolean> = new Vector.<Boolean>();
 			var bParam:Boolean;
+			var xPos:int = 0;
+			var yPos:int = 0;
+			var dir:int = 0;
 			
 			while (true) {
 				command = EventScript.readUnsignedShort();
@@ -116,31 +136,71 @@ package Game.Scripting {
 						break;
 					case 0x1008: //SpawnEffect
 						var effectInfo:EffectInfo = EffectManager.I.Effects[EventScript.readShort()];
-						var xPos:int = 0;
-						var yPos:int = 0;
-						var dir:int = 0;
 						
 						if (invoker is BaseCritter) {
 							xPos = (invoker as BaseCritter).X;
 							yPos = (invoker as BaseCritter).Y;
 							dir = (invoker as BaseCritter).direction;
+						} else if (invoker is EffectInstance) {
+							xPos = (invoker as EffectInstance).X;
+							yPos = (invoker as EffectInstance).Y;
+							dir = (invoker as EffectInstance).Direction;
+						}
 							
-							if (dir == 0) {
-								xPos -= EventScript.readShort();
-								yPos += EventScript.readShort();
-							} else if (dir == 1) {
-								xPos += EventScript.readShort();
-								yPos += EventScript.readShort();
-							} else if (dir == 2) {
-								yPos -= EventScript.readShort();
-								xPos += EventScript.readShort();
-							} else if (dir == 3) {
-								yPos += EventScript.readShort();
-								xPos -= EventScript.readShort();
-							}
+						if (dir == 0) {
+							xPos -= EventScript.readShort();
+							yPos += EventScript.readShort();
+						} else if (dir == 1) {
+							xPos += EventScript.readShort();
+							yPos += EventScript.readShort();
+						} else if (dir == 2) {
+							yPos -= EventScript.readShort();
+							xPos += EventScript.readShort();
+						} else if (dir == 3) {
+							yPos += EventScript.readShort();
+							xPos -= EventScript.readShort();
 						}
 						
 						new EffectInstance(effectInfo, xPos, yPos, dir);
+						
+						break;
+					case 0x100B: //SpawnObject
+						var id:int = EventScript.readShort();
+						
+						if (invoker is BaseCritter) {
+							xPos = (invoker as BaseCritter).X;
+							yPos = (invoker as BaseCritter).Y;
+							dir = (invoker as BaseCritter).direction;
+						} else if (invoker is EffectInstance) {
+							xPos = (invoker as EffectInstance).X;
+							yPos = (invoker as EffectInstance).Y;
+							dir = (invoker as EffectInstance).Direction;
+						}
+							
+						if (dir == 0) {
+							xPos -= EventScript.readShort();
+							yPos += EventScript.readShort();
+						} else if (dir == 1) {
+							xPos += EventScript.readShort();
+							yPos += EventScript.readShort();
+						} else if (dir == 2) {
+							yPos -= EventScript.readShort();
+							xPos += EventScript.readShort();
+						} else if (dir == 3) {
+							yPos += EventScript.readShort();
+							xPos -= EventScript.readShort();
+						}
+						
+						var o:ObjectInstance;
+						
+						if (ObjectTemplate.Objects[id].IndividualAnimations) {
+							o = new ObjectInstanceAnimated();
+						} else {
+							o = new ObjectInstance();
+						}
+						
+						o.SetInformation(WorldData.CurrentMap, id, xPos, yPos);
+						WorldData.CurrentMap.Objects.push(o);
 						
 						break;
 					case 0x4001: //Equip item on the target

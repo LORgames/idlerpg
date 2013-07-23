@@ -95,6 +95,8 @@ namespace CityTools {
                 CurrentEffect.Area.Width = (int)numSizeX.Value;
                 CurrentEffect.Area.Height = (int)numSizeY.Value;
 
+                CurrentEffect.IsSolid = ckbIsSolid.Checked;
+
                 VerifyGroup(CurrentEffect.Group);
 
                 if (EffectIsNew) {
@@ -147,6 +149,8 @@ namespace CityTools {
                 numOffsetY.Value = CurrentEffect.Area.Y;
                 numSizeX.Value = CurrentEffect.Area.Width;
                 numSizeY.Value = CurrentEffect.Area.Height;
+
+                ckbIsSolid.Checked = CurrentEffect.IsSolid;
 
                 //Add animations
                 UpdateAnimationList();

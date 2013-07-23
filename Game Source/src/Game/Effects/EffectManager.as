@@ -29,6 +29,8 @@ package Game.Effects {
 				e.MovementSpeed = b.readShort();
 				e.Life = b.readShort();
 				
+				e.IsSolid = (b.readByte() == 1);
+				
 				var animations:int = b.readByte();
 				e.AnimationFrames = new Vector.<int>(animations + 1, true);
 				e.AnimationFrames[0] = 0;
