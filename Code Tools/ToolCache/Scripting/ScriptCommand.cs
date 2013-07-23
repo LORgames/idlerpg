@@ -125,7 +125,11 @@ namespace ToolCache.Scripting {
                         }
 
                         if (info.RemappedEffectIDs != null) {
-                            AdditionalBytecode.Add((ushort)info.RemappedEffectIDs[paramBits[0]]);
+                            if (info.RemappedEffectIDs.ContainsKey(paramBits[0])) {
+                                AdditionalBytecode.Add((ushort)info.RemappedEffectIDs[paramBits[0]]);
+                            } else {
+                                info.Errors.Add("Cannot find an effect called: " + paramBits[0] + ".\nEffects without animations are skipped when exporting make sure the effect has an animation as well as checking spelling.");
+                            }
                         }
 
                         if(paramBits.Length >= 2) {

@@ -42,7 +42,7 @@ namespace ToolToGameExporter {
 
             Directory.CreateDirectory(Global.EXPORT_DIRECTORY);
 
-#if RELEASE
+#if !DEBUG
             try {
 #endif
                 //Precrush. No Dependancies.
@@ -95,7 +95,7 @@ namespace ToolToGameExporter {
                     fd.ShowDialog();
                     ((InputData)d).result = false;
                 }
-#if RELEASE
+#if !DEBUG
             } catch {
                 if(!silent) MessageBox.Show("Please close the exporter and try again! (Some kind of caching issue occurred)");
 
