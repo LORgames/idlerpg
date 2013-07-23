@@ -6,6 +6,7 @@ package Game.Equipment {
 	import Game.General.ImageLoader;
 	import Game.Scripting.Script;
 	import Game.Map.WorldData;
+	import Storage.SaveManager;
 	/**
 	 * ...
 	 * @author Paul
@@ -49,10 +50,35 @@ package Game.Equipment {
 			i = Weapons.length; while ( --i > -1) ReadEquipmentInfo(b, Weapons, Weapons.length - (i+1));
 			
 			//Then for some reason we set the player equipment up..?
-			WorldData.ME.Equipment.Equip(0, 0, 2, 3, 5, 6);
+			SetupPlayerEquipment();
 			
 			//And reset the loading total while some images load
 			Global.LoadingTotal--;
+		}
+		
+		private function SetupPlayerEquipment():void {
+			if(SaveManager.CurrentSave == null) {
+				WorldData.ME.Equipment.Equip(0, 0, 2, 3, 5, 6);
+			} else {
+				var shadowID:int = FindEquipmentIn(Shadows, SaveManager.CurrentSave.shadow);
+				var weaponID:int = FindEquipmentIn(Weapons, SaveManager.CurrentSave.weapon);
+				var bodyID:int = FindEquipmentIn(Bodies, SaveManager.CurrentSave.body);
+				var pantsID:int = FindEquipmentIn(Legs, SaveManager.CurrentSave.legs);
+				var faceID:int = FindEquipmentIn(Heads, SaveManager.CurrentSave.face);
+				var headgearID:int = FindEquipmentIn(Headgear, SaveManager.CurrentSave.headgear);
+				
+				WorldData.ME.Equipment.Equip(shadowID, pantsID, bodyID, faceID, headgearID, weaponID);
+			}
+		}
+		
+		public function FindEquipmentIn(bin:Vector.<EquipmentInfo>, name:String):int {
+			for (var i:int = bin.length-1; i > -1; --i) {
+				if (bin[i].Name == name) {
+					return i; 
+				}
+			}
+			
+			return 0;
 		}
 		
 		public function ReadEquipmentInfo(b:ByteArray, v:Vector.<EquipmentInfo>, index:int):void {

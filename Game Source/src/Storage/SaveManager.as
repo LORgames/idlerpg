@@ -25,6 +25,10 @@ package Storage {
 			if (!CONFIG::air) {
 				I = new SharedObjectSaver();
 			}
+			
+			if (Saves.length > 0) {
+				CurrentSave = Saves[0];
+			}
 		}
 	}
 }

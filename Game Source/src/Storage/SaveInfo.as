@@ -25,9 +25,11 @@ package Storage {
 		}
 		
 		public function DecodeFromString(raw:String):void {
-			var lines:Array = raw.replace("\r","").split("\n");
+			var lines:Array = raw.split("\r").join("").split("\n");
 			
-            for(var line:String in lines) {
+            for each (var line:String in lines) {
+				if (line.length < 3) continue;
+				
 				var variableName:String = line.split('=')[0];
                 var variableInfo:String = line.substring(line.indexOf('=')+1);
 				
@@ -42,7 +44,6 @@ package Storage {
                     case "Headgear": headgear = variableInfo; break;
                     case "Weapon": weapon = variableInfo; break;
                     default:
-                        trace("Unknown variable '"+variableName+"' in save file: " + key);
                         break;
                 }
             }

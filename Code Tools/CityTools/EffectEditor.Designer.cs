@@ -40,6 +40,7 @@ namespace CityTools {
             this.cbGroup = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.ckbDrawDebug = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.numOffsetY = new System.Windows.Forms.NumericUpDown();
@@ -52,7 +53,6 @@ namespace CityTools {
             this.numSpeed = new System.Windows.Forms.NumericUpDown();
             this.scriptEffect = new CityTools.Components.ScriptBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.ckbDrawDebug = new System.Windows.Forms.CheckBox();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -144,6 +144,7 @@ namespace CityTools {
             this.animationList.Name = "animationList";
             this.animationList.Size = new System.Drawing.Size(384, 106);
             this.animationList.TabIndex = 2;
+            this.animationList.AnimationChanged += new CityTools.ChangedEventHandler(this.ValueChanged);
             // 
             // cbAnimations
             // 
@@ -179,6 +180,7 @@ namespace CityTools {
             this.cbGroup.Name = "cbGroup";
             this.cbGroup.Size = new System.Drawing.Size(116, 21);
             this.cbGroup.TabIndex = 7;
+            this.cbGroup.SelectedIndexChanged += new System.EventHandler(this.ValueChanged);
             this.cbGroup.TextChanged += new System.EventHandler(this.ValueChanged);
             // 
             // label2
@@ -225,6 +227,16 @@ namespace CityTools {
             this.splitContainer1.Size = new System.Drawing.Size(926, 475);
             this.splitContainer1.SplitterDistance = 196;
             this.splitContainer1.TabIndex = 9;
+            // 
+            // ckbDrawDebug
+            // 
+            this.ckbDrawDebug.AutoSize = true;
+            this.ckbDrawDebug.Location = new System.Drawing.Point(625, 298);
+            this.ckbDrawDebug.Name = "ckbDrawDebug";
+            this.ckbDrawDebug.Size = new System.Drawing.Size(86, 17);
+            this.ckbDrawDebug.TabIndex = 19;
+            this.ckbDrawDebug.Text = "Draw Debug";
+            this.ckbDrawDebug.UseVisualStyleBackColor = true;
             // 
             // label7
             // 
@@ -370,16 +382,6 @@ namespace CityTools {
             // 
             this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // ckbDrawDebug
-            // 
-            this.ckbDrawDebug.AutoSize = true;
-            this.ckbDrawDebug.Location = new System.Drawing.Point(625, 298);
-            this.ckbDrawDebug.Name = "ckbDrawDebug";
-            this.ckbDrawDebug.Size = new System.Drawing.Size(86, 17);
-            this.ckbDrawDebug.TabIndex = 19;
-            this.ckbDrawDebug.Text = "Draw Debug";
-            this.ckbDrawDebug.UseVisualStyleBackColor = true;
             // 
             // EffectEditor
             // 
