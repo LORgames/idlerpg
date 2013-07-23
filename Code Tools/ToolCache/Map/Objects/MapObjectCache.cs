@@ -33,6 +33,16 @@ namespace ToolCache.Map.Objects {
             return null;
         }
 
+        public static bool HasObjectByName(string name) {
+            foreach (MapObject obj in ObjectTypes.Values) {
+                if (obj.ObjectName == name) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         private static void ReadDatabase() {
             // Load object types from file
             if (File.Exists(RESOLVED_DATABASE_FILENAME)) {

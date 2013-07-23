@@ -8,6 +8,7 @@ using ToolCache.Critters;
 using System.Text.RegularExpressions;
 using ToolCache.General;
 using ToolCache.Effects;
+using ToolCache.Map.Objects;
 
 namespace ToolCache.Scripting {
     public class ScriptCommand {
@@ -145,6 +146,39 @@ namespace ToolCache.Scripting {
                         } else { AdditionalBytecode.Add(0x0); }
                     } else {
                         info.Errors.Add("EffectSpawn expects 1-3 parameters, '<Effect Name> <[OPTIONAL]Offset Forwards> <[OPTIONAL]Offset Sideways>'. NB. Effect name do NOT have spaces in them.");
+                    } break;
+                case "objectspawn":
+                    CommandID = 0x100B;
+
+                    paramBits = Parameters.Split(' ');
+
+                    if (paramBits.Length >= 1 && paramBits.Length <= 3) {
+                        if (!MapObjectCache.HasObjectByName(paramBits[0])) {
+                            info.Errors.Add("Cannot find an object called: " + paramBits[0]);
+                            break;
+                        }
+
+                        if (info.RemappedObjectIDs != null) {
+                            if (info.RemappedObjectIDs.ContainsKey(paramBits[0])) {
+                                AdditionalBytecode.Add((ushort)info.RemappedObjectIDs[paramBits[0]]);
+                            } else {
+                                info.Errors.Add("Cannot find an object called: " + paramBits[0] + ".");
+                            }
+                        }
+
+                        if (paramBits.Length >= 2) {
+                            if (short.TryParse(paramBits[1], out sparam)) {
+                                AdditionalBytecode.Add((ushort)sparam);
+                            } else { info.Errors.Add("No idea how to convert: " + paramBits[1] + " into a number?"); }
+                        } else { AdditionalBytecode.Add(0x0); }
+
+                        if (paramBits.Length == 3) {
+                            if (short.TryParse(paramBits[2], out sparam)) {
+                                AdditionalBytecode.Add((ushort)sparam);
+                            } else { info.Errors.Add("No idea how to convert: " + paramBits[2] + " into a number?"); }
+                        } else { AdditionalBytecode.Add(0x0); }
+                    } else {
+                        info.Errors.Add("ObjectSpawn expects 1-3 parameters, '<Object Name> <[OPTIONAL]Offset Forwards> <[OPTIONAL]Offset Sideways>'. NB. Another object might share this name or you may have mistyped it. Remember object names are case sensitive!");
                     } break;
                 case "equip":
                     CommandID = 0x4001;

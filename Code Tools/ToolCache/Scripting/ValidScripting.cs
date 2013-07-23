@@ -17,7 +17,8 @@ namespace ToolCache.Scripting {
         AnimationEnded = 0x0006,
         StartMoving = 0x0007,
         EndMoving = 0x0008,
-        Died = 0x0009
+        Died = 0x0009,
+        Update = 0x000A
     }
 
     /// <summary>
