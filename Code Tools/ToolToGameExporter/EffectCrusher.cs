@@ -75,6 +75,5 @@ namespace ToolToGameExporter {
 
             f.Encode(Global.EXPORT_DIRECTORY + "/EffectInfo.bin");
         }
-
     }
 }

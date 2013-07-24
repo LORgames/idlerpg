@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using ToolCache.General;
+using System.Windows.Forms;
 
 namespace ToolCache.Map.Regions {
     public class SpawnRegion {
@@ -51,6 +52,8 @@ namespace ToolCache.Map.Regions {
             f.AddByte(MaxSpawn);
             f.AddShort(Timeout);
 
+            CleanUpAreas();
+
             f.AddByte((byte)Areas.Count); //How many rectangles?
 
             foreach (Rectangle r in Areas) {
@@ -64,6 +67,15 @@ namespace ToolCache.Map.Regions {
 
             foreach (CritterSpawn spawn in SpawnList) {
                 spawn.WriteToBinaryIO(f);
+            }
+        }
+
+        private void CleanUpAreas() {
+            int i = Areas.Count;
+            while (--i > -1) {
+                if (Areas[i].Width == 0 || Areas[i].Height == 0) {
+                    Areas.RemoveAt(i);
+                }
             }
         }
 

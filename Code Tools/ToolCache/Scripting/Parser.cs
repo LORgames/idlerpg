@@ -47,6 +47,5 @@ namespace ToolCache.Scripting {
                 comm.Parse(scriptInfo);
             }
         }
-
     }
 }

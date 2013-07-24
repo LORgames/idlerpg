@@ -151,6 +151,10 @@ namespace CityTools.CacheInterfaces {
             MapPieceCache.CurrentPiece.Save();
             DrawThumbnail();
 
+            if (MapPieceCache.Pieces.IndexOf(MapPieceCache.CurrentPiece) == -1) {
+                MapPieceCache.Pieces.Add(MapPieceCache.CurrentPiece);
+            }
+
             UpdateGUI();
         }
 

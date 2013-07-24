@@ -15,6 +15,7 @@ namespace ToolCache.Scripting {
         public int EventCount = 0;
         public ScriptTypes ScriptType = ScriptTypes.Unknown;
 
+        public Dictionary<String, ScriptVariable> Variables = new Dictionary<string, ScriptVariable>();
         public List<string> AnimationNames = new List<string>();
         public Dictionary<string, short> RemappedEquipmentIDs;
         public Dictionary<string, short> RemappedEffectIDs;

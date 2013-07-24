@@ -52,6 +52,7 @@ namespace CityTools {
         private void FillTree() {
             treeAllCritters.Nodes.Clear();
             GroupNodes.Clear();
+            cbBaseGroup.Items.Clear();
 
             foreach (Critter c in CritterManager.Critters.Values) {
                 //Create this critters node
@@ -69,6 +70,7 @@ namespace CityTools {
                     GroupNodes.Add(c.NodeGroup, new TreeNode(c.NodeGroup));
                     treeAllCritters.Nodes.Add(GroupNodes[c.NodeGroup]);
                     GroupNodes[c.NodeGroup].Expand();
+                    cbBaseGroup.Items.Add(c.NodeGroup);
                 }
 
                 //Yay theres a node now?

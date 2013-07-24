@@ -34,8 +34,13 @@ namespace CityTools.CacheInterfaces {
                     }
                 }
                 MainWindow.instance.treeTiles.Nodes.Add(groupNodes[group]);
-                
             }
+        }
+
+        internal static void ForceUpdate() {
+            MainWindow.instance.treeTiles.Nodes.Clear();
+            MainWindow.instance.treeTiles.ImageList.Images.Clear();
+            Initialize();
         }
     }
 }

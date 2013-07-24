@@ -13,7 +13,6 @@ using ToolCache.Map.Objects;
 namespace ToolCache.Scripting {
     public class ScriptCommand {
         public string Trimmed = "";
-        public string Default = "";
 
         public byte Indent = 0;
         public byte ExpectedIndent = 0;
@@ -34,18 +33,36 @@ namespace ToolCache.Scripting {
             }
 
             //Continue processing
-            Default = line;
             Trimmed = line.Trim();
 
             if (Trimmed.Length > 2) {
                 if (Indent == 0) {
-                    //Process this as an Event
-                    ProcessEvent(info);
+                    Match m = Regex.Match(Trimmed, "var\\s([A-Za-z][A-Za-z0-9_]*)\\s?=\\s?([0-9]+)");
+
+                    if (m.Success) {
+                        //Process this as a variable
+                        ProcessVariable(info, m);
+                    } else {
+                        //Process this as an Event
+                        ProcessEvent(info);
+                    }
                 } else {
                     //Process this as an action
                     ProcessAction(info);
                 }
             }
+        }
+
+        private void ProcessVariable(ScriptInfo info, Match match) {
+            string variablename = match.Groups[1].Value;
+            short variableValue = short.Parse(match.Groups[2].Value);
+
+            ScriptVariable s = new ScriptVariable();
+            s.Name = variablename;
+            s.InitialValue = variableValue;
+            s.Index = (short)info.Variables.Count;
+
+            info.Variables.Add(variablename, s);
         }
 
         public void ProcessEvent(ScriptInfo info) {
@@ -77,7 +94,6 @@ namespace ToolCache.Scripting {
                 Parameters = "";
             }
 
-            
             switch (Action) {
                 case "soundplay":
                     CommandID = 0x1001;
@@ -264,10 +280,33 @@ namespace ToolCache.Scripting {
                     CommandID = 0x8002;
                     break;
                 default:
-                    if (Parameters != "") {
-                        info.Errors.Add("Unknown command: " + Action + " & " + Parameters);
+                    //See if we have a decrement or increment line (and convert it to the longhand version :)
+                    Match m = Regex.Match(Trimmed, "([A-Za-z][A-Za-z0-9_]*)(\\+\\+|--)");
+
+                    if (m.Success) {
+                        string variableName = m.Groups[1].Value;
+                        if (!info.Variables.ContainsKey(variableName)) {
+                            info.Errors.Add("Cannot "+(m.Groups[2].Value=="++"?"Increment":"Decrement")+" a variable because cannot find: " + variableName);
+                        }
+
+                        Trimmed = m.Groups[1].Value + " = " + m.Groups[1].Value + " + 1";
+                    }
+
+                    //Might be a variable line or something :)
+                    m = Regex.Match(Trimmed, "([A-Za-z][A-Za-z0-9_]*)\\s?=\\s?([ A-Za-z0-9*+/-]+)");
+
+                    if (m.Success) {
+                        //Its a variable assignment line
+                        System.Diagnostics.Debug.WriteLine("MOD:" + m.Groups[1].Value);
+
+
+
                     } else {
-                        info.Errors.Add("Unknown command: " + Action);
+                        if (Parameters != "") {
+                            info.Errors.Add("Unknown command: " + Action + " & " + Parameters);
+                        } else {
+                            info.Errors.Add("Unknown command: " + Action);
+                        }
                     }
 
                     break;
@@ -441,12 +480,28 @@ namespace ToolCache.Scripting {
                         VerifyCommaSeperatedShorts(additionalInfo, 1, Info);
                         break;
                     default:
-                        Info.Errors.Add("IF param unknown: " + trueCommand); break;
+                        //Maybe a variable, lets see if we can find it
+                        Match match = Regex.Match(trueCommand, "([A-Za-z][A-Za-z0-9_]*)\\s?(==|<=|>=|<>|><|>|<|!=)\\s?([A-Za-z][A-Za-z0-9]*|[0-9]+)");
+
+                        if(match.Success) {
+                            if(VariableExists(match.Groups[1].Value, Info)) {
+
+                            } else {
+                                Info.Errors.Add(match.Groups[1].Value + " is not a variable.");
+                            }
+                        } else {
+                            Info.Errors.Add("IF param unknown: " + trueCommand);
+                        } break;
                 }
             }
 
             //End the param block :)
-            AdditionalBytecode.Add(0xF0FE); //End the parametre block
+            AdditionalBytecode.Add(0xF0FE); //End the parameter block
+        }
+
+        private bool VariableExists(string p, ScriptInfo Info) {
+ 	        //throw new NotImplementedException();
+            return Info.Variables.ContainsKey(p);
         }
 
         /// <summary>

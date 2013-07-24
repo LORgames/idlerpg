@@ -91,6 +91,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Scripting\GlobalVariables.cs" />
     <Compile Include="Scripting\Parser.cs" />
     <Compile Include="Scripting\ScriptCommand.cs" />
     <Compile Include="Scripting\ScriptInfo.cs" />

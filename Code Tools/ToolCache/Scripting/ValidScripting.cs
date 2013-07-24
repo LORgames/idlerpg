@@ -32,4 +32,12 @@ namespace ToolCache.Scripting {
         NotCritter = 0xA005,
         NotMe = 0xA006
     }
+
+    public struct ScriptVariable {
+        public string Name;
+        public short Index;
+        public short InitialValue;
+
+        public short TotalReferences;
+    }
 }
