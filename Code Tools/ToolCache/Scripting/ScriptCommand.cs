@@ -297,10 +297,53 @@ namespace ToolCache.Scripting {
 
                     if (m.Success) {
                         //Its a variable assignment line
-                        System.Diagnostics.Debug.WriteLine("MOD:" + m.Groups[1].Value);
+                        CommandID = 0xB000;
 
+                        string mathblock = m.Groups[2].Value;
 
+                        //First lets get rid of the 'and' and 'or' joins
+                        MatchCollection mc = Regex.Matches(mathblock, "(\\+|-|/|\\*|%)");
+                        List<string> mathblockBits = new List<string>();
 
+                        int endOfLast = 0;
+                        for (int i = 0; i < mc.Count; i++) {
+                            Match mathPieceMatch = mc[i];
+                            mathblockBits.Add(mathblock.Substring(endOfLast, mathPieceMatch.Index - endOfLast).Trim());
+                            mathblockBits.Add(mathPieceMatch.Groups[0].Value.Trim());
+
+                            endOfLast = mathPieceMatch.Index + mathPieceMatch.Length;
+                        }
+
+                        mathblockBits.Add(mathblock.Substring(endOfLast));
+
+                        AdditionalBytecode.Add(0xBF00); //Open maths block
+
+                        //Now we process the bits :D
+                        foreach(string mathBit in mathblockBits) {
+                            if (short.TryParse(mathBit, out sparam)) {
+                                AdditionalBytecode.Add(0xBFFF);
+                                AdditionalBytecode.Add((ushort)sparam);
+                            } else {
+                                switch (mathBit) {
+                                    case "+": AdditionalBytecode.Add(0xB001); break;
+                                    case "-": AdditionalBytecode.Add(0xB002); break;
+                                    case "*": AdditionalBytecode.Add(0xB003); break;
+                                    case "/": AdditionalBytecode.Add(0xB004); break;
+                                    case "%": AdditionalBytecode.Add(0xB005); break;
+                                    default:
+                                        if (VariableExists(mathBit, info)) {
+                                            if (info.Variables.ContainsKey(mathBit)) {
+                                                AdditionalBytecode.Add(0xBFFD);
+                                                AdditionalBytecode.Add((ushort)info.Variables[mathBit].Index);
+                                            }
+                                        } else {
+                                            info.Errors.Add("Cannot find a variable called: " + mathBit[0]);
+                                        } break;
+                                }
+                            }
+                        }
+
+                        AdditionalBytecode.Add(0xBF01); //Close maths block
                     } else {
                         if (Parameters != "") {
                             info.Errors.Add("Unknown command: " + Action + " & " + Parameters);
@@ -400,7 +443,7 @@ namespace ToolCache.Scripting {
         /// <param name="Info">The global script object</param>
         private void ProcessParametersOfIf(ScriptInfo Info) {
             List<String> paramBits = new List<string>();
-            int param0;
+            short param0;
 
             //First lets get rid of the 'and' and 'or' joins
             string regex = "( or )|( and )|(not )";
@@ -456,7 +499,7 @@ namespace ToolCache.Scripting {
                             Info.Errors.Add(unknownError);
                         } break;
                     case "animation":
-                        param0 = Info.AnimationNames.IndexOf(additionalInfo);
+                        param0 = (short)Info.AnimationNames.IndexOf(additionalInfo);
                         AdditionalBytecode.Add(0x7006);
                         AdditionalBytecode.Add((ushort)(param0 > -1 ? param0 : 0x0));
                         if (param0 < 0) Info.Errors.Add("Animation does not exist: " + additionalInfo);
@@ -481,16 +524,48 @@ namespace ToolCache.Scripting {
                         break;
                     default:
                         //Maybe a variable, lets see if we can find it
-                        Match match = Regex.Match(trueCommand, "([A-Za-z][A-Za-z0-9_]*)\\s?(==|<=|>=|<>|><|>|<|!=)\\s?([A-Za-z][A-Za-z0-9]*|[0-9]+)");
+                        Match match = Regex.Match(trueCommand, "([A-Za-z][A-Za-z0-9_]*)\\s?(<=|>=|!=|<>|><|>|<|=)\\s?([A-Za-z][A-Za-z0-9]*|[0-9]+)");
 
                         if(match.Success) {
                             if(VariableExists(match.Groups[1].Value, Info)) {
+                                AdditionalBytecode.Add(0x7009); //This is a variable lookup thing
 
+                                //Add the variable information
+                                if (Info.Variables.ContainsKey(match.Groups[1].Value)) {
+                                    AdditionalBytecode.Add(0xBFFD); //Local variable
+                                    AdditionalBytecode.Add((ushort)Info.Variables[match.Groups[1].Value].Index);
+                                }
+
+                                //Add the sign
+                                switch (match.Groups[2].Value) {
+                                    case "=": AdditionalBytecode.Add(0xBE00); break; //Equal To
+                                    case "<": AdditionalBytecode.Add(0xBE01); break; //Less Than
+                                    case ">": AdditionalBytecode.Add(0xBE02); break; //Greater Than
+                                    case "<=":AdditionalBytecode.Add(0xBE03); break; //Less than or equal to
+                                    case ">=":AdditionalBytecode.Add(0xBE04); break; //Greater than or equal to
+                                    default:  AdditionalBytecode.Add(0xBE05); break; //Not equal to
+                                }
+
+                                //Add the other value to compare against
+                                if (VariableExists(match.Groups[3].Value, Info)) {
+                                    if (Info.Variables.ContainsKey(match.Groups[3].Value)) {
+                                        AdditionalBytecode.Add(0xBFFD);
+                                        AdditionalBytecode.Add((ushort)Info.Variables[match.Groups[3].Value].Index);
+                                    }
+                                } else {
+                                    //its a number? :)
+                                    if (short.TryParse(match.Groups[3].Value, out param0)) {
+                                        AdditionalBytecode.Add(0xBFFF);
+                                        AdditionalBytecode.Add((ushort)param0);
+                                    } else {
+                                        Info.Errors.Add("Cannot find a variable called '" + match.Groups[3].Value + "'");
+                                    }
+                                }
                             } else {
                                 Info.Errors.Add(match.Groups[1].Value + " is not a variable.");
                             }
                         } else {
-                            Info.Errors.Add("IF param unknown: " + trueCommand);
+                            Info.Errors.Add("Cannot understand how to IF this bit " + trueCommand);
                         } break;
                 }
             }
