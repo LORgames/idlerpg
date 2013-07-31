@@ -102,8 +102,14 @@ package Game.Equipment {
 						if (LoopState) {
 							Frame = 0;
 						} else {
-							//Owner.ChangeState(0, true);
+							var sb:int = State;
+							
 							Owner.MyScript.Run(Script.AnimationEnded);
+							
+							//We check that the script didn't reset the animation
+							if(State == sb && Frame == TotalFrames) {
+								Owner.ChangeState(0, true);
+							}
 						}
 					}
 					

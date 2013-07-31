@@ -161,8 +161,6 @@ package Game.Effects {
 				}
 				
 				if (MyLife > 0) {
-					trace("MyLife:"+MyLife);
-					
 					MyLife -= dt;
 					if (MyLife <= 0) {
 						Clock.CleanUpList.push(this);
@@ -183,8 +181,11 @@ package Game.Effects {
 			MyRect = null;
 			Info = null;
 			CopyRect = null;
-			MyScript.CleanUp();
-			MyScript = null;
+			
+			if(MyScript != null) {
+				MyScript.CleanUp();
+				MyScript = null;
+			}
 			
 			if(this.parent) Main.OrderedLayer.removeChild(this);
 			Renderman.AnimatedObjectsRemove(this);

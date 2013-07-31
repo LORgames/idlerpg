@@ -147,14 +147,14 @@ package Game.Map.Objects {
 		}
 		
 		public function CleanUp():void {
-			if (!Map.Dying) {
+			if (Map != null && !Map.Dying) {
 				Map.RemoveObject(this);
 			} else {
 				if (parent != null) {
 					this.parent.removeChild(this);
 				}
 				
-				Template.OneLessInstance();
+				if(Template != null) Template.OneLessInstance();
 				
 				Template = null;
 				Map = null;

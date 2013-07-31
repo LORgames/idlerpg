@@ -54,6 +54,11 @@ package Game.Map.Objects {
 				this.bitmapData.dispose();
 				Renderman.AnimatedObjectsRemove(this);
 			}
+			
+			if(MyScript != null) {
+				MyScript.CleanUp();
+				MyScript = null;
+			}
 		}
 		
 		public function UpdateAnimation(dt:Number):void {

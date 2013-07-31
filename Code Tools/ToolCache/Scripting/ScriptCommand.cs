@@ -260,15 +260,26 @@ namespace ToolCache.Scripting {
                             info.Errors.Add("Cannot "+(m.Groups[2].Value=="++"?"Increment":"Decrement")+" a variable because cannot find: " + variableName);
                         }
 
-                        Trimmed = m.Groups[1].Value + " = " + m.Groups[1].Value + " + 1";
+                        if (m.Groups[2].Value == "++") {
+                            Trimmed = m.Groups[1].Value + " = " + m.Groups[1].Value + " + 1";
+                        } else {
+                            Trimmed = m.Groups[1].Value + " = " + m.Groups[1].Value + " - 1";
+                        }
                     }
 
                     //Might be a variable line or something :)
-                    m = Regex.Match(Trimmed, "([A-Za-z][A-Za-z0-9_]*)\\s?=\\s?([ A-Za-z0-9*+/-%]+)");
+                    m = Regex.Match(Trimmed, "([A-Za-z][A-Za-z0-9_]*)\\s?=\\s?([ A-Za-z0-9*+/\\-%]+)");
 
                     if (m.Success) {
                         //Its a variable assignment line
                         CommandID = 0xB000;
+
+                        if (info.Variables.ContainsKey(m.Groups[1].Value)) {
+                            AdditionalBytecode.Add(0xBFFD);
+                            AdditionalBytecode.Add((ushort)info.Variables[m.Groups[1].Value].Index);
+                        } else {
+                            info.Errors.Add("No variable called: " + m.Groups[1].Value);
+                        }
 
                         string mathblock = m.Groups[2].Value;
 
@@ -286,8 +297,6 @@ namespace ToolCache.Scripting {
                         }
 
                         mathblockBits.Add(mathblock.Substring(endOfLast));
-
-                        AdditionalBytecode.Add(0xBF00); //Open maths block
 
                         //Now we process the bits :D
                         foreach(string mathBit in mathblockBits) {

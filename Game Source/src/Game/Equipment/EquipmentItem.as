@@ -65,6 +65,9 @@ package Game.Equipment {
 			Layer.CleanUp();
 			if (Layer2 != null) Layer2.CleanUp();
 			
+			MyScript.CleanUp();
+			MyScript = null;
+			
 			Layer = null;
 			Layer2 = null;
 		}
