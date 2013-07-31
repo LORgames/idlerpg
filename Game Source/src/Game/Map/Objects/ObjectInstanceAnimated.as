@@ -1,6 +1,7 @@
 package Game.Map.Objects {
 	import flash.display.BitmapData;
 	import flash.geom.Rectangle;
+	import Game.Scripting.IScriptTarget;
 	import Game.Scripting.Script;
 	import Game.Map.MapData;
 	import Interfaces.IMapObject;
@@ -15,8 +16,11 @@ package Game.Map.Objects {
 		public var StartFrame:int = 0;
 		public var EndFrame:int = 0;
 		public var CurrentFrame:int = 0;
+		public var CurrentState:int = 0;
+		
 		private var FrameTimeout:Number = 0;
 		public var PlaybackSpeed:Number = 0;
+		
 		public var CopyRect:Rectangle = new Rectangle();
 		public var IsLooping:Boolean = true;
 		
@@ -35,10 +39,8 @@ package Game.Map.Objects {
 			CopyRect.width = Template.FrameSize.width;
 			CopyRect.height = Template.FrameSize.height;
 			
-			PlaybackSpeed = Template.PlaybackSpeed;
-			StartFrame = 0;
-			EndFrame = Template.TotalFrames;
-			FrameTimeout = Math.random();
+			ChangeState(0, true);
+			FrameTimeout = Math.random()*100.0;
 			
 			super.SetInformation(map, id, _x, _y);
 			
@@ -66,7 +68,7 @@ package Game.Map.Objects {
 						if(IsLooping) {
 							CurrentFrame = StartFrame;
 						} else {
-							Template.MyScript.Run(Script.AnimationEnded, this);
+							MyScript.Run(Script.AnimationEnded);
 							return;
 						}
 					}
@@ -80,9 +82,29 @@ package Game.Map.Objects {
 			}
 		}
 		
-		override public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IMapObject):void {
-			Template.MyScript.Run(Script.Attacked, this, attacker);
-			trace(Template.Name + " attacked.");
+		override public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IScriptTarget):void {
+			MyScript.AttachTarget(attacker);
+			MyScript.Run(Script.Attacked);
+			MyScript.PopTarget();
 		}
+		
+		override public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void {
+			PlaybackSpeed = newAnimationSpeed;
+		}
+		
+		override public function ChangeState(stateID:int, isLooping:Boolean):void {
+			CurrentState = stateID;
+			PlaybackSpeed = Template.PlaybackSpeed[stateID];
+			StartFrame = Template.TotalFrames[stateID];
+			EndFrame = Template.TotalFrames[stateID + 1];
+			
+			IsLooping = isLooping;
+			
+			CurrentFrame = StartFrame;
+		}
+		
+		override public function GetCurrentState():int {
+			return CurrentState;
+		} 
 	}
 }

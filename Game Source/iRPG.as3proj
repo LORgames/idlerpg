@@ -10,9 +10,9 @@
     <movie height="600" />
     <movie version="3" />
     <movie minorVersion="7" />
-    <movie platform="AIR" />
+    <movie platform="AIR Mobile" />
     <movie background="#FFFFFF" />
-    <movie preferredSDK="AIR 3.8.0;3.8.0;" />
+    <movie preferredSDK="Flex 4.6.0, AIR 3.8;4.6.0, 3.8;" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
@@ -21,6 +21,7 @@
   <!-- Build options -->
   <build>
     <option accessible="False" />
+    <option advancedTelemetry="False" />
     <option allowSourcePathOverlap="False" />
     <option benchmark="False" />
     <option es="False" />

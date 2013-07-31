@@ -1,20 +1,19 @@
 package Game.Map.Spawns {
-	import adobe.utils.CustomActions;
+	import CollisionSystem.PointX;
 	import CollisionSystem.Rect;
 	import EngineTiming.Clock;
 	import EngineTiming.IOneSecondUpdate;
-	import flash.display.BitmapData;
 	import flash.utils.ByteArray;
 	import Game.Critter.BaseCritter;
 	import Game.Critter.CritterManager;
 	import Game.Map.MapData;
+	import Game.Scripting.IScriptTarget;
 	import Interfaces.IMapObject;
-	import Game.Critter.ICritterOwner;
 	/**
 	 * ...
 	 * @author Paul
 	 */
-	public class SpawnRegion implements IMapObject, IOneSecondUpdate, ICritterOwner {
+	public class SpawnRegion implements IOneSecondUpdate, IScriptTarget {
 		
 		public var Map:MapData;
 		public var Area:Vector.<Rect>;
@@ -73,18 +72,6 @@ package Game.Map.Spawns {
 			return SpawnID[x];
 		}
 		
-		public function GetUnion():Rect {
-			return null;
-		}
-		
-		public function HasPerfectCollision(other:Rect):Boolean {
-			return false;
-		}
-		
-		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IMapObject):void {
-			
-		}
-		
 		public function CleanUp():void {
 			var i:int = 0;
 			
@@ -126,7 +113,7 @@ package Game.Map.Spawns {
 
 			// Rectangle0 (needs to be extended)
 			while (--totalRects > -1) {
-				s.Area[totalRects] = new Rect(true, s, b.readShort(), b.readShort(), b.readShort(), b.readShort());
+				s.Area[totalRects] = new Rect(true, null, b.readShort(), b.readShort(), b.readShort(), b.readShort());
 			}
 			
 			// Add what critters are here and what percents
@@ -159,7 +146,7 @@ package Game.Map.Spawns {
 			}
 		}
 		
-		/* INTERFACE Game.Critter.ICritterOwner */
+		/* INTERFACE Game.Scripting.IScriptTarget */
 		
 		public function AlertMinionDeath(minion:BaseCritter):void {
 			var i:int = Critters.indexOf(minion);
@@ -169,6 +156,25 @@ package Game.Map.Spawns {
 			} else {
 				trace("Being alerted of unexpected critter death!");
 			}
+		}
+		public function UpdatePointX(position:PointX):void {
+			//Does nothing obviously...
+		}
+		
+		public function ChangeState(stateID:int, isLooping:Boolean):void {
+			//Does nothing obviously...
+		}
+		
+		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IScriptTarget):void {
+			//Can't even attack a spawn region so thats a little bit silly...
+		}
+		
+		public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void {
+			//Don't see what this could possibly do here either...
+		}
+		
+		public function GetCurrentState():int {
+			return 0;
 		}
 		
 	}

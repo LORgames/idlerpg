@@ -110,7 +110,7 @@ package Game.Critter
 					if(CurrentAnimationLooping) {
 						CurrentFrame = StartFrame;
 					} else {
-						Owner.MyScript.Run(Script.AnimationEnded, Owner, this);
+						Owner.MyScript.Run(Script.AnimationEnded);
 					}
 				}
 				

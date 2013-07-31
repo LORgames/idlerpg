@@ -104,7 +104,9 @@ namespace ToolCache.Scripting {
                 case "spawn":
                     CommandID = 0x1002;
 
-                    if (!CritterManager.HasCritter(Parameters)) {
+                    if(info.RemappedCritterIDs != null && info.RemappedCritterIDs.ContainsKey(Parameters)) {
+                        AdditionalBytecode.Add((ushort)info.RemappedCritterIDs[Parameters]);
+                    } else if (!CritterManager.HasCritter(Parameters)) {
                         info.Errors.Add("Cannot find Critter: " + Parameters);
                     } break;
                 case "damage":
@@ -208,9 +210,6 @@ namespace ToolCache.Scripting {
                     if (info.ScriptType == ScriptTypes.Item) {
                         info.Errors.Add("Loop animation only applies to objects with state based animation.");
                         break;
-                    } else if (info.ScriptType == ScriptTypes.Object) {
-                        info.Errors.Add("Loop animation only applies to objects with state based animation. Use AnimationRange for objects.");
-                        break;
                     }
 
                     if (!info.AnimationNames.Contains(Parameters)) {
@@ -221,9 +220,6 @@ namespace ToolCache.Scripting {
 
                     if (info.ScriptType == ScriptTypes.Item) {
                         info.Errors.Add("Loop animation only applies to objects with state based animation.");
-                        break;
-                    } else if (info.ScriptType == ScriptTypes.Object) {
-                        info.Errors.Add("Loop animation only applies to objects with state based animation. Use AnimationRange for objects.");
                         break;
                     }
 
@@ -247,31 +243,6 @@ namespace ToolCache.Scripting {
                     } else {
                         info.Errors.Add("Expected a value above 0.05 after AnimationSpeed");
                     } break;
-                case "animationrangeloop":
-                case "animationrangeplay":
-                    if (Action == "animationrangeloop") {
-                        CommandID = 0x6004;
-                    } else {
-                        CommandID = 0x6003;
-                    }
-
-                    if (info.ScriptType != ScriptTypes.Object) {
-                        info.Errors.Add("AnimationRange[Loop/Play] only apply to Map Objects. Other scripts should use the state based solution: AnimationPlay or AnimationLoop.");
-                        break;
-                    }
-
-                    paramBits = Parameters.Split(' ');
-
-                    if (paramBits.Length == 2) {
-                        if (ushort.TryParse(paramBits[0], out param0) && ushort.TryParse(paramBits[1], out param1)) {
-                            AdditionalBytecode.Add(param0);
-                            AdditionalBytecode.Add(param1);
-                        } else {
-                            info.Errors.Add("Could not convert '" + Parameters + "' to 2 positive values.");
-                        }
-                    } else {
-                        info.Errors.Add("Expecting 2 positive integers to represent the frame range.");
-                    } break;
                 case "if":
                     break;
                 case "else":
@@ -293,7 +264,7 @@ namespace ToolCache.Scripting {
                     }
 
                     //Might be a variable line or something :)
-                    m = Regex.Match(Trimmed, "([A-Za-z][A-Za-z0-9_]*)\\s?=\\s?([ A-Za-z0-9*+/-]+)");
+                    m = Regex.Match(Trimmed, "([A-Za-z][A-Za-z0-9_]*)\\s?=\\s?([ A-Za-z0-9*+/-%]+)");
 
                     if (m.Success) {
                         //Its a variable assignment line

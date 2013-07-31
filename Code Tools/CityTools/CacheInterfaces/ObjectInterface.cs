@@ -40,9 +40,8 @@ namespace CityTools.CacheInterfaces {
             (MainWindow.instance.pnlObjectScenicCache.Controls[0] as ObjectCacheControl).Deactivate();
 
             foreach (MapObject t in MapObjectCache.GetObjectsInGroup(MainWindow.instance.cbScenicCacheSelector.Text)) {
-                if (t.Animation.Frames.Count > 0) {
-                    CachedObject co = new CachedObject(t.Animation.Frames[0], (t.isSolid ? "S" : "P"), t.ObjectID.ToString());
-
+                if (t.Animations["Default"].Frames.Count > 0) {
+                    CachedObject co = new CachedObject(t.Animations["Default"].Frames[0], (t.isSolid ? "S" : "P"), t.ObjectID.ToString());
                     (MainWindow.instance.pnlObjectScenicCache.Controls[0] as ObjectCacheControl).pnlInternal.Controls.Add(co);
                 }
             }

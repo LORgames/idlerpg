@@ -2,6 +2,7 @@ package Game.Critter {
 	import flash.utils.ByteArray;
 	import Game.Scripting.Script;
 	import Game.Map.MapData;
+	import Game.Scripting.ScriptInstance;
 	/**
 	 * ...
 	 * @author Paul
@@ -41,15 +42,13 @@ package Game.Critter {
 			
 			p.Update(0);
 			
-			p.MyScript = AICommands;
+			p.MyScript = new ScriptInstance(AICommands, p);
 			
 			p.MyAIType = this.AIType;
 			p.CurrentHP = Health;
 			
 			p.AlertRange = AlertRange*AlertRange;
 			p.MovementSpeed = MovementSpeed;
-			
-			AICommands.Run(Script.Spawn, p);
 			
 			return p;
 		}

@@ -7,6 +7,7 @@ using ToolCache.General;
 using System.Drawing;
 using System.Drawing.Imaging;
 using ToolCache.Scripting;
+using ToolCache.Animation;
 
 namespace ToolToGameExporter {
     internal class MapObjectCrusher {
@@ -41,12 +42,36 @@ namespace ToolToGameExporter {
             foreach (MapObject t in MapObjectCache.ObjectTypes.Values) {
                 f.AddString(t.ObjectName);
 
-                f.AddByte((byte)t.Animation.Frames.Count);
+                //Some animation things :)
+                if (t.Animations.Count > 255) Processor.Errors.Add(new ProcessingError("Object", t.ObjectName, "Cannot have more than 255 animation sets."));
+                f.AddByte((byte)t.Animations.Count);
 
+                //Animations as list of frame range
+                List<string> Animations = new List<string>();
+                List<string> AnimationFrames = new List<string>();
+
+                foreach (KeyValuePair<String, AnimatedObject> kvp in t.Animations) {
+                    if (kvp.Value.Frames.Count > 255) Processor.Errors.Add(new ProcessingError("Object", t.ObjectName + ":" + kvp.Key, "Individual animations cannot have more than 255 frames!"));
+
+                    Animations.Add(kvp.Key);
+                    AnimationFrames.AddRange(kvp.Value.Frames);
+
+                    f.AddByte((byte)kvp.Value.Frames.Count);
+                    f.AddFloat(kvp.Value.PlaybackSpeed);
+                }
+
+                Size sizeSprite = SpriteSheetHelper.GetFrameSizeOf(AnimationFrames);
+                Size sizeTex = SpriteSheetHelper.GetTextureSizeFor(sizeSprite, AnimationFrames.Count);
+
+                f.AddShort((short)sizeSprite.Width);
+                f.AddShort((short)sizeSprite.Height);
+                f.AddShort((short)sizeTex.Width);
+                f.AddShort((short)sizeTex.Height);
+
+                //TODO: Animation playback speeds
+                SpriteSheetHelper.PackAnimationsLinear(AnimationFrames, sizeSprite, sizeTex, "/Object_" + RealignedItemIndexes[t.ObjectID], false);
+                
                 f.AddShort((short)t.OffsetY);
-
-                ScriptInfo info = new ScriptInfo(t.ObjectName, ScriptTypes.Object);
-                ScriptCrusher.ProcessScript(info, t.Script, f);
 
                 f.AddByte((byte)t.Blocks.Count);
                 i = t.Blocks.Count;
@@ -60,30 +85,9 @@ namespace ToolToGameExporter {
 
                 f.AddByte(t.GetBooleanData());
 
-                if (t.Animation.Frames.Count > 0) {
-                    Image im = Image.FromFile(t.Animation.Frames[0]);
-                    Bitmap bmp = new Bitmap(im.Width * t.Animation.Frames.Count, im.Height, PixelFormat.Format32bppPArgb);
-                    Graphics gfx = Graphics.FromImage(bmp);
-
-                    f.AddShort((short)im.Width);
-                    f.AddShort((short)im.Height);
-                    f.AddFloat(t.Animation.PlaybackSpeed);
-
-                    im.Dispose();
-
-                    gfx.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
-                    gfx.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-                    gfx.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-
-                    for (i = 0; i < t.Animation.Frames.Count; i++) {
-                        im = Image.FromFile(t.Animation.Frames[i]);
-                        gfx.DrawImage(im, new Rectangle(im.Width * i, 0, im.Width, im.Height));
-                        im.Dispose();
-                    }
-
-                    bmp.Save(Global.EXPORT_DIRECTORY + "/Object_" + RealignedItemIndexes[t.ObjectID] + ".png");
-                    bmp.Dispose();
-                }
+                ScriptInfo info = new ScriptInfo(t.ObjectName, ScriptTypes.Object);
+                info.AnimationNames.AddRange(t.Animations.Keys);
+                ScriptCrusher.ProcessScript(info, t.Script, f);
             }
 
             f.Encode(Global.EXPORT_DIRECTORY + "/ObjectInfo.bin");

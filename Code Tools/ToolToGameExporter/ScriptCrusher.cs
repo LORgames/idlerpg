@@ -25,6 +25,8 @@ namespace ToolToGameExporter {
             info.RemappedEquipmentIDs = EquipmentCrusher.MappedEquipmentIDs;
             info.RemappedEffectIDs = EffectCrusher.RemappedEffectNames;
             info.RemappedObjectIDs = MapObjectCrusher.RemappedItemNameToID;
+            info.RemappedCritterIDs = CritterCrusher.NameToRemappedIDs;
+            info.RemappedSoundEffectIDs = SoundCrusher.EffectConversions;
 
             Parser.Parse(script, info);
 
@@ -32,6 +34,20 @@ namespace ToolToGameExporter {
                 f.AddUnsignedShort(0xFFFF);
                 ErrorAddAll(info);
                 return;
+            }
+
+            ///////////////////////////////////////////////////////////////////////////////////
+            /////// VARIABLES
+            ///////////////////////////////////////////////////////////////////////////////////
+
+            List<ScriptVariable> Vars = info.Variables.Values.ToList();
+            Vars.Sort((x, y) => x.Index.CompareTo(y.Index));
+
+            int variableID = Vars.Count;
+            f.AddShort((short)variableID);
+
+            while (--variableID > -1) {
+                f.AddShort(Vars[variableID].InitialValue);
             }
 
             ///////////////////////////////////////////////////////////////////////////////////
@@ -116,8 +132,6 @@ namespace ToolToGameExporter {
             switch (command.CommandID) {
                 case 0x1001: //PlaySound
                     f.AddShort(SoundCrusher.EffectConversions[command.Parameters]); break;
-                case 0x1002: //Spawn critter
-                    f.AddShort(CritterCrusher.NameToRemappedIDs[command.Parameters]); break;
                 case 0x4001: //Equip
                     f.AddShort((short)Array.IndexOf(EquipmentCrusher.equipmenttypes, EquipmentManager.Equipment[command.Parameters].Type));
                     f.AddShort(EquipmentCrusher.MappedEquipmentIDs[command.Parameters]); break;

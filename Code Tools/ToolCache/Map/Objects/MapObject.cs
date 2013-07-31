@@ -14,24 +14,31 @@ namespace ToolCache.Map.Objects {
 
         public string Script = "";
 
-        public AnimatedObject Animation = new AnimatedObject();
+        public Dictionary<String, AnimatedObject> Animations = new Dictionary<String, AnimatedObject>();
         public List<Rectangle> Blocks = new List<Rectangle>();
 
         public int OffsetY = 0;
 
         public bool isSolid = true;
         public bool IndividualAnimations = false;
-        public bool AnimateInTool = true;
 
         public MapObject() {
-            
+            Animations["Default"] = new AnimatedObject();
         }
 
         internal static MapObject LoadFromBinaryIO(BinaryIO f) {
             MapObject m = new MapObject();
 
             m.ObjectID = f.GetShort();
-            m.Animation = AnimatedObject.UnpackFromBinaryIO(f);
+
+            m.Animations["Default"] = AnimatedObject.UnpackFromBinaryIO(f);
+
+            short totalOtherAnimations = f.GetShort();
+            for (int i = 0; i < totalOtherAnimations; i++) {
+                string animName = f.GetString();
+                AnimatedObject ao = AnimatedObject.UnpackFromBinaryIO(f);
+                m.Animations.Add(animName, ao);
+            }
 
             m.ObjectName = f.GetString();
             m.ObjectGroup = f.GetString();
@@ -53,19 +60,26 @@ namespace ToolCache.Map.Objects {
             byte booleanData = f.GetByte();
             m.isSolid = (booleanData & (byte)0x1) == 0x1;
             m.IndividualAnimations = (booleanData & (byte)0x2) == 0x2;
-            m.AnimateInTool = (booleanData & (byte)0x4) != 0x4; //Is backwards compared to the others, 0=true, 4=false
-
-            m.Animation.Paused = !m.AnimateInTool;
-
+            
             m.OffsetY = f.GetShort();
 
             return m;
         }
 
         internal void WriteToBinaryIO(BinaryIO f) {
+            CleanUpAnimations();
+
             f.AddShort(ObjectID);
 
-            Animation.PackIntoBinaryIO(f);
+            Animations["Default"].PackIntoBinaryIO(f);
+
+            f.AddShort((short)(Animations.Count-1)); //Default is stored differently
+            foreach (KeyValuePair<String, AnimatedObject> kvp in Animations) {
+                if (kvp.Key != "Default") {
+                    f.AddString(kvp.Key);
+                    kvp.Value.PackIntoBinaryIO(f);
+                }
+            }
 
             f.AddString(ObjectName);
             f.AddString(ObjectGroup);
@@ -85,12 +99,26 @@ namespace ToolCache.Map.Objects {
             f.AddShort((short)OffsetY);
         }
 
+        public List<String> CleanUpAnimations() {
+            List<String> DudAnimations = new List<string>();
+            foreach (KeyValuePair<String, AnimatedObject> kvp in Animations) {
+                if (kvp.Key != "Default" && kvp.Value.Frames.Count == 0) {
+                    DudAnimations.Add(kvp.Key);
+                }
+            }
+
+            foreach (String s in DudAnimations) {
+                Animations.Remove(s);
+            }
+
+            return DudAnimations;
+        }
+
         public byte GetBooleanData() {
             byte booleanData = 0;
             booleanData |= (isSolid ? (byte)1 : (byte)0);
             booleanData |= (IndividualAnimations ? (byte)2 : (byte)0);
-            booleanData |= (AnimateInTool ? (byte)0 : (byte)4); //Is backwards compared to the others, 0=true, 4=false
-
+            
             return booleanData;
         }
     }

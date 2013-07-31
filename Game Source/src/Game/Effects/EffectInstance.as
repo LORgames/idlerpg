@@ -1,5 +1,5 @@
 package Game.Effects {
-	import adobe.utils.CustomActions;
+	import CollisionSystem.PointX;
 	import CollisionSystem.Rect;
 	import Debug.Drawer;
 	import EngineTiming.Clock;
@@ -7,29 +7,31 @@ package Game.Effects {
 	import EngineTiming.IUpdatable;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.display.Sprite;
 	import flash.geom.Rectangle;
-	import flash.geom.Vector3D;
-	import Game.Scripting.Script;
+	import Game.Critter.BaseCritter;
 	import Game.Map.WorldData;
+	import Game.Scripting.IScriptTarget;
+	import Game.Scripting.Script;
+	import Game.Scripting.ScriptInstance;
 	import Game.Scripting.ScriptTypes;
 	import Interfaces.IMapObject;
 	import RenderSystem.IAnimated;
 	import RenderSystem.IObjectLayer;
 	import RenderSystem.Renderman;
-	import EngineTiming.IUpdatable
 	/**
 	 * ...
 	 * @author Paul
 	 */
-	public class EffectInstance extends Bitmap implements IMapObject, IAnimated, IObjectLayer, IUpdatable, ICleanUp {
+	public class EffectInstance extends Bitmap implements IMapObject, IAnimated, IObjectLayer, IUpdatable, ICleanUp, IScriptTarget {
 		public var MyRect:Rect;
 		public var Info:EffectInfo;
 		public var Direction:int = 0;
+		public var MyScript:ScriptInstance;
 		
 		public var X:int = 0;
 		public var Y:int = 0;
 		
+		public var CurrentState:int = 0;
 		public var StartFrame:int = 0;
 		public var EndFrame:int = 0;
 		public var CurrentFrame:int = 0;
@@ -61,24 +63,10 @@ package Game.Effects {
 			
 			Clock.I.Updatables.push(this);
 			
-			Info.MyScript.Run(Script.Spawn, this, this);
+			MyScript = new ScriptInstance(info.MyScript, this);
 			WorldData.CurrentMap.Effects.push(this);
 			
 			MyLife = Info.Life;
-		}
-		
-		public function ChangeState(animationIndex:int, loop:Boolean):void {
-			this.StartFrame = Info.AnimationFrames[animationIndex];
-			this.EndFrame = Info.AnimationFrames[animationIndex + 1];
-			this.CurrentFrame = this.StartFrame;
-			this.IsLooping = loop;
-			
-			CopyRect.x = int(CurrentFrame % Info.SpriteColumns) * CopyRect.width;
-			CopyRect.y = int(CurrentFrame / Info.SpriteColumns) * CopyRect.height;
-			
-			if(Info.SpriteAtlas != null) {
-				this.bitmapData.copyPixels(Info.SpriteAtlas, CopyRect, Global.ZeroPoint);
-			}
 		}
 		
 		/* INTERFACE Interfaces.IMapObject */
@@ -89,10 +77,6 @@ package Game.Effects {
 		
 		public function HasPerfectCollision(other:Rect):Boolean {
 			return other.intersects(MyRect);
-		}
-		
-		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IMapObject):void {
-			//Does nothing at this stage
 		}
 		
 		/* INTERFACE RenderSystem.IAnimated */
@@ -110,7 +94,7 @@ package Game.Effects {
 							if(IsLooping) {
 								CurrentFrame = StartFrame;
 							} else {
-								Info.MyScript.Run(Script.AnimationEnded, this);
+								MyScript.Run(Script.AnimationEnded);
 								return;
 							}
 						}
@@ -170,7 +154,7 @@ package Game.Effects {
 				var i:int = objects.length;
 				while (--i > -1) {
 					if (Info.IsSolid) {
-						Info.MyScript.Run(Script.EndMoving, this);
+						MyScript.Run(Script.EndMoving);
 					} else {
 						
 					}
@@ -199,11 +183,48 @@ package Game.Effects {
 			MyRect = null;
 			Info = null;
 			CopyRect = null;
+			MyScript.CleanUp();
+			MyScript = null;
 			
 			if(this.parent) Main.OrderedLayer.removeChild(this);
 			Renderman.AnimatedObjectsRemove(this);
 			Clock.I.Remove(this);
 			WorldData.CurrentMap.EffectPop(this);
 		}
+		
+		/* INTERFACE Game.Scripting.IScriptTarget */
+		
+		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IScriptTarget):void { MyScript.Run(Script.Attacked); }
+		public function AlertMinionDeath(baseCritter:BaseCritter):void { MyScript.Run(Script.MinionDied); }
+		
+		public function UpdatePointX(position:PointX):void {
+			position.X = X;
+			position.Y = Y;
+			position.D = Direction;
+		}
+		
+		public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void {
+			PlaybackSpeed = newAnimationSpeed;
+		}
+		
+		public function ChangeState(animationIndex:int, loop:Boolean):void {
+			CurrentState = animationIndex;
+			this.StartFrame = Info.AnimationFrames[animationIndex];
+			this.EndFrame = Info.AnimationFrames[animationIndex + 1];
+			this.CurrentFrame = this.StartFrame;
+			this.IsLooping = loop;
+			
+			CopyRect.x = int(CurrentFrame % Info.SpriteColumns) * CopyRect.width;
+			CopyRect.y = int(CurrentFrame / Info.SpriteColumns) * CopyRect.height;
+			
+			if(Info.SpriteAtlas != null) {
+				this.bitmapData.copyPixels(Info.SpriteAtlas, CopyRect, Global.ZeroPoint);
+			}
+		}
+		
+		public function GetCurrentState():int {
+			return CurrentState;
+		}
+		
 	}
 }

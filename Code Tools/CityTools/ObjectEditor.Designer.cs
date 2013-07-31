@@ -49,9 +49,9 @@ namespace CityTools {
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.ckIndividualAnimations = new System.Windows.Forms.CheckBox();
+            this.cbAnimationName = new System.Windows.Forms.ComboBox();
             this.ccAnimation = new CityTools.Components.AnimationList();
-            this.scriptBox1 = new CityTools.Components.ScriptBox();
-            this.ckbAnimatedInTool = new System.Windows.Forms.CheckBox();
+            this.scriptBox = new CityTools.Components.ScriptBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbExampleBase)).BeginInit();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numOffsetHeight)).BeginInit();
@@ -289,7 +289,7 @@ namespace CityTools {
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.pbExampleBase);
-            this.splitContainer2.Panel2.Controls.Add(this.scriptBox1);
+            this.splitContainer2.Panel2.Controls.Add(this.scriptBox);
             this.splitContainer2.Size = new System.Drawing.Size(647, 541);
             this.splitContainer2.SplitterDistance = 152;
             this.splitContainer2.TabIndex = 18;
@@ -303,7 +303,6 @@ namespace CityTools {
             // 
             // splitContainer3.Panel1
             // 
-            this.splitContainer3.Panel1.Controls.Add(this.ckbAnimatedInTool);
             this.splitContainer3.Panel1.Controls.Add(this.ckIndividualAnimations);
             this.splitContainer3.Panel1.Controls.Add(this.lblGroup);
             this.splitContainer3.Panel1.Controls.Add(this.lblName);
@@ -318,6 +317,7 @@ namespace CityTools {
             // 
             // splitContainer3.Panel2
             // 
+            this.splitContainer3.Panel2.Controls.Add(this.cbAnimationName);
             this.splitContainer3.Panel2.Controls.Add(this.ccAnimation);
             this.splitContainer3.Size = new System.Drawing.Size(647, 152);
             this.splitContainer3.SplitterDistance = 254;
@@ -334,34 +334,35 @@ namespace CityTools {
             this.ckIndividualAnimations.UseVisualStyleBackColor = true;
             this.ckIndividualAnimations.CheckedChanged += new System.EventHandler(this.ValueChanged);
             // 
+            // cbAnimationName
+            // 
+            this.cbAnimationName.FormattingEnabled = true;
+            this.cbAnimationName.Location = new System.Drawing.Point(0, 1);
+            this.cbAnimationName.Name = "cbAnimationName";
+            this.cbAnimationName.Size = new System.Drawing.Size(199, 21);
+            this.cbAnimationName.TabIndex = 12;
+            this.cbAnimationName.TextChanged += new System.EventHandler(this.cbAnimationName_TextChanged);
+            // 
             // ccAnimation
             // 
             this.ccAnimation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ccAnimation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ccAnimation.Location = new System.Drawing.Point(0, 0);
+            this.ccAnimation.Location = new System.Drawing.Point(0, 24);
             this.ccAnimation.Name = "ccAnimation";
-            this.ccAnimation.Size = new System.Drawing.Size(389, 152);
+            this.ccAnimation.Size = new System.Drawing.Size(389, 128);
             this.ccAnimation.TabIndex = 11;
+            this.ccAnimation.AnimationChanged += new CityTools.ChangedEventHandler(this.ValueChanged);
             // 
-            // scriptBox1
+            // scriptBox
             // 
-            this.scriptBox1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.scriptBox1.Location = new System.Drawing.Point(410, 0);
-            this.scriptBox1.Name = "scriptBox1";
-            this.scriptBox1.Script = "";
-            this.scriptBox1.ScriptType = ToolCache.Scripting.ScriptTypes.Object;
-            this.scriptBox1.Size = new System.Drawing.Size(237, 385);
-            this.scriptBox1.TabIndex = 1;
-            // 
-            // ckbAnimatedInTool
-            // 
-            this.ckbAnimatedInTool.AutoSize = true;
-            this.ckbAnimatedInTool.Location = new System.Drawing.Point(120, 97);
-            this.ckbAnimatedInTool.Name = "ckbAnimatedInTool";
-            this.ckbAnimatedInTool.Size = new System.Drawing.Size(106, 17);
-            this.ckbAnimatedInTool.TabIndex = 19;
-            this.ckbAnimatedInTool.Text = "Animated In Tool";
-            this.ckbAnimatedInTool.UseVisualStyleBackColor = true;
+            this.scriptBox.Dock = System.Windows.Forms.DockStyle.Right;
+            this.scriptBox.Location = new System.Drawing.Point(410, 0);
+            this.scriptBox.Name = "scriptBox";
+            this.scriptBox.Script = "";
+            this.scriptBox.ScriptType = ToolCache.Scripting.ScriptTypes.Object;
+            this.scriptBox.Size = new System.Drawing.Size(237, 385);
+            this.scriptBox.TabIndex = 1;
+            this.scriptBox.BeforeParse += new System.EventHandler<CityTools.Components.ScriptInfoArgs>(this.scriptBox_BeforeParse);
+            this.scriptBox.ScriptUpdated += new System.EventHandler<System.EventArgs>(this.ValueChanged);
             // 
             // ObjectEditor
             // 
@@ -419,8 +420,8 @@ namespace CityTools {
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.TreeView treeTemplateNames;
-        private ScriptBox scriptBox1;
+        private ScriptBox scriptBox;
         private System.Windows.Forms.CheckBox ckIndividualAnimations;
-        private System.Windows.Forms.CheckBox ckbAnimatedInTool;
+        private System.Windows.Forms.ComboBox cbAnimationName;
     }
 }

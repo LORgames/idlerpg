@@ -177,9 +177,9 @@ namespace CityTools.ObjectSystem {
                         }
                     }
 
-                    MapObjectCache.G(obj.ObjectType).Animation.Draw(buffer.gfx, x, y, Camera.ZoomLevel, 0.33f);
+                    MapObjectCache.G(obj.ObjectType).Animations["Default"].Draw(buffer.gfx, x, y, Camera.ZoomLevel, 0.33f);
                 } else {
-                    MapObjectCache.G(obj.ObjectType).Animation.Draw(buffer.gfx, x, y, Camera.ZoomLevel);
+                    MapObjectCache.G(obj.ObjectType).Animations["Default"].Draw(buffer.gfx, x, y, Camera.ZoomLevel);
                 }
 
                 

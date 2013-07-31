@@ -1,8 +1,6 @@
 package Game.Map {
-	import adobe.utils.CustomActions;
 	import CollisionSystem.Rect;
 	import EngineTiming.IUpdatable;
-	import flash.geom.Vector3D;
 	import flash.utils.ByteArray;
 	import Game.Critter.BaseCritter;
 	import Game.Effects.EffectInstance;
@@ -65,8 +63,6 @@ package Game.Map {
 		public function ParseData(b:ByteArray):void {
 			//Some variables I'll need for loading
 			var i:int;
-			var x:int;
-			var y:int;
 			var _pID:int = 0;
 			
 			//Some map information

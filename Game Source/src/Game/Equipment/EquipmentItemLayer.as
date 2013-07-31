@@ -1,7 +1,6 @@
 package Game.Equipment {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import Game.Scripting.Script;
 	import RenderSystem.IAnimated;
@@ -19,13 +18,13 @@ package Game.Equipment {
 		
 		public var LoopState:Boolean = true;
 		public var State:int = 0;
+		public var PlaybackSpeed:Number = 0.2;
 		
 		public var TotalFrames:int = 0;
 		public var Frame:int = 0;
 		public var FrameDT:Number = 0;
 		
 		public var CopyRect:Rectangle = new Rectangle();
-		public static var DestPoint:Point = new Point();
 		
 		public function EquipmentItemLayer(ei:EquipmentItem, _layer:int = 0) {
 			Renderman.AnimatedObjectsPush(this);
@@ -36,8 +35,8 @@ package Game.Equipment {
 		
 		public function SetInformation(equipment:EquipmentInfo):void {
 			if (equipment.SizeX == 0 || equipment.SizeY == 0) return;
-			
 			Info = equipment;
+			PlaybackSpeed = Info.AnimationSpeed;
 			
 			this.bitmapData = new BitmapData(Info.SizeX, Info.SizeY, true, 0x00FF0000);
 			
@@ -79,7 +78,7 @@ package Game.Equipment {
 					
 					if (TotalFrames == 1) {
 						if (Info.Image != null)
-							this.bitmapData.copyPixels(Info.Image, CopyRect, DestPoint);
+							this.bitmapData.copyPixels(Info.Image, CopyRect, Global.ZeroPoint);
 					}
 				} else {
 					this.visible = false;
@@ -95,16 +94,16 @@ package Game.Equipment {
 			if(TotalFrames > 1) {
 				FrameDT += dt;
 				
-				if (FrameDT > Info.AnimationSpeed) {
-					FrameDT -= Info.AnimationSpeed;
+				if (FrameDT > PlaybackSpeed) {
+					FrameDT -= PlaybackSpeed;
 					Frame++;
 					
 					if (Frame == TotalFrames) {
 						if (LoopState) {
 							Frame = 0;
 						} else {
-							Info.MyScript.Run(Script.AnimationEnded, Owner.Owner.Owner, Owner);
-							Owner.SetState(0);
+							//Owner.ChangeState(0, true);
+							Owner.MyScript.Run(Script.AnimationEnded);
 						}
 					}
 					
@@ -113,7 +112,7 @@ package Game.Equipment {
 			}
 			
 			if (Info != null && Info.Image != null && TotalFrames > 0) {
-				this.bitmapData.copyPixels(Info.Image, CopyRect, DestPoint);
+				this.bitmapData.copyPixels(Info.Image, CopyRect, Global.ZeroPoint);
 			}
 		}
 		

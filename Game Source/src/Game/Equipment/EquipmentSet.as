@@ -111,14 +111,14 @@ package Game.Equipment {
 		
 		public function ChangeState(newState:int, fromState:int):void {
 			if ((newState == 1 && fromState == 0) || (newState == 0 && fromState == 1)) { //Walking
-				Legs.SetState(newState);
+				//Legs.ChangeState(newState);
 			} else if (newState == 2) { //Attacking
-				Face.Info.MyScript.Run(Script.Attack, Owner, Face);
-				Headgear.Info.MyScript.Run(Script.Attack, Owner, Headgear);
-				Body.Info.MyScript.Run(Script.Attack, Owner, Body);
-				Legs.Info.MyScript.Run(Script.Attack, Owner, Legs);
-				Shadow.Info.MyScript.Run(Script.Attack, Owner, Shadow);
-				Weapon.Info.MyScript.Run(Script.Attack, Owner, Weapon);
+				Face.MyScript.Run(Script.Attack);
+				Headgear.MyScript.Run(Script.Attack);
+				Body.MyScript.Run(Script.Attack);
+				Legs.MyScript.Run(Script.Attack);
+				Shadow.MyScript.Run(Script.Attack);
+				Weapon.MyScript.Run(Script.Attack);
 			}
 		}
 		
@@ -138,32 +138,32 @@ package Game.Equipment {
 				case 0: //Shadow
 					if(EquipmentManager.I.Shadows.length > equipmentID) {
 						Shadow.SetInformation(EquipmentManager.I.Shadows[equipmentID]);
-						Shadow.Info.MyScript.Run(Script.Equip, Owner, Shadow);
+						Shadow.MyScript.Run(Script.Equip);
 					} break;
 				case 1: //Legs
 					if(EquipmentManager.I.Legs.length > equipmentID) {
 						Legs.SetInformation(EquipmentManager.I.Legs[equipmentID]);
-						Legs.Info.MyScript.Run(Script.Equip, Owner, Legs);
+						Legs.MyScript.Run(Script.Equip);
 					} break;
 				case 2: //Body
 					if(EquipmentManager.I.Bodies.length > equipmentID) {
 						Body.SetInformation(EquipmentManager.I.Bodies[equipmentID]);
-						Body.Info.MyScript.Run(Script.Equip, Owner, Body);
+						Body.MyScript.Run(Script.Equip);
 					} break;
 				case 3: //Face
 					if(EquipmentManager.I.Heads.length > equipmentID) {
 						Face.SetInformation(EquipmentManager.I.Heads[equipmentID]);
-						Face.Info.MyScript.Run(Script.Equip, Owner, Face);
+						Face.MyScript.Run(Script.Equip);
 					} break;
 				case 4: //Headgear
 					if(EquipmentManager.I.Headgear.length > equipmentID) {
 						Headgear.SetInformation(EquipmentManager.I.Headgear[equipmentID]);
-						Headgear.Info.MyScript.Run(Script.Equip, Owner, Headgear);
+						Headgear.MyScript.Run(Script.Equip);
 					} break;
 				case 5: //Weapon
 					if(EquipmentManager.I.Weapons.length > equipmentID) {
 						Weapon.SetInformation(EquipmentManager.I.Weapons[equipmentID]);
-						Weapon.Info.MyScript.Run(Script.Equip, Owner, Weapon);
+						Weapon.MyScript.Run(Script.Equip);
 					} break;
 			}
 			

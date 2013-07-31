@@ -5,7 +5,7 @@ package Game.Map.Tiles {
 	 * ...
 	 * @author Paul
 	 */
-	public class TileInstance implements IMapObject {
+	public class TileInstance {
 		public var TileID:int = 0;
 		public var SolidRectangles:Vector.<Rect> = new Vector.<Rect>();
 		
@@ -19,21 +19,9 @@ package Game.Map.Tiles {
 			
 			while (--i > -1) {
 				var c:Rect = rectsToCopy[i];
-				var r:Rect = new Rect(true, this, c.X + tileX * 48, c.Y + tileY * 48, c.W, c.H);
+				var r:Rect = new Rect(true, null, c.X + tileX * 48, c.Y + tileY * 48, c.W, c.H);
 				SolidRectangles.push(r);
 			}
-		}
-		
-		public function GetUnion():Rect {
-			return null;
-		}
-		
-		public function HasPerfectCollision(other:Rect):Boolean {
-			return false;
-		}
-		
-		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IMapObject):void {
-			
 		}
 		
 		public function CleanUp():void {

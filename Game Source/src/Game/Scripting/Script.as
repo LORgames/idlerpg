@@ -1,10 +1,14 @@
 package Game.Scripting {
 	import adobe.utils.CustomActions;
+	import CollisionSystem.PointX;
 	import CollisionSystem.Rect;
 	import Debug.Drawer;
 	import EngineTiming.Clock;
+	import EngineTiming.ICleanUp;
 	import flash.display.Sprite;
 	import flash.geom.PerspectiveProjection;
+	import flash.geom.Point;
+	import flash.geom.Vector3D;
 	import flash.utils.ByteArray;
 	import Game.Critter.BaseCritter;
 	import Game.Critter.CritterAnimationSet;
@@ -28,7 +32,7 @@ package Game.Scripting {
 	public class Script {
 		//EVENT TYPES
 		public static const Attack:uint = 0;
-		public static const Spawn:uint = 1;
+		public static const Initialize:uint = 1;
 		public static const Attacked:uint = 2;
 		public static const Use:uint = 3;
 		public static const Equip:uint = 4;
@@ -51,41 +55,25 @@ package Game.Scripting {
 		public static const FRONTOFFSET:int = 0x9002;
 		public static const AOE:int = 0x9001;
 		
-		private var EventScripts:Vector.<ByteArray>;
+		//Script information
+		internal var EventScripts:Vector.<ByteArray>;
+		internal var InitialVariables:Vector.<int>;
 		
-		
-		private static var UpdateScripts:Vector.<Object> = new Vector.<Object>();
-		public static function ProcessUpdate():void {
-			for (var i:int = 0; i < UpdateScripts.length; i += 3) {
-				var script:Script = Script(UpdateScripts[i]);
-				script.Run(Update, UpdateScripts[i + 1], UpdateScripts[i + 2]);
-			}
-		}
-		
-		public function Script(commandBlock:Vector.<ByteArray>) {
+		public function Script(commandBlock:Vector.<ByteArray>, initalVariables:Vector.<int>) {
 			EventScripts = commandBlock;
+			InitialVariables = initalVariables.concat();
 		}
 		
-		public function Run(event:uint, invoker:Object = null, target:Object = null):void {
+		internal function Run(event:uint, info:ScriptInstance):void {
 			//Reset the reader
 			if (event >= TOTAL_EVENT_TYPES) {
 				trace("Event Type Unsupported!");
 				return;
 			}
 			
-			if (event == Spawn && EventScripts[Update] != null) {
-				UpdateScripts.push(this);
-				UpdateScripts.push(invoker);
-				UpdateScripts.push(target);
-			}
-			
 			if (EventScripts[event] == null) {
 				//trace("Event type not on this object. [" + invoker + " => " + event + "]");
 				return;
-			}
-			
-			if (target == null && invoker != null) {
-				target = invoker;
 			}
 			
 			var EventScript:ByteArray = EventScripts[event];
@@ -95,100 +83,63 @@ package Game.Scripting {
 			var command:uint = 0;
 			var CallStack:Vector.<Boolean> = new Vector.<Boolean>();
 			var bParam:Boolean;
-			var xPos:int = 0;
-			var yPos:int = 0;
-			var dir:int = 0;
+			
+			var Position:PointX = new PointX();
+			info.CurrentTarget.UpdatePointX(Position);
+			
+			var tX:int = Position.X;
+			var tY:int = Position.Y;
 			
 			while (true) {
 				command = EventScript.readUnsignedShort();
 				
 				if (command == 0xFFFF) break;
+				if (command == 0xB000) { ProcessMathCommand(EventScript, info); continue; }
 				
 				switch(command) {
 					case 0x1001: //Play sound effect
 						EffectsPlayer.Play(EventScript.readShort());
 						break;
 					case 0x1002: //Spawn Critter
-						var critterID:int = EventScript.readShort();
-						
-						var spawnX:int = 0;
-						var spawnY:int = 0;
-						
-						if (invoker is BaseCritter) {
-							var bc:BaseCritter = (invoker as BaseCritter);
-							
-							var critter:BaseCritter = CritterManager.I.CritterInfo[critterID].CreateCritter(bc.CurrentMap, bc.X, bc.Y);
-							
-							if(critter == null) {
-								trace("Script error: Could not spawn CritterID=" + critterID + ": critter is null.");
-							} else {
-								critter.Owner = bc;
-							}
-						}
-						
-						break;
+						var critter:BaseCritter = CritterManager.I.CritterInfo[EventScript.readShort()].CreateCritter(WorldData.CurrentMap, Position.X, Position.Y);
+						if (critter != null) { critter.Owner = info.CurrentTarget; } break;
 					case 0x1007: //Destroy
-						if (invoker is ObjectInstance || invoker is BaseCritter || invoker is EffectInstance) {
-							Clock.CleanUpList.push(invoker);
-						} else {
-							trace("Unknown Type for Destroy!");
-						}
-						break;
+						if (info.CurrentTarget is ICleanUp) { Clock.CleanUpList.push(info.CurrentTarget); } break;
 					case 0x1008: //SpawnEffect
 						var effectInfo:EffectInfo = EffectManager.I.Effects[EventScript.readShort()];
 						
-						if (invoker is BaseCritter) {
-							xPos = (invoker as BaseCritter).X;
-							yPos = (invoker as BaseCritter).Y;
-							dir = (invoker as BaseCritter).direction;
-						} else if (invoker is EffectInstance) {
-							xPos = (invoker as EffectInstance).X;
-							yPos = (invoker as EffectInstance).Y;
-							dir = (invoker as EffectInstance).Direction;
-						}
-							
-						if (dir == 0) {
-							xPos -= EventScript.readShort();
-							yPos += EventScript.readShort();
-						} else if (dir == 1) {
-							xPos += EventScript.readShort();
-							yPos += EventScript.readShort();
-						} else if (dir == 2) {
-							yPos -= EventScript.readShort();
-							xPos += EventScript.readShort();
-						} else if (dir == 3) {
-							yPos += EventScript.readShort();
-							xPos -= EventScript.readShort();
+						if (Position.D == 0) {
+							tX = Position.X - EventScript.readShort();
+							tY = Position.Y + EventScript.readShort();
+						} else if (Position.D == 1) {
+							tX = Position.X + EventScript.readShort();
+							tY = Position.Y + EventScript.readShort();
+						} else if (Position.D == 2) {
+							tY = Position.Y - EventScript.readShort();
+							tX = Position.X + EventScript.readShort();
+						} else if (Position.D == 3) {
+							tY = Position.Y + EventScript.readShort();
+							tX = Position.X - EventScript.readShort();
 						}
 						
-						new EffectInstance(effectInfo, xPos, yPos, dir);
+						new EffectInstance(effectInfo, tX, tY, Position.D);
 						
 						break;
 					case 0x100B: //SpawnObject
 						var id:int = EventScript.readShort();
 						
-						if (invoker is BaseCritter) {
-							xPos = (invoker as BaseCritter).X;
-							yPos = (invoker as BaseCritter).Y;
-							dir = (invoker as BaseCritter).direction;
-						} else if (invoker is EffectInstance) {
-							xPos = (invoker as EffectInstance).X;
-							yPos = (invoker as EffectInstance).Y;
-							dir = (invoker as EffectInstance).Direction;
-						}
-							
-						if (dir == 0) {
-							xPos -= EventScript.readShort();
-							yPos += EventScript.readShort();
-						} else if (dir == 1) {
-							xPos += EventScript.readShort();
-							yPos += EventScript.readShort();
-						} else if (dir == 2) {
-							yPos -= EventScript.readShort();
-							xPos += EventScript.readShort();
-						} else if (dir == 3) {
-							yPos += EventScript.readShort();
-							xPos -= EventScript.readShort();
+						if (Position.D == 0) {
+							tX = Position.X - EventScript.readShort();
+							tY = Position.Y + EventScript.readShort();
+						} else if (Position.D == 1) {
+							tX = Position.X + EventScript.readShort();
+							tY = Position.Y + EventScript.readShort();
+						} else if (Position.D == 2) {
+							tY = Position.Y - EventScript.readShort();
+							tX = Position.X + EventScript.readShort();
+						} else if (Position.D == 3) {
+							tY = Position.Y + EventScript.readShort();
+							tX = Position.X - EventScript.readShort();
 						}
 						
 						var o:ObjectInstance;
@@ -199,76 +150,32 @@ package Game.Scripting {
 							o = new ObjectInstance();
 						}
 						
-						o.SetInformation(WorldData.CurrentMap, id, xPos, yPos);
+						o.SetInformation(WorldData.CurrentMap, id, tX, tY);
 						WorldData.CurrentMap.Objects.push(o);
 						
 						break;
 					case 0x4001: //Equip item on the target
-						if (invoker is CritterHuman) {
-							var person:CritterHuman = (invoker as CritterHuman);
-							person.Equipment.EquipSlot(EventScript.readShort(), EventScript.readShort());
+						if (info.CurrentTarget is CritterHuman) {
+							(info.CurrentTarget as CritterHuman).Equipment.EquipSlot(EventScript.readShort(), EventScript.readShort());
+						} else if (info.CurrentTarget is EquipmentItem) {
+							(info.CurrentTarget as EquipmentItem).Owner.EquipSlot(EventScript.readShort(), EventScript.readShort());
+						} else {
+							EventScript.readShort(); EventScript.readShort();
 						} break;
 					case 0x6000: //Play Animation
-						if (target is EquipmentItem) {
-							(target as EquipmentItem).SetState(EventScript.readShort(), false);
-						} else if (target is CritterAnimationSet) { 
-							(target as CritterAnimationSet).ChangeState(EventScript.readShort(), false);
-						} else if (invoker is EffectInstance) { 
-							(target as EffectInstance).ChangeState(EventScript.readShort(), false);
-						} else {
-							trace("Unknown Invoker for 0x6000:PlayAnimation");
-							EventScript.readShort();
-						} break;
+						info.CurrentTarget.ChangeState(EventScript.readShort(), false); break;
 					case 0x6001: //Loop Animation
-						if (target is EquipmentItem) {
-							(target as EquipmentItem).SetState(EventScript.readShort(), true);
-						} else if (target is CritterAnimationSet) { 
-							(target as CritterAnimationSet).ChangeState(EventScript.readShort(), true);
-						} else if (invoker is EffectInstance) { 
-							(target as EffectInstance).ChangeState(EventScript.readShort(), true);
-						} else {
-							trace("Unknown Invoker for 0x6001:LoopAnimation @" + event);
-							EventScript.readShort();
-						} break;
+						info.CurrentTarget.ChangeState(EventScript.readShort(), true); break;
 					case 0x6002: //Animation Speed
-						var speedUI:uint = EventScript.readUnsignedShort();
-						var speedNU:Number = (speedUI * 0.05);
-						
-						if (invoker is ObjectInstanceAnimated) {
-							(target as ObjectInstanceAnimated).PlaybackSpeed = speedNU;
-						} else if (invoker is ObjectInstance) {
-							(invoker as ObjectInstance).Template.PlaybackSpeed = speedNU;
-						} else if (invoker is EffectInstance) { 
-							(target as EffectInstance).PlaybackSpeed = speedNU;
-						} else {
-							trace("Unknown invoker for AnimationSpeed");
-						} break;
-					case 0x6003: //Animation Range Play
-					case 0x6004: //Animation Range Loop
-						var startFrame:int = EventScript.readUnsignedShort();
-						var totalFrames:int = EventScript.readUnsignedShort();
-						
-						if (invoker is ObjectInstanceAnimated) {
-							(invoker as ObjectInstanceAnimated).StartFrame = startFrame;
-							(invoker as ObjectInstanceAnimated).EndFrame = totalFrames+startFrame;
-							(invoker as ObjectInstanceAnimated).CurrentFrame = startFrame;
-							
-							if (command == 0x6003) {
-								(invoker as ObjectInstanceAnimated).IsLooping = false;
-							} else {
-								(invoker as ObjectInstanceAnimated).IsLooping = true;
-							}
-						} else {
-							trace("Unknown invoker for AnimationRnage[Play/Loop]");
-						} break;
+						info.CurrentTarget.UpdatePlaybackSpeed((EventScript.readUnsignedShort() * 0.05)); break;
 					case 0x8000: //IF without ELSE
-						bParam = CanIf(EventScript, invoker, target);
+						bParam = CanIf(EventScript, info, Position);
 						if (!bParam) {
 							EventScript.readUnsignedShort(); //Just pop the 0xF0FD off
 							ReadUntilBalancedClose(EventScript);
 						} break;
 					case 0x8001: //IF with ELSE
-						bParam = CanIf(EventScript, invoker, target);
+						bParam = CanIf(EventScript, info, Position);
 						if (bParam) {
 							CallStack.push(true);
 						} else {
@@ -277,7 +184,7 @@ package Game.Scripting {
 							CallStack.push(false);
 						} break;
 					case 0x8002: //Foreach
-						Process_ForEach(EventScript, invoker, target);
+						Process_ForEach(EventScript, info, Position);
 						break;
 					case 0x8003: //ELSE
 						bParam = CallStack.pop();
@@ -294,6 +201,63 @@ package Game.Scripting {
 			}
 		}
 		
+		private function ProcessMathCommand(eventScript:ByteArray, info:ScriptInstance):void {
+			var SaveVarType:int = eventScript.readUnsignedShort();
+			var SaveVarID:int = eventScript.readShort();
+			
+			var runningTally:int = 0;
+			var nextValue:int = 0;
+			var currentOperation:int = 0xB001; //Set operation to ADDITION
+			
+			var nextVarType:int;
+			
+			while (true) {
+				nextVarType = eventScript.readUnsignedShort();
+				
+				if (nextVarType == 0xBF01) break;
+				
+				if (nextVarType > 0xBFF0) { //is a variable
+					switch (nextVarType) {
+						case 0xBFFF: //Static value
+							nextValue = eventScript.readShort(); break;
+						case 0xBFFD: //Local variable
+							nextValue = info.Variables[eventScript.readShort()]; break;
+						case 0xBFFE: //Global variable
+							//TODO: Update this when global variables are implemented.
+							break;
+						default:
+							trace("Unknown variable type");
+							break;
+					}
+					
+					//apply the operation :)
+					switch (currentOperation) {
+						case 0xB001: //Addition
+							runningTally += nextValue; break;
+						case 0xB002: //Subtraction
+							runningTally -= nextValue; break;
+						case 0xB003: //Multiplation
+							runningTally *= nextValue; break;
+						case 0xB004: //Division
+							runningTally /= nextValue; break;
+						case 0xB005: //Modulus
+							runningTally %= nextValue; break;
+						default:
+							trace("Unknown math operation!");
+							break;
+					}
+				} else { //is an operation hopefully
+					currentOperation = nextVarType;
+				}
+			}
+			
+			if (SaveVarType == 0xBFFD) { //Local variable
+				info.Variables[SaveVarID] = runningTally;
+			} else if (SaveVarType == 0xBFFE) {
+				//TODO: Implement this when global variables are added
+			}
+		}
+		
 		/**
 		 * Processes the conditionals for an IF block and returns true or false if that IF is processable
 		 * @param	eventScript	The current scriptblock we're processing.
@@ -301,7 +265,7 @@ package Game.Scripting {
 		 * @param	target	The target of the script if any
 		 * @return	How the IF evaluated, true or false.
 		 */
-		private function CanIf(eventScript:ByteArray, invoker:Object, target:Object):Boolean {
+		private function CanIf(eventScript:ByteArray, info:ScriptInstance, position:PointX):Boolean {
 			//Running values
 			var currentCalculatedValue:Boolean = true;
 			var currentUnprocessedValue:Boolean = true;
@@ -324,7 +288,7 @@ package Game.Scripting {
 						ended = true;
 						break;
 					case 0xF0FD:
-						currentUnprocessedValue = CanIf(eventScript, invoker, target);
+						currentUnprocessedValue = CanIf(eventScript, info, position);
 						trace("\nNested IF:" + currentUnprocessedValue);
 						break;
 					case 0x7000: currentOperation = 0; break; //AND
@@ -335,44 +299,34 @@ package Game.Scripting {
 						currentUnprocessedValue = Math.random() * 100 < param0;
 						break;
 					case 0x7004: //Is the script owner alive
-						if (invoker is BaseCritter) {
-							currentUnprocessedValue = (invoker as BaseCritter).CurrentHP > 0;
+						if (info.CurrentTarget is BaseCritter) {
+							currentUnprocessedValue = (info.CurrentTarget as BaseCritter).CurrentHP > 0;
 						} else {
-							trace("Unknown Invoker for 'Alive'");
+							currentUnprocessedValue = true;
 						} break;
 					case 0x7005: //Is an item equipped
-						if (invoker is CritterHuman) {
-							currentUnprocessedValue = (invoker as CritterHuman).Equipment.IsEquipped(eventScript.readUnsignedShort(), eventScript.readUnsignedShort());
+						if (info.CurrentTarget is CritterHuman) {
+							currentUnprocessedValue = (info.CurrentTarget as CritterHuman).Equipment.IsEquipped(eventScript.readUnsignedShort(), eventScript.readUnsignedShort());
 						} else {
 							trace("Unknown invoker for if equipped");
 						}
 						break;
 					case 0x7006: //Is an animation playing
-						param0 = eventScript.readUnsignedShort();
-						if (target is CritterAnimationSet) {
-							currentUnprocessedValue = (target as CritterAnimationSet).CurrentAnim() == param0;
-						} else if (target is EquipmentItem) {
-							currentUnprocessedValue = (target as EquipmentItem).currentState == param0;
-						} else {
-							trace("\t@0x7006: Unknown target for Animation(playing)");
-						} break;
+						currentUnprocessedValue = (info.CurrentTarget.GetCurrentState() == eventScript.readUnsignedShort()); break;
 					case 0x7007: //What direction am I facing
-						param0 = eventScript.readUnsignedShort();
-						if (invoker is BaseCritter) {
-							currentUnprocessedValue = ((invoker as BaseCritter).direction == param0);
-						} else if (invoker is EffectInstance) {
-							currentUnprocessedValue = ((invoker as EffectInstance).Direction == param0);
-						} else {
-							trace("\t@0x7007: Unknown invoker for Direction(facing)");
-						} break;
-					case 0x7008: //What is the current frame
-						param0 = eventScript.readUnsignedShort();
-						if (invoker is ObjectInstanceAnimated) {
-							currentUnprocessedValue = ((invoker as ObjectInstanceAnimated).CurrentFrame == param0);
-						} else if (invoker is ObjectInstance) {
-							currentUnprocessedValue = ((invoker as ObjectInstance).Template.CurrentFrame == param0);
-						} else {
-							trace("Unknown invoker for 0x7008:CurrentFrame invoker=" + invoker);
+						currentUnprocessedValue = (position.D == eventScript.readUnsignedShort()); break;
+					case 0x7009: //Math comparison function
+						var value1:int = GetNumberFromVariable(eventScript, info);
+						var comparisonInstruction:int = eventScript.readUnsignedShort();
+						var value2:int = GetNumberFromVariable(eventScript, info);
+						
+						switch(comparisonInstruction) {
+							case 0xBE00: currentUnprocessedValue = (value1 == value2); break; // =
+							case 0xBE01: currentUnprocessedValue = (value1 < value2); break; // <
+							case 0xBE02: currentUnprocessedValue = (value1 > value2); break; // >
+							case 0xBE03: currentUnprocessedValue = (value1 <= value2); break; // <=
+							case 0xBE04: currentUnprocessedValue = (value1 >= value2); break; // >=
+							case 0xBE05: currentUnprocessedValue = (value1 != value2); break; // !=
 						} break;
 					default:
 						trace("@0x" + command.toString(16) + ": Unknown Conditional.");
@@ -399,7 +353,7 @@ package Game.Scripting {
 			return currentCalculatedValue;
 		}
 		
-		private function Process_ForEach(eventScript:ByteArray, invoker:Object, target:Object):void {
+		private function Process_ForEach(eventScript:ByteArray, info:ScriptInstance, position:PointX):void {
 			var eType:int = eventScript.readUnsignedShort();
 			var arrayType:int = eventScript.readUnsignedShort();
 			
@@ -418,55 +372,31 @@ package Game.Scripting {
 						dim1 = eventScript.readUnsignedShort() * 24;
 						dim2 = (arrayType == FRONTOFFSET)?eventScript.readShort() : 0;
 						
-						var direction:int = 0;
-						var xPos:int = 0;
-						var yPos:int = 0;
-						
-						if (invoker is BaseCritter) {
-							var obj0:BaseCritter = (invoker as BaseCritter);
-							xPos = obj0.X;
-							yPos = obj0.Y;
-							direction = obj0.direction;
-						} else if (invoker is EffectInstance) {
-							var obj1:EffectInstance = (invoker as EffectInstance);
-							xPos = obj1.X;
-							yPos = obj1.Y;
-							direction = obj1.Direction;
-						} else {
- 							trace("FRONT is not available to this system [" + invoker + "].");
-							break;
-						}
-							
-						if (direction < 2) { //Left or right
-							rect.X = (direction == 1)? xPos : xPos - dim0; //if right center else offcenter
-							rect.Y = yPos - dim1 / 2;
+						if (position.D < 2) { //Left or right
+							rect.X = (position.D == 1)? position.X : position.X - dim0; //if right center else offcenter
+							rect.Y = position.Y - dim1 / 2;
 							rect.W = dim0;
 							rect.H = dim1;
 						} else {
-							rect.X = xPos - dim1 / 2;
-							rect.Y = (direction == 3)? yPos : yPos - dim0; //if down center else offcenter
+							rect.X = position.X - dim1 / 2;
+							rect.Y = (position.D == 3)? position.Y : position.Y - dim0; //if down center else offcenter
 							rect.W = dim1;
 							rect.H = dim0;
 							
 							//calculate offsets
-							if (direction == 2) { //Up
+							if (position.D == 2) { //Up
 								rect.X += dim2;
 							} else { //Down
 								rect.X -= dim2;
 							}
 						}
 							
-						WorldData.CurrentMap.GetObjectsInArea(rect, Objects, eType, invoker);
+						WorldData.CurrentMap.GetObjectsInArea(rect, Objects, eType, info.CurrentTarget);
 						Drawer.AddDebugRect(rect);
 						
 						break;
 					case AOE:
-						dim0 = eventScript.readUnsignedShort() * 24;
-						dim1 = dim0;
-						
-						trace("AOE: " + dim0 + "x" + dim1);
-						
-						break;
+						dim0 = eventScript.readUnsignedShort() * 24; dim1 = dim0; break;
 					default:
 						trace("Unknown ArrayType.");
 						break;
@@ -488,7 +418,7 @@ package Game.Scripting {
 					switch(command) {
 						case 0x1003: //Damage
 							dim0 = eventScript.readUnsignedShort();
-							obj.ScriptAttack(false, false, dim0, (invoker as IMapObject));
+							obj.ScriptAttack(false, false, dim0, info.CurrentTarget);
 							break;
 					}
 					
@@ -501,19 +431,39 @@ package Game.Scripting {
 			ReadUntilBalancedClose(eventScript);
 		}
 		
+		
+		private function GetNumberFromVariable(eventScript:ByteArray, info:ScriptInstance):int {
+			var varType:int = eventScript.readUnsignedShort();
+			var varID:int = eventScript.readShort();
+			
+			if (varType == 0xBFFD) {
+				return info.Variables[varID];
+			} else if (varType == 0xBFFE) {
+				//TODO: Implement this when global variables are implemented
+			}
+			
+			return varID; //Hopefully is a static number
+		}
+		
 		//This function is responsible for reading scripts in and creating script objects
 		//that can be run later :)
 		public static function ReadScript(b:ByteArray):Script {
 			//Scripts have a short as the command followed (possibly) by parametres.
 			//The documentation below describes the parametres available. If you add more remember to add them there as well
 			// https://docs.google.com/a/lorgames.com/spreadsheet/ccc?key=0AseSUpYHHmpOdGtycW92djQ3UjhyTlM1QmxvbXp1Rmc#gid=13
-			
 			var command:uint = 0;
 			
 			var activeEvent:uint = 0;
 			var activeScript:ByteArray;
 			
 			var commandBlock:Vector.<ByteArray> = new Vector.<ByteArray>(TOTAL_EVENT_TYPES);
+			
+			var totalVariables:int = b.readShort();
+			var initialVariables:Vector.<int> = new Vector.<int>(totalVariables, true);
+			
+			while (--totalVariables > -1) {
+				initialVariables[totalVariables] = b.readShort();
+			}
 			
 			while (command != 0xFFFF) { //While not end of file
 				command = b.readUnsignedShort();
@@ -541,7 +491,8 @@ package Game.Scripting {
 				}
 			}
 			
-			return new Script(commandBlock);
+			return new Script(commandBlock, initialVariables);
+			initialVariables = null;
 		}
 		
 		static private function WriteUntilBalancedCloseBlock(b:ByteArray, activeScript:ByteArray):void {
@@ -576,6 +527,14 @@ package Game.Scripting {
 				} else if (i == 0xF0FE) { //Close block
 					level--;
 				}
+			}
+		}
+		
+		//This updates the scripts if they have Update OR Clock methods
+		internal static var UpdateScripts:Vector.<ScriptInstance> = new Vector.<ScriptInstance>();
+		public static function ProcessUpdate():void {
+			for (var i:int = 0; i < UpdateScripts.length; i++) {
+				UpdateScripts[i].Run(Script.Update);
 			}
 		}
 	}

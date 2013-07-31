@@ -1,30 +1,31 @@
 package Game.Critter {
+	import CollisionSystem.PointX;
 	import CollisionSystem.Rect;
 	import EngineTiming.Clock;
 	import EngineTiming.ICleanUp;
 	import EngineTiming.IUpdatable;
 	import flash.display.Graphics;
 	import flash.geom.Point;
-	import Game.Scripting.Script;
 	import Game.Map.MapData;
 	import Game.Map.Portals.Portal;
 	import Game.Map.Tiles.TileHelper;
 	import Game.Map.Tiles.TileInstance;
 	import Game.Map.Tiles.TileTemplate;
 	import Game.Map.WorldData;
+	import Game.Scripting.IScriptTarget;
+	import Game.Scripting.Script;
+	import Game.Scripting.ScriptInstance;
 	import Interfaces.IMapObject;
-	import RenderSystem.Renderman;
 	/**
 	 * ...
 	 * @author Paul
 	 */
-	public class BaseCritter implements IUpdatable, IMapObject, ICleanUp, ICritterOwner {
-		public var direction:int = 3;
+	public class BaseCritter implements IUpdatable, IMapObject, ICleanUp, IScriptTarget {
 		public var state:int = 0;
 		protected var ControlsLocked:Boolean = false;
 		
 		public var Persistent:Boolean = false;
-		public var Owner:ICritterOwner;
+		public var Owner:IScriptTarget;
 		
 		//Current state information
 		public var isMoving:Boolean = false;
@@ -40,9 +41,11 @@ package Game.Critter {
 		
 		public var X:int = 0;
 		public var Y:int = 0;
+		public var direction:int = 3;
+		
 		public var MyRect:Rect;
 		
-		public var MyScript:Script;
+		public var MyScript:ScriptInstance;
 		
 		//Critter information
 		public var MyAIType:int;
@@ -275,32 +278,9 @@ package Game.Critter {
 			return MyRect.intersects(other);
 		}
 		
-		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IMapObject):void {
-			if(MyScript != null) {
-				MyScript.Run(Script.Attacked, this, attacker);
-			}
-			
-			//TODO: This should do something else :)
-			if (isDOT && isPercent) {
-				
-			} else if (isPercent) {
-				
-			} else if (isDOT) {
-				
-			} else {
-				//Flat damage
-				CurrentHP -= amount;
-				
-				if (CurrentHP < 1) {
-					Died();
-					Clock.CleanUpList.push(this);
-				}
-			}
-		}
-		
 		public function Died():void {
 			if (MyScript != null) {
-				MyScript.Run(Script.Died, this);
+				MyScript.Run(Script.Died);
 			}
 			
 			if (Owner != null) {
@@ -322,10 +302,46 @@ package Game.Critter {
 			Clock.I.Remove(this);
 		}
 		
+		/* INTERFACE Game.Scripting.IScriptTarget */
+		
 		public function AlertMinionDeath(minion:BaseCritter):void {
-			if(CurrentHP > 0) {
-				MyScript.Run(Script.MinionDied, this, minion);
+			if (CurrentHP > 0) {
+				MyScript.Run(Script.MinionDied);
 			}
 		}
+		
+		public function ChangeState(stateID:int, isLooping:Boolean):void { /* Possibly needs to be handed on to children. */ }
+		public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void { /* Definately needs to be handed down to children. */ }
+		public function GetCurrentState():int { /* Needs to be handed down */ return 0; }
+		
+		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IScriptTarget):void {
+			if(MyScript != null) {
+				MyScript.Run(Script.Attacked);
+			}
+			
+			//TODO: This should do something else :)
+			if (isDOT && isPercent) {
+				
+			} else if (isPercent) {
+				
+			} else if (isDOT) {
+				
+			} else {
+				//Flat damage
+				CurrentHP -= amount;
+				
+				if (CurrentHP < 1) {
+					Died();
+					Clock.CleanUpList.push(this);
+				}
+			}
+		}
+		
+		public function UpdatePointX(position:PointX):void {
+			position.X = X;
+			position.Y = Y;
+			position.D = direction;
+		}
+		
 	}
 }

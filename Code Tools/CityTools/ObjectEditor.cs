@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using ToolCache.Map.Objects;
 using ToolCache.General;
 using CityTools.Components;
+using ToolCache.Animation;
 
 namespace CityTools {
     public partial class ObjectEditor : Form {
@@ -31,7 +32,7 @@ namespace CityTools {
             ccAnimation.ClearAnimation();
             ccAnimation.AnimationChanged += AnimationChanged;
 
-            scriptBox1.ScriptUpdated += ValueChanged;
+            scriptBox.ScriptUpdated += ValueChanged;
 
             UpdateObjectNames();
             ChangeTo(-1);
@@ -59,19 +60,28 @@ namespace CityTools {
                 CurrentObject.ObjectID = MapObjectCache.NextID();
             }
 
-            ccAnimation.ChangeToAnimation(CurrentObject.Animation);
+            ccAnimation.ChangeToAnimation(CurrentObject.Animations["Default"]);
             cbTemplateGroup.Text = CurrentObject.ObjectGroup;
             txtTemplateName.Text = CurrentObject.ObjectName;
             numOffsetHeight.Value = CurrentObject.OffsetY;
             ckbIsSolid.Checked = CurrentObject.isSolid;
-            scriptBox1.Script = CurrentObject.Script;
+            scriptBox.Script = CurrentObject.Script;
             ckIndividualAnimations.Checked = CurrentObject.IndividualAnimations;
-            ckbAnimatedInTool.Checked = CurrentObject.AnimateInTool;
+            RefillAnimationNames();
 
             lblTemplateID.Text = "N:" + CurrentObject.ObjectID;
 
             _isUpdating = false;
             _isEdited = false;
+        }
+
+        private void RefillAnimationNames() {
+            cbAnimationName.Items.Clear();
+            foreach (String s in CurrentObject.Animations.Keys) {
+                cbAnimationName.Items.Add(s);
+            }
+
+            cbAnimationName.SelectedIndex = 0;
         }
 
         private void btnSave_Click(object sender, EventArgs e) {
@@ -80,16 +90,12 @@ namespace CityTools {
 
         private void Save() {
             if (CurrentObject != null) {
-                CurrentObject.Animation = ccAnimation.GetAnimation();
                 CurrentObject.ObjectGroup = cbTemplateGroup.Text;
                 CurrentObject.ObjectName = txtTemplateName.Text;
                 CurrentObject.OffsetY = (int)numOffsetHeight.Value;
                 CurrentObject.isSolid = ckbIsSolid.Checked;
-                CurrentObject.Script = scriptBox1.Script;
+                CurrentObject.Script = scriptBox.Script;
                 CurrentObject.IndividualAnimations = ckIndividualAnimations.Checked;
-
-                CurrentObject.AnimateInTool = ckbAnimatedInTool.Checked;
-                CurrentObject.Animation.Paused = !CurrentObject.AnimateInTool;
 
                 if (_isNew) {
                     MapObjectCache.AddObject(CurrentObject);
@@ -244,6 +250,26 @@ namespace CityTools {
             if (OnSave != null) {
                 OnSave(this, CurrentObject.ObjectID);
             }
+        }
+
+        private void cbAnimationName_TextChanged(object sender, EventArgs e) {
+            if (CurrentObject != null && !_isUpdating) {
+                List<String> badAnims = CurrentObject.CleanUpAnimations();
+                foreach (String s in badAnims) {
+                    cbAnimationName.Items.Remove(s);
+                }
+
+                if (!CurrentObject.Animations.ContainsKey(cbAnimationName.Text)) {
+                    CurrentObject.Animations.Add(cbAnimationName.Text, new AnimatedObject());
+                    cbAnimationName.Items.Add(cbAnimationName.Text);
+                }
+
+                ccAnimation.ChangeToAnimation(CurrentObject.Animations[cbAnimationName.Text]);
+            }
+        }
+
+        private void scriptBox_BeforeParse(object sender, ScriptInfoArgs e) {
+            e.Info.AnimationNames.AddRange(CurrentObject.Animations.Keys);
         }
     }
 }

@@ -1,21 +1,26 @@
 package Game.Map.Objects {
+	import CollisionSystem.PointX;
 	import CollisionSystem.Rect;
 	import EngineTiming.ICleanUp;
 	import flash.display.Bitmap;
+	import Game.Critter.BaseCritter;
+	import Game.Map.MapData;
+	import Game.Map.Tiles.TileHelper;
+	import Game.Map.Tiles.TileInstance;
+	import Game.Scripting.IScriptTarget;
 	import Game.Scripting.Script;
+	import Game.Scripting.ScriptInstance;
 	import Interfaces.IMapObject;
 	import RenderSystem.IObjectLayer;
-	import Game.Map.MapData;
-	import Game.Map.Tiles.TileInstance;
-	import Game.Map.Tiles.TileHelper;
 	/**
 	 * ...
 	 * @author Paul
 	 */
-	public class ObjectInstance extends Bitmap implements IObjectLayer, IMapObject, ICleanUp {
+	public class ObjectInstance extends Bitmap implements IObjectLayer, IMapObject, ICleanUp, IScriptTarget {
 		public var ID:int = -1;
 		public var Template:ObjectTemplate;
 		public var Map:MapData;
+		public var MyScript:ScriptInstance;
 		
 		protected var FullBase:Rect
 		
@@ -28,6 +33,7 @@ package Game.Map.Objects {
 			Map = map;
 			ID = id;
 			Template = ObjectTemplate.Objects[ID];
+			MyScript = new ScriptInstance(Template.MyScript, this);
 			
 			this.bitmapData = Template.GetBitmap();
 			
@@ -35,8 +41,6 @@ package Game.Map.Objects {
 			this.y = _y;
 			
 			AttachToTiles();
-			
-			Template.MyScript.Run(Script.Spawn, this);
 		}
 		
 		public function AttachToTiles():void {
@@ -51,9 +55,14 @@ package Game.Map.Objects {
 			FullBase.W = 0;
 			FullBase.H = 0;
 			
+			var rect:Rect = new Rect(true, this);
+			
 			if (Template.isSolid) {
 				while (--totalRects > -1) {
-					var rect:Rect = new Rect(true, this, this.x + Template.Bases[totalRects].x, this.y + Template.Bases[totalRects].y, Template.Bases[totalRects].width, Template.Bases[totalRects].height);
+					rect.X = this.x + Template.Bases[totalRects].x;
+					rect.Y = this.y + Template.Bases[totalRects].y;
+					rect.W = Template.Bases[totalRects].width;
+					rect.H = Template.Bases[totalRects].height;
 					
 					tiles = TileHelper.GetTiles(rect, Map);
 					i = tiles.length;
@@ -125,8 +134,16 @@ package Game.Map.Objects {
 			return "[OBJ=" + Template.ObjectID + "]";
 		}
 		
-		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IMapObject):void {
-			Template.MyScript.Run(Script.Attacked, this, attacker);
+		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IScriptTarget):void {
+			MyScript.AttachTarget(attacker);
+			MyScript.Run(Script.Attacked);
+			MyScript.PopTarget();
+		}
+		
+		public function UpdatePointX(position:PointX):void {
+			position.X = this.x;
+			position.Y = this.y;
+			position.D = 3; //Set to DOWN so the scripts kinda work :)
 		}
 		
 		public function CleanUp():void {
@@ -143,6 +160,26 @@ package Game.Map.Objects {
 				Map = null;
 				FullBase = null;
 			}
+		}
+		
+		/* INTERFACE Game.Scripting.IScriptTarget */
+		
+		public function ChangeState(stateID:int, isLooping:Boolean):void {
+			//TODO: implement this so that the global setup works correctly.
+		}
+		
+		public function AlertMinionDeath(baseCritter:BaseCritter):void {
+			MyScript.Run(Script.MinionDied);
+		}
+		
+		public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void {
+			//TODO: fix this so that playback speed isn't modifying the global speed
+			Template.PlaybackSpeed[0] = newAnimationSpeed;
+		}
+		
+		public function GetCurrentState():int {
+			//TODO: this
+			return 0;
 		}
 		
 	}

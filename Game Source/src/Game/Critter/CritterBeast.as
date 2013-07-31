@@ -3,6 +3,7 @@ package Game.Critter {
 	import Game.Scripting.Script;
 	import Game.Map.MapData;
 	import Game.Map.WorldData;
+	import Game.Scripting.ScriptInstance;
 	import Interfaces.IMapObject;
 	import RenderSystem.Camera;
 	import RenderSystem.Renderman;
@@ -34,10 +35,8 @@ package Game.Critter {
 			MovementSpeed = MyInfo.MovementSpeed;
 			AlertRange = MyInfo.AlertRange*MyInfo.AlertRange;
 			
-			MyScript = Info.AICommands;
+			MyScript = new ScriptInstance(Info.AICommands, this);
 			MyAIType = Info.AIType;
-			
-			MyScript.Run(Script.Spawn, this, Animation);
 		}
 		
 		public override function Update(dt:Number):void {
@@ -67,15 +66,15 @@ package Game.Critter {
 			
 			if (_m != isMoving) {
 				if (isMoving) {
-					MyScript.Run(Script.StartMoving, this, Animation);
+					MyScript.Run(Script.StartMoving);
 				} else {
-					MyScript.Run(Script.EndMoving, this, Animation);
+					MyScript.Run(Script.EndMoving);
 				}
 			}
 		}
 		
 		override public function RequestBasicAttack():void {
-			if (!ControlsLocked) MyScript.Run(Script.Attack, this, Animation);
+			if (!ControlsLocked) MyScript.Run(Script.Attack);
 		}
 		
 		public function toString():String {

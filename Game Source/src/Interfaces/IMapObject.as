@@ -1,5 +1,6 @@
 package Interfaces {
 	import CollisionSystem.Rect;
+	import Game.Scripting.IScriptTarget;
 	/**
 	 * ...
 	 * @author Paul
@@ -7,7 +8,6 @@ package Interfaces {
 	public interface IMapObject {
 		function GetUnion():Rect;
 		function HasPerfectCollision(other:Rect):Boolean;
-		
-		function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IMapObject):void;
+		function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IScriptTarget):void;
 	}
 }

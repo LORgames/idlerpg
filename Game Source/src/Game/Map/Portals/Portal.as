@@ -8,7 +8,7 @@ package Game.Map.Portals
 	 * ...
 	 * @author Paul
 	 */
-	public class Portal implements IMapObject {
+	public class Portal {
 		public var Entry:Rect;
 		public var ExitPoint:Point = new Point();
 		
@@ -18,7 +18,7 @@ package Game.Map.Portals
 		public var MapName:int;
 		
 		public function Portal(b:ByteArray) {
-			Entry = new Rect(true, this);
+			Entry = new Rect(true, null);
 			
 			//portal id
 			ID = b.readShort();
@@ -33,18 +33,6 @@ package Game.Map.Portals
 			Entry.Y = b.readShort();
 			Entry.W = b.readShort();
 			Entry.H = b.readShort();
-		}
-		
-		public function GetUnion():Rect {
-			return Entry;
-		}
-		
-		public function HasPerfectCollision(other:Rect):Boolean {
-			return Entry.intersects(other);
-		}
-		
-		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IMapObject):void {
-			trace("Why you retarded!");
 		}
 		
 		public function CleanUp():void {

@@ -1,8 +1,8 @@
 package Game.Map.Objects {
 	import adobe.utils.CustomActions;
 	import flash.display.BitmapData;
-	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import flash.geom.Vector3D;
 	import flash.utils.ByteArray;
 	import Game.General.BinaryLoader;
 	import Game.General.ImageLoader;
@@ -18,10 +18,10 @@ package Game.Map.Objects {
 		public var ObjectID:int;
 		public var Name:String;
 		
-		public var TotalFrames:int;
-		public var PlaybackSpeed:Number;
-		public var IndividualAnimations:Boolean = false;
+		public var TotalFrames:Vector.<int>;
+		public var PlaybackSpeed:Vector.<Number>;
 		public var Bases:Vector.<Rectangle>;
+		public var IndividualAnimations:Boolean = false;
 		
 		public var MyScript:Script;
 		
@@ -33,7 +33,14 @@ package Game.Map.Objects {
 		public var SpriteAtlas:BitmapData;
 		
 		private var timeout:Number = 0;
-		public var CurrentFrame:int = 0;
+		
+		private var CurrentFrame:int = 0;
+		private var StartFrame:int = 0;
+		private var EndFrame:int = 0;
+		
+		public var SpriteSizeW:int;
+		public var SpriteSizeH:int;
+		
 		public var FrameSize:Rectangle = new Rectangle();
 		
 		private var Instances:int = 0;
@@ -65,7 +72,8 @@ package Game.Map.Objects {
 				
 				isLoading = false;
 				
-				if (TotalFrames > 1) {
+				//Only has 1 state for non-instanced animation
+				if (TotalFrames[1] > 1) {
 					Renderman.AnimatedObjectsRemove(this);
 				}
 			}
@@ -76,7 +84,8 @@ package Game.Map.Objects {
 			bitmapCopy.copyPixels(e, FrameSize, Global.ZeroPoint);
 			Global.LoadingTotal--;
 			
-			if (TotalFrames > 1) {
+			//Only has 1 state for non-instanced animation
+			if (TotalFrames[1] > 1) {
 				Renderman.AnimatedObjectsPush(this);
 			}
 		}
@@ -84,11 +93,12 @@ package Game.Map.Objects {
 		public function UpdateAnimation(dt:Number):void {
 			timeout += dt;
 			
-			if (timeout > PlaybackSpeed) {
-				while(timeout > PlaybackSpeed) {
-					timeout -= PlaybackSpeed;
+			//Only has 1 state for non-instanced animation
+			if (timeout > PlaybackSpeed[0]) {
+				while(timeout > PlaybackSpeed[0]) {
+					timeout -= PlaybackSpeed[0];
 					CurrentFrame++;
-					if (CurrentFrame == TotalFrames) CurrentFrame = 0;
+					if (CurrentFrame == TotalFrames[1]) CurrentFrame = 0;
 				}
 				
 				FrameSize.x = CurrentFrame * FrameSize.width;
@@ -115,11 +125,26 @@ package Game.Map.Objects {
 				
 				obj.ObjectID = i;
 				obj.Name = BinaryLoader.GetString(b);
-				obj.TotalFrames = b.readByte();
+				
+				var totalFrames:int = b.readByte();
+				obj.TotalFrames = new Vector.<int>(totalFrames + 1, true);
+				obj.PlaybackSpeed = new Vector.<Number>(totalFrames, true);
+				
+				obj.TotalFrames[0] = 0; //Always push 0 onto the bottom of the pile so that it starts at 0
+				
+				for (var j:int = 0; j < totalFrames; j++) {
+					obj.TotalFrames[j + 1] = b.readByte() + obj.TotalFrames[j];
+					obj.PlaybackSpeed[j] = b.readFloat();
+				}
+				
+				obj.FrameSize.width = b.readShort();
+				obj.FrameSize.height = b.readShort();
+				obj.SpriteSizeW = b.readShort();
+				obj.SpriteSizeH = b.readShort();
 				
 				obj.OffsetHeight = b.readShort();
 				
-				obj.MyScript = Script.ReadScript(b);
+				obj.bitmapCopy = new BitmapData(obj.FrameSize.width, obj.FrameSize.height, true, 0x608080FF);
 				
 				totalRects = b.readByte();
 				
@@ -138,11 +163,7 @@ package Game.Map.Objects {
 				obj.isSolid = (extraData & 0x1) == 0x1;
 				obj.IndividualAnimations = (extraData & 0x2) == 0x2;
 				
-				obj.FrameSize.width = b.readShort();
-				obj.FrameSize.height = b.readShort();
-				obj.PlaybackSpeed = b.readFloat();
-				
-				obj.bitmapCopy = new BitmapData(obj.FrameSize.width, obj.FrameSize.height, true, 0x608080FF);
+				obj.MyScript = Script.ReadScript(b);
 				
 				Objects[i] = obj;
 			}

@@ -1,23 +1,20 @@
 package Game.Equipment {
-	import flash.display.Bitmap;
-	import flash.display.BitmapData;
+	import CollisionSystem.PointX;
 	import flash.geom.Point;
-	import flash.geom.Rectangle;
-	import Game.Scripting.Script;
-	import RenderSystem.IAnimated;
-	import RenderSystem.Renderman;
+	import Game.Critter.BaseCritter;
+	import Game.Scripting.IScriptTarget;
+	import Game.Scripting.ScriptInstance;
 	/**
 	 * ...
 	 * @author Paul
 	 */
-	public class EquipmentItem {
+	public class EquipmentItem implements IScriptTarget {
 		public var Info:EquipmentInfo;
 		public var Owner:EquipmentSet;
+		public var MyScript:ScriptInstance;
 		
 		public var Layer:EquipmentItemLayer;
 		public var Layer2:EquipmentItemLayer;
-		
-		public var DestPoint:Point = new Point();
 		
 		public var currentState:int = 0;
 		
@@ -33,16 +30,12 @@ package Game.Equipment {
 		
 		public function SetInformation(equipment:EquipmentInfo):void {
 			Info = equipment;
+			MyScript = new ScriptInstance(equipment.MyScript, this);
+			
 			Info.LoadIfRequired();
 			
 			Layer.SetInformation(equipment);
 			if (Layer2 != null) Layer2.SetInformation(equipment);
-		}
-		
-		public function SetState(newState:int, loop:Boolean = true):void {
-			currentState = newState;
-			Layer.SetState(newState, loop);
-			if (Layer2 != null) Layer2.SetState(newState, loop);
 		}
 		
 		public function SetDirection(newDirection:int):void {
@@ -57,7 +50,7 @@ package Game.Equipment {
 				if (direction == 3) return Info.Offset_3;
 				return Info.Offset;
 			} else {
-				return DestPoint;
+				return Global.ZeroPoint;
 			}
 		}
 		
@@ -74,6 +67,37 @@ package Game.Equipment {
 			
 			Layer = null;
 			Layer2 = null;
+		}
+		
+		/* INTERFACE Game.Scripting.IScriptTarget */
+		
+		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IScriptTarget):void {
+			
+		}
+		
+		public function UpdatePointX(position:PointX):void {
+			position.X = Owner.Owner.X;
+			position.Y = Owner.Owner.Y;
+			position.D = Owner.Owner.direction;
+		}
+		
+		public function AlertMinionDeath(baseCritter:BaseCritter):void {
+			
+		}
+		
+		public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void {
+			Layer.PlaybackSpeed = newAnimationSpeed;
+			if (Layer2) Layer2.PlaybackSpeed = newAnimationSpeed;
+		}
+		
+		public function ChangeState(newState:int, loop:Boolean):void {
+			currentState = newState;
+			Layer.SetState(newState, loop);
+			if (Layer2 != null) Layer2.SetState(newState, loop);
+		}
+		
+		public function GetCurrentState():int {
+			return currentState;
 		}
 	}
 
