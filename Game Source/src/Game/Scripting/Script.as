@@ -233,19 +233,14 @@ package Game.Scripting {
 					//apply the operation :)
 					switch (currentOperation) {
 						case 0xB001: //Addition
-							trace("\tMathOp: " + runningTally + "+" + nextValue);
 							runningTally += nextValue; break;
 						case 0xB002: //Subtraction
-							trace("\tMathOp: " + runningTally + "-" + nextValue);
 							runningTally -= nextValue; break;
 						case 0xB003: //Multiplation
-							trace("\tMathOp: " + runningTally + "*" + nextValue);
 							runningTally *= nextValue; break;
 						case 0xB004: //Division
-							trace("\tMathOp: " + runningTally + "/" + nextValue);
 							runningTally /= nextValue; break;
 						case 0xB005: //Modulus
-							trace("\tMathOp: " + runningTally + "%" + nextValue);
 							runningTally %= nextValue; break;
 						default:
 							trace("Unknown math operation!");
@@ -257,7 +252,6 @@ package Game.Scripting {
 			}
 			
 			if (SaveVarType == 0xBFFD) { //Local variable
-				trace("MathUp: " + SaveVarID + " = " + runningTally);
 				info.Variables[SaveVarID] = runningTally;
 			} else if (SaveVarType == 0xBFFE) {
 				//TODO: Implement this when global variables are added
@@ -334,8 +328,6 @@ package Game.Scripting {
 							case 0xBE04: currentUnprocessedValue = (value1 >= value2); break; // >=
 							case 0xBE05: currentUnprocessedValue = (value1 != value2); break; // !=
 						}
-						
-						trace("Math Eq: " + value1 + " " + comparisonInstruction.toString(16) + " " + value2);
 						
 						break;
 					default:

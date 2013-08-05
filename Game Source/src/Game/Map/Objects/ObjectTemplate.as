@@ -38,8 +38,7 @@ package Game.Map.Objects {
 		private var StartFrame:int = 0;
 		private var EndFrame:int = 0;
 		
-		public var SpriteSizeW:int;
-		public var SpriteSizeH:int;
+		public var SpriteColumns:int;
 		
 		public var FrameSize:Rectangle = new Rectangle();
 		
@@ -139,8 +138,7 @@ package Game.Map.Objects {
 				
 				obj.FrameSize.width = b.readShort();
 				obj.FrameSize.height = b.readShort();
-				obj.SpriteSizeW = b.readShort();
-				obj.SpriteSizeH = b.readShort();
+				obj.SpriteColumns = b.readShort();
 				
 				obj.OffsetHeight = b.readShort();
 				
