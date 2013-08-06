@@ -442,4 +442,26 @@ namespace CityTools.Components {
             set { _cancel = value; }
         }
     }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct LVGROUP {
+        public int cbSize;
+        public int mask;
+        [MarshalAs(UnmanagedType.LPTStr)]
+        public string pszHeader;
+        public int cchHeader;
+        [MarshalAs(UnmanagedType.LPTStr)]
+        public string pszFooter;
+        public int cchFooter;
+        public int iGroupId;
+        public int stateMask;
+        public int state;
+        public int uAlign;
+    }
+
+    public enum GroupState {
+        COLLAPSIBLE = 8,
+        COLLAPSED = 1,
+        EXPANDED = 0
+    } 
 }

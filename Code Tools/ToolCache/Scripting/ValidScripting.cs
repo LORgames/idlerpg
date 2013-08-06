@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace ToolCache.Scripting {
     /// <summary>
@@ -35,9 +36,10 @@ namespace ToolCache.Scripting {
 
     public struct ScriptVariable {
         public string Name;
-        public short Index;
+        public int Index;
         public short InitialValue;
 
+        public ListViewItem lvi;
         public short TotalReferences;
     }
 }

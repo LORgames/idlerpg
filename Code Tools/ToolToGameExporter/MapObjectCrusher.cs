@@ -67,7 +67,6 @@ namespace ToolToGameExporter {
                 f.AddShort((short)sizeSprite.Height);
                 f.AddShort((short)(sizeTex.Width/sizeSprite.Width));
 
-                //TODO: Animation playback speeds
                 SpriteSheetHelper.PackAnimationsLinear(AnimationFrames, sizeSprite, sizeTex, "/Object_" + RealignedItemIndexes[t.ObjectID], false);
                 
                 f.AddShort((short)t.OffsetY);

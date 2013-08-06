@@ -700,7 +700,6 @@ namespace CityTools {
         }
 
         private void btnDuplicate_Click(object sender, EventArgs e) {
-            // TODO: this function
             if (currentEquipment != null && treeEquipmentList.SelectedNode.Tag != null) {
                 SaveIfRequired();
 

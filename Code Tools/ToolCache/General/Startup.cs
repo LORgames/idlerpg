@@ -13,11 +13,13 @@ using ToolCache.Critters;
 using ToolCache.UI;
 using ToolCache.Effects;
 using ToolCache.SaveSystem;
+using ToolCache.Scripting;
 
 namespace ToolCache.General {
     public class Startup {
         public static void GoGoGadget() {
             //Tier 0 Loading:
+            GlobalVariables.Initialize();
             SoundDatabase.Initialize();
             ElementManager.Initialize();
             Factions.Initialize();

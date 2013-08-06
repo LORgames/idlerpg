@@ -27,10 +27,9 @@
             this.txtScript = new System.Windows.Forms.RichTextBox();
             this.scriptContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.btnParse = new System.Windows.Forms.ToolStripMenuItem();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.btnTSParse = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.btnTSParse = new System.Windows.Forms.ToolStripButton();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.equipmentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.weaponsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,6 +42,7 @@
             this.simpleAttackInRangeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.effectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.arrowScriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnGlobalVariables = new System.Windows.Forms.ToolStripButton();
             this.scriptContextMenu.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -65,32 +65,33 @@
             this.scriptContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnParse});
             this.scriptContextMenu.Name = "scriptContextMenu";
-            this.scriptContextMenu.Size = new System.Drawing.Size(103, 26);
+            this.scriptContextMenu.Size = new System.Drawing.Size(113, 26);
             // 
             // btnParse
             // 
             this.btnParse.Name = "btnParse";
-            this.btnParse.Size = new System.Drawing.Size(102, 22);
+            this.btnParse.Size = new System.Drawing.Size(112, 22);
             this.btnParse.Text = "Parse";
             this.btnParse.Click += new System.EventHandler(this.btnParse_Click);
-            // 
-            // timer1
-            // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 2500;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel1,
             this.btnTSParse,
-            this.toolStripDropDownButton1});
+            this.toolStripDropDownButton1,
+            this.btnGlobalVariables});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(406, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(34, 22);
+            this.toolStripLabel1.Text = "Script";
             // 
             // btnTSParse
             // 
@@ -101,12 +102,6 @@
             this.btnTSParse.Size = new System.Drawing.Size(23, 22);
             this.btnTSParse.Text = "Test Script";
             this.btnTSParse.Click += new System.EventHandler(this.btnParse_Click);
-            // 
-            // toolStripLabel1
-            // 
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(34, 22);
-            this.toolStripLabel1.Text = "Script";
             // 
             // toolStripDropDownButton1
             // 
@@ -136,19 +131,19 @@
             this.slashAttackToolStripMenuItem,
             this.spearAttackToolStripMenuItem});
             this.weaponsToolStripMenuItem.Name = "weaponsToolStripMenuItem";
-            this.weaponsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.weaponsToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.weaponsToolStripMenuItem.Text = "Weapons";
             // 
             // slashAttackToolStripMenuItem
             // 
             this.slashAttackToolStripMenuItem.Name = "slashAttackToolStripMenuItem";
-            this.slashAttackToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.slashAttackToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.slashAttackToolStripMenuItem.Text = "Slash Attack";
             // 
             // spearAttackToolStripMenuItem
             // 
             this.spearAttackToolStripMenuItem.Name = "spearAttackToolStripMenuItem";
-            this.spearAttackToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.spearAttackToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.spearAttackToolStripMenuItem.Text = "Spear Attack";
             // 
             // bootsToolStripMenuItem
@@ -156,7 +151,7 @@
             this.bootsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.walkingScriptToolStripMenuItem});
             this.bootsToolStripMenuItem.Name = "bootsToolStripMenuItem";
-            this.bootsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.bootsToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.bootsToolStripMenuItem.Text = "Boots";
             // 
             // walkingScriptToolStripMenuItem
@@ -178,7 +173,7 @@
             this.beastToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.simpleAttackInRangeToolStripMenuItem});
             this.beastToolStripMenuItem.Name = "beastToolStripMenuItem";
-            this.beastToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.beastToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.beastToolStripMenuItem.Text = "Beast";
             // 
             // simpleAttackInRangeToolStripMenuItem
@@ -198,8 +193,18 @@
             // arrowScriptToolStripMenuItem
             // 
             this.arrowScriptToolStripMenuItem.Name = "arrowScriptToolStripMenuItem";
-            this.arrowScriptToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.arrowScriptToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.arrowScriptToolStripMenuItem.Text = "Arrow Script";
+            // 
+            // btnGlobalVariables
+            // 
+            this.btnGlobalVariables.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnGlobalVariables.Image = global::CityTools.Properties.Resources.text_list_numbers;
+            this.btnGlobalVariables.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnGlobalVariables.Name = "btnGlobalVariables";
+            this.btnGlobalVariables.Size = new System.Drawing.Size(23, 22);
+            this.btnGlobalVariables.Text = "Global Variables";
+            this.btnGlobalVariables.Click += new System.EventHandler(this.btnGlobalVariables_Click);
             // 
             // ScriptBox
             // 
@@ -222,7 +227,6 @@
         private System.Windows.Forms.RichTextBox txtScript;
         private System.Windows.Forms.ContextMenuStrip scriptContextMenu;
         private System.Windows.Forms.ToolStripMenuItem btnParse;
-        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton btnTSParse;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
@@ -238,5 +242,6 @@
         private System.Windows.Forms.ToolStripMenuItem simpleAttackInRangeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem effectsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem arrowScriptToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton btnGlobalVariables;
     }
 }

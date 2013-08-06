@@ -46,6 +46,8 @@ namespace ToolToGameExporter {
             try {
 #endif
                 //Precrush. No Dependancies.
+                UpdateEPF(epf, "Calculating Standard Deviation...", 1);
+                GlobalVariableCrusher.Go();
                 UpdateEPF(epf, "Counting Monsters...", 1);
                 CritterCrusher.Precrush();
                 UpdateEPF(epf, "Evaluating Projectiles...", 2);

@@ -7,41 +7,73 @@ using ToolCache.General;
 
 namespace ToolCache.Scripting {
     public class GlobalVariables {
-        public static DictionaryEx<String, ScriptVariable> Variables = new DictionaryEx<string, ScriptVariable>();
-        private static bool Changing = false;
+        public static DictionaryEx<string, ScriptVariable> Variables = new DictionaryEx<string, ScriptVariable>();
+        private static int nexthighestindex = 1;
 
         public static void Initialize() {
             Variables.Clear();
             LoadDatabase();
-
-            Variables.ItemsChanged += new EventHandler(Variables_ItemsChanged);
-        }
-
-        static void Variables_ItemsChanged(object sender, EventArgs e) {
-            if (!Changing) {
-                throw new Exception("Do not modify the Variables list directly!");
-            }
         }
 
         private static void LoadDatabase() {
-            if (File.Exists(Settings.Database + "GlobalVariables.bin")) {
-                BinaryIO f = new BinaryIO(File.ReadAllBytes(Settings.Database + "GlobalVariables.bin"));
+            if (File.Exists(Settings.Database + "GlobalVariables.csv")) {
+                string[] lines = File.ReadAllLines(Settings.Database + "GlobalVariables.csv");
 
-                short totalVariables = f.GetShort();
-
-                while (--totalVariables < -1) {
+                foreach (String line in lines) {
                     ScriptVariable s = new ScriptVariable();
-                    s.Name = f.GetString();
-                    s.Index = f.GetShort();
-                    s.InitialValue = f.GetShort();
-                }
+                    string[] lineBits = line.Trim().Split(',');
 
-                f.Dispose();
+                    if (lineBits.Length != 3) {
+                        continue;
+                    }
+                    
+                    s.Name = lineBits[0];
+                    int.TryParse(lineBits[1], out s.Index);
+                    short.TryParse(lineBits[2], out s.InitialValue);
+
+                    AddToDatabase(s);
+                }
             }
         }
 
-        public static void AddToDatabase(ScriptVariable s) {
+        public static void SaveDatabase() {
+            List<string> keys = Variables.Keys.ToList<string>();
+            keys.Sort();
 
+            List<string> rows = new List<string>();
+
+            for (int i = 0; i < keys.Count; i++) {
+                rows.Add(keys[i] + "," + Variables[keys[i]].Index + "," + Variables[keys[i]].InitialValue);
+            }
+
+            File.WriteAllLines(Settings.Database + "GlobalVariables.csv", rows);
+        }
+
+        public static void AddToDatabase(ScriptVariable s) {
+            if (s.lvi == null) {
+                s.lvi = new System.Windows.Forms.ListViewItem();
+                s.lvi.Text = s.Name;
+                s.lvi.Tag = s;
+                s.lvi.SubItems.Add(s.InitialValue.ToString());
+            }
+
+            if (s.Index == 0) {
+                s.Index = nexthighestindex;
+            }
+
+            if (s.Index >= nexthighestindex) {
+                nexthighestindex = s.Index + 1;
+            }
+
+            Variables.Add(s.Name, s);
+        }
+
+        public static void UpdatedVariable(string key) {
+            //TODO: this
+        }
+
+        public static int HighestRequiredIndex() {
+            return nexthighestindex;
         }
     }
 }

@@ -277,6 +277,10 @@ namespace ToolCache.Scripting {
                         if (info.Variables.ContainsKey(m.Groups[1].Value)) {
                             AdditionalBytecode.Add(0xBFFD);
                             AdditionalBytecode.Add((ushort)info.Variables[m.Groups[1].Value].Index);
+                        } else if (GlobalVariables.Variables.ContainsKey(m.Groups[1].Value)) {
+                            //TODO: Update this possibly
+                            AdditionalBytecode.Add(0xBFFE);
+                            AdditionalBytecode.Add((ushort)GlobalVariables.Variables[m.Groups[1].Value].Index);
                         } else {
                             info.Errors.Add("No variable called: " + m.Groups[1].Value);
                         }
@@ -315,6 +319,9 @@ namespace ToolCache.Scripting {
                                             if (info.Variables.ContainsKey(mathBit)) {
                                                 AdditionalBytecode.Add(0xBFFD);
                                                 AdditionalBytecode.Add((ushort)info.Variables[mathBit].Index);
+                                            } else if (GlobalVariables.Variables.ContainsKey(mathBit)) {
+                                                AdditionalBytecode.Add(0xBFFE);
+                                                AdditionalBytecode.Add((ushort)GlobalVariables.Variables[mathBit].Index);
                                             }
                                         } else {
                                             info.Errors.Add("Cannot find a variable called: " + mathBit[0]);
@@ -555,8 +562,7 @@ namespace ToolCache.Scripting {
         }
 
         private bool VariableExists(string p, ScriptInfo Info) {
- 	        //throw new NotImplementedException();
-            return Info.Variables.ContainsKey(p);
+            return (Info.Variables.ContainsKey(p) || GlobalVariables.Variables.ContainsKey(p));
         }
 
         /// <summary>
