@@ -298,8 +298,10 @@ package Game.Critter {
 			if(CurrentMap != null) CurrentMap.CritterPop(this);
 			MyRect = null;
 			
-			MyScript.CleanUp();
-			MyScript = null;
+			if(MyScript != null) {
+				MyScript.CleanUp();
+				MyScript = null;
+			}
 			
 			Clock.I.Remove(this);
 		}

@@ -57,6 +57,7 @@
             this.ckbExportDebugRender = new System.Windows.Forms.ToolStripMenuItem();
             this.ckbExportShowFPS = new System.Windows.Forms.ToolStripMenuItem();
             this.ckbExportMusicEnabled = new System.Windows.Forms.ToolStripMenuItem();
+            this.cbExportSave = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.btnViewMenu = new System.Windows.Forms.ToolStripDropDownButton();
             this.mnuShowGrids = new System.Windows.Forms.ToolStripMenuItem();
@@ -125,7 +126,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtPieceName = new System.Windows.Forms.TextBox();
             this.tabTerrain = new System.Windows.Forms.TabPage();
-            this.treeTiles = new System.Windows.Forms.TreeView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.numBrushSize = new System.Windows.Forms.NumericUpDown();
             this.label22 = new System.Windows.Forms.Label();
@@ -138,7 +138,7 @@
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.timerRedrawAll = new System.Windows.Forms.Timer(this.components);
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.cbExportSave = new System.Windows.Forms.ToolStripComboBox();
+            this.listTiles = new System.Windows.Forms.ListView();
             this.listCritterSpawns = new CityTools.Components.ListViewEx();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -411,6 +411,14 @@
             this.ckbExportMusicEnabled.Size = new System.Drawing.Size(181, 22);
             this.ckbExportMusicEnabled.Text = "Music Enabled";
             // 
+            // cbExportSave
+            // 
+            this.cbExportSave.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbExportSave.Items.AddRange(new object[] {
+            "No Save"});
+            this.cbExportSave.Name = "cbExportSave";
+            this.cbExportSave.Size = new System.Drawing.Size(121, 21);
+            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
@@ -480,6 +488,7 @@
             // txtViewportWidth
             // 
             this.txtViewportWidth.AutoToolTip = true;
+            this.txtViewportWidth.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.txtViewportWidth.Name = "txtViewportWidth";
             this.txtViewportWidth.Size = new System.Drawing.Size(100, 21);
             this.txtViewportWidth.Text = "800";
@@ -487,6 +496,7 @@
             // 
             // txtViewportHeight
             // 
+            this.txtViewportHeight.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.txtViewportHeight.Name = "txtViewportHeight";
             this.txtViewportHeight.Size = new System.Drawing.Size(100, 21);
             this.txtViewportHeight.Text = "600";
@@ -1099,7 +1109,7 @@
             // 
             // tabTerrain
             // 
-            this.tabTerrain.Controls.Add(this.treeTiles);
+            this.tabTerrain.Controls.Add(this.listTiles);
             this.tabTerrain.Controls.Add(this.panel1);
             this.tabTerrain.Location = new System.Drawing.Point(4, 22);
             this.tabTerrain.Name = "tabTerrain";
@@ -1108,15 +1118,6 @@
             this.tabTerrain.TabIndex = 2;
             this.tabTerrain.Text = "Terrain";
             this.tabTerrain.UseVisualStyleBackColor = true;
-            // 
-            // treeTiles
-            // 
-            this.treeTiles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeTiles.Location = new System.Drawing.Point(3, 36);
-            this.treeTiles.Name = "treeTiles";
-            this.treeTiles.Size = new System.Drawing.Size(273, 704);
-            this.treeTiles.TabIndex = 3;
-            this.treeTiles.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeTiles_AfterSelect);
             // 
             // panel1
             // 
@@ -1243,13 +1244,15 @@
             this.colorDialog.FullOpen = true;
             this.colorDialog.SolidColorOnly = true;
             // 
-            // cbExportSave
+            // listTiles
             // 
-            this.cbExportSave.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbExportSave.Items.AddRange(new object[] {
-            "No Save"});
-            this.cbExportSave.Name = "cbExportSave";
-            this.cbExportSave.Size = new System.Drawing.Size(121, 21);
+            this.listTiles.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listTiles.Location = new System.Drawing.Point(3, 36);
+            this.listTiles.Name = "listTiles";
+            this.listTiles.Size = new System.Drawing.Size(273, 704);
+            this.listTiles.TabIndex = 3;
+            this.listTiles.UseCompatibleStateImageBehavior = false;
+            this.listTiles.SelectedIndexChanged += new System.EventHandler(this.listTiles_SelectedIndexChanged);
             // 
             // listCritterSpawns
             // 
@@ -1421,7 +1424,6 @@
         private System.Windows.Forms.Label label22;
         internal System.Windows.Forms.NumericUpDown numBrushSize;
         internal System.Windows.Forms.Button btnSpawnRegionClearAreas;
-        internal System.Windows.Forms.TreeView treeTiles;
         internal System.Windows.Forms.ToolStripMenuItem btnTileMerger;
         internal System.Windows.Forms.ToolStripMenuItem btnShadowTool;
         internal System.Windows.Forms.ToolStripSplitButton btnExport;
@@ -1432,6 +1434,7 @@
         internal System.Windows.Forms.ToolStripMenuItem ckbExportMusicEnabled;
         internal System.Windows.Forms.ToolStripMenuItem btnSaveEditor;
         internal System.Windows.Forms.ToolStripComboBox cbExportSave;
+        internal System.Windows.Forms.ListView listTiles;
     }
 }
 

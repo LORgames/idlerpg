@@ -32,8 +32,10 @@ package Game.Map.Objects {
 		private var bitmapCopy:BitmapData;
 		public var SpriteAtlas:BitmapData;
 		
+		private var isAddedToAnimatedList:Boolean = false;
 		private var timeout:Number = 0;
 		
+		private var CurrentAnimation:int = 0;
 		private var CurrentFrame:int = 0;
 		private var StartFrame:int = 0;
 		private var EndFrame:int = 0;
@@ -71,37 +73,64 @@ package Game.Map.Objects {
 				
 				isLoading = false;
 				
-				//Only has 1 state for non-instanced animation
-				if (TotalFrames[1] > 1) {
+				if (isAddedToAnimatedList) {
 					Renderman.AnimatedObjectsRemove(this);
+					isAddedToAnimatedList = false;
 				}
 			}
 		}
 		
 		private function LoadedBitmap(e:BitmapData):void {
 			SpriteAtlas = e.clone();
-			bitmapCopy.copyPixels(e, FrameSize, Global.ZeroPoint);
 			Global.LoadingTotal--;
-			
-			//Only has 1 state for non-instanced animation
-			if (TotalFrames[1] > 1) {
-				Renderman.AnimatedObjectsPush(this);
-			}
+			ChangeState(0);
 		}
 		
 		public function UpdateAnimation(dt:Number):void {
 			timeout += dt;
 			
 			//Only has 1 state for non-instanced animation
-			if (timeout > PlaybackSpeed[0]) {
-				while(timeout > PlaybackSpeed[0]) {
-					timeout -= PlaybackSpeed[0];
+			if (timeout > PlaybackSpeed[CurrentAnimation]) {
+				while(timeout > PlaybackSpeed[CurrentAnimation]) {
+					timeout -= PlaybackSpeed[CurrentAnimation];
 					CurrentFrame++;
-					if (CurrentFrame == TotalFrames[1]) CurrentFrame = 0;
+					if (CurrentFrame == EndFrame) CurrentFrame = StartFrame;
 				}
 				
-				FrameSize.x = CurrentFrame * FrameSize.width;
+				FrameSize.x = (int)(CurrentFrame % SpriteColumns) * FrameSize.width;
+				FrameSize.y = (int)(CurrentFrame / SpriteColumns) * FrameSize.height;
+				
 				bitmapCopy.copyPixels(SpriteAtlas, FrameSize, Global.ZeroPoint);
+			}
+		}
+		
+		public function ChangeState(stateID:int):void {
+			CurrentAnimation = stateID;
+			timeout = PlaybackSpeed[stateID];
+			StartFrame = TotalFrames[stateID];
+			EndFrame = TotalFrames[stateID + 1]-1;
+			
+			CurrentFrame = StartFrame;
+			
+			if(bitmapCopy != null) {
+				FrameSize.x = (int)(CurrentFrame % SpriteColumns) * FrameSize.width;
+				FrameSize.y = (int)(CurrentFrame / SpriteColumns) * FrameSize.height;
+				
+				if(SpriteAtlas != null) {
+					bitmapCopy.copyPixels(SpriteAtlas, FrameSize, Global.ZeroPoint);
+				}
+			}
+			
+			UpdateAnimationState();
+		}
+		
+		private function UpdateAnimationState():void {
+			if (!isAddedToAnimatedList && EndFrame-StartFrame > 1) {
+				Renderman.AnimatedObjectsPush(this);
+				isAddedToAnimatedList = true;
+			} else if (isAddedToAnimatedList && EndFrame-StartFrame < 2) {
+				Renderman.AnimatedObjectsRemove(this);
+				isAddedToAnimatedList = false;
 			}
 		}
 		

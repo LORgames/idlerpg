@@ -165,7 +165,11 @@ package Game.Map.Objects {
 		/* INTERFACE Game.Scripting.IScriptTarget */
 		
 		public function ChangeState(stateID:int, isLooping:Boolean):void {
-			//TODO: implement this so that the global setup works correctly.
+			if(isLooping) {
+				Template.ChangeState(stateID);
+			} else {
+				throw new Error("Cannot have a non-looping animation on an object without individual animations!");
+			}
 		}
 		
 		public function AlertMinionDeath(baseCritter:BaseCritter):void {
@@ -178,8 +182,8 @@ package Game.Map.Objects {
 		}
 		
 		public function GetCurrentState():int {
-			//TODO: this
-			return 0;
+			//TODO: maybe this?
+			return 0;// Template.CurrentAnimation;
 		}
 		
 	}

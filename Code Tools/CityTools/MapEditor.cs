@@ -348,9 +348,9 @@ namespace CityTools {
             }
         }
 
-        private void treeTiles_AfterSelect(object sender, TreeViewEventArgs e) {
-            if (e.Node.Tag != null) {
-                DrawWithObject((e.Node.Tag as TileTemplate).TileID.ToString());
+        private void listTiles_SelectedIndexChanged(object sender, EventArgs e) {
+            if (listTiles.SelectedItems.Count == 1 && listTiles.SelectedItems[0].Tag is TileTemplate) {
+                DrawWithObject((listTiles.SelectedItems[0].Tag as TileTemplate).TileID.ToString());
             }
         }
     }

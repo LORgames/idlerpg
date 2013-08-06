@@ -9,37 +9,39 @@ using ToolCache.General;
 
 namespace CityTools.CacheInterfaces {
     public class TileInterface {
-        public static Dictionary<string, TreeNode> groupNodes = new Dictionary<string, TreeNode>();
+        public static Dictionary<string, ListViewGroup> groupNodes = new Dictionary<string, ListViewGroup>();
 
         public static void Initialize() {
+            groupNodes.Clear();
+
             foreach (string group in TileCache.GetGroups()) {
-                groupNodes.Add(group, new TreeNode(group, -1, -1));
+                groupNodes.Add(group, new ListViewGroup(group));
                 foreach (TileTemplate tile in TileCache.GetTilesInGroup(group)) {
-                    if (MainWindow.instance.treeTiles.ImageList == null) {
-                        MainWindow.instance.treeTiles.ImageList = new ImageList();
-                        MainWindow.instance.treeTiles.ImageList.ImageSize = new System.Drawing.Size(48, 48);
-                        MainWindow.instance.treeTiles.ImageList.ColorDepth = ColorDepth.Depth32Bit;
+                    if (MainWindow.instance.listTiles.LargeImageList == null) {
+                        MainWindow.instance.listTiles.LargeImageList = new ImageList();
+                        MainWindow.instance.listTiles.LargeImageList.ImageSize = new System.Drawing.Size(48, 48);
+                        MainWindow.instance.listTiles.LargeImageList.ColorDepth = ColorDepth.Depth32Bit;
                     }
 
                     if (tile.Animation.Frames.Count != 0) {
-                        MainWindow.instance.treeTiles.ImageList.Images.Add(tile.Animation.Frames[0], ImageCache.RequestImage(tile.Animation.Frames[0]));
-                        int imageIndex = MainWindow.instance.treeTiles.ImageList.Images.IndexOfKey(tile.Animation.Frames[0]);
-                        if (groupNodes[group].ImageIndex == -1) {
+                        MainWindow.instance.listTiles.LargeImageList.Images.Add(tile.Animation.Frames[0], ImageCache.RequestImage(tile.Animation.Frames[0]));
+                        int imageIndex = MainWindow.instance.listTiles.LargeImageList.Images.IndexOfKey(tile.Animation.Frames[0]);
+                        /*if (groupNodes[group].ImageIndex == -1) {
                             groupNodes[group].ImageIndex = imageIndex;
                             groupNodes[group].SelectedImageIndex = imageIndex;
-                        }
-                        TreeNode temp = new TreeNode(tile.TileName, imageIndex, imageIndex);
+                        }*/
+                        ListViewItem temp = new ListViewItem(tile.TileName, imageIndex, groupNodes[group]);
                         temp.Tag = tile;
-                        groupNodes[group].Nodes.Add(temp);
+                        MainWindow.instance.listTiles.Items.Add(temp);
                     }
                 }
-                MainWindow.instance.treeTiles.Nodes.Add(groupNodes[group]);
+                MainWindow.instance.listTiles.Groups.Add(groupNodes[group]);
             }
         }
 
         internal static void ForceUpdate() {
-            MainWindow.instance.treeTiles.Nodes.Clear();
-            MainWindow.instance.treeTiles.ImageList.Images.Clear();
+            MainWindow.instance.listTiles.Groups.Clear();
+            MainWindow.instance.listTiles.LargeImageList.Images.Clear();
             Initialize();
         }
     }

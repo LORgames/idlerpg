@@ -18,6 +18,7 @@ package Game.Map.Objects {
 		public var CurrentFrame:int = 0;
 		public var CurrentState:int = 0;
 		
+		private var isAddedToAnimatedList:Boolean = false;
 		private var FrameTimeout:Number = 0;
 		public var PlaybackSpeed:Number = 0;
 		
@@ -26,7 +27,7 @@ package Game.Map.Objects {
 		
 		public function ObjectInstanceAnimated() {
 			super();
-			Renderman.AnimatedObjectsPush(this);
+			Renderman.DirtyObjects.push(this);
 		}
 		
 		override public function SetInformation(map:MapData, id:int, _x:int, _y:int):void {
@@ -49,14 +50,28 @@ package Game.Map.Objects {
 		override public function CleanUp():void {
 			super.CleanUp();
 			
+			if (isAddedToAnimatedList) {
+				Renderman.AnimatedObjectsRemove(this);
+				isAddedToAnimatedList = false;
+			}
+			
 			if(Template == null) {
 				this.bitmapData.dispose();
-				Renderman.AnimatedObjectsRemove(this);
 			}
 			
 			if(MyScript != null) {
 				MyScript.CleanUp();
 				MyScript = null;
+			}
+		}
+		
+		private function UpdateAnimationState():void {
+			if (!isAddedToAnimatedList && EndFrame-StartFrame > 1) {
+				Renderman.AnimatedObjectsPush(this);
+				isAddedToAnimatedList = true;
+			} else if (isAddedToAnimatedList && EndFrame-StartFrame < 2) {
+				Renderman.AnimatedObjectsRemove(this);
+				isAddedToAnimatedList = false;
 			}
 		}
 		
@@ -72,6 +87,10 @@ package Game.Map.Objects {
 						if(IsLooping) {
 							CurrentFrame = StartFrame;
 						} else {
+							StartFrame = EndFrame-1;
+							CurrentFrame = StartFrame;
+							UpdateAnimationState();
+							
 							MyScript.Run(Script.AnimationEnded);
 						}
 					}
@@ -115,10 +134,12 @@ package Game.Map.Objects {
 					this.bitmapData.copyPixels(Template.SpriteAtlas, CopyRect, Global.ZeroPoint);
 				}
 			}
+			
+			UpdateAnimationState();
 		}
 		
 		override public function GetCurrentState():int {
 			return CurrentState;
-		} 
+		}
 	}
 }

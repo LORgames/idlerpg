@@ -73,6 +73,18 @@ package Game.Critter {
 			}
 		}
 		
+		override public function ChangeState(stateID:int, isLooping:Boolean):void {
+			Animation.ChangeState(stateID, isLooping);
+		}
+		
+		override public function GetCurrentState():int {
+			return Animation.CurrentAnim();
+		}
+		
+		override public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void {
+			Animation.UpdateAnimation(newAnimationSpeed);
+		}
+		
 		override public function RequestBasicAttack():void {
 			if (!ControlsLocked) MyScript.Run(Script.Attack);
 		}
