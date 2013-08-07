@@ -9,6 +9,7 @@ using ToolCache.General;
 namespace ToolCache.SaveSystem {
     public class SaveInfo {
         //GENERAL
+        public bool disablePlayer = false;
         public string filename = "";
         public string name = "Adventurer";
         public string title = "Farmhand";
@@ -72,6 +73,7 @@ namespace ToolCache.SaveSystem {
                     case "Face": face = variableInfo; break;
                     case "Headgear": headgear = variableInfo; break;
                     case "Weapon": weapon = variableInfo; break;
+                    case "DisablePlayer": disablePlayer = (uint.Parse(variableInfo)==1); break;
                     default:
                         MessageBox.Show("Unknown variable '"+variableName+"' in save file: " + filename);
                         break;
@@ -102,6 +104,7 @@ namespace ToolCache.SaveSystem {
             Lines.Add("Face=" + face);
             Lines.Add("Headgear=" + headgear);
             Lines.Add("Weapon=" + weapon);
+            Lines.Add("DisablePlayer=" + (disablePlayer?1:0).ToString());
 
             File.WriteAllLines(filename, Lines);
         }

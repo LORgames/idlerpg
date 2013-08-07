@@ -79,6 +79,7 @@ namespace CityTools {
                 txtCharName.Text = currentInfo.name;
                 txtCharTitle.Text = currentInfo.title;
                 numCharExperience.Value = currentInfo.experienceAmount;
+                ckbNoPlayer.Checked = currentInfo.disablePlayer;
 
                 cbEquipmentShadow.SelectedItem = EquipmentManager.Get(currentInfo.shadow);
                 cbEquipmentPants.SelectedItem = EquipmentManager.Get(currentInfo.legs);
@@ -96,6 +97,7 @@ namespace CityTools {
                 currentInfo.name = txtCharName.Text;
                 currentInfo.title = txtCharTitle.Text;
                 currentInfo.experienceAmount = (uint)numCharExperience.Value;
+                currentInfo.disablePlayer = ckbNoPlayer.Checked;
 
                 currentInfo.shadow = cbEquipmentShadow.Text;
                 currentInfo.legs = cbEquipmentPants.Text;

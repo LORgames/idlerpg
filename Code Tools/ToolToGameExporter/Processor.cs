@@ -46,13 +46,13 @@ namespace ToolToGameExporter {
             try {
 #endif
                 //Precrush. No Dependancies.
-                UpdateEPF(epf, "Calculating Standard Deviation...", 1);
+                UpdateEPF(epf, "Calculating Standard Deviations...", 1);
                 GlobalVariableCrusher.Go();
-                UpdateEPF(epf, "Counting Monsters...", 1);
+                UpdateEPF(epf, "Counting Monsters...", 2);
                 CritterCrusher.Precrush();
-                UpdateEPF(epf, "Evaluating Projectiles...", 2);
+                UpdateEPF(epf, "Evaluating Projectiles...", 3);
                 EffectCrusher.Precrush();
-                UpdateEPF(epf, "Measuring Objects...", 3);
+                UpdateEPF(epf, "Measuring Objects...", 4);
                 MapObjectCrusher.Precrush();
 
                 //Tier 0  Crushing. No Dependancies.
@@ -76,7 +76,7 @@ namespace ToolToGameExporter {
                 //Tier 2 Crushing. Tier 1 Dependancies
                 UpdateEPF(epf, "Breeding Critters...", 80);
                 CritterCrusher.Go(); //Requires Equipment
-
+                
                 //Tier 3 Crushing. Tier 2 Depedancies
                 UpdateEPF(epf, "Navigating Maps...", 90);
                 MapCrusher.Go(); //Requires Portals, Tiles, Sounds and Objects. + Critters

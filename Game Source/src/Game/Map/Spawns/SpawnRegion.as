@@ -52,6 +52,8 @@ package Game.Map.Spawns {
 		}
 		
 		private function Spawn():void {
+			if (Area.length == 0) return;
+			
 			var critterID:int = GetNextCritterID();
 			var randArea:int = Math.random() * (Area.length);
 			var randX:int = Area[randArea].X + Math.random() * Area[randArea].W;
@@ -101,7 +103,7 @@ package Game.Map.Spawns {
 		}
 		
 		////////////////////////////////////////
-		//Static methods
+		// Static methods
 		///////////////////////////////////////
         public static function LoadFromBinary(map:MapData, b:ByteArray):SpawnRegion {
 			// All the spawn information (thats relevant)
@@ -157,6 +159,7 @@ package Game.Map.Spawns {
 				trace("Being alerted of unexpected critter death!");
 			}
 		}
+		
 		public function UpdatePointX(position:PointX):void {
 			//Does nothing obviously...
 		}
@@ -176,7 +179,5 @@ package Game.Map.Spawns {
 		public function GetCurrentState():int {
 			return 0;
 		}
-		
 	}
-
 }

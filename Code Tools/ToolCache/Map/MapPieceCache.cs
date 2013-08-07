@@ -25,6 +25,7 @@ namespace ToolCache.Map {
 
         public static void Initialize() {
             if (!Directory.Exists(PIECES_DIRECTORY)) Directory.CreateDirectory(PIECES_DIRECTORY);
+            if (!Directory.Exists(PIECES_DIRECTORY + "//Thumbs")) Directory.CreateDirectory(PIECES_DIRECTORY + "//Thumbs");
 
             //Load all the files in (get the map names especially)
             String[] files = Directory.GetFiles(PIECES_DIRECTORY);

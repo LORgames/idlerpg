@@ -38,12 +38,6 @@ namespace CityTools {
             this.lblTileID = new System.Windows.Forms.ToolStripLabel();
             this.lblTileName = new System.Windows.Forms.Label();
             this.lblGroup = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.numDamagePerSecond = new System.Windows.Forms.NumericUpDown();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.cbDamageElement = new System.Windows.Forms.ComboBox();
-            this.lblDamage = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.numMovementCost = new System.Windows.Forms.NumericUpDown();
             this.cbSlideDirection = new System.Windows.Forms.ComboBox();
@@ -59,8 +53,6 @@ namespace CityTools {
             this.ccAnimation = new CityTools.Components.AnimationList();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.toolStrip1.SuspendLayout();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numDamagePerSecond)).BeginInit();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numMovementCost)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -149,7 +141,7 @@ namespace CityTools {
             // lblTileID
             // 
             this.lblTileID.Name = "lblTileID";
-            this.lblTileID.Size = new System.Drawing.Size(41, 22);
+            this.lblTileID.Size = new System.Drawing.Size(40, 22);
             this.lblTileID.Text = "<TID>";
             // 
             // lblTileName
@@ -169,68 +161,6 @@ namespace CityTools {
             this.lblGroup.Size = new System.Drawing.Size(59, 13);
             this.lblGroup.TabIndex = 6;
             this.lblGroup.Text = "Tile Group:";
-            // 
-            // panel1
-            // 
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.numDamagePerSecond);
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.cbDamageElement);
-            this.panel1.Controls.Add(this.lblDamage);
-            this.panel1.Location = new System.Drawing.Point(217, 132);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(169, 78);
-            this.panel1.TabIndex = 9;
-            // 
-            // numDamagePerSecond
-            // 
-            this.numDamagePerSecond.Location = new System.Drawing.Point(64, 48);
-            this.numDamagePerSecond.Maximum = new decimal(new int[] {
-            50000,
-            0,
-            0,
-            0});
-            this.numDamagePerSecond.Name = "numDamagePerSecond";
-            this.numDamagePerSecond.Size = new System.Drawing.Size(100, 20);
-            this.numDamagePerSecond.TabIndex = 5;
-            this.numDamagePerSecond.ValueChanged += new System.EventHandler(this.ValueChanged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(4, 52);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(32, 13);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "DPS:";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(4, 24);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(48, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Element:";
-            // 
-            // cbDamageElement
-            // 
-            this.cbDamageElement.FormattingEnabled = true;
-            this.cbDamageElement.Location = new System.Drawing.Point(64, 21);
-            this.cbDamageElement.Name = "cbDamageElement";
-            this.cbDamageElement.Size = new System.Drawing.Size(100, 21);
-            this.cbDamageElement.TabIndex = 1;
-            this.cbDamageElement.SelectedIndexChanged += new System.EventHandler(this.ValueChanged);
-            // 
-            // lblDamage
-            // 
-            this.lblDamage.AutoSize = true;
-            this.lblDamage.Location = new System.Drawing.Point(4, 4);
-            this.lblDamage.Name = "lblDamage";
-            this.lblDamage.Size = new System.Drawing.Size(55, 13);
-            this.lblDamage.TabIndex = 0;
-            this.lblDamage.Text = "Damaging";
             // 
             // panel3
             // 
@@ -363,7 +293,6 @@ namespace CityTools {
             this.splitContainer2.Panel1.Controls.Add(this.panel3);
             this.splitContainer2.Panel1.Controls.Add(this.lblGroup);
             this.splitContainer2.Panel1.Controls.Add(this.txtTileName);
-            this.splitContainer2.Panel1.Controls.Add(this.panel1);
             // 
             // splitContainer2.Panel2
             // 
@@ -434,9 +363,6 @@ namespace CityTools {
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TileEditor_FormClosing);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numDamagePerSecond)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numMovementCost)).EndInit();
@@ -467,18 +393,12 @@ namespace CityTools {
         private System.Windows.Forms.Label lblGroup;
         private System.Windows.Forms.ToolStripButton btnSave;
         private System.Windows.Forms.ToolStripLabel lblTileID;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox cbDamageElement;
-        private System.Windows.Forms.Label lblDamage;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.ComboBox cbSlideDirection;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.NumericUpDown numMovementCost;
-        private System.Windows.Forms.NumericUpDown numDamagePerSecond;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.PictureBox pbDisplay;

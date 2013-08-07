@@ -37,28 +37,29 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnDeleteSelectedSaves = new System.Windows.Forms.Button();
             this.btnCreateNewSave = new System.Windows.Forms.Button();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabGlobalVars = new System.Windows.Forms.TabPage();
-            this.tabStatistics = new System.Windows.Forms.TabPage();
             this.tabEquipment = new System.Windows.Forms.TabPage();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.cbEquipmentWeapon = new System.Windows.Forms.ComboBox();
-            this.cbEquipmentHeadgear = new System.Windows.Forms.ComboBox();
-            this.cbEquipmentFace = new System.Windows.Forms.ComboBox();
-            this.cbEquipmentBody = new System.Windows.Forms.ComboBox();
-            this.cbEquipmentPants = new System.Windows.Forms.ComboBox();
-            this.cbEquipmentShadow = new System.Windows.Forms.ComboBox();
             this.pbDisplay = new System.Windows.Forms.PictureBox();
+            this.cbEquipmentShadow = new System.Windows.Forms.ComboBox();
+            this.cbEquipmentPants = new System.Windows.Forms.ComboBox();
+            this.cbEquipmentBody = new System.Windows.Forms.ComboBox();
+            this.cbEquipmentFace = new System.Windows.Forms.ComboBox();
+            this.cbEquipmentHeadgear = new System.Windows.Forms.ComboBox();
+            this.cbEquipmentWeapon = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.tabGlobalVars = new System.Windows.Forms.TabPage();
+            this.ckbNoPlayer = new System.Windows.Forms.CheckBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numCharExperience)).BeginInit();
-            this.tabControl1.SuspendLayout();
             this.tabEquipment.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbDisplay)).BeginInit();
+            this.tabGlobalVars.SuspendLayout();
+            this.tabControl1.SuspendLayout();
             this.SuspendLayout();
             // 
             // listAllSaves
@@ -205,37 +206,6 @@
             this.btnCreateNewSave.UseVisualStyleBackColor = true;
             this.btnCreateNewSave.Click += new System.EventHandler(this.btnCreateNewSave_Click);
             // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.tabGlobalVars);
-            this.tabControl1.Controls.Add(this.tabStatistics);
-            this.tabControl1.Controls.Add(this.tabEquipment);
-            this.tabControl1.Location = new System.Drawing.Point(6, 124);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(525, 364);
-            this.tabControl1.TabIndex = 3;
-            // 
-            // tabGlobalVars
-            // 
-            this.tabGlobalVars.Location = new System.Drawing.Point(4, 22);
-            this.tabGlobalVars.Name = "tabGlobalVars";
-            this.tabGlobalVars.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGlobalVars.Size = new System.Drawing.Size(517, 338);
-            this.tabGlobalVars.TabIndex = 0;
-            this.tabGlobalVars.Text = "Global Vars";
-            this.tabGlobalVars.UseVisualStyleBackColor = true;
-            // 
-            // tabStatistics
-            // 
-            this.tabStatistics.Location = new System.Drawing.Point(4, 22);
-            this.tabStatistics.Name = "tabStatistics";
-            this.tabStatistics.Padding = new System.Windows.Forms.Padding(3);
-            this.tabStatistics.Size = new System.Drawing.Size(517, 338);
-            this.tabStatistics.TabIndex = 1;
-            this.tabStatistics.Text = "Statistics";
-            this.tabStatistics.UseVisualStyleBackColor = true;
-            // 
             // tabEquipment
             // 
             this.tabEquipment.Controls.Add(this.label9);
@@ -258,114 +228,14 @@
             this.tabEquipment.Text = "Equipment";
             this.tabEquipment.UseVisualStyleBackColor = true;
             // 
-            // label9
+            // pbDisplay
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(16, 153);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(48, 13);
-            this.label9.TabIndex = 12;
-            this.label9.Text = "Weapon";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(10, 126);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(54, 13);
-            this.label8.TabIndex = 11;
-            this.label8.Text = "Headgear";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(33, 99);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(31, 13);
-            this.label7.TabIndex = 10;
-            this.label7.Text = "Face";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(33, 72);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(31, 13);
-            this.label6.TabIndex = 9;
-            this.label6.Text = "Body";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(30, 45);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(34, 13);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "Pants";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(18, 18);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(46, 13);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Shadow";
-            // 
-            // cbEquipmentWeapon
-            // 
-            this.cbEquipmentWeapon.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbEquipmentWeapon.FormattingEnabled = true;
-            this.cbEquipmentWeapon.Location = new System.Drawing.Point(70, 150);
-            this.cbEquipmentWeapon.Name = "cbEquipmentWeapon";
-            this.cbEquipmentWeapon.Size = new System.Drawing.Size(121, 21);
-            this.cbEquipmentWeapon.Sorted = true;
-            this.cbEquipmentWeapon.TabIndex = 6;
-            this.cbEquipmentWeapon.SelectedIndexChanged += new System.EventHandler(this.Edited);
-            // 
-            // cbEquipmentHeadgear
-            // 
-            this.cbEquipmentHeadgear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbEquipmentHeadgear.FormattingEnabled = true;
-            this.cbEquipmentHeadgear.Location = new System.Drawing.Point(70, 123);
-            this.cbEquipmentHeadgear.Name = "cbEquipmentHeadgear";
-            this.cbEquipmentHeadgear.Size = new System.Drawing.Size(121, 21);
-            this.cbEquipmentHeadgear.Sorted = true;
-            this.cbEquipmentHeadgear.TabIndex = 5;
-            this.cbEquipmentHeadgear.SelectedIndexChanged += new System.EventHandler(this.Edited);
-            // 
-            // cbEquipmentFace
-            // 
-            this.cbEquipmentFace.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbEquipmentFace.FormattingEnabled = true;
-            this.cbEquipmentFace.Location = new System.Drawing.Point(70, 96);
-            this.cbEquipmentFace.Name = "cbEquipmentFace";
-            this.cbEquipmentFace.Size = new System.Drawing.Size(121, 21);
-            this.cbEquipmentFace.Sorted = true;
-            this.cbEquipmentFace.TabIndex = 4;
-            this.cbEquipmentFace.SelectedIndexChanged += new System.EventHandler(this.Edited);
-            // 
-            // cbEquipmentBody
-            // 
-            this.cbEquipmentBody.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbEquipmentBody.FormattingEnabled = true;
-            this.cbEquipmentBody.Location = new System.Drawing.Point(70, 69);
-            this.cbEquipmentBody.Name = "cbEquipmentBody";
-            this.cbEquipmentBody.Size = new System.Drawing.Size(121, 21);
-            this.cbEquipmentBody.Sorted = true;
-            this.cbEquipmentBody.TabIndex = 3;
-            this.cbEquipmentBody.SelectedIndexChanged += new System.EventHandler(this.Edited);
-            // 
-            // cbEquipmentPants
-            // 
-            this.cbEquipmentPants.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbEquipmentPants.FormattingEnabled = true;
-            this.cbEquipmentPants.Location = new System.Drawing.Point(70, 42);
-            this.cbEquipmentPants.Name = "cbEquipmentPants";
-            this.cbEquipmentPants.Size = new System.Drawing.Size(121, 21);
-            this.cbEquipmentPants.Sorted = true;
-            this.cbEquipmentPants.TabIndex = 2;
-            this.cbEquipmentPants.SelectedIndexChanged += new System.EventHandler(this.Edited);
+            this.pbDisplay.Location = new System.Drawing.Point(197, 5);
+            this.pbDisplay.Name = "pbDisplay";
+            this.pbDisplay.Size = new System.Drawing.Size(317, 166);
+            this.pbDisplay.TabIndex = 0;
+            this.pbDisplay.TabStop = false;
+            this.pbDisplay.Paint += new System.Windows.Forms.PaintEventHandler(this.pbDisplay_Paint);
             // 
             // cbEquipmentShadow
             // 
@@ -378,14 +248,146 @@
             this.cbEquipmentShadow.TabIndex = 1;
             this.cbEquipmentShadow.SelectedIndexChanged += new System.EventHandler(this.Edited);
             // 
-            // pbDisplay
+            // cbEquipmentPants
             // 
-            this.pbDisplay.Location = new System.Drawing.Point(197, 5);
-            this.pbDisplay.Name = "pbDisplay";
-            this.pbDisplay.Size = new System.Drawing.Size(317, 166);
-            this.pbDisplay.TabIndex = 0;
-            this.pbDisplay.TabStop = false;
-            this.pbDisplay.Paint += new System.Windows.Forms.PaintEventHandler(this.pbDisplay_Paint);
+            this.cbEquipmentPants.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbEquipmentPants.FormattingEnabled = true;
+            this.cbEquipmentPants.Location = new System.Drawing.Point(70, 42);
+            this.cbEquipmentPants.Name = "cbEquipmentPants";
+            this.cbEquipmentPants.Size = new System.Drawing.Size(121, 21);
+            this.cbEquipmentPants.Sorted = true;
+            this.cbEquipmentPants.TabIndex = 2;
+            this.cbEquipmentPants.SelectedIndexChanged += new System.EventHandler(this.Edited);
+            // 
+            // cbEquipmentBody
+            // 
+            this.cbEquipmentBody.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbEquipmentBody.FormattingEnabled = true;
+            this.cbEquipmentBody.Location = new System.Drawing.Point(70, 69);
+            this.cbEquipmentBody.Name = "cbEquipmentBody";
+            this.cbEquipmentBody.Size = new System.Drawing.Size(121, 21);
+            this.cbEquipmentBody.Sorted = true;
+            this.cbEquipmentBody.TabIndex = 3;
+            this.cbEquipmentBody.SelectedIndexChanged += new System.EventHandler(this.Edited);
+            // 
+            // cbEquipmentFace
+            // 
+            this.cbEquipmentFace.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbEquipmentFace.FormattingEnabled = true;
+            this.cbEquipmentFace.Location = new System.Drawing.Point(70, 96);
+            this.cbEquipmentFace.Name = "cbEquipmentFace";
+            this.cbEquipmentFace.Size = new System.Drawing.Size(121, 21);
+            this.cbEquipmentFace.Sorted = true;
+            this.cbEquipmentFace.TabIndex = 4;
+            this.cbEquipmentFace.SelectedIndexChanged += new System.EventHandler(this.Edited);
+            // 
+            // cbEquipmentHeadgear
+            // 
+            this.cbEquipmentHeadgear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbEquipmentHeadgear.FormattingEnabled = true;
+            this.cbEquipmentHeadgear.Location = new System.Drawing.Point(70, 123);
+            this.cbEquipmentHeadgear.Name = "cbEquipmentHeadgear";
+            this.cbEquipmentHeadgear.Size = new System.Drawing.Size(121, 21);
+            this.cbEquipmentHeadgear.Sorted = true;
+            this.cbEquipmentHeadgear.TabIndex = 5;
+            this.cbEquipmentHeadgear.SelectedIndexChanged += new System.EventHandler(this.Edited);
+            // 
+            // cbEquipmentWeapon
+            // 
+            this.cbEquipmentWeapon.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbEquipmentWeapon.FormattingEnabled = true;
+            this.cbEquipmentWeapon.Location = new System.Drawing.Point(70, 150);
+            this.cbEquipmentWeapon.Name = "cbEquipmentWeapon";
+            this.cbEquipmentWeapon.Size = new System.Drawing.Size(121, 21);
+            this.cbEquipmentWeapon.Sorted = true;
+            this.cbEquipmentWeapon.TabIndex = 6;
+            this.cbEquipmentWeapon.SelectedIndexChanged += new System.EventHandler(this.Edited);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(18, 18);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(46, 13);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Shadow";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(30, 45);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(34, 13);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "Pants";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(33, 72);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(31, 13);
+            this.label6.TabIndex = 9;
+            this.label6.Text = "Body";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(33, 99);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(31, 13);
+            this.label7.TabIndex = 10;
+            this.label7.Text = "Face";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(10, 126);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(54, 13);
+            this.label8.TabIndex = 11;
+            this.label8.Text = "Headgear";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(16, 153);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(48, 13);
+            this.label9.TabIndex = 12;
+            this.label9.Text = "Weapon";
+            // 
+            // tabGlobalVars
+            // 
+            this.tabGlobalVars.Controls.Add(this.ckbNoPlayer);
+            this.tabGlobalVars.Location = new System.Drawing.Point(4, 22);
+            this.tabGlobalVars.Name = "tabGlobalVars";
+            this.tabGlobalVars.Padding = new System.Windows.Forms.Padding(3);
+            this.tabGlobalVars.Size = new System.Drawing.Size(517, 338);
+            this.tabGlobalVars.TabIndex = 0;
+            this.tabGlobalVars.Text = "Global Vars";
+            this.tabGlobalVars.UseVisualStyleBackColor = true;
+            // 
+            // ckbNoPlayer
+            // 
+            this.ckbNoPlayer.AutoSize = true;
+            this.ckbNoPlayer.Location = new System.Drawing.Point(6, 6);
+            this.ckbNoPlayer.Name = "ckbNoPlayer";
+            this.ckbNoPlayer.Size = new System.Drawing.Size(143, 17);
+            this.ckbNoPlayer.TabIndex = 0;
+            this.ckbNoPlayer.Text = "Disable Spawning Player";
+            this.ckbNoPlayer.UseVisualStyleBackColor = true;
+            this.ckbNoPlayer.CheckedChanged += new System.EventHandler(this.Edited);
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabGlobalVars);
+            this.tabControl1.Controls.Add(this.tabEquipment);
+            this.tabControl1.Location = new System.Drawing.Point(6, 124);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(525, 364);
+            this.tabControl1.TabIndex = 3;
             // 
             // SaveFileEditor
             // 
@@ -400,10 +402,12 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numCharExperience)).EndInit();
-            this.tabControl1.ResumeLayout(false);
             this.tabEquipment.ResumeLayout(false);
             this.tabEquipment.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbDisplay)).EndInit();
+            this.tabGlobalVars.ResumeLayout(false);
+            this.tabGlobalVars.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -420,11 +424,11 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown numCharExperience;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabGlobalVars;
-        private System.Windows.Forms.TabPage tabStatistics;
+        private System.Windows.Forms.Button btnSetSlot3;
+        private System.Windows.Forms.Button btnSetSlot2;
+        private System.Windows.Forms.Button btnSetSlot1;
+        private System.Windows.Forms.Button btnSetSlot0;
         private System.Windows.Forms.TabPage tabEquipment;
-        private System.Windows.Forms.PictureBox pbDisplay;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
@@ -437,9 +441,9 @@
         private System.Windows.Forms.ComboBox cbEquipmentBody;
         private System.Windows.Forms.ComboBox cbEquipmentPants;
         private System.Windows.Forms.ComboBox cbEquipmentShadow;
-        private System.Windows.Forms.Button btnSetSlot3;
-        private System.Windows.Forms.Button btnSetSlot2;
-        private System.Windows.Forms.Button btnSetSlot1;
-        private System.Windows.Forms.Button btnSetSlot0;
+        private System.Windows.Forms.PictureBox pbDisplay;
+        private System.Windows.Forms.TabPage tabGlobalVars;
+        private System.Windows.Forms.CheckBox ckbNoPlayer;
+        private System.Windows.Forms.TabControl tabControl1;
     }
 }

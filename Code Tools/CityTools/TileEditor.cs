@@ -31,22 +31,10 @@ namespace CityTools {
             ccAnimation.ClearAnimation();
             ccAnimation.AnimationChanged += AnimationChanged;
 
-            UpdateElementNames();
-
             UpdateTileNames();
             ChangeTo(-1);
 
             timer1.Start();
-        }
-
-        private void UpdateElementNames() {
-            string[] elements = ElementManager.ElementNames();
-
-            cbDamageElement.Items.Clear();
-
-            foreach (String s in elements) {
-                cbDamageElement.Items.Add(s);
-            }
         }
 
         private void ChangeTo(short tileID) {
@@ -67,9 +55,6 @@ namespace CityTools {
                 cbTileGroup.Text = t.TileGroup;
                 txtTileName.Text = t.TileName;
 
-                cbDamageElement.SelectedIndex = ElementManager.ElementIDToIndex(t.damageElement);
-                numDamagePerSecond.Value = t.damagePerSecond;
-
                 numMovementCost.Value = (Decimal)t.movementCost;
                 cbSlideDirection.SelectedIndex = t.slidingDirection;
 
@@ -84,9 +69,6 @@ namespace CityTools {
                 txtTileName.Text = "<Unknown>";
 
                 _bases = new List<Rectangle>();
-
-                cbDamageElement.SelectedIndex = 0;
-                numDamagePerSecond.Value = 0;
 
                 numMovementCost.Value = 1.0M;
                 cbSlideDirection.SelectedIndex = 0;
@@ -116,9 +98,6 @@ namespace CityTools {
 
             t.movementCost = (float)numMovementCost.Value;
             t.slidingDirection = (byte)cbSlideDirection.SelectedIndex;
-
-            t.damageElement = ElementManager.GetElementIDFromName(cbDamageElement.Text);
-            t.damagePerSecond = (short)numDamagePerSecond.Value;
 
             t.Collision = _bases;
 
@@ -185,7 +164,7 @@ namespace CityTools {
         }
 
         private void ValueChanged(object sender, EventArgs e) {
-            if(!_updating) _iE = true;
+            if (!_updating) _iE = true;
         }
 
         private void AnimationChanged(object sender, EventArgs e) {
@@ -211,9 +190,9 @@ namespace CityTools {
                 e.Graphics.FillRectangle(Brushes.Beige, 26, 26, 48, 48);
             }
 
-            if(ckbShowCollisions.Checked) {
+            if (ckbShowCollisions.Checked) {
                 foreach (Rectangle r in _bases) {
-                    e.Graphics.DrawRectangle(Pens.White, r.X+26, r.Y+26, r.Width, r.Height);
+                    e.Graphics.DrawRectangle(Pens.White, r.X + 26, r.Y + 26, r.Width, r.Height);
                 }
             }
         }

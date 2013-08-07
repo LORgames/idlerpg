@@ -16,15 +16,17 @@ namespace ToolCache.Critters {
         }
 
         private static void ReadDatabase() {
-            BinaryIO b = new BinaryIO(File.ReadAllBytes(FILENAME));
+            if (File.Exists(FILENAME)) {
+                BinaryIO b = new BinaryIO(File.ReadAllBytes(FILENAME));
 
-            short totalFactions = b.GetShort();
+                short totalFactions = b.GetShort();
 
-            while (--totalFactions > -1) {
-                AllFactions.Add(b.GetString());
+                while (--totalFactions > -1) {
+                    AllFactions.Add(b.GetString());
+                }
+
+                b.Dispose();
             }
-
-            b.Dispose();
         }
 
         public static void SaveDatabase() {

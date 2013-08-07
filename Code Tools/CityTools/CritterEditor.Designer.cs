@@ -530,6 +530,7 @@ namespace CityTools {
             this.ccBeastAnimations.Name = "ccBeastAnimations";
             this.ccBeastAnimations.Size = new System.Drawing.Size(218, 103);
             this.ccBeastAnimations.TabIndex = 0;
+            this.ccBeastAnimations.AnimationChanged += new CityTools.ChangedEventHandler(this.ccBeastAnimations_AnimationChanged);
             // 
             // panel3
             // 
@@ -572,6 +573,8 @@ namespace CityTools {
             this.listLoot.TabIndex = 8;
             this.listLoot.UseCompatibleStateImageBehavior = false;
             this.listLoot.View = System.Windows.Forms.View.Details;
+            this.listLoot.SubItemClicked += new CityTools.Components.SubItemEventHandler(this.listLoot_SubItemClicked);
+            this.listLoot.SubItemEndEditing += new CityTools.Components.SubItemEndEditingEventHandler(this.listLoot_SubItemEndEditing);
             // 
             // columnHeader1
             // 

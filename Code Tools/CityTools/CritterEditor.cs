@@ -33,13 +33,10 @@ namespace CityTools {
             treeAllCritters.ImageList.Images.Add(Resources.Humanoid);
             treeAllCritters.ImageList.Images.Add(Resources.Monster);
 
-            ccBeastAnimations.AnimationChanged +=new ChangedEventHandler(ccBeastAnimations_AnimationChanged);
             ccBeastAnimations.SetSaveLocation("Critters");
             ccBeastAnimations.DisablePlaybackSpeed();
 
             sptFullForm.Panel2.Enabled = false;
-
-            SetupLootBox();
 
             FillAITypes();
             FillItemBox();
@@ -121,11 +118,6 @@ namespace CityTools {
 
             CritterManager.SaveDatabase();
             Factions.SaveDatabase();
-        }
-
-        private void SetupLootBox() {
-            listLoot.SubItemClicked += new Components.SubItemEventHandler(listLoot_SubItemClicked);
-            listLoot.SubItemEndEditing += new Components.SubItemEndEditingEventHandler(listLoot_SubItemEndEditing);
         }
 
         void listLoot_SubItemEndEditing(object sender, Components.SubItemEndEditingEventArgs e) {

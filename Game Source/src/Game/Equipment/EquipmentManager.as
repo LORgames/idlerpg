@@ -60,14 +60,16 @@ package Game.Equipment {
 			if(SaveManager.CurrentSave == null) {
 				WorldData.ME.Equipment.Equip(0, 0, 2, 3, 5, 6);
 			} else {
-				var shadowID:int = FindEquipmentIn(Shadows, SaveManager.CurrentSave.shadow);
-				var weaponID:int = FindEquipmentIn(Weapons, SaveManager.CurrentSave.weapon);
-				var bodyID:int = FindEquipmentIn(Bodies, SaveManager.CurrentSave.body);
-				var pantsID:int = FindEquipmentIn(Legs, SaveManager.CurrentSave.legs);
-				var faceID:int = FindEquipmentIn(Heads, SaveManager.CurrentSave.face);
-				var headgearID:int = FindEquipmentIn(Headgear, SaveManager.CurrentSave.headgear);
-				
-				WorldData.ME.Equipment.Equip(shadowID, pantsID, bodyID, faceID, headgearID, weaponID);
+				if(!SaveManager.CurrentSave.PlayerDisabled) {
+					var shadowID:int = FindEquipmentIn(Shadows, SaveManager.CurrentSave.shadow);
+					var weaponID:int = FindEquipmentIn(Weapons, SaveManager.CurrentSave.weapon);
+					var bodyID:int = FindEquipmentIn(Bodies, SaveManager.CurrentSave.body);
+					var pantsID:int = FindEquipmentIn(Legs, SaveManager.CurrentSave.legs);
+					var faceID:int = FindEquipmentIn(Heads, SaveManager.CurrentSave.face);
+					var headgearID:int = FindEquipmentIn(Headgear, SaveManager.CurrentSave.headgear);
+					
+					WorldData.ME.Equipment.Equip(shadowID, pantsID, bodyID, faceID, headgearID, weaponID);
+				}
 			}
 		}
 		

@@ -6,6 +6,7 @@ package {
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.system.Capabilities;
+	import Game.Scripting.GlobalVariables;
 	import RenderSystem.Camera;
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
@@ -139,6 +140,7 @@ package {
 			new EquipmentManager();
 			new CritterManager();
 			new EffectManager();
+			new GlobalVariables();
 			
 			Clock.I.Start(stage);
 			

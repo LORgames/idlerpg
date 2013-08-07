@@ -17,6 +17,7 @@ package Storage {
         public var face:String = "_UNKNOWN";
         public var headgear:String = "";
         public var weapon:String = "";
+		public var PlayerDisabled:Boolean = false;
 		
 		public function SaveInfo(key:String) {
 			this.key = key;
@@ -45,6 +46,7 @@ package Storage {
                     case "Face": face = variableInfo; break;
                     case "Headgear": headgear = variableInfo; break;
                     case "Weapon": weapon = variableInfo; break;
+					case "DisablePlayer": PlayerDisabled = uint(variableInfo) == 1; break;
                     default:
                         break;
                 }

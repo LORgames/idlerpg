@@ -14,15 +14,15 @@ namespace CityTools.CacheInterfaces {
         public static void Initialize() {
             groupNodes.Clear();
 
+            if (MainWindow.instance.listTiles.LargeImageList == null) {
+                MainWindow.instance.listTiles.LargeImageList = new ImageList();
+                MainWindow.instance.listTiles.LargeImageList.ImageSize = new System.Drawing.Size(48, 48);
+                MainWindow.instance.listTiles.LargeImageList.ColorDepth = ColorDepth.Depth32Bit;
+            }
+
             foreach (string group in TileCache.GetGroups()) {
                 groupNodes.Add(group, new ListViewGroup(group));
                 foreach (TileTemplate tile in TileCache.GetTilesInGroup(group)) {
-                    if (MainWindow.instance.listTiles.LargeImageList == null) {
-                        MainWindow.instance.listTiles.LargeImageList = new ImageList();
-                        MainWindow.instance.listTiles.LargeImageList.ImageSize = new System.Drawing.Size(48, 48);
-                        MainWindow.instance.listTiles.LargeImageList.ColorDepth = ColorDepth.Depth32Bit;
-                    }
-
                     if (tile.Animation.Frames.Count != 0) {
                         MainWindow.instance.listTiles.LargeImageList.Images.Add(tile.Animation.Frames[0], ImageCache.RequestImage(tile.Animation.Frames[0]));
                         int imageIndex = MainWindow.instance.listTiles.LargeImageList.Images.IndexOfKey(tile.Animation.Frames[0]);
