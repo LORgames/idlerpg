@@ -193,6 +193,12 @@
     <Compile Include="MiscHelpers\RegionHelper.cs" />
     <Compile Include="ObjectSystem\ScenicPlacementHelper.cs" />
     <Compile Include="ObjectSystem\ScenicHelper.cs" />
+    <Compile Include="PortraitEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PortraitEditor.Designer.cs">
+      <DependentUpon>PortraitEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaveFileEditor.cs">
@@ -294,6 +300,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ItemEditor.resx">
       <DependentUpon>ItemEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PortraitEditor.resx">
+      <DependentUpon>PortraitEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -10,6 +10,7 @@ namespace ToolCache.Scripting {
     /// </summary>
     enum ValidEvents {
         Attack = 0x0000,
+        Press = 0x0000,
         Spawn = 0x0001,
         Attacked = 0x0002,
         Use = 0x0003,
@@ -19,7 +20,8 @@ namespace ToolCache.Scripting {
         StartMoving = 0x0007,
         EndMoving = 0x0008,
         Died = 0x0009,
-        Update = 0x000A
+        Update = 0x000A,
+        Trigger = 0x000B
     }
 
     /// <summary>

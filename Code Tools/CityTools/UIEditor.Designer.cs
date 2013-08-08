@@ -28,6 +28,11 @@
             this.btnNewUIElement = new System.Windows.Forms.Button();
             this.btnDeleteSelectedUIElements = new System.Windows.Forms.Button();
             this.pnlUIElement = new System.Windows.Forms.Panel();
+            this.btnMoveLayerDown = new System.Windows.Forms.Button();
+            this.btnMoveLayerUp = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
+            this.numUIElementSizeY = new System.Windows.Forms.NumericUpDown();
+            this.numUIElementSizeX = new System.Windows.Forms.NumericUpDown();
             this.btnUILayerDelete = new System.Windows.Forms.Button();
             this.btnUILayerAdd = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
@@ -40,6 +45,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtUIName = new System.Windows.Forms.TextBox();
             this.pnlUILayer = new System.Windows.Forms.Panel();
+            this.label10 = new System.Windows.Forms.Label();
+            this.txtLayerName = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.cbLayerType = new System.Windows.Forms.ComboBox();
             this.pbLayerImage = new System.Windows.Forms.PictureBox();
             this.btnLayerChangeImage = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
@@ -51,18 +60,12 @@
             this.numLayerHeight = new System.Windows.Forms.NumericUpDown();
             this.numLayerWidth = new System.Windows.Forms.NumericUpDown();
             this.tbPercent = new System.Windows.Forms.TrackBar();
-            this.cbLayerType = new System.Windows.Forms.ComboBox();
-            this.label8 = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.label9 = new System.Windows.Forms.Label();
-            this.numUIElementSizeY = new System.Windows.Forms.NumericUpDown();
-            this.numUIElementSizeX = new System.Windows.Forms.NumericUpDown();
-            this.txtLayerName = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.btnMoveLayerDown = new System.Windows.Forms.Button();
-            this.btnMoveLayerUp = new System.Windows.Forms.Button();
+            this.scriptUI = new CityTools.Components.ScriptBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbExample)).BeginInit();
             this.pnlUIElement.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numUIElementSizeY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numUIElementSizeX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUIElementOffsetY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUIElementOffsetX)).BeginInit();
             this.pnlUILayer.SuspendLayout();
@@ -72,15 +75,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.numLayerHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLayerWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbPercent)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numUIElementSizeY)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numUIElementSizeX)).BeginInit();
             this.SuspendLayout();
             // 
             // pbExample
             // 
-            this.pbExample.Location = new System.Drawing.Point(0, 0);
+            this.pbExample.Location = new System.Drawing.Point(12, 12);
             this.pbExample.Name = "pbExample";
-            this.pbExample.Size = new System.Drawing.Size(800, 600);
+            this.pbExample.Size = new System.Drawing.Size(1024, 588);
             this.pbExample.TabIndex = 0;
             this.pbExample.TabStop = false;
             this.pbExample.Paint += new System.Windows.Forms.PaintEventHandler(this.pbExample_Paint);
@@ -117,6 +118,7 @@
             // pnlUIElement
             // 
             this.pnlUIElement.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlUIElement.Controls.Add(this.scriptUI);
             this.pnlUIElement.Controls.Add(this.btnMoveLayerDown);
             this.pnlUIElement.Controls.Add(this.btnMoveLayerUp);
             this.pnlUIElement.Controls.Add(this.label9);
@@ -136,8 +138,63 @@
             this.pnlUIElement.Enabled = false;
             this.pnlUIElement.Location = new System.Drawing.Point(213, 655);
             this.pnlUIElement.Name = "pnlUIElement";
-            this.pnlUIElement.Size = new System.Drawing.Size(220, 199);
+            this.pnlUIElement.Size = new System.Drawing.Size(468, 199);
             this.pnlUIElement.TabIndex = 4;
+            // 
+            // btnMoveLayerDown
+            // 
+            this.btnMoveLayerDown.Location = new System.Drawing.Point(49, 156);
+            this.btnMoveLayerDown.Name = "btnMoveLayerDown";
+            this.btnMoveLayerDown.Size = new System.Drawing.Size(40, 23);
+            this.btnMoveLayerDown.TabIndex = 15;
+            this.btnMoveLayerDown.Text = "v";
+            this.btnMoveLayerDown.UseVisualStyleBackColor = true;
+            this.btnMoveLayerDown.Click += new System.EventHandler(this.btnMoveLayerDown_Click);
+            // 
+            // btnMoveLayerUp
+            // 
+            this.btnMoveLayerUp.Location = new System.Drawing.Point(49, 127);
+            this.btnMoveLayerUp.Name = "btnMoveLayerUp";
+            this.btnMoveLayerUp.Size = new System.Drawing.Size(40, 23);
+            this.btnMoveLayerUp.TabIndex = 14;
+            this.btnMoveLayerUp.Text = "ʌ";
+            this.btnMoveLayerUp.UseVisualStyleBackColor = true;
+            this.btnMoveLayerUp.Click += new System.EventHandler(this.btnMoveLayerUp_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(39, 87);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(50, 13);
+            this.label9.TabIndex = 13;
+            this.label9.Text = "Max Size";
+            // 
+            // numUIElementSizeY
+            // 
+            this.numUIElementSizeY.Location = new System.Drawing.Point(155, 85);
+            this.numUIElementSizeY.Maximum = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
+            this.numUIElementSizeY.Name = "numUIElementSizeY";
+            this.numUIElementSizeY.Size = new System.Drawing.Size(61, 20);
+            this.numUIElementSizeY.TabIndex = 12;
+            this.numUIElementSizeY.ValueChanged += new System.EventHandler(this.UIElementValueChanged);
+            // 
+            // numUIElementSizeX
+            // 
+            this.numUIElementSizeX.Location = new System.Drawing.Point(95, 85);
+            this.numUIElementSizeX.Maximum = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
+            this.numUIElementSizeX.Name = "numUIElementSizeX";
+            this.numUIElementSizeX.Size = new System.Drawing.Size(61, 20);
+            this.numUIElementSizeX.TabIndex = 11;
+            this.numUIElementSizeX.ValueChanged += new System.EventHandler(this.UIElementValueChanged);
             // 
             // btnUILayerDelete
             // 
@@ -276,10 +333,55 @@
             this.pnlUILayer.Controls.Add(this.numLayerHeight);
             this.pnlUILayer.Controls.Add(this.numLayerWidth);
             this.pnlUILayer.Enabled = false;
-            this.pnlUILayer.Location = new System.Drawing.Point(439, 655);
+            this.pnlUILayer.Location = new System.Drawing.Point(687, 655);
             this.pnlUILayer.Name = "pnlUILayer";
             this.pnlUILayer.Size = new System.Drawing.Size(349, 199);
             this.pnlUILayer.TabIndex = 5;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(12, 9);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(35, 13);
+            this.label10.TabIndex = 18;
+            this.label10.Text = "Name";
+            // 
+            // txtLayerName
+            // 
+            this.txtLayerName.Location = new System.Drawing.Point(53, 6);
+            this.txtLayerName.Name = "txtLayerName";
+            this.txtLayerName.Size = new System.Drawing.Size(120, 20);
+            this.txtLayerName.TabIndex = 17;
+            this.txtLayerName.TextChanged += new System.EventHandler(this.UILayerValueChanged);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(13, 87);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(31, 13);
+            this.label8.TabIndex = 16;
+            this.label8.Text = "Type";
+            // 
+            // cbLayerType
+            // 
+            this.cbLayerType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbLayerType.FormattingEnabled = true;
+            this.cbLayerType.Items.AddRange(new object[] {
+            "Static",
+            "Tile",
+            "Stretch",
+            "StretchToValueX",
+            "StretchToValueY",
+            "PanX",
+            "PanY",
+            "Radial"});
+            this.cbLayerType.Location = new System.Drawing.Point(53, 84);
+            this.cbLayerType.Name = "cbLayerType";
+            this.cbLayerType.Size = new System.Drawing.Size(120, 21);
+            this.cbLayerType.TabIndex = 12;
+            this.cbLayerType.SelectedIndexChanged += new System.EventHandler(this.UILayerValueChanged);
             // 
             // pbLayerImage
             // 
@@ -404,38 +506,10 @@
             this.tbPercent.Location = new System.Drawing.Point(12, 606);
             this.tbPercent.Maximum = 100;
             this.tbPercent.Name = "tbPercent";
-            this.tbPercent.Size = new System.Drawing.Size(776, 45);
+            this.tbPercent.Size = new System.Drawing.Size(1024, 45);
             this.tbPercent.TabIndex = 11;
             this.tbPercent.Value = 50;
             this.tbPercent.ValueChanged += new System.EventHandler(this.tbPercent_ValueChanged);
-            // 
-            // cbLayerType
-            // 
-            this.cbLayerType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbLayerType.FormattingEnabled = true;
-            this.cbLayerType.Items.AddRange(new object[] {
-            "Static",
-            "Tile",
-            "Stretch",
-            "StretchToValueX",
-            "StretchToValueY",
-            "PanX",
-            "PanY",
-            "Radial"});
-            this.cbLayerType.Location = new System.Drawing.Point(53, 84);
-            this.cbLayerType.Name = "cbLayerType";
-            this.cbLayerType.Size = new System.Drawing.Size(120, 21);
-            this.cbLayerType.TabIndex = 12;
-            this.cbLayerType.SelectedIndexChanged += new System.EventHandler(this.UILayerValueChanged);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(13, 87);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(31, 13);
-            this.label8.TabIndex = 16;
-            this.label8.Text = "Type";
             // 
             // openFileDialog1
             // 
@@ -443,83 +517,20 @@
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.Title = "Select UI Layer Image";
             // 
-            // label9
+            // scriptUI
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(39, 87);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(50, 13);
-            this.label9.TabIndex = 13;
-            this.label9.Text = "Max Size";
-            // 
-            // numUIElementSizeY
-            // 
-            this.numUIElementSizeY.Location = new System.Drawing.Point(155, 85);
-            this.numUIElementSizeY.Maximum = new decimal(new int[] {
-            2000,
-            0,
-            0,
-            0});
-            this.numUIElementSizeY.Name = "numUIElementSizeY";
-            this.numUIElementSizeY.Size = new System.Drawing.Size(61, 20);
-            this.numUIElementSizeY.TabIndex = 12;
-            this.numUIElementSizeY.ValueChanged += new System.EventHandler(this.UIElementValueChanged);
-            // 
-            // numUIElementSizeX
-            // 
-            this.numUIElementSizeX.Location = new System.Drawing.Point(95, 85);
-            this.numUIElementSizeX.Maximum = new decimal(new int[] {
-            2000,
-            0,
-            0,
-            0});
-            this.numUIElementSizeX.Name = "numUIElementSizeX";
-            this.numUIElementSizeX.Size = new System.Drawing.Size(61, 20);
-            this.numUIElementSizeX.TabIndex = 11;
-            this.numUIElementSizeX.ValueChanged += new System.EventHandler(this.UIElementValueChanged);
-            // 
-            // txtLayerName
-            // 
-            this.txtLayerName.Location = new System.Drawing.Point(53, 6);
-            this.txtLayerName.Name = "txtLayerName";
-            this.txtLayerName.Size = new System.Drawing.Size(120, 20);
-            this.txtLayerName.TabIndex = 17;
-            this.txtLayerName.TextChanged += new System.EventHandler(this.UILayerValueChanged);
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(12, 9);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(35, 13);
-            this.label10.TabIndex = 18;
-            this.label10.Text = "Name";
-            // 
-            // btnMoveLayerDown
-            // 
-            this.btnMoveLayerDown.Location = new System.Drawing.Point(49, 156);
-            this.btnMoveLayerDown.Name = "btnMoveLayerDown";
-            this.btnMoveLayerDown.Size = new System.Drawing.Size(40, 23);
-            this.btnMoveLayerDown.TabIndex = 15;
-            this.btnMoveLayerDown.Text = "v";
-            this.btnMoveLayerDown.UseVisualStyleBackColor = true;
-            this.btnMoveLayerDown.Click += new System.EventHandler(this.btnMoveLayerDown_Click);
-            // 
-            // btnMoveLayerUp
-            // 
-            this.btnMoveLayerUp.Location = new System.Drawing.Point(49, 127);
-            this.btnMoveLayerUp.Name = "btnMoveLayerUp";
-            this.btnMoveLayerUp.Size = new System.Drawing.Size(40, 23);
-            this.btnMoveLayerUp.TabIndex = 14;
-            this.btnMoveLayerUp.Text = "ʌ";
-            this.btnMoveLayerUp.UseVisualStyleBackColor = true;
-            this.btnMoveLayerUp.Click += new System.EventHandler(this.btnMoveLayerUp_Click);
+            this.scriptUI.Location = new System.Drawing.Point(222, 6);
+            this.scriptUI.Name = "scriptUI";
+            this.scriptUI.Script = "";
+            this.scriptUI.ScriptType = ToolCache.Scripting.ScriptTypes.Unknown;
+            this.scriptUI.Size = new System.Drawing.Size(241, 187);
+            this.scriptUI.TabIndex = 16;
             // 
             // UIEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 866);
+            this.ClientSize = new System.Drawing.Size(1048, 866);
             this.Controls.Add(this.pnlUILayer);
             this.Controls.Add(this.pnlUIElement);
             this.Controls.Add(this.tbPercent);
@@ -533,6 +544,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbExample)).EndInit();
             this.pnlUIElement.ResumeLayout(false);
             this.pnlUIElement.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numUIElementSizeY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numUIElementSizeX)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUIElementOffsetY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUIElementOffsetX)).EndInit();
             this.pnlUILayer.ResumeLayout(false);
@@ -543,8 +556,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numLayerHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLayerWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbPercent)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numUIElementSizeY)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numUIElementSizeX)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -590,5 +601,6 @@
         private System.Windows.Forms.TextBox txtLayerName;
         private System.Windows.Forms.Button btnMoveLayerDown;
         private System.Windows.Forms.Button btnMoveLayerUp;
+        private Components.ScriptBox scriptUI;
     }
 }

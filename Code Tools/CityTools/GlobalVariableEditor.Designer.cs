@@ -69,7 +69,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(735, 321);
+            this.tabPage1.Size = new System.Drawing.Size(735, 409);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Integers";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -86,7 +86,7 @@
             this.listVariables.GridLines = true;
             this.listVariables.Location = new System.Drawing.Point(3, 3);
             this.listVariables.Name = "listVariables";
-            this.listVariables.Size = new System.Drawing.Size(729, 293);
+            this.listVariables.Size = new System.Drawing.Size(729, 381);
             this.listVariables.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.listVariables.TabIndex = 0;
             this.listVariables.UseCompatibleStateImageBehavior = false;
@@ -108,7 +108,7 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnVarAddVariable,
             this.btnVarDeleteSelected});
-            this.statusStrip1.Location = new System.Drawing.Point(3, 296);
+            this.statusStrip1.Location = new System.Drawing.Point(3, 384);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(729, 22);
             this.statusStrip1.TabIndex = 1;

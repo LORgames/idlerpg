@@ -29,7 +29,7 @@ namespace CityTools {
             if (File.Exists("UI\\Background.png")) {
                 bgImage = Image.FromFile("UI\\Background.png");
             } else {
-                MessageBox.Show("You can place a preview image in at '.\\UI\\Background.png' to give a better example of the UI in action.");
+                MessageBox.Show("You can place a preview image in at '.\\UI\\Background.png' to give a better example of the UI in action. Recommended size: 1024x588px.");
                 bgImage = new Bitmap(1, 1);
             }
 

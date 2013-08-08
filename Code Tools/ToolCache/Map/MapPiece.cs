@@ -26,6 +26,7 @@ namespace ToolCache.Map {
 
         public string Name = "Unnamed";
         public string Filename = "";
+        public string Script = "";
 
         public Point WorldPosition = Point.Empty;
         public List<Portal> Portals = new List<Portal>();
@@ -103,6 +104,11 @@ namespace ToolCache.Map {
                 }
             }
 
+            //Scripting information
+            if (!f.IsEndOfFile()) {
+                Script = f.GetString();
+            }
+
             f.Dispose();
         }
 
@@ -143,6 +149,9 @@ namespace ToolCache.Map {
 
             //Save background information
             Background.SaveToBinary(f);
+
+            //And save the script
+            f.AddString(Script);
 
             f.Encode(Filename);
 

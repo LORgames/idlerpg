@@ -26,6 +26,7 @@ namespace CityTools.CacheInterfaces {
             MainWindow.instance.btnUIEditor.Click += new EventHandler(btnUIEditor_Click);
             MainWindow.instance.btnEffectEditor.Click += new EventHandler(btnEffectEditor_Click);
             MainWindow.instance.btnSaveEditor.Click += new EventHandler(btnSaveEditor_Click);
+            MainWindow.instance.btnPortraitEditor.Click += new EventHandler(btnPortraitEditor_Click);
         }
 
         public static bool ProcessKeys(Keys keyData) {
@@ -53,6 +54,8 @@ namespace CityTools.CacheInterfaces {
                 OpenEffectEditor(); return true;
             } else if (keyData == Keys.V) {
                 OpenSaveEditor(); return true;
+            } else if (keyData == Keys.P) {
+                OpenPortraitEditor(); return true;
             }
 
             return false;
@@ -124,6 +127,11 @@ namespace CityTools.CacheInterfaces {
 
         private static void OpenSaveEditor() {
             SaveFileEditor t = new SaveFileEditor();
+            t.ShowDialog();
+        }
+
+        private static void OpenPortraitEditor() {
+            PortraitEditor t = new PortraitEditor();
             t.ShowDialog();
         }
 
@@ -222,6 +230,10 @@ namespace CityTools.CacheInterfaces {
 
         static void btnSaveEditor_Click(object sender, EventArgs e) {
             OpenSaveEditor();
+        }
+
+        static void btnPortraitEditor_Click(object sender, EventArgs e) {
+            OpenPortraitEditor();
         }
     }
 }

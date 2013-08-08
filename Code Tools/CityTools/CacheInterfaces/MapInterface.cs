@@ -27,8 +27,9 @@ namespace CityTools.CacheInterfaces {
             UpdateGUI();
 
             MainWindow.instance.cbMapPieces.SelectedIndexChanged += new EventHandler(combo_mappieces_SelectedIndexChanged);
-            MainWindow.instance.txtPieceName.TextChanged += new EventHandler(txtPieceName_TextChanged);
+            MainWindow.instance.txtPieceName.Leave += new EventHandler(txtPieceName_TextChanged);
             MainWindow.instance.cbMapMusic.TextChanged += new EventHandler(cbMapMusic_TextChanged);
+            MainWindow.instance.scriptMap.ScriptUpdated += new EventHandler<EventArgs>(scriptMap_ScriptUpdated);
 
             MainWindow.instance.btnMapResize.Click += new EventHandler(mapSize_TextChanged);
 
@@ -61,6 +62,9 @@ namespace CityTools.CacheInterfaces {
 
             SpawnRegionInterface.UpdateRegionList();
             SpawnRegionInterface.UpdateGUI();
+
+            //Update the script
+            MainWindow.instance.scriptMap.Script = MapPieceCache.CurrentPiece.Script;
         }
 
         /// <summary>
@@ -79,6 +83,18 @@ namespace CityTools.CacheInterfaces {
                 MessageBox.Show("Cannot have 0 for width or height.", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             } else {
                 MapPieceCache.CurrentPiece.Tiles.ChangeSizeTo(Terrain.TerrainHelper.GetCurrentTile(), w, h, MainWindow.instance.cbMapExtendX.SelectedIndex, MainWindow.instance.cbMapExtendY.SelectedIndex);
+            }
+        }
+
+        /// <summary>
+        /// Is called when the script is modified by the user. Just causes the script to update on the Map Object.
+        /// </summary>
+        /// <param name="sender">Not too important, can be null</param>
+        /// <param name="e">Not too important, can be null</param>
+        static void scriptMap_ScriptUpdated(object sender, EventArgs e) {
+            if (MapPieceCache.CurrentPiece != null) {
+                MapPieceCache.CurrentPiece.Edited();
+                MapPieceCache.CurrentPiece.Script = MainWindow.instance.scriptMap.Script;
             }
         }
 
