@@ -19,7 +19,7 @@ echo.
 echo (hint: edit 'Run.bat' to test on device or change screen size)
 echo.
 ::adl "%APP_XML%" "%APP_DIR%" -- map=Logger's Retreat+debug=Yes+showfps=Yes+save=Test.sva
-adl "%APP_XML%" "%APP_DIR%" -- map=Bandit Checkpoint
+adl "%APP_XML%" "%APP_DIR%" -- map=Mountain Temple
 
 if errorlevel 1 goto end
 goto end

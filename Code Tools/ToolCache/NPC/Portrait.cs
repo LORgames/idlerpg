@@ -22,5 +22,10 @@ namespace ToolCache.NPC {
             f.AddString(Name);
             f.AddString(Filename);
         }
+
+        public override string ToString() {
+            if (Name.Length == 0) return "Unnamed";
+            return Name;
+        }
     }
 }

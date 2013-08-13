@@ -32,7 +32,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.nameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtPortraitName = new System.Windows.Forms.ToolStripTextBox();
-            this.lblID = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnAcceptResize = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
             this.splitMain.Panel1.SuspendLayout();
             this.splitMain.Panel2.SuspendLayout();
@@ -57,6 +57,7 @@
             // splitMain.Panel2
             // 
             this.splitMain.Panel2.AllowDrop = true;
+            this.splitMain.Panel2.Controls.Add(this.btnAcceptResize);
             this.splitMain.Panel2.Controls.Add(this.pbDisplay);
             this.splitMain.Panel2.Controls.Add(this.menuStrip1);
             this.splitMain.Panel2.DragDrop += new System.Windows.Forms.DragEventHandler(this.pbDisplay_DragDrop);
@@ -109,9 +110,9 @@
             // pbDisplay
             // 
             this.pbDisplay.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pbDisplay.Location = new System.Drawing.Point(0, 25);
+            this.pbDisplay.Location = new System.Drawing.Point(0, 27);
             this.pbDisplay.Name = "pbDisplay";
-            this.pbDisplay.Size = new System.Drawing.Size(492, 460);
+            this.pbDisplay.Size = new System.Drawing.Size(492, 458);
             this.pbDisplay.TabIndex = 1;
             this.pbDisplay.TabStop = false;
             this.pbDisplay.Paint += new System.Windows.Forms.PaintEventHandler(this.pbDisplay_Paint);
@@ -119,35 +120,42 @@
             this.pbDisplay.MouseLeave += new System.EventHandler(this.pbDisplay_MouseLeave);
             this.pbDisplay.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbDisplay_MouseMove);
             this.pbDisplay.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pbDisplay_MouseUp);
+            this.pbDisplay.Resize += new System.EventHandler(this.pbDisplay_Resize);
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.nameToolStripMenuItem,
-            this.txtPortraitName,
-            this.lblID});
+            this.txtPortraitName});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(492, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(492, 27);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // nameToolStripMenuItem
             // 
             this.nameToolStripMenuItem.Name = "nameToolStripMenuItem";
-            this.nameToolStripMenuItem.Size = new System.Drawing.Size(50, 21);
+            this.nameToolStripMenuItem.Size = new System.Drawing.Size(54, 23);
             this.nameToolStripMenuItem.Text = "Name:";
             // 
             // txtPortraitName
             // 
             this.txtPortraitName.Name = "txtPortraitName";
-            this.txtPortraitName.Size = new System.Drawing.Size(100, 21);
+            this.txtPortraitName.Size = new System.Drawing.Size(100, 23);
             // 
-            // lblID
+            // btnAcceptResize
             // 
-            this.lblID.Name = "lblID";
-            this.lblID.Size = new System.Drawing.Size(34, 21);
-            this.lblID.Text = "ID:";
+            this.btnAcceptResize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAcceptResize.Image = global::CityTools.Properties.Resources.accept;
+            this.btnAcceptResize.Location = new System.Drawing.Point(377, 459);
+            this.btnAcceptResize.Name = "btnAcceptResize";
+            this.btnAcceptResize.Size = new System.Drawing.Size(112, 23);
+            this.btnAcceptResize.TabIndex = 2;
+            this.btnAcceptResize.Text = "Accept Changes";
+            this.btnAcceptResize.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnAcceptResize.UseVisualStyleBackColor = true;
+            this.btnAcceptResize.Visible = false;
             // 
             // PortraitEditor
             // 
@@ -179,12 +187,12 @@
         private System.Windows.Forms.SplitContainer splitMain;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton btnAddNew;
-        private System.Windows.Forms.PictureBox pbDisplay;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem nameToolStripMenuItem;
         private System.Windows.Forms.ToolStripTextBox txtPortraitName;
-        private System.Windows.Forms.ToolStripMenuItem lblID;
         private System.Windows.Forms.ListBox listPortraits;
         private System.Windows.Forms.ToolStripButton btnDeleteSelected;
+        private System.Windows.Forms.Button btnAcceptResize;
+        internal System.Windows.Forms.PictureBox pbDisplay;
     }
 }

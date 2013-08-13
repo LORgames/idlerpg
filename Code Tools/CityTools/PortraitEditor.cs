@@ -9,17 +9,26 @@ using System.Windows.Forms;
 using ToolCache.NPC;
 using System.IO;
 using ToolCache.General;
+using ToolCache.Scripting;
+using System.Drawing.Imaging;
 
 namespace CityTools {
     public partial class PortraitEditor : Form {
         private Portrait CurrentPortrait;
 
+        private const int NOTHING = 0;
+        private const int CROPPING = 0;
+        private const int PANNING = 0;
+
         private bool _isEdited = false;
         private bool _isNew = false;
-        private bool _isCropping = false;
         private bool _isUpdating = false;
 
-        private Rectangle CropArea = new Rectangle();
+
+        private int _MouseAction = NOTHING;
+        private Point p0 = Point.Empty;
+        private Point p1 = Point.Empty;
+        private Rectangle CropArea = Rectangle.Empty;
 
         EventHandler addedEvent;
         EventHandler removedEvent;
@@ -31,6 +40,10 @@ namespace CityTools {
             removedEvent = new EventHandler(Portraits_ItemRemoved);
             PortraitManager.Portraits.ItemAdded += addedEvent;
             PortraitManager.Portraits.ItemRemoved += removedEvent;
+
+            foreach (Portrait p in PortraitManager.Portraits.Values) {
+                listPortraits.Items.Add(p);
+            }
 
             UpdateForm();
         }
@@ -44,12 +57,27 @@ namespace CityTools {
         }
 
         private void pbDisplay_Paint(object sender, PaintEventArgs e) {
-            e.Graphics.Clear(Color.White);
+            Graphics g = e.Graphics;
+
+            g.Clear(Color.White);
 
             if (CurrentPortrait != null && CurrentPortrait.Filename != "" && CurrentPortrait.Filename.Length > 3) {
                 Image im = ImageCache.RequestImage(CurrentPortrait.Filename);
 
-                e.Graphics.DrawImage(im, e.ClipRectangle);
+                float scale = Math.Min((float)pbDisplay.DisplayRectangle.Width / im.Width, (float)pbDisplay.DisplayRectangle.Height / im.Height);
+                Rectangle r = new Rectangle(0, 0, (int)(im.Width * scale), (int)(im.Height * scale));
+
+                if(im.Width != 256 || im.Height != 512) {
+                    g.DrawString("The portrait is not 256x512,\nClick and Drag on the image to select the correct area!", SystemFonts.DefaultFont, Brushes.Red, PointF.Empty);
+                }
+
+                g.DrawImage(im, r);
+
+                if (CropArea != Rectangle.Empty) {
+                    g.DrawRectangle(Pens.Red, CropArea);
+                }
+            } else {
+                g.DrawString("No portrait is available!", SystemFonts.DefaultFont, Brushes.Black, PointF.Empty);
             }
         }
 
@@ -61,7 +89,6 @@ namespace CityTools {
         }
 
         private void btnDeleteSelected_Click (object sender, EventArgs e) {
-            //TODO: Implement this.
             SaveIfRequired();
 
             List<string> keys = new List<string>();
@@ -102,6 +129,7 @@ namespace CityTools {
             _isUpdating = true;
             txtPortraitName.Text = CurrentPortrait == null ? "" : CurrentPortrait.Name;
             pbDisplay.Invalidate();
+            btnAcceptResize.Visible = false;
             _isUpdating = false;
         }
 
@@ -111,6 +139,7 @@ namespace CityTools {
 
                 if (_isNew) {
                     PortraitManager.Portraits.Add(txtPortraitName.Text, CurrentPortrait);
+                    _isNew = false;
                 }
             }
         }
@@ -119,7 +148,6 @@ namespace CityTools {
             if (CurrentPortrait != null) e.Effect = DragDropEffects.Copy;
             else e.Effect = DragDropEffects.None;
         }
-
         private void pbDisplay_DragDrop(object sender, DragEventArgs e) {
             if (CurrentPortrait == null) {
                 return;
@@ -136,8 +164,8 @@ namespace CityTools {
                             string filename = ((string[])data)[i];
                             string ext = Path.GetExtension(filename).ToLower();
                             if (ext == ".png") {
-                                //Add animation
-                                string nFilename = "Portraits/" + Path.GetFileNameWithoutExtension(filename) + ".png";
+                                string expectedName = GlobalVariables.FixVariableName(CurrentPortrait.Name);
+                                string nFilename = "Portraits/" + expectedName + ".png";
 
                                 if (Path.GetFullPath(nFilename) == Path.GetFullPath(filename)) {
                                     //Do nothing :)
@@ -149,7 +177,7 @@ namespace CityTools {
                                     //Keep adding _1, _2, _3 etc until we find a filename we can use.
                                     int nextFilenameAttempt = 1;
                                     while (File.Exists(nFilename)) {
-                                        nFilename = "Portraits/" + Path.GetFileNameWithoutExtension(filename) + "_" + nextFilenameAttempt + ".png";
+                                        nFilename = "Portraits/" + expectedName + "_" + nextFilenameAttempt + ".png";
                                         nextFilenameAttempt++;
                                     }
 
@@ -160,7 +188,7 @@ namespace CityTools {
                                 CurrentPortrait.Filename = nFilename;
                                 Edited();
                                 ImageCache.ForceCache(nFilename);
-                                LoadPortraitImage();
+                                pbDisplay.Invalidate();
                             }
                         }
                     }
@@ -168,28 +196,99 @@ namespace CityTools {
             }
         }
 
-        private void LoadPortraitImage() {
-            pbDisplay.Invalidate();
-        }
-
         private void Edited(object sender = null, EventArgs e = null) {
             _isEdited = true;
         }
 
+
+        private void FixCropAreaPosition() {
+            if (CropArea.Width < 0) {
+                CropArea.X += CropArea.Width;
+                CropArea.Width = -CropArea.Width;
+            }
+
+            if (CropArea.Height < 0) {
+                CropArea.Y += CropArea.Height;
+                CropArea.Height = -CropArea.Height;
+            }
+        }
+
+        private void FixCropAreaSize() {
+            CropArea.X = Math.Min(p0.X, p1.X);
+            CropArea.Y = Math.Min(p0.Y, p1.Y);
+            CropArea.Width = Math.Abs(p1.X - p0.X);
+            CropArea.Height = Math.Abs(p1.Y - p0.Y);
+
+            int difference = CropArea.Width * 2 - CropArea.Height;
+
+            if (difference < 0) {
+                //Remember is negative so subtract it.
+                CropArea.X += difference / 4;
+                CropArea.Width -= difference/2;
+            } else {
+                CropArea.Y -= difference / 2;
+                CropArea.Height += difference;
+            }
+        }
+
         private void pbDisplay_MouseMove(object sender, MouseEventArgs e) {
-            Cursor.Current = Cursors.SizeAll;
+            if (_MouseAction == CROPPING) {
+                p1.X = e.X;
+                p1.Y = e.Y;
+
+                FixCropAreaSize();
+                pbDisplay.Invalidate();
+            }
         }
 
         private void pbDisplay_MouseDown(object sender, MouseEventArgs e) {
+            if (CurrentPortrait != null && e.X > 0 && e.Y > 0) {
+                if (_MouseAction == NOTHING && e.Button == System.Windows.Forms.MouseButtons.Left) {
+                    Image im = ImageCache.RequestImage(CurrentPortrait.Filename);
+                    if (im.Size.Width > 256 || im.Size.Height > 512) {
+                        _MouseAction = CROPPING;
 
+                        p0.X = e.X;
+                        p0.Y = e.Y;
+                        p1.X = p0.X;
+                        p1.Y = p1.Y;
+
+                        CropArea.X = e.X;
+                        CropArea.Y = e.Y;
+                        CropArea.Width = 0;
+                        CropArea.Height = 0;
+
+                        pbDisplay.Invalidate();
+                    }
+                }
+            }
         }
 
         private void pbDisplay_MouseUp(object sender, MouseEventArgs e) {
+            if (_MouseAction == CROPPING) {
+                _MouseAction = NOTHING;
+                btnAcceptResize.Visible = true;
 
+                p1.X = e.X;
+                p1.Y = e.Y;
+
+                FixCropAreaSize();
+                FixCropAreaPosition();
+                
+                ImageCache.ForceCache(CurrentPortrait.Filename);
+                pbDisplay.Invalidate();
+            }
         }
 
         private void pbDisplay_MouseLeave(object sender, EventArgs e) {
+            if (_MouseAction != NOTHING) {
+                _MouseAction = NOTHING;
+                pbDisplay.Invalidate();
+            }
+        }
 
+        private void pbDisplay_Resize(object sender, EventArgs e) {
+            pbDisplay.Invalidate();
         }
     }
 }

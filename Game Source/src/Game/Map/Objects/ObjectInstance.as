@@ -167,8 +167,6 @@ package Game.Map.Objects {
 		public function ChangeState(stateID:int, isLooping:Boolean):void {
 			if(isLooping) {
 				Template.ChangeState(stateID);
-			} else {
-				throw new Error("Cannot have a non-looping animation on an object without individual animations!");
 			}
 		}
 		

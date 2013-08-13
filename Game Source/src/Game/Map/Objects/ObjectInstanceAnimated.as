@@ -31,9 +31,7 @@ package Game.Map.Objects {
 		}
 		
 		override public function SetInformation(map:MapData, id:int, _x:int, _y:int):void {
-			Map = map;
-			ID = id;
-			Template = ObjectTemplate.Objects[ID];
+			super.SetInformation(map, id, _x, _y);
 			
 			CopyRect.x = 0;
 			CopyRect.y = 0;
@@ -41,10 +39,6 @@ package Game.Map.Objects {
 			CopyRect.height = Template.FrameSize.height;
 			
 			ChangeState(0, true);
-			
-			super.SetInformation(map, id, _x, _y);
-			
-			this.bitmapData = new BitmapData(CopyRect.width, CopyRect.height, true, 0x40FFFF00);
 		}
 		
 		override public function CleanUp():void {
@@ -69,6 +63,11 @@ package Game.Map.Objects {
 			if (!isAddedToAnimatedList && EndFrame-StartFrame > 1) {
 				Renderman.AnimatedObjectsPush(this);
 				isAddedToAnimatedList = true;
+				
+				if (!HasLoaded) {
+					this.bitmapData = this.bitmapData.clone();
+					HasLoaded = true;
+				}
 			} else if (isAddedToAnimatedList && EndFrame-StartFrame < 2) {
 				Renderman.AnimatedObjectsRemove(this);
 				isAddedToAnimatedList = false;
@@ -78,7 +77,7 @@ package Game.Map.Objects {
 		public function UpdateAnimation(dt:Number):void {
 			FrameTimeout += dt;
 			
-			if (FrameTimeout > PlaybackSpeed || (!HasLoaded && Template.SpriteAtlas != null)) {
+			if (FrameTimeout > PlaybackSpeed) {
 				while(FrameTimeout > PlaybackSpeed) {
 					FrameTimeout -= PlaybackSpeed;
 					CurrentFrame++;
@@ -101,7 +100,6 @@ package Game.Map.Objects {
 				
 				if(Template.SpriteAtlas != null) {
 					this.bitmapData.copyPixels(Template.SpriteAtlas, CopyRect, Global.ZeroPoint);
-					HasLoaded = true;
 				}
 			}
 		}
@@ -122,20 +120,18 @@ package Game.Map.Objects {
 			StartFrame = Template.TotalFrames[stateID];
 			EndFrame = Template.TotalFrames[stateID + 1]-1;
 			
+			UpdateAnimationState();
+			
 			IsLooping = isLooping;
 			
 			CurrentFrame = StartFrame;
 			
-			if(this.bitmapData != null) {
-				CopyRect.x = (int)(CurrentFrame % Template.SpriteColumns) * CopyRect.width;
-				CopyRect.y = (int)(CurrentFrame / Template.SpriteColumns) * CopyRect.height;
-				
-				if(Template.SpriteAtlas != null) {
-					this.bitmapData.copyPixels(Template.SpriteAtlas, CopyRect, Global.ZeroPoint);
-				}
-			}
+			CopyRect.x = (int)(CurrentFrame % Template.SpriteColumns) * CopyRect.width;
+			CopyRect.y = (int)(CurrentFrame / Template.SpriteColumns) * CopyRect.height;
 			
-			UpdateAnimationState();
+			if(Template.SpriteAtlas != null) {
+				this.bitmapData.copyPixels(Template.SpriteAtlas, CopyRect, Global.ZeroPoint);
+			}
 		}
 		
 		override public function GetCurrentState():int {
