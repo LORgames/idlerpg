@@ -131,6 +131,7 @@ package Game.Map.Objects {
 			if (Template == null) {
 				return "[OBJ=NULL]";
 			}
+			
 			return "[OBJ=" + Template.ObjectID + "]";
 		}
 		
@@ -163,7 +164,6 @@ package Game.Map.Objects {
 		}
 		
 		/* INTERFACE Game.Scripting.IScriptTarget */
-		
 		public function ChangeState(stateID:int, isLooping:Boolean):void {
 			if(isLooping) {
 				Template.ChangeState(stateID);
