@@ -64,12 +64,7 @@ package Game.Map.Tiles {
 				
 				tt.TotalFrames = e.readByte();
 				tt.movementCost = e.readFloat();
-				
-				tt.SlideDirection = e.readByte();
 				tt.PlaybackSpeed = e.readFloat();
-				
-				tt.DamageElement = e.readShort();
-				tt.DamagePerSecond = e.readShort();
 				
 				var __t:int = e.readByte();
 				tt.Collisions = new Vector.<Rect>(__t, true);
