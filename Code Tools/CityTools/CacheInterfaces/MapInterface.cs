@@ -198,7 +198,7 @@ namespace CityTools.CacheInterfaces {
         /// </summary>
         internal static void DrawThumbnail() {
             float scale = 0.1f;
-            Size s = new Size((int)(MapPieceCache.CurrentPiece.Tiles.numTilesX * TileTemplate.PIXELS_X * scale), (int)(MapPieceCache.CurrentPiece.Tiles.numTilesY * TileTemplate.PIXELS_Y * scale));
+            Size s = new Size((int)(MapPieceCache.CurrentPiece.Tiles.numTilesX * TileTemplate.PIXELS * scale), (int)(MapPieceCache.CurrentPiece.Tiles.numTilesY * TileTemplate.PIXELS * scale));
             Rectangle r = new Rectangle(Point.Empty, s);
 
             Bitmap total = new Bitmap(s.Width, s.Height, PixelFormat.Format32bppArgb);

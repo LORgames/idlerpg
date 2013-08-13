@@ -40,7 +40,7 @@ namespace ToolCache.Map.Tiles {
                 }
             }
 
-            Map.WorldRectangle = new System.Drawing.Rectangle(0, 0, numTilesX * TileTemplate.PIXELS_X, numTilesY * TileTemplate.PIXELS_Y);
+            Map.WorldRectangle = new System.Drawing.Rectangle(0, 0, numTilesX * TileTemplate.PIXELS, numTilesY * TileTemplate.PIXELS);
         }
 
         public void LoadMapFromFile(BinaryIO mapFile) {
@@ -55,7 +55,7 @@ namespace ToolCache.Map.Tiles {
                 }
             }
 
-            Map.WorldRectangle = new System.Drawing.Rectangle(0, 0, numTilesX * TileTemplate.PIXELS_X, numTilesY * TileTemplate.PIXELS_Y);
+            Map.WorldRectangle = new System.Drawing.Rectangle(0, 0, numTilesX * TileTemplate.PIXELS, numTilesY * TileTemplate.PIXELS);
         }
 
         public void SaveMap(BinaryIO mapFile) {
@@ -101,8 +101,8 @@ namespace ToolCache.Map.Tiles {
             }
 
             //Loop over objects and move them
-            int offsetX = (extendX == 0) ? 0 : (extendX == 2 ? TileTemplate.PIXELS_X * sizeDifX : TileTemplate.PIXELS_X * sizeDifX / 2);
-            int offsetY = (extendY == 0) ? 0 : (extendY == 2 ? TileTemplate.PIXELS_Y * sizeDifY : TileTemplate.PIXELS_Y * sizeDifY / 2);
+            int offsetX = (extendX == 0) ? 0 : (extendX == 2 ? TileTemplate.PIXELS * sizeDifX : TileTemplate.PIXELS * sizeDifX / 2);
+            int offsetY = (extendY == 0) ? 0 : (extendY == 2 ? TileTemplate.PIXELS * sizeDifY : TileTemplate.PIXELS * sizeDifY / 2);
 
             Data = newTiles;
 
@@ -118,16 +118,16 @@ namespace ToolCache.Map.Tiles {
                 o.Move(offsetX, offsetY);
             }
 
-            Map.WorldRectangle = new System.Drawing.Rectangle(0, 0, numTilesX * TileTemplate.PIXELS_X, numTilesY * TileTemplate.PIXELS_Y);
+            Map.WorldRectangle = new System.Drawing.Rectangle(0, 0, numTilesX * TileTemplate.PIXELS, numTilesY * TileTemplate.PIXELS);
         }
 
         public List<TileInstance> GetTilesFromWorldRectangle(int x, int y, int w, int h) {
             List<TileInstance> retList = new List<TileInstance>();
 
-            int LX = x / TileTemplate.PIXELS_X;
-            int LY = y / TileTemplate.PIXELS_Y;
-            int UX = (x + w) / TileTemplate.PIXELS_X;
-            int UY = (y + h) / TileTemplate.PIXELS_Y;
+            int LX = x / TileTemplate.PIXELS;
+            int LY = y / TileTemplate.PIXELS;
+            int UX = (x + w) / TileTemplate.PIXELS;
+            int UY = (y + h) / TileTemplate.PIXELS;
 
             if (LX < 0) LX = 0;
             if (LY < 0) LY = 0;

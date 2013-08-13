@@ -38,12 +38,6 @@ namespace CityTools {
             this.lblTileID = new System.Windows.Forms.ToolStripLabel();
             this.lblTileName = new System.Windows.Forms.Label();
             this.lblGroup = new System.Windows.Forms.Label();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.numMovementCost = new System.Windows.Forms.NumericUpDown();
-            this.cbSlideDirection = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.treeAllTiles = new System.Windows.Forms.TreeView();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
@@ -52,9 +46,9 @@ namespace CityTools {
             this.pbDisplay = new System.Windows.Forms.PictureBox();
             this.ccAnimation = new CityTools.Components.AnimationList();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.label4 = new System.Windows.Forms.Label();
+            this.numMovementCost = new System.Windows.Forms.NumericUpDown();
             this.toolStrip1.SuspendLayout();
-            this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numMovementCost)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -64,6 +58,7 @@ namespace CityTools {
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbDisplay)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numMovementCost)).BeginInit();
             this.SuspendLayout();
             // 
             // txtTileName
@@ -141,7 +136,7 @@ namespace CityTools {
             // lblTileID
             // 
             this.lblTileID.Name = "lblTileID";
-            this.lblTileID.Size = new System.Drawing.Size(40, 22);
+            this.lblTileID.Size = new System.Drawing.Size(41, 22);
             this.lblTileID.Text = "<TID>";
             // 
             // lblTileName
@@ -161,91 +156,6 @@ namespace CityTools {
             this.lblGroup.Size = new System.Drawing.Size(59, 13);
             this.lblGroup.TabIndex = 6;
             this.lblGroup.Text = "Tile Group:";
-            // 
-            // panel3
-            // 
-            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel3.Controls.Add(this.numMovementCost);
-            this.panel3.Controls.Add(this.cbSlideDirection);
-            this.panel3.Controls.Add(this.label3);
-            this.panel3.Controls.Add(this.label4);
-            this.panel3.Controls.Add(this.label5);
-            this.panel3.Location = new System.Drawing.Point(217, 48);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(169, 78);
-            this.panel3.TabIndex = 10;
-            // 
-            // numMovementCost
-            // 
-            this.numMovementCost.DecimalPlaces = 2;
-            this.numMovementCost.Increment = new decimal(new int[] {
-            25,
-            0,
-            0,
-            131072});
-            this.numMovementCost.Location = new System.Drawing.Point(64, 22);
-            this.numMovementCost.Maximum = new decimal(new int[] {
-            400,
-            0,
-            0,
-            131072});
-            this.numMovementCost.Minimum = new decimal(new int[] {
-            25,
-            0,
-            0,
-            131072});
-            this.numMovementCost.Name = "numMovementCost";
-            this.numMovementCost.Size = new System.Drawing.Size(100, 20);
-            this.numMovementCost.TabIndex = 6;
-            this.numMovementCost.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numMovementCost.ValueChanged += new System.EventHandler(this.ValueChanged);
-            // 
-            // cbSlideDirection
-            // 
-            this.cbSlideDirection.FormattingEnabled = true;
-            this.cbSlideDirection.Items.AddRange(new object[] {
-            "No Sliding",
-            "Force Slide Left",
-            "Force Slide Right",
-            "Force Slide Up",
-            "Force Slide Down",
-            "Slide In Direction Of Travel"});
-            this.cbSlideDirection.Location = new System.Drawing.Point(64, 49);
-            this.cbSlideDirection.Name = "cbSlideDirection";
-            this.cbSlideDirection.Size = new System.Drawing.Size(100, 21);
-            this.cbSlideDirection.TabIndex = 5;
-            this.cbSlideDirection.SelectedIndexChanged += new System.EventHandler(this.ValueChanged);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(4, 52);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(41, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Sliding:";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(4, 24);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(31, 13);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "Cost:";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(4, 4);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(57, 13);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "Movement";
             // 
             // splitContainer1
             // 
@@ -285,12 +195,13 @@ namespace CityTools {
             // 
             // splitContainer2.Panel1
             // 
+            this.splitContainer2.Panel1.Controls.Add(this.numMovementCost);
             this.splitContainer2.Panel1.Controls.Add(this.btnClearCollisions);
+            this.splitContainer2.Panel1.Controls.Add(this.label4);
             this.splitContainer2.Panel1.Controls.Add(this.ckbShowCollisions);
             this.splitContainer2.Panel1.Controls.Add(this.pbDisplay);
             this.splitContainer2.Panel1.Controls.Add(this.lblTileName);
             this.splitContainer2.Panel1.Controls.Add(this.cbTileGroup);
-            this.splitContainer2.Panel1.Controls.Add(this.panel3);
             this.splitContainer2.Panel1.Controls.Add(this.lblGroup);
             this.splitContainer2.Panel1.Controls.Add(this.txtTileName);
             // 
@@ -351,6 +262,44 @@ namespace CityTools {
             this.timer1.Interval = 50;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(237, 52);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(84, 13);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "Movement Cost:";
+            // 
+            // numMovementCost
+            // 
+            this.numMovementCost.DecimalPlaces = 2;
+            this.numMovementCost.Increment = new decimal(new int[] {
+            25,
+            0,
+            0,
+            131072});
+            this.numMovementCost.Location = new System.Drawing.Point(240, 68);
+            this.numMovementCost.Maximum = new decimal(new int[] {
+            400,
+            0,
+            0,
+            131072});
+            this.numMovementCost.Minimum = new decimal(new int[] {
+            25,
+            0,
+            0,
+            131072});
+            this.numMovementCost.Name = "numMovementCost";
+            this.numMovementCost.Size = new System.Drawing.Size(100, 20);
+            this.numMovementCost.TabIndex = 6;
+            this.numMovementCost.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numMovementCost.ValueChanged += new System.EventHandler(this.ValueChanged);
+            // 
             // TileEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -363,9 +312,6 @@ namespace CityTools {
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TileEditor_FormClosing);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numMovementCost)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -377,6 +323,7 @@ namespace CityTools {
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbDisplay)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numMovementCost)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -393,12 +340,6 @@ namespace CityTools {
         private System.Windows.Forms.Label lblGroup;
         private System.Windows.Forms.ToolStripButton btnSave;
         private System.Windows.Forms.ToolStripLabel lblTileID;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.ComboBox cbSlideDirection;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.NumericUpDown numMovementCost;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.PictureBox pbDisplay;
@@ -407,5 +348,7 @@ namespace CityTools {
         private System.Windows.Forms.CheckBox ckbShowCollisions;
         private System.Windows.Forms.Button btnClearCollisions;
         private System.Windows.Forms.ToolStripButton btnMerge;
+        private System.Windows.Forms.NumericUpDown numMovementCost;
+        private System.Windows.Forms.Label label4;
     }
 }

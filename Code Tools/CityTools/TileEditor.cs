@@ -56,7 +56,6 @@ namespace CityTools {
                 txtTileName.Text = t.TileName;
 
                 numMovementCost.Value = (Decimal)t.movementCost;
-                cbSlideDirection.SelectedIndex = t.slidingDirection;
 
                 _bases = t.Collision;
 
@@ -71,7 +70,6 @@ namespace CityTools {
                 _bases = new List<Rectangle>();
 
                 numMovementCost.Value = 1.0M;
-                cbSlideDirection.SelectedIndex = 0;
             }
 
             lblTileID.Text = "ID:" + this.tileID;
@@ -97,7 +95,6 @@ namespace CityTools {
             t.TileName = txtTileName.Text;
 
             t.movementCost = (float)numMovementCost.Value;
-            t.slidingDirection = (byte)cbSlideDirection.SelectedIndex;
 
             t.Collision = _bases;
 

@@ -256,8 +256,8 @@ namespace CityTools {
             TileTemplate tt = cbTileList.SelectedItem as TileTemplate;
 
             if (tt != null) {
-                for (int x = 0; x < e.ClipRectangle.Width; x += TileTemplate.PIXELS_X) {
-                    for (int y = 0; y < e.ClipRectangle.Width; y += TileTemplate.PIXELS_Y) {
+                for (int x = 0; x < e.ClipRectangle.Width; x += TileTemplate.PIXELS) {
+                    for (int y = 0; y < e.ClipRectangle.Width; y += TileTemplate.PIXELS) {
                         tt.Animation.Draw(e.Graphics, x, y, 1);
                     }
                 }

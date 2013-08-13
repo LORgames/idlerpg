@@ -37,11 +37,7 @@ namespace ToolToGameExporter {
 
                 f.AddByte((byte)tt.Animation.Frames.Count);
                 f.AddFloat(tt.movementCost);
-                f.AddByte(tt.slidingDirection);
                 f.AddFloat(tt.Animation.PlaybackSpeed);
-
-                f.AddShort(tt.damageElement);
-                f.AddShort(tt.damagePerSecond);
 
                 f.AddByte((byte)tt.Collision.Count);
                 foreach (Rectangle r in tt.Collision) {
