@@ -27,6 +27,7 @@ namespace CityTools.CacheInterfaces {
             MainWindow.instance.btnEffectEditor.Click += new EventHandler(btnEffectEditor_Click);
             MainWindow.instance.btnSaveEditor.Click += new EventHandler(btnSaveEditor_Click);
             MainWindow.instance.btnPortraitEditor.Click += new EventHandler(btnPortraitEditor_Click);
+            MainWindow.instance.btnGlobalSettingsEditor.Click += new EventHandler(btnGlobalSettingsEditor_Click);
         }
 
         public static bool ProcessKeys(Keys keyData) {
@@ -135,6 +136,11 @@ namespace CityTools.CacheInterfaces {
             t.ShowDialog();
         }
 
+        private static void OpenGlobalSettingsEditor() {
+            GlobalSettingsEditor t = new GlobalSettingsEditor();
+            t.ShowDialog(MainWindow.instance);
+        }
+
         private static void ExportAndRun() {
             string args = "map=" + MapPieceCache.CurrentPiece.Name;
 
@@ -234,6 +240,10 @@ namespace CityTools.CacheInterfaces {
 
         static void btnPortraitEditor_Click(object sender, EventArgs e) {
             OpenPortraitEditor();
+        }
+
+        private static void btnGlobalSettingsEditor_Click(object send, EventArgs e) {
+            OpenGlobalSettingsEditor();
         }
     }
 }

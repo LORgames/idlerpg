@@ -153,6 +153,12 @@
     <Compile Include="GenerateEquipmentAlternatives.Designer.cs">
       <DependentUpon>GenerateEquipmentAlternatives.cs</DependentUpon>
     </Compile>
+    <Compile Include="GlobalSettingsEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GlobalSettingsEditor.Designer.cs">
+      <DependentUpon>GlobalSettingsEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="GlobalVariableEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -282,6 +288,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GenerateEquipmentAlternatives.resx">
       <DependentUpon>GenerateEquipmentAlternatives.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GlobalSettingsEditor.resx">
+      <DependentUpon>GlobalSettingsEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GlobalVariableEditor.resx">
       <DependentUpon>GlobalVariableEditor.cs</DependentUpon>
