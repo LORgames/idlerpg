@@ -110,15 +110,29 @@ namespace ToolCache.Scripting {
                         info.Errors.Add("Cannot find Critter: " + Parameters);
                     } break;
                 case "damage":
-                    CommandID = 0x1003; CheckUnsignedShortParameter(info); break;
+                    if (Parameters[Parameters.Length - 1] == '%') {
+                        CommandID = 0x1005;
+                        Parameters = Parameters.Remove(Parameters.Length - 2);
+                    } else {
+                        CommandID = 0x1003;
+                    }
+                    CheckUnsignedShortParameter(info);
+                    break;
                 case "knockback":
                     CommandID = 0x1004; CheckUnsignedShortParameter(info); break;
                 case "damagepercent":
-                    CommandID = 0x1005; CheckUnsignedShortParameter(info); break;
+                    CommandID = 0x1005;
+                    CheckUnsignedShortParameter(info);
+                    break;
                 case "dot":
-                    CommandID = 0x1006;
-
                     paramBits = Parameters.Split(' ');
+
+                    if (paramBits[0][paramBits[0].Length - 1] == '%') {
+                        CommandID = 0x100C;
+                        paramBits[0] = paramBits[0].Remove(paramBits[0].Length-2);
+                    } else {
+                        CommandID = 0x1006;
+                    }
 
                     if (paramBits.Length == 2) {
                         if (!ushort.TryParse(paramBits[0], out param0)) {
@@ -197,6 +211,20 @@ namespace ToolCache.Scripting {
                         } else { AdditionalBytecode.Add(0x0); }
                     } else {
                         info.Errors.Add("ObjectSpawn expects 1-3 parameters, '<Object Name> <[OPTIONAL]Offset Forwards> <[OPTIONAL]Offset Sideways>'. NB. Another object might share this name or you may have mistyped it. Remember object names are case sensitive!");
+                    } break;
+                case "dotpercent":
+                    CommandID = 0x100C;
+
+                    paramBits = Parameters.Split(' ');
+
+                    if (paramBits.Length == 2) {
+                        if (!ushort.TryParse(paramBits[0], out param0)) {
+                            info.Errors.Add("Cannot convert '" + Parameters + "' into a number.");
+                        } else if (!ushort.TryParse(paramBits[1], out param1)) {
+                            info.Errors.Add("Cannot convert '" + Parameters + "' into a number.");
+                        }
+                    } else {
+                        info.Errors.Add("Requires both damage per second and total seconds (1 tick per second).");
                     } break;
                 case "equip":
                     CommandID = 0x4001;

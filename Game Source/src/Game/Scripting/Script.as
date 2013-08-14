@@ -163,7 +163,7 @@ package Game.Scripting {
 							EventScript.readShort(); EventScript.readShort();
 						} break;
 					case 0x5001:
-						if (info.CurrentTarget is BaseCritter) {
+						if (info.CurrentTarget is BaseCritter) { 
 							(info.CurrentTarget as BaseCritter).MovementSpeed = EventScript.readShort();
 						} break;
 					case 0x5002:
@@ -438,6 +438,18 @@ package Game.Scripting {
 						case 0x1003: //Damage
 							dim0 = eventScript.readUnsignedShort();
 							obj.ScriptAttack(false, false, dim0, info.CurrentTarget);
+							break;
+						case 0x1005:
+							dim0 = eventScript.readUnsignedShort();
+							obj.ScriptAttack(true, false, dim0, info.CurrentTarget);
+							break;
+						case 0x1006: //DOT
+							dim0 = eventScript.readUnsignedShort();
+							obj.ScriptAttack(false, true, dim0, info.CurrentTarget);
+							break;
+						case 0x100C:
+							dim0 = eventScript.readUnsignedShort();
+							obj.ScriptAttack(true, true, dim0, info.CurrentTarget);
 							break;
 					}
 					
