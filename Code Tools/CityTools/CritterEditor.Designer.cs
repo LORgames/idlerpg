@@ -56,16 +56,6 @@ namespace CityTools {
             this.btnBeastDown = new System.Windows.Forms.Button();
             this.btnBeastUp = new System.Windows.Forms.Button();
             this.btnBeastLeft = new System.Windows.Forms.Button();
-            this.label16 = new System.Windows.Forms.Label();
-            this.ccBeastAnimations = new CityTools.Components.AnimationList();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.numListViewHidden = new System.Windows.Forms.NumericUpDown();
-            this.listLoot = new CityTools.Components.ListViewEx();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label3 = new System.Windows.Forms.Label();
             this.btnAddLoot = new System.Windows.Forms.Button();
             this.cbItemList = new System.Windows.Forms.ComboBox();
@@ -82,9 +72,6 @@ namespace CityTools {
             this.cbHumanoidBody = new System.Windows.Forms.ComboBox();
             this.cbHumanoidPants = new System.Windows.Forms.ComboBox();
             this.cbHumanoidShadow = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.txtScript = new CityTools.Components.ScriptBox();
             this.label7 = new System.Windows.Forms.Label();
             this.listGroups = new System.Windows.Forms.ListBox();
             this.btnAddGroup = new System.Windows.Forms.Button();
@@ -101,6 +88,22 @@ namespace CityTools {
             this.txtMonsterName = new System.Windows.Forms.TextBox();
             this.pbPreviewDisplay = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabInfo = new System.Windows.Forms.TabPage();
+            this.tabScripts = new System.Windows.Forms.TabPage();
+            this.tabLoot = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.numListViewHidden = new System.Windows.Forms.NumericUpDown();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.ccBeastAnimations = new CityTools.Components.AnimationList();
+            this.txtScript = new CityTools.Components.ScriptBox();
+            this.listLoot = new CityTools.Components.ListViewEx();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.sptFullForm)).BeginInit();
             this.sptFullForm.Panel1.SuspendLayout();
             this.sptFullForm.Panel2.SuspendLayout();
@@ -113,13 +116,18 @@ namespace CityTools {
             ((System.ComponentModel.ISupportInitialize)(this.numBeastRectHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBeastRectWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBeastFPS)).BeginInit();
-            this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numListViewHidden)).BeginInit();
             this.pnlHumanoid.SuspendLayout();
-            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numHealth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numExperience)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreviewDisplay)).BeginInit();
+            this.tabControl1.SuspendLayout();
+            this.tabInfo.SuspendLayout();
+            this.tabScripts.SuspendLayout();
+            this.tabLoot.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numListViewHidden)).BeginInit();
+            this.panel3.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // sptFullForm
@@ -137,28 +145,10 @@ namespace CityTools {
             // 
             // sptFullForm.Panel2
             // 
-            this.sptFullForm.Panel2.Controls.Add(this.label22);
-            this.sptFullForm.Panel2.Controls.Add(this.label14);
-            this.sptFullForm.Panel2.Controls.Add(this.numRange);
-            this.sptFullForm.Panel2.Controls.Add(this.numMovementSpeed);
-            this.sptFullForm.Panel2.Controls.Add(this.btnAddToSpawnList);
-            this.sptFullForm.Panel2.Controls.Add(this.label15);
-            this.sptFullForm.Panel2.Controls.Add(this.cbBaseGroup);
-            this.sptFullForm.Panel2.Controls.Add(this.pnlBeast);
-            this.sptFullForm.Panel2.Controls.Add(this.panel3);
-            this.sptFullForm.Panel2.Controls.Add(this.pnlHumanoid);
-            this.sptFullForm.Panel2.Controls.Add(this.panel1);
-            this.sptFullForm.Panel2.Controls.Add(this.ckbOneOfAKind);
-            this.sptFullForm.Panel2.Controls.Add(this.label5);
-            this.sptFullForm.Panel2.Controls.Add(this.numHealth);
-            this.sptFullForm.Panel2.Controls.Add(this.numExperience);
-            this.sptFullForm.Panel2.Controls.Add(this.label4);
-            this.sptFullForm.Panel2.Controls.Add(this.txtMonsterName);
-            this.sptFullForm.Panel2.Controls.Add(this.pbPreviewDisplay);
-            this.sptFullForm.Panel2.Controls.Add(this.label2);
+            this.sptFullForm.Panel2.Controls.Add(this.tabControl1);
             this.sptFullForm.Panel2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.sptFullForm.Size = new System.Drawing.Size(921, 588);
-            this.sptFullForm.SplitterDistance = 164;
+            this.sptFullForm.Size = new System.Drawing.Size(733, 588);
+            this.sptFullForm.SplitterDistance = 290;
             this.sptFullForm.TabIndex = 0;
             this.sptFullForm.TabStop = false;
             // 
@@ -167,7 +157,7 @@ namespace CityTools {
             this.treeAllCritters.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeAllCritters.Location = new System.Drawing.Point(0, 25);
             this.treeAllCritters.Name = "treeAllCritters";
-            this.treeAllCritters.Size = new System.Drawing.Size(162, 561);
+            this.treeAllCritters.Size = new System.Drawing.Size(288, 561);
             this.treeAllCritters.TabIndex = 2;
             this.treeAllCritters.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeAllCritters_AfterSelect);
             // 
@@ -179,7 +169,7 @@ namespace CityTools {
             this.toolStripTextBox1});
             this.toolsMainTools.Location = new System.Drawing.Point(0, 0);
             this.toolsMainTools.Name = "toolsMainTools";
-            this.toolsMainTools.Size = new System.Drawing.Size(162, 25);
+            this.toolsMainTools.Size = new System.Drawing.Size(288, 25);
             this.toolsMainTools.TabIndex = 0;
             this.toolsMainTools.Text = "toolStrip1";
             // 
@@ -199,7 +189,7 @@ namespace CityTools {
             // 
             this.btnCreateHumanoidCritter.Image = ((System.Drawing.Image)(resources.GetObject("btnCreateHumanoidCritter.Image")));
             this.btnCreateHumanoidCritter.Name = "btnCreateHumanoidCritter";
-            this.btnCreateHumanoidCritter.Size = new System.Drawing.Size(131, 22);
+            this.btnCreateHumanoidCritter.Size = new System.Drawing.Size(124, 22);
             this.btnCreateHumanoidCritter.Text = "Humanoid";
             this.btnCreateHumanoidCritter.Click += new System.EventHandler(this.btnCreateHumanoidCritter_Click);
             // 
@@ -207,7 +197,7 @@ namespace CityTools {
             // 
             this.btnCreateBeastCritter.Image = ((System.Drawing.Image)(resources.GetObject("btnCreateBeastCritter.Image")));
             this.btnCreateBeastCritter.Name = "btnCreateBeastCritter";
-            this.btnCreateBeastCritter.Size = new System.Drawing.Size(131, 22);
+            this.btnCreateBeastCritter.Size = new System.Drawing.Size(124, 22);
             this.btnCreateBeastCritter.Text = "Beast Man";
             this.btnCreateBeastCritter.Click += new System.EventHandler(this.btnCreateBeastCritter_Click);
             // 
@@ -229,7 +219,7 @@ namespace CityTools {
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(20, 190);
+            this.label22.Location = new System.Drawing.Point(18, 163);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(63, 13);
             this.label22.TabIndex = 23;
@@ -238,7 +228,7 @@ namespace CityTools {
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(26, 164);
+            this.label14.Location = new System.Drawing.Point(24, 137);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(57, 13);
             this.label14.TabIndex = 22;
@@ -246,7 +236,7 @@ namespace CityTools {
             // 
             // numRange
             // 
-            this.numRange.Location = new System.Drawing.Point(89, 188);
+            this.numRange.Location = new System.Drawing.Point(87, 161);
             this.numRange.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -269,7 +259,7 @@ namespace CityTools {
             0,
             0,
             0});
-            this.numMovementSpeed.Location = new System.Drawing.Point(89, 162);
+            this.numMovementSpeed.Location = new System.Drawing.Point(87, 135);
             this.numMovementSpeed.Maximum = new decimal(new int[] {
             250,
             0,
@@ -287,7 +277,7 @@ namespace CityTools {
             // 
             // btnAddToSpawnList
             // 
-            this.btnAddToSpawnList.Location = new System.Drawing.Point(8, 237);
+            this.btnAddToSpawnList.Location = new System.Drawing.Point(6, 187);
             this.btnAddToSpawnList.Name = "btnAddToSpawnList";
             this.btnAddToSpawnList.Size = new System.Drawing.Size(185, 23);
             this.btnAddToSpawnList.TabIndex = 19;
@@ -298,7 +288,7 @@ namespace CityTools {
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(14, 113);
+            this.label15.Location = new System.Drawing.Point(12, 86);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(69, 13);
             this.label15.TabIndex = 18;
@@ -307,7 +297,7 @@ namespace CityTools {
             // cbBaseGroup
             // 
             this.cbBaseGroup.FormattingEnabled = true;
-            this.cbBaseGroup.Location = new System.Drawing.Point(89, 110);
+            this.cbBaseGroup.Location = new System.Drawing.Point(87, 83);
             this.cbBaseGroup.Name = "cbBaseGroup";
             this.cbBaseGroup.Size = new System.Drawing.Size(104, 21);
             this.cbBaseGroup.TabIndex = 17;
@@ -315,7 +305,6 @@ namespace CityTools {
             // 
             // pnlBeast
             // 
-            this.pnlBeast.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlBeast.Controls.Add(this.label21);
             this.pnlBeast.Controls.Add(this.numBeastOffsetY);
             this.pnlBeast.Controls.Add(this.label20);
@@ -331,17 +320,17 @@ namespace CityTools {
             this.pnlBeast.Controls.Add(this.btnBeastDown);
             this.pnlBeast.Controls.Add(this.btnBeastUp);
             this.pnlBeast.Controls.Add(this.btnBeastLeft);
-            this.pnlBeast.Controls.Add(this.label16);
             this.pnlBeast.Controls.Add(this.ccBeastAnimations);
-            this.pnlBeast.Location = new System.Drawing.Point(226, 266);
+            this.pnlBeast.Location = new System.Drawing.Point(197, 168);
             this.pnlBeast.Name = "pnlBeast";
-            this.pnlBeast.Size = new System.Drawing.Size(226, 309);
+            this.pnlBeast.Size = new System.Drawing.Size(226, 270);
             this.pnlBeast.TabIndex = 16;
+            this.pnlBeast.Visible = false;
             // 
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(112, 271);
+            this.label21.Location = new System.Drawing.Point(112, 247);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(45, 13);
             this.label21.TabIndex = 29;
@@ -349,7 +338,7 @@ namespace CityTools {
             // 
             // numBeastOffsetY
             // 
-            this.numBeastOffsetY.Location = new System.Drawing.Point(159, 269);
+            this.numBeastOffsetY.Location = new System.Drawing.Point(159, 245);
             this.numBeastOffsetY.Name = "numBeastOffsetY";
             this.numBeastOffsetY.Size = new System.Drawing.Size(62, 20);
             this.numBeastOffsetY.TabIndex = 28;
@@ -358,7 +347,7 @@ namespace CityTools {
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(112, 245);
+            this.label20.Location = new System.Drawing.Point(112, 221);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(41, 13);
             this.label20.TabIndex = 27;
@@ -367,7 +356,7 @@ namespace CityTools {
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(3, 245);
+            this.label19.Location = new System.Drawing.Point(3, 221);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(38, 13);
             this.label19.TabIndex = 26;
@@ -375,7 +364,7 @@ namespace CityTools {
             // 
             // numBeastRectHeight
             // 
-            this.numBeastRectHeight.Location = new System.Drawing.Point(159, 243);
+            this.numBeastRectHeight.Location = new System.Drawing.Point(159, 219);
             this.numBeastRectHeight.Name = "numBeastRectHeight";
             this.numBeastRectHeight.Size = new System.Drawing.Size(62, 20);
             this.numBeastRectHeight.TabIndex = 25;
@@ -383,7 +372,7 @@ namespace CityTools {
             // 
             // numBeastRectWidth
             // 
-            this.numBeastRectWidth.Location = new System.Drawing.Point(47, 243);
+            this.numBeastRectWidth.Location = new System.Drawing.Point(47, 219);
             this.numBeastRectWidth.Name = "numBeastRectWidth";
             this.numBeastRectWidth.Size = new System.Drawing.Size(62, 20);
             this.numBeastRectWidth.TabIndex = 24;
@@ -392,7 +381,7 @@ namespace CityTools {
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(50, 221);
+            this.label18.Location = new System.Drawing.Point(50, 197);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(79, 13);
             this.label18.TabIndex = 23;
@@ -406,7 +395,7 @@ namespace CityTools {
             0,
             0,
             131072});
-            this.numBeastFPS.Location = new System.Drawing.Point(135, 217);
+            this.numBeastFPS.Location = new System.Drawing.Point(135, 193);
             this.numBeastFPS.Maximum = new decimal(new int[] {
             2,
             0,
@@ -430,7 +419,7 @@ namespace CityTools {
             // lblBeastDirection
             // 
             this.lblBeastDirection.AutoSize = true;
-            this.lblBeastDirection.Location = new System.Drawing.Point(180, 30);
+            this.lblBeastDirection.Location = new System.Drawing.Point(180, 6);
             this.lblBeastDirection.Name = "lblBeastDirection";
             this.lblBeastDirection.Size = new System.Drawing.Size(25, 13);
             this.lblBeastDirection.TabIndex = 21;
@@ -440,7 +429,7 @@ namespace CityTools {
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(3, 30);
+            this.label17.Location = new System.Drawing.Point(3, 6);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(35, 13);
             this.label17.TabIndex = 20;
@@ -449,7 +438,7 @@ namespace CityTools {
             // cbBeastState
             // 
             this.cbBeastState.FormattingEnabled = true;
-            this.cbBeastState.Location = new System.Drawing.Point(44, 27);
+            this.cbBeastState.Location = new System.Drawing.Point(44, 3);
             this.cbBeastState.Name = "cbBeastState";
             this.cbBeastState.Size = new System.Drawing.Size(106, 21);
             this.cbBeastState.TabIndex = 19;
@@ -459,7 +448,7 @@ namespace CityTools {
             this.btnBeastRight.AllowDrop = true;
             this.btnBeastRight.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.btnBeastRight.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnBeastRight.Location = new System.Drawing.Point(59, 158);
+            this.btnBeastRight.Location = new System.Drawing.Point(59, 134);
             this.btnBeastRight.Name = "btnBeastRight";
             this.btnBeastRight.Size = new System.Drawing.Size(50, 52);
             this.btnBeastRight.TabIndex = 18;
@@ -474,7 +463,7 @@ namespace CityTools {
             this.btnBeastDown.AllowDrop = true;
             this.btnBeastDown.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.btnBeastDown.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnBeastDown.Location = new System.Drawing.Point(171, 158);
+            this.btnBeastDown.Location = new System.Drawing.Point(171, 134);
             this.btnBeastDown.Name = "btnBeastDown";
             this.btnBeastDown.Size = new System.Drawing.Size(50, 52);
             this.btnBeastDown.TabIndex = 17;
@@ -489,7 +478,7 @@ namespace CityTools {
             this.btnBeastUp.AllowDrop = true;
             this.btnBeastUp.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.btnBeastUp.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnBeastUp.Location = new System.Drawing.Point(115, 158);
+            this.btnBeastUp.Location = new System.Drawing.Point(115, 134);
             this.btnBeastUp.Name = "btnBeastUp";
             this.btnBeastUp.Size = new System.Drawing.Size(50, 52);
             this.btnBeastUp.TabIndex = 16;
@@ -504,7 +493,7 @@ namespace CityTools {
             this.btnBeastLeft.AllowDrop = true;
             this.btnBeastLeft.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.btnBeastLeft.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnBeastLeft.Location = new System.Drawing.Point(3, 158);
+            this.btnBeastLeft.Location = new System.Drawing.Point(3, 134);
             this.btnBeastLeft.Name = "btnBeastLeft";
             this.btnBeastLeft.Size = new System.Drawing.Size(50, 52);
             this.btnBeastLeft.TabIndex = 15;
@@ -514,36 +503,447 @@ namespace CityTools {
             this.btnBeastLeft.DragOver += new System.Windows.Forms.DragEventHandler(this.btnBeastDirection_DragEnter);
             this.btnBeastLeft.MouseEnter += new System.EventHandler(this.btnBeastDirection_MouseEnter);
             // 
-            // label16
+            // label3
             // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(3, 3);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(119, 13);
-            this.label16.TabIndex = 14;
-            this.label16.Text = "Non-Humanoid Controls";
+            this.label3.AutoSize = true;
+            this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label3.Location = new System.Drawing.Point(3, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(29, 29);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Loot";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // ccBeastAnimations
+            // btnAddLoot
             // 
-            this.ccBeastAnimations.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ccBeastAnimations.Location = new System.Drawing.Point(3, 52);
-            this.ccBeastAnimations.Name = "ccBeastAnimations";
-            this.ccBeastAnimations.Size = new System.Drawing.Size(218, 103);
-            this.ccBeastAnimations.TabIndex = 0;
-            this.ccBeastAnimations.AnimationChanged += new CityTools.ChangedEventHandler(this.ccBeastAnimations_AnimationChanged);
+            this.btnAddLoot.Image = ((System.Drawing.Image)(resources.GetObject("btnAddLoot.Image")));
+            this.btnAddLoot.Location = new System.Drawing.Point(385, 3);
+            this.btnAddLoot.Name = "btnAddLoot";
+            this.btnAddLoot.Size = new System.Drawing.Size(26, 21);
+            this.btnAddLoot.TabIndex = 6;
+            this.btnAddLoot.UseVisualStyleBackColor = true;
+            this.btnAddLoot.Click += new System.EventHandler(this.btnAddLoot_Click);
             // 
-            // panel3
+            // cbItemList
             // 
-            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel3.Controls.Add(this.numListViewHidden);
-            this.panel3.Controls.Add(this.listLoot);
-            this.panel3.Controls.Add(this.label3);
-            this.panel3.Controls.Add(this.btnAddLoot);
-            this.panel3.Controls.Add(this.cbItemList);
-            this.panel3.Location = new System.Drawing.Point(458, 266);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(290, 309);
-            this.panel3.TabIndex = 15;
+            this.cbItemList.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.cbItemList.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbItemList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbItemList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbItemList.FormattingEnabled = true;
+            this.cbItemList.Location = new System.Drawing.Point(38, 3);
+            this.cbItemList.Name = "cbItemList";
+            this.cbItemList.Size = new System.Drawing.Size(341, 21);
+            this.cbItemList.TabIndex = 5;
+            // 
+            // pnlHumanoid
+            // 
+            this.pnlHumanoid.Controls.Add(this.label13);
+            this.pnlHumanoid.Controls.Add(this.label12);
+            this.pnlHumanoid.Controls.Add(this.label11);
+            this.pnlHumanoid.Controls.Add(this.label10);
+            this.pnlHumanoid.Controls.Add(this.label9);
+            this.pnlHumanoid.Controls.Add(this.label8);
+            this.pnlHumanoid.Controls.Add(this.cbHumanoidWeapon);
+            this.pnlHumanoid.Controls.Add(this.cbHumanoidHeadgear);
+            this.pnlHumanoid.Controls.Add(this.cbHumanoidFace);
+            this.pnlHumanoid.Controls.Add(this.cbHumanoidBody);
+            this.pnlHumanoid.Controls.Add(this.cbHumanoidPants);
+            this.pnlHumanoid.Controls.Add(this.cbHumanoidShadow);
+            this.pnlHumanoid.Location = new System.Drawing.Point(197, 165);
+            this.pnlHumanoid.Name = "pnlHumanoid";
+            this.pnlHumanoid.Size = new System.Drawing.Size(226, 252);
+            this.pnlHumanoid.TabIndex = 15;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(3, 208);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(48, 13);
+            this.label13.TabIndex = 13;
+            this.label13.Text = "Weapon";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(3, 87);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(54, 13);
+            this.label12.TabIndex = 12;
+            this.label12.Text = "Headgear";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(3, 168);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(31, 13);
+            this.label11.TabIndex = 11;
+            this.label11.Text = "Face";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(3, 47);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(31, 13);
+            this.label10.TabIndex = 10;
+            this.label10.Text = "Body";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(3, 128);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(30, 13);
+            this.label9.TabIndex = 9;
+            this.label9.Text = "Legs";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(3, 7);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(46, 13);
+            this.label8.TabIndex = 8;
+            this.label8.Text = "Shadow";
+            // 
+            // cbHumanoidWeapon
+            // 
+            this.cbHumanoidWeapon.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.cbHumanoidWeapon.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbHumanoidWeapon.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbHumanoidWeapon.FormattingEnabled = true;
+            this.cbHumanoidWeapon.Location = new System.Drawing.Point(6, 224);
+            this.cbHumanoidWeapon.Name = "cbHumanoidWeapon";
+            this.cbHumanoidWeapon.Size = new System.Drawing.Size(217, 21);
+            this.cbHumanoidWeapon.TabIndex = 7;
+            this.cbHumanoidWeapon.SelectedIndexChanged += new System.EventHandler(this.ChangedEquipment);
+            // 
+            // cbHumanoidHeadgear
+            // 
+            this.cbHumanoidHeadgear.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.cbHumanoidHeadgear.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbHumanoidHeadgear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbHumanoidHeadgear.FormattingEnabled = true;
+            this.cbHumanoidHeadgear.Location = new System.Drawing.Point(6, 103);
+            this.cbHumanoidHeadgear.Name = "cbHumanoidHeadgear";
+            this.cbHumanoidHeadgear.Size = new System.Drawing.Size(217, 21);
+            this.cbHumanoidHeadgear.TabIndex = 6;
+            this.cbHumanoidHeadgear.SelectedIndexChanged += new System.EventHandler(this.ChangedEquipment);
+            // 
+            // cbHumanoidFace
+            // 
+            this.cbHumanoidFace.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.cbHumanoidFace.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbHumanoidFace.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbHumanoidFace.FormattingEnabled = true;
+            this.cbHumanoidFace.Location = new System.Drawing.Point(6, 184);
+            this.cbHumanoidFace.Name = "cbHumanoidFace";
+            this.cbHumanoidFace.Size = new System.Drawing.Size(217, 21);
+            this.cbHumanoidFace.TabIndex = 5;
+            this.cbHumanoidFace.SelectedIndexChanged += new System.EventHandler(this.ChangedEquipment);
+            // 
+            // cbHumanoidBody
+            // 
+            this.cbHumanoidBody.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.cbHumanoidBody.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbHumanoidBody.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbHumanoidBody.FormattingEnabled = true;
+            this.cbHumanoidBody.Location = new System.Drawing.Point(6, 63);
+            this.cbHumanoidBody.Name = "cbHumanoidBody";
+            this.cbHumanoidBody.Size = new System.Drawing.Size(217, 21);
+            this.cbHumanoidBody.TabIndex = 4;
+            this.cbHumanoidBody.SelectedIndexChanged += new System.EventHandler(this.ChangedEquipment);
+            // 
+            // cbHumanoidPants
+            // 
+            this.cbHumanoidPants.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.cbHumanoidPants.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbHumanoidPants.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbHumanoidPants.FormattingEnabled = true;
+            this.cbHumanoidPants.Location = new System.Drawing.Point(6, 144);
+            this.cbHumanoidPants.Name = "cbHumanoidPants";
+            this.cbHumanoidPants.Size = new System.Drawing.Size(217, 21);
+            this.cbHumanoidPants.TabIndex = 3;
+            this.cbHumanoidPants.SelectedIndexChanged += new System.EventHandler(this.ChangedEquipment);
+            // 
+            // cbHumanoidShadow
+            // 
+            this.cbHumanoidShadow.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.cbHumanoidShadow.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbHumanoidShadow.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbHumanoidShadow.FormattingEnabled = true;
+            this.cbHumanoidShadow.Location = new System.Drawing.Point(6, 23);
+            this.cbHumanoidShadow.Name = "cbHumanoidShadow";
+            this.cbHumanoidShadow.Size = new System.Drawing.Size(217, 21);
+            this.cbHumanoidShadow.TabIndex = 2;
+            this.cbHumanoidShadow.SelectedIndexChanged += new System.EventHandler(this.ChangedEquipment);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 380);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(41, 13);
+            this.label7.TabIndex = 7;
+            this.label7.Text = "Groups";
+            // 
+            // listGroups
+            // 
+            this.listGroups.FormattingEnabled = true;
+            this.listGroups.Location = new System.Drawing.Point(6, 423);
+            this.listGroups.Name = "listGroups";
+            this.listGroups.Size = new System.Drawing.Size(183, 121);
+            this.listGroups.TabIndex = 4;
+            this.listGroups.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listAIType_KeyDown);
+            // 
+            // btnAddGroup
+            // 
+            this.btnAddGroup.Image = ((System.Drawing.Image)(resources.GetObject("btnAddGroup.Image")));
+            this.btnAddGroup.Location = new System.Drawing.Point(170, 396);
+            this.btnAddGroup.Name = "btnAddGroup";
+            this.btnAddGroup.Size = new System.Drawing.Size(21, 21);
+            this.btnAddGroup.TabIndex = 6;
+            this.btnAddGroup.UseVisualStyleBackColor = true;
+            this.btnAddGroup.Click += new System.EventHandler(this.btnAddGroup_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 213);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(49, 13);
+            this.label6.TabIndex = 7;
+            this.label6.Text = "AI Types";
+            // 
+            // cbAddGroup
+            // 
+            this.cbAddGroup.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.cbAddGroup.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbAddGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbAddGroup.FormattingEnabled = true;
+            this.cbAddGroup.Location = new System.Drawing.Point(6, 396);
+            this.cbAddGroup.Name = "cbAddGroup";
+            this.cbAddGroup.Size = new System.Drawing.Size(158, 21);
+            this.cbAddGroup.TabIndex = 5;
+            // 
+            // btnAddAIType
+            // 
+            this.btnAddAIType.Image = ((System.Drawing.Image)(resources.GetObject("btnAddAIType.Image")));
+            this.btnAddAIType.Location = new System.Drawing.Point(170, 229);
+            this.btnAddAIType.Name = "btnAddAIType";
+            this.btnAddAIType.Size = new System.Drawing.Size(21, 21);
+            this.btnAddAIType.TabIndex = 6;
+            this.btnAddAIType.UseVisualStyleBackColor = true;
+            this.btnAddAIType.Click += new System.EventHandler(this.btnAddAIType_Click);
+            // 
+            // listAIType
+            // 
+            this.listAIType.FormattingEnabled = true;
+            this.listAIType.Location = new System.Drawing.Point(6, 256);
+            this.listAIType.Name = "listAIType";
+            this.listAIType.Size = new System.Drawing.Size(185, 121);
+            this.listAIType.TabIndex = 4;
+            this.listAIType.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listAIType_KeyDown);
+            // 
+            // cbAITypes
+            // 
+            this.cbAITypes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbAITypes.FormattingEnabled = true;
+            this.cbAITypes.Location = new System.Drawing.Point(6, 229);
+            this.cbAITypes.Name = "cbAITypes";
+            this.cbAITypes.Size = new System.Drawing.Size(158, 21);
+            this.cbAITypes.TabIndex = 5;
+            // 
+            // ckbOneOfAKind
+            // 
+            this.ckbOneOfAKind.AutoSize = true;
+            this.ckbOneOfAKind.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.ckbOneOfAKind.Location = new System.Drawing.Point(6, 112);
+            this.ckbOneOfAKind.Name = "ckbOneOfAKind";
+            this.ckbOneOfAKind.Size = new System.Drawing.Size(94, 17);
+            this.ckbOneOfAKind.TabIndex = 13;
+            this.ckbOneOfAKind.Text = "One Of A Kind";
+            this.ckbOneOfAKind.UseVisualStyleBackColor = true;
+            this.ckbOneOfAKind.CheckedChanged += new System.EventHandler(this.ValueChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(13, 59);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(68, 13);
+            this.label5.TabIndex = 12;
+            this.label5.Text = "Base Health:";
+            // 
+            // numHealth
+            // 
+            this.numHealth.Location = new System.Drawing.Point(87, 57);
+            this.numHealth.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.numHealth.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.numHealth.Name = "numHealth";
+            this.numHealth.Size = new System.Drawing.Size(104, 20);
+            this.numHealth.TabIndex = 11;
+            this.numHealth.Value = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.numHealth.ValueChanged += new System.EventHandler(this.ValueChanged);
+            // 
+            // numExperience
+            // 
+            this.numExperience.Location = new System.Drawing.Point(87, 31);
+            this.numExperience.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.numExperience.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.numExperience.Name = "numExperience";
+            this.numExperience.Size = new System.Drawing.Size(104, 20);
+            this.numExperience.TabIndex = 10;
+            this.numExperience.Value = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+            this.numExperience.ValueChanged += new System.EventHandler(this.ValueChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(18, 33);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(63, 13);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Experience:";
+            // 
+            // txtMonsterName
+            // 
+            this.txtMonsterName.Location = new System.Drawing.Point(87, 6);
+            this.txtMonsterName.Name = "txtMonsterName";
+            this.txtMonsterName.Size = new System.Drawing.Size(102, 20);
+            this.txtMonsterName.TabIndex = 3;
+            this.txtMonsterName.TextChanged += new System.EventHandler(this.ValueChanged);
+            // 
+            // pbPreviewDisplay
+            // 
+            this.pbPreviewDisplay.Location = new System.Drawing.Point(197, 6);
+            this.pbPreviewDisplay.Name = "pbPreviewDisplay";
+            this.pbPreviewDisplay.Size = new System.Drawing.Size(226, 153);
+            this.pbPreviewDisplay.TabIndex = 0;
+            this.pbPreviewDisplay.TabStop = false;
+            this.pbPreviewDisplay.Paint += new System.Windows.Forms.PaintEventHandler(this.pbPreviewDisplay_Paint);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(43, 9);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(38, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Name:";
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabInfo);
+            this.tabControl1.Controls.Add(this.tabScripts);
+            this.tabControl1.Controls.Add(this.tabLoot);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(437, 586);
+            this.tabControl1.TabIndex = 24;
+            // 
+            // tabInfo
+            // 
+            this.tabInfo.Controls.Add(this.txtMonsterName);
+            this.tabInfo.Controls.Add(this.listGroups);
+            this.tabInfo.Controls.Add(this.label7);
+            this.tabInfo.Controls.Add(this.btnAddGroup);
+            this.tabInfo.Controls.Add(this.btnAddToSpawnList);
+            this.tabInfo.Controls.Add(this.cbAddGroup);
+            this.tabInfo.Controls.Add(this.label22);
+            this.tabInfo.Controls.Add(this.pnlHumanoid);
+            this.tabInfo.Controls.Add(this.label6);
+            this.tabInfo.Controls.Add(this.listAIType);
+            this.tabInfo.Controls.Add(this.btnAddAIType);
+            this.tabInfo.Controls.Add(this.label2);
+            this.tabInfo.Controls.Add(this.label14);
+            this.tabInfo.Controls.Add(this.cbAITypes);
+            this.tabInfo.Controls.Add(this.pbPreviewDisplay);
+            this.tabInfo.Controls.Add(this.label4);
+            this.tabInfo.Controls.Add(this.numRange);
+            this.tabInfo.Controls.Add(this.numExperience);
+            this.tabInfo.Controls.Add(this.numMovementSpeed);
+            this.tabInfo.Controls.Add(this.numHealth);
+            this.tabInfo.Controls.Add(this.label5);
+            this.tabInfo.Controls.Add(this.label15);
+            this.tabInfo.Controls.Add(this.ckbOneOfAKind);
+            this.tabInfo.Controls.Add(this.cbBaseGroup);
+            this.tabInfo.Controls.Add(this.pnlBeast);
+            this.tabInfo.Location = new System.Drawing.Point(4, 22);
+            this.tabInfo.Name = "tabInfo";
+            this.tabInfo.Padding = new System.Windows.Forms.Padding(3);
+            this.tabInfo.Size = new System.Drawing.Size(429, 560);
+            this.tabInfo.TabIndex = 0;
+            this.tabInfo.Text = "Information";
+            this.tabInfo.UseVisualStyleBackColor = true;
+            // 
+            // tabScripts
+            // 
+            this.tabScripts.Controls.Add(this.txtScript);
+            this.tabScripts.Location = new System.Drawing.Point(4, 22);
+            this.tabScripts.Name = "tabScripts";
+            this.tabScripts.Padding = new System.Windows.Forms.Padding(3);
+            this.tabScripts.Size = new System.Drawing.Size(429, 560);
+            this.tabScripts.TabIndex = 1;
+            this.tabScripts.Text = "Scripts";
+            this.tabScripts.UseVisualStyleBackColor = true;
+            // 
+            // tabLoot
+            // 
+            this.tabLoot.Controls.Add(this.tableLayoutPanel2);
+            this.tabLoot.Location = new System.Drawing.Point(4, 22);
+            this.tabLoot.Name = "tabLoot";
+            this.tabLoot.Padding = new System.Windows.Forms.Padding(3);
+            this.tabLoot.Size = new System.Drawing.Size(429, 560);
+            this.tabLoot.TabIndex = 2;
+            this.tabLoot.Text = "Loot";
+            this.tabLoot.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 3;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel1.Controls.Add(this.label3, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.cbItemList, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnAddLoot, 2, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(417, 29);
+            this.tableLayoutPanel1.TabIndex = 16;
             // 
             // numListViewHidden
             // 
@@ -554,6 +954,52 @@ namespace CityTools {
             this.numListViewHidden.TabStop = false;
             this.numListViewHidden.Visible = false;
             // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.numListViewHidden);
+            this.panel3.Controls.Add(this.listLoot);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(3, 38);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(417, 513);
+            this.panel3.TabIndex = 15;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 1;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel1, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.panel3, 0, 1);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(423, 554);
+            this.tableLayoutPanel2.TabIndex = 17;
+            // 
+            // ccBeastAnimations
+            // 
+            this.ccBeastAnimations.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ccBeastAnimations.Location = new System.Drawing.Point(3, 28);
+            this.ccBeastAnimations.Name = "ccBeastAnimations";
+            this.ccBeastAnimations.Size = new System.Drawing.Size(218, 103);
+            this.ccBeastAnimations.TabIndex = 0;
+            this.ccBeastAnimations.AnimationChanged += new CityTools.ChangedEventHandler(this.ccBeastAnimations_AnimationChanged);
+            // 
+            // txtScript
+            // 
+            this.txtScript.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtScript.Location = new System.Drawing.Point(3, 3);
+            this.txtScript.Name = "txtScript";
+            this.txtScript.Script = "";
+            this.txtScript.ScriptType = ToolCache.Scripting.ScriptTypes.Critter;
+            this.txtScript.Size = new System.Drawing.Size(423, 554);
+            this.txtScript.TabIndex = 19;
+            this.txtScript.BeforeParse += new System.EventHandler<CityTools.Components.ScriptInfoArgs>(this.txtScript_BeforeParse);
+            this.txtScript.ScriptUpdated += new System.EventHandler<System.EventArgs>(this.ValueChanged);
+            // 
             // listLoot
             // 
             this.listLoot.AllowColumnReorder = true;
@@ -563,13 +1009,14 @@ namespace CityTools {
             this.columnHeader3,
             this.columnHeader4,
             this.columnHeader5});
+            this.listLoot.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listLoot.DoubleClickActivation = false;
             this.listLoot.FullRowSelect = true;
             this.listLoot.GridLines = true;
             this.listLoot.LabelEdit = true;
-            this.listLoot.Location = new System.Drawing.Point(7, 30);
+            this.listLoot.Location = new System.Drawing.Point(0, 0);
             this.listLoot.Name = "listLoot";
-            this.listLoot.Size = new System.Drawing.Size(274, 274);
+            this.listLoot.Size = new System.Drawing.Size(417, 513);
             this.listLoot.TabIndex = 8;
             this.listLoot.UseCompatibleStateImageBehavior = false;
             this.listLoot.View = System.Windows.Forms.View.Details;
@@ -605,402 +1052,11 @@ namespace CityTools {
             this.columnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.columnHeader5.Width = 32;
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(0, 7);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(28, 13);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "Loot";
-            // 
-            // btnAddLoot
-            // 
-            this.btnAddLoot.Image = ((System.Drawing.Image)(resources.GetObject("btnAddLoot.Image")));
-            this.btnAddLoot.Location = new System.Drawing.Point(255, 3);
-            this.btnAddLoot.Name = "btnAddLoot";
-            this.btnAddLoot.Size = new System.Drawing.Size(26, 21);
-            this.btnAddLoot.TabIndex = 6;
-            this.btnAddLoot.UseVisualStyleBackColor = true;
-            this.btnAddLoot.Click += new System.EventHandler(this.btnAddLoot_Click);
-            // 
-            // cbItemList
-            // 
-            this.cbItemList.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.cbItemList.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.cbItemList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbItemList.FormattingEnabled = true;
-            this.cbItemList.Location = new System.Drawing.Point(58, 3);
-            this.cbItemList.Name = "cbItemList";
-            this.cbItemList.Size = new System.Drawing.Size(191, 21);
-            this.cbItemList.TabIndex = 5;
-            // 
-            // pnlHumanoid
-            // 
-            this.pnlHumanoid.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlHumanoid.Controls.Add(this.label13);
-            this.pnlHumanoid.Controls.Add(this.label12);
-            this.pnlHumanoid.Controls.Add(this.label11);
-            this.pnlHumanoid.Controls.Add(this.label10);
-            this.pnlHumanoid.Controls.Add(this.label9);
-            this.pnlHumanoid.Controls.Add(this.label8);
-            this.pnlHumanoid.Controls.Add(this.cbHumanoidWeapon);
-            this.pnlHumanoid.Controls.Add(this.cbHumanoidHeadgear);
-            this.pnlHumanoid.Controls.Add(this.cbHumanoidFace);
-            this.pnlHumanoid.Controls.Add(this.cbHumanoidBody);
-            this.pnlHumanoid.Controls.Add(this.cbHumanoidPants);
-            this.pnlHumanoid.Controls.Add(this.cbHumanoidShadow);
-            this.pnlHumanoid.Controls.Add(this.label1);
-            this.pnlHumanoid.Location = new System.Drawing.Point(8, 425);
-            this.pnlHumanoid.Name = "pnlHumanoid";
-            this.pnlHumanoid.Size = new System.Drawing.Size(212, 150);
-            this.pnlHumanoid.TabIndex = 15;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(105, 104);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(48, 13);
-            this.label13.TabIndex = 13;
-            this.label13.Text = "Weapon";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(3, 104);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(54, 13);
-            this.label12.TabIndex = 12;
-            this.label12.Text = "Headgear";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(104, 64);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(31, 13);
-            this.label11.TabIndex = 11;
-            this.label11.Text = "Face";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(3, 64);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(31, 13);
-            this.label10.TabIndex = 10;
-            this.label10.Text = "Body";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(104, 24);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(30, 13);
-            this.label9.TabIndex = 9;
-            this.label9.Text = "Legs";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(3, 24);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(46, 13);
-            this.label8.TabIndex = 8;
-            this.label8.Text = "Shadow";
-            // 
-            // cbHumanoidWeapon
-            // 
-            this.cbHumanoidWeapon.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.cbHumanoidWeapon.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.cbHumanoidWeapon.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbHumanoidWeapon.FormattingEnabled = true;
-            this.cbHumanoidWeapon.Location = new System.Drawing.Point(107, 120);
-            this.cbHumanoidWeapon.Name = "cbHumanoidWeapon";
-            this.cbHumanoidWeapon.Size = new System.Drawing.Size(100, 21);
-            this.cbHumanoidWeapon.TabIndex = 7;
-            this.cbHumanoidWeapon.SelectedIndexChanged += new System.EventHandler(this.ChangedEquipment);
-            // 
-            // cbHumanoidHeadgear
-            // 
-            this.cbHumanoidHeadgear.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.cbHumanoidHeadgear.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.cbHumanoidHeadgear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbHumanoidHeadgear.FormattingEnabled = true;
-            this.cbHumanoidHeadgear.Location = new System.Drawing.Point(3, 120);
-            this.cbHumanoidHeadgear.Name = "cbHumanoidHeadgear";
-            this.cbHumanoidHeadgear.Size = new System.Drawing.Size(100, 21);
-            this.cbHumanoidHeadgear.TabIndex = 6;
-            this.cbHumanoidHeadgear.SelectedIndexChanged += new System.EventHandler(this.ChangedEquipment);
-            // 
-            // cbHumanoidFace
-            // 
-            this.cbHumanoidFace.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.cbHumanoidFace.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.cbHumanoidFace.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbHumanoidFace.FormattingEnabled = true;
-            this.cbHumanoidFace.Location = new System.Drawing.Point(108, 80);
-            this.cbHumanoidFace.Name = "cbHumanoidFace";
-            this.cbHumanoidFace.Size = new System.Drawing.Size(100, 21);
-            this.cbHumanoidFace.TabIndex = 5;
-            this.cbHumanoidFace.SelectedIndexChanged += new System.EventHandler(this.ChangedEquipment);
-            // 
-            // cbHumanoidBody
-            // 
-            this.cbHumanoidBody.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.cbHumanoidBody.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.cbHumanoidBody.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbHumanoidBody.FormattingEnabled = true;
-            this.cbHumanoidBody.Location = new System.Drawing.Point(3, 80);
-            this.cbHumanoidBody.Name = "cbHumanoidBody";
-            this.cbHumanoidBody.Size = new System.Drawing.Size(100, 21);
-            this.cbHumanoidBody.TabIndex = 4;
-            this.cbHumanoidBody.SelectedIndexChanged += new System.EventHandler(this.ChangedEquipment);
-            // 
-            // cbHumanoidPants
-            // 
-            this.cbHumanoidPants.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.cbHumanoidPants.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.cbHumanoidPants.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbHumanoidPants.FormattingEnabled = true;
-            this.cbHumanoidPants.Location = new System.Drawing.Point(107, 40);
-            this.cbHumanoidPants.Name = "cbHumanoidPants";
-            this.cbHumanoidPants.Size = new System.Drawing.Size(100, 21);
-            this.cbHumanoidPants.TabIndex = 3;
-            this.cbHumanoidPants.SelectedIndexChanged += new System.EventHandler(this.ChangedEquipment);
-            // 
-            // cbHumanoidShadow
-            // 
-            this.cbHumanoidShadow.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.cbHumanoidShadow.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.cbHumanoidShadow.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbHumanoidShadow.FormattingEnabled = true;
-            this.cbHumanoidShadow.Location = new System.Drawing.Point(3, 40);
-            this.cbHumanoidShadow.Name = "cbHumanoidShadow";
-            this.cbHumanoidShadow.Size = new System.Drawing.Size(100, 21);
-            this.cbHumanoidShadow.TabIndex = 2;
-            this.cbHumanoidShadow.SelectedIndexChanged += new System.EventHandler(this.ChangedEquipment);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 3);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(96, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Humanoid Controls";
-            // 
-            // panel1
-            // 
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.txtScript);
-            this.panel1.Controls.Add(this.label7);
-            this.panel1.Controls.Add(this.listGroups);
-            this.panel1.Controls.Add(this.btnAddGroup);
-            this.panel1.Controls.Add(this.label6);
-            this.panel1.Controls.Add(this.cbAddGroup);
-            this.panel1.Controls.Add(this.btnAddAIType);
-            this.panel1.Controls.Add(this.listAIType);
-            this.panel1.Controls.Add(this.cbAITypes);
-            this.panel1.Location = new System.Drawing.Point(199, 4);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(549, 256);
-            this.panel1.TabIndex = 14;
-            // 
-            // txtScript
-            // 
-            this.txtScript.Location = new System.Drawing.Point(3, 3);
-            this.txtScript.Name = "txtScript";
-            this.txtScript.ScriptType = ToolCache.Scripting.ScriptTypes.Critter;
-            this.txtScript.Size = new System.Drawing.Size(289, 247);
-            this.txtScript.TabIndex = 19;
-            this.txtScript.BeforeParse += new System.EventHandler<CityTools.Components.ScriptInfoArgs>(this.txtScript_BeforeParse);
-            this.txtScript.ScriptUpdated += new System.EventHandler<System.EventArgs>(this.ValueChanged);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(503, 9);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(41, 13);
-            this.label7.TabIndex = 7;
-            this.label7.Text = "Groups";
-            // 
-            // listGroups
-            // 
-            this.listGroups.FormattingEnabled = true;
-            this.listGroups.Location = new System.Drawing.Point(424, 52);
-            this.listGroups.Name = "listGroups";
-            this.listGroups.Size = new System.Drawing.Size(120, 199);
-            this.listGroups.TabIndex = 4;
-            this.listGroups.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listAIType_KeyDown);
-            // 
-            // btnAddGroup
-            // 
-            this.btnAddGroup.Image = ((System.Drawing.Image)(resources.GetObject("btnAddGroup.Image")));
-            this.btnAddGroup.Location = new System.Drawing.Point(523, 25);
-            this.btnAddGroup.Name = "btnAddGroup";
-            this.btnAddGroup.Size = new System.Drawing.Size(21, 21);
-            this.btnAddGroup.TabIndex = 6;
-            this.btnAddGroup.UseVisualStyleBackColor = true;
-            this.btnAddGroup.Click += new System.EventHandler(this.btnAddGroup_Click);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(295, 9);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(49, 13);
-            this.label6.TabIndex = 7;
-            this.label6.Text = "AI Types";
-            // 
-            // cbAddGroup
-            // 
-            this.cbAddGroup.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.cbAddGroup.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.cbAddGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbAddGroup.FormattingEnabled = true;
-            this.cbAddGroup.Location = new System.Drawing.Point(424, 25);
-            this.cbAddGroup.Name = "cbAddGroup";
-            this.cbAddGroup.Size = new System.Drawing.Size(93, 21);
-            this.cbAddGroup.TabIndex = 5;
-            // 
-            // btnAddAIType
-            // 
-            this.btnAddAIType.Image = ((System.Drawing.Image)(resources.GetObject("btnAddAIType.Image")));
-            this.btnAddAIType.Location = new System.Drawing.Point(397, 24);
-            this.btnAddAIType.Name = "btnAddAIType";
-            this.btnAddAIType.Size = new System.Drawing.Size(21, 21);
-            this.btnAddAIType.TabIndex = 6;
-            this.btnAddAIType.UseVisualStyleBackColor = true;
-            this.btnAddAIType.Click += new System.EventHandler(this.btnAddAIType_Click);
-            // 
-            // listAIType
-            // 
-            this.listAIType.FormattingEnabled = true;
-            this.listAIType.Location = new System.Drawing.Point(298, 51);
-            this.listAIType.Name = "listAIType";
-            this.listAIType.Size = new System.Drawing.Size(120, 199);
-            this.listAIType.TabIndex = 4;
-            this.listAIType.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listAIType_KeyDown);
-            // 
-            // cbAITypes
-            // 
-            this.cbAITypes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbAITypes.FormattingEnabled = true;
-            this.cbAITypes.Location = new System.Drawing.Point(298, 24);
-            this.cbAITypes.Name = "cbAITypes";
-            this.cbAITypes.Size = new System.Drawing.Size(93, 21);
-            this.cbAITypes.TabIndex = 5;
-            // 
-            // ckbOneOfAKind
-            // 
-            this.ckbOneOfAKind.AutoSize = true;
-            this.ckbOneOfAKind.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.ckbOneOfAKind.Location = new System.Drawing.Point(8, 139);
-            this.ckbOneOfAKind.Name = "ckbOneOfAKind";
-            this.ckbOneOfAKind.Size = new System.Drawing.Size(94, 17);
-            this.ckbOneOfAKind.TabIndex = 13;
-            this.ckbOneOfAKind.Text = "One Of A Kind";
-            this.ckbOneOfAKind.UseVisualStyleBackColor = true;
-            this.ckbOneOfAKind.CheckedChanged += new System.EventHandler(this.ValueChanged);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(15, 86);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(68, 13);
-            this.label5.TabIndex = 12;
-            this.label5.Text = "Base Health:";
-            // 
-            // numHealth
-            // 
-            this.numHealth.Location = new System.Drawing.Point(89, 84);
-            this.numHealth.Maximum = new decimal(new int[] {
-            10000000,
-            0,
-            0,
-            0});
-            this.numHealth.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
-            this.numHealth.Name = "numHealth";
-            this.numHealth.Size = new System.Drawing.Size(104, 20);
-            this.numHealth.TabIndex = 11;
-            this.numHealth.Value = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
-            this.numHealth.ValueChanged += new System.EventHandler(this.ValueChanged);
-            // 
-            // numExperience
-            // 
-            this.numExperience.Location = new System.Drawing.Point(89, 58);
-            this.numExperience.Maximum = new decimal(new int[] {
-            10000000,
-            0,
-            0,
-            0});
-            this.numExperience.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
-            this.numExperience.Name = "numExperience";
-            this.numExperience.Size = new System.Drawing.Size(104, 20);
-            this.numExperience.TabIndex = 10;
-            this.numExperience.Value = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.numExperience.ValueChanged += new System.EventHandler(this.ValueChanged);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(20, 60);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(63, 13);
-            this.label4.TabIndex = 9;
-            this.label4.Text = "Experience:";
-            // 
-            // txtMonsterName
-            // 
-            this.txtMonsterName.Location = new System.Drawing.Point(89, 33);
-            this.txtMonsterName.Name = "txtMonsterName";
-            this.txtMonsterName.Size = new System.Drawing.Size(102, 20);
-            this.txtMonsterName.TabIndex = 3;
-            this.txtMonsterName.TextChanged += new System.EventHandler(this.ValueChanged);
-            // 
-            // pbPreviewDisplay
-            // 
-            this.pbPreviewDisplay.Location = new System.Drawing.Point(8, 266);
-            this.pbPreviewDisplay.Name = "pbPreviewDisplay";
-            this.pbPreviewDisplay.Size = new System.Drawing.Size(212, 153);
-            this.pbPreviewDisplay.TabIndex = 0;
-            this.pbPreviewDisplay.TabStop = false;
-            this.pbPreviewDisplay.Paint += new System.Windows.Forms.PaintEventHandler(this.pbPreviewDisplay_Paint);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(45, 36);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(38, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Name:";
-            // 
             // CritterEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(921, 588);
+            this.ClientSize = new System.Drawing.Size(733, 588);
             this.Controls.Add(this.sptFullForm);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "CritterEditor";
@@ -1009,7 +1065,6 @@ namespace CityTools {
             this.sptFullForm.Panel1.ResumeLayout(false);
             this.sptFullForm.Panel1.PerformLayout();
             this.sptFullForm.Panel2.ResumeLayout(false);
-            this.sptFullForm.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sptFullForm)).EndInit();
             this.sptFullForm.ResumeLayout(false);
             this.toolsMainTools.ResumeLayout(false);
@@ -1022,16 +1077,21 @@ namespace CityTools {
             ((System.ComponentModel.ISupportInitialize)(this.numBeastRectHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBeastRectWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBeastFPS)).EndInit();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numListViewHidden)).EndInit();
             this.pnlHumanoid.ResumeLayout(false);
             this.pnlHumanoid.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numHealth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numExperience)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreviewDisplay)).EndInit();
+            this.tabControl1.ResumeLayout(false);
+            this.tabInfo.ResumeLayout(false);
+            this.tabInfo.PerformLayout();
+            this.tabScripts.ResumeLayout(false);
+            this.tabLoot.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numListViewHidden)).EndInit();
+            this.panel3.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1052,11 +1112,9 @@ namespace CityTools {
         private System.Windows.Forms.NumericUpDown numExperience;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox ckbOneOfAKind;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TreeView treeAllCritters;
         private System.Windows.Forms.Panel pnlHumanoid;
-        private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnAddLoot;
         private System.Windows.Forms.ComboBox cbItemList;
@@ -1087,10 +1145,8 @@ namespace CityTools {
         private System.Windows.Forms.ComboBox cbHumanoidBody;
         private System.Windows.Forms.ComboBox cbHumanoidPants;
         private System.Windows.Forms.ComboBox cbHumanoidShadow;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.ComboBox cbBaseGroup;
-        private System.Windows.Forms.Label label16;
         private Components.AnimationList ccBeastAnimations;
         private System.Windows.Forms.Button btnBeastRight;
         private System.Windows.Forms.Button btnBeastDown;
@@ -1101,7 +1157,6 @@ namespace CityTools {
         private System.Windows.Forms.Label lblBeastDirection;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.NumericUpDown numBeastFPS;
-        private System.Windows.Forms.NumericUpDown numListViewHidden;
         private ScriptBox txtScript;
         private System.Windows.Forms.Button btnAddToSpawnList;
         private System.Windows.Forms.Label label20;
@@ -1114,5 +1169,13 @@ namespace CityTools {
         private System.Windows.Forms.NumericUpDown numMovementSpeed;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabInfo;
+        private System.Windows.Forms.TabPage tabScripts;
+        private System.Windows.Forms.TabPage tabLoot;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.NumericUpDown numListViewHidden;
     }
 }

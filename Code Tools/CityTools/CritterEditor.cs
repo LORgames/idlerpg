@@ -225,6 +225,10 @@ namespace CityTools {
                 cbHumanoidWeapon.Text = human.Weapon;
 
                 pbPreviewDisplay.Invalidate();
+
+                pnlHumanoid.Visible = true;
+                pnlBeast.Visible = false;
+
                 numBeastFPS.Value = (decimal)0.2;
                 numBeastRectWidth.Value = 0;
                 numBeastRectHeight.Value = 0;
@@ -247,6 +251,9 @@ namespace CityTools {
                 foreach(String s in beast.AnimationNames()) {
                     cbBeastState.Items.Add(s);
                 }
+
+                pnlBeast.Visible = true;
+                pnlHumanoid.Visible = false;
 
                 cbHumanoidShadow.Text = "";
                 cbHumanoidPants.Text = "";
