@@ -204,6 +204,13 @@ namespace ToolCache.Scripting {
                     if (!EquipmentManager.Equipment.ContainsKey(Parameters)) {
                         info.Errors.Add("Cannot find equipment item: '" + Parameters + "'");
                     } break;
+                case "movementspeed":
+                    CommandID = 0x5001;
+                    if (short.TryParse(Parameters, out sparam)) {
+                        AdditionalBytecode.Add((ushort)sparam);
+                    } else {
+                        info.Errors.Add("Parameter must be an integer");
+                    } break;
                 case "movementdirection":
                 case "movementturn":
                     if (Action == "movementdirection") {

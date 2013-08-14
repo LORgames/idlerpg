@@ -42,15 +42,15 @@ namespace CityTools {
             this.treeAllTiles = new System.Windows.Forms.TreeView();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.pbDisplay = new System.Windows.Forms.PictureBox();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.btnClearCollisions = new System.Windows.Forms.Button();
             this.ckbShowCollisions = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.label4 = new System.Windows.Forms.Label();
             this.numMovementCost = new System.Windows.Forms.NumericUpDown();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.ccAnimation = new CityTools.Components.AnimationList();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -62,11 +62,11 @@ namespace CityTools {
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbDisplay)).BeginInit();
-            this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numMovementCost)).BeginInit();
+            this.tableLayoutPanel2.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtTileName
@@ -83,7 +83,7 @@ namespace CityTools {
             // 
             this.cbTileGroup.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.cbTileGroup.FormattingEnabled = true;
-            this.cbTileGroup.Location = new System.Drawing.Point(226, 16);
+            this.cbTileGroup.Location = new System.Drawing.Point(178, 16);
             this.cbTileGroup.Name = "cbTileGroup";
             this.cbTileGroup.Size = new System.Drawing.Size(169, 21);
             this.cbTileGroup.TabIndex = 3;
@@ -163,7 +163,7 @@ namespace CityTools {
             // 
             this.lblGroup.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblGroup.AutoSize = true;
-            this.lblGroup.Location = new System.Drawing.Point(226, 0);
+            this.lblGroup.Location = new System.Drawing.Point(178, 0);
             this.lblGroup.Name = "lblGroup";
             this.lblGroup.Size = new System.Drawing.Size(59, 13);
             this.lblGroup.TabIndex = 6;
@@ -184,7 +184,7 @@ namespace CityTools {
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(648, 440);
+            this.splitContainer1.Size = new System.Drawing.Size(643, 440);
             this.splitContainer1.SplitterDistance = 222;
             this.splitContainer1.TabIndex = 11;
             // 
@@ -212,7 +212,7 @@ namespace CityTools {
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.ccAnimation);
-            this.splitContainer2.Size = new System.Drawing.Size(422, 440);
+            this.splitContainer2.Size = new System.Drawing.Size(417, 440);
             this.splitContainer2.SplitterDistance = 296;
             this.splitContainer2.TabIndex = 11;
             // 
@@ -220,39 +220,17 @@ namespace CityTools {
             // 
             this.tableLayoutPanel1.AutoSize = true;
             this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel4, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.txtTileName, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.lblTileName, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.cbTileGroup, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.lblGroup, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 0, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(398, 152);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(356, 158);
             this.tableLayoutPanel1.TabIndex = 13;
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.AutoSize = true;
-            this.tableLayoutPanel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel2.Controls.Add(this.pbDisplay, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 1, 0);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 43);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(217, 106);
-            this.tableLayoutPanel2.TabIndex = 7;
             // 
             // pbDisplay
             // 
@@ -267,26 +245,10 @@ namespace CityTools {
             this.pbDisplay.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbDisplay_MouseMove);
             this.pbDisplay.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pbDisplay_MouseUp);
             // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.AutoSize = true;
-            this.tableLayoutPanel3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tableLayoutPanel3.ColumnCount = 1;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel3.Controls.Add(this.btnClearCollisions, 0, 1);
-            this.tableLayoutPanel3.Controls.Add(this.ckbShowCollisions, 0, 0);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(109, 3);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 2;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(105, 52);
-            this.tableLayoutPanel3.TabIndex = 1;
-            // 
             // btnClearCollisions
             // 
             this.btnClearCollisions.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.btnClearCollisions.Location = new System.Drawing.Point(3, 26);
+            this.btnClearCollisions.Location = new System.Drawing.Point(3, 65);
             this.btnClearCollisions.Name = "btnClearCollisions";
             this.btnClearCollisions.Size = new System.Drawing.Size(99, 23);
             this.btnClearCollisions.TabIndex = 12;
@@ -300,7 +262,7 @@ namespace CityTools {
             this.ckbShowCollisions.AutoSize = true;
             this.ckbShowCollisions.Checked = true;
             this.ckbShowCollisions.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ckbShowCollisions.Location = new System.Drawing.Point(3, 3);
+            this.ckbShowCollisions.Location = new System.Drawing.Point(3, 42);
             this.ckbShowCollisions.Name = "ckbShowCollisions";
             this.ckbShowCollisions.Size = new System.Drawing.Size(99, 17);
             this.ckbShowCollisions.TabIndex = 11;
@@ -315,12 +277,16 @@ namespace CityTools {
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel4.Controls.Add(this.label4, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.numMovementCost, 0, 1);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(226, 43);
+            this.tableLayoutPanel4.Controls.Add(this.btnClearCollisions, 0, 3);
+            this.tableLayoutPanel4.Controls.Add(this.ckbShowCollisions, 0, 2);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(109, 3);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 2;
+            this.tableLayoutPanel4.RowCount = 4;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(106, 39);
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(106, 91);
             this.tableLayoutPanel4.TabIndex = 8;
             // 
             // label4
@@ -368,6 +334,41 @@ namespace CityTools {
             this.timer1.Interval = 50;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.AutoSize = true;
+            this.tableLayoutPanel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel2.Controls.Add(this.pbDisplay, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel4, 1, 0);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 49);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(218, 106);
+            this.tableLayoutPanel2.TabIndex = 14;
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.AutoSize = true;
+            this.tableLayoutPanel3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tableLayoutPanel3.ColumnCount = 2;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel3.Controls.Add(this.cbTileGroup, 1, 1);
+            this.tableLayoutPanel3.Controls.Add(this.txtTileName, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.lblGroup, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.lblTileName, 0, 0);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 2;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(350, 40);
+            this.tableLayoutPanel3.TabIndex = 15;
+            // 
             // ccAnimation
             // 
             this.ccAnimation.AllowDrop = true;
@@ -375,7 +376,7 @@ namespace CityTools {
             this.ccAnimation.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ccAnimation.Location = new System.Drawing.Point(0, 0);
             this.ccAnimation.Name = "ccAnimation";
-            this.ccAnimation.Size = new System.Drawing.Size(422, 140);
+            this.ccAnimation.Size = new System.Drawing.Size(417, 140);
             this.ccAnimation.TabIndex = 1;
             // 
             // TileEditor
@@ -383,7 +384,7 @@ namespace CityTools {
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(648, 440);
+            this.ClientSize = new System.Drawing.Size(643, 440);
             this.Controls.Add(this.splitContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "TileEditor";
@@ -404,14 +405,14 @@ namespace CityTools {
             this.splitContainer2.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbDisplay)).EndInit();
-            this.tableLayoutPanel3.ResumeLayout(false);
-            this.tableLayoutPanel3.PerformLayout();
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numMovementCost)).EndInit();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -439,8 +440,8 @@ namespace CityTools {
         private System.Windows.Forms.NumericUpDown numMovementCost;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
     }
 }

@@ -162,6 +162,10 @@ package Game.Scripting {
 						} else {
 							EventScript.readShort(); EventScript.readShort();
 						} break;
+					case 0x5001:
+						if (info.CurrentTarget is BaseCritter) {
+							(info.CurrentTarget as BaseCritter).MovementSpeed = EventScript.readShort();
+						} break;
 					case 0x5002:
 					case 0x5003:
 						if (info.CurrentTarget is BaseCritter) {
