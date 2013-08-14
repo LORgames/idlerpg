@@ -236,5 +236,10 @@ namespace CityTools {
             TileMergeDialog tmd = new TileMergeDialog();
             tmd.ShowDialog();
         }
+
+        private void TileEditor_Load(object sender, EventArgs e) {
+            pbDisplay.Width = GlobalSettings.tileSize + 50;
+            pbDisplay.Height = GlobalSettings.tileSize + 50;
+        }
     }
 }

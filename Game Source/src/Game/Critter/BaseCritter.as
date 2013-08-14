@@ -29,6 +29,8 @@ package Game.Critter {
 		
 		//Current state information
 		public var isMoving:Boolean = false;
+		public var virginMoveSpeedX:Number = 0;
+		public var virginMoveSpeedY:Number = 0;
 		public var moveSpeedX:int = 0;
 		public var moveSpeedY:int = 0;
 		
@@ -236,21 +238,29 @@ package Game.Critter {
 			}
 		}
 		
-		public function RequestMove(xSpeed:Number, ySpeed:Number):void {
+		public function RequestMove(xSpeed:Number, ySpeed:Number, move:Boolean = true):void {
+			virginMoveSpeedX = xSpeed;
+			virginMoveSpeedY = ySpeed;
 			if (xSpeed != 0 || ySpeed != 0) {
 				direction = SpeedToDirection(xSpeed, ySpeed);
 				
-				// normalise speed vector
-				var mSpeed:Number = Math.sqrt((xSpeed * xSpeed) + (ySpeed * ySpeed));
-				xSpeed = xSpeed / mSpeed;
-				ySpeed = ySpeed / mSpeed;
-				
-				moveSpeedX = xSpeed * MovementSpeed;
-				
-				if(ySpeed < 0) moveSpeedY = ySpeed * MovementSpeed * 0.707;
-				if(ySpeed > 0) moveSpeedY = ySpeed * MovementSpeed * 0.900;
-				
-				isMoving = true;
+				if (move) {
+					// normalise speed vector
+					var mSpeed:Number = Math.sqrt((xSpeed * xSpeed) + (ySpeed * ySpeed));
+					xSpeed = xSpeed / mSpeed;
+					ySpeed = ySpeed / mSpeed;
+					
+					moveSpeedX = xSpeed * MovementSpeed;
+					
+					if(ySpeed < 0) moveSpeedY = ySpeed * MovementSpeed * 0.707;
+					if(ySpeed > 0) moveSpeedY = ySpeed * MovementSpeed * 0.900;
+					
+					isMoving = true;
+				} else {
+					moveSpeedX = 0;
+					moveSpeedY = 0;
+					isMoving = false;
+				}
 			}
 			
 			if (xSpeed == 0) moveSpeedX = 0;

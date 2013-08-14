@@ -24,16 +24,16 @@ package WindowSystem
 		public var Thumb:Bitmap;
 		
 		public function HUD() {
-			ImageLoader.Load("OtherUI/Test Boss HP.png", LoadedBossHP);
+			//ImageLoader.Load("OtherUI/Test Boss HP.png", LoadedBossHP);
 			ImageLoader.Load("OtherUI/Buttons.png", LoadedButtonsArt);
 			ImageLoader.Load("OtherUI/Stick.png", LoadedStickArt);
 			ImageLoader.Load("OtherUI/Thumb.png", LoadedThumbArt); //THUMB MUST LOAD AFTER STICK!!!
-			ImageLoader.Load("OtherUI/Test UI.png", LoadedLowerMiddle);
+			//ImageLoader.Load("OtherUI/Test UI.png", LoadedLowerMiddle);
 			//ScrollPanelItem.LoadIcons();
 			
 			if(Global.DebugFPS) this.addChild(new FPSCounter());
 			
-			Global.LoadingTotal += 5;
+			Global.LoadingTotal += 3;
 		}
 		
 		public function Resized():void {

@@ -15,16 +15,16 @@ package Game.Scripting {
 		
 		public var MyScript:Script;
 		
-		public function ScriptInstance(script:Script, invoker:IScriptTarget) {
+		public function ScriptInstance(script:Script, invoker:IScriptTarget, initialize:Boolean = true) {
 			MyScript = script;
 			Variables = script.InitialVariables.concat();
 			
 			TargetStack = new Vector.<IScriptTarget>(1);
 			TargetStack[0] = invoker;
 			this.CurrentTarget = invoker;
-			
-			MyScript.Run(Script.Initialize, this);
-			
+			if (initialize) {
+				MyScript.Run(Script.Initialize, this);
+			}
 			//Add this to the update scripts thing
 			if (MyScript.EventScripts[Script.Update] != null) {
 				Script.UpdateScripts.push(this);

@@ -7,6 +7,7 @@ namespace ToolCache.Scripting {
     public class ScriptInfo {
         public string ScriptName = "";
         public List<String> Errors = new List<string>();
+        public List<String> Warnings = new List<string>();
 
         public List<ScriptCommand> Commands = new List<ScriptCommand>();
         public List<ScriptCommand> Unparsed = new List<ScriptCommand>();

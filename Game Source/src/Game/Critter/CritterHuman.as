@@ -35,11 +35,11 @@ package Game.Critter {
 			Renderman.DirtyObjects.push(Equipment);
  		}
 		
-		override public function RequestMove(xSpeed:Number, ySpeed:Number):void {
+		override public function RequestMove(xSpeed:Number, ySpeed:Number, move:Boolean = true):void {
 			var _m:Boolean = isMoving;
 			var _d:int = direction;
 			
-			super.RequestMove(xSpeed, ySpeed);
+			super.RequestMove(xSpeed, ySpeed, move);
 			
 			if (_d != direction) {
 				Equipment.ChangeDirection(direction);

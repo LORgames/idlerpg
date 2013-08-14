@@ -42,7 +42,8 @@ package Game.Critter {
 			
 			p.Update(0);
 			
-			p.MyScript = new ScriptInstance(AICommands, p);
+			p.MyScript = new ScriptInstance(AICommands, p, false);
+			p.MyScript.Run(Script.Initialize);
 			
 			p.MyAIType = this.AIType;
 			p.CurrentHP = Health;

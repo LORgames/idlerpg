@@ -35,7 +35,8 @@ package Game.Critter {
 			MovementSpeed = MyInfo.MovementSpeed;
 			AlertRange = MyInfo.AlertRange*MyInfo.AlertRange;
 			
-			MyScript = new ScriptInstance(Info.AICommands, this);
+			MyScript = new ScriptInstance(Info.AICommands, this, false);
+			MyScript.Run(Script.Initialize);
 			MyAIType = Info.AIType;
 		}
 		
@@ -54,11 +55,11 @@ package Game.Critter {
 			Renderman.DirtyObjects.push(Animation);
 		}
 		
-		override public function RequestMove(xSpeed:Number, ySpeed:Number):void {
+		override public function RequestMove(xSpeed:Number, ySpeed:Number, move:Boolean = true):void {
 			var _d:int = direction;
 			var _m:Boolean = isMoving;
 			
-			super.RequestMove(xSpeed, ySpeed);
+			super.RequestMove(xSpeed, ySpeed, move);
 				
 			if (_d != direction) {
 				Animation.ChangeDirection(direction);

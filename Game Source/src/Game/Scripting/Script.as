@@ -162,6 +162,19 @@ package Game.Scripting {
 						} else {
 							EventScript.readShort(); EventScript.readShort();
 						} break;
+					case 0x5002:
+					case 0x5003:
+						if (info.CurrentTarget is BaseCritter) {
+							var angle:Number = Math.PI * (EventScript.readShort() / 180.0);
+							var move:Boolean = (EventScript.readShort() == 0);
+							if (command == 0x5002) {
+								(info.CurrentTarget as BaseCritter).RequestMove(Math.cos(angle), Math.sin(angle), move);
+							} else if (command == 0x5003) {
+								var c:BaseCritter = (info.CurrentTarget as BaseCritter);
+								angle += Math.atan2(c.virginMoveSpeedY, c.virginMoveSpeedX);								
+								c.RequestMove(Math.cos(angle), Math.sin(angle), move);
+							}
+						} break;
 					case 0x6000: //Play Animation
 						info.CurrentTarget.ChangeState(EventScript.readShort(), false); break;
 					case 0x6001: //Loop Animation

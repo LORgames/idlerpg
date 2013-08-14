@@ -204,6 +204,31 @@ namespace ToolCache.Scripting {
                     if (!EquipmentManager.Equipment.ContainsKey(Parameters)) {
                         info.Errors.Add("Cannot find equipment item: '" + Parameters + "'");
                     } break;
+                case "movementdirection":
+                case "movementturn":
+                    if (Action == "movementdirection") {
+                        CommandID = 0x5002;
+                    } else if (Action == "movementturn") {
+                        CommandID = 0x5003;
+                    }
+
+                    paramBits = Parameters.Split(' ');
+
+                    if (short.TryParse(paramBits[0], out sparam)) {
+                        if (sparam < -359 || sparam > 359) {
+                            info.Warnings.Add("Parameter should be between -359 and 359");
+                        }
+                        if (paramBits.Length > 1) {
+                            param0 = paramBits[1].ToLower() == "true" ? (ushort)0 : (ushort)1;
+                        } else {
+                            param0 = (ushort)0;
+                        }
+                        AdditionalBytecode.Add((ushort)sparam);
+                        AdditionalBytecode.Add(param0);
+                    } else {
+                        info.Errors.Add("Parameter must be an integer");
+                    }
+                    break;
                 case "animationplay":
                     CommandID = 0x6000;
 
