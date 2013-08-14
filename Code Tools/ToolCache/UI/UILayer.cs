@@ -28,6 +28,8 @@ namespace ToolCache.UI {
         public short OffsetX = 0;
         public short OffsetY = 0;
 
+        public int GlobalVariable = 0;
+
         public string ImageFilename = "";
 
         public UILayer() {
@@ -47,6 +49,8 @@ namespace ToolCache.UI {
             ul.OffsetX = f.GetShort();
             ul.OffsetY = f.GetShort();
 
+            ul.GlobalVariable = f.GetInt();
+
             ul.ImageFilename = f.GetString();
 
             return ul;
@@ -62,6 +66,8 @@ namespace ToolCache.UI {
             f.AddShort(SizeY);
             f.AddShort(OffsetX);
             f.AddShort(OffsetY);
+
+            f.AddInt(GlobalVariable);
 
             f.AddString(ImageFilename);
         }

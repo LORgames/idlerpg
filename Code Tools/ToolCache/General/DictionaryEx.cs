@@ -44,9 +44,9 @@ namespace ToolCache.General {
         }
 
         public bool Remove(TKey key) {
-            bool retVal = RealDictionary.Remove(key);
-
             OnItemRemoved(key, new EventArgs());
+
+            bool retVal = RealDictionary.Remove(key);
 
             return retVal;
         }

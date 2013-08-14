@@ -105,6 +105,7 @@
     <Compile Include="UI\UIElement.cs" />
     <Compile Include="UI\UILayer.cs" />
     <Compile Include="UI\UIManager.cs" />
+    <Compile Include="UI\UIPanel.cs" />
     <Compile Include="World\Portal.cs" />
   </ItemGroup>
   <ItemGroup>

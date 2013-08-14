@@ -43,5 +43,9 @@ namespace ToolCache.Scripting {
 
         public ListViewItem lvi;
         public short TotalReferences;
+
+        public override string ToString() {
+            return Name;
+        }
     }
 }

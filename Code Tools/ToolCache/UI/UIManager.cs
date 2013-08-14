@@ -9,35 +9,35 @@ namespace ToolCache.UI {
     public class UIManager {
         private const string name = General.Settings.Database + "UserInterface.bin";
 
-        public static List<UIElement> Elements = new List<UIElement>();
+        public static List<UIPanel> Panels = new List<UIPanel>();
 
         public static void Initialize() {
-            Elements.Clear();
+            Panels.Clear();
             ReadDatabase();
         }
 
         internal static void ReadDatabase() {
             if (File.Exists(name)) {
                 BinaryIO f = new BinaryIO(File.ReadAllBytes(name));
-                short totalElements = f.GetShort();
+                short totalPanels = f.GetShort();
 
-                while (--totalElements > -1) {
-                    AddElement(UIElement.ReadFromBinaryIO(f));
+                while (--totalPanels > -1) {
+                    AddPanel(UIPanel.ReadFromBinaryIO(f));
                 }
             }
         }
 
-        public static void AddElement(UIElement uiElement) {
-            Elements.Add(uiElement);
+        public static void AddPanel(UIPanel uiPanel) {
+            Panels.Add(uiPanel);
         }
 
         public static void WriteDatabase() {
             BinaryIO f = new BinaryIO();
 
-            f.AddShort((short)Elements.Count);
+            f.AddShort((short)Panels.Count);
 
-            foreach (UIElement element in Elements) {
-                element.WriteToBinaryIO(f);
+            foreach (UIPanel panel in Panels) {
+                panel.WriteToBinaryIO(f);
             }
 
             f.Encode(name);

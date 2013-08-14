@@ -255,11 +255,11 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(40, 113);
+            this.label7.Location = new System.Drawing.Point(34, 113);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(73, 13);
+            this.label7.Size = new System.Drawing.Size(79, 13);
             this.label7.TabIndex = 13;
-            this.label7.Text = "Shadow Color";
+            this.label7.Text = "Shadow Colour";
             // 
             // label6
             // 
