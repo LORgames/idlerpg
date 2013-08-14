@@ -1,4 +1,5 @@
-﻿namespace CityTools.Components {
+﻿using ToolCache.General;
+namespace CityTools.Components {
     partial class TileMergeDialog {
         /// <summary>
         /// Required designer variable.
@@ -97,7 +98,7 @@
             // 
             this.pbDisplay.Location = new System.Drawing.Point(12, 12);
             this.pbDisplay.Name = "pbDisplay";
-            this.pbDisplay.Size = new System.Drawing.Size(48, 48);
+            this.pbDisplay.Size = new System.Drawing.Size(GlobalSettings.tileSize, GlobalSettings.tileSize);
             this.pbDisplay.TabIndex = 0;
             this.pbDisplay.TabStop = false;
             this.pbDisplay.Paint += new System.Windows.Forms.PaintEventHandler(this.pbDisplay_Paint);

@@ -184,7 +184,7 @@ namespace CityTools {
             if (ccAnimation.GetAnimation().Frames.Count > 0) {
                 ccAnimation.GetAnimation().Draw(e.Graphics, 26, 26, 1);
             } else {
-                e.Graphics.FillRectangle(Brushes.Beige, 26, 26, 48, 48);
+                e.Graphics.FillRectangle(Brushes.Beige, 26, 26, GlobalSettings.tileSize, GlobalSettings.tileSize);
             }
 
             if (ckbShowCollisions.Checked) {

@@ -6,24 +6,22 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using ToolCache.GlobalSettings;
+using ToolCache.General;
 
 namespace CityTools
 {
     public partial class GlobalSettingsEditor : Form
     {
-        private GlobalSettings currentInfo;
         private bool isEdited = false;
 
         public GlobalSettingsEditor()
         {
             InitializeComponent();
 
-            currentInfo = new GlobalSettings();
-            txtGameName.Text = currentInfo.gameName;
-            chkEnableTiles.Checked = currentInfo.enableTiles;
-            nudTileSize.Value = currentInfo.tileSize;
-            chkDisableCharacter.Checked = currentInfo.disableCharacter;
+            txtGameName.Text = GlobalSettings.gameName;
+            chkEnableTiles.Checked = GlobalSettings.enableTiles;
+            nudTileSize.Value = GlobalSettings.tileSize;
+            chkDisableCharacter.Checked = GlobalSettings.disableCharacter;
         }
 
         private void Edited(object sender, EventArgs e) {
@@ -31,20 +29,21 @@ namespace CityTools
         }
 
         private void SaveIfRequired() {
-            if (currentInfo != null && isEdited) {
-                currentInfo.gameName = txtGameName.Text;
-                currentInfo.enableTiles = chkEnableTiles.Checked;
-                currentInfo.tileSize = (uint)nudTileSize.Value;
-                currentInfo.disableCharacter = chkDisableCharacter.Checked;
+            if (isEdited) {
+                GlobalSettings.gameName = txtGameName.Text;
+                GlobalSettings.enableTiles = chkEnableTiles.Checked;
+                GlobalSettings.tileSize = (int)nudTileSize.Value;
+                GlobalSettings.disableCharacter = chkDisableCharacter.Checked;
 
-                currentInfo.Save();
+                GlobalSettings.Save();
             }
 
             isEdited = false;
         }
 
-        private void GlobalSettings_FormClosing(object sender, FormClosingEventArgs e) {
+        private void btnSave_Click(object sender, EventArgs e) {
             SaveIfRequired();
+            this.Close();
         }
     }
 }

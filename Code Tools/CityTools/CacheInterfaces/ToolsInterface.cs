@@ -57,6 +57,8 @@ namespace CityTools.CacheInterfaces {
                 OpenSaveEditor(); return true;
             } else if (keyData == Keys.P) {
                 OpenPortraitEditor(); return true;
+            } else if (keyData == Keys.G) {
+                OpenGlobalSettingsEditor(); return true;
             }
 
             return false;

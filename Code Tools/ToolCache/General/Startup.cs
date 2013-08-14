@@ -27,6 +27,7 @@ namespace ToolCache.General {
             Factions.Initialize();
             UIManager.Initialize();
             EffectManager.Initialize();
+            GlobalSettings.Initialize();
 
             //Tier 1 Loading:
             MapObjectCache.Initialize();

@@ -64,7 +64,7 @@
     <Compile Include="General\BinaryIO.cs" />
     <Compile Include="General\DictionaryEx.cs" />
     <Compile Include="General\ImageCache.cs" />
-    <Compile Include="GlobalSettings\GlobalSettings.cs" />
+    <Compile Include="General\GlobalSettings.cs" />
     <Compile Include="NPC\Portrait.cs" />
     <Compile Include="NPC\PortraitManager.cs" />
     <Compile Include="SaveSystem\SaveInfo.cs" />

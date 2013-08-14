@@ -5,23 +5,23 @@ using System.Text;
 using System.IO;
 using System.Windows.Forms;
 
-namespace ToolCache.GlobalSettings {
+namespace ToolCache.General {
     public class GlobalSettings {
         public const string DATABASE = ".\\Database\\";
         public const string FILENAME = "GlobalSettings.ini";
 
-        public string gameName = "";
-        public bool enableTiles = true;
-        public uint tileSize = 100;
-        public bool disableCharacter = false;
+        public static string gameName = "New Game";
+        public static bool enableTiles = true;
+        public static int tileSize = 48;
+        public static bool disableCharacter = false;
 
-        public GlobalSettings() {
+        internal static void Initialize() {
             if (File.Exists(DATABASE + FILENAME)) {
                 Load();
             }
         }
 
-        public void Load() {
+        public static void Load() {
             string[] lines = File.ReadAllLines(DATABASE + FILENAME);
 
             foreach (string line in lines) {
@@ -32,7 +32,7 @@ namespace ToolCache.GlobalSettings {
                     switch (variableName) {
                         case "gamename": gameName = variableProperty; break;
                         case "enabletiles": enableTiles = (variableProperty == "True"); break;
-                        case "tilesize": tileSize = uint.Parse(variableProperty); break;
+                        case "tilesize": tileSize = int.Parse(variableProperty); break;
                         case "disablecharacter": disableCharacter = (variableProperty == "True"); break;
                         default:
                             MessageBox.Show("Unknown variable '" + variableName + "' in global settings");
@@ -42,7 +42,7 @@ namespace ToolCache.GlobalSettings {
             }
         }
 
-        public void Save() {
+        public static void Save() {
             List<string> lines = new List<string>();
             lines.Add("gamename=" + gameName);
             lines.Add("enabletiles=" + enableTiles.ToString());
@@ -50,10 +50,6 @@ namespace ToolCache.GlobalSettings {
             lines.Add("disablecharacter=" + disableCharacter.ToString());
 
             File.WriteAllLines(DATABASE + FILENAME, lines);
-        }
-
-        public override string ToString() {
-            return Path.GetFileName(DATABASE + FILENAME);
         }
     }
 }

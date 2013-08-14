@@ -230,8 +230,8 @@
             this.btnGlobalSettingsEditor.Image = global::CityTools.Properties.Resources.Monster;
             this.btnGlobalSettingsEditor.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnGlobalSettingsEditor.Name = "btnGlobalSettingsEditor";
-            this.btnGlobalSettingsEditor.Size = new System.Drawing.Size(69, 22);
-            this.btnGlobalSettingsEditor.Text = "Settings";
+            this.btnGlobalSettingsEditor.Size = new System.Drawing.Size(125, 22);
+            this.btnGlobalSettingsEditor.Text = "Global Settings (G)";
             // 
             // cbMapPieces
             // 
