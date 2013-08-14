@@ -34,6 +34,8 @@ package Game.Critter {
 		public var moveSpeedX:int = 0;
 		public var moveSpeedY:int = 0;
 		
+		public var teamID:int = 0;
+		
 		public var MovementSpeed:int = 125;
 		public var AlertRange:int = 20000;
 		

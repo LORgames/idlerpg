@@ -25,6 +25,7 @@ using System.Drawing.Imaging;
 using ToolCache.Map.Background;
 using CityTools.CacheInterfaces;
 using CityTools.MiscHelpers;
+using ToolCache.Map.Regions;
 
 namespace CityTools {
     public enum PaintMode {
@@ -351,6 +352,33 @@ namespace CityTools {
         private void listTiles_SelectedIndexChanged(object sender, EventArgs e) {
             if (listTiles.SelectedItems.Count == 1 && listTiles.SelectedItems[0].Tag is TileTemplate) {
                 DrawWithObject((listTiles.SelectedItems[0].Tag as TileTemplate).TileID.ToString());
+            }
+        }
+
+        private void listCritterSpawns_SubItemClicked(object sender, SubItemEventArgs e) {
+            if (e.SubItem == 1) {
+                listCritterSpawns.StartEditing(numSpawnChance, e.Item, e.SubItem);
+            }
+        }
+
+        private void listCritterSpawns_SubItemEndEditing(object sender, SubItemEndEditingEventArgs e) {
+            (e.Item.Tag as CritterSpawn).spawnChance = (float)numSpawnChance.Value;
+            e.DisplayText = numSpawnChance.Value.ToString();
+            MapPieceCache.CurrentPiece.Edited();
+        }
+
+        private void btnNormalizeSpawnRegion_Click(object sender, EventArgs e) {
+            if(MainWindow.instance.listRegions.SelectedItem != null) {
+                if ((MainWindow.instance.listRegions.SelectedItem as SpawnRegion).FixSpawnRates()) {
+                    //Now we have to update them :(
+                    foreach (ListViewItem lvi in listCritterSpawns.Items) {
+                        if (lvi.Tag is CritterSpawn) {
+                            lvi.SubItems[1].Text = (lvi.Tag as CritterSpawn).spawnChance.ToString();
+                        }
+                    }
+
+                    MapPieceCache.CurrentPiece.Edited();
+                }
             }
         }
     }

@@ -88,5 +88,25 @@ namespace ToolCache.Map.Regions {
                 Area.Offset(x, y);
             }
         }
+
+        public bool FixSpawnRates() {
+            float totalPercent = 0;
+
+            foreach (CritterSpawn c in SpawnList) {
+                totalPercent += c.spawnChance;
+            }
+
+            totalPercent /= 100;
+
+            if (totalPercent != 100) {
+                foreach (CritterSpawn c in SpawnList) {
+                    c.spawnChance = c.spawnChance / totalPercent;
+                }
+
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 }

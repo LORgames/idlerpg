@@ -25,6 +25,7 @@ namespace ToolCache.Scripting {
             LoadGlobalVariables();
             LoadStringTable();
         }
+
         private static void LoadGlobalVariables() {
             //Load the variables from the variable CSV
             if (File.Exists(Settings.Database + "GlobalVariables.csv")) {
@@ -46,6 +47,7 @@ namespace ToolCache.Scripting {
                 }
             }
         }
+
         private static void LoadStringTable() {
             //Load the strings from the string table
             if (File.Exists(Settings.Database + "StringTable.csv")) {
@@ -68,6 +70,7 @@ namespace ToolCache.Scripting {
             SaveVariables();
             SaveStrings();
         }
+
         private static void SaveVariables() {
             List<string> keys = Variables.Keys.ToList<string>();
             keys.Sort();
@@ -80,6 +83,7 @@ namespace ToolCache.Scripting {
 
             File.WriteAllLines(Settings.Database + "GlobalVariables.csv", rows);
         }
+
         private static void SaveStrings() {
             List<string> keys = StringTable.Keys.ToList<string>();
             keys.Sort();
@@ -115,6 +119,7 @@ namespace ToolCache.Scripting {
         public static void UpdatedVariable(string key) {
             //TODO: this
         }
+
         public static int HighestRequiredVariableIndex() {
             return nexthighestindex;
         }

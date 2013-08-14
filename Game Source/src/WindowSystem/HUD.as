@@ -28,12 +28,12 @@ package WindowSystem
 			ImageLoader.Load("OtherUI/Buttons.png", LoadedButtonsArt);
 			ImageLoader.Load("OtherUI/Stick.png", LoadedStickArt);
 			ImageLoader.Load("OtherUI/Thumb.png", LoadedThumbArt); //THUMB MUST LOAD AFTER STICK!!!
-			//ImageLoader.Load("OtherUI/Test UI.png", LoadedLowerMiddle);
-			//ScrollPanelItem.LoadIcons();
+			ImageLoader.Load("OtherUI/Test UI.png", LoadedLowerMiddle);
+			ScrollPanelItem.LoadIcons();
 			
 			if(Global.DebugFPS) this.addChild(new FPSCounter());
 			
-			Global.LoadingTotal += 3;
+			Global.LoadingTotal += 5;
 		}
 		
 		public function Resized():void {

@@ -43,17 +43,21 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.txtNewStringName = new System.Windows.Forms.ToolStripTextBox();
             this.btnDeleteStrings = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.numIntegerChanger = new System.Windows.Forms.NumericUpDown();
             this.tabGroupVariableTypes.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.statusStrip2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numIntegerChanger)).BeginInit();
             this.SuspendLayout();
             // 
             // tabGroupVariableTypes
             // 
             this.tabGroupVariableTypes.Controls.Add(this.tabPage1);
             this.tabGroupVariableTypes.Controls.Add(this.tabPage2);
+            this.tabGroupVariableTypes.Controls.Add(this.tabPage3);
             this.tabGroupVariableTypes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabGroupVariableTypes.ItemSize = new System.Drawing.Size(50, 18);
             this.tabGroupVariableTypes.Location = new System.Drawing.Point(0, 0);
@@ -64,6 +68,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.numIntegerChanger);
             this.tabPage1.Controls.Add(this.listVariables);
             this.tabPage1.Controls.Add(this.statusStrip1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
@@ -91,6 +96,8 @@
             this.listVariables.TabIndex = 0;
             this.listVariables.UseCompatibleStateImageBehavior = false;
             this.listVariables.View = System.Windows.Forms.View.Details;
+            this.listVariables.SubItemClicked += new CityTools.Components.SubItemEventHandler(this.listVariables_SubItemClicked);
+            this.listVariables.SubItemEndEditing += new CityTools.Components.SubItemEndEditingEventHandler(this.listVariables_SubItemEndEditing);
             // 
             // columnHeader1
             // 
@@ -122,19 +129,19 @@
             this.btnVarAddVariable.Image = global::CityTools.Properties.Resources.add;
             this.btnVarAddVariable.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnVarAddVariable.Name = "btnVarAddVariable";
-            this.btnVarAddVariable.Size = new System.Drawing.Size(99, 20);
+            this.btnVarAddVariable.Size = new System.Drawing.Size(106, 20);
             this.btnVarAddVariable.Text = "Add Variable";
             // 
             // typeTheNameOfTheNewVariableAndPressEnterToAddItToolStripMenuItem
             // 
             this.typeTheNameOfTheNewVariableAndPressEnterToAddItToolStripMenuItem.Name = "typeTheNameOfTheNewVariableAndPressEnterToAddItToolStripMenuItem";
-            this.typeTheNameOfTheNewVariableAndPressEnterToAddItToolStripMenuItem.Size = new System.Drawing.Size(379, 22);
+            this.typeTheNameOfTheNewVariableAndPressEnterToAddItToolStripMenuItem.Size = new System.Drawing.Size(389, 22);
             this.typeTheNameOfTheNewVariableAndPressEnterToAddItToolStripMenuItem.Text = "Type the name of the new variable and press enter to add it.";
             // 
             // txtNewVariable
             // 
             this.txtNewVariable.Name = "txtNewVariable";
-            this.txtNewVariable.Size = new System.Drawing.Size(100, 21);
+            this.txtNewVariable.Size = new System.Drawing.Size(100, 23);
             this.txtNewVariable.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtNewVariable_KeyDown);
             // 
             // btnVarDeleteSelected
@@ -142,7 +149,7 @@
             this.btnVarDeleteSelected.Image = global::CityTools.Properties.Resources.delete;
             this.btnVarDeleteSelected.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnVarDeleteSelected.Name = "btnVarDeleteSelected";
-            this.btnVarDeleteSelected.Size = new System.Drawing.Size(111, 20);
+            this.btnVarDeleteSelected.Size = new System.Drawing.Size(116, 20);
             this.btnVarDeleteSelected.Text = "Delete Selected";
             this.btnVarDeleteSelected.Click += new System.EventHandler(this.btnVarDeleteSelected_Click);
             // 
@@ -217,19 +224,19 @@
             this.toolStripSplitButton1.Image = global::CityTools.Properties.Resources.add;
             this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripSplitButton1.Name = "toolStripSplitButton1";
-            this.toolStripSplitButton1.Size = new System.Drawing.Size(99, 20);
+            this.toolStripSplitButton1.Size = new System.Drawing.Size(106, 20);
             this.toolStripSplitButton1.Text = "Add Variable";
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(379, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(389, 22);
             this.toolStripMenuItem1.Text = "Type the name of the new variable and press enter to add it.";
             // 
             // txtNewStringName
             // 
             this.txtNewStringName.Name = "txtNewStringName";
-            this.txtNewStringName.Size = new System.Drawing.Size(100, 21);
+            this.txtNewStringName.Size = new System.Drawing.Size(100, 23);
             this.txtNewStringName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtNewStringName_KeyDown);
             // 
             // btnDeleteStrings
@@ -237,9 +244,25 @@
             this.btnDeleteStrings.Image = global::CityTools.Properties.Resources.delete;
             this.btnDeleteStrings.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnDeleteStrings.Name = "btnDeleteStrings";
-            this.btnDeleteStrings.Size = new System.Drawing.Size(111, 20);
+            this.btnDeleteStrings.Size = new System.Drawing.Size(116, 20);
             this.btnDeleteStrings.Text = "Delete Selected";
             this.btnDeleteStrings.Click += new System.EventHandler(this.btnDeleteStrings_Click);
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(735, 409);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Trigger Names";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // numIntegerChanger
+            // 
+            this.numIntegerChanger.Location = new System.Drawing.Point(429, 228);
+            this.numIntegerChanger.Name = "numIntegerChanger";
+            this.numIntegerChanger.Size = new System.Drawing.Size(120, 20);
+            this.numIntegerChanger.TabIndex = 2;
             // 
             // GlobalVariableEditor
             // 
@@ -259,6 +282,7 @@
             this.tabPage2.PerformLayout();
             this.statusStrip2.ResumeLayout(false);
             this.statusStrip2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numIntegerChanger)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -285,5 +309,7 @@
         private System.Windows.Forms.ToolStripTextBox txtNewStringName;
         private System.Windows.Forms.ToolStripDropDownButton btnDeleteStrings;
         private System.Windows.Forms.TextBox txtHiddenStringEditing;
+        private System.Windows.Forms.NumericUpDown numIntegerChanger;
+        private System.Windows.Forms.TabPage tabPage3;
     }
 }

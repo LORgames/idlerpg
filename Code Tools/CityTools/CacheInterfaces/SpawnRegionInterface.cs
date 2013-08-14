@@ -129,6 +129,7 @@ namespace CityTools.CacheInterfaces {
         /// <param name="e">Not Important, Can be null.</param>
         private static void listRegions_SelectedIndexChanged(object sender, EventArgs e) {
             if (MainWindow.instance.listRegions.SelectedItems.Count == 1) {
+                (MainWindow.instance.listRegions.SelectedItems[0] as SpawnRegion).FixSpawnRates();
                 RegionHelper.selectedRegion = MainWindow.instance.listRegions.SelectedItems[0] as SpawnRegion;
             }
 

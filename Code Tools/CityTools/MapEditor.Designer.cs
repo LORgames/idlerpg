@@ -142,10 +142,12 @@
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.timerRedrawAll = new System.Windows.Forms.Timer(this.components);
             this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.numSpawnChance = new System.Windows.Forms.NumericUpDown();
             this.listCritterSpawns = new CityTools.Components.ListViewEx();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.scriptMap = new CityTools.Components.ScriptBox();
+            this.btnNormalizeSpawnRegion = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.main_splitter)).BeginInit();
             this.main_splitter.Panel1.SuspendLayout();
             this.main_splitter.Panel2.SuspendLayout();
@@ -171,6 +173,7 @@
             this.obj_splitter.Panel2.SuspendLayout();
             this.obj_splitter.SuspendLayout();
             this.tabMapScript.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numSpawnChance)).BeginInit();
             this.SuspendLayout();
             // 
             // main_splitter
@@ -187,7 +190,7 @@
             // main_splitter.Panel2
             // 
             this.main_splitter.Panel2.Controls.Add(this.toolpanel_splitter);
-            this.main_splitter.Size = new System.Drawing.Size(925, 769);
+            this.main_splitter.Size = new System.Drawing.Size(925, 811);
             this.main_splitter.SplitterDistance = 634;
             this.main_splitter.TabIndex = 0;
             this.main_splitter.TabStop = false;
@@ -199,7 +202,7 @@
             this.mapViewPanel_c.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mapViewPanel_c.Location = new System.Drawing.Point(0, 0);
             this.mapViewPanel_c.Name = "mapViewPanel_c";
-            this.mapViewPanel_c.Size = new System.Drawing.Size(634, 769);
+            this.mapViewPanel_c.Size = new System.Drawing.Size(634, 811);
             this.mapViewPanel_c.TabIndex = 0;
             // 
             // toolStrip1
@@ -547,7 +550,7 @@
             this.mapViewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mapViewPanel.Location = new System.Drawing.Point(0, 0);
             this.mapViewPanel.Name = "mapViewPanel";
-            this.mapViewPanel.Size = new System.Drawing.Size(634, 769);
+            this.mapViewPanel.Size = new System.Drawing.Size(634, 811);
             this.mapViewPanel.TabIndex = 0;
             this.mapViewPanel.TabStop = false;
             this.mapViewPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.mapViewPanel_Paint);
@@ -569,7 +572,7 @@
             // toolpanel_splitter.Panel2
             // 
             this.toolpanel_splitter.Panel2.Controls.Add(this.tabFirstLevel);
-            this.toolpanel_splitter.Size = new System.Drawing.Size(287, 769);
+            this.toolpanel_splitter.Size = new System.Drawing.Size(287, 811);
             this.toolpanel_splitter.SplitterDistance = 25;
             this.toolpanel_splitter.TabIndex = 0;
             // 
@@ -583,12 +586,14 @@
             this.tabFirstLevel.Location = new System.Drawing.Point(0, 0);
             this.tabFirstLevel.Name = "tabFirstLevel";
             this.tabFirstLevel.SelectedIndex = 0;
-            this.tabFirstLevel.Size = new System.Drawing.Size(287, 769);
+            this.tabFirstLevel.Size = new System.Drawing.Size(287, 811);
             this.tabFirstLevel.TabIndex = 0;
             // 
             // tabOptions
             // 
             this.tabOptions.AutoScroll = true;
+            this.tabOptions.Controls.Add(this.btnNormalizeSpawnRegion);
+            this.tabOptions.Controls.Add(this.numSpawnChance);
             this.tabOptions.Controls.Add(this.btnSpawnRegionClearAreas);
             this.tabOptions.Controls.Add(this.btnChangeBackground);
             this.tabOptions.Controls.Add(this.numSpawnLoad);
@@ -644,23 +649,23 @@
             this.tabOptions.Location = new System.Drawing.Point(4, 22);
             this.tabOptions.Name = "tabOptions";
             this.tabOptions.Padding = new System.Windows.Forms.Padding(3);
-            this.tabOptions.Size = new System.Drawing.Size(279, 743);
+            this.tabOptions.Size = new System.Drawing.Size(279, 785);
             this.tabOptions.TabIndex = 3;
             this.tabOptions.Text = "Options";
             this.tabOptions.UseVisualStyleBackColor = true;
             // 
             // btnSpawnRegionClearAreas
             // 
-            this.btnSpawnRegionClearAreas.Location = new System.Drawing.Point(162, 508);
+            this.btnSpawnRegionClearAreas.Location = new System.Drawing.Point(120, 685);
             this.btnSpawnRegionClearAreas.Name = "btnSpawnRegionClearAreas";
-            this.btnSpawnRegionClearAreas.Size = new System.Drawing.Size(47, 23);
+            this.btnSpawnRegionClearAreas.Size = new System.Drawing.Size(89, 23);
             this.btnSpawnRegionClearAreas.TabIndex = 52;
-            this.btnSpawnRegionClearAreas.Text = "Clear";
+            this.btnSpawnRegionClearAreas.Text = "Clear Areas";
             this.btnSpawnRegionClearAreas.UseVisualStyleBackColor = true;
             // 
             // btnChangeBackground
             // 
-            this.btnChangeBackground.Location = new System.Drawing.Point(109, 704);
+            this.btnChangeBackground.Location = new System.Drawing.Point(109, 738);
             this.btnChangeBackground.Name = "btnChangeBackground";
             this.btnChangeBackground.Size = new System.Drawing.Size(100, 23);
             this.btnChangeBackground.TabIndex = 51;
@@ -694,7 +699,7 @@
             this.cbBackgroundType.FormattingEnabled = true;
             this.cbBackgroundType.Items.AddRange(new object[] {
             "Solid"});
-            this.cbBackgroundType.Location = new System.Drawing.Point(14, 706);
+            this.cbBackgroundType.Location = new System.Drawing.Point(14, 740);
             this.cbBackgroundType.Name = "cbBackgroundType";
             this.cbBackgroundType.Size = new System.Drawing.Size(89, 21);
             this.cbBackgroundType.TabIndex = 48;
@@ -703,7 +708,7 @@
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(10, 690);
+            this.label20.Location = new System.Drawing.Point(10, 724);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(89, 13);
             this.label20.TabIndex = 47;
@@ -713,7 +718,7 @@
             // 
             this.label19.BackColor = System.Drawing.Color.Silver;
             this.label19.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label19.Location = new System.Drawing.Point(36, 686);
+            this.label19.Location = new System.Drawing.Point(36, 720);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(150, 1);
             this.label19.TabIndex = 46;
@@ -791,11 +796,11 @@
             // 
             // btnRegionResize
             // 
-            this.btnRegionResize.Location = new System.Drawing.Point(120, 508);
+            this.btnRegionResize.Location = new System.Drawing.Point(14, 685);
             this.btnRegionResize.Name = "btnRegionResize";
-            this.btnRegionResize.Size = new System.Drawing.Size(37, 23);
+            this.btnRegionResize.Size = new System.Drawing.Size(100, 23);
             this.btnRegionResize.TabIndex = 38;
-            this.btnRegionResize.Text = "Add";
+            this.btnRegionResize.Text = "Add Areas";
             this.btnRegionResize.UseVisualStyleBackColor = true;
             // 
             // label15
@@ -1295,6 +1300,15 @@
             this.colorDialog.FullOpen = true;
             this.colorDialog.SolidColorOnly = true;
             // 
+            // numSpawnChance
+            // 
+            this.numSpawnChance.Location = new System.Drawing.Point(128, 624);
+            this.numSpawnChance.Name = "numSpawnChance";
+            this.numSpawnChance.Size = new System.Drawing.Size(48, 20);
+            this.numSpawnChance.TabIndex = 53;
+            this.numSpawnChance.TabStop = false;
+            this.numSpawnChance.Visible = false;
+            // 
             // listCritterSpawns
             // 
             this.listCritterSpawns.AllowColumnReorder = true;
@@ -1309,6 +1323,8 @@
             this.listCritterSpawns.TabIndex = 41;
             this.listCritterSpawns.UseCompatibleStateImageBehavior = false;
             this.listCritterSpawns.View = System.Windows.Forms.View.Details;
+            this.listCritterSpawns.SubItemClicked += new CityTools.Components.SubItemEventHandler(this.listCritterSpawns_SubItemClicked);
+            this.listCritterSpawns.SubItemEndEditing += new CityTools.Components.SubItemEndEditingEventHandler(this.listCritterSpawns_SubItemEndEditing);
             // 
             // columnHeader1
             // 
@@ -1329,11 +1345,21 @@
             this.scriptMap.Size = new System.Drawing.Size(273, 737);
             this.scriptMap.TabIndex = 0;
             // 
+            // btnNormalizeSpawnRegion
+            // 
+            this.btnNormalizeSpawnRegion.Location = new System.Drawing.Point(120, 511);
+            this.btnNormalizeSpawnRegion.Name = "btnNormalizeSpawnRegion";
+            this.btnNormalizeSpawnRegion.Size = new System.Drawing.Size(89, 21);
+            this.btnNormalizeSpawnRegion.TabIndex = 54;
+            this.btnNormalizeSpawnRegion.Text = "Fix Spawn%";
+            this.btnNormalizeSpawnRegion.UseVisualStyleBackColor = true;
+            this.btnNormalizeSpawnRegion.Click += new System.EventHandler(this.btnNormalizeSpawnRegion_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(925, 769);
+            this.ClientSize = new System.Drawing.Size(925, 811);
             this.Controls.Add(this.main_splitter);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainWindow";
@@ -1369,6 +1395,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.obj_splitter)).EndInit();
             this.obj_splitter.ResumeLayout(false);
             this.tabMapScript.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numSpawnChance)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1491,6 +1518,8 @@
         internal Components.ScriptBox scriptMap;
         internal System.Windows.Forms.ToolStripMenuItem btnPortraitEditor;
         internal System.Windows.Forms.ToolStripButton btnGlobalSettingsEditor;
+        private System.Windows.Forms.NumericUpDown numSpawnChance;
+        private System.Windows.Forms.Button btnNormalizeSpawnRegion;
     }
 }
 

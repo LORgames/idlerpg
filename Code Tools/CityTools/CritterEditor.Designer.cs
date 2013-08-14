@@ -199,7 +199,7 @@ namespace CityTools {
             // 
             this.btnCreateHumanoidCritter.Image = ((System.Drawing.Image)(resources.GetObject("btnCreateHumanoidCritter.Image")));
             this.btnCreateHumanoidCritter.Name = "btnCreateHumanoidCritter";
-            this.btnCreateHumanoidCritter.Size = new System.Drawing.Size(135, 22);
+            this.btnCreateHumanoidCritter.Size = new System.Drawing.Size(131, 22);
             this.btnCreateHumanoidCritter.Text = "Humanoid";
             this.btnCreateHumanoidCritter.Click += new System.EventHandler(this.btnCreateHumanoidCritter_Click);
             // 
@@ -207,7 +207,7 @@ namespace CityTools {
             // 
             this.btnCreateBeastCritter.Image = ((System.Drawing.Image)(resources.GetObject("btnCreateBeastCritter.Image")));
             this.btnCreateBeastCritter.Name = "btnCreateBeastCritter";
-            this.btnCreateBeastCritter.Size = new System.Drawing.Size(135, 22);
+            this.btnCreateBeastCritter.Size = new System.Drawing.Size(131, 22);
             this.btnCreateBeastCritter.Text = "Beast Man";
             this.btnCreateBeastCritter.Click += new System.EventHandler(this.btnCreateBeastCritter_Click);
             // 
@@ -812,7 +812,6 @@ namespace CityTools {
             // 
             this.txtScript.Location = new System.Drawing.Point(3, 3);
             this.txtScript.Name = "txtScript";
-            this.txtScript.Script = "";
             this.txtScript.ScriptType = ToolCache.Scripting.ScriptTypes.Critter;
             this.txtScript.Size = new System.Drawing.Size(289, 247);
             this.txtScript.TabIndex = 19;

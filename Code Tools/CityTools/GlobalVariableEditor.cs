@@ -171,5 +171,18 @@ namespace CityTools {
                 listString.StartEditing(txtHiddenStringEditing, e.Item, e.SubItem);
             }
         }
+
+        private void listVariables_SubItemClicked(object sender, Components.SubItemEventArgs e) {
+            if (e.SubItem == 1) {
+                listVariables.StartEditing(numIntegerChanger, e.Item, e.SubItem);
+            }
+        }
+
+        private void listVariables_SubItemEndEditing(object sender, Components.SubItemEndEditingEventArgs e) {
+            ScriptVariable s = (ScriptVariable)e.Item.Tag;
+
+            s.InitialValue = (short)numIntegerChanger.Value;
+            e.DisplayText = numIntegerChanger.Value.ToString();
+        }
     }
 }
