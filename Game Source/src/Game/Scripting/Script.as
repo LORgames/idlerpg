@@ -90,6 +90,8 @@ package Game.Scripting {
 			var tX:int = Position.X;
 			var tY:int = Position.Y;
 			
+			var effectInfo:EffectInfo;
+			
 			while (true) {
 				command = EventScript.readUnsignedShort();
 				
@@ -102,11 +104,13 @@ package Game.Scripting {
 						break;
 					case 0x1002: //Spawn Critter
 						var critter:BaseCritter = CritterManager.I.CritterInfo[EventScript.readShort()].CreateCritter(WorldData.CurrentMap, Position.X, Position.Y);
-						if (critter != null) { critter.Owner = info.CurrentTarget; } break;
+						if (critter != null) { critter.Owner = info.CurrentTarget; }
+						break;
 					case 0x1007: //Destroy
-						if (info.CurrentTarget is ICleanUp) { Clock.CleanUpList.push(info.CurrentTarget); } break;
-					case 0x1008: //SpawnEffect
-						var effectInfo:EffectInfo = EffectManager.I.Effects[EventScript.readShort()];
+						if (info.CurrentTarget is ICleanUp) { Clock.CleanUpList.push(info.CurrentTarget); }
+						break;
+					case 0x1008: //EffectSpawn
+						effectInfo = EffectManager.I.Effects[EventScript.readShort()];
 						
 						if (Position.D == 0) {
 							tX = Position.X - EventScript.readShort();
@@ -124,6 +128,93 @@ package Game.Scripting {
 						
 						new EffectInstance(effectInfo, tX, tY, Position.D);
 						
+						break;
+					case 0x1009: //EffectSpawnDirectional
+						effectInfo = EffectManager.I.Effects[EventScript.readShort()];
+						
+						tX = Position.X + EventScript.readShort();
+						tY = Position.Y + EventScript.readShort();
+						
+						new EffectInstance(effectInfo, tX, tY, EventScript.readShort());
+						
+						break;
+					case 0x100A: //EffectSpawnDirectionalRelative
+						effectInfo = EffectManager.I.Effects[EventScript.readShort()];
+
+						tX = Position.X + EventScript.readShort();
+						tY = Position.Y + EventScript.readShort();
+						var direction:int = EventScript.readShort();
+						var tD:int = 0;
+						
+						switch (Position.D) {
+							case 0: //critter left
+								switch (direction) {
+									case 0: //relative left
+										tD = 3; //down
+										break;
+									case 1: //relative right
+										tD = 2; //up
+										break;
+									case 2: //relative up
+										tD = 0; //left
+										break;
+									case 3: //relative down
+										tD = 1; //right
+										break;
+								}
+								break;
+							case 1: //critter right
+								switch (direction) {
+									case 0: //relative left
+										tD = 2; //up
+										break;
+									case 1: //relative right
+										tD = 3; //down
+										break;
+									case 2: //relative up
+										tD = 1; //right
+										break;
+									case 3: //relative down
+										tD = 0; //left
+										break;
+								}
+								break;
+							case 2: //critter up
+								switch (direction) {
+									case 0: //relative left
+										tD = 0; //left
+										break;
+									case 1: //relative right
+										tD = 1; //right
+										break;
+									case 2: //relative up
+										tD = 2; //up
+										break;
+									case 3: //relative down
+										tD = 3; //down
+										break;
+								}
+								break;
+							case 3: //critter down
+								switch (direction) {
+									case 0: //relative left
+										tD = 1; //right
+										break;
+									case 1: //relative right
+										tD = 0; //left
+										break;
+									case 2: //relative up
+										tD = 3; //down
+										break;
+									case 3: //relative down
+										tD = 2; //up
+										break;
+								}
+								break;
+						}
+						
+						new EffectInstance(effectInfo, tX, tY, tD);
+
 						break;
 					case 0x100B: //SpawnObject
 						var id:int = EventScript.readShort();
@@ -162,12 +253,12 @@ package Game.Scripting {
 						} else {
 							EventScript.readShort(); EventScript.readShort();
 						} break;
-					case 0x5001:
+					case 0x5001: //Movement speed
 						if (info.CurrentTarget is BaseCritter) { 
 							(info.CurrentTarget as BaseCritter).MovementSpeed = EventScript.readShort();
 						} break;
-					case 0x5002:
-					case 0x5003:
+					case 0x5002: //Movement direction absolute
+					case 0x5003: //Movement direction relative
 						if (info.CurrentTarget is BaseCritter) {
 							var angle:Number = Math.PI * (EventScript.readShort() / 180.0);
 							var move:Boolean = (EventScript.readShort() == 0);

@@ -179,6 +179,100 @@ namespace ToolCache.Scripting {
                     } else {
                         info.Errors.Add("EffectSpawn expects 1-3 parameters, '<Effect Name> <[OPTIONAL]Offset Forwards> <[OPTIONAL]Offset Sideways>'. NB. Effect name do NOT have spaces in them.");
                     } break;
+                case "effectspawndirectional":
+                    CommandID = 0x1009;
+
+                    paramBits = Parameters.Split(' ');
+
+                    if (paramBits.Length == 4) {
+                        if (!EffectManager.Effects.ContainsKey(paramBits[0])) {
+                            info.Errors.Add("Cannot find an effect called: " + paramBits[0]);
+                            break;
+                        }
+
+                        if (info.RemappedEffectIDs != null) {
+                            if (info.RemappedEffectIDs.ContainsKey(paramBits[0])) {
+                                AdditionalBytecode.Add((ushort)info.RemappedEffectIDs[paramBits[0]]);
+                            } else {
+                                info.Errors.Add("Cannot find an effect called: " + paramBits[0] + ".\nEffects without animations are skipped when exporting make sure the effect has an animation as well as checking spelling.");
+                            }
+                        }
+
+                        if (short.TryParse(paramBits[1], out sparam)) {
+                            AdditionalBytecode.Add((ushort)sparam);
+                        } else { info.Errors.Add("No idea how to convert: " + paramBits[1] + " into a number?"); }
+                        
+                        if (short.TryParse(paramBits[2], out sparam)) {
+                            AdditionalBytecode.Add((ushort)sparam);
+                        } else { info.Errors.Add("No idea how to convert: " + paramBits[2] + " into a number?"); }
+
+                        switch (paramBits[3].ToLower()) {
+                            case "left":
+                                AdditionalBytecode.Add((ushort)0);
+                                break;
+                            case "right":
+                                AdditionalBytecode.Add((ushort)1);
+                                break;
+                            case "up":
+                                AdditionalBytecode.Add((ushort)2);
+                                break;
+                            case "down":
+                                AdditionalBytecode.Add((ushort)3);
+                                break;
+                            default:
+                                info.Errors.Add("Invalid direction: '" + paramBits[3] + "'. Expected one of the following: 'Left', 'Right', 'Up', 'Down'");
+                                break;
+                        }
+                    } else {
+                        info.Errors.Add("EffectSpawnDirectional expects 4 parameters, '<Effect Name> <Y Offset> <X Offset> <Effect Direction>'. NB. Effect name do NOT have spaces in them.");
+                    } break;
+                case "effectspawndirectionalrelative":
+                    CommandID = 0x100A;
+
+                    paramBits = Parameters.Split(' ');
+
+                    if (paramBits.Length == 4) {
+                        if (!EffectManager.Effects.ContainsKey(paramBits[0])) {
+                            info.Errors.Add("Cannot find an effect called: " + paramBits[0]);
+                            break;
+                        }
+
+                        if (info.RemappedEffectIDs != null) {
+                            if (info.RemappedEffectIDs.ContainsKey(paramBits[0])) {
+                                AdditionalBytecode.Add((ushort)info.RemappedEffectIDs[paramBits[0]]);
+                            } else {
+                                info.Errors.Add("Cannot find an effect called: " + paramBits[0] + ".\nEffects without animations are skipped when exporting make sure the effect has an animation as well as checking spelling.");
+                            }
+                        }
+
+                        if (short.TryParse(paramBits[1], out sparam)) {
+                            AdditionalBytecode.Add((ushort)sparam);
+                        } else { info.Errors.Add("No idea how to convert: " + paramBits[1] + " into a number?"); }
+                        
+                        if (short.TryParse(paramBits[2], out sparam)) {
+                            AdditionalBytecode.Add((ushort)sparam);
+                        } else { info.Errors.Add("No idea how to convert: " + paramBits[2] + " into a number?"); }
+
+                        switch (paramBits[3].ToLower()) {
+                            case "left":
+                                AdditionalBytecode.Add((ushort)0);
+                                break;
+                            case "right":
+                                AdditionalBytecode.Add((ushort)1);
+                                break;
+                            case "up":
+                                AdditionalBytecode.Add((ushort)2);
+                                break;
+                            case "down":
+                                AdditionalBytecode.Add((ushort)3);
+                                break;
+                            default:
+                                info.Errors.Add("Invalid direction: '" + paramBits[3] + "'. Expected one of the following: 'Left', 'Right', 'Up', 'Down'");
+                                break;
+                        }
+                    } else {
+                        info.Errors.Add("EffectSpawnDirectionalRelative expects 4 parameters, '<Effect Name> <Offset Forwards> <Offset Sideways> <Effect Direction>'. NB. Effect name do NOT have spaces in them.");
+                    } break;
                 case "objectspawn":
                     CommandID = 0x100B;
 

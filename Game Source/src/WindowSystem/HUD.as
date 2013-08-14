@@ -24,7 +24,7 @@ package WindowSystem
 		public var Thumb:Bitmap;
 		
 		public function HUD() {
-			//ImageLoader.Load("OtherUI/Test Boss HP.png", LoadedBossHP);
+			ImageLoader.Load("OtherUI/Test Boss HP.png", LoadedBossHP);
 			ImageLoader.Load("OtherUI/Buttons.png", LoadedButtonsArt);
 			ImageLoader.Load("OtherUI/Stick.png", LoadedStickArt);
 			ImageLoader.Load("OtherUI/Thumb.png", LoadedThumbArt); //THUMB MUST LOAD AFTER STICK!!!
