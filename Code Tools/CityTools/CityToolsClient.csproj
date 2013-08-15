@@ -103,18 +103,6 @@
     <Compile Include="Components\SoundSelector_Panel.Designer.cs">
       <DependentUpon>SoundSelector_Panel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\CachedObject.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Components\CachedObject.Designer.cs">
-      <DependentUpon>CachedObject.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\ObjectCacheControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Components\ObjectCacheControl.Designer.cs">
-      <DependentUpon>ObjectCacheControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="Components\TileMergeDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -264,12 +252,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Components\SoundSelector_Panel.resx">
       <DependentUpon>SoundSelector_Panel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\CachedObject.resx">
-      <DependentUpon>CachedObject.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\ObjectCacheControl.resx">
-      <DependentUpon>ObjectCacheControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\TileMergeDialog.resx">
       <DependentUpon>TileMergeDialog.cs</DependentUpon>

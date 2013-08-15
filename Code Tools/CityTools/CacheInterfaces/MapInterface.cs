@@ -48,7 +48,6 @@ namespace CityTools.CacheInterfaces {
 
             //Update the map info
             MainWindow.instance.txtPieceName.Text = MapPieceCache.CurrentPiece.Name;
-            MainWindow.instance.txtFilename.Text = MapPieceCache.CurrentPiece.Filename;
 
             //Update the map size
             MainWindow.instance.txtMapSizeX.Text = MapPieceCache.CurrentPiece.Tiles.numTilesX.ToString();

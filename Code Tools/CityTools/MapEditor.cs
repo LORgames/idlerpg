@@ -264,10 +264,8 @@ namespace CityTools {
                 short objectID = short.Parse(objectName);
                 paintingAnimation = MapObjectCache.G(objectID).Animations["Default"];
 
-                if (tabObjectTools.SelectedTab == tabObjects) {
-                    ScenicPlacementHelper.object_index = objectID;
-                    paintMode = PaintMode.Objects;
-                }
+                ScenicPlacementHelper.object_index = objectID;
+                paintMode = PaintMode.Objects;
             } else if (tabFirstLevel.SelectedTab == tabTerrain) {
                 paintMode = PaintMode.Terrain;
                 Terrain.TerrainHelper.SetCurrentTile(short.Parse(objectName));
@@ -276,10 +274,6 @@ namespace CityTools {
 
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e) {
             MapPieceCache.SaveIfRequired();
-        }
-
-        private void obj_scenary_cache_CB_SelectionChangeCommitted(object sender, EventArgs e) {
-            CacheInterfaces.ObjectInterface.UpdateObjectPage();
         }
 
         private void newPieceBtn_Click(object sender, EventArgs e) {
@@ -379,6 +373,12 @@ namespace CityTools {
 
                     MapPieceCache.CurrentPiece.Edited();
                 }
+            }
+        }
+
+        private void listObjects_SelectedIndexChanged(object sender, EventArgs e) {
+            if (listObjects.SelectedItems.Count == 1 && listObjects.SelectedItems[0].Tag is MapObject) {
+                DrawWithObject((listObjects.SelectedItems[0].Tag as MapObject).ObjectID.ToString());
             }
         }
     }
