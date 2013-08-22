@@ -98,43 +98,53 @@
             this.numBrushSize = new System.Windows.Forms.NumericUpDown();
             this.label22 = new System.Windows.Forms.Label();
             this.tabPalette = new System.Windows.Forms.TabPage();
+            this.listObjects = new System.Windows.Forms.ListView();
             this.tabMapScript = new System.Windows.Forms.TabPage();
+            this.scriptMap = new CityTools.Components.ScriptBox();
             this.tabMapRegions = new System.Windows.Forms.TabPage();
+            this.scriptScriptRegion = new CityTools.Components.ScriptBox();
+            this.btnScriptRegionAreaClear = new System.Windows.Forms.Button();
+            this.btnScriptRegionAreaAdd = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtScriptRegionName = new System.Windows.Forms.TextBox();
+            this.ckbDrawScriptRegions = new System.Windows.Forms.CheckBox();
+            this.btnScriptRegionDelete = new System.Windows.Forms.Button();
+            this.btnScriptRegionAdd = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.listScriptRegions = new System.Windows.Forms.ListBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.btnNormalizeSpawnRegion = new System.Windows.Forms.Button();
             this.numSpawnChance = new System.Windows.Forms.NumericUpDown();
-            this.btnSpawnRegionClearAreas = new System.Windows.Forms.Button();
+            this.btnSpawnAreaClear = new System.Windows.Forms.Button();
             this.numSpawnLoad = new System.Windows.Forms.NumericUpDown();
             this.label21 = new System.Windows.Forms.Label();
             this.numSpawnTimer = new System.Windows.Forms.NumericUpDown();
             this.numSpawnMax = new System.Windows.Forms.NumericUpDown();
             this.label18 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
+            this.listSpawnCritters = new CityTools.Components.ListViewEx();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label16 = new System.Windows.Forms.Label();
-            this.btnRegionResize = new System.Windows.Forms.Button();
+            this.btnSpawnAreaAdd = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
-            this.txtRegionName = new System.Windows.Forms.TextBox();
-            this.cbDrawRegions = new System.Windows.Forms.CheckBox();
-            this.btnDeleteRegion = new System.Windows.Forms.Button();
-            this.btnAddRegion = new System.Windows.Forms.Button();
+            this.txtSpawnName = new System.Windows.Forms.TextBox();
+            this.ckbDrawSpawns = new System.Windows.Forms.CheckBox();
+            this.btnSpawnDelete = new System.Windows.Forms.Button();
+            this.btnSpawnAdd = new System.Windows.Forms.Button();
             this.label14 = new System.Windows.Forms.Label();
-            this.listRegions = new System.Windows.Forms.ListBox();
+            this.listSpawns = new System.Windows.Forms.ListBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.btnPortalExit = new System.Windows.Forms.Button();
             this.btnPortalEntry = new System.Windows.Forms.Button();
             this.txtPortalName = new System.Windows.Forms.TextBox();
             this.ckbDrawPortals = new System.Windows.Forms.CheckBox();
-            this.btnDeletePortals = new System.Windows.Forms.Button();
-            this.btnAddPortal = new System.Windows.Forms.Button();
+            this.btnPortalDelete = new System.Windows.Forms.Button();
+            this.btnPortalAdd = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.listPortals = new System.Windows.Forms.ListBox();
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.timerRedrawAll = new System.Windows.Forms.Timer(this.components);
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.listObjects = new System.Windows.Forms.ListView();
-            this.scriptMap = new CityTools.Components.ScriptBox();
-            this.listCritterSpawns = new CityTools.Components.ListViewEx();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.main_splitter)).BeginInit();
             this.main_splitter.Panel1.SuspendLayout();
             this.main_splitter.Panel2.SuspendLayout();
@@ -840,6 +850,16 @@
             this.tabPalette.Text = "Objects";
             this.tabPalette.UseVisualStyleBackColor = true;
             // 
+            // listObjects
+            // 
+            this.listObjects.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listObjects.Location = new System.Drawing.Point(0, 0);
+            this.listObjects.Name = "listObjects";
+            this.listObjects.Size = new System.Drawing.Size(308, 785);
+            this.listObjects.TabIndex = 0;
+            this.listObjects.UseCompatibleStateImageBehavior = false;
+            this.listObjects.SelectedIndexChanged += new System.EventHandler(this.listObjects_SelectedIndexChanged);
+            // 
             // tabMapScript
             // 
             this.tabMapScript.Controls.Add(this.scriptMap);
@@ -851,34 +871,54 @@
             this.tabMapScript.Text = "Scripting";
             this.tabMapScript.UseVisualStyleBackColor = true;
             // 
+            // scriptMap
+            // 
+            this.scriptMap.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scriptMap.Location = new System.Drawing.Point(3, 3);
+            this.scriptMap.Name = "scriptMap";
+            this.scriptMap.Script = "";
+            this.scriptMap.ScriptType = ToolCache.Scripting.ScriptTypes.Map;
+            this.scriptMap.Size = new System.Drawing.Size(302, 779);
+            this.scriptMap.TabIndex = 0;
+            // 
             // tabMapRegions
             // 
+            this.tabMapRegions.Controls.Add(this.scriptScriptRegion);
+            this.tabMapRegions.Controls.Add(this.btnScriptRegionAreaClear);
+            this.tabMapRegions.Controls.Add(this.btnScriptRegionAreaAdd);
+            this.tabMapRegions.Controls.Add(this.label3);
+            this.tabMapRegions.Controls.Add(this.txtScriptRegionName);
+            this.tabMapRegions.Controls.Add(this.ckbDrawScriptRegions);
+            this.tabMapRegions.Controls.Add(this.btnScriptRegionDelete);
+            this.tabMapRegions.Controls.Add(this.btnScriptRegionAdd);
+            this.tabMapRegions.Controls.Add(this.label8);
+            this.tabMapRegions.Controls.Add(this.listScriptRegions);
+            this.tabMapRegions.Controls.Add(this.label2);
             this.tabMapRegions.Controls.Add(this.btnNormalizeSpawnRegion);
             this.tabMapRegions.Controls.Add(this.numSpawnChance);
-            this.tabMapRegions.Controls.Add(this.btnSpawnRegionClearAreas);
+            this.tabMapRegions.Controls.Add(this.btnSpawnAreaClear);
             this.tabMapRegions.Controls.Add(this.numSpawnLoad);
             this.tabMapRegions.Controls.Add(this.label21);
             this.tabMapRegions.Controls.Add(this.numSpawnTimer);
             this.tabMapRegions.Controls.Add(this.numSpawnMax);
             this.tabMapRegions.Controls.Add(this.label18);
             this.tabMapRegions.Controls.Add(this.label17);
-            this.tabMapRegions.Controls.Add(this.listCritterSpawns);
+            this.tabMapRegions.Controls.Add(this.listSpawnCritters);
             this.tabMapRegions.Controls.Add(this.label16);
-            this.tabMapRegions.Controls.Add(this.btnRegionResize);
+            this.tabMapRegions.Controls.Add(this.btnSpawnAreaAdd);
             this.tabMapRegions.Controls.Add(this.label15);
-            this.tabMapRegions.Controls.Add(this.txtRegionName);
-            this.tabMapRegions.Controls.Add(this.cbDrawRegions);
-            this.tabMapRegions.Controls.Add(this.btnDeleteRegion);
-            this.tabMapRegions.Controls.Add(this.btnAddRegion);
+            this.tabMapRegions.Controls.Add(this.txtSpawnName);
+            this.tabMapRegions.Controls.Add(this.ckbDrawSpawns);
+            this.tabMapRegions.Controls.Add(this.btnSpawnDelete);
+            this.tabMapRegions.Controls.Add(this.btnSpawnAdd);
             this.tabMapRegions.Controls.Add(this.label14);
-            this.tabMapRegions.Controls.Add(this.listRegions);
+            this.tabMapRegions.Controls.Add(this.listSpawns);
             this.tabMapRegions.Controls.Add(this.label11);
-            this.tabMapRegions.Controls.Add(this.btnPortalExit);
             this.tabMapRegions.Controls.Add(this.btnPortalEntry);
             this.tabMapRegions.Controls.Add(this.txtPortalName);
             this.tabMapRegions.Controls.Add(this.ckbDrawPortals);
-            this.tabMapRegions.Controls.Add(this.btnDeletePortals);
-            this.tabMapRegions.Controls.Add(this.btnAddPortal);
+            this.tabMapRegions.Controls.Add(this.btnPortalDelete);
+            this.tabMapRegions.Controls.Add(this.btnPortalAdd);
             this.tabMapRegions.Controls.Add(this.label10);
             this.tabMapRegions.Controls.Add(this.listPortals);
             this.tabMapRegions.Location = new System.Drawing.Point(4, 22);
@@ -888,49 +928,147 @@
             this.tabMapRegions.Text = "Regions";
             this.tabMapRegions.UseVisualStyleBackColor = true;
             // 
+            // scriptScriptRegion
+            // 
+            this.scriptScriptRegion.Location = new System.Drawing.Point(3, 552);
+            this.scriptScriptRegion.Name = "scriptScriptRegion";
+            this.scriptScriptRegion.Script = "";
+            this.scriptScriptRegion.ScriptType = ToolCache.Scripting.ScriptTypes.Unknown;
+            this.scriptScriptRegion.Size = new System.Drawing.Size(297, 225);
+            this.scriptScriptRegion.TabIndex = 86;
+            // 
+            // btnScriptRegionAreaClear
+            // 
+            this.btnScriptRegionAreaClear.Location = new System.Drawing.Point(100, 524);
+            this.btnScriptRegionAreaClear.Name = "btnScriptRegionAreaClear";
+            this.btnScriptRegionAreaClear.Size = new System.Drawing.Size(78, 23);
+            this.btnScriptRegionAreaClear.TabIndex = 85;
+            this.btnScriptRegionAreaClear.Text = "Clear Areas";
+            this.btnScriptRegionAreaClear.UseVisualStyleBackColor = true;
+            // 
+            // btnScriptRegionAreaAdd
+            // 
+            this.btnScriptRegionAreaAdd.Location = new System.Drawing.Point(18, 524);
+            this.btnScriptRegionAreaAdd.Name = "btnScriptRegionAreaAdd";
+            this.btnScriptRegionAreaAdd.Size = new System.Drawing.Size(78, 23);
+            this.btnScriptRegionAreaAdd.TabIndex = 84;
+            this.btnScriptRegionAreaAdd.Text = "Add Areas";
+            this.btnScriptRegionAreaAdd.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(19, 501);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(38, 13);
+            this.label3.TabIndex = 83;
+            this.label3.Text = "Name:";
+            // 
+            // txtScriptRegionName
+            // 
+            this.txtScriptRegionName.Location = new System.Drawing.Point(63, 498);
+            this.txtScriptRegionName.Name = "txtScriptRegionName";
+            this.txtScriptRegionName.Size = new System.Drawing.Size(114, 20);
+            this.txtScriptRegionName.TabIndex = 80;
+            // 
+            // ckbDrawScriptRegions
+            // 
+            this.ckbDrawScriptRegions.AutoSize = true;
+            this.ckbDrawScriptRegions.Location = new System.Drawing.Point(205, 465);
+            this.ckbDrawScriptRegions.Name = "ckbDrawScriptRegions";
+            this.ckbDrawScriptRegions.Size = new System.Drawing.Size(65, 17);
+            this.ckbDrawScriptRegions.TabIndex = 79;
+            this.ckbDrawScriptRegions.Text = "Draw All";
+            this.ckbDrawScriptRegions.UseVisualStyleBackColor = true;
+            // 
+            // btnScriptRegionDelete
+            // 
+            this.btnScriptRegionDelete.Image = global::CityTools.Properties.Resources.delete;
+            this.btnScriptRegionDelete.Location = new System.Drawing.Point(234, 436);
+            this.btnScriptRegionDelete.Name = "btnScriptRegionDelete";
+            this.btnScriptRegionDelete.Size = new System.Drawing.Size(23, 23);
+            this.btnScriptRegionDelete.TabIndex = 78;
+            this.btnScriptRegionDelete.UseVisualStyleBackColor = true;
+            // 
+            // btnScriptRegionAdd
+            // 
+            this.btnScriptRegionAdd.Image = global::CityTools.Properties.Resources.add;
+            this.btnScriptRegionAdd.Location = new System.Drawing.Point(205, 436);
+            this.btnScriptRegionAdd.Name = "btnScriptRegionAdd";
+            this.btnScriptRegionAdd.Size = new System.Drawing.Size(23, 23);
+            this.btnScriptRegionAdd.TabIndex = 77;
+            this.btnScriptRegionAdd.UseVisualStyleBackColor = true;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(13, 420);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(76, 13);
+            this.label8.TabIndex = 76;
+            this.label8.Text = "Script Regions";
+            // 
+            // listScriptRegions
+            // 
+            this.listScriptRegions.FormattingEnabled = true;
+            this.listScriptRegions.Location = new System.Drawing.Point(18, 436);
+            this.listScriptRegions.Name = "listScriptRegions";
+            this.listScriptRegions.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.listScriptRegions.Size = new System.Drawing.Size(181, 56);
+            this.listScriptRegions.TabIndex = 75;
+            // 
+            // label2
+            // 
+            this.label2.BackColor = System.Drawing.Color.Silver;
+            this.label2.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.label2.Location = new System.Drawing.Point(17, 416);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(260, 1);
+            this.label2.TabIndex = 74;
+            // 
             // btnNormalizeSpawnRegion
             // 
-            this.btnNormalizeSpawnRegion.Location = new System.Drawing.Point(123, 239);
+            this.btnNormalizeSpawnRegion.Location = new System.Drawing.Point(17, 383);
             this.btnNormalizeSpawnRegion.Name = "btnNormalizeSpawnRegion";
-            this.btnNormalizeSpawnRegion.Size = new System.Drawing.Size(89, 21);
+            this.btnNormalizeSpawnRegion.Size = new System.Drawing.Size(89, 23);
             this.btnNormalizeSpawnRegion.TabIndex = 73;
             this.btnNormalizeSpawnRegion.Text = "Fix Spawn%";
             this.btnNormalizeSpawnRegion.UseVisualStyleBackColor = true;
             // 
             // numSpawnChance
             // 
-            this.numSpawnChance.Location = new System.Drawing.Point(131, 352);
+            this.numSpawnChance.Location = new System.Drawing.Point(131, 340);
             this.numSpawnChance.Name = "numSpawnChance";
             this.numSpawnChance.Size = new System.Drawing.Size(48, 20);
             this.numSpawnChance.TabIndex = 72;
             this.numSpawnChance.TabStop = false;
             this.numSpawnChance.Visible = false;
             // 
-            // btnSpawnRegionClearAreas
+            // btnSpawnAreaClear
             // 
-            this.btnSpawnRegionClearAreas.Location = new System.Drawing.Point(123, 413);
-            this.btnSpawnRegionClearAreas.Name = "btnSpawnRegionClearAreas";
-            this.btnSpawnRegionClearAreas.Size = new System.Drawing.Size(89, 23);
-            this.btnSpawnRegionClearAreas.TabIndex = 71;
-            this.btnSpawnRegionClearAreas.Text = "Clear Areas";
-            this.btnSpawnRegionClearAreas.UseVisualStyleBackColor = true;
+            this.btnSpawnAreaClear.Location = new System.Drawing.Point(194, 383);
+            this.btnSpawnAreaClear.Name = "btnSpawnAreaClear";
+            this.btnSpawnAreaClear.Size = new System.Drawing.Size(76, 23);
+            this.btnSpawnAreaClear.TabIndex = 71;
+            this.btnSpawnAreaClear.Text = "Clear Areas";
+            this.btnSpawnAreaClear.UseVisualStyleBackColor = true;
             // 
             // numSpawnLoad
             // 
-            this.numSpawnLoad.Location = new System.Drawing.Point(88, 278);
+            this.numSpawnLoad.Location = new System.Drawing.Point(104, 248);
             this.numSpawnLoad.Maximum = new decimal(new int[] {
             25,
             0,
             0,
             0});
             this.numSpawnLoad.Name = "numSpawnLoad";
-            this.numSpawnLoad.Size = new System.Drawing.Size(59, 20);
+            this.numSpawnLoad.Size = new System.Drawing.Size(80, 20);
             this.numSpawnLoad.TabIndex = 70;
             // 
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(85, 262);
+            this.label21.Location = new System.Drawing.Point(101, 232);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(62, 13);
             this.label21.TabIndex = 69;
@@ -938,7 +1076,7 @@
             // 
             // numSpawnTimer
             // 
-            this.numSpawnTimer.Location = new System.Drawing.Point(17, 278);
+            this.numSpawnTimer.Location = new System.Drawing.Point(17, 248);
             this.numSpawnTimer.Maximum = new decimal(new int[] {
             1200,
             0,
@@ -950,7 +1088,7 @@
             0,
             0});
             this.numSpawnTimer.Name = "numSpawnTimer";
-            this.numSpawnTimer.Size = new System.Drawing.Size(65, 20);
+            this.numSpawnTimer.Size = new System.Drawing.Size(80, 20);
             this.numSpawnTimer.TabIndex = 68;
             this.numSpawnTimer.Value = new decimal(new int[] {
             60,
@@ -960,7 +1098,7 @@
             // 
             // numSpawnMax
             // 
-            this.numSpawnMax.Location = new System.Drawing.Point(153, 278);
+            this.numSpawnMax.Location = new System.Drawing.Point(190, 248);
             this.numSpawnMax.Maximum = new decimal(new int[] {
             25,
             0,
@@ -972,7 +1110,7 @@
             0,
             0});
             this.numSpawnMax.Name = "numSpawnMax";
-            this.numSpawnMax.Size = new System.Drawing.Size(59, 20);
+            this.numSpawnMax.Size = new System.Drawing.Size(80, 20);
             this.numSpawnMax.TabIndex = 67;
             this.numSpawnMax.Value = new decimal(new int[] {
             1,
@@ -983,7 +1121,7 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(150, 262);
+            this.label18.Location = new System.Drawing.Point(187, 232);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(62, 13);
             this.label18.TabIndex = 66;
@@ -992,153 +1130,170 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(14, 262);
+            this.label17.Location = new System.Drawing.Point(14, 232);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(71, 13);
             this.label17.TabIndex = 65;
             this.label17.Text = "Timeout (sec)";
             // 
+            // listSpawnCritters
+            // 
+            this.listSpawnCritters.AllowColumnReorder = true;
+            this.listSpawnCritters.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2});
+            this.listSpawnCritters.DoubleClickActivation = false;
+            this.listSpawnCritters.FullRowSelect = true;
+            this.listSpawnCritters.Location = new System.Drawing.Point(17, 274);
+            this.listSpawnCritters.Name = "listSpawnCritters";
+            this.listSpawnCritters.Size = new System.Drawing.Size(253, 103);
+            this.listSpawnCritters.TabIndex = 64;
+            this.listSpawnCritters.UseCompatibleStateImageBehavior = false;
+            this.listSpawnCritters.View = System.Windows.Forms.View.Details;
+            this.listSpawnCritters.SubItemClicked += new CityTools.Components.SubItemEventHandler(this.listCritterSpawns_SubItemClicked);
+            this.listSpawnCritters.SubItemEndEditing += new CityTools.Components.SubItemEndEditingEventHandler(this.listCritterSpawns_SubItemEndEditing);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Critter";
+            this.columnHeader1.Width = 181;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Spawn%";
+            // 
             // label16
             // 
             this.label16.BackColor = System.Drawing.Color.Silver;
             this.label16.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label16.Location = new System.Drawing.Point(39, 218);
+            this.label16.Location = new System.Drawing.Point(14, 116);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(150, 1);
+            this.label16.Size = new System.Drawing.Size(260, 1);
             this.label16.TabIndex = 63;
             // 
-            // btnRegionResize
+            // btnSpawnAreaAdd
             // 
-            this.btnRegionResize.Location = new System.Drawing.Point(17, 413);
-            this.btnRegionResize.Name = "btnRegionResize";
-            this.btnRegionResize.Size = new System.Drawing.Size(100, 23);
-            this.btnRegionResize.TabIndex = 62;
-            this.btnRegionResize.Text = "Add Areas";
-            this.btnRegionResize.UseVisualStyleBackColor = true;
+            this.btnSpawnAreaAdd.Location = new System.Drawing.Point(112, 383);
+            this.btnSpawnAreaAdd.Name = "btnSpawnAreaAdd";
+            this.btnSpawnAreaAdd.Size = new System.Drawing.Size(76, 23);
+            this.btnSpawnAreaAdd.TabIndex = 62;
+            this.btnSpawnAreaAdd.Text = "Add Areas";
+            this.btnSpawnAreaAdd.UseVisualStyleBackColor = true;
             // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(14, 223);
+            this.label15.Location = new System.Drawing.Point(18, 208);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(108, 13);
+            this.label15.Size = new System.Drawing.Size(38, 13);
             this.label15.TabIndex = 61;
-            this.label15.Text = "Spawn Region Name";
+            this.label15.Text = "Name:";
             // 
-            // txtRegionName
+            // txtSpawnName
             // 
-            this.txtRegionName.Location = new System.Drawing.Point(17, 239);
-            this.txtRegionName.Name = "txtRegionName";
-            this.txtRegionName.Size = new System.Drawing.Size(100, 20);
-            this.txtRegionName.TabIndex = 60;
+            this.txtSpawnName.Location = new System.Drawing.Point(58, 205);
+            this.txtSpawnName.Name = "txtSpawnName";
+            this.txtSpawnName.Size = new System.Drawing.Size(117, 20);
+            this.txtSpawnName.TabIndex = 60;
             // 
-            // cbDrawRegions
+            // ckbDrawSpawns
             // 
-            this.cbDrawRegions.AutoSize = true;
-            this.cbDrawRegions.Location = new System.Drawing.Point(123, 184);
-            this.cbDrawRegions.Name = "cbDrawRegions";
-            this.cbDrawRegions.Size = new System.Drawing.Size(65, 17);
-            this.cbDrawRegions.TabIndex = 59;
-            this.cbDrawRegions.Text = "Draw All";
-            this.cbDrawRegions.UseVisualStyleBackColor = true;
+            this.ckbDrawSpawns.AutoSize = true;
+            this.ckbDrawSpawns.Location = new System.Drawing.Point(205, 172);
+            this.ckbDrawSpawns.Name = "ckbDrawSpawns";
+            this.ckbDrawSpawns.Size = new System.Drawing.Size(65, 17);
+            this.ckbDrawSpawns.TabIndex = 59;
+            this.ckbDrawSpawns.Text = "Draw All";
+            this.ckbDrawSpawns.UseVisualStyleBackColor = true;
             // 
-            // btnDeleteRegion
+            // btnSpawnDelete
             // 
-            this.btnDeleteRegion.Location = new System.Drawing.Point(165, 155);
-            this.btnDeleteRegion.Name = "btnDeleteRegion";
-            this.btnDeleteRegion.Size = new System.Drawing.Size(47, 23);
-            this.btnDeleteRegion.TabIndex = 58;
-            this.btnDeleteRegion.Text = "Delete";
-            this.btnDeleteRegion.UseVisualStyleBackColor = true;
+            this.btnSpawnDelete.Image = global::CityTools.Properties.Resources.delete;
+            this.btnSpawnDelete.Location = new System.Drawing.Point(234, 143);
+            this.btnSpawnDelete.Name = "btnSpawnDelete";
+            this.btnSpawnDelete.Size = new System.Drawing.Size(23, 23);
+            this.btnSpawnDelete.TabIndex = 58;
+            this.btnSpawnDelete.UseVisualStyleBackColor = true;
             // 
-            // btnAddRegion
+            // btnSpawnAdd
             // 
-            this.btnAddRegion.Location = new System.Drawing.Point(123, 155);
-            this.btnAddRegion.Name = "btnAddRegion";
-            this.btnAddRegion.Size = new System.Drawing.Size(37, 23);
-            this.btnAddRegion.TabIndex = 57;
-            this.btnAddRegion.Text = "Add";
-            this.btnAddRegion.UseVisualStyleBackColor = true;
+            this.btnSpawnAdd.Image = global::CityTools.Properties.Resources.add;
+            this.btnSpawnAdd.Location = new System.Drawing.Point(205, 143);
+            this.btnSpawnAdd.Name = "btnSpawnAdd";
+            this.btnSpawnAdd.Size = new System.Drawing.Size(23, 23);
+            this.btnSpawnAdd.TabIndex = 57;
+            this.btnSpawnAdd.UseVisualStyleBackColor = true;
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(11, 139);
+            this.label14.Location = new System.Drawing.Point(11, 127);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(45, 13);
             this.label14.TabIndex = 56;
             this.label14.Text = "Spawns";
             // 
-            // listRegions
+            // listSpawns
             // 
-            this.listRegions.FormattingEnabled = true;
-            this.listRegions.Location = new System.Drawing.Point(16, 155);
-            this.listRegions.Name = "listRegions";
-            this.listRegions.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listRegions.Size = new System.Drawing.Size(101, 56);
-            this.listRegions.TabIndex = 55;
+            this.listSpawns.FormattingEnabled = true;
+            this.listSpawns.Location = new System.Drawing.Point(16, 143);
+            this.listSpawns.Name = "listSpawns";
+            this.listSpawns.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.listSpawns.Size = new System.Drawing.Size(183, 56);
+            this.listSpawns.TabIndex = 55;
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(11, 88);
+            this.label11.Location = new System.Drawing.Point(14, 87);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(65, 13);
+            this.label11.Size = new System.Drawing.Size(38, 13);
             this.label11.TabIndex = 38;
-            this.label11.Text = "Portal Name";
-            // 
-            // btnPortalExit
-            // 
-            this.btnPortalExit.Location = new System.Drawing.Point(165, 101);
-            this.btnPortalExit.Name = "btnPortalExit";
-            this.btnPortalExit.Size = new System.Drawing.Size(44, 23);
-            this.btnPortalExit.TabIndex = 37;
-            this.btnPortalExit.Text = "Exit";
-            this.btnPortalExit.UseVisualStyleBackColor = true;
+            this.label11.Text = "Name:";
             // 
             // btnPortalEntry
             // 
-            this.btnPortalEntry.Location = new System.Drawing.Point(120, 101);
+            this.btnPortalEntry.Location = new System.Drawing.Point(181, 84);
             this.btnPortalEntry.Name = "btnPortalEntry";
-            this.btnPortalEntry.Size = new System.Drawing.Size(44, 23);
+            this.btnPortalEntry.Size = new System.Drawing.Size(89, 20);
             this.btnPortalEntry.TabIndex = 36;
-            this.btnPortalEntry.Text = "Entry";
+            this.btnPortalEntry.Text = "Change Area";
             this.btnPortalEntry.UseVisualStyleBackColor = true;
             // 
             // txtPortalName
             // 
-            this.txtPortalName.Location = new System.Drawing.Point(14, 104);
+            this.txtPortalName.Location = new System.Drawing.Point(58, 84);
             this.txtPortalName.Name = "txtPortalName";
-            this.txtPortalName.Size = new System.Drawing.Size(100, 20);
+            this.txtPortalName.Size = new System.Drawing.Size(117, 20);
             this.txtPortalName.TabIndex = 34;
             // 
             // ckbDrawPortals
             // 
             this.ckbDrawPortals.AutoSize = true;
-            this.ckbDrawPortals.Location = new System.Drawing.Point(181, 51);
+            this.ckbDrawPortals.Location = new System.Drawing.Point(205, 51);
             this.ckbDrawPortals.Name = "ckbDrawPortals";
             this.ckbDrawPortals.Size = new System.Drawing.Size(65, 17);
             this.ckbDrawPortals.TabIndex = 33;
             this.ckbDrawPortals.Text = "Draw All";
             this.ckbDrawPortals.UseVisualStyleBackColor = true;
             // 
-            // btnDeletePortals
+            // btnPortalDelete
             // 
-            this.btnDeletePortals.Location = new System.Drawing.Point(224, 22);
-            this.btnDeletePortals.Name = "btnDeletePortals";
-            this.btnDeletePortals.Size = new System.Drawing.Size(47, 23);
-            this.btnDeletePortals.TabIndex = 32;
-            this.btnDeletePortals.Text = "Delete";
-            this.btnDeletePortals.UseVisualStyleBackColor = true;
+            this.btnPortalDelete.Image = global::CityTools.Properties.Resources.delete;
+            this.btnPortalDelete.Location = new System.Drawing.Point(234, 22);
+            this.btnPortalDelete.Name = "btnPortalDelete";
+            this.btnPortalDelete.Size = new System.Drawing.Size(23, 23);
+            this.btnPortalDelete.TabIndex = 32;
+            this.btnPortalDelete.UseVisualStyleBackColor = true;
             // 
-            // btnAddPortal
+            // btnPortalAdd
             // 
-            this.btnAddPortal.Location = new System.Drawing.Point(181, 22);
-            this.btnAddPortal.Name = "btnAddPortal";
-            this.btnAddPortal.Size = new System.Drawing.Size(37, 23);
-            this.btnAddPortal.TabIndex = 31;
-            this.btnAddPortal.Text = "Add";
-            this.btnAddPortal.UseVisualStyleBackColor = true;
+            this.btnPortalAdd.Image = global::CityTools.Properties.Resources.add;
+            this.btnPortalAdd.Location = new System.Drawing.Point(205, 22);
+            this.btnPortalAdd.Name = "btnPortalAdd";
+            this.btnPortalAdd.Size = new System.Drawing.Size(23, 23);
+            this.btnPortalAdd.TabIndex = 31;
+            this.btnPortalAdd.UseVisualStyleBackColor = true;
             // 
             // label10
             // 
@@ -1155,7 +1310,7 @@
             this.listPortals.Location = new System.Drawing.Point(13, 22);
             this.listPortals.Name = "listPortals";
             this.listPortals.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listPortals.Size = new System.Drawing.Size(162, 56);
+            this.listPortals.Size = new System.Drawing.Size(186, 56);
             this.listPortals.TabIndex = 29;
             // 
             // timerRefresh
@@ -1172,50 +1327,6 @@
             this.colorDialog.AnyColor = true;
             this.colorDialog.FullOpen = true;
             this.colorDialog.SolidColorOnly = true;
-            // 
-            // listObjects
-            // 
-            this.listObjects.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listObjects.Location = new System.Drawing.Point(0, 0);
-            this.listObjects.Name = "listObjects";
-            this.listObjects.Size = new System.Drawing.Size(308, 785);
-            this.listObjects.TabIndex = 0;
-            this.listObjects.UseCompatibleStateImageBehavior = false;
-            this.listObjects.SelectedIndexChanged += new System.EventHandler(this.listObjects_SelectedIndexChanged);
-            // 
-            // scriptMap
-            // 
-            this.scriptMap.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scriptMap.Location = new System.Drawing.Point(3, 3);
-            this.scriptMap.Name = "scriptMap";
-            this.scriptMap.Script = "";
-            this.scriptMap.ScriptType = ToolCache.Scripting.ScriptTypes.Map;
-            this.scriptMap.Size = new System.Drawing.Size(302, 779);
-            this.scriptMap.TabIndex = 0;
-            // 
-            // listCritterSpawns
-            // 
-            this.listCritterSpawns.AllowColumnReorder = true;
-            this.listCritterSpawns.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2});
-            this.listCritterSpawns.DoubleClickActivation = false;
-            this.listCritterSpawns.FullRowSelect = true;
-            this.listCritterSpawns.Location = new System.Drawing.Point(17, 304);
-            this.listCritterSpawns.Name = "listCritterSpawns";
-            this.listCritterSpawns.Size = new System.Drawing.Size(195, 103);
-            this.listCritterSpawns.TabIndex = 64;
-            this.listCritterSpawns.UseCompatibleStateImageBehavior = false;
-            this.listCritterSpawns.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "Critter";
-            this.columnHeader1.Width = 130;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Spawn%";
             // 
             // MainWindow
             // 
@@ -1336,36 +1447,46 @@
         internal System.Windows.Forms.Button btnPortalEntry;
         internal System.Windows.Forms.TextBox txtPortalName;
         internal System.Windows.Forms.CheckBox ckbDrawPortals;
-        internal System.Windows.Forms.Button btnDeletePortals;
-        internal System.Windows.Forms.Button btnAddPortal;
+        internal System.Windows.Forms.Button btnPortalDelete;
+        internal System.Windows.Forms.Button btnPortalAdd;
         private System.Windows.Forms.Label label10;
         internal System.Windows.Forms.ListBox listPortals;
         private System.Windows.Forms.Button btnNormalizeSpawnRegion;
         private System.Windows.Forms.NumericUpDown numSpawnChance;
-        internal System.Windows.Forms.Button btnSpawnRegionClearAreas;
+        internal System.Windows.Forms.Button btnSpawnAreaClear;
         internal System.Windows.Forms.NumericUpDown numSpawnLoad;
         private System.Windows.Forms.Label label21;
         internal System.Windows.Forms.NumericUpDown numSpawnTimer;
         internal System.Windows.Forms.NumericUpDown numSpawnMax;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label17;
-        internal Components.ListViewEx listCritterSpawns;
+        internal Components.ListViewEx listSpawnCritters;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.Label label16;
-        internal System.Windows.Forms.Button btnRegionResize;
+        internal System.Windows.Forms.Button btnSpawnAreaAdd;
         private System.Windows.Forms.Label label15;
-        internal System.Windows.Forms.TextBox txtRegionName;
-        internal System.Windows.Forms.CheckBox cbDrawRegions;
-        internal System.Windows.Forms.Button btnDeleteRegion;
-        internal System.Windows.Forms.Button btnAddRegion;
+        internal System.Windows.Forms.TextBox txtSpawnName;
+        internal System.Windows.Forms.CheckBox ckbDrawSpawns;
+        internal System.Windows.Forms.Button btnSpawnDelete;
+        internal System.Windows.Forms.Button btnSpawnAdd;
         private System.Windows.Forms.Label label14;
-        internal System.Windows.Forms.ListBox listRegions;
-        internal System.Windows.Forms.Button btnPortalExit;
+        internal System.Windows.Forms.ListBox listSpawns;
         internal System.Windows.Forms.ComboBox cbBackgroundType;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Button btnChangeBackground;
         internal System.Windows.Forms.ListView listObjects;
+        private System.Windows.Forms.Label label3;
+        internal System.Windows.Forms.TextBox txtScriptRegionName;
+        internal System.Windows.Forms.CheckBox ckbDrawScriptRegions;
+        internal System.Windows.Forms.Button btnScriptRegionDelete;
+        internal System.Windows.Forms.Button btnScriptRegionAdd;
+        private System.Windows.Forms.Label label8;
+        internal System.Windows.Forms.ListBox listScriptRegions;
+        private System.Windows.Forms.Label label2;
+        internal System.Windows.Forms.Button btnScriptRegionAreaClear;
+        internal System.Windows.Forms.Button btnScriptRegionAreaAdd;
+        internal Components.ScriptBox scriptScriptRegion;
     }
 }
 

@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ToolCache.Map;
-using CityTools.Core;
-using System.Windows.Forms;
-using ToolCache.Map.Tiles;
 using System.Drawing;
-using ToolCache.Drawing;
 using System.Drawing.Imaging;
-using CityTools.Terrain;
-using CityTools.ObjectSystem;
-using System.Threading;
 using System.IO;
-using ToolCache.World;
+using System.Threading;
+using System.Windows.Forms;
+using CityTools.Core;
+using CityTools.ObjectSystem;
+using CityTools.Terrain;
+using ToolCache.Drawing;
+using ToolCache.Map;
+using ToolCache.Map.Tiles;
 
 namespace CityTools.CacheInterfaces {
     /// <summary>
@@ -59,8 +55,11 @@ namespace CityTools.CacheInterfaces {
             PortalInterface.UpdatePortalList();
             PortalInterface.UpdateGUI();
 
-            SpawnRegionInterface.UpdateRegionList();
+            SpawnRegionInterface.UpdateSpawnRegionList();
             SpawnRegionInterface.UpdateGUI();
+
+            ScriptRegionInterface.UpdateScriptRegionList();
+            ScriptRegionInterface.UpdateGUI();
 
             //Update the script
             MainWindow.instance.scriptMap.Script = MapPieceCache.CurrentPiece.Script;

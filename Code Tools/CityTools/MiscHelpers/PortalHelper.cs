@@ -1,21 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.Drawing;
+using System.Windows.Forms;
 using CityTools.Core;
-using ToolCache.Map.Objects;
 using ToolCache.Drawing;
 using ToolCache.Map;
-using ToolCache.Map.Tiles;
-using ToolCache.World;
+using ToolCache.Map.Regions;
 
 namespace CityTools.MiscHelpers {
     public class PortalHelper {
         public static Portal selectedPortal;
-
-        public static bool PlacingEntry = true;
         public static bool DoingSomething = false;
 
         public static List<Portal> DrawList = new List<Portal>();
@@ -32,17 +26,12 @@ namespace CityTools.MiscHelpers {
                 p0.Y = (int)(e.Location.Y / Camera.ZoomLevel + Camera.ViewArea.Top);
                 p1 = p0;
 
-                if (!PlacingEntry) {
-                    selectedPortal.ExitPoint = p0;
-                    MapPieceCache.CurrentPiece.Edited();
-                } else {
-                    DoingSomething = true;
-                }
+                DoingSomething = true;
             }
         }
 
         public static void MouseUp(MouseEventArgs e) {
-            if (DoingSomething && PlacingEntry && selectedPortal != null) {
+            if (DoingSomething && selectedPortal != null) {
                 Point p0a = new Point(Math.Min(p0.X, p1.X), Math.Min(p0.Y, p1.Y));
                 Point p1a = new Point(Math.Max(p0.X, p1.X), Math.Max(p0.Y, p1.Y));
 
@@ -83,10 +72,6 @@ namespace CityTools.MiscHelpers {
                 int h = p.EntrySize.Height;
 
                 buffer.gfx.DrawRectangle(Pens.Fuchsia, x, y, w, h);
-
-                x = (int)((p.ExitPoint.X - Camera.ViewArea.Left) * Camera.ZoomLevel);
-                y = (int)((p.ExitPoint.Y - Camera.ViewArea.Top) * Camera.ZoomLevel);
-                buffer.gfx.FillEllipse(Brushes.CornflowerBlue, x - 10, y - 5, 20, 10);
             }
         }
     }

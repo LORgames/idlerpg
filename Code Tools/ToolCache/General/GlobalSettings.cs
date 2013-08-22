@@ -14,6 +14,7 @@ namespace ToolCache.General {
         public static bool enableTiles = true;
         public static int tileSize = 48;
         public static bool disableCharacter = false;
+        public static int targetGameFPS = 20;
 
         internal static void Initialize() {
             if (File.Exists(DATABASE + FILENAME)) {
@@ -34,6 +35,7 @@ namespace ToolCache.General {
                         case "enabletiles": enableTiles = (variableProperty == "True"); break;
                         case "tilesize": tileSize = int.Parse(variableProperty); break;
                         case "disablecharacter": disableCharacter = (variableProperty == "True"); break;
+                        case "targetGameFPS": targetGameFPS = int.Parse(variableProperty); break;
                         default:
                             MessageBox.Show("Unknown variable '" + variableName + "' in global settings");
                             break;
@@ -48,6 +50,7 @@ namespace ToolCache.General {
             lines.Add("enabletiles=" + enableTiles.ToString());
             lines.Add("tilesize=" + tileSize);
             lines.Add("disablecharacter=" + disableCharacter.ToString());
+            lines.Add("targetGameFPS=" + targetGameFPS.ToString());
 
             File.WriteAllLines(DATABASE + FILENAME, lines);
         }

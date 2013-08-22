@@ -10,8 +10,6 @@ package Game.Map.Portals
 	 */
 	public class Portal {
 		public var Entry:Rect;
-		public var ExitPoint:Point = new Point();
-		
 		public var ID:int;
 		public var ExitID:int;
 		
@@ -24,11 +22,7 @@ package Game.Map.Portals
 			ID = b.readShort();
 			ExitID = b.readShort();
 			
-			//read entry
-			ExitPoint.x = b.readShort();
-			ExitPoint.y = b.readShort();
-			
-			//read exit
+			//read entrty
 			Entry.X = b.readShort();
 			Entry.Y = b.readShort();
 			Entry.W = b.readShort();
@@ -37,7 +31,6 @@ package Game.Map.Portals
 		
 		public function CleanUp():void {
 			Entry = null;
-			ExitPoint = null;
 			MapName = 0;
 		}
 		

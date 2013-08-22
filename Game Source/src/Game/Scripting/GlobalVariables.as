@@ -6,7 +6,6 @@ package Game.Scripting {
 	 * @author Paul
 	 */
 	public class GlobalVariables {
-		
 		public static var Variables:Vector.<int>;
 		public static var Strings:Vector.<String>;
 		
@@ -36,7 +35,5 @@ package Game.Scripting {
 			
 			Global.LoadingTotal--;
 		}
-		
 	}
-
 }

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using ToolCache.General;
 using ToolCache.Map.Objects;
-using ToolCache.World;
 using ToolCache.Map.Regions;
 
 namespace ToolCache.Map.Tiles {
@@ -115,6 +114,10 @@ namespace ToolCache.Map.Tiles {
             }
 
             foreach (SpawnRegion o in Map.Spawns) {
+                o.Move(offsetX, offsetY);
+            }
+
+            foreach (ScriptRegion o in Map.ScriptRegions) {
                 o.Move(offsetX, offsetY);
             }
 

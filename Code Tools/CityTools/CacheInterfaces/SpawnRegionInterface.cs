@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ToolCache.World;
 using ToolCache.Map;
 using CityTools.ObjectSystem;
 using ToolCache.Map.Regions;
@@ -17,17 +16,17 @@ namespace CityTools.CacheInterfaces {
         /// Hooks into the GUI and sets up all the event handlers
         /// </summary>
         internal static void Initialize() {
-            MainWindow.instance.btnAddRegion.Click += new EventHandler(btnAddRegion_Click);
-            MainWindow.instance.btnDeleteRegion.Click += new EventHandler(btnDeleteRegions_Click);
+            MainWindow.instance.btnSpawnAdd.Click += new EventHandler(btnAddRegion_Click);
+            MainWindow.instance.btnSpawnDelete.Click += new EventHandler(btnDeleteRegions_Click);
 
-            MainWindow.instance.listRegions.SelectedIndexChanged += new EventHandler(listRegions_SelectedIndexChanged);
-            MainWindow.instance.cbDrawRegions.CheckedChanged += new EventHandler(ckDrawRegions_CheckedChanged);
+            MainWindow.instance.listSpawns.SelectedIndexChanged += new EventHandler(listRegions_SelectedIndexChanged);
+            MainWindow.instance.ckbDrawSpawns.CheckedChanged += new EventHandler(ckDrawRegions_CheckedChanged);
 
-            MainWindow.instance.txtRegionName.TextChanged += new EventHandler(txtRegionName_TextChanged);
-            MainWindow.instance.txtRegionName.LostFocus += new EventHandler(txtRegionName_LostFocus);
+            MainWindow.instance.txtSpawnName.TextChanged += new EventHandler(txtRegionName_TextChanged);
+            MainWindow.instance.txtSpawnName.LostFocus += new EventHandler(txtRegionName_LostFocus);
 
-            MainWindow.instance.btnRegionResize.Click += new EventHandler(btnRegionResize_Click);
-            MainWindow.instance.btnSpawnRegionClearAreas.Click += new EventHandler(btnSpawnRegionClearAreas_Click);
+            MainWindow.instance.btnSpawnAreaAdd.Click += new EventHandler(btnSpawnAreaAdd_Click);
+            MainWindow.instance.btnSpawnAreaClear.Click += new EventHandler(btnSpawnRegionClearAreas_Click);
 
             MainWindow.instance.numSpawnTimer.ValueChanged += new EventHandler(numValueChanged);
             MainWindow.instance.numSpawnLoad.ValueChanged += new EventHandler(numValueChanged);
@@ -40,14 +39,16 @@ namespace CityTools.CacheInterfaces {
         /// <param name="sender">Not Important, Can be null.</param>
         /// <param name="e">Not Important, Can be null.</param>
         static void numValueChanged(object sender, EventArgs e) {
-            if (MainWindow.instance.listRegions.SelectedItem != null) {
+            if (MainWindow.instance.listSpawns.SelectedItem != null) {
                 if (sender == MainWindow.instance.numSpawnTimer) {
-                    (MainWindow.instance.listRegions.SelectedItem as SpawnRegion).Timeout = (short)MainWindow.instance.numSpawnTimer.Value;
+                    (MainWindow.instance.listSpawns.SelectedItem as SpawnRegion).Timeout = (short)MainWindow.instance.numSpawnTimer.Value;
                 } else if (sender == MainWindow.instance.numSpawnLoad) {
-                    (MainWindow.instance.listRegions.SelectedItem as SpawnRegion).SpawnOnLoad = (byte)MainWindow.instance.numSpawnLoad.Value;
+                    (MainWindow.instance.listSpawns.SelectedItem as SpawnRegion).SpawnOnLoad = (byte)MainWindow.instance.numSpawnLoad.Value;
                 } else if (sender == MainWindow.instance.numSpawnMax) {
-                    (MainWindow.instance.listRegions.SelectedItem as SpawnRegion).MaxSpawn = (byte)MainWindow.instance.numSpawnMax.Value;
+                    (MainWindow.instance.listSpawns.SelectedItem as SpawnRegion).MaxSpawn = (byte)MainWindow.instance.numSpawnMax.Value;
                 }
+
+                MapPieceCache.CurrentPiece.Edited();
             }
         }
 
@@ -55,23 +56,25 @@ namespace CityTools.CacheInterfaces {
         /// Updates all of the Spawn related GUI
         /// </summary>
         internal static void UpdateGUI() {
-            if (MainWindow.instance.listRegions.SelectedItems.Count != 1) {
-                MainWindow.instance.txtRegionName.Enabled = false;
-                MainWindow.instance.btnRegionResize.Enabled = false;
+            if (MainWindow.instance.listSpawns.SelectedItems.Count != 1) {
+                MainWindow.instance.txtSpawnName.Enabled = false;
+                MainWindow.instance.btnSpawnAreaAdd.Enabled = false;
+                MainWindow.instance.btnSpawnAreaClear.Enabled = false;
                 MainWindow.instance.numSpawnLoad.Enabled = false;
                 MainWindow.instance.numSpawnMax.Enabled = false;
                 MainWindow.instance.numSpawnTimer.Enabled = false;
             } else {
-                MainWindow.instance.txtRegionName.Enabled = true;
-                MainWindow.instance.btnRegionResize.Enabled = true;
+                MainWindow.instance.txtSpawnName.Enabled = true;
+                MainWindow.instance.btnSpawnAreaAdd.Enabled = true;
+                MainWindow.instance.btnSpawnAreaClear.Enabled = true;
                 MainWindow.instance.numSpawnLoad.Enabled = true;
                 MainWindow.instance.numSpawnMax.Enabled = true;
                 MainWindow.instance.numSpawnTimer.Enabled = true;
 
-                MainWindow.instance.txtRegionName.Text = (MainWindow.instance.listRegions.SelectedItem as SpawnRegion).Name;
-                MainWindow.instance.numSpawnLoad.Value = (MainWindow.instance.listRegions.SelectedItem as SpawnRegion).SpawnOnLoad;
-                MainWindow.instance.numSpawnMax.Value = (MainWindow.instance.listRegions.SelectedItem as SpawnRegion).MaxSpawn;
-                MainWindow.instance.numSpawnTimer.Value = (MainWindow.instance.listRegions.SelectedItem as SpawnRegion).Timeout;
+                MainWindow.instance.txtSpawnName.Text = (MainWindow.instance.listSpawns.SelectedItem as SpawnRegion).Name;
+                MainWindow.instance.numSpawnLoad.Value = (MainWindow.instance.listSpawns.SelectedItem as SpawnRegion).SpawnOnLoad;
+                MainWindow.instance.numSpawnMax.Value = (MainWindow.instance.listSpawns.SelectedItem as SpawnRegion).MaxSpawn;
+                MainWindow.instance.numSpawnTimer.Value = (MainWindow.instance.listSpawns.SelectedItem as SpawnRegion).Timeout;
 
                 UpdateSpawnList();
             }
@@ -81,11 +84,11 @@ namespace CityTools.CacheInterfaces {
         /// Updates the critter list for the current selected spawn region.
         /// </summary>
         private static void UpdateSpawnList() {
-            MainWindow.instance.listCritterSpawns.Items.Clear();
+            MainWindow.instance.listSpawnCritters.Items.Clear();
 
-            if (MainWindow.instance.listRegions.SelectedItems.Count == 1) {
-                foreach (CritterSpawn spawn in (MainWindow.instance.listRegions.SelectedItem as SpawnRegion).SpawnList) {
-                    MainWindow.instance.listCritterSpawns.Items.Add(spawn.GetListViewItem());
+            if (MainWindow.instance.listSpawns.SelectedItems.Count == 1) {
+                foreach (CritterSpawn spawn in (MainWindow.instance.listSpawns.SelectedItem as SpawnRegion).SpawnList) {
+                    MainWindow.instance.listSpawnCritters.Items.Add(spawn.GetListViewItem());
                 }
             }
         }
@@ -93,12 +96,12 @@ namespace CityTools.CacheInterfaces {
         /// <summary>
         /// Updates the list of spawn areas on the map editor panel.
         /// </summary>
-        internal static void UpdateRegionList() {
+        internal static void UpdateSpawnRegionList() {
             //Fix the region list
-            MainWindow.instance.listRegions.Items.Clear();
+            MainWindow.instance.listSpawns.Items.Clear();
 
             foreach (SpawnRegion p in MapPieceCache.CurrentPiece.Spawns) {
-                MainWindow.instance.listRegions.Items.Add(p);
+                MainWindow.instance.listSpawns.Items.Add(p);
             }
 
             UpdateRegionDrawList();
@@ -108,15 +111,25 @@ namespace CityTools.CacheInterfaces {
         /// <summary>
         /// 
         /// </summary>
-        private static void UpdateRegionDrawList() {
+        internal static void UpdateRegionDrawList() {
             RegionHelper.DrawList.Clear();
 
-            if (MainWindow.instance.cbDrawRegions.Checked) {
+            if (MainWindow.instance.ckbDrawSpawns.Checked) {
                 RegionHelper.DrawList.AddRange(MapPieceCache.CurrentPiece.Spawns);
             } else {
-                foreach (object p in MainWindow.instance.listRegions.SelectedItems) {
+                foreach (object p in MainWindow.instance.listSpawns.SelectedItems) {
                     if (p is SpawnRegion) {
                         RegionHelper.DrawList.Add(p as SpawnRegion);
+                    }
+                }
+            }
+
+            if (MainWindow.instance.ckbDrawScriptRegions.Checked) {
+                RegionHelper.DrawList.AddRange(MapPieceCache.CurrentPiece.ScriptRegions);
+            } else {
+                foreach (object p in MainWindow.instance.listScriptRegions.SelectedItems) {
+                    if (p is ScriptRegion) {
+                        RegionHelper.DrawList.Add(p as ScriptRegion);
                     }
                 }
             }
@@ -128,9 +141,9 @@ namespace CityTools.CacheInterfaces {
         /// <param name="sender">Not Important, Can be null.</param>
         /// <param name="e">Not Important, Can be null.</param>
         private static void listRegions_SelectedIndexChanged(object sender, EventArgs e) {
-            if (MainWindow.instance.listRegions.SelectedItems.Count == 1) {
-                (MainWindow.instance.listRegions.SelectedItems[0] as SpawnRegion).FixSpawnRates();
-                RegionHelper.selectedRegion = MainWindow.instance.listRegions.SelectedItems[0] as SpawnRegion;
+            if (MainWindow.instance.listSpawns.SelectedItems.Count == 1) {
+                (MainWindow.instance.listSpawns.SelectedItems[0] as SpawnRegion).FixSpawnRates();
+                RegionHelper.selectedRegion = MainWindow.instance.listSpawns.SelectedItems[0] as SpawnRegion;
             }
 
             UpdateGUI();
@@ -143,9 +156,9 @@ namespace CityTools.CacheInterfaces {
         /// <param name="sender">Not Important, Can be null.</param>
         /// <param name="e">Not Important, Can be null.</param>
         private static void txtRegionName_TextChanged(object sender, EventArgs e) {
-            if (MainWindow.instance.listRegions.SelectedItems.Count == 1) {
-                if ((MainWindow.instance.listRegions.SelectedItem as SpawnRegion).Name != MainWindow.instance.txtRegionName.Text) {
-                    (MainWindow.instance.listRegions.SelectedItem as SpawnRegion).Name = MainWindow.instance.txtRegionName.Text;
+            if (MainWindow.instance.listSpawns.SelectedItems.Count == 1) {
+                if ((MainWindow.instance.listSpawns.SelectedItem as SpawnRegion).Name != MainWindow.instance.txtSpawnName.Text) {
+                    (MainWindow.instance.listSpawns.SelectedItem as SpawnRegion).Name = MainWindow.instance.txtSpawnName.Text;
                     MapPieceCache.CurrentPiece.Edited();
                 }
             }
@@ -157,7 +170,7 @@ namespace CityTools.CacheInterfaces {
         /// <param name="sender">Not Important, Can be null.</param>
         /// <param name="e">Not Important, Can be null.</param>
         private static void txtRegionName_LostFocus(object sender, EventArgs e) {
-            UpdateRegionList();
+            UpdateSpawnRegionList();
         }
 
 
@@ -166,10 +179,10 @@ namespace CityTools.CacheInterfaces {
         /// </summary>
         /// <param name="sender">Not Important, Can be null.</param>
         /// <param name="e">Not Important, Can be null.</param>
-        private static void btnRegionResize_Click(object sender, EventArgs e) {
-            if(MainWindow.instance.listRegions.SelectedItem != null) {
+        private static void btnSpawnAreaAdd_Click(object sender, EventArgs e) {
+            if(MainWindow.instance.listSpawns.SelectedItem != null) {
                 MainWindow.instance.paintMode = PaintMode.Regions;
-                RegionHelper.selectedRegion = (MainWindow.instance.listRegions.SelectedItem as SpawnRegion);
+                RegionHelper.selectedRegion = (MainWindow.instance.listSpawns.SelectedItem as SpawnRegion);
             }
         }
 
@@ -179,8 +192,8 @@ namespace CityTools.CacheInterfaces {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         static void btnSpawnRegionClearAreas_Click(object sender, EventArgs e) {
-            if (MainWindow.instance.listRegions.SelectedItem != null) {
-                (MainWindow.instance.listRegions.SelectedItem as SpawnRegion).Areas.Clear();
+            if (MainWindow.instance.listSpawns.SelectedItem != null) {
+                (MainWindow.instance.listSpawns.SelectedItem as SpawnRegion).Areas.Clear();
                 MapPieceCache.CurrentPiece.Edited();
             }
         }
@@ -193,7 +206,7 @@ namespace CityTools.CacheInterfaces {
         private static void btnAddRegion_Click(object sender, EventArgs e) {
             MapPieceCache.CurrentPiece.Spawns.Add(new SpawnRegion());
             MapPieceCache.CurrentPiece.Edited();
-            UpdateRegionList();
+            UpdateSpawnRegionList();
         }
 
         /// <summary>
@@ -204,7 +217,7 @@ namespace CityTools.CacheInterfaces {
         private static void btnDeleteRegions_Click(object sender, EventArgs e) {
             int totalItems = MapPieceCache.CurrentPiece.Spawns.Count;
 
-            foreach (Object item in MainWindow.instance.listRegions.SelectedItems) {
+            foreach (Object item in MainWindow.instance.listSpawns.SelectedItems) {
                 if (item is SpawnRegion) {
                     MapPieceCache.CurrentPiece.Spawns.Remove(item as SpawnRegion);
                 }
@@ -214,7 +227,7 @@ namespace CityTools.CacheInterfaces {
                 MapPieceCache.CurrentPiece.Edited();
             }
 
-            UpdateRegionList();
+            UpdateSpawnRegionList();
         }
 
         /// <summary>

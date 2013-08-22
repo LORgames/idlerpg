@@ -78,11 +78,13 @@ package Game.Critter {
 			
 			newMap.CritterPush(this);
 			
-			this.X = portal.ExitPoint.x;
-			this.Y = portal.ExitPoint.y;
+			this.X = portal.Entry.X;
+			this.Y = portal.Entry.Y;
 			
 			Update(0);
-			Global.DisablePortals = false;
+			
+			//TODO: Portals need to get disabled when you step off one
+			//Global.DisablePortals = false;
 		}
 		
 		public function RequestInMapTeleport():void {

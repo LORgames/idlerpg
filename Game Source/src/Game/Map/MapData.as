@@ -36,6 +36,7 @@ package Game.Map {
 		public var TotalObjects:int = 0;
 		public var Objects:Vector.<ObjectInstance>;
 		public var Spawns:Vector.<SpawnRegion>;
+		public var ScriptRegions:Vector.<ScriptRegion>;
 		
 		public var Portals:Vector.<Portal>;
 		public var Critters:Vector.<BaseCritter> = new Vector.<BaseCritter>();
@@ -132,9 +133,16 @@ package Game.Map {
 			
 			//Spawn things
 			TotalObjects = b.readByte();
-			Spawns = new Vector.<SpawnRegion>(TotalObjects);
+			Spawns = new Vector.<SpawnRegion>(TotalObjects, true);
 			while (--TotalObjects > -1) {
 				Spawns[TotalObjects] = SpawnRegion.LoadFromBinary(this, b);
+			}
+			
+			//Script regions
+			TotalObjects = b.readByte();
+			ScriptRegions = new Vector.<ScriptRegion>(TotalObjects, true);
+			while (--TotalObjects > -1) {
+				ScriptRegions[TotalObjects] = ScriptRegion.LoadFromBinary(this, b);
 			}
 			
 			Global.LoadingTotal--;
@@ -150,8 +158,6 @@ package Game.Map {
 					WorldData.ME.ShiftMaps(this, 281);
 				}
 			}
-			
-			//Main.I.Renderer.FadeToWorld();
 		}
 		
 		public function GetObjectsInArea(rect:Rect, objects:Vector.<IMapObject>, type:int = 0xA004, scanner:Object = null):void {

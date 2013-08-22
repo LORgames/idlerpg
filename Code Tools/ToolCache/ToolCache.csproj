@@ -65,6 +65,8 @@
     <Compile Include="General\DictionaryEx.cs" />
     <Compile Include="General\ImageCache.cs" />
     <Compile Include="General\GlobalSettings.cs" />
+    <Compile Include="Map\Regions\RegionBase.cs" />
+    <Compile Include="Map\Regions\ScriptRegion.cs" />
     <Compile Include="NPC\Portrait.cs" />
     <Compile Include="NPC\PortraitManager.cs" />
     <Compile Include="SaveSystem\SaveInfo.cs" />
@@ -106,7 +108,7 @@
     <Compile Include="UI\UILayer.cs" />
     <Compile Include="UI\UIManager.cs" />
     <Compile Include="UI\UIPanel.cs" />
-    <Compile Include="World\Portal.cs" />
+    <Compile Include="Map\Regions\Portal.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

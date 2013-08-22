@@ -112,13 +112,11 @@ package Game.Map.Objects {
 			
 			CurrentFrame = StartFrame;
 			
-			if(bitmapCopy != null) {
-				FrameSize.x = (int)(CurrentFrame % SpriteColumns) * FrameSize.width;
-				FrameSize.y = (int)(CurrentFrame / SpriteColumns) * FrameSize.height;
-				
-				if(SpriteAtlas != null) {
-					bitmapCopy.copyPixels(SpriteAtlas, FrameSize, Global.ZeroPoint);
-				}
+			FrameSize.x = (int)(CurrentFrame % SpriteColumns) * FrameSize.width;
+			FrameSize.y = (int)(CurrentFrame / SpriteColumns) * FrameSize.height;
+			
+			if (SpriteAtlas != null) {
+				bitmapCopy.copyPixels(SpriteAtlas, FrameSize, Global.ZeroPoint);
 			}
 			
 			UpdateAnimationState();

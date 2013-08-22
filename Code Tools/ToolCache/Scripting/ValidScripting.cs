@@ -15,13 +15,15 @@ namespace ToolCache.Scripting {
         Attacked = 0x0002,
         Use = 0x0003,
         Equip = 0x0004,
+        OnEnter = 0x0004,
         MinionDied = 0x0005,
         AnimationEnded = 0x0006,
+        OnExit = 0x0006,
         StartMoving = 0x0007,
         EndMoving = 0x0008,
         Died = 0x0009,
         Update = 0x000A,
-        Trigger = 0x000B
+        OnTrigger = 0x000B
     }
 
     /// <summary>
@@ -33,7 +35,10 @@ namespace ToolCache.Scripting {
         Object = 0xA002,
         Ally = 0xA003,
         NotCritter = 0xA005,
-        NotMe = 0xA006
+        NotMe = 0xA006,
+        Effect = 0xA007,
+        NotEffect = 0xA008,
+        NotObject = 0xA009
     }
 
     public struct ScriptVariable {

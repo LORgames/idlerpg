@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using ToolCache.Map;
-using ToolCache.Drawing;
-using CityTools.Core;
-using ToolCache.World;
 using CityTools.Properties;
+using ToolCache.Drawing;
+using ToolCache.Map;
+using ToolCache.Map.Regions;
 
 namespace CityTools {
     internal enum WorldEditMode {
@@ -65,12 +60,12 @@ namespace CityTools {
             // draw all the portals in the map pieces
             foreach (Portal portal0 in Portals.Data.Values) {
                 if (portal0.ExitID > 0 && portal0.ExitID != portal0.ID && Portals.Data.ContainsKey(portal0.ExitID)) {
-                    int x1 = portal0.Map.WorldPosition.X + portal0.ExitPoint.X / 10 + Offset.X;
-                    int y1 = portal0.Map.WorldPosition.Y + portal0.ExitPoint.Y / 10 + Offset.Y;
+                    int x1 = portal0.Map.WorldPosition.X + (portal0.EntryPoint.X+portal0.EntrySize.Width/2) / 10 + Offset.X;
+                    int y1 = portal0.Map.WorldPosition.Y + (portal0.EntryPoint.Y+portal0.EntrySize.Height/2) / 10 + Offset.Y;
 
                     Portal portal1 = Portals.Data[portal0.ExitID];
-                    int x2 = portal1.Map.WorldPosition.X + portal1.ExitPoint.X / 10 + Offset.X;
-                    int y2 = portal1.Map.WorldPosition.Y + portal1.ExitPoint.Y / 10 + Offset.Y;
+                    int x2 = portal1.Map.WorldPosition.X + (portal1.EntryPoint.X + portal1.EntrySize.Width / 2) / 10 + Offset.X;
+                    int y2 = portal1.Map.WorldPosition.Y + (portal1.EntryPoint.Y + portal1.EntrySize.Height / 2) / 10 + Offset.Y;
 
                     if (portal1.ExitID == portal0.ID) {
                         buffer.gfx.DrawLine(PortalPen_TwoWay, x1, y1, x2, y2);
@@ -139,8 +134,8 @@ namespace CityTools {
             foreach (WorldData d in Data) {
                 if (d.rect.Contains(_p)) {
                     foreach (Portal p in d.myPiece.Portals) {
-                        r.X = p.ExitPoint.X / 10 + d.rect.X + Offset.X - 8;
-                        r.Y = p.ExitPoint.Y / 10 + d.rect.Y + Offset.Y - 8;
+                        r.X = (p.EntryPoint.X+p.EntrySize.Width/2) / 10 + d.rect.X + Offset.X - 8;
+                        r.Y = (p.EntryPoint.Y+p.EntrySize.Height/2) / 10 + d.rect.Y + Offset.Y - 8;
 
                         if (r.Contains(e.Location)) {
                             return p;
@@ -170,8 +165,8 @@ namespace CityTools {
 
                     // scan for portal
                     foreach (Portal p in d.myPiece.Portals) {
-                        r.X = p.ExitPoint.X / 10 + d.rect.X + Offset.X - 8;
-                        r.Y = p.ExitPoint.Y / 10 + d.rect.Y + Offset.Y - 8;
+                        r.X = (p.EntryPoint.X + p.EntrySize.Width / 2) / 10 + d.rect.X + Offset.X - 8;
+                        r.Y = (p.EntryPoint.Y + p.EntrySize.Height / 2) / 10 + d.rect.Y + Offset.Y - 8;
 
                         if (r.Contains(e.Location)) {
                             selectedPortal = p;
@@ -295,6 +290,8 @@ namespace CityTools {
             if (!piece.isLoaded) {
                 piece.Load(true);
             }
+
+            piece.Save();
         }
 
         public void Draw(LBuffer buffer, Point offset) {
@@ -307,8 +304,11 @@ namespace CityTools {
             buffer.gfx.DrawRectangle(Pens.Black, ScrolledAABB);
 
             foreach(Portal p in myPiece.Portals) {
-                PortalRect.X = p.ExitPoint.X/10 + rect.X + offset.X - 8;
-                PortalRect.Y = p.ExitPoint.Y/10 + rect.Y + offset.Y - 8;
+                //PortalRect.X = p.EntryPoint.X / 10 + rect.X + offset.X;
+                //PortalRect.Y = p.EntryPoint.Y / 10 + rect.Y + offset.Y;
+
+                PortalRect.X = (p.EntryPoint.X + p.EntrySize.Width / 2) / 10 + rect.X + offset.X - 8;
+                PortalRect.Y = (p.EntryPoint.Y + p.EntrySize.Height / 2) / 10 + rect.Y + offset.Y - 8;
 
                 buffer.gfx.DrawImage(portalIcon, PortalRect);
             }

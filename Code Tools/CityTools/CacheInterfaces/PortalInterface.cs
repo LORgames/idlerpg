@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ToolCache.World;
-using ToolCache.Map;
-using CityTools.ObjectSystem;
 using CityTools.MiscHelpers;
+using ToolCache.Map;
+using ToolCache.Map.Regions;
 
 namespace CityTools.CacheInterfaces {
     /// <summary>
@@ -16,8 +12,8 @@ namespace CityTools.CacheInterfaces {
         /// Creates any GUI hooks that might be required and loads any additional databases.
         /// </summary>
         internal static void Initialize() {
-            MainWindow.instance.btnAddPortal.Click += new EventHandler(btnAddPortal_Click);
-            MainWindow.instance.btnDeletePortals.Click += new EventHandler(btnDeletePortals_Click);
+            MainWindow.instance.btnPortalAdd.Click += new EventHandler(btnAddPortal_Click);
+            MainWindow.instance.btnPortalDelete.Click += new EventHandler(btnDeletePortals_Click);
 
             MainWindow.instance.listPortals.SelectedIndexChanged += new EventHandler(listPortals_SelectedIndexChanged);
             MainWindow.instance.ckbDrawPortals.CheckedChanged += new EventHandler(ckbShowPortals_CheckedChanged);
@@ -26,7 +22,6 @@ namespace CityTools.CacheInterfaces {
             MainWindow.instance.txtPortalName.LostFocus += new EventHandler(txtPortalName_LostFocus);
 
             MainWindow.instance.btnPortalEntry.Click += new EventHandler(btnPortalEntry_Click);
-            MainWindow.instance.btnPortalExit.Click += new EventHandler(btnPortalExit_Click);
         }
 
         /// <summary>
@@ -36,11 +31,9 @@ namespace CityTools.CacheInterfaces {
             if (MainWindow.instance.listPortals.SelectedItems.Count != 1) {
                 MainWindow.instance.txtPortalName.Enabled = false;
                 MainWindow.instance.btnPortalEntry.Enabled = false;
-                MainWindow.instance.btnPortalExit.Enabled = false;
             } else {
                 MainWindow.instance.txtPortalName.Enabled = true;
                 MainWindow.instance.btnPortalEntry.Enabled = true;
-                MainWindow.instance.btnPortalExit.Enabled = true;
 
                 MainWindow.instance.txtPortalName.Text = (MainWindow.instance.listPortals.SelectedItem as Portal).Name;
             }
@@ -118,23 +111,12 @@ namespace CityTools.CacheInterfaces {
         }
 
         /// <summary>
-        /// Pretty obvious...
-        /// </summary>
-        /// <param name="sender">Not important, can be null.</param>
-        /// <param name="e">Not important, can be null.</param>
-        private static void btnPortalExit_Click(object sender, EventArgs e) {
-            MainWindow.instance.paintMode = PaintMode.Portals;
-            PortalHelper.PlacingEntry = false;
-        }
-
-        /// <summary>
         /// Comments are stupid...
         /// </summary>
         /// <param name="sender">Not important, can be null.</param>
         /// <param name="e">Not important, can be null.</param>
         private static void btnPortalEntry_Click(object sender, EventArgs e) {
             MainWindow.instance.paintMode = PaintMode.Portals;
-            PortalHelper.PlacingEntry = true;
         }
 
         /// <summary>

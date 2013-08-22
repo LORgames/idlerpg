@@ -5,9 +5,9 @@ using System.Text;
 using ToolCache.Map;
 using ToolCache.General;
 using ToolCache.Map.Objects;
-using ToolCache.World;
 using ToolCache.Map.Regions;
 using System.Drawing;
+using ToolCache.Scripting;
 
 namespace ToolToGameExporter {
     internal class MapCrusher {
@@ -31,7 +31,6 @@ namespace ToolToGameExporter {
                     f.AddShort(SoundCrusher.MusicConversions[map.Music]);
                 } else {
                     f.AddShort(0);
-
                     if (map.Music != "") Processor.Errors.Add(new ProcessingError("Map", map.Name, "Music (" + map.Music + ") doesn't exist."));
                 }
 
@@ -43,8 +42,6 @@ namespace ToolToGameExporter {
 
                     f.AddShort(PortalCrusher.RemappedPortalIDs[p.ID]);
                     f.AddShort(PortalCrusher.RemappedPortalIDs[p.ExitID]);
-                    f.AddShort((short)p.ExitPoint.X);
-                    f.AddShort((short)p.ExitPoint.Y);
                     f.AddShort((short)p.EntryPoint.X);
                     f.AddShort((short)p.EntryPoint.Y);
                     f.AddShort((short)p.EntrySize.Width);
@@ -91,7 +88,7 @@ namespace ToolToGameExporter {
                     f.AddShort((short)sr.Timeout);
 
                     // Rectangles
-                    if (sr.Areas.Count > 255) Processor.Errors.Add(new ProcessingError("Map", map.Name + ":Spawn Zones", "Can only have upto 255 zones per spawn. Surpassed in " + sr.Name));
+                    if (sr.Areas.Count > 255) Processor.Errors.Add(new ProcessingError("Map", map.Name + ":Spawns:Zones", "Can only have upto 255 zones per spawn. Surpassed in " + sr.Name));
                     f.AddByte((byte)sr.Areas.Count); // How many rectangles we have
 
                     // Rectangle0 (needs to be extended)
@@ -103,13 +100,36 @@ namespace ToolToGameExporter {
                     }
                     
                     // Add what critters are here and what percents
-                    if (sr.SpawnList.Count > 255) Processor.Errors.Add(new ProcessingError("Map", map.Name + ":Spawn List", "Can only have upto 255 critters in the spawn list. Surpassed in " + sr.Name));
+                    if (sr.SpawnList.Count > 255) Processor.Errors.Add(new ProcessingError("Map", map.Name + ":Spawns:Critters", "Can only have upto 255 critters in the spawn list. Surpassed in " + sr.Name));
                     f.AddByte((byte)sr.SpawnList.Count);
 
                     foreach (CritterSpawn cs in sr.SpawnList) {
                         f.AddShort(CritterCrusher.RemappedCritterIDs[cs.critterID]);
                         f.AddByte((byte)(cs.spawnChance/100.0f * 255));
                     }
+                }
+
+                //Script Regions
+                if (map.ScriptRegions.Count > 255) Processor.Errors.Add(new ProcessingError("Map", map.Name + ":ScriptRegions", "Can only have upto 255 ScriptRegions per map."));
+                f.AddByte((byte)map.ScriptRegions.Count);
+
+                for (int i = 0; i < map.ScriptRegions.Count; i++) {
+                    ScriptRegion sr = map.ScriptRegions[i];
+
+                    // Rectangles
+                    if (sr.Areas.Count > 255) Processor.Errors.Add(new ProcessingError("Map", map.Name + ":ScriptRegion:Zones", "Can only have upto 255 zones per ScriptRegion. Surpassed in " + sr.Name));
+                    f.AddByte((byte)sr.Areas.Count); // How many rectangles we have
+
+                    // Rectangle0 (needs to be extended)
+                    foreach (Rectangle Area in sr.Areas) {
+                        f.AddShort((short)Area.Left);
+                        f.AddShort((short)Area.Top);
+                        f.AddShort((short)Area.Width);
+                        f.AddShort((short)Area.Height);
+                    }
+
+                    ScriptInfo info = new ScriptInfo("Map."+map.Name+":ScriptRegion."+sr.Name, ScriptTypes.Region);
+                    ScriptCrusher.ProcessScript(info, sr.Script, f);
                 }
 
                 f.Encode(Global.EXPORT_DIRECTORY + "/Map_" + map.Name + ".bin");

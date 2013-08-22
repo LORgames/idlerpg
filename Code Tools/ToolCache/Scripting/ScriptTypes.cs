@@ -14,6 +14,7 @@ namespace ToolCache.Scripting {
         Item,
         Equipment,
         Object,
-        Effect
+        Effect,
+        Region
     }
 }

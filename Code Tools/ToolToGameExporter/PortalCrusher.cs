@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ToolCache.World;
+using ToolCache.Map.Regions;
 
 namespace ToolToGameExporter {
     internal class PortalCrusher {

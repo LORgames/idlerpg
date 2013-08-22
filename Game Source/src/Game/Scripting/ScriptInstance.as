@@ -25,9 +25,15 @@ package Game.Scripting {
 			if (initialize) {
 				MyScript.Run(Script.Initialize, this);
 			}
+			
 			//Add this to the update scripts thing
 			if (MyScript.EventScripts[Script.Update] != null) {
 				Script.UpdateScripts.push(this);
+			}
+			
+			//Add this to the trigger scripts thing
+			if (MyScript.EventScripts[Script.OnTrigger] != null) {
+				Script.TriggerListeners.push(this);
 			}
 		}
 		
@@ -54,6 +60,11 @@ package Game.Scripting {
 			if (MyScript.EventScripts[Script.Update] != null) {
 				var i:int = Script.UpdateScripts.indexOf(this);
 				if (i > -1) { Script.UpdateScripts.splice(i, 1); }
+			}
+			
+			if (MyScript.EventScripts[Script.OnTrigger] != null) {
+				var i:int = Script.TriggerListeners.indexOf(this);
+				if (i > -1) { Script.TriggerListeners.splice(i, 1); }
 			}
 			
 			MyScript = null;

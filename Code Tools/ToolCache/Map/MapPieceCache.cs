@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 using System.Windows.Forms;
 using ToolCache.Map.Tiles;
-using ToolCache.World;
+using ToolCache.Map.Regions;
 
 namespace ToolCache.Map {
     public class MapPieceCache {

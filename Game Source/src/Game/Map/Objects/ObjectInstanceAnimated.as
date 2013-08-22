@@ -65,6 +65,7 @@ package Game.Map.Objects {
 				isAddedToAnimatedList = true;
 				
 				if (!HasLoaded) {
+					if (this.bitmapData == null) this.bitmapData = new BitmapData(this.Template.FrameSize.width, this.Template.FrameSize.height);
 					this.bitmapData = this.bitmapData.clone();
 					HasLoaded = true;
 				}

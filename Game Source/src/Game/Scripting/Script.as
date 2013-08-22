@@ -1,19 +1,13 @@
 package Game.Scripting {
-	import adobe.utils.CustomActions;
 	import CollisionSystem.PointX;
 	import CollisionSystem.Rect;
 	import Debug.Drawer;
 	import EngineTiming.Clock;
 	import EngineTiming.ICleanUp;
-	import flash.display.Sprite;
-	import flash.geom.PerspectiveProjection;
-	import flash.geom.Point;
-	import flash.geom.Vector3D;
 	import flash.utils.ByteArray;
 	import Game.Critter.BaseCritter;
-	import Game.Critter.CritterAnimationSet;
-	import Game.Critter.CritterManager;
 	import Game.Critter.CritterHuman;
+	import Game.Critter.CritterManager;
 	import Game.Effects.EffectInfo;
 	import Game.Effects.EffectInstance;
 	import Game.Effects.EffectManager;
@@ -23,7 +17,6 @@ package Game.Scripting {
 	import Game.Map.Objects.ObjectTemplate;
 	import Game.Map.WorldData;
 	import Interfaces.IMapObject;
-	import RenderSystem.IObjectLayer;
 	import SoundSystem.EffectsPlayer;
 	/**
 	 * ...
@@ -42,7 +35,8 @@ package Game.Scripting {
 		public static const EndMoving:uint = 8;
 		public static const Died:uint = 9;
 		public static const Update:uint = 10;
-		public static const TOTAL_EVENT_TYPES:uint = 11;
+		public static const OnTrigger:uint = 11;
+		public static const TOTAL_EVENT_TYPES:uint = 12;
 		
 		//SCRIPT TYPES
 		public static const CRITTER:int = 0xA000;
@@ -245,6 +239,8 @@ package Game.Scripting {
 						WorldData.CurrentMap.Objects.push(o);
 						
 						break;
+					case 0x100D: //Fire a trigger
+						Script.FireTrigger(EventScript.readShort()); break;
 					case 0x4001: //Equip item on the target
 						if (info.CurrentTarget is CritterHuman) {
 							(info.CurrentTarget as CritterHuman).Equipment.EquipSlot(EventScript.readShort(), EventScript.readShort());
@@ -331,7 +327,7 @@ package Game.Scripting {
 						case 0xBFFD: //Local variable
 							nextValue = info.Variables[eventScript.readShort()]; break;
 						case 0xBFFE: //Global variable
-							//TODO: Update this when global variables are implemented.
+							nextValue = GlobalVariables.Variables[eventScript.readShort()]; break;
 							break;
 						default:
 							trace("Unknown variable type");
@@ -361,8 +357,8 @@ package Game.Scripting {
 			
 			if (SaveVarType == 0xBFFD) { //Local variable
 				info.Variables[SaveVarID] = runningTally;
-			} else if (SaveVarType == 0xBFFE) {
-				//TODO: Implement this when global variables are added
+			} else if (SaveVarType == 0xBFFE) { //Global variable
+				info.Variables[SaveVarID] = runningTally;
 			}
 		}
 		
@@ -558,10 +554,10 @@ package Game.Scripting {
 			var varType:int = eventScript.readUnsignedShort();
 			var varID:int = eventScript.readShort();
 			
-			if (varType == 0xBFFD) {
+			if (varType == 0xBFFD) { //Local variable
 				return info.Variables[varID];
-			} else if (varType == 0xBFFE) {
-				//TODO: Implement this when global variables are implemented
+			} else if (varType == 0xBFFE) { //Global variable
+				return GlobalVariables.Variables[varID];
 			}
 			
 			return varID; //Hopefully is a static number
@@ -657,6 +653,17 @@ package Game.Scripting {
 		public static function ProcessUpdate():void {
 			for (var i:int = 0; i < UpdateScripts.length; i++) {
 				UpdateScripts[i].Run(Script.Update);
+			}
+		}
+		
+		//This updates all the triggers when a trigger is fired
+		internal static var TriggerListeners:Vector.<ScriptInstance> = new Vector.<ScriptInstance>();
+		public static function FireTrigger(triggerID:int):void {
+			//TODO: Make this actually work properly! (more details follow)
+			//It should be able to support multiple triggers firing at the same time
+			//Some kind of stack system would be ideal.
+			for (var i:int = 0; i < UpdateScripts.length; i++) {
+				TriggerListeners[i].Run(Script.OnTrigger);
 			}
 		}
 	}

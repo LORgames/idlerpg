@@ -91,7 +91,10 @@ namespace CityTools {
             CacheInterfaces.ObjectInterface.Initialize();
             CacheInterfaces.SoundInterface.PopulateList();
             CacheInterfaces.ToolsInterface.Initialize();
+
             CacheInterfaces.SpawnRegionInterface.Initialize();
+            CacheInterfaces.ScriptRegionInterface.Initialize();
+
             CacheInterfaces.SaveInterface.Initialize();
         }
 
@@ -351,7 +354,7 @@ namespace CityTools {
 
         private void listCritterSpawns_SubItemClicked(object sender, SubItemEventArgs e) {
             if (e.SubItem == 1) {
-                listCritterSpawns.StartEditing(numSpawnChance, e.Item, e.SubItem);
+                listSpawnCritters.StartEditing(numSpawnChance, e.Item, e.SubItem);
             }
         }
 
@@ -362,10 +365,10 @@ namespace CityTools {
         }
 
         private void btnNormalizeSpawnRegion_Click(object sender, EventArgs e) {
-            if(MainWindow.instance.listRegions.SelectedItem != null) {
-                if ((MainWindow.instance.listRegions.SelectedItem as SpawnRegion).FixSpawnRates()) {
+            if(MainWindow.instance.listSpawns.SelectedItem != null) {
+                if ((MainWindow.instance.listSpawns.SelectedItem as SpawnRegion).FixSpawnRates()) {
                     //Now we have to update them :(
-                    foreach (ListViewItem lvi in listCritterSpawns.Items) {
+                    foreach (ListViewItem lvi in listSpawnCritters.Items) {
                         if (lvi.Tag is CritterSpawn) {
                             lvi.SubItems[1].Text = (lvi.Tag as CritterSpawn).spawnChance.ToString();
                         }

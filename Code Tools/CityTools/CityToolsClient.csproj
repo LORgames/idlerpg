@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CacheInterfaces\SaveInterface.cs" />
+    <Compile Include="CacheInterfaces\ScriptRegionInterface.cs" />
     <Compile Include="CacheInterfaces\SpawnRegionInterface.cs" />
     <Compile Include="CacheInterfaces\MapInterface.cs" />
     <Compile Include="CacheInterfaces\ObjectInterface.cs" />
@@ -183,6 +184,9 @@
     <Compile Include="ItemEditor.Designer.cs">
       <DependentUpon>ItemEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="MiscHelpers\GIFEncoding\GIFEncoder.cs" />
+    <Compile Include="MiscHelpers\GIFEncoding\NeuQuant.cs" />
+    <Compile Include="MiscHelpers\GIFEncoding\LZWEncoder.cs" />
     <Compile Include="MiscHelpers\PortalHelper.cs" />
     <Compile Include="MiscHelpers\RegionHelper.cs" />
     <Compile Include="ObjectSystem\ScenicPlacementHelper.cs" />

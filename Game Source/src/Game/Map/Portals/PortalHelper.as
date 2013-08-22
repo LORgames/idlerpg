@@ -27,6 +27,7 @@ package Game.Map.Portals {
 				while (--j > -1) {
 					if (CurrentMap.Portals[j].Entry.intersects(MyRect)) {
 						var exitID:int = CurrentMap.Portals[j].ExitID;
+						
 						if (WorldData.ME.CurrentMap.Name == WorldData.PortalDestinations[exitID]) {
 							var k:int = CurrentMap.Portals.length;
 							while (--k > -1) {
@@ -35,8 +36,7 @@ package Game.Map.Portals {
 									Main.I.Renderer.FadeToBlack(WorldData.ME.RequestInMapTeleport, "zaaaappp!");
 									Global.DisablePortals = true;
 								}
-							}
-							break;
+							} break;
 						} else {
 							Global.MapPortalID = exitID;
 							Main.I.Renderer.FadeToBlack(WorldData.UpdatePlayerPosition, WorldData.PortalDestinations[exitID]);

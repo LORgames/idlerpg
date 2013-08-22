@@ -11,11 +11,11 @@ using ToolCache.Drawing;
 
 namespace CityTools.MiscHelpers {
     public class RegionHelper {
-        public static SpawnRegion selectedRegion;
+        public static RegionBase selectedRegion;
 
         public static bool DoingSomething = false;
 
-        public static List<SpawnRegion> DrawList = new List<SpawnRegion>();
+        public static List<RegionBase> DrawList = new List<RegionBase>();
 
         private static Point p0 = Point.Empty;
         private static Point p1 = Point.Empty;
@@ -72,7 +72,7 @@ namespace CityTools.MiscHelpers {
         }
 
         public static void Draw(LBuffer buffer) {
-            foreach (SpawnRegion p in DrawList) {
+            foreach (RegionBase p in DrawList) {
                 foreach (Rectangle Area in p.Areas) {
                     int x = (int)((Area.X - Camera.ViewArea.Left) * Camera.ZoomLevel);
                     int y = (int)((Area.Y - Camera.ViewArea.Top) * Camera.ZoomLevel);

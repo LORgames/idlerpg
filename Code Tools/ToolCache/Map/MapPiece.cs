@@ -8,7 +8,6 @@ using System.IO;
 using ToolCache.General;
 using ToolCache.Map.Objects;
 using ToolCache.Map.Tiles;
-using ToolCache.World;
 using ToolCache.Map.Regions;
 using ToolCache.Map.Background;
 
@@ -29,11 +28,14 @@ namespace ToolCache.Map {
         public string Script = "";
 
         public Point WorldPosition = Point.Empty;
-        public List<Portal> Portals = new List<Portal>();
 
         public List<BaseObject> Objects = new List<BaseObject>();
         public TileMap Tiles;
+
+        //Region informations
+        public List<Portal> Portals = new List<Portal>();
         public List<SpawnRegion> Spawns = new List<SpawnRegion>();
+        public List<ScriptRegion> ScriptRegions = new List<ScriptRegion>();
 
         public Rectangle WorldRectangle;
         public string Music = "";
@@ -61,7 +63,7 @@ namespace ToolCache.Map {
             Portals.Clear();
             short totalPortals = f.GetByte();
             while (--totalPortals > -1) {
-                World.Portals.LoadPortal(this, f);
+                Map.Regions.Portals.LoadPortal(this, f);
             }
 
             //Exit Early
@@ -73,6 +75,7 @@ namespace ToolCache.Map {
             isLoaded = true;
             Objects = new List<BaseObject>();
             Spawns = new List<SpawnRegion>();
+            ScriptRegions = new List<ScriptRegion>();
 
             //First load the terrain
             Tiles.LoadMapFromFile(f);
@@ -107,6 +110,15 @@ namespace ToolCache.Map {
             //Scripting information
             if (!f.IsEndOfFile()) {
                 Script = f.GetString();
+            }
+
+            //Scripting region information
+            if (!f.IsEndOfFile()) {
+                int totalTerritories = f.GetShort();
+
+                while (--totalTerritories > -1) {
+                    ScriptRegions.Add(ScriptRegion.LoadFromBinaryIO(f));
+                }
             }
 
             f.Dispose();
@@ -152,6 +164,12 @@ namespace ToolCache.Map {
 
             //And save the script
             f.AddString(Script);
+
+            //Append the script regions
+            f.AddShort((short)ScriptRegions.Count);
+            foreach (ScriptRegion scriptR in ScriptRegions) {
+                scriptR.SaveToBinaryIO(f);
+            }
 
             f.Encode(Filename);
 

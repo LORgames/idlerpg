@@ -14,7 +14,6 @@ package Game.Map.Spawns {
 	 * @author Paul
 	 */
 	public class SpawnRegion implements IOneSecondUpdate, IScriptTarget {
-		
 		public var Map:MapData;
 		public var Area:Vector.<Rect>;
 		
@@ -113,7 +112,7 @@ package Game.Map.Spawns {
 			var totalRects:int = b.readByte();
 			s.Area = new Vector.<Rect>(totalRects, true);
 
-			// Rectangle0 (needs to be extended)
+			// Load rectangles
 			while (--totalRects > -1) {
 				s.Area[totalRects] = new Rect(true, null, b.readShort(), b.readShort(), b.readShort(), b.readShort());
 			}

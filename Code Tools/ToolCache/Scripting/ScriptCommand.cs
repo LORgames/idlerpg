@@ -320,6 +320,17 @@ namespace ToolCache.Scripting {
                     } else {
                         info.Errors.Add("Requires both damage per second and total seconds (1 tick per second).");
                     } break;
+                case "triggerfire":
+                case "firetrigger":
+                    CommandID = 0x100D;
+
+                    if (short.TryParse(Parameters, out sparam)) {
+                        AdditionalBytecode.Add((ushort)sparam);
+                    } else {
+                        info.Errors.Add("Cannot convert '" + Parameters + "' into a number. Must be between " + short.MinValue + " and " + short.MaxValue + " inclusive.");
+                    }
+
+                    break;
                 case "equip":
                     CommandID = 0x4001;
 

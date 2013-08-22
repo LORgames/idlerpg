@@ -1,21 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ToolCache.Map;
-using ToolCache.General;
 using System.Drawing;
+using ToolCache.General;
 
-namespace ToolCache.World {
+namespace ToolCache.Map.Regions {
     public class Portal : IComparable<Portal> {
-
         public string Name;
 
         public short ID;
         public short ExitID; //Can be -1 if this portal doesn't link anywhere
         public byte Direction;
 
-        public Point ExitPoint = Point.Empty;
         public Point EntryPoint = Point.Empty;
         public Size EntrySize = Size.Empty;
 
@@ -27,8 +22,6 @@ namespace ToolCache.World {
             f.AddShort(ExitID);
             f.AddByte(Direction);
 
-            f.AddShort((short)ExitPoint.X);
-            f.AddShort((short)ExitPoint.Y);
             f.AddShort((short)EntryPoint.X);
             f.AddShort((short)EntryPoint.Y);
             f.AddShort((short)EntrySize.Width);
@@ -44,7 +37,6 @@ namespace ToolCache.World {
         }
 
         public void Move(int x, int y) {
-            ExitPoint.Offset(x, y);
             EntryPoint.Offset(x, y);
         }
     }
@@ -81,8 +73,6 @@ namespace ToolCache.World {
             p.ExitID = f.GetShort();
             p.Direction = f.GetByte();
 
-            p.ExitPoint.X = f.GetShort();
-            p.ExitPoint.Y = f.GetShort();
             p.EntryPoint.X = f.GetShort();
             p.EntryPoint.Y = f.GetShort();
             p.EntrySize.Width = f.GetShort();

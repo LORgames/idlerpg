@@ -8,20 +8,18 @@ using System.Text;
 using System.Windows.Forms;
 using ToolCache.General;
 
-namespace CityTools
-{
-    public partial class GlobalSettingsEditor : Form
-    {
+namespace CityTools {
+    public partial class GlobalSettingsEditor : Form {
         private bool isEdited = false;
 
-        public GlobalSettingsEditor()
-        {
+        public GlobalSettingsEditor() {
             InitializeComponent();
 
             txtGameName.Text = GlobalSettings.gameName;
             chkEnableTiles.Checked = GlobalSettings.enableTiles;
             nudTileSize.Value = GlobalSettings.tileSize;
             chkDisableCharacter.Checked = GlobalSettings.disableCharacter;
+            numTargetFPS.Value = GlobalSettings.targetGameFPS;
         }
 
         private void Edited(object sender, EventArgs e) {
@@ -34,6 +32,7 @@ namespace CityTools
                 GlobalSettings.enableTiles = chkEnableTiles.Checked;
                 GlobalSettings.tileSize = (int)nudTileSize.Value;
                 GlobalSettings.disableCharacter = chkDisableCharacter.Checked;
+                GlobalSettings.targetGameFPS = (int)numTargetFPS.Value;
 
                 GlobalSettings.Save();
             }
