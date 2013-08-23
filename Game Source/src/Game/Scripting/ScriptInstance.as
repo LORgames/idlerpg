@@ -53,17 +53,19 @@ package Game.Scripting {
 		/* INTERFACE EngineTiming.ICleanUp */
 		
 		public function CleanUp():void {
+			var i:int;
+			
 			while (TargetStack.length > 0) {
 				TargetStack.pop();
 			}
 			
 			if (MyScript.EventScripts[Script.Update] != null) {
-				var i:int = Script.UpdateScripts.indexOf(this);
+				i = Script.UpdateScripts.indexOf(this);
 				if (i > -1) { Script.UpdateScripts.splice(i, 1); }
 			}
 			
 			if (MyScript.EventScripts[Script.OnTrigger] != null) {
-				var i:int = Script.TriggerListeners.indexOf(this);
+				i = Script.TriggerListeners.indexOf(this);
 				if (i > -1) { Script.TriggerListeners.splice(i, 1); }
 			}
 			

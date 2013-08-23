@@ -245,6 +245,7 @@ package Game.Critter {
 		public function RequestMove(xSpeed:Number, ySpeed:Number, move:Boolean = true):void {
 			virginMoveSpeedX = xSpeed;
 			virginMoveSpeedY = ySpeed;
+			
 			if (xSpeed != 0 || ySpeed != 0) {
 				direction = SpeedToDirection(xSpeed, ySpeed);
 				

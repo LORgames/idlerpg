@@ -50,7 +50,9 @@ package Game.Equipment {
 			i = Weapons.length; while ( --i > -1) ReadEquipmentInfo(b, Weapons, Weapons.length - (i+1));
 			
 			//Then for some reason we set the player equipment up..?
-			SetupPlayerEquipment();
+			
+			//TODO: load player if this is an equipment game?
+			//SetupPlayerEquipment();
 			
 			//And reset the loading total while some images load
 			Global.LoadingTotal--;

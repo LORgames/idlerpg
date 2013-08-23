@@ -574,8 +574,8 @@
             this.tabFirstLevel.Controls.Add(this.tabOptions);
             this.tabFirstLevel.Controls.Add(this.tabTerrain);
             this.tabFirstLevel.Controls.Add(this.tabPalette);
-            this.tabFirstLevel.Controls.Add(this.tabMapScript);
             this.tabFirstLevel.Controls.Add(this.tabMapRegions);
+            this.tabFirstLevel.Controls.Add(this.tabMapScript);
             this.tabFirstLevel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabFirstLevel.Location = new System.Drawing.Point(0, 0);
             this.tabFirstLevel.Name = "tabFirstLevel";
@@ -785,7 +785,7 @@
             this.tabTerrain.Padding = new System.Windows.Forms.Padding(3);
             this.tabTerrain.Size = new System.Drawing.Size(308, 785);
             this.tabTerrain.TabIndex = 2;
-            this.tabTerrain.Text = "Terrain";
+            this.tabTerrain.Text = "Tiles";
             this.tabTerrain.UseVisualStyleBackColor = true;
             // 
             // listTiles

@@ -145,9 +145,13 @@ namespace CityTools {
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
-            if (FindFocusedControl(this) is TextBox) {
+            Control active = FindFocusedControl(this);
+
+            if (active is TextBox || active is RichTextBox || active is ListBox || active is NumericUpDown || active is ComboBox) {
                 return base.ProcessCmdKey(ref msg, keyData);
             }
+
+            System.Diagnostics.Debug.WriteLine(FindFocusedControl(this));
 
             this.ActiveControl = mapViewPanel;
 

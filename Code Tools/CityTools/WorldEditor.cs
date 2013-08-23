@@ -290,8 +290,6 @@ namespace CityTools {
             if (!piece.isLoaded) {
                 piece.Load(true);
             }
-
-            piece.Save();
         }
 
         public void Draw(LBuffer buffer, Point offset) {
