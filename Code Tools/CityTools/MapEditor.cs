@@ -249,9 +249,18 @@ namespace CityTools {
             objects_buffer.gfx.Clear(Color.Transparent);
 
             TerrainHelper.DrawTerrain(terrain_buffer);
-            PortalHelper.Draw(terrain_buffer);
-            RegionHelper.Draw(terrain_buffer);
+
+            if (GlobalSettings.enableTiles) {
+                PortalHelper.Draw(terrain_buffer);
+                RegionHelper.Draw(terrain_buffer);
+            }
+
             ScenicHelper.DrawObjects(objects_buffer);
+
+            if (!GlobalSettings.enableTiles) {
+                PortalHelper.Draw(objects_buffer);
+                RegionHelper.Draw(objects_buffer);
+            }
         }
 
         private void mapViewPanel_Resize(object sender, EventArgs e) {

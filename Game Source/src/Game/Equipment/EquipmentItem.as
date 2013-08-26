@@ -102,6 +102,10 @@ package Game.Equipment {
 		public function GetCurrentState():int {
 			return currentState;
 		}
+		
+		public function toString():String {
+			return "[Equipment:"+this.Info.Name+"]";
+		}
 	}
 
 }

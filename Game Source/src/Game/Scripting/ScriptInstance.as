@@ -2,6 +2,7 @@ package Game.Scripting {
 	import EngineTiming.ICleanUp;
 	import flash.display.Screen;
 	import flash.geom.Vector3D;
+	import Game.Equipment.EquipmentItem;
 	/**
 	 * ...
 	 * @author Paul
@@ -19,9 +20,14 @@ package Game.Scripting {
 			MyScript = script;
 			Variables = script.InitialVariables.concat();
 			
-			TargetStack = new Vector.<IScriptTarget>(1);
-			TargetStack[0] = invoker;
-			this.CurrentTarget = invoker;
+			this.Invoker = invoker;
+			this.CurrentTarget = Invoker;
+			TargetStack = new Vector.<IScriptTarget>();
+			
+			if (Invoker is EquipmentItem) {
+				AttachTarget((Invoker as EquipmentItem).Owner.Owner);
+			}
+			
 			if (initialize) {
 				MyScript.Run(Script.Initialize, this);
 			}
@@ -39,10 +45,15 @@ package Game.Scripting {
 		
 		public function AttachTarget(target:IScriptTarget):void {
 			TargetStack.push(CurrentTarget);
+			CurrentTarget = target;
 		}
 		
 		public function PopTarget():void {
-			CurrentTarget = TargetStack.pop();
+			if(TargetStack.length > 0) {
+				CurrentTarget = TargetStack.pop();
+			} else {
+				CurrentTarget = Invoker;
+			}
 		}
 		
 		public function Run(event:uint):void {

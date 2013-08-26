@@ -67,8 +67,8 @@ package Game.Critter {
 			
 			newMap.CritterPush(this);
 			
-			this.X = (location % newMap.TileSizeX) * 48;
-			this.Y = (location / newMap.TileSizeX) * 48;
+			this.X = (location % newMap.TileSizeX) * Global.TileSize;
+			this.Y = (location / newMap.TileSizeX) * Global.TileSize;
 		}
 		
 		public function RequestTeleport(newMap:MapData, portal:Portal):void {
@@ -121,7 +121,7 @@ package Game.Critter {
 			
 			if (WorldData.ME != this && dt > 0) {
 				//AI AGENTS
-				var me:BaseCritter = WorldData.ME;
+				var me:BaseCritter = WorldData.ME==null?this:WorldData.ME;
 				var dx:Number = (this.X - me.X);
 				var dy:Number = (this.Y - me.Y) / 0.85;
 				
@@ -205,7 +205,7 @@ package Game.Critter {
 					}
 					
 					//No collision so lets update the movement speed
-					if (TileTemplate.Tiles[tiles[i].TileID].movementCost > CurrentMovementCost) {
+					if (Global.HasTiles && TileTemplate.Tiles[tiles[i].TileID].movementCost > CurrentMovementCost) {
 						CurrentMovementCost = TileTemplate.Tiles[tiles[i].TileID].movementCost;
 					}
 				}

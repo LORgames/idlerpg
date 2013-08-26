@@ -13,6 +13,7 @@ package Game.Map {
 	import Game.Map.Spawns.SpawnRegion;
 	import Game.Map.Tiles.TileHelper;
 	import Game.Map.Tiles.TileInstance;
+	import Game.Scripting.IScriptTarget;
 	import Game.Scripting.ScriptTypes;
 	import Interfaces.IMapObject;
 	import SoundSystem.MusicPlayer;
@@ -89,22 +90,26 @@ package Game.Map {
 			//Tiles First?
 			TileSizeX = b.readShort();
 			TileSizeY = b.readShort();
-			TotalTiles = TileSizeX * TileSizeY;
 			
-			SizeX = TileSizeX * 48;
-			SizeY = TileSizeY * 48;
-			
+			SizeX = TileSizeX * Global.TileSize;
+			SizeY = TileSizeY * Global.TileSize;
+				
 			Boundaries.W = SizeX;
 			Boundaries.H = SizeY;
 			
+			TotalTiles = TileSizeX * TileSizeY;
 			Tiles = new Vector.<TileInstance>(TotalTiles, true);
 			
 			for (i = 0; i < TileSizeX; i++) {
 				for (var j:int = 0; j < TileSizeY; j++) {
 					var ttt:TileInstance = new TileInstance();
-
-					ttt.TileID = b.readShort();
-					ttt.RecalculateRectangles(i, j);
+					
+					if(Global.HasTiles) {
+						ttt.TileID = b.readShort();
+						ttt.RecalculateRectangles(i, j);
+					} else {
+						ttt.TileID = 0;
+					}
 					
 					Tiles[i + TileSizeX * j] = ttt;
 				}
@@ -121,6 +126,7 @@ package Game.Map {
 				
 				var o:ObjectInstance;
 				
+				trace("OBJID: " + id + "/" + TotalObjects);
 				if (ObjectTemplate.Objects[id].IndividualAnimations) {
 					o = new ObjectInstanceAnimated();
 				} else {
@@ -149,7 +155,7 @@ package Game.Map {
 			
 			MusicPlayer.PlaySong(Music);
 			
-			if (firstload) {
+			if (firstload && Global.HasCharacter) {
 				firstload = false;
 				if (Portals.length > 0) {
 					Critters.push(WorldData.ME);
@@ -160,7 +166,7 @@ package Game.Map {
 			}
 		}
 		
-		public function GetObjectsInArea(rect:Rect, objects:Vector.<IMapObject>, type:int = 0xA004, scanner:Object = null):void {
+		public function GetObjectsInArea(rect:Rect, objects:Vector.<IScriptTarget>, type:int, scanner:Object = null):void {
 			var _tiles:Vector.<TileInstance> = TileHelper.GetTiles(rect, this);
 			
 			var _tt:int = _tiles.length;

@@ -19,22 +19,29 @@ package Game.Map {
 		
 		public static var TileSheet:BitmapData;
 		
-		public static var ME:CritterHuman = new CritterHuman();
+		public static var ME:CritterHuman;
 		public static var CurrentMap:MapData = new MapData();
 		
 		public static function Initialize(loadReq:String):void {
-			ME.Persistent = true;
-			ME.MovementSpeed = 150;
+			if (Global.HasCharacter) {
+				ME = new CritterHuman();
+				ME.Persistent = true;
+				ME.MovementSpeed = 150;
+			}
 			
 			RequestedMapLoad = loadReq;
 			
 			BinaryLoader.Load("Data/MapInfo.bin", ParseWorldFile);
-			ImageLoader.Load("Data/TileSheet.png", LoadedTileSet);
+			
+			if(Global.HasTiles) {
+				ImageLoader.Load("Data/TileSheet.png", LoadedTileSet);
+				Global.LoadingTotal++;
+			}
 			
 			TileTemplate.LoadTileInfo();
 			ObjectTemplate.LoadObjectInfo();
 			
-			Global.LoadingTotal += 2;
+			Global.LoadingTotal++;
 		}
 		
 		public static function ParseWorldFile(data:ByteArray):void {

@@ -20,7 +20,14 @@ package {
 		
 		//Debug information
 		public static var DebugRender:Boolean = false;
-		static public var DebugFPS:Boolean = true;
+		static public var DebugFPS:Boolean = false;
 		static public var IsEditor:Boolean = true;
+		
+		//Settings
+		public static var GameName:String = "";
+		public static var FPS:int = 20;
+		public static var HasTiles:Boolean = false;
+		public static var TileSize:int = 48;
+		public static var HasCharacter:Boolean = false;
 	}
 }

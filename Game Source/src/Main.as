@@ -1,24 +1,14 @@
 package {
-	import EngineTiming.Clock;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageQuality;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.system.Capabilities;
-	import Game.Scripting.GlobalVariables;
-	import RenderSystem.Camera;
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
-	import Game.Critter.CritterManager;
-	import Game.Effects.EffectManager;
-	import Game.Equipment.EquipmentManager;
-	import Game.General.BinaryLoader;
-	import Game.General.ImageLoader;
-	import Game.Map.WorldData;
 	import InputSystems.IInputSystem;
-	import InputSystems.KeyboardInput;
-	import InputSystems.TouchInput;
+	import RenderSystem.Camera;
 	import RenderSystem.Renderman;
 	import SoundSystem.MusicPlayer;
 	import Storage.SaveManager;
@@ -41,7 +31,7 @@ package {
 		
 		public static var OrderedLayer:Sprite = new Sprite();
 		public static var Input:IInputSystem;
-		public var hud:HUD = new HUD();
+		public var hud:HUD;
 		
 		//Some other important things
 		public var Renderer:Renderman;
@@ -55,18 +45,11 @@ package {
 			
 			stage.addEventListener(Event.DEACTIVATE, OnLostFocus);
 			
-			//Need more logic to adding input system?
-			if (Multitouch.supportsTouchEvents && Multitouch.maxTouchPoints > 1) {
-				// touch or gesture?
-				Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
-				Input = new TouchInput();//new KeyboardInput();
-			} else {
-				Input = new KeyboardInput();
-			}
+			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 			
 			CONFIG::air {			
 				if (NativeWindow.isSupported && stage.nativeWindow.maximizable) {
-					stage.nativeWindow.maximize();
+					//stage.nativeWindow.maximize();
 				}
 				
 				NativeApplication.nativeApplication.addEventListener(InvokeEvent.INVOKE, OnInvoke);
@@ -130,22 +113,12 @@ package {
 			
 			//Set up some other things
 			Renderer = new Renderman();
-			Renderer.FadeToBlack(null, loadMap);
-			
-			BinaryLoader.Initialize();
-			ImageLoader.Initialize();
-			
-			WorldData.Initialize(loadMap);
-			
-			new EquipmentManager();
-			new CritterManager();
-			new EffectManager();
-			new GlobalVariables();
-			
-			Clock.I.Start(stage);
+			Renderer.FadeToBlack(null, "Loading...");
+			new System(loadMap);
 			
 			stage.addEventListener(Event.RESIZE, Resized);
 			
+			hud = new HUD();
 			this.addChild(hud);
 			
 			//var c:CaveLight = new CaveLight();
@@ -172,7 +145,5 @@ package {
 			Renderer.Resized();
 			hud.Resized();
 		}
-		
 	}
-	
 }

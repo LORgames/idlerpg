@@ -52,15 +52,12 @@ namespace ToolToGameExporter {
                 f.AddShort((short)map.Tiles.numTilesX);
                 f.AddShort((short)map.Tiles.numTilesY);
 
-                for (int i = 0; i < map.Tiles.numTilesX; i++) {
-                    for (int j = 0; j < map.Tiles.numTilesY; j++) {
-                        if (i == 1 && j == 1) {
-                            System.Diagnostics.Debug.WriteLine(map.Name + " " + map.Tiles[i, j]);
+                if (GlobalSettings.enableTiles) {
+                    for (int i = 0; i < map.Tiles.numTilesX; i++) {
+                        for (int j = 0; j < map.Tiles.numTilesY; j++) {
+                            short _d = map.Tiles[i, j];
+                            f.AddShort(TileCrusher.RemappedTileIds[map.Tiles[i, j]]);
                         }
-
-                        short _d = map.Tiles[i, j];
-
-                        f.AddShort(TileCrusher.RemappedTileIds[map.Tiles[i, j]]);
                     }
                 }
 

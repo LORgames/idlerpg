@@ -62,6 +62,7 @@
     <Compile Include="FinishedDisplay.Designer.cs">
       <DependentUpon>FinishedDisplay.cs</DependentUpon>
     </Compile>
+    <Compile Include="GameSettingsExporter.cs" />
     <Compile Include="GlobalVariableCrusher.cs" />
     <Compile Include="ItemCrusher.cs" />
     <Compile Include="MainForm.cs">

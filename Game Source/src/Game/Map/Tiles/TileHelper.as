@@ -8,15 +8,13 @@ package Game.Map.Tiles {
 	 */
 	public class TileHelper {
 		
-		public static const TILE_SIZE:int = 48;
-		
 		public static function GetTiles(r:Rect, Map:MapData, b:Boolean = false):Vector.<TileInstance> {
 			var retVal:Vector.<TileInstance> = new Vector.<TileInstance>();
 			
-			var xTilePosL:int = r.X / TILE_SIZE;
-			var yTilePosL:int = r.Y / TILE_SIZE;
-			var xTilePosU:int = (r.X + r.W) / TILE_SIZE;
-			var yTilePosU:int = (r.Y + r.H) / TILE_SIZE;
+			var xTilePosL:int = r.X / Global.TileSize;
+			var yTilePosL:int = r.Y / Global.TileSize;
+			var xTilePosU:int = (r.X + r.W) / Global.TileSize;
+			var yTilePosU:int = (r.Y + r.H) / Global.TileSize;
 			
 			if (xTilePosL < 0) xTilePosL = 0;
 			if (yTilePosL < 0) yTilePosL = 0;

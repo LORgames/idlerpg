@@ -361,7 +361,7 @@ namespace ToolCache.Scripting {
                         if (paramBits.Length > 1) {
                             param0 = paramBits[1].ToLower() == "true" ? (ushort)0 : (ushort)1;
                         } else {
-                            param0 = (ushort)0;
+                            param0 = (ushort)1;
                         }
                         AdditionalBytecode.Add((ushort)sparam);
                         AdditionalBytecode.Add(param0);
@@ -741,7 +741,7 @@ namespace ToolCache.Scripting {
             if (l.Contains(" and ") || l.Contains(" or ")) {
                 Info.Errors.Add("FOREACH does not currently support joins AND or OR");
             } else {
-                string regex = "([A-Za-z]+)\\(([A-Za-z0-9,\\.\\s]+)\\)";
+                string regex = "([A-Za-z]+)\\(([A-Za-z0-9,\\.\\s]*)\\)";
                 Match m = Regex.Match(p, regex);
 
                 if (!m.Success) {
@@ -764,6 +764,9 @@ namespace ToolCache.Scripting {
                         case "aoe":
                             this.AdditionalBytecode.Add((ushort)0x9001);
                             VerifyCommaSeperatedShorts(arrayParam, 1, Info);
+                            break;
+                        case "myarea":
+                            this.AdditionalBytecode.Add((ushort)0x9003);
                             break;
                         default:
                             Info.Errors.Add("Unknown Array Type: " + arrayValue);

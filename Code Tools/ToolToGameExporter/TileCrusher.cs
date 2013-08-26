@@ -14,6 +14,8 @@ namespace ToolToGameExporter {
         public static Dictionary<short, short> RemappedTileIds = new Dictionary<short, short>();
 
         public static void Go() {
+            if (!GlobalSettings.enableTiles) return;
+
             RemappedTileIds.Clear();
             List<string> tiles = new List<string>();
 
@@ -54,19 +56,20 @@ namespace ToolToGameExporter {
                 highestID++;
             }
 
-            if (tiles.Count > 448) {
-                MessageBox.Show("Too many tiles, alert Paul that the TileCrusher needs to be better.");
+            int totalPerRow = 1024 / GlobalSettings.tileSize;
+
+            if (tiles.Count > (totalPerRow*totalPerRow)) {
+                Processor.Errors.Add(new ProcessingError("Tiles", "ALL", "Can only fit: " + totalPerRow * totalPerRow + " total tiles."));
             }
 
             for (int i = 0; i < tiles.Count; i++) {
-                p.X = (int)(i % 21) * 48;
-                p.Y = (int)(i / 21) * 48;
+                //TODO: Calculate this stuff rather than magic numbers
+                p.X = (int)(i % totalPerRow) * GlobalSettings.tileSize;
+                p.Y = (int)(i / totalPerRow) * GlobalSettings.tileSize;
 
                 Image im = Image.FromFile(tiles[i]);
-                gfx.DrawImage(im, new Rectangle(p.X, p.Y, 48, 48));
+                gfx.DrawImage(im, new Rectangle(p.X, p.Y, GlobalSettings.tileSize, GlobalSettings.tileSize));
                 im.Dispose();
-
-                //bmp.SetResolution(im.HorizontalResolution, im.VerticalResolution);
             }
 
             f.Encode(Global.EXPORT_DIRECTORY + "/TileInfo.bin");

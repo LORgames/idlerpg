@@ -43,43 +43,45 @@ package RenderSystem {
 		}
 		
 		public function Draw():void {
-			var destPoint:Point = new Point();
-			
-			var xTilePosL:int = -Camera.X / 48;
-			var yTilePosL:int = -Camera.Y / 48;
-			var xTilePosU:int = (-Camera.X + data.width) / 48;
-			var yTilePosU:int = (-Camera.Y + data.height) / 48;
-			
-			if (xTilePosL < 0) xTilePosL = 0;
-			if (yTilePosL < 0) yTilePosL = 0;
-			if (xTilePosU >= WorldData.CurrentMap.TileSizeX) xTilePosU = WorldData.CurrentMap.TileSizeX - 1;
-			if (yTilePosU >= WorldData.CurrentMap.TileSizeY) yTilePosU = WorldData.CurrentMap.TileSizeY - 1;
-			
-			var tiles:Vector.<TileInstance> = WorldData.CurrentMap.Tiles;
-			var tileArt:BitmapData = WorldData.TileSheet;
-			
-			var xPos:int = xTilePosU+1;
-			var yPos:int = 0;
-			var xSize:int = WorldData.CurrentMap.TileSizeX;
-			
-			data.lock();
-			
-			data.fillRect(fullRect, 0x0);
-			
-			while (--xPos >= xTilePosL) {
-				yPos = yTilePosU+1;
+			if(Global.HasTiles) {
+				var destPoint:Point = new Point();
 				
-				while (--yPos >= yTilePosL) {
-					var tileType:int = tiles[xPos+yPos*xSize].TileID;
+				var xTilePosL:int = -Camera.X / Global.TileSize;
+				var yTilePosL:int = -Camera.Y / Global.TileSize;
+				var xTilePosU:int = (-Camera.X + data.width) / Global.TileSize;
+				var yTilePosU:int = (-Camera.Y + data.height) / Global.TileSize;
+				
+				if (xTilePosL < 0) xTilePosL = 0;
+				if (yTilePosL < 0) yTilePosL = 0;
+				if (xTilePosU >= WorldData.CurrentMap.TileSizeX) xTilePosU = WorldData.CurrentMap.TileSizeX - 1;
+				if (yTilePosU >= WorldData.CurrentMap.TileSizeY) yTilePosU = WorldData.CurrentMap.TileSizeY - 1;
+				
+				var tiles:Vector.<TileInstance> = WorldData.CurrentMap.Tiles;
+				var tileArt:BitmapData = WorldData.TileSheet;
+				
+				var xPos:int = xTilePosU+1;
+				var yPos:int = 0;
+				var xSize:int = WorldData.CurrentMap.TileSizeX;
+				
+				data.lock();
+				
+				data.fillRect(fullRect, 0x0);
+				
+				while (--xPos >= xTilePosL) {
+					yPos = yTilePosU+1;
 					
-					destPoint.x = 48 * xPos + Camera.X;
-					destPoint.y = 48 * yPos + Camera.Y;
-					
-					data.copyPixels(tileArt, TileTemplate.Tiles[tileType].Frame, destPoint);
+					while (--yPos >= yTilePosL) {
+						var tileType:int = tiles[xPos+yPos*xSize].TileID;
+						
+						destPoint.x = Global.TileSize * xPos + Camera.X;
+						destPoint.y = Global.TileSize * yPos + Camera.Y;
+						
+						data.copyPixels(tileArt, TileTemplate.Tiles[tileType].Frame, destPoint);
+					}
 				}
+				
+				data.unlock();
 			}
-			
-			data.unlock();
 			
 			if (Global.DebugRender) {
 				xPos = WorldData.CurrentMap.Critters.length;

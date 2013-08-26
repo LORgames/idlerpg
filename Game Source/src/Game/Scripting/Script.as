@@ -48,6 +48,7 @@ package Game.Scripting {
 		public static const FRONT:int = 0x9000;
 		public static const FRONTOFFSET:int = 0x9002;
 		public static const AOE:int = 0x9001;
+		public static const MYAREA:int = 0x9003;
 		
 		//Script information
 		internal var EventScripts:Vector.<ByteArray>;
@@ -60,248 +61,16 @@ package Game.Scripting {
 		
 		internal function Run(event:uint, info:ScriptInstance):void {
 			//Reset the reader
-			if (event >= TOTAL_EVENT_TYPES) {
-				trace("Event Type Unsupported!");
-				return;
-			}
-			
-			if (EventScripts[event] == null) {
-				//trace("Event type not on this object. [" + invoker + " => " + event + "]");
-				return;
-			}
+			if (event >= TOTAL_EVENT_TYPES) return;
+			if (EventScripts[event] == null) return;
 			
 			var EventScript:ByteArray = EventScripts[event];
 			EventScript.position = 0;
 			
-			//Some required variables
-			var command:uint = 0;
-			var CallStack:Vector.<Boolean> = new Vector.<Boolean>();
-			var bParam:Boolean;
+			ProcessBlock(EventScript, info);
 			
-			var Position:PointX = new PointX();
-			info.CurrentTarget.UpdatePointX(Position);
-			
-			var tX:int = Position.X;
-			var tY:int = Position.Y;
-			
-			var effectInfo:EffectInfo;
-			
-			while (true) {
-				command = EventScript.readUnsignedShort();
-				
-				if (command == 0xFFFF) break;
-				if (command == 0xB000) { ProcessMathCommand(EventScript, info); continue; }
-				
-				switch(command) {
-					case 0x1001: //Play sound effect
-						EffectsPlayer.Play(EventScript.readShort());
-						break;
-					case 0x1002: //Spawn Critter
-						var critter:BaseCritter = CritterManager.I.CritterInfo[EventScript.readShort()].CreateCritter(WorldData.CurrentMap, Position.X, Position.Y);
-						if (critter != null) { critter.Owner = info.CurrentTarget; }
-						break;
-					case 0x1007: //Destroy
-						if (info.CurrentTarget is ICleanUp) { Clock.CleanUpList.push(info.CurrentTarget); }
-						break;
-					case 0x1008: //EffectSpawn
-						effectInfo = EffectManager.I.Effects[EventScript.readShort()];
-						
-						if (Position.D == 0) {
-							tX = Position.X - EventScript.readShort();
-							tY = Position.Y + EventScript.readShort();
-						} else if (Position.D == 1) {
-							tX = Position.X + EventScript.readShort();
-							tY = Position.Y + EventScript.readShort();
-						} else if (Position.D == 2) {
-							tY = Position.Y - EventScript.readShort();
-							tX = Position.X + EventScript.readShort();
-						} else if (Position.D == 3) {
-							tY = Position.Y + EventScript.readShort();
-							tX = Position.X - EventScript.readShort();
-						}
-						
-						new EffectInstance(effectInfo, tX, tY, Position.D);
-						
-						break;
-					case 0x1009: //EffectSpawnDirectional
-						effectInfo = EffectManager.I.Effects[EventScript.readShort()];
-						
-						tX = Position.X + EventScript.readShort();
-						tY = Position.Y + EventScript.readShort();
-						
-						new EffectInstance(effectInfo, tX, tY, EventScript.readShort());
-						
-						break;
-					case 0x100A: //EffectSpawnDirectionalRelative
-						effectInfo = EffectManager.I.Effects[EventScript.readShort()];
-
-						tX = Position.X + EventScript.readShort();
-						tY = Position.Y + EventScript.readShort();
-						var direction:int = EventScript.readShort();
-						var tD:int = 0;
-						
-						switch (Position.D) {
-							case 0: //critter left
-								switch (direction) {
-									case 0: //relative left
-										tD = 3; //down
-										break;
-									case 1: //relative right
-										tD = 2; //up
-										break;
-									case 2: //relative up
-										tD = 0; //left
-										break;
-									case 3: //relative down
-										tD = 1; //right
-										break;
-								}
-								break;
-							case 1: //critter right
-								switch (direction) {
-									case 0: //relative left
-										tD = 2; //up
-										break;
-									case 1: //relative right
-										tD = 3; //down
-										break;
-									case 2: //relative up
-										tD = 1; //right
-										break;
-									case 3: //relative down
-										tD = 0; //left
-										break;
-								}
-								break;
-							case 2: //critter up
-								switch (direction) {
-									case 0: //relative left
-										tD = 0; //left
-										break;
-									case 1: //relative right
-										tD = 1; //right
-										break;
-									case 2: //relative up
-										tD = 2; //up
-										break;
-									case 3: //relative down
-										tD = 3; //down
-										break;
-								}
-								break;
-							case 3: //critter down
-								switch (direction) {
-									case 0: //relative left
-										tD = 1; //right
-										break;
-									case 1: //relative right
-										tD = 0; //left
-										break;
-									case 2: //relative up
-										tD = 3; //down
-										break;
-									case 3: //relative down
-										tD = 2; //up
-										break;
-								}
-								break;
-						}
-						
-						new EffectInstance(effectInfo, tX, tY, tD);
-
-						break;
-					case 0x100B: //SpawnObject
-						var id:int = EventScript.readShort();
-						
-						if (Position.D == 0) {
-							tX = Position.X - EventScript.readShort();
-							tY = Position.Y + EventScript.readShort();
-						} else if (Position.D == 1) {
-							tX = Position.X + EventScript.readShort();
-							tY = Position.Y + EventScript.readShort();
-						} else if (Position.D == 2) {
-							tY = Position.Y - EventScript.readShort();
-							tX = Position.X + EventScript.readShort();
-						} else if (Position.D == 3) {
-							tY = Position.Y + EventScript.readShort();
-							tX = Position.X - EventScript.readShort();
-						}
-						
-						var o:ObjectInstance;
-						
-						if (ObjectTemplate.Objects[id].IndividualAnimations) {
-							o = new ObjectInstanceAnimated();
-						} else {
-							o = new ObjectInstance();
-						}
-						
-						o.SetInformation(WorldData.CurrentMap, id, tX, tY);
-						WorldData.CurrentMap.Objects.push(o);
-						
-						break;
-					case 0x100D: //Fire a trigger
-						Script.FireTrigger(EventScript.readShort()); break;
-					case 0x4001: //Equip item on the target
-						if (info.CurrentTarget is CritterHuman) {
-							(info.CurrentTarget as CritterHuman).Equipment.EquipSlot(EventScript.readShort(), EventScript.readShort());
-						} else if (info.CurrentTarget is EquipmentItem) {
-							(info.CurrentTarget as EquipmentItem).Owner.EquipSlot(EventScript.readShort(), EventScript.readShort());
-						} else {
-							EventScript.readShort(); EventScript.readShort();
-						} break;
-					case 0x5001: //Movement speed
-						if (info.CurrentTarget is BaseCritter) { 
-							(info.CurrentTarget as BaseCritter).MovementSpeed = EventScript.readShort();
-						} break;
-					case 0x5002: //Movement direction absolute
-					case 0x5003: //Movement direction relative
-						if (info.CurrentTarget is BaseCritter) {
-							var angle:Number = Math.PI * (EventScript.readShort() / 180.0);
-							var move:Boolean = (EventScript.readShort() == 0);
-							if (command == 0x5002) {
-								(info.CurrentTarget as BaseCritter).RequestMove(Math.cos(angle), Math.sin(angle), move);
-							} else if (command == 0x5003) {
-								var c:BaseCritter = (info.CurrentTarget as BaseCritter);
-								angle += Math.atan2(c.virginMoveSpeedY, c.virginMoveSpeedX);								
-								c.RequestMove(Math.cos(angle), Math.sin(angle), move);
-							}
-						} break;
-					case 0x6000: //Play Animation
-						info.CurrentTarget.ChangeState(EventScript.readShort(), false); break;
-					case 0x6001: //Loop Animation
-						info.CurrentTarget.ChangeState(EventScript.readShort(), true); break;
-					case 0x6002: //Animation Speed
-						info.CurrentTarget.UpdatePlaybackSpeed((EventScript.readUnsignedShort() * 0.05)); break;
-					case 0x8000: //IF without ELSE
-						bParam = CanIf(EventScript, info, Position);
-						if (!bParam) {
-							EventScript.readUnsignedShort(); //Just pop the 0xF0FD off
-							ReadUntilBalancedClose(EventScript);
-						} break;
-					case 0x8001: //IF with ELSE
-						bParam = CanIf(EventScript, info, Position);
-						if (bParam) {
-							CallStack.push(true);
-						} else {
-							EventScript.readUnsignedShort(); //Just pop the 0xF0FD off
-							ReadUntilBalancedClose(EventScript);
-							CallStack.push(false);
-						} break;
-					case 0x8002: //Foreach
-						Process_ForEach(EventScript, info, Position);
-						break;
-					case 0x8003: //ELSE
-						bParam = CallStack.pop();
-						if (bParam) {
-							EventScript.readUnsignedShort(); //Just pop the 0xF0FD off
-							ReadUntilBalancedClose(EventScript);
-						} break;
-					default:
-						if(command != 0xF0FD && command != 0xF0FE) {
-							trace("Unknown Command: 0x" + command.toString(16));
-						} break;
-						break;
-				}
+			if(EventScript.position != EventScript.length) {
+				trace("SCRIPT UNFINISHED: [" + info.Invoker + " Event="+event+ " ScriptPosition=" + EventScript.position + "/" + EventScript.length);
 			}
 		}
 		
@@ -416,7 +185,7 @@ package Game.Scripting {
 						}
 						break;
 					case 0x7006: //Is an animation playing
-						currentUnprocessedValue = (info.CurrentTarget.GetCurrentState() == eventScript.readUnsignedShort()); break;
+						currentUnprocessedValue = (info.Invoker.GetCurrentState() == eventScript.readUnsignedShort()); break;
 					case 0x7007: //What direction am I facing
 						currentUnprocessedValue = (position.D == eventScript.readUnsignedShort()); break;
 					case 0x7009: //Math comparison function
@@ -468,7 +237,7 @@ package Game.Scripting {
 			var dim2:int;
 			var rect:Rect = new Rect(false, null);
 			
-			var Objects:Vector.<IMapObject> = new Vector.<IMapObject>();
+			var Objects:Vector.<IScriptTarget> = new Vector.<IScriptTarget>();
 			
 			while(arrayType != 0xF0FD) {
 				switch(arrayType) {
@@ -503,6 +272,9 @@ package Game.Scripting {
 						break;
 					case AOE:
 						dim0 = eventScript.readUnsignedShort() * 24; dim1 = dim0; break;
+					case MYAREA:
+						//something :)
+						break;
 					default:
 						trace("Unknown ArrayType.");
 						break;
@@ -516,33 +288,12 @@ package Game.Scripting {
 			
 			var obji:int = Objects.length;
 			while(--obji > -1) {
-				var obj:IMapObject = Objects[obji];
+				var target:IScriptTarget = Objects[obji];
+				info.AttachTarget(target);
 				
-				var command:int = eventScript.readUnsignedShort();
+				ProcessBlock(eventScript, info);
 				
-				while (command != 0xF0FE) {
-					switch(command) {
-						case 0x1003: //Damage
-							dim0 = eventScript.readUnsignedShort();
-							obj.ScriptAttack(false, false, dim0, info.CurrentTarget);
-							break;
-						case 0x1005:
-							dim0 = eventScript.readUnsignedShort();
-							obj.ScriptAttack(true, false, dim0, info.CurrentTarget);
-							break;
-						case 0x1006: //DOT
-							dim0 = eventScript.readUnsignedShort();
-							obj.ScriptAttack(false, true, dim0, info.CurrentTarget);
-							break;
-						case 0x100C:
-							dim0 = eventScript.readUnsignedShort();
-							obj.ScriptAttack(true, true, dim0, info.CurrentTarget);
-							break;
-					}
-					
-					command = eventScript.readUnsignedShort();
-				}
-				
+				info.PopTarget();
 				eventScript.position = startIndex;
 			}
 			
@@ -644,6 +395,259 @@ package Game.Scripting {
 					level++;
 				} else if (i == 0xF0FE) { //Close block
 					level--;
+				}
+			}
+		}
+		
+		private function ProcessBlock(EventScript:ByteArray, info:ScriptInstance):void {
+			var effectInfo:EffectInfo;
+			
+			//Some required variables
+			var command:uint = 0;
+			var CallStack:Vector.<Boolean> = new Vector.<Boolean>();
+			var bParam:Boolean;
+			
+			var deep:int = 0;
+			
+			var Position:PointX = new PointX();
+			info.CurrentTarget.UpdatePointX(Position);
+			
+			var tX:int = Position.X;
+			var tY:int = Position.Y;
+			
+			while (true) {
+				command = EventScript.readUnsignedShort();
+				
+				if (command == 0xFFFF) break;
+				if (command == 0xB000) { ProcessMathCommand(EventScript, info); continue; }
+				
+				switch(command) {
+					case 0x1001: //Play sound effect
+						EffectsPlayer.Play(EventScript.readShort());
+						break;
+					case 0x1002: //Spawn Critter
+						var critter:BaseCritter = CritterManager.I.CritterInfo[EventScript.readShort()].CreateCritter(WorldData.CurrentMap, Position.X, Position.Y);
+						if (critter != null) { critter.Owner = info.CurrentTarget; }
+						break;
+					case 0x1003: //Flat Damage
+					case 0x1005: //% Damage
+					case 0x1006: //Flat DOT
+					case 0x100C: //% DOT
+						if(info.CurrentTarget is IMapObject) {
+							(info.CurrentTarget as IMapObject).ScriptAttack((command==0x1005||command==0x100C), (command==0x1006||command==0x100C), EventScript.readUnsignedShort(), info.Invoker); break;
+						} break;
+					case 0x1007: //Destroy
+						if (info.CurrentTarget is ICleanUp) { Clock.CleanUpList.push(info.CurrentTarget); } break;
+					case 0x1008: //EffectSpawn
+						effectInfo = EffectManager.I.Effects[EventScript.readShort()];
+						
+						if (Position.D == 0) {
+							tX = Position.X - EventScript.readShort();
+							tY = Position.Y + EventScript.readShort();
+						} else if (Position.D == 1) {
+							tX = Position.X + EventScript.readShort();
+							tY = Position.Y + EventScript.readShort();
+						} else if (Position.D == 2) {
+							tY = Position.Y - EventScript.readShort();
+							tX = Position.X + EventScript.readShort();
+						} else if (Position.D == 3) {
+							tY = Position.Y + EventScript.readShort();
+							tX = Position.X - EventScript.readShort();
+						}
+						
+						new EffectInstance(effectInfo, tX, tY, Position.D);
+						
+						break;
+					case 0x1009: //EffectSpawnDirectional
+						effectInfo = EffectManager.I.Effects[EventScript.readShort()];
+						
+						tX = Position.X + EventScript.readShort();
+						tY = Position.Y + EventScript.readShort();
+						
+						new EffectInstance(effectInfo, tX, tY, EventScript.readShort());
+						
+						break;
+					case 0x100A: //EffectSpawnDirectionalRelative
+						effectInfo = EffectManager.I.Effects[EventScript.readShort()];
+		
+						tX = Position.X + EventScript.readShort();
+						tY = Position.Y + EventScript.readShort();
+						var direction:int = EventScript.readShort();
+						var tD:int = 0;
+						
+						switch (Position.D) {
+							case 0: //critter left
+								switch (direction) {
+									case 0: //relative left
+										tD = 3; //down
+										break;
+									case 1: //relative right
+										tD = 2; //up
+										break;
+									case 2: //relative up
+										tD = 0; //left
+										break;
+									case 3: //relative down
+										tD = 1; //right
+										break;
+								}
+								break;
+							case 1: //critter right
+								switch (direction) {
+									case 0: //relative left
+										tD = 2; //up
+										break;
+									case 1: //relative right
+										tD = 3; //down
+										break;
+									case 2: //relative up
+										tD = 1; //right
+										break;
+									case 3: //relative down
+										tD = 0; //left
+										break;
+								}
+								break;
+							case 2: //critter up
+								switch (direction) {
+									case 0: //relative left
+										tD = 0; //left
+										break;
+									case 1: //relative right
+										tD = 1; //right
+										break;
+									case 2: //relative up
+										tD = 2; //up
+										break;
+									case 3: //relative down
+										tD = 3; //down
+										break;
+								}
+								break;
+							case 3: //critter down
+								switch (direction) {
+									case 0: //relative left
+										tD = 1; //right
+										break;
+									case 1: //relative right
+										tD = 0; //left
+										break;
+									case 2: //relative up
+										tD = 3; //down
+										break;
+									case 3: //relative down
+										tD = 2; //up
+										break;
+								}
+								break;
+						}
+						
+						new EffectInstance(effectInfo, tX, tY, tD);
+		
+						break;
+					case 0x100B: //SpawnObject
+						var id:int = EventScript.readShort();
+						
+						if (Position.D == 0) {
+							tX = Position.X - EventScript.readShort();
+							tY = Position.Y + EventScript.readShort();
+						} else if (Position.D == 1) {
+							tX = Position.X + EventScript.readShort();
+							tY = Position.Y + EventScript.readShort();
+						} else if (Position.D == 2) {
+							tY = Position.Y - EventScript.readShort();
+							tX = Position.X + EventScript.readShort();
+						} else if (Position.D == 3) {
+							tY = Position.Y + EventScript.readShort();
+							tX = Position.X - EventScript.readShort();
+						}
+						
+						var o:ObjectInstance;
+						
+						if (ObjectTemplate.Objects[id].IndividualAnimations) {
+							o = new ObjectInstanceAnimated();
+						} else {
+							o = new ObjectInstance();
+						}
+						
+						o.SetInformation(WorldData.CurrentMap, id, tX, tY);
+						WorldData.CurrentMap.Objects.push(o);
+						
+						break;
+					case 0x100D: //Fire a trigger
+						Script.FireTrigger(EventScript.readShort()); break;
+					case 0x4001: //Equip item on the target
+						if (info.CurrentTarget is CritterHuman) {
+							(info.CurrentTarget as CritterHuman).Equipment.EquipSlot(EventScript.readShort(), EventScript.readShort());
+						} else if (info.CurrentTarget is EquipmentItem) {
+							(info.CurrentTarget as EquipmentItem).Owner.EquipSlot(EventScript.readShort(), EventScript.readShort());
+						} else {
+							EventScript.readShort(); EventScript.readShort();
+						} break;
+					case 0x5001: //Movement speed
+						if (info.CurrentTarget is BaseCritter) { 
+							(info.CurrentTarget as BaseCritter).MovementSpeed = EventScript.readShort();
+						} break;
+					case 0x5002: //Movement direction absolute
+					case 0x5003: //Movement direction relative
+						if (info.CurrentTarget is BaseCritter) {
+							var angle:Number = Math.PI * (EventScript.readShort() / 180.0);
+							var move:Boolean = (EventScript.readShort() == 0);
+							if (command == 0x5002) {
+								(info.CurrentTarget as BaseCritter).RequestMove(Math.cos(angle), Math.sin(angle), move);
+							} else if (command == 0x5003) {
+								var c:BaseCritter = (info.CurrentTarget as BaseCritter);
+								angle += Math.atan2(c.virginMoveSpeedY, c.virginMoveSpeedX);								
+								c.RequestMove(Math.cos(angle), Math.sin(angle), move);
+							}
+						} break;
+					case 0x6000: //Play Animation
+						info.Invoker.ChangeState(EventScript.readShort(), false); break;
+					case 0x6001: //Loop Animation
+						info.Invoker.ChangeState(EventScript.readShort(), true); break;
+					case 0x6002: //Animation Speed
+						//TODO: change this on both sides so that its not dependant on FPS anymore and is actually a good number?
+						info.Invoker.UpdatePlaybackSpeed((EventScript.readUnsignedShort() * 0.05)); break;
+					case 0x8000: //IF without ELSE
+						bParam = CanIf(EventScript, info, Position);
+						if (!bParam) {
+							EventScript.readUnsignedShort(); //Just pop the 0xF0FD off
+							ReadUntilBalancedClose(EventScript);
+						} else {
+							ProcessBlock(EventScript, info);
+						} break;
+					case 0x8001: //IF with ELSE
+						bParam = CanIf(EventScript, info, Position);
+						if (bParam) {
+							CallStack.push(true);
+							ProcessBlock(EventScript, info);
+						} else {
+							EventScript.readUnsignedShort(); //Just pop the 0xF0FD off
+							ReadUntilBalancedClose(EventScript);
+							CallStack.push(false);
+						} break;
+					case 0x8002: //Foreach
+						Process_ForEach(EventScript, info, Position);
+						break;
+					case 0x8003: //ELSE
+						bParam = CallStack.pop();
+						if (bParam) {
+							EventScript.readUnsignedShort(); //Just pop the 0xF0FD off
+							ReadUntilBalancedClose(EventScript);
+						} else {
+							ProcessBlock(EventScript, info);
+						} break;
+					default:
+						if (command == 0xF0FD) {
+							deep++;
+						} else if (command == 0xF0FE) {
+							if (deep == 0) return;
+							deep--;
+						} else {
+							trace("Unknown Command: 0x" + command.toString(16));
+						}
+						
+						break;
 				}
 			}
 		}

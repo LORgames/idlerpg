@@ -100,9 +100,7 @@
             this.tabPalette = new System.Windows.Forms.TabPage();
             this.listObjects = new System.Windows.Forms.ListView();
             this.tabMapScript = new System.Windows.Forms.TabPage();
-            this.scriptMap = new CityTools.Components.ScriptBox();
             this.tabMapRegions = new System.Windows.Forms.TabPage();
-            this.scriptScriptRegion = new CityTools.Components.ScriptBox();
             this.btnScriptRegionAreaClear = new System.Windows.Forms.Button();
             this.btnScriptRegionAreaAdd = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
@@ -122,9 +120,6 @@
             this.numSpawnMax = new System.Windows.Forms.NumericUpDown();
             this.label18 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
-            this.listSpawnCritters = new CityTools.Components.ListViewEx();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label16 = new System.Windows.Forms.Label();
             this.btnSpawnAreaAdd = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
@@ -145,6 +140,11 @@
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.timerRedrawAll = new System.Windows.Forms.Timer(this.components);
             this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.scriptScriptRegion = new CityTools.Components.ScriptBox();
+            this.listSpawnCritters = new CityTools.Components.ListViewEx();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.scriptMap = new CityTools.Components.ScriptBox();
             ((System.ComponentModel.ISupportInitialize)(this.main_splitter)).BeginInit();
             this.main_splitter.Panel1.SuspendLayout();
             this.main_splitter.Panel2.SuspendLayout();
@@ -471,7 +471,7 @@
             this.ckbShowObjectBases,
             this.ckbShowTileBases});
             this.mnuShowGrids.Name = "mnuShowGrids";
-            this.mnuShowGrids.Size = new System.Drawing.Size(121, 22);
+            this.mnuShowGrids.Size = new System.Drawing.Size(152, 22);
             this.mnuShowGrids.Text = "Grids";
             // 
             // ckbShowTileGrid
@@ -502,7 +502,7 @@
             this.txtViewportWidth,
             this.txtViewportHeight});
             this.viewportToolStripMenuItem.Name = "viewportToolStripMenuItem";
-            this.viewportToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.viewportToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.viewportToolStripMenuItem.Text = "Viewport";
             // 
             // ckbViewportEnabled
@@ -871,16 +871,6 @@
             this.tabMapScript.Text = "Scripting";
             this.tabMapScript.UseVisualStyleBackColor = true;
             // 
-            // scriptMap
-            // 
-            this.scriptMap.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scriptMap.Location = new System.Drawing.Point(3, 3);
-            this.scriptMap.Name = "scriptMap";
-            this.scriptMap.Script = "";
-            this.scriptMap.ScriptType = ToolCache.Scripting.ScriptTypes.Map;
-            this.scriptMap.Size = new System.Drawing.Size(302, 779);
-            this.scriptMap.TabIndex = 0;
-            // 
             // tabMapRegions
             // 
             this.tabMapRegions.Controls.Add(this.scriptScriptRegion);
@@ -927,15 +917,6 @@
             this.tabMapRegions.TabIndex = 5;
             this.tabMapRegions.Text = "Regions";
             this.tabMapRegions.UseVisualStyleBackColor = true;
-            // 
-            // scriptScriptRegion
-            // 
-            this.scriptScriptRegion.Location = new System.Drawing.Point(3, 552);
-            this.scriptScriptRegion.Name = "scriptScriptRegion";
-            this.scriptScriptRegion.Script = "";
-            this.scriptScriptRegion.ScriptType = ToolCache.Scripting.ScriptTypes.Unknown;
-            this.scriptScriptRegion.Size = new System.Drawing.Size(297, 225);
-            this.scriptScriptRegion.TabIndex = 86;
             // 
             // btnScriptRegionAreaClear
             // 
@@ -1136,32 +1117,6 @@
             this.label17.TabIndex = 65;
             this.label17.Text = "Timeout (sec)";
             // 
-            // listSpawnCritters
-            // 
-            this.listSpawnCritters.AllowColumnReorder = true;
-            this.listSpawnCritters.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2});
-            this.listSpawnCritters.DoubleClickActivation = false;
-            this.listSpawnCritters.FullRowSelect = true;
-            this.listSpawnCritters.Location = new System.Drawing.Point(17, 274);
-            this.listSpawnCritters.Name = "listSpawnCritters";
-            this.listSpawnCritters.Size = new System.Drawing.Size(253, 103);
-            this.listSpawnCritters.TabIndex = 64;
-            this.listSpawnCritters.UseCompatibleStateImageBehavior = false;
-            this.listSpawnCritters.View = System.Windows.Forms.View.Details;
-            this.listSpawnCritters.SubItemClicked += new CityTools.Components.SubItemEventHandler(this.listCritterSpawns_SubItemClicked);
-            this.listSpawnCritters.SubItemEndEditing += new CityTools.Components.SubItemEndEditingEventHandler(this.listCritterSpawns_SubItemEndEditing);
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "Critter";
-            this.columnHeader1.Width = 181;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Spawn%";
-            // 
             // label16
             // 
             this.label16.BackColor = System.Drawing.Color.Silver;
@@ -1327,6 +1282,51 @@
             this.colorDialog.AnyColor = true;
             this.colorDialog.FullOpen = true;
             this.colorDialog.SolidColorOnly = true;
+            // 
+            // scriptScriptRegion
+            // 
+            this.scriptScriptRegion.Location = new System.Drawing.Point(3, 552);
+            this.scriptScriptRegion.Name = "scriptScriptRegion";
+            this.scriptScriptRegion.Script = "";
+            this.scriptScriptRegion.ScriptType = ToolCache.Scripting.ScriptTypes.Region;
+            this.scriptScriptRegion.Size = new System.Drawing.Size(297, 225);
+            this.scriptScriptRegion.TabIndex = 86;
+            // 
+            // listSpawnCritters
+            // 
+            this.listSpawnCritters.AllowColumnReorder = true;
+            this.listSpawnCritters.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2});
+            this.listSpawnCritters.DoubleClickActivation = false;
+            this.listSpawnCritters.FullRowSelect = true;
+            this.listSpawnCritters.Location = new System.Drawing.Point(17, 274);
+            this.listSpawnCritters.Name = "listSpawnCritters";
+            this.listSpawnCritters.Size = new System.Drawing.Size(253, 103);
+            this.listSpawnCritters.TabIndex = 64;
+            this.listSpawnCritters.UseCompatibleStateImageBehavior = false;
+            this.listSpawnCritters.View = System.Windows.Forms.View.Details;
+            this.listSpawnCritters.SubItemClicked += new CityTools.Components.SubItemEventHandler(this.listCritterSpawns_SubItemClicked);
+            this.listSpawnCritters.SubItemEndEditing += new CityTools.Components.SubItemEndEditingEventHandler(this.listCritterSpawns_SubItemEndEditing);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Critter";
+            this.columnHeader1.Width = 181;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Spawn%";
+            // 
+            // scriptMap
+            // 
+            this.scriptMap.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scriptMap.Location = new System.Drawing.Point(3, 3);
+            this.scriptMap.Name = "scriptMap";
+            this.scriptMap.Script = "";
+            this.scriptMap.ScriptType = ToolCache.Scripting.ScriptTypes.Map;
+            this.scriptMap.Size = new System.Drawing.Size(302, 779);
+            this.scriptMap.TabIndex = 0;
             // 
             // MainWindow
             // 

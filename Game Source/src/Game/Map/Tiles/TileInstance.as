@@ -19,7 +19,7 @@ package Game.Map.Tiles {
 			
 			while (--i > -1) {
 				var c:Rect = rectsToCopy[i];
-				var r:Rect = new Rect(true, null, c.X + tileX * 48, c.Y + tileY * 48, c.W, c.H);
+				var r:Rect = new Rect(true, null, c.X + tileX * Global.TileSize, c.Y + tileY * Global.TileSize, c.W, c.H);
 				SolidRectangles.push(r);
 			}
 		}

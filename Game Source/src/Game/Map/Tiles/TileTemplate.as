@@ -11,7 +11,7 @@ package Game.Map.Tiles {
 	 * @author Paul
 	 */
 	public class TileTemplate implements IAnimated {
-		public var Frame:Rectangle = new Rectangle(0, 0, 48, 48);
+		public var Frame:Rectangle = new Rectangle(0, 0, Global.TileSize, Global.TileSize);
 		
 		public var TotalFrames:int = 0;
 		public var StartingFrame:int = 0;
@@ -39,8 +39,9 @@ package Game.Map.Tiles {
 				currentFrame++;
 				if (currentFrame == StartingFrame+TotalFrames) currentFrame = StartingFrame;
 				
-				Frame.x = currentFrame % 21 * 48;
-				Frame.y = int(currentFrame / 21) * 48;
+				//TODO: Unhardcode tiles across as 21, should be tile atlas width / Global.TileSize
+				Frame.x = currentFrame % 21 * Global.TileSize;
+				Frame.y = int(currentFrame / 21) * Global.TileSize;
 			}
 		}
 		
@@ -49,6 +50,8 @@ package Game.Map.Tiles {
 		public static var TotalTiles:int;
 		
 		public static function LoadTileInfo():void {
+			if (!Global.HasTiles) return;
+			
 			BinaryLoader.Load("Data/TileInfo.bin", LoadedTiles);
 			Global.LoadingTotal++;
 		}
@@ -74,8 +77,10 @@ package Game.Map.Tiles {
 				}
 				
 				var j:int = tt.TotalFrames;
-				tt.Frame.x = runningTileCount % 21 * 48;
-				tt.Frame.y = int(runningTileCount / 21) * 48;
+				
+				//TODO: Unhardcode 21 as atlas width, should be Tile atlas width / Global.TileSize
+				tt.Frame.x = runningTileCount % 21 * Global.TileSize;
+				tt.Frame.y = int(runningTileCount / 21) * Global.TileSize;
 				
 				tt.StartingFrame = runningTileCount;
 				tt.currentFrame = tt.StartingFrame;

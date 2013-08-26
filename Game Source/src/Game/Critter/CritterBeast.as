@@ -91,7 +91,7 @@ package Game.Critter {
 		}
 		
 		public function toString():String {
-			return "[" + Info.Name + "]";
+			return "[Critter:" + Info.Name + "]";
 		}
 		
 		override public function CleanUp():void {

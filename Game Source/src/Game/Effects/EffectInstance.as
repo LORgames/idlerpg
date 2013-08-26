@@ -148,7 +148,7 @@ package Game.Effects {
 				Clock.CleanUpList.push(this);
 			} else {
 				//Do some world scans?
-				var objects:Vector.<IMapObject> = new Vector.<IMapObject>();
+				var objects:Vector.<IScriptTarget> = new Vector.<IScriptTarget>();
 				WorldData.CurrentMap.GetObjectsInArea(MyRect, objects, ScriptTypes.NotMe, this);
 				
 				var i:int = objects.length;

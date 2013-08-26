@@ -6,6 +6,7 @@ package WindowSystem {
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
+	import Game.Map.WorldData;
 	/**
 	 * ...
 	 * @author Paul
@@ -30,12 +31,16 @@ package WindowSystem {
 			text = "FPS:" + newFPS + "|DPI=" + Capabilities.screenDPI;
 			
 			if (Main.I != null && Main.I.stage != null) {
-				appendText("|W=" + Main.I.stage.stageWidth + "|H=" + Main.I.stage.stageHeight + "|SX=" + Main.I.stage.scaleX + "|SY=" + Main.I.stage.scaleY);
+				appendText("\nW=" + Main.I.stage.stageWidth + "|H=" + Main.I.stage.stageHeight + "|SX=" + Main.I.stage.scaleX + "|SY=" + Main.I.stage.scaleY);
 				
 				CONFIG::air {
 					if(Main.I.stage.nativeWindow != null) {
-						appendText("|WW=" + Main.I.stage.nativeWindow.width + "|WH=" + Main.I.stage.nativeWindow.height);
+						appendText("\nWW=" + Main.I.stage.nativeWindow.width + "|WH=" + Main.I.stage.nativeWindow.height);
 					}
+				}
+				
+				if(Global.HasCharacter) {
+					appendText("\nHP=" + WorldData.ME.CurrentHP);
 				}
 			}
 		}

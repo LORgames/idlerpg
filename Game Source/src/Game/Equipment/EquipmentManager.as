@@ -50,27 +50,29 @@ package Game.Equipment {
 			i = Weapons.length; while ( --i > -1) ReadEquipmentInfo(b, Weapons, Weapons.length - (i+1));
 			
 			//Then for some reason we set the player equipment up..?
-			
-			//TODO: load player if this is an equipment game?
-			//SetupPlayerEquipment();
+			if(Global.HasCharacter) {
+				SetupPlayerEquipment();
+			}
 			
 			//And reset the loading total while some images load
 			Global.LoadingTotal--;
 		}
 		
 		private function SetupPlayerEquipment():void {
-			if(SaveManager.CurrentSave == null) {
-				WorldData.ME.Equipment.Equip(0, 0, 2, 3, 5, 6);
-			} else {
-				if(!SaveManager.CurrentSave.PlayerDisabled) {
-					var shadowID:int = FindEquipmentIn(Shadows, SaveManager.CurrentSave.shadow);
-					var weaponID:int = FindEquipmentIn(Weapons, SaveManager.CurrentSave.weapon);
-					var bodyID:int = FindEquipmentIn(Bodies, SaveManager.CurrentSave.body);
-					var pantsID:int = FindEquipmentIn(Legs, SaveManager.CurrentSave.legs);
-					var faceID:int = FindEquipmentIn(Heads, SaveManager.CurrentSave.face);
-					var headgearID:int = FindEquipmentIn(Headgear, SaveManager.CurrentSave.headgear);
-					
-					WorldData.ME.Equipment.Equip(shadowID, pantsID, bodyID, faceID, headgearID, weaponID);
+			if(Global.HasCharacter) {
+				if(SaveManager.CurrentSave == null) {
+					WorldData.ME.Equipment.Equip(0, 0, 2, 3, 5, 6);
+				} else {
+					if(!SaveManager.CurrentSave.PlayerDisabled) {
+						var shadowID:int = FindEquipmentIn(Shadows, SaveManager.CurrentSave.shadow);
+						var weaponID:int = FindEquipmentIn(Weapons, SaveManager.CurrentSave.weapon);
+						var bodyID:int = FindEquipmentIn(Bodies, SaveManager.CurrentSave.body);
+						var pantsID:int = FindEquipmentIn(Legs, SaveManager.CurrentSave.legs);
+						var faceID:int = FindEquipmentIn(Heads, SaveManager.CurrentSave.face);
+						var headgearID:int = FindEquipmentIn(Headgear, SaveManager.CurrentSave.headgear);
+						
+						WorldData.ME.Equipment.Equip(shadowID, pantsID, bodyID, faceID, headgearID, weaponID);
+					}
 				}
 			}
 		}
