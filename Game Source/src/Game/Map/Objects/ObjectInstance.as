@@ -136,9 +136,7 @@ package Game.Map.Objects {
 		}
 		
 		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IScriptTarget):void {
-			MyScript.AttachTarget(attacker);
-			MyScript.Run(Script.Attacked);
-			MyScript.PopTarget();
+			MyScript.Run(Script.Attacked, attacker);
 		}
 		
 		public function UpdatePointX(position:PointX):void {

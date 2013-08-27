@@ -30,15 +30,12 @@ package Game.Critter {
 		}
 		
 		override public function CreateCritter(map:MapData, x:int, y:int):BaseCritter {
-			var p:CritterHuman = new CritterHuman();
+			var p:CritterHuman = new CritterHuman(x, y);
 			
 			p.Equipment.Equip(shadow, legs, body, face, headgear, weapon);
 			
 			p.CurrentMap = map;
 			map.Critters.push(p);
-			
-			p.X = x;
-			p.Y = y;
 			
 			p.Update(0);
 			

@@ -11,13 +11,18 @@ package Game.Critter {
 	public class CritterHuman extends BaseCritter {
 		public var Equipment:EquipmentSet;
 		
-		public function CritterHuman() {
+		public function CritterHuman(x:int, y:int) {
 			Equipment = new EquipmentSet(this);
 			
 			Main.OrderedLayer.addChild(Equipment);
 			
 			MyRect.W = 24;
 			MyRect.H = 12;
+			MyRect.X = x-12;
+			MyRect.Y = y-6;
+			
+			this.X = x;
+			this.Y = y;
 		}
 		
 		public override function Update(dt:Number):void {

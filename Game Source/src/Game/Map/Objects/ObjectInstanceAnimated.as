@@ -106,9 +106,7 @@ package Game.Map.Objects {
 		}
 		
 		override public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IScriptTarget):void {
-			MyScript.AttachTarget(attacker);
-			MyScript.Run(Script.Attacked);
-			MyScript.PopTarget();
+			MyScript.Run(Script.Attacked, attacker);
 		}
 		
 		override public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void {

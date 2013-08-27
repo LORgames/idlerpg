@@ -29,8 +29,10 @@ package Game.Scripting {
 		public static const Attacked:uint = 2;
 		public static const Use:uint = 3;
 		public static const Equip:uint = 4;
+		public static const OnEnter:uint = 4;
 		public static const MinionDied:uint = 5;
 		public static const AnimationEnded:uint = 6;
+		public static const OnExit:uint = 6;
 		public static const StartMoving:uint = 7;
 		public static const EndMoving:uint = 8;
 		public static const Died:uint = 9;
@@ -59,18 +61,18 @@ package Game.Scripting {
 			InitialVariables = initalVariables.concat();
 		}
 		
-		internal function Run(event:uint, info:ScriptInstance):void {
+		internal function Run(eventID:uint, info:ScriptInstance):void {
 			//Reset the reader
-			if (event >= TOTAL_EVENT_TYPES) return;
-			if (EventScripts[event] == null) return;
+			if (eventID >= TOTAL_EVENT_TYPES) return;
+			if (EventScripts[eventID] == null) return;
 			
-			var EventScript:ByteArray = EventScripts[event];
+			var EventScript:ByteArray = EventScripts[eventID];
 			EventScript.position = 0;
 			
-			ProcessBlock(EventScript, info);
+			ProcessBlock(EventScript, info, eventID);
 			
 			if(EventScript.position != EventScript.length) {
-				trace("SCRIPT UNFINISHED: [" + info.Invoker + " Event="+event+ " ScriptPosition=" + EventScript.position + "/" + EventScript.length);
+				trace("SCRIPT UNFINISHED: [" + info.Invoker + " Event="+eventID+ " ScriptPosition=" + EventScript.position + "/" + EventScript.length);
 			}
 		}
 		
@@ -228,7 +230,7 @@ package Game.Scripting {
 			return currentCalculatedValue;
 		}
 		
-		private function Process_ForEach(eventScript:ByteArray, info:ScriptInstance, position:PointX):void {
+		private function Process_ForEach(eventScript:ByteArray, info:ScriptInstance, position:PointX, eventID:int):void {
 			var eType:int = eventScript.readUnsignedShort();
 			var arrayType:int = eventScript.readUnsignedShort();
 			
@@ -291,7 +293,7 @@ package Game.Scripting {
 				var target:IScriptTarget = Objects[obji];
 				info.AttachTarget(target);
 				
-				ProcessBlock(eventScript, info);
+				ProcessBlock(eventScript, info, eventID);
 				
 				info.PopTarget();
 				eventScript.position = startIndex;
@@ -399,7 +401,7 @@ package Game.Scripting {
 			}
 		}
 		
-		private function ProcessBlock(EventScript:ByteArray, info:ScriptInstance):void {
+		private function ProcessBlock(EventScript:ByteArray, info:ScriptInstance, eventID:int):void {
 			var effectInfo:EffectInfo;
 			
 			//Some required variables
@@ -591,6 +593,7 @@ package Game.Scripting {
 					case 0x5002: //Movement direction absolute
 					case 0x5003: //Movement direction relative
 						if (info.CurrentTarget is BaseCritter) {
+							trace("CORRECT TARGET!");
 							var angle:Number = Math.PI * (EventScript.readShort() / 180.0);
 							var move:Boolean = (EventScript.readShort() == 0);
 							if (command == 0x5002) {
@@ -600,6 +603,9 @@ package Game.Scripting {
 								angle += Math.atan2(c.virginMoveSpeedY, c.virginMoveSpeedX);								
 								c.RequestMove(Math.cos(angle), Math.sin(angle), move);
 							}
+						} else {
+							trace("WRONG TARGET! " + info.CurrentTarget + " @" + eventID);
+							EventScript.readShort(); EventScript.readShort(); //Remove the two shorts
 						} break;
 					case 0x6000: //Play Animation
 						info.Invoker.ChangeState(EventScript.readShort(), false); break;
@@ -614,20 +620,20 @@ package Game.Scripting {
 							EventScript.readUnsignedShort(); //Just pop the 0xF0FD off
 							ReadUntilBalancedClose(EventScript);
 						} else {
-							ProcessBlock(EventScript, info);
+							ProcessBlock(EventScript, info, eventID);
 						} break;
 					case 0x8001: //IF with ELSE
 						bParam = CanIf(EventScript, info, Position);
 						if (bParam) {
 							CallStack.push(true);
-							ProcessBlock(EventScript, info);
+							ProcessBlock(EventScript, info, eventID);
 						} else {
 							EventScript.readUnsignedShort(); //Just pop the 0xF0FD off
 							ReadUntilBalancedClose(EventScript);
 							CallStack.push(false);
 						} break;
 					case 0x8002: //Foreach
-						Process_ForEach(EventScript, info, Position);
+						Process_ForEach(EventScript, info, Position, eventID);
 						break;
 					case 0x8003: //ELSE
 						bParam = CallStack.pop();
@@ -635,7 +641,7 @@ package Game.Scripting {
 							EventScript.readUnsignedShort(); //Just pop the 0xF0FD off
 							ReadUntilBalancedClose(EventScript);
 						} else {
-							ProcessBlock(EventScript, info);
+							ProcessBlock(EventScript, info, eventID);
 						} break;
 					default:
 						if (command == 0xF0FD) {
@@ -644,7 +650,7 @@ package Game.Scripting {
 							if (deep == 0) return;
 							deep--;
 						} else {
-							trace("Unknown Command: 0x" + command.toString(16));
+							trace("Unknown Command: 0x" + command.toString(16) + " Event="+eventID + " Position="+EventScript.position+" Length="+EventScript.length+" Invoker="+info.Invoker);
 						}
 						
 						break;

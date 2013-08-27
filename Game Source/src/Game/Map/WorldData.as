@@ -24,7 +24,7 @@ package Game.Map {
 		
 		public static function Initialize(loadReq:String):void {
 			if (Global.HasCharacter) {
-				ME = new CritterHuman();
+				ME = new CritterHuman(0, 0);
 				ME.Persistent = true;
 				ME.MovementSpeed = 150;
 			}

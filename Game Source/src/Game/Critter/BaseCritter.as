@@ -8,10 +8,12 @@ package Game.Critter {
 	import flash.geom.Point;
 	import Game.Map.MapData;
 	import Game.Map.Portals.Portal;
+	import Game.Map.ScriptRegion;
 	import Game.Map.Tiles.TileHelper;
 	import Game.Map.Tiles.TileInstance;
 	import Game.Map.Tiles.TileTemplate;
 	import Game.Map.WorldData;
+	import Game.Scripting.GlobalVariables;
 	import Game.Scripting.IScriptTarget;
 	import Game.Scripting.Script;
 	import Game.Scripting.ScriptInstance;
@@ -50,6 +52,7 @@ package Game.Critter {
 		public var MyRect:Rect;
 		
 		public var MyScript:ScriptInstance;
+		private var ActiveScriptRegions:Vector.<ScriptRegion> = new Vector.<ScriptRegion>();
 		
 		//Critter information
 		public var MyAIType:int;
@@ -58,6 +61,58 @@ package Game.Critter {
 		public function BaseCritter() {
 			MyRect = new Rect(false, this, 0, 0, 0, 0);
 			Clock.I.Updatables.push(this);
+		}
+		
+		protected function CheckScriptRegions():void {
+			var sci:int = CurrentMap.ScriptRegions.length;
+			var sai:int;
+			var sr:ScriptRegion;
+			var hasCollision:Boolean;
+			var activeRegions:Vector.<ScriptRegion> = new Vector.<ScriptRegion>();
+			
+			while (--sci > -1) {
+				hasCollision = false;
+				sr = CurrentMap.ScriptRegions[sci];
+				sai = sr.Area.length;
+				
+				while (--sai > -1) {
+					if (sr.Area[sai].intersects(MyRect)) {
+						hasCollision = true;
+						break;
+					}
+				}
+				
+				if (hasCollision) {
+					activeRegions.push(sr);
+					break;
+				}
+			}
+			
+			sci = ActiveScriptRegions.length;
+			while (--sci > -1) {
+				sai = activeRegions.indexOf(ActiveScriptRegions[sci]);
+				
+				if (sai == -1) {
+					//We stepped off a script region
+					ActiveScriptRegions[sci].MyScript.Run(Script.OnExit, this);
+					
+					trace("Stepped Off");
+					
+					ActiveScriptRegions.splice(sci, 1);
+				} else {
+					//We were on it last update
+					activeRegions.splice(sai, 1);
+				}
+			}
+			
+			sci = activeRegions.length;
+			while (--sci > -1) {
+				activeRegions[sci].MyScript.Run(Script.OnEnter, this);
+				
+				trace("Stepped on!");
+				
+				ActiveScriptRegions.push(activeRegions[sci]);
+			}
 		}
 		
 		public function ShiftMaps(newMap:MapData, location:int = 0):void {
@@ -119,7 +174,7 @@ package Game.Critter {
 			
 			//// AI  AI  AI  AI ///////////////////////////////////////////////////////// AI
 			
-			if (WorldData.ME != this && dt > 0) {
+			if (WorldData.ME != this && dt > 0 && Global.HasCharacter) {
 				//AI AGENTS
 				var me:BaseCritter = WorldData.ME==null?this:WorldData.ME;
 				var dx:Number = (this.X - me.X);
@@ -239,12 +294,16 @@ package Game.Critter {
 					MyRect.X = X - MyRect.W / 2;
 					MyRect.Y = Y - MyRect.H / 2;
 				}
+				
+				CheckScriptRegions();
 			}
 		}
 		
 		public function RequestMove(xSpeed:Number, ySpeed:Number, move:Boolean = true):void {
 			virginMoveSpeedX = xSpeed;
 			virginMoveSpeedY = ySpeed;
+			
+			trace(xSpeed + ", " + ySpeed + " M=" + move);
 			
 			if (xSpeed != 0 || ySpeed != 0) {
 				direction = SpeedToDirection(xSpeed, ySpeed);
@@ -277,7 +336,7 @@ package Game.Critter {
 		}
 		
 		public function RequestBasicAttack():void {
-			//need to deal with a few things here, incl state management
+			//Gets handed down to the child classes.
 		}
 		
 		public function DrawDebugRect(gfx:Graphics):void {
@@ -303,14 +362,14 @@ package Game.Critter {
 			}
 			
 			if (this == WorldData.ME) {
-				Main.I.Renderer.FadeToBlack(null, "You are died.");
+				Main.I.Renderer.FadeToBlack(null, GlobalVariables.Strings[0]);
 			}
 		}
 		
 		public function CleanUp():void {
 			if (Persistent) return;
 			
-			if(CurrentMap != null) CurrentMap.CritterPop(this);
+			if (CurrentMap != null) CurrentMap.CritterPop(this);
 			MyRect = null;
 			
 			if(MyScript != null) {

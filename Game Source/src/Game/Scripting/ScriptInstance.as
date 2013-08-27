@@ -43,12 +43,12 @@ package Game.Scripting {
 			}
 		}
 		
-		public function AttachTarget(target:IScriptTarget):void {
+		internal function AttachTarget(target:IScriptTarget):void {
 			TargetStack.push(CurrentTarget);
 			CurrentTarget = target;
 		}
 		
-		public function PopTarget():void {
+		internal function PopTarget():void {
 			if(TargetStack.length > 0) {
 				CurrentTarget = TargetStack.pop();
 			} else {
@@ -56,9 +56,22 @@ package Game.Scripting {
 			}
 		}
 		
-		public function Run(event:uint):void {
+		public function Run(event:uint, target:IScriptTarget = null):void {
 			//TODO: Set up variables here
+			
+			if (target != null) {
+				AttachTarget(target);
+				trace("TARGETTING: " + CurrentTarget);
+			} else {
+				if(event == 4 || event == 6) {
+					trace("No target");
+				}
+			}
+			
 			MyScript.Run(event, this);
+			
+			TargetStack.length = 0;
+			CurrentTarget = Invoker;
 		}
 		
 		/* INTERFACE EngineTiming.ICleanUp */
