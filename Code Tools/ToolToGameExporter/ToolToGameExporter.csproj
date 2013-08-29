@@ -56,6 +56,7 @@
     <Compile Include="ExportProgressForm.Designer.cs">
       <DependentUpon>ExportProgressForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FactionCrusher.cs" />
     <Compile Include="FinishedDisplay.cs">
       <SubType>Form</SubType>
     </Compile>

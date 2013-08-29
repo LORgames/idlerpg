@@ -35,6 +35,7 @@ namespace ToolToGameExporter {
                 f.AddByte((byte)c.CritterType);
                 f.AddString(c.Name);
 
+                //Other basic data
                 f.AddInt(c.AIType);
 
                 f.AddInt(c.ExperienceGain);
@@ -43,11 +44,21 @@ namespace ToolToGameExporter {
                 f.AddShort(c.MovementSpeed);
                 f.AddShort(c.AlertRange);
 
+                //Adding scripts
                 ScriptInfo script = new ScriptInfo("Critter:AI:" + c.Name, ScriptTypes.Critter);
                 script.AnimationNames = (c.CritterType == CritterTypes.NonHumanoid) ? (c as CritterBeast).AnimationNames() : null;
 
                 ScriptCrusher.ProcessScript(script, c.AICommands, f);
 
+                //Adding factions
+                if (c.Groups.Count + 1 > 255) Processor.Errors.Add(new ProcessingError("Critter", c.Name, "A critter can only belong to upto 255 Factions, many less would be recommended as well though!"));
+                f.AddByte((byte)(c.Groups.Count + 1));
+                f.AddShort(Factions.GetID(c.NodeGroup));
+                foreach (string s in c.Groups) {
+                    f.AddShort(Factions.GetID(s));
+                }
+
+                //Now humanoid/beastoid specific things.
                 if (c.CritterType == CritterTypes.Humanoid) {
                     CritterHuman ch = (c as CritterHuman);
                     f.AddShort(EquipmentCrusher.MappedEquipmentIDs[ch.Shadow]);

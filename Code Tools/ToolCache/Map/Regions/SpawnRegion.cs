@@ -13,6 +13,7 @@ namespace ToolCache.Map.Regions {
         public byte SpawnOnLoad = 1;
         public byte MaxSpawn = 10;
         public short Timeout = 60;
+        public string Faction = "";
 
         public static SpawnRegion LoadFromBinaryIO(BinaryIO f) {
             SpawnRegion s = new SpawnRegion();
@@ -22,6 +23,7 @@ namespace ToolCache.Map.Regions {
             s.SpawnOnLoad = f.GetByte();
             s.MaxSpawn = f.GetByte();
             s.Timeout = f.GetShort();
+            s.Faction = f.GetString();
 
             int totalSpawns = (int)f.GetByte();
 
@@ -38,6 +40,7 @@ namespace ToolCache.Map.Regions {
             f.AddByte(SpawnOnLoad);
             f.AddByte(MaxSpawn);
             f.AddShort(Timeout);
+            f.AddString(Faction);
 
             f.AddByte((byte)SpawnList.Count);
 

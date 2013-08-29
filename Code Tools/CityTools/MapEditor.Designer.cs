@@ -43,6 +43,7 @@
             this.btnOtherToolsMenu = new System.Windows.Forms.ToolStripDropDownButton();
             this.btnCritterEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.btnShadowTool = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnFactionEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.btnEffectEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.btnEquipmentEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.btnItemEditor = new System.Windows.Forms.ToolStripMenuItem();
@@ -99,8 +100,10 @@
             this.label22 = new System.Windows.Forms.Label();
             this.tabPalette = new System.Windows.Forms.TabPage();
             this.listObjects = new System.Windows.Forms.ListView();
-            this.tabMapScript = new System.Windows.Forms.TabPage();
             this.tabMapRegions = new System.Windows.Forms.TabPage();
+            this.cbSpawnRegionFaction = new System.Windows.Forms.ComboBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.scriptScriptRegion = new CityTools.Components.ScriptBox();
             this.btnScriptRegionAreaClear = new System.Windows.Forms.Button();
             this.btnScriptRegionAreaAdd = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
@@ -120,6 +123,9 @@
             this.numSpawnMax = new System.Windows.Forms.NumericUpDown();
             this.label18 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
+            this.listSpawnCritters = new CityTools.Components.ListViewEx();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label16 = new System.Windows.Forms.Label();
             this.btnSpawnAreaAdd = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
@@ -137,14 +143,11 @@
             this.btnPortalAdd = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.listPortals = new System.Windows.Forms.ListBox();
+            this.tabMapScript = new System.Windows.Forms.TabPage();
+            this.scriptMap = new CityTools.Components.ScriptBox();
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.timerRedrawAll = new System.Windows.Forms.Timer(this.components);
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.scriptScriptRegion = new CityTools.Components.ScriptBox();
-            this.listSpawnCritters = new CityTools.Components.ListViewEx();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.scriptMap = new CityTools.Components.ScriptBox();
             ((System.ComponentModel.ISupportInitialize)(this.main_splitter)).BeginInit();
             this.main_splitter.Panel1.SuspendLayout();
             this.main_splitter.Panel2.SuspendLayout();
@@ -161,12 +164,12 @@
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numBrushSize)).BeginInit();
             this.tabPalette.SuspendLayout();
-            this.tabMapScript.SuspendLayout();
             this.tabMapRegions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numSpawnChance)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSpawnLoad)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSpawnTimer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSpawnMax)).BeginInit();
+            this.tabMapScript.SuspendLayout();
             this.SuspendLayout();
             // 
             // main_splitter
@@ -226,7 +229,7 @@
             this.btnGlobalSettingsEditor.Image = global::CityTools.Properties.Resources.Monster;
             this.btnGlobalSettingsEditor.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnGlobalSettingsEditor.Name = "btnGlobalSettingsEditor";
-            this.btnGlobalSettingsEditor.Size = new System.Drawing.Size(125, 22);
+            this.btnGlobalSettingsEditor.Size = new System.Drawing.Size(116, 22);
             this.btnGlobalSettingsEditor.Text = "Global Settings (G)";
             // 
             // cbMapPieces
@@ -297,71 +300,78 @@
             this.btnWorldEditor});
             this.btnOtherToolsMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnOtherToolsMenu.Name = "btnOtherToolsMenu";
-            this.btnOtherToolsMenu.Size = new System.Drawing.Size(82, 22);
+            this.btnOtherToolsMenu.Size = new System.Drawing.Size(76, 22);
             this.btnOtherToolsMenu.Text = "Other Tools";
             // 
             // btnCritterEditor
             // 
             this.btnCritterEditor.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnShadowTool});
+            this.btnShadowTool,
+            this.btnFactionEditor});
             this.btnCritterEditor.Image = global::CityTools.Properties.Resources.Monster;
             this.btnCritterEditor.Name = "btnCritterEditor";
-            this.btnCritterEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnCritterEditor.Size = new System.Drawing.Size(214, 22);
             this.btnCritterEditor.Text = "Critter Editor (C)";
             // 
             // btnShadowTool
             // 
             this.btnShadowTool.Name = "btnShadowTool";
-            this.btnShadowTool.Size = new System.Drawing.Size(143, 22);
+            this.btnShadowTool.Size = new System.Drawing.Size(170, 22);
             this.btnShadowTool.Text = "Shadow Tool";
+            // 
+            // btnFactionEditor
+            // 
+            this.btnFactionEditor.Name = "btnFactionEditor";
+            this.btnFactionEditor.Size = new System.Drawing.Size(170, 22);
+            this.btnFactionEditor.Text = "Faction Editor (Q)";
             // 
             // btnEffectEditor
             // 
             this.btnEffectEditor.Image = global::CityTools.Properties.Resources.bomb;
             this.btnEffectEditor.Name = "btnEffectEditor";
-            this.btnEffectEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnEffectEditor.Size = new System.Drawing.Size(214, 22);
             this.btnEffectEditor.Text = "Effect Editor (F)";
             // 
             // btnEquipmentEditor
             // 
             this.btnEquipmentEditor.Image = global::CityTools.Properties.Resources.mouse;
             this.btnEquipmentEditor.Name = "btnEquipmentEditor";
-            this.btnEquipmentEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnEquipmentEditor.Size = new System.Drawing.Size(214, 22);
             this.btnEquipmentEditor.Text = "Equipment Editor (E)";
             // 
             // btnItemEditor
             // 
             this.btnItemEditor.Image = global::CityTools.Properties.Resources.bell;
             this.btnItemEditor.Name = "btnItemEditor";
-            this.btnItemEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnItemEditor.Size = new System.Drawing.Size(214, 22);
             this.btnItemEditor.Text = "Item Editor (I)";
             // 
             // btnObjectEditor
             // 
             this.btnObjectEditor.Image = global::CityTools.Properties.Resources.attach;
             this.btnObjectEditor.Name = "btnObjectEditor";
-            this.btnObjectEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnObjectEditor.Size = new System.Drawing.Size(214, 22);
             this.btnObjectEditor.Text = "Object Template Editor (O)";
             // 
             // btnPortraitEditor
             // 
             this.btnPortraitEditor.Image = global::CityTools.Properties.Resources.Humanoid;
             this.btnPortraitEditor.Name = "btnPortraitEditor";
-            this.btnPortraitEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnPortraitEditor.Size = new System.Drawing.Size(214, 22);
             this.btnPortraitEditor.Text = "Portrait Editor (P)";
             // 
             // btnSaveEditor
             // 
             this.btnSaveEditor.Image = global::CityTools.Properties.Resources.disk;
             this.btnSaveEditor.Name = "btnSaveEditor";
-            this.btnSaveEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnSaveEditor.Size = new System.Drawing.Size(214, 22);
             this.btnSaveEditor.Text = "Save File Editor (V)";
             // 
             // btnSoundEditor
             // 
             this.btnSoundEditor.Image = global::CityTools.Properties.Resources.music;
             this.btnSoundEditor.Name = "btnSoundEditor";
-            this.btnSoundEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnSoundEditor.Size = new System.Drawing.Size(214, 22);
             this.btnSoundEditor.Text = "Sound Editor (Z)";
             // 
             // btnTileEditorTool
@@ -370,27 +380,27 @@
             this.btnTileMerger});
             this.btnTileEditorTool.Image = global::CityTools.Properties.Resources.application_double;
             this.btnTileEditorTool.Name = "btnTileEditorTool";
-            this.btnTileEditorTool.Size = new System.Drawing.Size(216, 22);
+            this.btnTileEditorTool.Size = new System.Drawing.Size(214, 22);
             this.btnTileEditorTool.Text = "Tile Editor (T)";
             // 
             // btnTileMerger
             // 
             this.btnTileMerger.Name = "btnTileMerger";
-            this.btnTileMerger.Size = new System.Drawing.Size(134, 22);
+            this.btnTileMerger.Size = new System.Drawing.Size(138, 22);
             this.btnTileMerger.Text = "Tile Merger";
             // 
             // btnUIEditor
             // 
             this.btnUIEditor.Image = global::CityTools.Properties.Resources.application_view_gallery;
             this.btnUIEditor.Name = "btnUIEditor";
-            this.btnUIEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnUIEditor.Size = new System.Drawing.Size(214, 22);
             this.btnUIEditor.Text = "UI Editor (U)";
             // 
             // btnWorldEditor
             // 
             this.btnWorldEditor.Image = global::CityTools.Properties.Resources.world;
             this.btnWorldEditor.Name = "btnWorldEditor";
-            this.btnWorldEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnWorldEditor.Size = new System.Drawing.Size(214, 22);
             this.btnWorldEditor.Text = "World Editor (X)";
             // 
             // toolStripSeparator2
@@ -408,7 +418,7 @@
             this.btnExport.Image = global::CityTools.Properties.Resources.bug;
             this.btnExport.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(84, 22);
+            this.btnExport.Size = new System.Drawing.Size(83, 22);
             this.btnExport.Text = "Test (F5)";
             // 
             // ckbExportDebugRender
@@ -444,7 +454,7 @@
             this.cbExportSave.Items.AddRange(new object[] {
             "No Save"});
             this.cbExportSave.Name = "cbExportSave";
-            this.cbExportSave.Size = new System.Drawing.Size(121, 23);
+            this.cbExportSave.Size = new System.Drawing.Size(121, 21);
             // 
             // toolStripSeparator3
             // 
@@ -461,7 +471,7 @@
             this.btnViewMenu.Image = ((System.Drawing.Image)(resources.GetObject("btnViewMenu.Image")));
             this.btnViewMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnViewMenu.Name = "btnViewMenu";
-            this.btnViewMenu.Size = new System.Drawing.Size(45, 22);
+            this.btnViewMenu.Size = new System.Drawing.Size(42, 22);
             this.btnViewMenu.Text = "View";
             // 
             // mnuShowGrids
@@ -471,28 +481,28 @@
             this.ckbShowObjectBases,
             this.ckbShowTileBases});
             this.mnuShowGrids.Name = "mnuShowGrids";
-            this.mnuShowGrids.Size = new System.Drawing.Size(152, 22);
+            this.mnuShowGrids.Size = new System.Drawing.Size(127, 22);
             this.mnuShowGrids.Text = "Grids";
             // 
             // ckbShowTileGrid
             // 
             this.ckbShowTileGrid.CheckOnClick = true;
             this.ckbShowTileGrid.Name = "ckbShowTileGrid";
-            this.ckbShowTileGrid.Size = new System.Drawing.Size(190, 22);
+            this.ckbShowTileGrid.Size = new System.Drawing.Size(194, 22);
             this.ckbShowTileGrid.Text = "Show Outlines (1)";
             // 
             // ckbShowObjectBases
             // 
             this.ckbShowObjectBases.CheckOnClick = true;
             this.ckbShowObjectBases.Name = "ckbShowObjectBases";
-            this.ckbShowObjectBases.Size = new System.Drawing.Size(190, 22);
+            this.ckbShowObjectBases.Size = new System.Drawing.Size(194, 22);
             this.ckbShowObjectBases.Text = "Show Object Bases (2)";
             // 
             // ckbShowTileBases
             // 
             this.ckbShowTileBases.CheckOnClick = true;
             this.ckbShowTileBases.Name = "ckbShowTileBases";
-            this.ckbShowTileBases.Size = new System.Drawing.Size(190, 22);
+            this.ckbShowTileBases.Size = new System.Drawing.Size(194, 22);
             this.ckbShowTileBases.Text = "Show Tile Bases (3)";
             // 
             // viewportToolStripMenuItem
@@ -502,7 +512,7 @@
             this.txtViewportWidth,
             this.txtViewportHeight});
             this.viewportToolStripMenuItem.Name = "viewportToolStripMenuItem";
-            this.viewportToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.viewportToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.viewportToolStripMenuItem.Text = "Viewport";
             // 
             // ckbViewportEnabled
@@ -516,14 +526,14 @@
             // 
             this.txtViewportWidth.AutoToolTip = true;
             this.txtViewportWidth.Name = "txtViewportWidth";
-            this.txtViewportWidth.Size = new System.Drawing.Size(100, 23);
+            this.txtViewportWidth.Size = new System.Drawing.Size(100, 21);
             this.txtViewportWidth.Text = "800";
             this.txtViewportWidth.ToolTipText = "Viewport Width";
             // 
             // txtViewportHeight
             // 
             this.txtViewportHeight.Name = "txtViewportHeight";
-            this.txtViewportHeight.Size = new System.Drawing.Size(100, 23);
+            this.txtViewportHeight.Size = new System.Drawing.Size(100, 21);
             this.txtViewportHeight.Text = "600";
             this.txtViewportHeight.ToolTipText = "Viewport Height";
             // 
@@ -535,7 +545,7 @@
             // lblHighlightedCell
             // 
             this.lblHighlightedCell.Name = "lblHighlightedCell";
-            this.lblHighlightedCell.Size = new System.Drawing.Size(27, 15);
+            this.lblHighlightedCell.Size = new System.Drawing.Size(24, 22);
             this.lblHighlightedCell.Text = "Cell";
             // 
             // mapViewPanel
@@ -860,19 +870,10 @@
             this.listObjects.UseCompatibleStateImageBehavior = false;
             this.listObjects.SelectedIndexChanged += new System.EventHandler(this.listObjects_SelectedIndexChanged);
             // 
-            // tabMapScript
-            // 
-            this.tabMapScript.Controls.Add(this.scriptMap);
-            this.tabMapScript.Location = new System.Drawing.Point(4, 22);
-            this.tabMapScript.Name = "tabMapScript";
-            this.tabMapScript.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMapScript.Size = new System.Drawing.Size(308, 785);
-            this.tabMapScript.TabIndex = 4;
-            this.tabMapScript.Text = "Scripting";
-            this.tabMapScript.UseVisualStyleBackColor = true;
-            // 
             // tabMapRegions
             // 
+            this.tabMapRegions.Controls.Add(this.cbSpawnRegionFaction);
+            this.tabMapRegions.Controls.Add(this.label9);
             this.tabMapRegions.Controls.Add(this.scriptScriptRegion);
             this.tabMapRegions.Controls.Add(this.btnScriptRegionAreaClear);
             this.tabMapRegions.Controls.Add(this.btnScriptRegionAreaAdd);
@@ -918,9 +919,41 @@
             this.tabMapRegions.Text = "Regions";
             this.tabMapRegions.UseVisualStyleBackColor = true;
             // 
+            // cbSpawnRegionFaction
+            // 
+            this.cbSpawnRegionFaction.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbSpawnRegionFaction.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbSpawnRegionFaction.FormattingEnabled = true;
+            this.cbSpawnRegionFaction.Location = new System.Drawing.Point(69, 228);
+            this.cbSpawnRegionFaction.Name = "cbSpawnRegionFaction";
+            this.cbSpawnRegionFaction.Size = new System.Drawing.Size(159, 21);
+            this.cbSpawnRegionFaction.TabIndex = 88;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(18, 231);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(45, 13);
+            this.label9.TabIndex = 87;
+            this.label9.Text = "Faction:";
+            // 
+            // scriptScriptRegion
+            // 
+            this.scriptScriptRegion.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.scriptScriptRegion.Location = new System.Drawing.Point(3, 587);
+            this.scriptScriptRegion.Name = "scriptScriptRegion";
+            this.scriptScriptRegion.Script = "";
+            this.scriptScriptRegion.ScriptType = ToolCache.Scripting.ScriptTypes.Region;
+            this.scriptScriptRegion.Size = new System.Drawing.Size(297, 190);
+            this.scriptScriptRegion.TabIndex = 86;
+            // 
             // btnScriptRegionAreaClear
             // 
-            this.btnScriptRegionAreaClear.Location = new System.Drawing.Point(100, 524);
+            this.btnScriptRegionAreaClear.Location = new System.Drawing.Point(101, 558);
             this.btnScriptRegionAreaClear.Name = "btnScriptRegionAreaClear";
             this.btnScriptRegionAreaClear.Size = new System.Drawing.Size(78, 23);
             this.btnScriptRegionAreaClear.TabIndex = 85;
@@ -929,7 +962,7 @@
             // 
             // btnScriptRegionAreaAdd
             // 
-            this.btnScriptRegionAreaAdd.Location = new System.Drawing.Point(18, 524);
+            this.btnScriptRegionAreaAdd.Location = new System.Drawing.Point(19, 558);
             this.btnScriptRegionAreaAdd.Name = "btnScriptRegionAreaAdd";
             this.btnScriptRegionAreaAdd.Size = new System.Drawing.Size(78, 23);
             this.btnScriptRegionAreaAdd.TabIndex = 84;
@@ -939,7 +972,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(19, 501);
+            this.label3.Location = new System.Drawing.Point(18, 535);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(38, 13);
             this.label3.TabIndex = 83;
@@ -947,15 +980,18 @@
             // 
             // txtScriptRegionName
             // 
-            this.txtScriptRegionName.Location = new System.Drawing.Point(63, 498);
+            this.txtScriptRegionName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtScriptRegionName.Location = new System.Drawing.Point(64, 532);
             this.txtScriptRegionName.Name = "txtScriptRegionName";
-            this.txtScriptRegionName.Size = new System.Drawing.Size(114, 20);
+            this.txtScriptRegionName.Size = new System.Drawing.Size(164, 20);
             this.txtScriptRegionName.TabIndex = 80;
             // 
             // ckbDrawScriptRegions
             // 
+            this.ckbDrawScriptRegions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.ckbDrawScriptRegions.AutoSize = true;
-            this.ckbDrawScriptRegions.Location = new System.Drawing.Point(205, 465);
+            this.ckbDrawScriptRegions.Location = new System.Drawing.Point(234, 499);
             this.ckbDrawScriptRegions.Name = "ckbDrawScriptRegions";
             this.ckbDrawScriptRegions.Size = new System.Drawing.Size(65, 17);
             this.ckbDrawScriptRegions.TabIndex = 79;
@@ -964,8 +1000,9 @@
             // 
             // btnScriptRegionDelete
             // 
+            this.btnScriptRegionDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnScriptRegionDelete.Image = global::CityTools.Properties.Resources.delete;
-            this.btnScriptRegionDelete.Location = new System.Drawing.Point(234, 436);
+            this.btnScriptRegionDelete.Location = new System.Drawing.Point(262, 470);
             this.btnScriptRegionDelete.Name = "btnScriptRegionDelete";
             this.btnScriptRegionDelete.Size = new System.Drawing.Size(23, 23);
             this.btnScriptRegionDelete.TabIndex = 78;
@@ -973,8 +1010,9 @@
             // 
             // btnScriptRegionAdd
             // 
+            this.btnScriptRegionAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnScriptRegionAdd.Image = global::CityTools.Properties.Resources.add;
-            this.btnScriptRegionAdd.Location = new System.Drawing.Point(205, 436);
+            this.btnScriptRegionAdd.Location = new System.Drawing.Point(234, 470);
             this.btnScriptRegionAdd.Name = "btnScriptRegionAdd";
             this.btnScriptRegionAdd.Size = new System.Drawing.Size(23, 23);
             this.btnScriptRegionAdd.TabIndex = 77;
@@ -983,7 +1021,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(13, 420);
+            this.label8.Location = new System.Drawing.Point(14, 454);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(76, 13);
             this.label8.TabIndex = 76;
@@ -991,25 +1029,29 @@
             // 
             // listScriptRegions
             // 
+            this.listScriptRegions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.listScriptRegions.FormattingEnabled = true;
-            this.listScriptRegions.Location = new System.Drawing.Point(18, 436);
+            this.listScriptRegions.Location = new System.Drawing.Point(19, 470);
             this.listScriptRegions.Name = "listScriptRegions";
             this.listScriptRegions.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listScriptRegions.Size = new System.Drawing.Size(181, 56);
+            this.listScriptRegions.Size = new System.Drawing.Size(209, 56);
             this.listScriptRegions.TabIndex = 75;
             // 
             // label2
             // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.BackColor = System.Drawing.Color.Silver;
             this.label2.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label2.Location = new System.Drawing.Point(17, 416);
+            this.label2.Location = new System.Drawing.Point(18, 450);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(260, 1);
+            this.label2.Size = new System.Drawing.Size(269, 1);
             this.label2.TabIndex = 74;
             // 
             // btnNormalizeSpawnRegion
             // 
-            this.btnNormalizeSpawnRegion.Location = new System.Drawing.Point(17, 383);
+            this.btnNormalizeSpawnRegion.Location = new System.Drawing.Point(17, 406);
             this.btnNormalizeSpawnRegion.Name = "btnNormalizeSpawnRegion";
             this.btnNormalizeSpawnRegion.Size = new System.Drawing.Size(89, 23);
             this.btnNormalizeSpawnRegion.TabIndex = 73;
@@ -1018,7 +1060,7 @@
             // 
             // numSpawnChance
             // 
-            this.numSpawnChance.Location = new System.Drawing.Point(131, 340);
+            this.numSpawnChance.Location = new System.Drawing.Point(131, 363);
             this.numSpawnChance.Name = "numSpawnChance";
             this.numSpawnChance.Size = new System.Drawing.Size(48, 20);
             this.numSpawnChance.TabIndex = 72;
@@ -1027,7 +1069,7 @@
             // 
             // btnSpawnAreaClear
             // 
-            this.btnSpawnAreaClear.Location = new System.Drawing.Point(194, 383);
+            this.btnSpawnAreaClear.Location = new System.Drawing.Point(194, 406);
             this.btnSpawnAreaClear.Name = "btnSpawnAreaClear";
             this.btnSpawnAreaClear.Size = new System.Drawing.Size(76, 23);
             this.btnSpawnAreaClear.TabIndex = 71;
@@ -1036,20 +1078,22 @@
             // 
             // numSpawnLoad
             // 
-            this.numSpawnLoad.Location = new System.Drawing.Point(104, 248);
+            this.numSpawnLoad.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.numSpawnLoad.Location = new System.Drawing.Point(132, 268);
             this.numSpawnLoad.Maximum = new decimal(new int[] {
             25,
             0,
             0,
             0});
             this.numSpawnLoad.Name = "numSpawnLoad";
-            this.numSpawnLoad.Size = new System.Drawing.Size(80, 20);
+            this.numSpawnLoad.Size = new System.Drawing.Size(59, 20);
             this.numSpawnLoad.TabIndex = 70;
             // 
             // label21
             // 
+            this.label21.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(101, 232);
+            this.label21.Location = new System.Drawing.Point(129, 252);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(62, 13);
             this.label21.TabIndex = 69;
@@ -1057,7 +1101,8 @@
             // 
             // numSpawnTimer
             // 
-            this.numSpawnTimer.Location = new System.Drawing.Point(17, 248);
+            this.numSpawnTimer.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.numSpawnTimer.Location = new System.Drawing.Point(58, 268);
             this.numSpawnTimer.Maximum = new decimal(new int[] {
             1200,
             0,
@@ -1069,7 +1114,7 @@
             0,
             0});
             this.numSpawnTimer.Name = "numSpawnTimer";
-            this.numSpawnTimer.Size = new System.Drawing.Size(80, 20);
+            this.numSpawnTimer.Size = new System.Drawing.Size(68, 20);
             this.numSpawnTimer.TabIndex = 68;
             this.numSpawnTimer.Value = new decimal(new int[] {
             60,
@@ -1079,7 +1124,8 @@
             // 
             // numSpawnMax
             // 
-            this.numSpawnMax.Location = new System.Drawing.Point(190, 248);
+            this.numSpawnMax.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.numSpawnMax.Location = new System.Drawing.Point(197, 268);
             this.numSpawnMax.Maximum = new decimal(new int[] {
             25,
             0,
@@ -1091,7 +1137,7 @@
             0,
             0});
             this.numSpawnMax.Name = "numSpawnMax";
-            this.numSpawnMax.Size = new System.Drawing.Size(80, 20);
+            this.numSpawnMax.Size = new System.Drawing.Size(59, 20);
             this.numSpawnMax.TabIndex = 67;
             this.numSpawnMax.Value = new decimal(new int[] {
             1,
@@ -1101,8 +1147,9 @@
             // 
             // label18
             // 
+            this.label18.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(187, 232);
+            this.label18.Location = new System.Drawing.Point(194, 252);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(62, 13);
             this.label18.TabIndex = 66;
@@ -1110,25 +1157,56 @@
             // 
             // label17
             // 
+            this.label17.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(14, 232);
+            this.label17.Location = new System.Drawing.Point(55, 252);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(71, 13);
             this.label17.TabIndex = 65;
             this.label17.Text = "Timeout (sec)";
             // 
+            // listSpawnCritters
+            // 
+            this.listSpawnCritters.AllowColumnReorder = true;
+            this.listSpawnCritters.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.listSpawnCritters.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2});
+            this.listSpawnCritters.DoubleClickActivation = false;
+            this.listSpawnCritters.FullRowSelect = true;
+            this.listSpawnCritters.Location = new System.Drawing.Point(17, 297);
+            this.listSpawnCritters.Name = "listSpawnCritters";
+            this.listSpawnCritters.Size = new System.Drawing.Size(211, 103);
+            this.listSpawnCritters.TabIndex = 64;
+            this.listSpawnCritters.UseCompatibleStateImageBehavior = false;
+            this.listSpawnCritters.View = System.Windows.Forms.View.Details;
+            this.listSpawnCritters.SubItemClicked += new CityTools.Components.SubItemEventHandler(this.listCritterSpawns_SubItemClicked);
+            this.listSpawnCritters.SubItemEndEditing += new CityTools.Components.SubItemEndEditingEventHandler(this.listCritterSpawns_SubItemEndEditing);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Critter";
+            this.columnHeader1.Width = 124;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Spawn%";
+            // 
             // label16
             // 
+            this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.label16.BackColor = System.Drawing.Color.Silver;
             this.label16.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.label16.Location = new System.Drawing.Point(14, 116);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(260, 1);
+            this.label16.Size = new System.Drawing.Size(269, 1);
             this.label16.TabIndex = 63;
             // 
             // btnSpawnAreaAdd
             // 
-            this.btnSpawnAreaAdd.Location = new System.Drawing.Point(112, 383);
+            this.btnSpawnAreaAdd.Location = new System.Drawing.Point(112, 406);
             this.btnSpawnAreaAdd.Name = "btnSpawnAreaAdd";
             this.btnSpawnAreaAdd.Size = new System.Drawing.Size(76, 23);
             this.btnSpawnAreaAdd.TabIndex = 62;
@@ -1138,7 +1216,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(18, 208);
+            this.label15.Location = new System.Drawing.Point(25, 208);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(38, 13);
             this.label15.TabIndex = 61;
@@ -1146,15 +1224,18 @@
             // 
             // txtSpawnName
             // 
-            this.txtSpawnName.Location = new System.Drawing.Point(58, 205);
+            this.txtSpawnName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSpawnName.Location = new System.Drawing.Point(69, 205);
             this.txtSpawnName.Name = "txtSpawnName";
-            this.txtSpawnName.Size = new System.Drawing.Size(117, 20);
+            this.txtSpawnName.Size = new System.Drawing.Size(159, 20);
             this.txtSpawnName.TabIndex = 60;
             // 
             // ckbDrawSpawns
             // 
+            this.ckbDrawSpawns.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.ckbDrawSpawns.AutoSize = true;
-            this.ckbDrawSpawns.Location = new System.Drawing.Point(205, 172);
+            this.ckbDrawSpawns.Location = new System.Drawing.Point(235, 172);
             this.ckbDrawSpawns.Name = "ckbDrawSpawns";
             this.ckbDrawSpawns.Size = new System.Drawing.Size(65, 17);
             this.ckbDrawSpawns.TabIndex = 59;
@@ -1163,8 +1244,9 @@
             // 
             // btnSpawnDelete
             // 
+            this.btnSpawnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSpawnDelete.Image = global::CityTools.Properties.Resources.delete;
-            this.btnSpawnDelete.Location = new System.Drawing.Point(234, 143);
+            this.btnSpawnDelete.Location = new System.Drawing.Point(264, 143);
             this.btnSpawnDelete.Name = "btnSpawnDelete";
             this.btnSpawnDelete.Size = new System.Drawing.Size(23, 23);
             this.btnSpawnDelete.TabIndex = 58;
@@ -1172,8 +1254,9 @@
             // 
             // btnSpawnAdd
             // 
+            this.btnSpawnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSpawnAdd.Image = global::CityTools.Properties.Resources.add;
-            this.btnSpawnAdd.Location = new System.Drawing.Point(205, 143);
+            this.btnSpawnAdd.Location = new System.Drawing.Point(235, 143);
             this.btnSpawnAdd.Name = "btnSpawnAdd";
             this.btnSpawnAdd.Size = new System.Drawing.Size(23, 23);
             this.btnSpawnAdd.TabIndex = 57;
@@ -1190,11 +1273,13 @@
             // 
             // listSpawns
             // 
+            this.listSpawns.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.listSpawns.FormattingEnabled = true;
             this.listSpawns.Location = new System.Drawing.Point(16, 143);
             this.listSpawns.Name = "listSpawns";
             this.listSpawns.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listSpawns.Size = new System.Drawing.Size(183, 56);
+            this.listSpawns.Size = new System.Drawing.Size(212, 56);
             this.listSpawns.TabIndex = 55;
             // 
             // label11
@@ -1208,7 +1293,8 @@
             // 
             // btnPortalEntry
             // 
-            this.btnPortalEntry.Location = new System.Drawing.Point(181, 84);
+            this.btnPortalEntry.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPortalEntry.Location = new System.Drawing.Point(211, 84);
             this.btnPortalEntry.Name = "btnPortalEntry";
             this.btnPortalEntry.Size = new System.Drawing.Size(89, 20);
             this.btnPortalEntry.TabIndex = 36;
@@ -1217,15 +1303,18 @@
             // 
             // txtPortalName
             // 
+            this.txtPortalName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPortalName.Location = new System.Drawing.Point(58, 84);
             this.txtPortalName.Name = "txtPortalName";
-            this.txtPortalName.Size = new System.Drawing.Size(117, 20);
+            this.txtPortalName.Size = new System.Drawing.Size(141, 20);
             this.txtPortalName.TabIndex = 34;
             // 
             // ckbDrawPortals
             // 
+            this.ckbDrawPortals.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.ckbDrawPortals.AutoSize = true;
-            this.ckbDrawPortals.Location = new System.Drawing.Point(205, 51);
+            this.ckbDrawPortals.Location = new System.Drawing.Point(234, 51);
             this.ckbDrawPortals.Name = "ckbDrawPortals";
             this.ckbDrawPortals.Size = new System.Drawing.Size(65, 17);
             this.ckbDrawPortals.TabIndex = 33;
@@ -1234,8 +1323,9 @@
             // 
             // btnPortalDelete
             // 
+            this.btnPortalDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnPortalDelete.Image = global::CityTools.Properties.Resources.delete;
-            this.btnPortalDelete.Location = new System.Drawing.Point(234, 22);
+            this.btnPortalDelete.Location = new System.Drawing.Point(263, 22);
             this.btnPortalDelete.Name = "btnPortalDelete";
             this.btnPortalDelete.Size = new System.Drawing.Size(23, 23);
             this.btnPortalDelete.TabIndex = 32;
@@ -1243,8 +1333,9 @@
             // 
             // btnPortalAdd
             // 
+            this.btnPortalAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnPortalAdd.Image = global::CityTools.Properties.Resources.add;
-            this.btnPortalAdd.Location = new System.Drawing.Point(205, 22);
+            this.btnPortalAdd.Location = new System.Drawing.Point(234, 22);
             this.btnPortalAdd.Name = "btnPortalAdd";
             this.btnPortalAdd.Size = new System.Drawing.Size(23, 23);
             this.btnPortalAdd.TabIndex = 31;
@@ -1261,12 +1352,35 @@
             // 
             // listPortals
             // 
+            this.listPortals.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.listPortals.FormattingEnabled = true;
             this.listPortals.Location = new System.Drawing.Point(13, 22);
             this.listPortals.Name = "listPortals";
             this.listPortals.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listPortals.Size = new System.Drawing.Size(186, 56);
+            this.listPortals.Size = new System.Drawing.Size(215, 56);
             this.listPortals.TabIndex = 29;
+            // 
+            // tabMapScript
+            // 
+            this.tabMapScript.Controls.Add(this.scriptMap);
+            this.tabMapScript.Location = new System.Drawing.Point(4, 22);
+            this.tabMapScript.Name = "tabMapScript";
+            this.tabMapScript.Padding = new System.Windows.Forms.Padding(3);
+            this.tabMapScript.Size = new System.Drawing.Size(308, 785);
+            this.tabMapScript.TabIndex = 4;
+            this.tabMapScript.Text = "Scripting";
+            this.tabMapScript.UseVisualStyleBackColor = true;
+            // 
+            // scriptMap
+            // 
+            this.scriptMap.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scriptMap.Location = new System.Drawing.Point(3, 3);
+            this.scriptMap.Name = "scriptMap";
+            this.scriptMap.Script = "";
+            this.scriptMap.ScriptType = ToolCache.Scripting.ScriptTypes.Map;
+            this.scriptMap.Size = new System.Drawing.Size(302, 779);
+            this.scriptMap.TabIndex = 0;
             // 
             // timerRefresh
             // 
@@ -1282,51 +1396,6 @@
             this.colorDialog.AnyColor = true;
             this.colorDialog.FullOpen = true;
             this.colorDialog.SolidColorOnly = true;
-            // 
-            // scriptScriptRegion
-            // 
-            this.scriptScriptRegion.Location = new System.Drawing.Point(3, 552);
-            this.scriptScriptRegion.Name = "scriptScriptRegion";
-            this.scriptScriptRegion.Script = "";
-            this.scriptScriptRegion.ScriptType = ToolCache.Scripting.ScriptTypes.Region;
-            this.scriptScriptRegion.Size = new System.Drawing.Size(297, 225);
-            this.scriptScriptRegion.TabIndex = 86;
-            // 
-            // listSpawnCritters
-            // 
-            this.listSpawnCritters.AllowColumnReorder = true;
-            this.listSpawnCritters.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2});
-            this.listSpawnCritters.DoubleClickActivation = false;
-            this.listSpawnCritters.FullRowSelect = true;
-            this.listSpawnCritters.Location = new System.Drawing.Point(17, 274);
-            this.listSpawnCritters.Name = "listSpawnCritters";
-            this.listSpawnCritters.Size = new System.Drawing.Size(253, 103);
-            this.listSpawnCritters.TabIndex = 64;
-            this.listSpawnCritters.UseCompatibleStateImageBehavior = false;
-            this.listSpawnCritters.View = System.Windows.Forms.View.Details;
-            this.listSpawnCritters.SubItemClicked += new CityTools.Components.SubItemEventHandler(this.listCritterSpawns_SubItemClicked);
-            this.listSpawnCritters.SubItemEndEditing += new CityTools.Components.SubItemEndEditingEventHandler(this.listCritterSpawns_SubItemEndEditing);
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "Critter";
-            this.columnHeader1.Width = 181;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Spawn%";
-            // 
-            // scriptMap
-            // 
-            this.scriptMap.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scriptMap.Location = new System.Drawing.Point(3, 3);
-            this.scriptMap.Name = "scriptMap";
-            this.scriptMap.Script = "";
-            this.scriptMap.ScriptType = ToolCache.Scripting.ScriptTypes.Map;
-            this.scriptMap.Size = new System.Drawing.Size(302, 779);
-            this.scriptMap.TabIndex = 0;
             // 
             // MainWindow
             // 
@@ -1359,13 +1428,13 @@
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numBrushSize)).EndInit();
             this.tabPalette.ResumeLayout(false);
-            this.tabMapScript.ResumeLayout(false);
             this.tabMapRegions.ResumeLayout(false);
             this.tabMapRegions.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numSpawnChance)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSpawnLoad)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSpawnTimer)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSpawnMax)).EndInit();
+            this.tabMapScript.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1451,7 +1520,6 @@
         internal System.Windows.Forms.Button btnPortalAdd;
         private System.Windows.Forms.Label label10;
         internal System.Windows.Forms.ListBox listPortals;
-        private System.Windows.Forms.Button btnNormalizeSpawnRegion;
         private System.Windows.Forms.NumericUpDown numSpawnChance;
         internal System.Windows.Forms.Button btnSpawnAreaClear;
         internal System.Windows.Forms.NumericUpDown numSpawnLoad;
@@ -1487,6 +1555,10 @@
         internal System.Windows.Forms.Button btnScriptRegionAreaClear;
         internal System.Windows.Forms.Button btnScriptRegionAreaAdd;
         internal Components.ScriptBox scriptScriptRegion;
+        internal System.Windows.Forms.ToolStripMenuItem btnFactionEditor;
+        internal System.Windows.Forms.Button btnNormalizeSpawnRegion;
+        internal System.Windows.Forms.ComboBox cbSpawnRegionFaction;
+        private System.Windows.Forms.Label label9;
     }
 }
 

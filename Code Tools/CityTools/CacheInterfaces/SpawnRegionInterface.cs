@@ -6,12 +6,15 @@ using ToolCache.Map;
 using CityTools.ObjectSystem;
 using ToolCache.Map.Regions;
 using CityTools.MiscHelpers;
+using ToolCache.Critters;
 
 namespace CityTools.CacheInterfaces {
     /// <summary>
     /// Responsible for controlling spawn regions.
     /// </summary>
     internal class SpawnRegionInterface {
+        private static bool _Editing = false;
+
         /// <summary>
         /// Hooks into the GUI and sets up all the event handlers
         /// </summary>
@@ -31,6 +34,11 @@ namespace CityTools.CacheInterfaces {
             MainWindow.instance.numSpawnTimer.ValueChanged += new EventHandler(numValueChanged);
             MainWindow.instance.numSpawnLoad.ValueChanged += new EventHandler(numValueChanged);
             MainWindow.instance.numSpawnMax.ValueChanged += new EventHandler(numValueChanged);
+            MainWindow.instance.cbExportSave.SelectedIndexChanged += new EventHandler(numValueChanged);
+
+            MainWindow.instance.btnNormalizeSpawnRegion.Click += new EventHandler(btnNormalizeSpawnRegion_Click);
+
+            UpdateSpawnRegionFactions();
         }
 
         /// <summary>
@@ -39,13 +47,15 @@ namespace CityTools.CacheInterfaces {
         /// <param name="sender">Not Important, Can be null.</param>
         /// <param name="e">Not Important, Can be null.</param>
         static void numValueChanged(object sender, EventArgs e) {
-            if (MainWindow.instance.listSpawns.SelectedItem != null) {
+            if (MainWindow.instance.listSpawns.SelectedItem != null && !_Editing) {
                 if (sender == MainWindow.instance.numSpawnTimer) {
                     (MainWindow.instance.listSpawns.SelectedItem as SpawnRegion).Timeout = (short)MainWindow.instance.numSpawnTimer.Value;
                 } else if (sender == MainWindow.instance.numSpawnLoad) {
                     (MainWindow.instance.listSpawns.SelectedItem as SpawnRegion).SpawnOnLoad = (byte)MainWindow.instance.numSpawnLoad.Value;
                 } else if (sender == MainWindow.instance.numSpawnMax) {
                     (MainWindow.instance.listSpawns.SelectedItem as SpawnRegion).MaxSpawn = (byte)MainWindow.instance.numSpawnMax.Value;
+                } else if (sender == MainWindow.instance.cbSpawnRegionFaction) {
+                    (MainWindow.instance.listSpawns.SelectedItem as SpawnRegion).Faction = MainWindow.instance.cbSpawnRegionFaction.SelectedText;
                 }
 
                 MapPieceCache.CurrentPiece.Edited();
@@ -63,6 +73,7 @@ namespace CityTools.CacheInterfaces {
                 MainWindow.instance.numSpawnLoad.Enabled = false;
                 MainWindow.instance.numSpawnMax.Enabled = false;
                 MainWindow.instance.numSpawnTimer.Enabled = false;
+                MainWindow.instance.cbSpawnRegionFaction.Enabled = false;
             } else {
                 MainWindow.instance.txtSpawnName.Enabled = true;
                 MainWindow.instance.btnSpawnAreaAdd.Enabled = true;
@@ -70,11 +81,19 @@ namespace CityTools.CacheInterfaces {
                 MainWindow.instance.numSpawnLoad.Enabled = true;
                 MainWindow.instance.numSpawnMax.Enabled = true;
                 MainWindow.instance.numSpawnTimer.Enabled = true;
+                MainWindow.instance.cbSpawnRegionFaction.Enabled = true;
+
+                _Editing = true;
 
                 MainWindow.instance.txtSpawnName.Text = (MainWindow.instance.listSpawns.SelectedItem as SpawnRegion).Name;
                 MainWindow.instance.numSpawnLoad.Value = (MainWindow.instance.listSpawns.SelectedItem as SpawnRegion).SpawnOnLoad;
                 MainWindow.instance.numSpawnMax.Value = (MainWindow.instance.listSpawns.SelectedItem as SpawnRegion).MaxSpawn;
                 MainWindow.instance.numSpawnTimer.Value = (MainWindow.instance.listSpawns.SelectedItem as SpawnRegion).Timeout;
+
+                int fID = Factions.GetID((MainWindow.instance.listSpawns.SelectedItem as SpawnRegion).Faction);
+                MainWindow.instance.cbSpawnRegionFaction.SelectedIndex = fID > -1 ? fID : MainWindow.instance.cbSpawnRegionFaction.Items.Count - 1;
+
+                _Editing = false;
 
                 UpdateSpawnList();
             }
@@ -90,6 +109,18 @@ namespace CityTools.CacheInterfaces {
                 foreach (CritterSpawn spawn in (MainWindow.instance.listSpawns.SelectedItem as SpawnRegion).SpawnList) {
                     MainWindow.instance.listSpawnCritters.Items.Add(spawn.GetListViewItem());
                 }
+            }
+        }
+
+        /// <summary>
+        /// Fires when the user clicks the normalize button. Sorts out the SpawnRegion percentages
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void btnNormalizeSpawnRegion_Click(object sender, EventArgs e) {
+            if (MainWindow.instance.listSpawns.SelectedItems.Count == 1) {
+                (MainWindow.instance.listSpawns.SelectedItems[0] as SpawnRegion).FixSpawnRates();
+                UpdateSpawnList();
             }
         }
 
@@ -237,6 +268,21 @@ namespace CityTools.CacheInterfaces {
         /// <param name="e">Not Important, Can be null.</param>
         private static void ckDrawRegions_CheckedChanged(object sender, EventArgs e) {
             UpdateRegionDrawList();
+        }
+
+        /// <summary>
+        /// Updates the list of factions a spawn region can belong to.
+        /// </summary>
+        internal static void UpdateSpawnRegionFactions() {
+            MainWindow.instance.cbSpawnRegionFaction.Items.Clear();
+
+            foreach (String s in Factions.FactionNames()) {
+                MainWindow.instance.cbSpawnRegionFaction.Items.Add(s);
+            }
+
+            MainWindow.instance.cbSpawnRegionFaction.Items.Add("");
+
+            UpdateGUI();
         }
     }
 }

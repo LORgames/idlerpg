@@ -23,6 +23,7 @@ package Game.Critter {
 		
         public var AICommands:Script;
 		
+		public var Factions:Vector.<int>;
         public var Loot:Vector.<LootDrop>;
 		
 		public function CritterInfoBase() {}
@@ -39,6 +40,11 @@ package Game.Critter {
 			AlertRange = b.readShort();
 			
 			AICommands = Script.ReadScript(b);
+			
+			Factions = new Vector.<int>(b.readByte());
+			for (var i:int = 0; i < Factions.length; i++) {
+				Factions[i] = b.readShort();
+			}
 		}
 		
 		public function CreateCritter(map:MapData, x:int, y:int):BaseCritter {

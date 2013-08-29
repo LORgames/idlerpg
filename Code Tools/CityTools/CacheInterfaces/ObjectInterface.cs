@@ -62,11 +62,9 @@ namespace CityTools.CacheInterfaces {
                 r.Height = im.Height;
             } else if (im.Width < im.Height) {
                 float scale = (float)im.Width / im.Height;
-                System.Diagnostics.Debug.WriteLine(im.Width + ", " + im.Height + " => " + scale);
                 r.Width = (int)(ICON_SIZE * scale);
             } else if (im.Width > im.Height) {
                 float scale = (float)im.Height / im.Width;
-                System.Diagnostics.Debug.WriteLine(im.Width + ", " + im.Height + " => " + scale);
                 r.Height = (int)(ICON_SIZE * scale);
             }
 

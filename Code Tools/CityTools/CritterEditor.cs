@@ -78,7 +78,7 @@ namespace CityTools {
         private void FillGroups() {
             cbAddGroup.Items.Clear();
 
-            foreach (String s in Factions.AllFactions) {
+            foreach (String s in Factions.FactionNames()) {
                 cbAddGroup.Items.Add(s);
             }
         }
@@ -371,8 +371,8 @@ namespace CityTools {
 
         private void btnAddGroup_Click(object sender, EventArgs e) {
             if (cbAddGroup.Text.Length > 2) {
-                if (!Factions.AllFactions.Contains(cbAddGroup.Text)) {
-                    Factions.AllFactions.Add(cbAddGroup.Text);
+                if (!Factions.Has(cbAddGroup.Text)) {
+                    Factions.AddFaction(cbAddGroup.Text);
                     cbAddGroup.Items.Add(cbAddGroup.Text);
                 }
 

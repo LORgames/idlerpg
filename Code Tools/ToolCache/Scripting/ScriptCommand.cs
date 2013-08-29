@@ -369,6 +369,15 @@ namespace ToolCache.Scripting {
                         info.Errors.Add("Parameter must be an integer");
                     }
                     break;
+                case "factionset":
+                    CommandID = 0x5004;
+
+                    if (!Factions.Has(Parameters)) {
+                        info.Errors.Add("Could not find the faction: " + Parameters);
+                    } else {
+                        AdditionalBytecode.Add((ushort)Factions.GetID(Parameters));
+                    }
+                    break;
                 case "animationplay":
                     CommandID = 0x6000;
 
@@ -670,9 +679,13 @@ namespace ToolCache.Scripting {
                             case 'd': AdditionalBytecode.Add(0x3); break;
                             default: Info.Errors.Add("Unknown direction: " + additionalInfo); break;
                         } break;
-                    case "currentframe":
+                    case "isfaction":
                         AdditionalBytecode.Add(0x7008);
-                        VerifyCommaSeperatedShorts(additionalInfo, 1, Info);
+                        if (Factions.Has(additionalInfo)) {
+                            AdditionalBytecode.Add((ushort)Factions.GetID(additionalInfo));
+                        } else {
+                            Info.Errors.Add("Could not find faction to compare against '"+additionalInfo+"'");
+                        }
                         break;
                     default:
                         //Maybe a variable, lets see if we can find it

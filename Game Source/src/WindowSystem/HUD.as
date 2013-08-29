@@ -14,7 +14,6 @@ package WindowSystem
 	public class HUD extends Sprite {
 		
 		//UI Stuff
-		private var lowerMiddle:Bitmap;
 		private var bossHPBar:Bitmap;
 		private var butnsX:Bitmap;
 		
@@ -24,27 +23,19 @@ package WindowSystem
 		public var Thumb:Bitmap;
 		
 		public function HUD() {
-			ImageLoader.Load("OtherUI/Test Boss HP.png", LoadedBossHP);
-			ImageLoader.Load("OtherUI/Buttons.png", LoadedButtonsArt);
-			ImageLoader.Load("OtherUI/Stick.png", LoadedStickArt);
-			ImageLoader.Load("OtherUI/Thumb.png", LoadedThumbArt); //THUMB MUST LOAD AFTER STICK!!!
-			ImageLoader.Load("OtherUI/Test UI.png", LoadedLowerMiddle);
+			//ImageLoader.Load("OtherUI/Buttons.png", LoadedButtonsArt); Global.LoadingTotal++;
+			//ImageLoader.Load("OtherUI/Stick.png", LoadedStickArt); Global.LoadingTotal++;
+			//ImageLoader.Load("OtherUI/Thumb.png", LoadedThumbArt); Global.LoadingTotal++; //THUMB MUST LOAD AFTER STICK!!!
+			//ImageLoader.Load("OtherUI/UI Test.png", LoadedBossHP); Global.LoadingTotal++;
 			ScrollPanelItem.LoadIcons();
 			
 			if(Global.DebugFPS) this.addChild(new FPSCounter());
-			
-			Global.LoadingTotal += 5;
 		}
 		
 		public function Resized():void {
 			if (bossHPBar != null) {
 				bossHPBar.x = (this.stage.stageWidth - bossHPBar.width) * 0.5;
-				bossHPBar.y = 5;
-			}
-			
-			if (lowerMiddle != null) {
-				lowerMiddle.x = (this.stage.stageWidth - lowerMiddle.width) * 0.5;
-				lowerMiddle.y = this.stage.stageHeight - (lowerMiddle.height + 5);
+				bossHPBar.y = (this.stage.stageHeight-bossHPBar.height) * 0.5;
 			}
 			
 			if (butnsX != null) {
@@ -70,15 +61,6 @@ package WindowSystem
 		public function LoadedBossHP(e:BitmapData):void {
 			bossHPBar = new Bitmap(e.clone());
 			this.addChild(bossHPBar);
-			
-			Global.LoadingTotal--;
-			
-			Resized();
-		}
-		
-		public function LoadedLowerMiddle(e:BitmapData):void {
-			lowerMiddle = new Bitmap(e.clone());
-			this.addChild(lowerMiddle);
 			
 			Global.LoadingTotal--;
 			

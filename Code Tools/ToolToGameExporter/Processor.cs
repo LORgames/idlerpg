@@ -50,15 +50,17 @@ namespace ToolToGameExporter {
                 GameSettingsExporter.Go();
                 UpdateEPF(epf, "Calculating Standard Deviations...", 2);
                 GlobalVariableCrusher.Go();
-                UpdateEPF(epf, "Counting Monsters...", 3);
+                UpdateEPF(epf, "Applying Diplomacy...", 3);
+                FactionCrusher.Go();
+                UpdateEPF(epf, "Counting Monsters...", 4);
                 CritterCrusher.Precrush();
-                UpdateEPF(epf, "Evaluating Projectiles...", 4);
+                UpdateEPF(epf, "Evaluating Projectiles...", 5);
                 EffectCrusher.Precrush();
-                UpdateEPF(epf, "Measuring Objects...", 5);
+                UpdateEPF(epf, "Measuring Objects...", 6);
                 MapObjectCrusher.Precrush();
 
                 //Tier 0  Crushing. No Dependancies.
-                UpdateEPF(epf, "Amplyfying Sounds...", 10);
+                UpdateEPF(epf, "Amplyfying Sounds...", 12);
                 SoundCrusher.Go();
                 UpdateEPF(epf, "Laying Tiles...", 20);
                 TileCrusher.Go();

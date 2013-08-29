@@ -136,6 +136,12 @@
     <Compile Include="EquipmentEditor.Designer.cs">
       <DependentUpon>EquipmentEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="FactionEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FactionEditor.Designer.cs">
+      <DependentUpon>FactionEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="GenerateEquipmentAlternatives.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -272,6 +278,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EquipmentEditor.resx">
       <DependentUpon>EquipmentEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FactionEditor.resx">
+      <DependentUpon>FactionEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GenerateEquipmentAlternatives.resx">
       <DependentUpon>GenerateEquipmentAlternatives.cs</DependentUpon>
@@ -453,6 +462,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\bug.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Enemies.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Friends.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Neutral.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

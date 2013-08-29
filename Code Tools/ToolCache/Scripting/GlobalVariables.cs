@@ -130,7 +130,7 @@ namespace ToolCache.Scripting {
                 AddNewVariable("Stat_GroupDeaths_" + c.NodeGroup);
             }
 
-            foreach (String groupName in Factions.AllFactions) {
+            foreach (String groupName in Factions.FactionNames()) {
                 AddNewVariable("Stat_GroupDeaths_" + groupName);
             }
         }

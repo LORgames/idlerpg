@@ -4,6 +4,7 @@ package {
 	import flash.ui.MultitouchInputMode;
 	import flash.utils.ByteArray;
 	import Game.Critter.CritterManager;
+	import Game.Critter.Factions;
 	import Game.Effects.EffectManager;
 	import Game.Equipment.EquipmentManager;
 	import Game.General.BinaryLoader;
@@ -60,6 +61,7 @@ package {
 			new CritterManager();
 			new EffectManager();
 			new GlobalVariables();
+			new Factions();
 			
 			Clock.I.Start(Main.I.stage);
 		}
