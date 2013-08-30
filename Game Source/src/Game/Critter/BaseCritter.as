@@ -35,6 +35,7 @@ package Game.Critter {
 		public var virginMoveSpeedY:Number = 0;
 		public var moveSpeedX:int = 0;
 		public var moveSpeedY:int = 0;
+		public var PrimaryFaction:int = 0;
 		
 		public var teamID:int = 0;
 		

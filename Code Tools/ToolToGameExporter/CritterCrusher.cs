@@ -51,11 +51,11 @@ namespace ToolToGameExporter {
                 ScriptCrusher.ProcessScript(script, c.AICommands, f);
 
                 //Adding factions
-                if (c.Groups.Count + 1 > 255) Processor.Errors.Add(new ProcessingError("Critter", c.Name, "A critter can only belong to upto 255 Factions, many less would be recommended as well though!"));
+                if (c.Groups.Count + 1 > 8) Processor.Errors.Add(new ProcessingError("Critter", c.Name, "A critter can only belong to upto 8 Factions!"));
                 f.AddByte((byte)(c.Groups.Count + 1));
-                f.AddShort(Factions.GetID(c.NodeGroup));
+                f.AddByte((byte)FactionCrusher.RemappedFactionIDs[c.NodeGroup]);
                 foreach (string s in c.Groups) {
-                    f.AddShort(Factions.GetID(s));
+                    f.AddByte((byte)FactionCrusher.RemappedFactionIDs[s]);
                 }
 
                 //Now humanoid/beastoid specific things.

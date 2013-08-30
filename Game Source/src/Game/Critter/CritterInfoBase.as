@@ -43,7 +43,7 @@ package Game.Critter {
 			
 			Factions = new Vector.<int>(b.readByte());
 			for (var i:int = 0; i < Factions.length; i++) {
-				Factions[i] = b.readShort();
+				Factions[i] = b.readByte();
 			}
 		}
 		

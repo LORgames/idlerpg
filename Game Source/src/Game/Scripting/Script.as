@@ -190,6 +190,10 @@ package Game.Scripting {
 						currentUnprocessedValue = (info.Invoker.GetCurrentState() == eventScript.readUnsignedShort()); break;
 					case 0x7007: //What direction am I facing
 						currentUnprocessedValue = (position.D == eventScript.readUnsignedShort()); break;
+					case 0x7008: //What faction do i belong to
+						if (info.CurrentTarget is BaseCritter) {
+							currentUnprocessedValue =  ((info.CurrentTarget as BaseCritter).PrimaryFaction == eventScript.readShort());
+						} break;
 					case 0x7009: //Math comparison function
 						var value1:int = GetNumberFromVariable(eventScript, info);
 						var comparisonInstruction:int = eventScript.readUnsignedShort();
@@ -606,6 +610,10 @@ package Game.Scripting {
 						} else {
 							trace("WRONG TARGET! " + info.CurrentTarget + " @" + eventID);
 							EventScript.readShort(); EventScript.readShort(); //Remove the two shorts
+						} break;
+					case 0x5004: //Set Faction
+						if (info.CurrentTarget is BaseCritter) { 
+							(info.CurrentTarget as BaseCritter).PrimaryFaction = EventScript.readShort();
 						} break;
 					case 0x6000: //Play Animation
 						info.Invoker.ChangeState(EventScript.readShort(), false); break;

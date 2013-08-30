@@ -26,6 +26,11 @@ namespace ToolCache.Critters {
         }
 
         public static void AddFaction(string factionName) {
+            if (FactionNameToID.Count >= 31) {
+                System.Windows.Forms.MessageBox.Show("Cannot surpass 32 factions!");
+                return;
+            }
+
             if (!FactionNameToID.ContainsKey(factionName)) {
                 FactionNameToID.Add(factionName, NextID);
                 AllFactions.Add(NextID, new Faction(factionName, NextID));

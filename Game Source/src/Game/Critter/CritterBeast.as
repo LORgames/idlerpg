@@ -23,6 +23,7 @@ package Game.Critter {
 			Main.OrderedLayer.addChild(Animation);
 			
 			CurrentMap = map;
+			PrimaryFaction = MyInfo.Factions[0];
 			
 			X = x;
 			Y = y;

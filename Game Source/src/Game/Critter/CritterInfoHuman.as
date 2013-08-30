@@ -33,6 +33,7 @@ package Game.Critter {
 			var p:CritterHuman = new CritterHuman(x, y);
 			
 			p.Equipment.Equip(shadow, legs, body, face, headgear, weapon);
+			p.PrimaryFaction = Factions[0];
 			
 			p.CurrentMap = map;
 			map.Critters.push(p);
