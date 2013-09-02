@@ -166,8 +166,11 @@ package Game.Map {
 			}
 		}
 		
-		public function GetObjectsInArea(rect:Rect, objects:Vector.<IScriptTarget>, type:int, scanner:Object = null):void {
+		public function GetObjectsInArea(rect:Rect, objects:Vector.<IScriptTarget>, type:int, scanner:Object = null, primaryfaction:int = 0):void {
+			//TODO: This function doesn't properly look for factioned units.
+			
 			var _tiles:Vector.<TileInstance> = TileHelper.GetTiles(rect, this);
+			var _factionsearchflag:int = 0x1 << primaryfaction;
 			
 			var _tt:int = _tiles.length;
 			var r:Rect;

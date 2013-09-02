@@ -29,5 +29,6 @@ package {
 		public static var HasTiles:Boolean = false;
 		public static var TileSize:int = 48;
 		public static var HasCharacter:Boolean = false;
+		public static var PerspectiveSkew:Number = 0.85;
 	}
 }

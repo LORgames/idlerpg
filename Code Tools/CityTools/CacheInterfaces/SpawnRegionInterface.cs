@@ -7,6 +7,7 @@ using CityTools.ObjectSystem;
 using ToolCache.Map.Regions;
 using CityTools.MiscHelpers;
 using ToolCache.Critters;
+using System.Windows.Forms;
 
 namespace CityTools.CacheInterfaces {
     /// <summary>
@@ -36,6 +37,7 @@ namespace CityTools.CacheInterfaces {
             MainWindow.instance.numSpawnMax.ValueChanged += new EventHandler(numValueChanged);
             MainWindow.instance.cbExportSave.SelectedIndexChanged += new EventHandler(numValueChanged);
 
+            MainWindow.instance.btnDeleteSelectedCritters.Click += new EventHandler(btnDeleteSelectedCritters_Click);
             MainWindow.instance.btnNormalizeSpawnRegion.Click += new EventHandler(btnNormalizeSpawnRegion_Click);
 
             UpdateSpawnRegionFactions();
@@ -283,6 +285,21 @@ namespace CityTools.CacheInterfaces {
             MainWindow.instance.cbSpawnRegionFaction.Items.Add("");
 
             UpdateGUI();
+        }
+
+
+        static void btnDeleteSelectedCritters_Click(object sender, EventArgs e) {
+            if (MainWindow.instance.listScriptRegions.SelectedItem != null) {
+                if (MainWindow.instance.listSpawnCritters.SelectedItems.Count > 0) {
+                    List<CritterSpawn> css = new List<CritterSpawn>();
+
+                    foreach (ListViewItem lvi in MainWindow.instance.listSpawnCritters.SelectedItems) {
+                        if (lvi.Tag is CritterSpawn) {
+
+                        }
+                    }
+                }
+            }
         }
     }
 }

@@ -69,10 +69,14 @@ package Game.Scripting {
 			var EventScript:ByteArray = EventScripts[eventID];
 			EventScript.position = 0;
 			
+			//trace("Running: Invoker=" + info.Invoker + " Event=" + eventID);
 			ProcessBlock(EventScript, info, eventID);
 			
-			if(EventScript.position != EventScript.length) {
+			if (EventScript.position != EventScript.length) {
 				trace("SCRIPT UNFINISHED: [" + info.Invoker + " Event="+eventID+ " ScriptPosition=" + EventScript.position + "/" + EventScript.length);
+				if (EventScript.position + 2 <= EventScript.length) {
+					trace("\t\tEOF: 0x" + MathsEx.ZeroPad(EventScript.readUnsignedShort(), 0, 16));
+				}
 			}
 		}
 		
@@ -156,6 +160,7 @@ package Game.Scripting {
 			
 			while (!ended) {
 				command = eventScript.readUnsignedShort();
+				//trace("\t0x" + MathsEx.ZeroPad(command, 4, 16) + " IFPARAM");
 				currentUnprocessedValue = true;
 				
 				switch(command) {
@@ -193,6 +198,8 @@ package Game.Scripting {
 					case 0x7008: //What faction do i belong to
 						if (info.CurrentTarget is BaseCritter) {
 							currentUnprocessedValue =  ((info.CurrentTarget as BaseCritter).PrimaryFaction == eventScript.readShort());
+						} else {
+							trace("Unknown target for 0x7008 Target=" + info.CurrentTarget + " Faction=" + eventScript.readShort());
 						} break;
 					case 0x7009: //Math comparison function
 						var value1:int = GetNumberFromVariable(eventScript, info);
@@ -345,7 +352,7 @@ package Game.Scripting {
 				
 				if (command < 0x1000) { //All events are in this range
 					if (activeScript != null) {
-						activeScript.writeShort(0xFFFF);
+						//activeScript.writeShort(0xFFFF);
 					}
 					
 					activeEvent = command;
@@ -358,7 +365,6 @@ package Game.Scripting {
 					}
 				} else {
 					if (command == 0xFFFF) {
-						if(activeScript != null) activeScript.writeShort(0xFFFF);
 						break; //Exit early if script has ended
 					} else if (command == 0xF0FD) {
 						WriteUntilBalancedCloseBlock(b, activeScript);
@@ -423,6 +429,7 @@ package Game.Scripting {
 			
 			while (true) {
 				command = EventScript.readUnsignedShort();
+				//trace("\t0x" + MathsEx.ZeroPad(command, 4, 16) + " Deep=" + deep);
 				
 				if (command == 0xFFFF) break;
 				if (command == 0xB000) { ProcessMathCommand(EventScript, info); continue; }
@@ -597,7 +604,6 @@ package Game.Scripting {
 					case 0x5002: //Movement direction absolute
 					case 0x5003: //Movement direction relative
 						if (info.CurrentTarget is BaseCritter) {
-							trace("CORRECT TARGET!");
 							var angle:Number = Math.PI * (EventScript.readShort() / 180.0);
 							var move:Boolean = (EventScript.readShort() == 0);
 							if (command == 0x5002) {
@@ -608,7 +614,7 @@ package Game.Scripting {
 								c.RequestMove(Math.cos(angle), Math.sin(angle), move);
 							}
 						} else {
-							trace("WRONG TARGET! " + info.CurrentTarget + " @" + eventID);
+							trace("0x5003 WRONG TARGET! " + info.CurrentTarget + " @" + eventID);
 							EventScript.readShort(); EventScript.readShort(); //Remove the two shorts
 						} break;
 					case 0x5004: //Set Faction
@@ -655,7 +661,7 @@ package Game.Scripting {
 						if (command == 0xF0FD) {
 							deep++;
 						} else if (command == 0xF0FE) {
-							if (deep == 0) return;
+							if (deep <= 1) return;
 							deep--;
 						} else {
 							trace("Unknown Command: 0x" + command.toString(16) + " Event="+eventID + " Position="+EventScript.position+" Length="+EventScript.length+" Invoker="+info.Invoker);

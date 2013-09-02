@@ -34,7 +34,7 @@ package Game.Critter {
 			CurrentHP = MyInfo.Health;
 			
 			MovementSpeed = MyInfo.MovementSpeed;
-			AlertRange = MyInfo.AlertRange*MyInfo.AlertRange;
+			SetAlertRangeSqrd(MyInfo.AlertRange * MyInfo.AlertRange);
 			
 			MyScript = new ScriptInstance(Info.AICommands, this, false);
 			MyScript.Run(Script.Initialize);

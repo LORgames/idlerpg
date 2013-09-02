@@ -61,11 +61,6 @@ package Game.Scripting {
 			
 			if (target != null) {
 				AttachTarget(target);
-				trace("TARGETTING: " + CurrentTarget);
-			} else {
-				if(event == 4 || event == 6) {
-					trace("No target");
-				}
 			}
 			
 			MyScript.Run(event, this);

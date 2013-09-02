@@ -17,6 +17,7 @@ package Game.Critter {
 	import Game.Scripting.IScriptTarget;
 	import Game.Scripting.Script;
 	import Game.Scripting.ScriptInstance;
+	import Game.Scripting.ScriptTypes;
 	import Interfaces.IMapObject;
 	/**
 	 * ...
@@ -40,7 +41,9 @@ package Game.Critter {
 		public var teamID:int = 0;
 		
 		public var MovementSpeed:int = 125;
-		public var AlertRange:int = 20000;
+		private var AlertRange:int = 20000; private var AlertRangeSqrt:int = 0; public function SetAlertRangeSqrd(ar:int):void { AlertRange = ar; AlertRangeSqrt = Math.sqrt(ar) + 1; }
+		public var AttackRange:int = 2000;
+		public var CurrentTarget:IScriptTarget;
 		
 		public var CurrentMovementCost:Number = 1;
 		
@@ -96,9 +99,6 @@ package Game.Critter {
 				if (sai == -1) {
 					//We stepped off a script region
 					ActiveScriptRegions[sci].MyScript.Run(Script.OnExit, this);
-					
-					trace("Stepped Off");
-					
 					ActiveScriptRegions.splice(sci, 1);
 				} else {
 					//We were on it last update
@@ -109,9 +109,6 @@ package Game.Critter {
 			sci = activeRegions.length;
 			while (--sci > -1) {
 				activeRegions[sci].MyScript.Run(Script.OnEnter, this);
-				
-				trace("Stepped on!");
-				
 				ActiveScriptRegions.push(activeRegions[sci]);
 			}
 		}
@@ -174,47 +171,7 @@ package Game.Critter {
 			var j:int;
 			
 			//// AI  AI  AI  AI ///////////////////////////////////////////////////////// AI
-			
-			if (WorldData.ME != this && dt > 0 && Global.HasCharacter) {
-				//AI AGENTS
-				var me:BaseCritter = WorldData.ME==null?this:WorldData.ME;
-				var dx:Number = (this.X - me.X);
-				var dy:Number = (this.Y - me.Y) / 0.85;
-				
-				var effectiveRange:int = dx * dx + dy * dy;
-				
-				if (effectiveRange < AlertRange) { //was 100000
-					if (effectiveRange < 2500) {
-						RequestBasicAttack();
-						RequestMove(0, 0);
-					} else if ((MyAIType & AITypes.Aggressive)) {
-						RequestMove( -dx, -dy);
-					} else {
-						//Look at the player character
-						if (Math.abs(dx) > Math.abs(dy)) {
-							if (dx > 0) { // Right
-								direction = 0;
-							} else { // Left
-								direction = 1;
-							}
-						} else {
-							if (dy > 0) { // Up
-								direction = 2;
-							} else { // Down
-								direction = 3;
-							}
-						}
-					}
-				} else {
-					if ((MyAIType & AITypes.Wonder) > 0) {
-						//trace("WONDAR");
-					} else {
-						if (moveSpeedX != 0 || moveSpeedY != 0) {
-							RequestMove(0, 0);
-						}
-					}
-				}
-			}
+			ProcessAI(dt);
 			
 			////////////////////////////////////////////////////////////////////////////////
 			
@@ -300,11 +257,76 @@ package Game.Critter {
 			}
 		}
 		
+		private function ProcessAI(dt:Number = 0):void {
+			if (WorldData.ME != this && dt > 0) {
+				//AI AGENTS
+				if (CurrentTarget == null) {
+					if ((MyAIType | AITypes.Aggressive) > 0) {
+						//Scan for a new target
+						var r:Rect = new Rect(false, null, X-AlertRangeSqrt, Y-AlertRangeSqrt, AlertRangeSqrt*2, AlertRangeSqrt*2);
+						var objs:Vector.<IScriptTarget> = new Vector.<IScriptTarget>();
+						CurrentMap.GetObjectsInArea(r, objs, ScriptTypes.Enemy, this, PrimaryFaction);
+						
+						var i:int = objs.length;
+						while (--i > -1) {
+							if (objs[i] is BaseCritter) {
+								var x:BaseCritter = (objs[i] as BaseCritter);
+								if (Factions.IsEnemies(PrimaryFaction, x.PrimaryFaction)) {
+									CurrentTarget = x;
+									break;
+								}
+							}
+						}
+					}
+				}
+				
+				if(CurrentTarget != null) {
+					var p:PointX = new PointX();;
+					CurrentTarget.UpdatePointX(p);
+					
+					var dx:Number = (this.X - p.X);
+					var dy:Number = (this.Y - p.Y) / Global.PerspectiveSkew;
+					
+					var effectiveRange:int = dx * dx + dy * dy;
+					
+					if (effectiveRange < AlertRange) {
+						if (effectiveRange < AttackRange) {
+							RequestBasicAttack();
+							RequestMove(0, 0);
+						} else if ((MyAIType & AITypes.Aggressive)) {
+							RequestMove( -dx, -dy);
+						} else {
+							//Look at the target character
+							if (Math.abs(dx) > Math.abs(dy)) {
+								if (dx > 0) { // Right
+									direction = 0;
+								} else { // Left
+									direction = 1;
+								}
+							} else {
+								if (dy > 0) { // Up
+									direction = 2;
+								} else { // Down
+									direction = 3;
+								}
+							}
+						}
+					}
+				} else {
+					if ((MyAIType & AITypes.Wonder) > 0) {
+						//trace("WONDAR");
+					} else {
+						if (moveSpeedX != 0 || moveSpeedY != 0) {
+							RequestMove(0, 0);
+						}
+					}
+				}
+			}
+		}
+		
 		public function RequestMove(xSpeed:Number, ySpeed:Number, move:Boolean = true):void {
 			virginMoveSpeedX = xSpeed;
 			virginMoveSpeedY = ySpeed;
-			
-			trace(xSpeed + ", " + ySpeed + " M=" + move);
 			
 			if (xSpeed != 0 || ySpeed != 0) {
 				direction = SpeedToDirection(xSpeed, ySpeed);
