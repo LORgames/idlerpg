@@ -227,5 +227,11 @@ package Game.Effects {
 			return CurrentState;
 		}
 		
+		/* INTERFACE Game.Scripting.IScriptTarget */
+		
+		public function GetFaction():int {
+			return 0;
+		}
+		
 	}
 }

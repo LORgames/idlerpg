@@ -63,6 +63,12 @@ package Game.Map
 		public function GetCurrentState():int {
 			return 0;
 		}
+		
+		/* INTERFACE Game.Scripting.IScriptTarget */
+		
+		public function GetFaction():int {
+			return 0;
+		}
 	}
 
 }

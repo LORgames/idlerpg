@@ -106,6 +106,12 @@ package Game.Equipment {
 		public function toString():String {
 			return "[Equipment:"+this.Info.Name+"]";
 		}
+		
+		/* INTERFACE Game.Scripting.IScriptTarget */
+		
+		public function GetFaction():int {
+			return Owner.Owner.PrimaryFaction;
+		}
 	}
 
 }

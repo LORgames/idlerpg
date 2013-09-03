@@ -50,8 +50,8 @@ package Game.Critter {
 				Animation.ChangeDirection(direction);
 			}
 			
-			Animation.x = this.X - Animation.width/2;
-			Animation.y = this.Y - Animation.height + MyRect.H / 2 + Info.CollisionOffsetY;
+			Animation.x = int(this.X) - Animation.width/2;
+			Animation.y = int(this.Y) - Animation.height + MyRect.H / 2 + Info.CollisionOffsetY;
 			
 			Renderman.DirtyObjects.push(Animation);
 		}
@@ -92,7 +92,7 @@ package Game.Critter {
 		}
 		
 		public function toString():String {
-			return "[Critter:" + Info.Name + "]";
+			return "[Critter:" + Info.Name + " Faction=" + PrimaryFaction + "]";
 		}
 		
 		override public function CleanUp():void {

@@ -289,16 +289,23 @@ namespace CityTools.CacheInterfaces {
 
 
         static void btnDeleteSelectedCritters_Click(object sender, EventArgs e) {
-            if (MainWindow.instance.listScriptRegions.SelectedItem != null) {
-                if (MainWindow.instance.listSpawnCritters.SelectedItems.Count > 0) {
-                    List<CritterSpawn> css = new List<CritterSpawn>();
+            if (MainWindow.instance.listSpawns.SelectedItem != null && MainWindow.instance.listSpawnCritters.SelectedItems.Count > 0) {
+                List<CritterSpawn> css = new List<CritterSpawn>();
 
-                    foreach (ListViewItem lvi in MainWindow.instance.listSpawnCritters.SelectedItems) {
-                        if (lvi.Tag is CritterSpawn) {
-
-                        }
+                foreach (ListViewItem lvi in MainWindow.instance.listSpawnCritters.SelectedItems) {
+                    if (lvi.Tag is CritterSpawn) {
+                        css.Add(lvi.Tag as CritterSpawn);
                     }
                 }
+
+                foreach (CritterSpawn cs in css) {
+                    (MainWindow.instance.listSpawns.SelectedItem as SpawnRegion).SpawnList.Remove(cs);
+                }
+
+                css.Clear();
+
+                UpdateSpawnList();
+                MapPieceCache.CurrentPiece.Edited();
             }
         }
     }

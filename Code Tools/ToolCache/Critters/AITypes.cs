@@ -5,14 +5,12 @@ using System.Text;
 
 namespace ToolCache.Critters {
     public enum AITypes {
-        Wonder = 1,
-        Kite = 2,
-        Pathfind = 4,
-        Aggressive = 8,
-        Hunting = 16,
-        HiveMind = 32,
-        RunAway = 64,
-        Alpha = 128,
-        Territorial = 256
+        Wonder = 1,             // Aimlessly walks around
+        Kite = 2,               // Ranged and runs away
+        ClosestTarget = 4,      // No idea?
+        Aggressive = 8,         // Actively looks for new targets
+        Supportive = 16,        // Chooses ally units as targets rather than enemies
+        Territorial = 32,       // Defends their spawn zone and returns to it if they get too far away
+        RunAway = 64           // Runs away on low health
     }
 }

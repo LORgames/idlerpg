@@ -19,11 +19,17 @@ package Debug {
 			}
 		}
 		
-		public static function AddDebugRect(r:Rect):void {
-			GetSprite().graphics.drawRect(r.X, r.Y, r.W, r.H);
+		public static function AddDebugRect(r:Rect, c:int = -1):void {
+			var s:Sprite = GetSprite();
+			
+			if (c != -1) {
+				s.graphics.lineStyle(1, c);
+			}
+			
+			s.graphics.drawRect(r.X, r.Y, r.W, r.H);
 		}
 		
-		public static function AddDebugCircle(x:Number, y:Number, r:Number):void {
+		public static function AddDebugCircle(x:Number, y:Number, r:Number, c:int = -1):void {
 			GetSprite().graphics.drawEllipse(x-r, y-r*0.85, r*2, r*2*0.85);
 		}
 		
@@ -48,6 +54,17 @@ package Debug {
 			return spr;
 		}
 		
+		public static function AddLine(x1:int, y1:int, x2:int, y2:int, c:int = -1):void {
+			var s:Sprite = GetSprite();
+			
+			if (c != -1) {
+				s.graphics.lineStyle(1, c);
+			}
+			
+			s.graphics.moveTo(x1, y1);
+			s.graphics.lineTo(x2, y2);
+		}
+		
 		/* INTERFACE EngineTiming.IOneSecondUpdate */
 		
 		public function Update(dt:Number):void {
@@ -55,7 +72,7 @@ package Debug {
 			
 			while (--i > -1) {
 				var spr:Sprite = DrawingObjects[i];
-				spr.alpha -= 0.075;
+				spr.alpha -= 0.15;
 				
 				if (spr.alpha <= 0) {
 					DrawingObjects.pop();

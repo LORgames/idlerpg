@@ -12,5 +12,7 @@ package Game.Scripting {
 		function ChangeState(stateID:int, isLooping:Boolean):void;
 		function UpdatePlaybackSpeed(newAnimationSpeed:Number):void;
 		function GetCurrentState():int;
+		
+		function GetFaction():int;
 	}
 }

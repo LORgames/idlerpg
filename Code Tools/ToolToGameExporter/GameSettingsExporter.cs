@@ -19,6 +19,8 @@ namespace ToolToGameExporter {
             f.AddShort((short)GlobalSettings.tileSize);
             f.AddShort((short)GlobalSettings.targetGameFPS);
 
+            f.AddFloat(GlobalSettings.perspectiveSkew);
+
             f.Encode(Global.EXPORT_DIRECTORY + "/Settings.bin");
         }
     }

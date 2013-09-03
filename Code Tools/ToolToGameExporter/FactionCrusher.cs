@@ -35,9 +35,9 @@ namespace ToolToGameExporter {
                     String f2 = factions[j];
                     int type = Factions.GetRelationship(f1, f2);
                     if (type == 1) { //Friends
-                        myFriends |= 0x1 << j;
+                        myFriends |= (0x1 << j);
                     } else if (type == 2) { //Enemies
-                        myEnemies |= 0x1 << i;
+                        myEnemies |= (0x1 << j);
                     }
                 }
 

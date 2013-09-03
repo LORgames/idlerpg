@@ -15,6 +15,7 @@ namespace ToolCache.General {
         public static int tileSize = 48;
         public static bool disableCharacter = false;
         public static int targetGameFPS = 20;
+        public static float perspectiveSkew = 0.85f;
 
         internal static void Initialize() {
             if (File.Exists(DATABASE + FILENAME)) {
@@ -36,6 +37,7 @@ namespace ToolCache.General {
                         case "tilesize": tileSize = int.Parse(variableProperty); break;
                         case "disablecharacter": disableCharacter = (variableProperty == "True"); break;
                         case "targetGameFPS": targetGameFPS = int.Parse(variableProperty); break;
+                        case "perspectiveskew": perspectiveSkew = float.Parse(variableProperty); break;
                         default:
                             MessageBox.Show("Unknown variable '" + variableName + "' in global settings");
                             break;
@@ -51,6 +53,7 @@ namespace ToolCache.General {
             lines.Add("tilesize=" + tileSize);
             lines.Add("disablecharacter=" + disableCharacter.ToString());
             lines.Add("targetGameFPS=" + targetGameFPS.ToString());
+            lines.Add("perspectiveskew=" + perspectiveSkew.ToString());
 
             File.WriteAllLines(DATABASE + FILENAME, lines);
         }

@@ -1,6 +1,7 @@
 package Game.Critter {
 	import CollisionSystem.PointX;
 	import CollisionSystem.Rect;
+	import Debug.Drawer;
 	import EngineTiming.Clock;
 	import EngineTiming.ICleanUp;
 	import EngineTiming.IUpdatable;
@@ -42,15 +43,15 @@ package Game.Critter {
 		
 		public var MovementSpeed:int = 125;
 		private var AlertRange:int = 20000; private var AlertRangeSqrt:int = 0; public function SetAlertRangeSqrd(ar:int):void { AlertRange = ar; AlertRangeSqrt = Math.sqrt(ar) + 1; }
-		public var AttackRange:int = 2000;
+		public var AttackRange:int = 600;
 		public var CurrentTarget:IScriptTarget;
 		
 		public var CurrentMovementCost:Number = 1;
 		
 		public var CurrentMap:MapData;
 		
-		public var X:int = 0;
-		public var Y:int = 0;
+		public var X:Number = 0;
+		public var Y:Number = 0;
 		public var direction:int = 3;
 		
 		public var MyRect:Rect;
@@ -149,7 +150,7 @@ package Game.Critter {
 			var mx:Number = xSpeed < 0 ? -xSpeed : xSpeed;
 			var my:Number = ySpeed < 0 ? -ySpeed : ySpeed;
 			
-			if (mx > my) {
+			if (mx > my && Global.HasLeftRight || !Global.HasUpDown) {
 				if (xSpeed < 0) {
 					return 0;
 				} else {
@@ -260,61 +261,69 @@ package Game.Critter {
 		private function ProcessAI(dt:Number = 0):void {
 			if (WorldData.ME != this && dt > 0) {
 				//AI AGENTS
-				if (CurrentTarget == null) {
-					if ((MyAIType | AITypes.Aggressive) > 0) {
-						//Scan for a new target
-						var r:Rect = new Rect(false, null, X-AlertRangeSqrt, Y-AlertRangeSqrt, AlertRangeSqrt*2, AlertRangeSqrt*2);
-						var objs:Vector.<IScriptTarget> = new Vector.<IScriptTarget>();
-						CurrentMap.GetObjectsInArea(r, objs, ScriptTypes.Enemy, this, PrimaryFaction);
-						
-						var i:int = objs.length;
-						while (--i > -1) {
-							if (objs[i] is BaseCritter) {
-								var x:BaseCritter = (objs[i] as BaseCritter);
-								if (Factions.IsEnemies(PrimaryFaction, x.PrimaryFaction)) {
-									CurrentTarget = x;
-									break;
-								}
-							}
+				if ((MyAIType | AITypes.Aggressive) > 0 && (CurrentTarget == null && (MyAIType | AITypes.ClosestTarget) > 0)) {
+					//Scan for a new target
+					var r:Rect = new Rect(false, null, X - AlertRangeSqrt, Y - AlertRangeSqrt*Global.PerspectiveSkew, AlertRangeSqrt * 2, AlertRangeSqrt * 2*Global.PerspectiveSkew);
+					Drawer.AddDebugRect(r, PrimaryFaction==1?0xFFFFFF:0x0);
+					
+					var objs:Vector.<IScriptTarget> = new Vector.<IScriptTarget>();
+					CurrentMap.GetObjectsInArea(r, objs, ((MyAIType & AITypes.Supportive) > 0)?ScriptTypes.Ally:ScriptTypes.Enemy, this);
+					
+					var i:int = objs.length;
+					while (--i > -1) {
+						if (objs[i] is BaseCritter) {
+							var x:BaseCritter = (objs[i] as BaseCritter);
+							CurrentTarget = x;
+							break;
 						}
 					}
 				}
 				
-				if(CurrentTarget != null) {
+				if (CurrentTarget != null) {
+					if (CurrentTarget is BaseCritter) {
+						if ((CurrentTarget as BaseCritter).CurrentHP <= 0) {
+							CurrentTarget = null;
+							RequestMove(0, 0);
+							return;
+						}
+					}
+					
 					var p:PointX = new PointX();;
 					CurrentTarget.UpdatePointX(p);
 					
 					var dx:Number = (this.X - p.X);
 					var dy:Number = (this.Y - p.Y) / Global.PerspectiveSkew;
 					
-					var effectiveRange:int = dx * dx + dy * dy;
+					Drawer.AddLine(X, Y, p.X, p.Y, PrimaryFaction==1?0xFFFFFF:0x0);
 					
-					if (effectiveRange < AlertRange) {
-						if (effectiveRange < AttackRange) {
-							RequestBasicAttack();
-							RequestMove(0, 0);
-						} else if ((MyAIType & AITypes.Aggressive)) {
-							RequestMove( -dx, -dy);
+					var AttackRangeSqrt:int = Math.sqrt(AttackRange) + 1;
+					var rAtk:Rect = new Rect(false, null, X - AttackRangeSqrt, Y - AttackRangeSqrt*Global.PerspectiveSkew, AttackRangeSqrt * 2, AttackRangeSqrt * 2*Global.PerspectiveSkew);
+					Drawer.AddDebugRect(rAtk, PrimaryFaction==1?0xFFFFFF:0x0);
+					
+					if ((CurrentTarget is IMapObject) && (CurrentTarget as IMapObject).HasPerfectCollision(rAtk)) {
+						RequestBasicAttack();
+						RequestMove(0, 0);
+					} else if ((MyAIType & AITypes.Aggressive)) {
+						RequestMove( -dx, -dy);
+					} else {
+						//Look at the target character
+						if (Math.abs(dx) > Math.abs(dy)) {
+							if (dx > 0) { // Right
+								direction = 0;
+							} else { // Left
+								direction = 1;
+							}
 						} else {
-							//Look at the target character
-							if (Math.abs(dx) > Math.abs(dy)) {
-								if (dx > 0) { // Right
-									direction = 0;
-								} else { // Left
-									direction = 1;
-								}
-							} else {
-								if (dy > 0) { // Up
-									direction = 2;
-								} else { // Down
-									direction = 3;
-								}
+							if (dy > 0) { // Up
+								direction = 2;
+							} else { // Down
+								direction = 3;
 							}
 						}
 					}
 				} else {
 					if ((MyAIType & AITypes.Wonder) > 0) {
-						//trace("WONDAR");
+						//This should call an AI event :)
 					} else {
 						if (moveSpeedX != 0 || moveSpeedY != 0) {
 							RequestMove(0, 0);
@@ -424,17 +433,17 @@ package Game.Critter {
 			if (isDOT && isPercent) {
 				
 			} else if (isPercent) {
-				
+				CurrentHP -= CurrentHP * (amount / 100);
 			} else if (isDOT) {
 				
 			} else {
 				//Flat damage
 				CurrentHP -= amount;
-				
-				if (CurrentHP < 1) {
-					Died();
-					Clock.CleanUpList.push(this);
-				}
+			}
+			
+			if (CurrentHP < 1) {
+				Died();
+				Clock.CleanUpList.push(this);
 			}
 		}
 		
@@ -442,6 +451,12 @@ package Game.Critter {
 			position.X = X;
 			position.Y = Y;
 			position.D = direction;
+		}
+		
+		/* INTERFACE Game.Scripting.IScriptTarget */
+		
+		public function GetFaction():int {
+			return PrimaryFaction;
 		}
 		
 	}

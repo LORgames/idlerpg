@@ -139,7 +139,8 @@ package {
 		
 		private function Resized(e:* = null):void {
 			if (Capabilities.screenDPI > 250) {
-				Camera.Z = 2;
+				//Camera.Z = 2;
+				//TODO: Some global setting thing for ZoomMode
 			}
 			
 			Renderer.Resized();

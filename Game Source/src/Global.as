@@ -20,7 +20,7 @@ package {
 		
 		//Debug information
 		public static var DebugRender:Boolean = false;
-		static public var DebugFPS:Boolean = false;
+		static public var DebugFPS:Boolean = true;
 		static public var IsEditor:Boolean = true;
 		
 		//Settings
@@ -30,5 +30,8 @@ package {
 		public static var TileSize:int = 48;
 		public static var HasCharacter:Boolean = false;
 		public static var PerspectiveSkew:Number = 0.85;
+		
+		public static var HasLeftRight:Boolean = true;
+		public static var HasUpDown:Boolean = false;
 	}
 }

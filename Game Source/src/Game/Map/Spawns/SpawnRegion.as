@@ -44,7 +44,7 @@ package Game.Map.Spawns {
 		/**
 		 * We're all loaded so lets actually spawn the things :)
 		 */
-		private function PreSpawn():void {
+		public function PreSpawn():void {
 			while (--SpawnOnLoad > -1) {
 				Spawn();
 			}
@@ -128,7 +128,7 @@ package Game.Map.Spawns {
 				s.SpawnChance[totalRects] = b.readByte();
 			}
 			
-			s.PreSpawn();
+			//s.PreSpawn();
 			
             return s;
         }
@@ -176,6 +176,12 @@ package Game.Map.Spawns {
 		}
 		
 		public function GetCurrentState():int {
+			return 0;
+		}
+		
+		/* INTERFACE Game.Scripting.IScriptTarget */
+		
+		public function GetFaction():int {
 			return 0;
 		}
 	}

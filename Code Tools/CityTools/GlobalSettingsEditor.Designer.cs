@@ -42,10 +42,13 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.numTargetFPS = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
+            this.numPerspectiveSkew = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.nudTileSize)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numTargetFPS)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPerspectiveSkew)).BeginInit();
             this.SuspendLayout();
             // 
             // txtGameName
@@ -152,19 +155,22 @@
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.chkEnableTiles, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 5);
-            this.tableLayoutPanel1.Controls.Add(this.label5, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.numTargetFPS, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 6);
+            this.tableLayoutPanel1.Controls.Add(this.label5, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.numTargetFPS, 1, 5);
+            this.tableLayoutPanel1.Controls.Add(this.label6, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.numPerspectiveSkew, 1, 4);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 6;
+            this.tableLayoutPanel1.RowCount = 7;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(463, 153);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(463, 173);
             this.tableLayoutPanel1.TabIndex = 8;
             // 
             // tableLayoutPanel2
@@ -177,7 +183,7 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel2.Controls.Add(this.btnSave, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnCancel, 1, 0);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(298, 121);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(298, 141);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -208,7 +214,7 @@
             // 
             this.label5.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 98);
+            this.label5.Location = new System.Drawing.Point(3, 118);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(61, 13);
             this.label5.TabIndex = 9;
@@ -216,10 +222,38 @@
             // 
             // numTargetFPS
             // 
-            this.numTargetFPS.Location = new System.Drawing.Point(126, 95);
+            this.numTargetFPS.Location = new System.Drawing.Point(126, 115);
             this.numTargetFPS.Name = "numTargetFPS";
             this.numTargetFPS.Size = new System.Drawing.Size(83, 20);
             this.numTargetFPS.TabIndex = 10;
+            // 
+            // label6
+            // 
+            this.label6.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(3, 95);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(93, 13);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "Perspective Skew";
+            // 
+            // numPerspectiveSkew
+            // 
+            this.numPerspectiveSkew.DecimalPlaces = 2;
+            this.numPerspectiveSkew.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.numPerspectiveSkew.Location = new System.Drawing.Point(126, 95);
+            this.numPerspectiveSkew.Name = "numPerspectiveSkew";
+            this.numPerspectiveSkew.Size = new System.Drawing.Size(83, 20);
+            this.numPerspectiveSkew.TabIndex = 12;
+            this.numPerspectiveSkew.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             // 
             // GlobalSettingsEditor
             // 
@@ -229,7 +263,7 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(534, 188);
+            this.ClientSize = new System.Drawing.Size(534, 248);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "GlobalSettingsEditor";
             this.Text = "Global Settings";
@@ -238,6 +272,7 @@
             this.tableLayoutPanel1.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numTargetFPS)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPerspectiveSkew)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -259,5 +294,7 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.NumericUpDown numTargetFPS;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.NumericUpDown numPerspectiveSkew;
     }
 }

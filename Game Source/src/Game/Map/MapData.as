@@ -3,6 +3,7 @@ package Game.Map {
 	import EngineTiming.IUpdatable;
 	import flash.utils.ByteArray;
 	import Game.Critter.BaseCritter;
+	import Game.Critter.Factions;
 	import Game.Effects.EffectInstance;
 	import Game.General.BinaryLoader;
 	import Game.Map.Objects.ObjectInstance;
@@ -151,6 +152,12 @@ package Game.Map {
 				ScriptRegions[TotalObjects] = ScriptRegion.LoadFromBinary(this, b);
 			}
 			
+			//Prespawn the spawn area's
+			TotalObjects = Spawns.length;
+			while (--TotalObjects > -1) {
+				Spawns[TotalObjects].PreSpawn();
+			}
+			
 			Global.LoadingTotal--;
 			
 			MusicPlayer.PlaySong(Music);
@@ -166,8 +173,8 @@ package Game.Map {
 			}
 		}
 		
-		public function GetObjectsInArea(rect:Rect, objects:Vector.<IScriptTarget>, type:int, scanner:Object = null, primaryfaction:int = 0):void {
-			//TODO: This function doesn't properly look for factioned units.
+		public function GetObjectsInArea(rect:Rect, objects:Vector.<IScriptTarget>, type:int, scanner:IScriptTarget = null):void {
+			var primaryfaction:int = scanner.GetFaction();
 			
 			var _tiles:Vector.<TileInstance> = TileHelper.GetTiles(rect, this);
 			var _factionsearchflag:int = 0x1 << primaryfaction;
@@ -208,6 +215,14 @@ package Game.Map {
  						if (Critters[_tt] == scanner) {
 							continue;
 						}
+					}
+					
+					if (type == ScriptTypes.Enemy && !Factions.IsEnemies(primaryfaction, Critters[_tt].PrimaryFaction)) {
+						continue;
+					}
+					
+					if (type == ScriptTypes.Ally && !Factions.IsFriends(primaryfaction, Critters[_tt].PrimaryFaction)) {
+						continue;
 					}
 					
 					if (Critters[_tt].MyRect.intersects(rect)) {

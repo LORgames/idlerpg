@@ -182,6 +182,12 @@ package Game.Map.Objects {
 			return 0;// Template.CurrentAnimation;
 		}
 		
+		/* INTERFACE Game.Scripting.IScriptTarget */
+		
+		public function GetFaction():int {
+			return 0;
+		}
+		
 	}
 
 }

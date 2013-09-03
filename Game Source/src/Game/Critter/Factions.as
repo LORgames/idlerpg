@@ -27,7 +27,7 @@ package Game.Critter {
 		}
 		
 		public static function IsEnemies(faction1:int, faction2:int):Boolean {
-			return ((0x1 << Enemies[faction1]) & (0x1 << faction2)) > 0;
+			return (Enemies[faction1] & (0x1 << faction2)) > 0;
 		}
 		
 		public static function IsFriends(faction1:int, faction2:int):Boolean {

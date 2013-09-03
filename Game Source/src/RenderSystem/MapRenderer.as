@@ -116,7 +116,17 @@ package RenderSystem {
 					if(WorldData.CurrentMap.Critters[xPos] != WorldData.ME) {
 						var objC:Rect = WorldData.CurrentMap.Critters[xPos].MyRect;
 						if (objC == null) continue;
-						DebugLayer.graphics.drawRect(objC.X, objC.Y, objC.W, objC.H);
+						
+						if (WorldData.CurrentMap.Critters[xPos].PrimaryFaction == 1) {
+							DebugLayer.graphics.lineStyle(1, 0xFFFFFF);
+							DebugLayer.graphics.drawRect(objC.X, objC.Y, objC.W, objC.H);
+						} else if (WorldData.CurrentMap.Critters[xPos].PrimaryFaction == 0) {
+							DebugLayer.graphics.lineStyle(1, 0x0);
+							DebugLayer.graphics.drawRect(objC.X, objC.Y, objC.W, objC.H);
+						} else {
+							DebugLayer.graphics.lineStyle(1, 0xFF0000);
+							DebugLayer.graphics.drawRect(objC.X, objC.Y, objC.W, objC.H);
+						}
 					}
 				}
 				
