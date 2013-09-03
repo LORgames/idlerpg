@@ -150,19 +150,19 @@ package Game.Critter {
 			var mx:Number = xSpeed < 0 ? -xSpeed : xSpeed;
 			var my:Number = ySpeed < 0 ? -ySpeed : ySpeed;
 			
-			if (mx > my && Global.HasLeftRight || !Global.HasUpDown) {
+			//if (mx > my) {
 				if (xSpeed < 0) {
 					return 0;
 				} else {
 					return 1;
 				}
-			} else {
-				if (ySpeed < 0) {
-					return 2;
-				} else {
-					return 3;
-				}
-			}
+			//} else {
+			//	if (ySpeed < 0) {
+			//		return 2;
+			//	} else {
+			//		return 3;
+			//	}
+			//}
 		}
 		
 		public function Update(dt:Number):void {
