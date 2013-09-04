@@ -429,7 +429,7 @@ package Game.Scripting {
 			
 			while (true) {
 				command = EventScript.readUnsignedShort();
-				//trace("\t0x" + MathsEx.ZeroPad(command, 4, 16) + " Deep=" + deep);
+				//trace("\t0x" + MathsEx.ZeroPad(command, 4, 16) + " Deep=" + deep + " CurrentTarget=" + info.CurrentTarget);
 				
 				if (command == 0xFFFF) { break; }
 				if (command == 0xB000) { ProcessMathCommand(EventScript, info); continue; }
@@ -603,7 +603,7 @@ package Game.Scripting {
 					case 0x5003: //Movement direction relative
 						if (info.CurrentTarget is BaseCritter) {
 							var angle:Number = Math.PI * (EventScript.readShort() / 180.0);
-							var move:Boolean = (EventScript.readShort() == 0);
+							var move:Boolean = (EventScript.readShort() == 1);
 							if (command == 0x5002) {
 								(info.CurrentTarget as BaseCritter).RequestMove(Math.cos(angle), Math.sin(angle), move);
 							} else if (command == 0x5003) {

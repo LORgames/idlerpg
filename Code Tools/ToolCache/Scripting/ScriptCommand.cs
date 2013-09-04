@@ -86,10 +86,10 @@ namespace ToolCache.Scripting {
             string[] paramBits;
             float fparam;
 
-            string validRegex = "([A-Za-z]+)\\(([A-Z,a-z0-9\\(\\)\\s]*)\\)";
+            string validRegex = "([A-Za-z]+)\\(([A-Z,a-z0-9\\.\\(\\)\\s]*)\\)";
             Match match = Regex.Match(Trimmed, validRegex);
 
-            if (match.Success) {
+            if (match.Success && match.Index == 0) {
                 Action = match.Groups[1].Value.ToLowerInvariant();
                 Parameters = match.Groups[2].Value;
 
@@ -99,30 +99,49 @@ namespace ToolCache.Scripting {
                     ValidCommand vc = Commands.All[Action];
                     paramBits = Parameters.Split(',');
 
-                    if (paramBits.Length >= vc.MinimumParams && paramBits.Length < vc.MaximumParams) {
+                    if (paramBits.Length >= vc.MinimumParams && paramBits.Length <= vc.MaximumParams) {
                         CommandID = vc.CommandID;
 
                         for (int i = 0; i < paramBits.Length; i++) {
                             Param thisParamType = vc.ExpectedParameters[i];
+                            paramBits[i] = paramBits[i].Trim();
 
-                            if((thisParamType|Param.Optional) == Param.Optional) {
-
+                            if ((thisParamType & Param.Optional) == Param.Optional) {
+                                thisParamType = thisParamType ^ Param.Optional;
                             }
 
+                            #region PARAMTYPES CALCULATIONS
                             switch (thisParamType) {
+                                case Param.Void: break; //Obviously void does nothing
                                 case Param.Number:
+                                    if (!float.TryParse(paramBits[i], out fparam)) {
+                                        info.Errors.Add("Cannot convert " + paramBits[i] + " into a number!");
+                                    } else {
+                                        if (fparam > 370 || fparam < -370) {
+                                            info.Errors.Add("Floating point values are limited to the -370 to 370 range!");
+                                        } else {
+                                            AdditionalBytecode.Add((ushort)((short)(fparam * 100)));
+                                        }
+                                    } break;
+                                case Param.Integer:
                                     if (!ushort.TryParse(paramBits[i], out param0)) {
-                                        info.Errors.Add("Cannot convert '" + paramBits[i] + "' into a number.");
+                                        info.Errors.Add("Cannot convert '" + paramBits[i] + "' into an integer!");
                                     } else {
                                         this.AdditionalBytecode.Add(param0);
                                     } break;
-                                case Param.Integer:
-                                    break;
                                 case Param.Angle:
-                                    break;
+                                    if (!short.TryParse(paramBits[i], out sparam)) {
+                                        info.Errors.Add("Cannot convert '" + paramBits[i] + "' into an angle!");
+                                    } else {
+                                        if (sparam < -359 || sparam > 359) info.Warnings.Add("Parameter should be between -359 and 359");
+                                        this.AdditionalBytecode.Add((ushort)sparam);
+                                    } break;
                                 case Param.Boolean:
+                                    bool isTrue = (Array.IndexOf(Commands.ValidBooleanNames, paramBits[i]) != -1);
+                                    AdditionalBytecode.Add((ushort)(isTrue ? 1 : 0));
                                     break;
                                 case Param.String:
+                                    info.Errors.Add("Cannot Param.String yet!");
                                     break;
                                 case Param.Direction:
                                     switch (paramBits[i].ToLower()) {
@@ -130,10 +149,10 @@ namespace ToolCache.Scripting {
                                         case "right": AdditionalBytecode.Add((ushort)1); break;
                                         case "up": AdditionalBytecode.Add((ushort)2); break;
                                         case "down": AdditionalBytecode.Add((ushort)3); break;
-                                        default: info.Errors.Add("Invalid direction: '" + paramBits[3] + "'. Expected one of the following: 'Left', 'Right', 'Up', 'Down'"); break;
+                                        default: info.Errors.Add("Invalid direction: '" + paramBits[i] + "'. Expected one of the following: 'Left', 'Right', 'Up', 'Down'"); break;
                                     } break;
                                 case Param.CritterName:
-                                    if(info.RemappedCritterIDs != null && info.RemappedCritterIDs.ContainsKey(paramBits[i])) {
+                                    if (info.RemappedCritterIDs != null && info.RemappedCritterIDs.ContainsKey(paramBits[i])) {
                                         AdditionalBytecode.Add((ushort)info.RemappedCritterIDs[paramBits[i]]);
                                     } else if (!CritterManager.HasCritter(paramBits[i])) {
                                         info.Errors.Add("Cannot find Critter: " + paramBits[i]);
@@ -152,16 +171,16 @@ namespace ToolCache.Scripting {
                                         }
                                     } break;
                                 case Param.ObjectName:
-                                    if (!MapObjectCache.HasObjectByName(paramBits[0])) {
-                                        info.Errors.Add("Cannot find an object called: " + paramBits[0]);
+                                    if (!MapObjectCache.HasObjectByName(paramBits[i])) {
+                                        info.Errors.Add("Cannot find an object called: " + paramBits[i]);
                                         break;
                                     }
 
                                     if (info.RemappedObjectIDs != null) {
-                                        if (info.RemappedObjectIDs.ContainsKey(paramBits[0])) {
-                                            AdditionalBytecode.Add((ushort)info.RemappedObjectIDs[paramBits[0]]);
+                                        if (info.RemappedObjectIDs.ContainsKey(paramBits[i])) {
+                                            AdditionalBytecode.Add((ushort)info.RemappedObjectIDs[paramBits[i]]);
                                         } else {
-                                            info.Errors.Add("Cannot find an object called: " + paramBits[0] + ".");
+                                            info.Errors.Add("Cannot find an object called: " + paramBits[i] + ".");
                                         }
                                     } break;
                                 case Param.ItemName:
@@ -169,15 +188,22 @@ namespace ToolCache.Scripting {
                                     break;
                                 case Param.EquipmentName:
                                     if (!EquipmentManager.Equipment.ContainsKey(Parameters)) {
-                                        info.Errors.Add("Cannot find equipment item: '" + Parameters + "'");
+                                        info.Errors.Add("Cannot find equipment item: '" + paramBits[i] + "'");
                                     } break;
                                 case Param.SoundEffectName:
                                     if (!SoundDatabase.HasEffect(paramBits[i])) {
-                                        info.Errors.Add("Cannot find sound effect: '" + Parameters + "'");
+                                        info.Errors.Add("Cannot find sound effect: '" + paramBits[i] + "'");
                                     } break;
+                                case Param.SoundEffectGroup:
+                                    if (!SoundDatabase.EffectGroups.ContainsKey(paramBits[i])) {
+                                        info.Errors.Add("Cannot find sound effect group: '" + paramBits[i] + "'");
+                                    }
+                                    break;
                                 case Param.MusicName:
+                                    info.Errors.Add("Cannot Param.MusicName yet!");
                                     break;
                                 case Param.Portrait:
+                                    info.Errors.Add("Cannot Param.Portrait yet!");
                                     break;
                                 case Param.FactionName:
                                     if (!Factions.Has(Parameters)) {
@@ -195,8 +221,22 @@ namespace ToolCache.Scripting {
                                         info.Errors.Add("Cannot find animation: " + Parameters);
                                     } break;
                                 case Param.ImageDatabase:
+                                    info.Errors.Add("Cannot Param.ImageDatabase yet!");
                                     break;
+                                default:
+                                    info.Errors.Add("Unknown Param type: " + thisParamType); break;
                             }
+                            #endregion
+                        }
+
+                        for (int i = paramBits.Length; i < vc.ExpectedParameters.Length; i++) {
+                            Param thisParamType = vc.ExpectedParameters[i];
+
+                            if ((thisParamType & Param.Optional) == Param.Optional) {
+                                thisParamType = thisParamType ^ Param.Optional;
+                            }
+
+                            AdditionalBytecode.AddRange(Commands.DefaultValues[thisParamType]);
                         }
                     } else {
                         if (vc.MinimumParams == vc.MaximumParams) {
@@ -206,105 +246,117 @@ namespace ToolCache.Scripting {
                         }
                     }
                 }
-            }
-
-            //OLD STUFF
-            /*case "if":
-                break;
-            case "else":
-                Parameters = ""; break;
-            case "foreach":
-                CommandID = 0x8002;
-                break;
-            default:
-                //See if we have a decrement or increment line (and convert it to the longhand version :)
-                Match m = Regex.Match(Trimmed, "([A-Za-z][A-Za-z0-9_]*)(\\+\\+|--)");
-
-                if (m.Success) {
-                    string variableName = m.Groups[1].Value;
-                    if (!info.Variables.ContainsKey(variableName)) {
-                        info.Errors.Add("Cannot "+(m.Groups[2].Value=="++"?"Increment":"Decrement")+" a variable because cannot find: " + variableName);
-                    }
-
-                    if (m.Groups[2].Value == "++") {
-                        Trimmed = m.Groups[1].Value + " = " + m.Groups[1].Value + " + 1";
-                    } else {
-                        Trimmed = m.Groups[1].Value + " = " + m.Groups[1].Value + " - 1";
-                    }
+            } else {
+                //Not a command probably :)
+                Action = Trimmed;
+                Parameters = "";
+                if (Trimmed.IndexOf(' ') > -1) {
+                    Action = Trimmed.Substring(0, Trimmed.IndexOf(' '));
+                    Parameters = Trimmed.Substring(Trimmed.IndexOf(' ')+1);
                 }
 
-                //Might be a variable line or something :)
-                m = Regex.Match(Trimmed, "([A-Za-z][A-Za-z0-9_]*)\\s?=\\s?([ A-Za-z0-9*+/\\-%]+)");
+                switch (Action) {
+                    case "if":
+                        break;
+                    case "else":
+                        Parameters = ""; break;
+                    case "foreach":
+                        CommandID = 0x8002; break;
+                    default:
+                        //See if we have a decrement or increment line (and convert it to the longhand version :)
+                        #region CHECK FOR INCREMENT/DECREMENT ++/--
+                        Match m = Regex.Match(Trimmed, "([A-Za-z][A-Za-z0-9_]*)(\\+\\+|--)");
 
-                if (m.Success) {
-                    //Its a variable assignment line
-                    CommandID = 0xB000;
+                        if (m.Success) {
+                            string variableName = m.Groups[1].Value;
+                            if (!info.Variables.ContainsKey(variableName)) {
+                                info.Errors.Add("Cannot "+(m.Groups[2].Value=="++"?"Increment":"Decrement")+" a variable because cannot find: " + variableName);
+                            }
 
-                    if (info.Variables.ContainsKey(m.Groups[1].Value)) {
-                        AdditionalBytecode.Add(0xBFFD);
-                        AdditionalBytecode.Add((ushort)info.Variables[m.Groups[1].Value].Index);
-                    } else if (GlobalVariables.Variables.ContainsKey(m.Groups[1].Value)) {
-                        //TODO: Update this possibly
-                        AdditionalBytecode.Add(0xBFFE);
-                        AdditionalBytecode.Add((ushort)GlobalVariables.Variables[m.Groups[1].Value].Index);
-                    } else {
-                        info.Errors.Add("No variable called: " + m.Groups[1].Value);
-                    }
-
-                    string mathblock = m.Groups[2].Value;
-
-                    //First lets get rid of the 'and' and 'or' joins
-                    MatchCollection mc = Regex.Matches(mathblock, "(\\+|-|/|\\*|%)");
-                    List<string> mathblockBits = new List<string>();
-
-                    int endOfLast = 0;
-                    for (int i = 0; i < mc.Count; i++) {
-                        Match mathPieceMatch = mc[i];
-                        mathblockBits.Add(mathblock.Substring(endOfLast, mathPieceMatch.Index - endOfLast).Trim());
-                        mathblockBits.Add(mathPieceMatch.Groups[0].Value.Trim());
-
-                        endOfLast = mathPieceMatch.Index + mathPieceMatch.Length;
-                    }
-
-                    mathblockBits.Add(mathblock.Substring(endOfLast));
-
-                    //Now we process the bits :D
-                    foreach(string mathBit in mathblockBits) {
-                        if (short.TryParse(mathBit, out sparam)) {
-                            AdditionalBytecode.Add(0xBFFF);
-                            AdditionalBytecode.Add((ushort)sparam);
-                        } else {
-                            switch (mathBit) {
-                                case "+": AdditionalBytecode.Add(0xB001); break;
-                                case "-": AdditionalBytecode.Add(0xB002); break;
-                                case "*": AdditionalBytecode.Add(0xB003); break;
-                                case "/": AdditionalBytecode.Add(0xB004); break;
-                                case "%": AdditionalBytecode.Add(0xB005); break;
-                                default:
-                                    if (VariableExists(mathBit, info)) {
-                                        if (info.Variables.ContainsKey(mathBit)) {
-                                            AdditionalBytecode.Add(0xBFFD);
-                                            AdditionalBytecode.Add((ushort)info.Variables[mathBit].Index);
-                                        } else if (GlobalVariables.Variables.ContainsKey(mathBit)) {
-                                            AdditionalBytecode.Add(0xBFFE);
-                                            AdditionalBytecode.Add((ushort)GlobalVariables.Variables[mathBit].Index);
-                                        }
-                                    } else {
-                                        info.Errors.Add("Cannot find a variable called: " + mathBit[0]);
-                                    } break;
+                            if (m.Groups[2].Value == "++") {
+                                Trimmed = m.Groups[1].Value + " = " + m.Groups[1].Value + " + 1";
+                            } else {
+                                Trimmed = m.Groups[1].Value + " = " + m.Groups[1].Value + " - 1";
                             }
                         }
-                    }
+                        #endregion
 
-                    AdditionalBytecode.Add(0xBF01); //Close maths block
-                } else {
-                    if (Parameters != "") {
-                        info.Errors.Add("Unknown command: " + Action + " & " + Parameters);
-                    } else {
-                        info.Errors.Add("Unknown command: " + Action);
-                    }
+                        //Might be a variable line or something :)
+                        m = Regex.Match(Trimmed, "([A-Za-z][A-Za-z0-9_]*)\\s?=\\s?([ A-Za-z0-9*+/\\-%]+)");
+
+                        if (m.Success) {
+                            #region PROCESS MATH BLOCK
+                            //Its a variable assignment line
+                            CommandID = 0xB000;
+
+                            if (info.Variables.ContainsKey(m.Groups[1].Value)) {
+                                AdditionalBytecode.Add(0xBFFD);
+                                AdditionalBytecode.Add((ushort)info.Variables[m.Groups[1].Value].Index);
+                            } else if (GlobalVariables.Variables.ContainsKey(m.Groups[1].Value)) {
+                                //TODO: Update this possibly
+                                AdditionalBytecode.Add(0xBFFE);
+                                AdditionalBytecode.Add((ushort)GlobalVariables.Variables[m.Groups[1].Value].Index);
+                            } else {
+                                info.Errors.Add("No variable called: " + m.Groups[1].Value);
+                            }
+
+                            string mathblock = m.Groups[2].Value;
+
+                            //First lets get rid of the 'and' and 'or' joins
+                            MatchCollection mc = Regex.Matches(mathblock, "(\\+|-|/|\\*|%)");
+                            List<string> mathblockBits = new List<string>();
+
+                            int endOfLast = 0;
+                            for (int i = 0; i < mc.Count; i++) {
+                                Match mathPieceMatch = mc[i];
+                                mathblockBits.Add(mathblock.Substring(endOfLast, mathPieceMatch.Index - endOfLast).Trim());
+                                mathblockBits.Add(mathPieceMatch.Groups[0].Value.Trim());
+
+                                endOfLast = mathPieceMatch.Index + mathPieceMatch.Length;
+                            }
+
+                            mathblockBits.Add(mathblock.Substring(endOfLast));
+
+                            //Now we process the bits :D
+                            foreach(string mathBit in mathblockBits) {
+                                if (short.TryParse(mathBit, out sparam)) {
+                                    AdditionalBytecode.Add(0xBFFF);
+                                    AdditionalBytecode.Add((ushort)sparam);
+                                } else {
+                                    switch (mathBit) {
+                                        case "+": AdditionalBytecode.Add(0xB001); break;
+                                        case "-": AdditionalBytecode.Add(0xB002); break;
+                                        case "*": AdditionalBytecode.Add(0xB003); break;
+                                        case "/": AdditionalBytecode.Add(0xB004); break;
+                                        case "%": AdditionalBytecode.Add(0xB005); break;
+                                        default:
+                                            if (VariableExists(mathBit, info)) {
+                                                if (info.Variables.ContainsKey(mathBit)) {
+                                                    AdditionalBytecode.Add(0xBFFD);
+                                                    AdditionalBytecode.Add((ushort)info.Variables[mathBit].Index);
+                                                } else if (GlobalVariables.Variables.ContainsKey(mathBit)) {
+                                                    AdditionalBytecode.Add(0xBFFE);
+                                                    AdditionalBytecode.Add((ushort)GlobalVariables.Variables[mathBit].Index);
+                                                }
+                                            } else {
+                                                info.Errors.Add("Cannot find a variable called: " + mathBit[0]);
+                                            } break;
+                                    }
+                                }
+                            }
+
+                            AdditionalBytecode.Add(0xBF01); //Close maths block
+                            #endregion
+                        } else {
+                            if (Parameters != "") {
+                                info.Errors.Add("Unknown command: " + Action + " & " + Parameters);
+                            } else {
+                                info.Errors.Add("Unknown command: " + Action);
+                            }
+                        }
+                        break;
                 }
-            }*/
+            }
         }
 
         internal void Parse(ScriptInfo Info) {

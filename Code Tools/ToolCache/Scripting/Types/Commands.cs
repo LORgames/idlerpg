@@ -6,11 +6,13 @@ using System.Text;
 namespace ToolCache.Scripting.Types {
     public class Commands {
         public static Dictionary<string, ValidCommand> All = new Dictionary<string, ValidCommand>();
+        public static Dictionary<Param, ushort[]> DefaultValues = new Dictionary<Param, ushort[]>();
+        public static readonly string[] ValidBooleanNames = { "on", "true", "1" };
 
         public static void Initialize() {
             //General Commands :)
             All.Add("soundplay",
-                new ValidCommand(0x1001, new Param[]{Param.SoundEffectName}));
+                new ValidCommand(0x1001, new Param[] { Param.SoundEffectName}));
             All.Add("spawn",
                 new ValidCommand(0x1002, new Param[] { Param.CritterName, Param.Integer | Param.Optional, Param.Integer | Param.Optional }));
             All.Add("damage",
@@ -22,7 +24,7 @@ namespace ToolCache.Scripting.Types {
             All.Add("dot",
                 new ValidCommand(0x1006, new Param[] { Param.Integer, Param.Integer }));
             All.Add("destroy",
-                new ValidCommand(0x1007, new Param[] { }));
+                new ValidCommand(0x1007, new Param[] { Param.Void }));
             All.Add("effectspawn",
                 new ValidCommand(0x1008, new Param[] { Param.EffectName, Param.Integer | Param.Optional, Param.Integer | Param.Optional }));
             All.Add("effectspawndirectional",
@@ -35,6 +37,8 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0x100C, new Param[] { Param.CritterName, Param.Integer | Param.Optional, Param.Integer | Param.Optional }));
             All.Add("triggerfire",
                 new ValidCommand(0x100D, new Param[] { Param.Integer }));
+            All.Add("soundgroupplay",
+                new ValidCommand(0x100E, new Param[] { Param.SoundEffectGroup }));
 
             //Quest and Inventory Commands
             All.Add("saydialogue",
@@ -44,7 +48,7 @@ namespace ToolCache.Scripting.Types {
 
             //Item Commands
             All.Add("consume",
-                new ValidCommand(0x3000, new Param[] { }));
+                new ValidCommand(0x3000, new Param[] { Param.Void }));
 
             //Equipment Commands
             All.Add("equip",
@@ -62,7 +66,7 @@ namespace ToolCache.Scripting.Types {
             All.Add("factionset",
                 new ValidCommand(0x5004, new Param[] { Param.FactionName }));
             All.Add("movementstop",
-                new ValidCommand(0x5005, new Param[] { }));
+                new ValidCommand(0x5005, new Param[] { Param.Void }));
 
             //Animation Commands
             All.Add("animationplay",
@@ -78,6 +82,30 @@ namespace ToolCache.Scripting.Types {
             All.Add("replacelayerfromdatabase",
                 new ValidCommand(0xC001, new Param[] { Param.AnimationName, Param.ImageDatabase }));
 
+
+            /////////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////// DEFAULT VALUES
+            /////////////////////////////////////////////////////////////////////////
+
+            DefaultValues.Add(Param.Void, new ushort[] {});
+            DefaultValues.Add(Param.Number, new ushort[] { 0 });
+            DefaultValues.Add(Param.Integer, new ushort[] { 0 });
+            DefaultValues.Add(Param.Angle, new ushort[] { 0 });
+            DefaultValues.Add(Param.Boolean, new ushort[] { 1 });
+            DefaultValues.Add(Param.String, new ushort[] { 0 });
+            DefaultValues.Add(Param.Direction, new ushort[] { 0 });
+            DefaultValues.Add(Param.CritterName, new ushort[] { 0 });
+            DefaultValues.Add(Param.EffectName, new ushort[] { 0 });
+            DefaultValues.Add(Param.ObjectName, new ushort[] { 0 });
+            DefaultValues.Add(Param.ItemName, new ushort[] { 0 });
+            DefaultValues.Add(Param.EquipmentName, new ushort[] { 0 });
+            DefaultValues.Add(Param.SoundEffectName, new ushort[] { 0 });
+            DefaultValues.Add(Param.SoundEffectGroup, new ushort[] { 0 });
+            DefaultValues.Add(Param.MusicName, new ushort[] { 0 });
+            DefaultValues.Add(Param.Portrait, new ushort[] { 0 });
+            DefaultValues.Add(Param.FactionName, new ushort[] { 0 });
+            DefaultValues.Add(Param.AnimationName, new ushort[] { 0 });
+            DefaultValues.Add(Param.ImageDatabase, new ushort[] { 0 });
         }
     }
 }

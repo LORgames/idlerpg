@@ -29,6 +29,7 @@
             this.txtFilename = new System.Windows.Forms.TextBox();
             this.btnPlay = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
+            this.btnAddToGroup = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -67,28 +68,39 @@
             // 
             // btnPlay
             // 
-            this.btnPlay.Location = new System.Drawing.Point(366, 3);
+            this.btnPlay.Image = global::CityTools.Properties.Resources.bell;
+            this.btnPlay.Location = new System.Drawing.Point(274, 9);
             this.btnPlay.Name = "btnPlay";
-            this.btnPlay.Size = new System.Drawing.Size(38, 31);
+            this.btnPlay.Size = new System.Drawing.Size(25, 25);
             this.btnPlay.TabIndex = 4;
-            this.btnPlay.Text = "Play";
             this.btnPlay.UseVisualStyleBackColor = true;
             this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(410, 3);
+            this.btnDelete.Image = global::CityTools.Properties.Resources.delete;
+            this.btnDelete.Location = new System.Drawing.Point(305, 9);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(47, 31);
+            this.btnDelete.Size = new System.Drawing.Size(25, 25);
             this.btnDelete.TabIndex = 5;
-            this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
+            // btnAddToGroup
+            // 
+            this.btnAddToGroup.Image = global::CityTools.Properties.Resources.add;
+            this.btnAddToGroup.Location = new System.Drawing.Point(336, 9);
+            this.btnAddToGroup.Name = "btnAddToGroup";
+            this.btnAddToGroup.Size = new System.Drawing.Size(25, 25);
+            this.btnAddToGroup.TabIndex = 6;
+            this.btnAddToGroup.UseVisualStyleBackColor = true;
+            this.btnAddToGroup.Click += new System.EventHandler(this.btnAddToGroup_Click);
             // 
             // SoundEditor_SoundPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnAddToGroup);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnPlay);
             this.Controls.Add(this.txtFilename);
@@ -96,7 +108,7 @@
             this.Controls.Add(this.txtSoundName);
             this.Controls.Add(this.label1);
             this.Name = "SoundEditor_SoundPanel";
-            this.Size = new System.Drawing.Size(460, 37);
+            this.Size = new System.Drawing.Size(367, 37);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -110,5 +122,6 @@
         private System.Windows.Forms.TextBox txtFilename;
         private System.Windows.Forms.Button btnPlay;
         private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Button btnAddToGroup;
     }
 }

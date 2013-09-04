@@ -13,6 +13,8 @@ namespace ToolCache.Sound {
         public static List<SoundData> Ambience = new List<SoundData>();
         public static List<SoundData> Effects = new List<SoundData>();
 
+        public static Dictionary<string, List<SoundData>> EffectGroups = new Dictionary<string, List<SoundData>>();
+
         internal static void Initialize() {
             Music.Clear();
             Ambience.Clear();
@@ -44,12 +46,30 @@ namespace ToolCache.Sound {
                 }
 
                 //Now load effects
+                List<string> effectNames = new List<string>();
                 short totalEffects = f.GetShort();
                 while (--totalEffects > -1) {
                     SoundData s = new SoundData();
                     s.Filename = f.GetString();
                     s.Name = f.GetString();
+                    effectNames.Add(s.Name);
                     Effects.Add(s);
+                }
+
+                //Now load effect groups
+                if (!f.IsEndOfFile()) {
+                    short totalGroups = f.GetShort();
+
+                    while (--totalGroups > -1) {
+                        string name = f.GetString();
+                        List<SoundData> sd = new List<SoundData>();
+                        EffectGroups.Add(name, sd);
+
+                        short totalSounds = f.GetShort();
+                        while (--totalSounds > -1) {
+                            sd.Add(Effects[effectNames.IndexOf(f.GetString())]);
+                        }
+                    }
                 }
             }
         }
@@ -75,6 +95,15 @@ namespace ToolCache.Sound {
                 f.AddString(s.Name);
             }
 
+            f.AddShort((short)EffectGroups.Count);
+            foreach (KeyValuePair<string, List<SoundData>> kvp in EffectGroups) {
+                f.AddString(kvp.Key);
+                f.AddShort((short)kvp.Value.Count);
+                foreach (SoundData s in kvp.Value) {
+                    f.AddString(s.Name);
+                }
+            }
+
             f.Encode(FILENAME);
         }
 
@@ -86,6 +115,14 @@ namespace ToolCache.Sound {
             }
 
             return false;
+        }
+
+        public static List<SoundData> GetEffectGroup(string effectGroupName) {
+            if (EffectGroups.ContainsKey(effectGroupName)) {
+                return EffectGroups[effectGroupName];
+            }
+
+            return null;
         }
     }
 }

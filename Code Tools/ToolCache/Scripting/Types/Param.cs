@@ -5,6 +5,7 @@ using System.Text;
 
 namespace ToolCache.Scripting.Types {
     public enum Param {
+        Void,
         Number,
         Integer,
         Angle,
@@ -17,6 +18,7 @@ namespace ToolCache.Scripting.Types {
         ItemName,
         EquipmentName,
         SoundEffectName,
+        SoundEffectGroup,
         MusicName,
         Portrait,
         FactionName,

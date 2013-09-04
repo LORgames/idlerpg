@@ -54,7 +54,13 @@ namespace ToolToGameExporter {
                 //Adding factions
                 if (c.Groups.Count + 1 > 8) Processor.Errors.Add(new ProcessingError("Critter", c.Name, "A critter can only belong to upto 8 Factions!"));
                 f.AddByte((byte)(c.Groups.Count + 1));
-                f.AddByte((byte)FactionCrusher.RemappedFactionIDs[c.NodeGroup]);
+
+                if (FactionCrusher.RemappedFactionIDs.ContainsKey(c.NodeGroup)) {
+                    f.AddByte((byte)FactionCrusher.RemappedFactionIDs[c.NodeGroup]);
+                } else {
+                    f.AddByte(0); //TODO: this should find a better faction to use instead
+                }
+
                 foreach (string s in c.Groups) {
                     f.AddByte((byte)FactionCrusher.RemappedFactionIDs[s]);
                 }

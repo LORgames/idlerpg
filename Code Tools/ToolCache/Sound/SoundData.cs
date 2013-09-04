@@ -14,5 +14,9 @@ namespace ToolCache.Sound {
             this.Filename = filename;
             this.Name = name;
         }
+
+        public override string ToString() {
+            return this.Name;
+        }
     }
 }

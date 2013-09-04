@@ -23,7 +23,6 @@ namespace CityTools.Components {
             Sound = _Sound;
             Owner = owner;
 
-
             txtFilename.Text = Path.GetFileName(Sound.Filename);
             txtSoundName.Text = Sound.Name;
         }
@@ -47,6 +46,10 @@ namespace CityTools.Components {
 
         private void btnPlay_Click(object sender, EventArgs e) {
             SoundEditor.I.player.URL = Owner.SaveLocation + "/" + Sound.Filename;
+        }
+
+        private void btnAddToGroup_Click(object sender, EventArgs e) {
+            SoundEditor.I.AddToGroup(Sound);
         }
     }
 }
