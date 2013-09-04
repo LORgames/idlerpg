@@ -374,7 +374,7 @@ namespace CityTools {
             this.scriptEffect.Location = new System.Drawing.Point(3, 3);
             this.scriptEffect.Name = "scriptEffect";
             this.scriptEffect.Script = "";
-            this.scriptEffect.ScriptType = ToolCache.Scripting.ScriptTypes.Effect;
+            this.scriptEffect.ScriptType = ToolCache.Scripting.Types.ScriptTypes.Effect;
             this.scriptEffect.Size = new System.Drawing.Size(320, 443);
             this.scriptEffect.TabIndex = 5;
             this.scriptEffect.BeforeParse += new System.EventHandler<CityTools.Components.ScriptInfoArgs>(this.scriptEffect_BeforeParse);

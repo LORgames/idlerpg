@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ToolCache.Scripting.Types;
 
 namespace ToolCache.Scripting {
     public class ScriptInfo {

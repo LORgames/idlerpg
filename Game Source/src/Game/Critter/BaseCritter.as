@@ -259,11 +259,13 @@ package Game.Critter {
 		}
 		
 		private function ProcessAI(dt:Number = 0):void {
+			var procTarget:Boolean = false;
+			
 			if (WorldData.ME != this && dt > 0) {
 				//AI AGENTS
 				if ((MyAIType | AITypes.Aggressive) > 0 && (CurrentTarget == null && (MyAIType | AITypes.ClosestTarget) > 0)) {
 					//Scan for a new target
-					var r:Rect = new Rect(false, null, X - AlertRangeSqrt, Y - AlertRangeSqrt*Global.PerspectiveSkew, AlertRangeSqrt * 2, AlertRangeSqrt * 2*Global.PerspectiveSkew);
+					var r:Rect = new Rect(false, null, X - AlertRangeSqrt, Y - AlertRangeSqrt * Global.PerspectiveSkew, AlertRangeSqrt * 2, AlertRangeSqrt * 2 * Global.PerspectiveSkew);
 					Drawer.AddDebugRect(r, PrimaryFaction==1?0xFFFFFF:0x0);
 					
 					var objs:Vector.<IScriptTarget> = new Vector.<IScriptTarget>();
@@ -297,33 +299,25 @@ package Game.Critter {
 					Drawer.AddLine(X, Y, p.X, p.Y, PrimaryFaction==1?0xFFFFFF:0x0);
 					
 					var AttackRangeSqrt:int = Math.sqrt(AttackRange) + 1;
+					
 					var rAtk:Rect = new Rect(false, null, X - AttackRangeSqrt, Y - AttackRangeSqrt*Global.PerspectiveSkew, AttackRangeSqrt * 2, AttackRangeSqrt * 2*Global.PerspectiveSkew);
 					Drawer.AddDebugRect(rAtk, PrimaryFaction==1?0xFFFFFF:0x0);
 					
 					if ((CurrentTarget is IMapObject) && (CurrentTarget as IMapObject).HasPerfectCollision(rAtk)) {
 						RequestBasicAttack();
-						RequestMove(0, 0);
+						procTarget = true;
 					} else if ((MyAIType & AITypes.Aggressive)) {
 						RequestMove( -dx, -dy);
-					} else {
-						//Look at the target character
-						if (Math.abs(dx) > Math.abs(dy)) {
-							if (dx > 0) { // Right
-								direction = 0;
-							} else { // Left
-								direction = 1;
-							}
-						} else {
-							if (dy > 0) { // Up
-								direction = 2;
-							} else { // Down
-								direction = 3;
-							}
-						}
+						procTarget = true;
+					} else if (dx * dx + dy * dy > AlertRange*1.25) {
+						procTarget = false;
+						CurrentTarget = null;
 					}
-				} else {
+				}
+				
+				if (!procTarget) {
 					if ((MyAIType & AITypes.Wonder) > 0) {
-						//This should call an AI event :)
+						//This should call an AI event probably :)
 					} else {
 						if (moveSpeedX != 0 || moveSpeedY != 0) {
 							RequestMove(0, 0);
@@ -348,8 +342,8 @@ package Game.Critter {
 					
 					moveSpeedX = xSpeed * MovementSpeed;
 					
-					if(ySpeed < 0) moveSpeedY = ySpeed * MovementSpeed * 0.707;
-					if(ySpeed > 0) moveSpeedY = ySpeed * MovementSpeed * 0.900;
+					if(ySpeed < 0) moveSpeedY = ySpeed * MovementSpeed * Global.PerspectiveSkew;
+					if(ySpeed > 0) moveSpeedY = ySpeed * MovementSpeed * Global.PerspectiveSkew;
 					
 					isMoving = true;
 				} else {

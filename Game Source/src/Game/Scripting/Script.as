@@ -431,17 +431,15 @@ package Game.Scripting {
 				command = EventScript.readUnsignedShort();
 				//trace("\t0x" + MathsEx.ZeroPad(command, 4, 16) + " Deep=" + deep);
 				
-				if (command == 0xFFFF) break;
+				if (command == 0xFFFF) { break; }
 				if (command == 0xB000) { ProcessMathCommand(EventScript, info); continue; }
 				
 				switch(command) {
 					case 0x1001: //Play sound effect
-						EffectsPlayer.Play(EventScript.readShort());
-						break;
+						EffectsPlayer.Play(EventScript.readShort()); break;
 					case 0x1002: //Spawn Critter
 						var critter:BaseCritter = CritterManager.I.CritterInfo[EventScript.readShort()].CreateCritter(WorldData.CurrentMap, Position.X, Position.Y);
-						if (critter != null) { critter.Owner = info.CurrentTarget; }
-						break;
+						if (critter != null) { critter.Owner = info.CurrentTarget; } break;
 					case 0x1003: //Flat Damage
 					case 0x1005: //% Damage
 					case 0x1006: //Flat DOT
@@ -621,6 +619,10 @@ package Game.Scripting {
 						if (info.CurrentTarget is BaseCritter) { 
 							(info.CurrentTarget as BaseCritter).PrimaryFaction = EventScript.readShort();
 						} break;
+					case 0x5005: //Set Faction
+						if (info.CurrentTarget is BaseCritter) { 
+							(info.CurrentTarget as BaseCritter).RequestMove(0, 0);
+						} break;
 					case 0x6000: //Play Animation
 						info.Invoker.ChangeState(EventScript.readShort(), false); break;
 					case 0x6001: //Loop Animation
@@ -661,7 +663,9 @@ package Game.Scripting {
 						if (command == 0xF0FD) {
 							deep++;
 						} else if (command == 0xF0FE) {
-							if (deep <= 1) return;
+							if (deep <= 1) {
+								return;
+							}
 							deep--;
 						} else {
 							trace("Unknown Command: 0x" + command.toString(16) + " Event="+eventID + " Position="+EventScript.position+" Length="+EventScript.length+" Invoker="+info.Invoker);

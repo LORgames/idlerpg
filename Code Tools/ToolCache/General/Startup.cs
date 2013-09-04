@@ -15,10 +15,14 @@ using ToolCache.Effects;
 using ToolCache.SaveSystem;
 using ToolCache.Scripting;
 using ToolCache.NPC;
+using ToolCache.Scripting.Types;
 
 namespace ToolCache.General {
     public class Startup {
         public static void GoGoGadget() {
+            //Internal loading
+            Commands.Initialize();
+
             //Tier 0 Loading:
             PortraitManager.Initialize();
             GlobalVariables.Initialize();

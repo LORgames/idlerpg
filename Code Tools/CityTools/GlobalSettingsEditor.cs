@@ -20,7 +20,7 @@ namespace CityTools {
             nudTileSize.Value = GlobalSettings.tileSize;
             chkDisableCharacter.Checked = GlobalSettings.disableCharacter;
             numTargetFPS.Value = GlobalSettings.targetGameFPS;
-            numPerspectiveSkew.Value = GlobalSettings.perspectiveSkew;
+            numPerspectiveSkew.Value = (decimal)GlobalSettings.perspectiveSkew;
         }
 
         private void Edited(object sender, EventArgs e) {

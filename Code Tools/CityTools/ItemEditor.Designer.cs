@@ -139,7 +139,7 @@
             this.scriptConsumeEffect.Location = new System.Drawing.Point(3, 3);
             this.scriptConsumeEffect.Name = "scriptConsumeEffect";
             this.scriptConsumeEffect.Script = "";
-            this.scriptConsumeEffect.ScriptType = ToolCache.Scripting.ScriptTypes.Item;
+            this.scriptConsumeEffect.ScriptType = ToolCache.Scripting.Types.ScriptTypes.Item;
             this.scriptConsumeEffect.Size = new System.Drawing.Size(354, 327);
             this.scriptConsumeEffect.TabIndex = 31;
             this.scriptConsumeEffect.TextChanged += new System.EventHandler(this.FormEdited);

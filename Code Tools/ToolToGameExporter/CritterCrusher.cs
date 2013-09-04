@@ -7,6 +7,7 @@ using ToolCache.General;
 using ToolCache.Scripting;
 using ToolCache.Animation;
 using System.Drawing;
+using ToolCache.Scripting.Types;
 
 namespace ToolToGameExporter {
     internal class CritterCrusher {

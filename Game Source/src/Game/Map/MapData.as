@@ -127,7 +127,6 @@ package Game.Map {
 				
 				var o:ObjectInstance;
 				
-				trace("OBJID: " + id + "/" + TotalObjects);
 				if (ObjectTemplate.Objects[id].IndividualAnimations) {
 					o = new ObjectInstanceAnimated();
 				} else {

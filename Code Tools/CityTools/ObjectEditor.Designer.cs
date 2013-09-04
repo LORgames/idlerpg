@@ -373,7 +373,7 @@ namespace CityTools {
             this.scriptBox.Location = new System.Drawing.Point(3, 3);
             this.scriptBox.Name = "scriptBox";
             this.scriptBox.Script = "";
-            this.scriptBox.ScriptType = ToolCache.Scripting.ScriptTypes.Object;
+            this.scriptBox.ScriptType = ToolCache.Scripting.Types.ScriptTypes.Object;
             this.scriptBox.Size = new System.Drawing.Size(433, 509);
             this.scriptBox.TabIndex = 1;
             this.scriptBox.BeforeParse += new System.EventHandler<CityTools.Components.ScriptInfoArgs>(this.scriptBox_BeforeParse);

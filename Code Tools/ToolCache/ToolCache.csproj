@@ -100,8 +100,13 @@
     <Compile Include="Scripting\Parser.cs" />
     <Compile Include="Scripting\ScriptCommand.cs" />
     <Compile Include="Scripting\ScriptInfo.cs" />
-    <Compile Include="Scripting\ScriptTypes.cs" />
-    <Compile Include="Scripting\ValidScripting.cs" />
+    <Compile Include="Scripting\Types\Param.cs" />
+    <Compile Include="Scripting\Types\ScriptTypes.cs" />
+    <Compile Include="Scripting\Types\Events.cs" />
+    <Compile Include="Scripting\Types\InternalTypes.cs" />
+    <Compile Include="Scripting\Types\ScriptVariable.cs" />
+    <Compile Include="Scripting\Types\ValidCommand.cs" />
+    <Compile Include="Scripting\Types\Commands.cs" />
     <Compile Include="Sound\SoundData.cs" />
     <Compile Include="Sound\SoundDatabase.cs" />
     <Compile Include="UI\UIElement.cs" />

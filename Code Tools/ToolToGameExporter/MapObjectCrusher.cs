@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using ToolCache.Scripting;
 using ToolCache.Animation;
+using ToolCache.Scripting.Types;
 
 namespace ToolToGameExporter {
     internal class MapObjectCrusher {

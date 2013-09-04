@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ToolCache.General;
 using ToolCache.Scripting;
+using ToolCache.Scripting.Types;
 
 namespace ToolToGameExporter {
     internal class GlobalVariableCrusher {

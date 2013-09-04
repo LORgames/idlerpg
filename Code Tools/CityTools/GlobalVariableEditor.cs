@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using ToolCache.Scripting;
+using ToolCache.Scripting.Types;
 
 namespace CityTools {
     public partial class GlobalVariableEditor : Form {

@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using ToolCache.General;
 using ToolCache.Effects;
 using ToolCache.Map.Objects;
+using ToolCache.Scripting.Types;
 
 namespace ToolCache.Scripting {
     public class ScriptCommand {
@@ -85,446 +86,225 @@ namespace ToolCache.Scripting {
             string[] paramBits;
             float fparam;
 
-            //Figure out what this command does...
-            if (Trimmed.IndexOf(' ') > -1) {
-                Action = Trimmed.Substring(0, Trimmed.IndexOf(' ')).ToLowerInvariant();
-                Parameters = Trimmed.Substring(Trimmed.IndexOf(' ') + 1);
-            } else {
-                Action = Trimmed.ToLowerInvariant();
-                Parameters = "";
-            }
+            string validRegex = "([A-Za-z]+)\\(([A-Z,a-z0-9\\(\\)\\s]*)\\)";
+            Match match = Regex.Match(Trimmed, validRegex);
 
-            switch (Action) {
-                case "soundplay":
-                    CommandID = 0x1001;
+            if (match.Success) {
+                Action = match.Groups[1].Value.ToLowerInvariant();
+                Parameters = match.Groups[2].Value;
 
-                    if (!SoundDatabase.HasEffect(Parameters)) {
-                        info.Errors.Add("Cannot find sound effect: '" + Parameters + "'");
-                    } break;
-                case "spawn":
-                    CommandID = 0x1002;
+                if (!Commands.All.ContainsKey(Action)) {
+                    info.Errors.Add("Cannot find any actions called: " + Action);
+                } else {
+                    ValidCommand vc = Commands.All[Action];
+                    paramBits = Parameters.Split(',');
 
-                    if(info.RemappedCritterIDs != null && info.RemappedCritterIDs.ContainsKey(Parameters)) {
-                        AdditionalBytecode.Add((ushort)info.RemappedCritterIDs[Parameters]);
-                    } else if (!CritterManager.HasCritter(Parameters)) {
-                        info.Errors.Add("Cannot find Critter: " + Parameters);
-                    } break;
-                case "damage":
-                    if (Parameters[Parameters.Length - 1] == '%') {
-                        CommandID = 0x1005;
-                        Parameters = Parameters.Remove(Parameters.Length - 2);
-                    } else {
-                        CommandID = 0x1003;
-                    }
-                    CheckUnsignedShortParameter(info);
-                    break;
-                case "knockback":
-                    CommandID = 0x1004; CheckUnsignedShortParameter(info); break;
-                case "damagepercent":
-                    CommandID = 0x1005;
-                    CheckUnsignedShortParameter(info);
-                    break;
-                case "dot":
-                    paramBits = Parameters.Split(' ');
+                    if (paramBits.Length >= vc.MinimumParams && paramBits.Length < vc.MaximumParams) {
+                        CommandID = vc.CommandID;
 
-                    if (paramBits[0][paramBits[0].Length - 1] == '%') {
-                        CommandID = 0x100C;
-                        paramBits[0] = paramBits[0].Remove(paramBits[0].Length-2);
-                    } else {
-                        CommandID = 0x1006;
-                    }
+                        for (int i = 0; i < paramBits.Length; i++) {
+                            Param thisParamType = vc.ExpectedParameters[i];
 
-                    if (paramBits.Length == 2) {
-                        if (!ushort.TryParse(paramBits[0], out param0)) {
-                            info.Errors.Add("Cannot convert '" + Parameters + "' into a number.");
-                        } else if (!ushort.TryParse(paramBits[1], out param1)) {
-                            info.Errors.Add("Cannot convert '" + Parameters + "' into a number.");
-                        }
-                    } else {
-                        info.Errors.Add("Requires both damage per second and total seconds (1 tick per second).");
-                    } break;
-                case "destroy":
-                    CommandID = 0x1007;
-                    break;
-                case "effectspawn":
-                    CommandID = 0x1008;
+                            if((thisParamType|Param.Optional) == Param.Optional) {
 
-                    paramBits = Parameters.Split(' ');
-
-                    if (paramBits.Length >= 1 && paramBits.Length <= 3) {
-                        if (!EffectManager.Effects.ContainsKey(paramBits[0])) {
-                            info.Errors.Add("Cannot find an effect called: " + paramBits[0]);
-                            break;
-                        }
-
-                        if (info.RemappedEffectIDs != null) {
-                            if (info.RemappedEffectIDs.ContainsKey(paramBits[0])) {
-                                AdditionalBytecode.Add((ushort)info.RemappedEffectIDs[paramBits[0]]);
-                            } else {
-                                info.Errors.Add("Cannot find an effect called: " + paramBits[0] + ".\nEffects without animations are skipped when exporting make sure the effect has an animation as well as checking spelling.");
                             }
-                        }
 
-                        if(paramBits.Length >= 2) {
-                            if (short.TryParse(paramBits[1], out sparam)) {
-                                AdditionalBytecode.Add((ushort)sparam);
-                            } else { info.Errors.Add("No idea how to convert: " + paramBits[1] + " into a number?"); }
-                        } else { AdditionalBytecode.Add(0x0); }
+                            switch (thisParamType) {
+                                case Param.Number:
+                                    if (!ushort.TryParse(paramBits[i], out param0)) {
+                                        info.Errors.Add("Cannot convert '" + paramBits[i] + "' into a number.");
+                                    } else {
+                                        this.AdditionalBytecode.Add(param0);
+                                    } break;
+                                case Param.Integer:
+                                    break;
+                                case Param.Angle:
+                                    break;
+                                case Param.Boolean:
+                                    break;
+                                case Param.String:
+                                    break;
+                                case Param.Direction:
+                                    switch (paramBits[i].ToLower()) {
+                                        case "left": AdditionalBytecode.Add((ushort)0); break;
+                                        case "right": AdditionalBytecode.Add((ushort)1); break;
+                                        case "up": AdditionalBytecode.Add((ushort)2); break;
+                                        case "down": AdditionalBytecode.Add((ushort)3); break;
+                                        default: info.Errors.Add("Invalid direction: '" + paramBits[3] + "'. Expected one of the following: 'Left', 'Right', 'Up', 'Down'"); break;
+                                    } break;
+                                case Param.CritterName:
+                                    if(info.RemappedCritterIDs != null && info.RemappedCritterIDs.ContainsKey(paramBits[i])) {
+                                        AdditionalBytecode.Add((ushort)info.RemappedCritterIDs[paramBits[i]]);
+                                    } else if (!CritterManager.HasCritter(paramBits[i])) {
+                                        info.Errors.Add("Cannot find Critter: " + paramBits[i]);
+                                    } break;
+                                case Param.EffectName:
+                                    if (!EffectManager.Effects.ContainsKey(paramBits[i])) {
+                                        info.Errors.Add("Cannot find an effect called: " + paramBits[i]);
+                                        break;
+                                    }
 
-                        if (paramBits.Length == 3) {
-                            if (short.TryParse(paramBits[2], out sparam)) {
-                                AdditionalBytecode.Add((ushort)sparam);
-                            } else { info.Errors.Add("No idea how to convert: " + paramBits[2] + " into a number?"); }
-                        } else { AdditionalBytecode.Add(0x0); }
-                    } else {
-                        info.Errors.Add("EffectSpawn expects 1-3 parameters, '<Effect Name> <[OPTIONAL]Offset Forwards> <[OPTIONAL]Offset Sideways>'. NB. Effect name do NOT have spaces in them.");
-                    } break;
-                case "effectspawndirectional":
-                    CommandID = 0x1009;
-
-                    paramBits = Parameters.Split(' ');
-
-                    if (paramBits.Length == 4) {
-                        if (!EffectManager.Effects.ContainsKey(paramBits[0])) {
-                            info.Errors.Add("Cannot find an effect called: " + paramBits[0]);
-                            break;
-                        }
-
-                        if (info.RemappedEffectIDs != null) {
-                            if (info.RemappedEffectIDs.ContainsKey(paramBits[0])) {
-                                AdditionalBytecode.Add((ushort)info.RemappedEffectIDs[paramBits[0]]);
-                            } else {
-                                info.Errors.Add("Cannot find an effect called: " + paramBits[0] + ".\nEffects without animations are skipped when exporting make sure the effect has an animation as well as checking spelling.");
-                            }
-                        }
-
-                        if (short.TryParse(paramBits[1], out sparam)) {
-                            AdditionalBytecode.Add((ushort)sparam);
-                        } else { info.Errors.Add("No idea how to convert: " + paramBits[1] + " into a number?"); }
-                        
-                        if (short.TryParse(paramBits[2], out sparam)) {
-                            AdditionalBytecode.Add((ushort)sparam);
-                        } else { info.Errors.Add("No idea how to convert: " + paramBits[2] + " into a number?"); }
-
-                        switch (paramBits[3].ToLower()) {
-                            case "left":
-                                AdditionalBytecode.Add((ushort)0);
-                                break;
-                            case "right":
-                                AdditionalBytecode.Add((ushort)1);
-                                break;
-                            case "up":
-                                AdditionalBytecode.Add((ushort)2);
-                                break;
-                            case "down":
-                                AdditionalBytecode.Add((ushort)3);
-                                break;
-                            default:
-                                info.Errors.Add("Invalid direction: '" + paramBits[3] + "'. Expected one of the following: 'Left', 'Right', 'Up', 'Down'");
-                                break;
-                        }
-                    } else {
-                        info.Errors.Add("EffectSpawnDirectional expects 4 parameters, '<Effect Name> <Y Offset> <X Offset> <Effect Direction>'. NB. Effect name do NOT have spaces in them.");
-                    } break;
-                case "effectspawndirectionalrelative":
-                    CommandID = 0x100A;
-
-                    paramBits = Parameters.Split(' ');
-
-                    if (paramBits.Length == 4) {
-                        if (!EffectManager.Effects.ContainsKey(paramBits[0])) {
-                            info.Errors.Add("Cannot find an effect called: " + paramBits[0]);
-                            break;
-                        }
-
-                        if (info.RemappedEffectIDs != null) {
-                            if (info.RemappedEffectIDs.ContainsKey(paramBits[0])) {
-                                AdditionalBytecode.Add((ushort)info.RemappedEffectIDs[paramBits[0]]);
-                            } else {
-                                info.Errors.Add("Cannot find an effect called: " + paramBits[0] + ".\nEffects without animations are skipped when exporting make sure the effect has an animation as well as checking spelling.");
-                            }
-                        }
-
-                        if (short.TryParse(paramBits[1], out sparam)) {
-                            AdditionalBytecode.Add((ushort)sparam);
-                        } else { info.Errors.Add("No idea how to convert: " + paramBits[1] + " into a number?"); }
-                        
-                        if (short.TryParse(paramBits[2], out sparam)) {
-                            AdditionalBytecode.Add((ushort)sparam);
-                        } else { info.Errors.Add("No idea how to convert: " + paramBits[2] + " into a number?"); }
-
-                        switch (paramBits[3].ToLower()) {
-                            case "left":
-                                AdditionalBytecode.Add((ushort)0);
-                                break;
-                            case "right":
-                                AdditionalBytecode.Add((ushort)1);
-                                break;
-                            case "up":
-                                AdditionalBytecode.Add((ushort)2);
-                                break;
-                            case "down":
-                                AdditionalBytecode.Add((ushort)3);
-                                break;
-                            default:
-                                info.Errors.Add("Invalid direction: '" + paramBits[3] + "'. Expected one of the following: 'Left', 'Right', 'Up', 'Down'");
-                                break;
-                        }
-                    } else {
-                        info.Errors.Add("EffectSpawnDirectionalRelative expects 4 parameters, '<Effect Name> <Offset Forwards> <Offset Sideways> <Effect Direction>'. NB. Effect name do NOT have spaces in them.");
-                    } break;
-                case "objectspawn":
-                    CommandID = 0x100B;
-
-                    paramBits = Parameters.Split(' ');
-
-                    if (paramBits.Length >= 1 && paramBits.Length <= 3) {
-                        if (!MapObjectCache.HasObjectByName(paramBits[0])) {
-                            info.Errors.Add("Cannot find an object called: " + paramBits[0]);
-                            break;
-                        }
-
-                        if (info.RemappedObjectIDs != null) {
-                            if (info.RemappedObjectIDs.ContainsKey(paramBits[0])) {
-                                AdditionalBytecode.Add((ushort)info.RemappedObjectIDs[paramBits[0]]);
-                            } else {
-                                info.Errors.Add("Cannot find an object called: " + paramBits[0] + ".");
-                            }
-                        }
-
-                        if (paramBits.Length >= 2) {
-                            if (short.TryParse(paramBits[1], out sparam)) {
-                                AdditionalBytecode.Add((ushort)sparam);
-                            } else { info.Errors.Add("No idea how to convert: " + paramBits[1] + " into a number?"); }
-                        } else { AdditionalBytecode.Add(0x0); }
-
-                        if (paramBits.Length == 3) {
-                            if (short.TryParse(paramBits[2], out sparam)) {
-                                AdditionalBytecode.Add((ushort)sparam);
-                            } else { info.Errors.Add("No idea how to convert: " + paramBits[2] + " into a number?"); }
-                        } else { AdditionalBytecode.Add(0x0); }
-                    } else {
-                        info.Errors.Add("ObjectSpawn expects 1-3 parameters, '<Object Name> <[OPTIONAL]Offset Forwards> <[OPTIONAL]Offset Sideways>'. NB. Another object might share this name or you may have mistyped it. Remember object names are case sensitive!");
-                    } break;
-                case "dotpercent":
-                    CommandID = 0x100C;
-
-                    paramBits = Parameters.Split(' ');
-
-                    if (paramBits.Length == 2) {
-                        if (!ushort.TryParse(paramBits[0], out param0)) {
-                            info.Errors.Add("Cannot convert '" + Parameters + "' into a number.");
-                        } else if (!ushort.TryParse(paramBits[1], out param1)) {
-                            info.Errors.Add("Cannot convert '" + Parameters + "' into a number.");
-                        }
-                    } else {
-                        info.Errors.Add("Requires both damage per second and total seconds (1 tick per second).");
-                    } break;
-                case "triggerfire":
-                case "firetrigger":
-                    CommandID = 0x100D;
-
-                    if (short.TryParse(Parameters, out sparam)) {
-                        AdditionalBytecode.Add((ushort)sparam);
-                    } else {
-                        info.Errors.Add("Cannot convert '" + Parameters + "' into a number. Must be between " + short.MinValue + " and " + short.MaxValue + " inclusive.");
-                    }
-
-                    break;
-                case "equip":
-                    CommandID = 0x4001;
-
-                    if (!EquipmentManager.Equipment.ContainsKey(Parameters)) {
-                        info.Errors.Add("Cannot find equipment item: '" + Parameters + "'");
-                    } break;
-                case "movementspeed":
-                    CommandID = 0x5001;
-                    if (short.TryParse(Parameters, out sparam)) {
-                        AdditionalBytecode.Add((ushort)sparam);
-                    } else {
-                        info.Errors.Add("Parameter must be an integer");
-                    } break;
-                case "movementdirection":
-                case "movementturn":
-                    if (Action == "movementdirection") {
-                        CommandID = 0x5002;
-                    } else if (Action == "movementturn") {
-                        CommandID = 0x5003;
-                    }
-
-                    paramBits = Parameters.Split(' ');
-
-                    if (short.TryParse(paramBits[0], out sparam)) {
-                        if (sparam < -359 || sparam > 359) {
-                            info.Warnings.Add("Parameter should be between -359 and 359");
-                        }
-                        if (paramBits.Length > 1) {
-                            param0 = paramBits[1].ToLower() == "true" ? (ushort)0 : (ushort)1;
-                        } else {
-                            param0 = (ushort)1;
-                        }
-                        AdditionalBytecode.Add((ushort)sparam);
-                        AdditionalBytecode.Add(param0);
-                    } else {
-                        info.Errors.Add("Parameter must be an integer");
-                    }
-                    break;
-                case "factionset":
-                    CommandID = 0x5004;
-
-                    if (!Factions.Has(Parameters)) {
-                        info.Errors.Add("Could not find the faction: " + Parameters);
-                    } else {
-                        AdditionalBytecode.Add((ushort)Factions.GetID(Parameters));
-                    }
-                    break;
-                case "animationplay":
-                    CommandID = 0x6000;
-
-                    if (info.ScriptType == ScriptTypes.Item) {
-                        info.Errors.Add("Loop animation only applies to objects with state based animation.");
-                        break;
-                    }
-
-                    if (!info.AnimationNames.Contains(Parameters)) {
-                        info.Errors.Add("Cannot find animation: " + Parameters);
-                    } break;
-                case "animationloop":
-                    CommandID = 0x6001;
-
-                    if (info.ScriptType == ScriptTypes.Item) {
-                        info.Errors.Add("Loop animation only applies to objects with state based animation.");
-                        break;
-                    }
-
-                    if (!info.AnimationNames.Contains(Parameters)) {
-                        info.Errors.Add("Cannot find animation: " + Parameters);
-                    } break;
-                case "animationspeed":
-                    CommandID = 0x6002;
-
-                    if (info.ScriptType != ScriptTypes.Equipment && info.ScriptType != ScriptTypes.Critter && info.ScriptType != ScriptTypes.Object && info.ScriptType != ScriptTypes.Effect) {
-                        info.Errors.Add("AnimationSpeed only applies to objects with direct control of thier animations.");
-                        break;
-                    }
-
-                    if (float.TryParse(Parameters, out fparam)) {
-                        if (fparam > 0.049) {
-                            AdditionalBytecode.Add((ushort)(fparam * 20));
-                        } else {
-                            info.Errors.Add("Expected a value above 0.05 after AnimationSpeed");
-                        }
-                    } else {
-                        info.Errors.Add("Expected a value above 0.05 after AnimationSpeed");
-                    } break;
-                case "if":
-                    break;
-                case "else":
-                    Parameters = ""; break;
-                case "foreach":
-                    CommandID = 0x8002;
-                    break;
-                default:
-                    //See if we have a decrement or increment line (and convert it to the longhand version :)
-                    Match m = Regex.Match(Trimmed, "([A-Za-z][A-Za-z0-9_]*)(\\+\\+|--)");
-
-                    if (m.Success) {
-                        string variableName = m.Groups[1].Value;
-                        if (!info.Variables.ContainsKey(variableName)) {
-                            info.Errors.Add("Cannot "+(m.Groups[2].Value=="++"?"Increment":"Decrement")+" a variable because cannot find: " + variableName);
-                        }
-
-                        if (m.Groups[2].Value == "++") {
-                            Trimmed = m.Groups[1].Value + " = " + m.Groups[1].Value + " + 1";
-                        } else {
-                            Trimmed = m.Groups[1].Value + " = " + m.Groups[1].Value + " - 1";
-                        }
-                    }
-
-                    //Might be a variable line or something :)
-                    m = Regex.Match(Trimmed, "([A-Za-z][A-Za-z0-9_]*)\\s?=\\s?([ A-Za-z0-9*+/\\-%]+)");
-
-                    if (m.Success) {
-                        //Its a variable assignment line
-                        CommandID = 0xB000;
-
-                        if (info.Variables.ContainsKey(m.Groups[1].Value)) {
-                            AdditionalBytecode.Add(0xBFFD);
-                            AdditionalBytecode.Add((ushort)info.Variables[m.Groups[1].Value].Index);
-                        } else if (GlobalVariables.Variables.ContainsKey(m.Groups[1].Value)) {
-                            //TODO: Update this possibly
-                            AdditionalBytecode.Add(0xBFFE);
-                            AdditionalBytecode.Add((ushort)GlobalVariables.Variables[m.Groups[1].Value].Index);
-                        } else {
-                            info.Errors.Add("No variable called: " + m.Groups[1].Value);
-                        }
-
-                        string mathblock = m.Groups[2].Value;
-
-                        //First lets get rid of the 'and' and 'or' joins
-                        MatchCollection mc = Regex.Matches(mathblock, "(\\+|-|/|\\*|%)");
-                        List<string> mathblockBits = new List<string>();
-
-                        int endOfLast = 0;
-                        for (int i = 0; i < mc.Count; i++) {
-                            Match mathPieceMatch = mc[i];
-                            mathblockBits.Add(mathblock.Substring(endOfLast, mathPieceMatch.Index - endOfLast).Trim());
-                            mathblockBits.Add(mathPieceMatch.Groups[0].Value.Trim());
-
-                            endOfLast = mathPieceMatch.Index + mathPieceMatch.Length;
-                        }
-
-                        mathblockBits.Add(mathblock.Substring(endOfLast));
-
-                        //Now we process the bits :D
-                        foreach(string mathBit in mathblockBits) {
-                            if (short.TryParse(mathBit, out sparam)) {
-                                AdditionalBytecode.Add(0xBFFF);
-                                AdditionalBytecode.Add((ushort)sparam);
-                            } else {
-                                switch (mathBit) {
-                                    case "+": AdditionalBytecode.Add(0xB001); break;
-                                    case "-": AdditionalBytecode.Add(0xB002); break;
-                                    case "*": AdditionalBytecode.Add(0xB003); break;
-                                    case "/": AdditionalBytecode.Add(0xB004); break;
-                                    case "%": AdditionalBytecode.Add(0xB005); break;
-                                    default:
-                                        if (VariableExists(mathBit, info)) {
-                                            if (info.Variables.ContainsKey(mathBit)) {
-                                                AdditionalBytecode.Add(0xBFFD);
-                                                AdditionalBytecode.Add((ushort)info.Variables[mathBit].Index);
-                                            } else if (GlobalVariables.Variables.ContainsKey(mathBit)) {
-                                                AdditionalBytecode.Add(0xBFFE);
-                                                AdditionalBytecode.Add((ushort)GlobalVariables.Variables[mathBit].Index);
-                                            }
+                                    if (info.RemappedEffectIDs != null) {
+                                        if (info.RemappedEffectIDs.ContainsKey(paramBits[i])) {
+                                            AdditionalBytecode.Add((ushort)info.RemappedEffectIDs[paramBits[i]]);
                                         } else {
-                                            info.Errors.Add("Cannot find a variable called: " + mathBit[0]);
-                                        } break;
-                                }
+                                            info.Errors.Add("Cannot find an effect called: " + paramBits[i] + ".\nEffects without animations are skipped when exporting make sure the effect has an animation as well as checking spelling.");
+                                        }
+                                    } break;
+                                case Param.ObjectName:
+                                    if (!MapObjectCache.HasObjectByName(paramBits[0])) {
+                                        info.Errors.Add("Cannot find an object called: " + paramBits[0]);
+                                        break;
+                                    }
+
+                                    if (info.RemappedObjectIDs != null) {
+                                        if (info.RemappedObjectIDs.ContainsKey(paramBits[0])) {
+                                            AdditionalBytecode.Add((ushort)info.RemappedObjectIDs[paramBits[0]]);
+                                        } else {
+                                            info.Errors.Add("Cannot find an object called: " + paramBits[0] + ".");
+                                        }
+                                    } break;
+                                case Param.ItemName:
+                                    info.Errors.Add("cannot use item name yet.");
+                                    break;
+                                case Param.EquipmentName:
+                                    if (!EquipmentManager.Equipment.ContainsKey(Parameters)) {
+                                        info.Errors.Add("Cannot find equipment item: '" + Parameters + "'");
+                                    } break;
+                                case Param.SoundEffectName:
+                                    if (!SoundDatabase.HasEffect(paramBits[i])) {
+                                        info.Errors.Add("Cannot find sound effect: '" + Parameters + "'");
+                                    } break;
+                                case Param.MusicName:
+                                    break;
+                                case Param.Portrait:
+                                    break;
+                                case Param.FactionName:
+                                    if (!Factions.Has(Parameters)) {
+                                        info.Errors.Add("Could not find the faction: " + Parameters);
+                                    } else {
+                                        AdditionalBytecode.Add((ushort)Factions.GetID(Parameters));
+                                    } break;
+                                case Param.AnimationName:
+                                    if (info.ScriptType == ScriptTypes.Item) {
+                                        info.Errors.Add("Loop animation only applies to objects with state based animation.");
+                                        break;
+                                    }
+
+                                    if (!info.AnimationNames.Contains(Parameters)) {
+                                        info.Errors.Add("Cannot find animation: " + Parameters);
+                                    } break;
+                                case Param.ImageDatabase:
+                                    break;
                             }
                         }
-
-                        AdditionalBytecode.Add(0xBF01); //Close maths block
                     } else {
-                        if (Parameters != "") {
-                            info.Errors.Add("Unknown command: " + Action + " & " + Parameters);
+                        if (vc.MinimumParams == vc.MaximumParams) {
+                            info.Errors.Add(Action + " expects " + vc.MinimumParams + " parameters but got " + paramBits.Length);
                         } else {
-                            info.Errors.Add("Unknown command: " + Action);
+                            info.Errors.Add(Action + " expects between " + vc.MinimumParams + " and " + vc.MaximumParams + " parameters but got " + paramBits.Length);
+                        }
+                    }
+                }
+            }
+
+            //OLD STUFF
+            /*case "if":
+                break;
+            case "else":
+                Parameters = ""; break;
+            case "foreach":
+                CommandID = 0x8002;
+                break;
+            default:
+                //See if we have a decrement or increment line (and convert it to the longhand version :)
+                Match m = Regex.Match(Trimmed, "([A-Za-z][A-Za-z0-9_]*)(\\+\\+|--)");
+
+                if (m.Success) {
+                    string variableName = m.Groups[1].Value;
+                    if (!info.Variables.ContainsKey(variableName)) {
+                        info.Errors.Add("Cannot "+(m.Groups[2].Value=="++"?"Increment":"Decrement")+" a variable because cannot find: " + variableName);
+                    }
+
+                    if (m.Groups[2].Value == "++") {
+                        Trimmed = m.Groups[1].Value + " = " + m.Groups[1].Value + " + 1";
+                    } else {
+                        Trimmed = m.Groups[1].Value + " = " + m.Groups[1].Value + " - 1";
+                    }
+                }
+
+                //Might be a variable line or something :)
+                m = Regex.Match(Trimmed, "([A-Za-z][A-Za-z0-9_]*)\\s?=\\s?([ A-Za-z0-9*+/\\-%]+)");
+
+                if (m.Success) {
+                    //Its a variable assignment line
+                    CommandID = 0xB000;
+
+                    if (info.Variables.ContainsKey(m.Groups[1].Value)) {
+                        AdditionalBytecode.Add(0xBFFD);
+                        AdditionalBytecode.Add((ushort)info.Variables[m.Groups[1].Value].Index);
+                    } else if (GlobalVariables.Variables.ContainsKey(m.Groups[1].Value)) {
+                        //TODO: Update this possibly
+                        AdditionalBytecode.Add(0xBFFE);
+                        AdditionalBytecode.Add((ushort)GlobalVariables.Variables[m.Groups[1].Value].Index);
+                    } else {
+                        info.Errors.Add("No variable called: " + m.Groups[1].Value);
+                    }
+
+                    string mathblock = m.Groups[2].Value;
+
+                    //First lets get rid of the 'and' and 'or' joins
+                    MatchCollection mc = Regex.Matches(mathblock, "(\\+|-|/|\\*|%)");
+                    List<string> mathblockBits = new List<string>();
+
+                    int endOfLast = 0;
+                    for (int i = 0; i < mc.Count; i++) {
+                        Match mathPieceMatch = mc[i];
+                        mathblockBits.Add(mathblock.Substring(endOfLast, mathPieceMatch.Index - endOfLast).Trim());
+                        mathblockBits.Add(mathPieceMatch.Groups[0].Value.Trim());
+
+                        endOfLast = mathPieceMatch.Index + mathPieceMatch.Length;
+                    }
+
+                    mathblockBits.Add(mathblock.Substring(endOfLast));
+
+                    //Now we process the bits :D
+                    foreach(string mathBit in mathblockBits) {
+                        if (short.TryParse(mathBit, out sparam)) {
+                            AdditionalBytecode.Add(0xBFFF);
+                            AdditionalBytecode.Add((ushort)sparam);
+                        } else {
+                            switch (mathBit) {
+                                case "+": AdditionalBytecode.Add(0xB001); break;
+                                case "-": AdditionalBytecode.Add(0xB002); break;
+                                case "*": AdditionalBytecode.Add(0xB003); break;
+                                case "/": AdditionalBytecode.Add(0xB004); break;
+                                case "%": AdditionalBytecode.Add(0xB005); break;
+                                default:
+                                    if (VariableExists(mathBit, info)) {
+                                        if (info.Variables.ContainsKey(mathBit)) {
+                                            AdditionalBytecode.Add(0xBFFD);
+                                            AdditionalBytecode.Add((ushort)info.Variables[mathBit].Index);
+                                        } else if (GlobalVariables.Variables.ContainsKey(mathBit)) {
+                                            AdditionalBytecode.Add(0xBFFE);
+                                            AdditionalBytecode.Add((ushort)GlobalVariables.Variables[mathBit].Index);
+                                        }
+                                    } else {
+                                        info.Errors.Add("Cannot find a variable called: " + mathBit[0]);
+                                    } break;
+                            }
                         }
                     }
 
-                    break;
-            }
-        }
-
-        private void CheckUnsignedShortParameter(ScriptInfo info) {
-            ushort param0;
-
-            if (!ushort.TryParse(Parameters, out param0)) {
-                info.Errors.Add("Cannot convert '" + Parameters + "' into a number.");
-            } else {
-                this.AdditionalBytecode.Add(param0);
-            }
+                    AdditionalBytecode.Add(0xBF01); //Close maths block
+                } else {
+                    if (Parameters != "") {
+                        info.Errors.Add("Unknown command: " + Action + " & " + Parameters);
+                    } else {
+                        info.Errors.Add("Unknown command: " + Action);
+                    }
+                }
+            }*/
         }
 
         internal void Parse(ScriptInfo Info) {
@@ -590,8 +370,8 @@ namespace ToolCache.Scripting {
         /// <param name="Info">The global script object</param>
         /// <param name="typeName">The string containing the expected type. E.g. "Attackable"</param>
         private void ProcessScriptType(ScriptInfo Info, string typeName) {
-            ValidTypes scriptType;
-            if (!Enum.TryParse<ValidTypes>(typeName, out scriptType)) {
+            InternalTypes scriptType;
+            if (!Enum.TryParse<InternalTypes>(typeName, out scriptType)) {
                 Info.Errors.Add(typeName + " is not a valid scripting type!");
             } else {
                 AdditionalBytecode.Add((ushort)scriptType);

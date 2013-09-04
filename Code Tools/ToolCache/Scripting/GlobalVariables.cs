@@ -6,6 +6,7 @@ using System.IO;
 using ToolCache.General;
 using ToolCache.Critters;
 using System.Text.RegularExpressions;
+using ToolCache.Scripting.Types;
 
 namespace ToolCache.Scripting {
     public class GlobalVariables {

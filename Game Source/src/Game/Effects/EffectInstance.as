@@ -37,7 +37,7 @@ package Game.Effects {
 		public var CurrentFrame:int = 0;
 		private var FrameTimeout:Number = 0;
 		public var PlaybackSpeed:Number = 0;
-		public var CopyRect:Rectangle = new Rectangle();
+		public var CopyRect:Rectangle;
 		public var IsLooping:Boolean = true;
 		
 		private var MyLife:int = 0;
@@ -45,6 +45,7 @@ package Game.Effects {
 		public function EffectInstance(info:EffectInfo, x:int, y:int, d:int) {
  			this.Info = info;
 			
+			CopyRect = new Rectangle();
 			CopyRect.width = Info.FrameWidth;
 			CopyRect.height = Info.FrameHeight;
 			

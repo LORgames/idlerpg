@@ -600,7 +600,7 @@
             this.scriptUI.Location = new System.Drawing.Point(3, 130);
             this.scriptUI.Name = "scriptUI";
             this.scriptUI.Script = "";
-            this.scriptUI.ScriptType = ToolCache.Scripting.ScriptTypes.Unknown;
+            this.scriptUI.ScriptType = ToolCache.Scripting.Types.ScriptTypes.Unknown;
             this.scriptUI.Size = new System.Drawing.Size(337, 162);
             this.scriptUI.TabIndex = 16;
             // 

@@ -904,7 +904,7 @@ namespace CityTools {
             this.txtScript.Location = new System.Drawing.Point(3, 3);
             this.txtScript.Name = "txtScript";
             this.txtScript.Script = "";
-            this.txtScript.ScriptType = ToolCache.Scripting.ScriptTypes.Critter;
+            this.txtScript.ScriptType = ToolCache.Scripting.Types.ScriptTypes.Critter;
             this.txtScript.Size = new System.Drawing.Size(423, 554);
             this.txtScript.TabIndex = 19;
             this.txtScript.BeforeParse += new System.EventHandler<CityTools.Components.ScriptInfoArgs>(this.txtScript_BeforeParse);

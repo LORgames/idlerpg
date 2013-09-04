@@ -959,7 +959,7 @@
             this.scriptScriptRegion.Location = new System.Drawing.Point(3, 587);
             this.scriptScriptRegion.Name = "scriptScriptRegion";
             this.scriptScriptRegion.Script = "";
-            this.scriptScriptRegion.ScriptType = ToolCache.Scripting.ScriptTypes.Region;
+            this.scriptScriptRegion.ScriptType = ToolCache.Scripting.Types.ScriptTypes.Region;
             this.scriptScriptRegion.Size = new System.Drawing.Size(297, 190);
             this.scriptScriptRegion.TabIndex = 86;
             // 
@@ -1391,7 +1391,7 @@
             this.scriptMap.Location = new System.Drawing.Point(3, 3);
             this.scriptMap.Name = "scriptMap";
             this.scriptMap.Script = "";
-            this.scriptMap.ScriptType = ToolCache.Scripting.ScriptTypes.Map;
+            this.scriptMap.ScriptType = ToolCache.Scripting.Types.ScriptTypes.Map;
             this.scriptMap.Size = new System.Drawing.Size(302, 779);
             this.scriptMap.TabIndex = 0;
             // 

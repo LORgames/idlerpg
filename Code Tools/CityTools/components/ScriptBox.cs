@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using ToolCache.Scripting;
+using ToolCache.Scripting.Types;
 
 namespace CityTools.Components {
     public partial class ScriptBox : UserControl {

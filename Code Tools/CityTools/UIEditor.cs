@@ -11,6 +11,7 @@ using ToolCache.UI;
 using ToolCache.General;
 using System.Drawing.Drawing2D;
 using ToolCache.Scripting;
+using ToolCache.Scripting.Types;
 
 namespace CityTools {
     public partial class UIEditor : Form {
