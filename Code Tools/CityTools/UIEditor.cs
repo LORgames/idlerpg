@@ -96,6 +96,7 @@ namespace CityTools {
                 PanelSwitching = true;
                 txtPanelName.Text = CurrentPanel.Name;
 
+                listUIElements.Items.Clear();
                 foreach (UIElement element in CurrentPanel.Elements) {
                     listUIElements.Items.Add(element);
                 }
@@ -346,6 +347,12 @@ namespace CityTools {
             SavePanelIfRequired();
 
             pbExample.Invalidate();
+        }
+
+        private void btnAddPanel_Click(object sender, EventArgs e) {
+            UIPanel uip = new UIPanel();
+            UIManager.AddPanel(uip);
+            cbUIPanels.Items.Add(uip);
         }
     }
 }

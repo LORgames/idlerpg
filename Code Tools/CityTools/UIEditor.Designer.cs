@@ -28,6 +28,7 @@
             this.btnNewUIElement = new System.Windows.Forms.Button();
             this.btnDeleteSelectedUIElements = new System.Windows.Forms.Button();
             this.pnlUIElement = new System.Windows.Forms.Panel();
+            this.scriptUI = new CityTools.Components.ScriptBox();
             this.btnMoveLayerDown = new System.Windows.Forms.Button();
             this.btnMoveLayerUp = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
@@ -68,7 +69,6 @@
             this.txtPanelName = new System.Windows.Forms.TextBox();
             this.pnlUIPanel = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
-            this.scriptUI = new CityTools.Components.ScriptBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbExample)).BeginInit();
             this.pnlUIElement.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUIElementSizeY)).BeginInit();
@@ -148,6 +148,15 @@
             this.pnlUIElement.Name = "pnlUIElement";
             this.pnlUIElement.Size = new System.Drawing.Size(345, 297);
             this.pnlUIElement.TabIndex = 4;
+            // 
+            // scriptUI
+            // 
+            this.scriptUI.Location = new System.Drawing.Point(3, 130);
+            this.scriptUI.Name = "scriptUI";
+            this.scriptUI.Script = "";
+            this.scriptUI.ScriptType = ToolCache.Scripting.Types.ScriptTypes.Unknown;
+            this.scriptUI.Size = new System.Drawing.Size(337, 162);
+            this.scriptUI.TabIndex = 16;
             // 
             // btnMoveLayerDown
             // 
@@ -535,7 +544,7 @@
             this.tbPercent.Location = new System.Drawing.Point(363, 606);
             this.tbPercent.Maximum = 100;
             this.tbPercent.Name = "tbPercent";
-            this.tbPercent.Size = new System.Drawing.Size(1024, 42);
+            this.tbPercent.Size = new System.Drawing.Size(1024, 45);
             this.tbPercent.TabIndex = 11;
             this.tbPercent.Value = 50;
             this.tbPercent.ValueChanged += new System.EventHandler(this.tbPercent_ValueChanged);
@@ -563,6 +572,7 @@
             this.btnAddPanel.TabIndex = 13;
             this.btnAddPanel.Text = "Add New Panel";
             this.btnAddPanel.UseVisualStyleBackColor = true;
+            this.btnAddPanel.Click += new System.EventHandler(this.btnAddPanel_Click);
             // 
             // txtPanelName
             // 
@@ -594,15 +604,6 @@
             this.label11.Size = new System.Drawing.Size(65, 13);
             this.label11.TabIndex = 15;
             this.label11.Text = "Panel Name";
-            // 
-            // scriptUI
-            // 
-            this.scriptUI.Location = new System.Drawing.Point(3, 130);
-            this.scriptUI.Name = "scriptUI";
-            this.scriptUI.Script = "";
-            this.scriptUI.ScriptType = ToolCache.Scripting.Types.ScriptTypes.Unknown;
-            this.scriptUI.Size = new System.Drawing.Size(337, 162);
-            this.scriptUI.TabIndex = 16;
             // 
             // UIEditor
             // 
