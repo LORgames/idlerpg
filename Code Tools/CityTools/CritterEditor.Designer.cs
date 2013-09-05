@@ -24,6 +24,7 @@ namespace CityTools {
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CritterEditor));
             this.sptFullForm = new System.Windows.Forms.SplitContainer();
             this.treeAllCritters = new System.Windows.Forms.TreeView();
@@ -35,6 +36,8 @@ namespace CityTools {
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabInfo = new System.Windows.Forms.TabPage();
+            this.label1 = new System.Windows.Forms.Label();
+            this.numAttackRange = new System.Windows.Forms.NumericUpDown();
             this.txtMonsterName = new System.Windows.Forms.TextBox();
             this.listGroups = new System.Windows.Forms.ListBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -104,6 +107,7 @@ namespace CityTools {
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.redrawTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.sptFullForm)).BeginInit();
             this.sptFullForm.Panel1.SuspendLayout();
             this.sptFullForm.Panel2.SuspendLayout();
@@ -111,6 +115,7 @@ namespace CityTools {
             this.toolsMainTools.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabInfo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numAttackRange)).BeginInit();
             this.pnlHumanoid.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreviewDisplay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numRange)).BeginInit();
@@ -147,7 +152,7 @@ namespace CityTools {
             // 
             this.sptFullForm.Panel2.Controls.Add(this.tabControl1);
             this.sptFullForm.Panel2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.sptFullForm.Size = new System.Drawing.Size(733, 588);
+            this.sptFullForm.Size = new System.Drawing.Size(824, 588);
             this.sptFullForm.SplitterDistance = 290;
             this.sptFullForm.TabIndex = 0;
             this.sptFullForm.TabStop = false;
@@ -225,11 +230,13 @@ namespace CityTools {
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(437, 586);
+            this.tabControl1.Size = new System.Drawing.Size(528, 586);
             this.tabControl1.TabIndex = 24;
             // 
             // tabInfo
             // 
+            this.tabInfo.Controls.Add(this.label1);
+            this.tabInfo.Controls.Add(this.numAttackRange);
             this.tabInfo.Controls.Add(this.txtMonsterName);
             this.tabInfo.Controls.Add(this.listGroups);
             this.tabInfo.Controls.Add(this.label7);
@@ -258,10 +265,37 @@ namespace CityTools {
             this.tabInfo.Location = new System.Drawing.Point(4, 22);
             this.tabInfo.Name = "tabInfo";
             this.tabInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.tabInfo.Size = new System.Drawing.Size(429, 560);
+            this.tabInfo.Size = new System.Drawing.Size(520, 560);
             this.tabInfo.TabIndex = 0;
             this.tabInfo.Text = "Information";
             this.tabInfo.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(8, 189);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(73, 13);
+            this.label1.TabIndex = 25;
+            this.label1.Text = "Attack Range";
+            // 
+            // numAttackRange
+            // 
+            this.numAttackRange.Location = new System.Drawing.Point(87, 187);
+            this.numAttackRange.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numAttackRange.Name = "numAttackRange";
+            this.numAttackRange.Size = new System.Drawing.Size(104, 20);
+            this.numAttackRange.TabIndex = 24;
+            this.numAttackRange.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.numAttackRange.ValueChanged += new System.EventHandler(this.ValueChanged);
             // 
             // txtMonsterName
             // 
@@ -344,7 +378,7 @@ namespace CityTools {
             this.pnlHumanoid.Controls.Add(this.cbHumanoidBody);
             this.pnlHumanoid.Controls.Add(this.cbHumanoidPants);
             this.pnlHumanoid.Controls.Add(this.cbHumanoidShadow);
-            this.pnlHumanoid.Location = new System.Drawing.Point(197, 165);
+            this.pnlHumanoid.Location = new System.Drawing.Point(197, 271);
             this.pnlHumanoid.Name = "pnlHumanoid";
             this.pnlHumanoid.Size = new System.Drawing.Size(226, 252);
             this.pnlHumanoid.TabIndex = 15;
@@ -537,7 +571,7 @@ namespace CityTools {
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.pbPreviewDisplay.Location = new System.Drawing.Point(197, 6);
             this.pbPreviewDisplay.Name = "pbPreviewDisplay";
-            this.pbPreviewDisplay.Size = new System.Drawing.Size(226, 153);
+            this.pbPreviewDisplay.Size = new System.Drawing.Size(317, 259);
             this.pbPreviewDisplay.TabIndex = 0;
             this.pbPreviewDisplay.TabStop = false;
             this.pbPreviewDisplay.Paint += new System.Windows.Forms.PaintEventHandler(this.pbPreviewDisplay_Paint);
@@ -567,7 +601,7 @@ namespace CityTools {
             0,
             0,
             0});
-            this.numRange.ValueChanged += new System.EventHandler(this.numRange_ValueChanged);
+            this.numRange.ValueChanged += new System.EventHandler(this.ValueChanged);
             // 
             // numExperience
             // 
@@ -613,7 +647,7 @@ namespace CityTools {
             0,
             0,
             0});
-            this.numMovementSpeed.ValueChanged += new System.EventHandler(this.numMovementSpeed_ValueChanged);
+            this.numMovementSpeed.ValueChanged += new System.EventHandler(this.ValueChanged);
             // 
             // numHealth
             // 
@@ -696,7 +730,7 @@ namespace CityTools {
             this.pnlBeast.Controls.Add(this.btnBeastUp);
             this.pnlBeast.Controls.Add(this.btnBeastLeft);
             this.pnlBeast.Controls.Add(this.ccBeastAnimations);
-            this.pnlBeast.Location = new System.Drawing.Point(197, 168);
+            this.pnlBeast.Location = new System.Drawing.Point(197, 274);
             this.pnlBeast.Name = "pnlBeast";
             this.pnlBeast.Size = new System.Drawing.Size(226, 270);
             this.pnlBeast.TabIndex = 16;
@@ -893,7 +927,7 @@ namespace CityTools {
             this.tabScripts.Location = new System.Drawing.Point(4, 22);
             this.tabScripts.Name = "tabScripts";
             this.tabScripts.Padding = new System.Windows.Forms.Padding(3);
-            this.tabScripts.Size = new System.Drawing.Size(429, 560);
+            this.tabScripts.Size = new System.Drawing.Size(520, 560);
             this.tabScripts.TabIndex = 1;
             this.tabScripts.Text = "Scripts";
             this.tabScripts.UseVisualStyleBackColor = true;
@@ -905,7 +939,7 @@ namespace CityTools {
             this.txtScript.Name = "txtScript";
             this.txtScript.Script = "";
             this.txtScript.ScriptType = ToolCache.Scripting.Types.ScriptTypes.Critter;
-            this.txtScript.Size = new System.Drawing.Size(423, 554);
+            this.txtScript.Size = new System.Drawing.Size(514, 554);
             this.txtScript.TabIndex = 19;
             this.txtScript.BeforeParse += new System.EventHandler<CityTools.Components.ScriptInfoArgs>(this.txtScript_BeforeParse);
             this.txtScript.ScriptUpdated += new System.EventHandler<System.EventArgs>(this.ValueChanged);
@@ -916,7 +950,7 @@ namespace CityTools {
             this.tabLoot.Location = new System.Drawing.Point(4, 22);
             this.tabLoot.Name = "tabLoot";
             this.tabLoot.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLoot.Size = new System.Drawing.Size(429, 560);
+            this.tabLoot.Size = new System.Drawing.Size(520, 560);
             this.tabLoot.TabIndex = 2;
             this.tabLoot.Text = "Loot";
             this.tabLoot.UseVisualStyleBackColor = true;
@@ -933,7 +967,7 @@ namespace CityTools {
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(423, 554);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(514, 554);
             this.tableLayoutPanel2.TabIndex = 17;
             // 
             // tableLayoutPanel1
@@ -950,7 +984,7 @@ namespace CityTools {
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(417, 29);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(508, 29);
             this.tableLayoutPanel1.TabIndex = 16;
             // 
             // label3
@@ -973,13 +1007,13 @@ namespace CityTools {
             this.cbItemList.FormattingEnabled = true;
             this.cbItemList.Location = new System.Drawing.Point(38, 3);
             this.cbItemList.Name = "cbItemList";
-            this.cbItemList.Size = new System.Drawing.Size(341, 21);
+            this.cbItemList.Size = new System.Drawing.Size(432, 21);
             this.cbItemList.TabIndex = 5;
             // 
             // btnAddLoot
             // 
             this.btnAddLoot.Image = ((System.Drawing.Image)(resources.GetObject("btnAddLoot.Image")));
-            this.btnAddLoot.Location = new System.Drawing.Point(385, 3);
+            this.btnAddLoot.Location = new System.Drawing.Point(476, 3);
             this.btnAddLoot.Name = "btnAddLoot";
             this.btnAddLoot.Size = new System.Drawing.Size(26, 21);
             this.btnAddLoot.TabIndex = 6;
@@ -993,7 +1027,7 @@ namespace CityTools {
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(3, 38);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(417, 513);
+            this.panel3.Size = new System.Drawing.Size(508, 513);
             this.panel3.TabIndex = 15;
             // 
             // numListViewHidden
@@ -1021,7 +1055,7 @@ namespace CityTools {
             this.listLoot.LabelEdit = true;
             this.listLoot.Location = new System.Drawing.Point(0, 0);
             this.listLoot.Name = "listLoot";
-            this.listLoot.Size = new System.Drawing.Size(417, 513);
+            this.listLoot.Size = new System.Drawing.Size(508, 513);
             this.listLoot.TabIndex = 8;
             this.listLoot.UseCompatibleStateImageBehavior = false;
             this.listLoot.View = System.Windows.Forms.View.Details;
@@ -1057,11 +1091,17 @@ namespace CityTools {
             this.columnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.columnHeader5.Width = 32;
             // 
+            // redrawTimer
+            // 
+            this.redrawTimer.Enabled = true;
+            this.redrawTimer.Interval = 50;
+            this.redrawTimer.Tick += new System.EventHandler(this.redrawTimer_Tick);
+            // 
             // CritterEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(733, 588);
+            this.ClientSize = new System.Drawing.Size(824, 588);
             this.Controls.Add(this.sptFullForm);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "CritterEditor";
@@ -1077,6 +1117,7 @@ namespace CityTools {
             this.tabControl1.ResumeLayout(false);
             this.tabInfo.ResumeLayout(false);
             this.tabInfo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numAttackRange)).EndInit();
             this.pnlHumanoid.ResumeLayout(false);
             this.pnlHumanoid.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreviewDisplay)).EndInit();
@@ -1182,5 +1223,8 @@ namespace CityTools {
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.NumericUpDown numListViewHidden;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown numAttackRange;
+        private System.Windows.Forms.Timer redrawTimer;
     }
 }

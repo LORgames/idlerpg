@@ -44,6 +44,7 @@ namespace ToolToGameExporter {
 
                 f.AddShort(c.MovementSpeed);
                 f.AddShort(c.AlertRange);
+                f.AddShort(c.AttackRange);
 
                 //Adding scripts
                 ScriptInfo script = new ScriptInfo("Critter:AI:" + c.Name, ScriptTypes.Critter);

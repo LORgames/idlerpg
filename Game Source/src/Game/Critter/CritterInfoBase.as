@@ -14,8 +14,10 @@ package Game.Critter {
         public var ID:uint;
         public var Name:String;
         public var AIType:uint;
+		
 		public var MovementSpeed:int;
 		public var AlertRange:int;
+		public var AttackRange:int;
 		
         public var ExperienceGain:int;
         public var Health:int;
@@ -38,6 +40,7 @@ package Game.Critter {
 			
 			MovementSpeed = b.readShort();
 			AlertRange = b.readShort();
+			AttackRange = b.readShort();
 			
 			AICommands = Script.ReadScript(b);
 			

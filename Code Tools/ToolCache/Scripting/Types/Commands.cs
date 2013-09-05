@@ -67,6 +67,8 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0x5004, new Param[] { Param.FactionName }));
             All.Add("movementstop",
                 new ValidCommand(0x5005, new Param[] { Param.Void }));
+            All.Add("gettargetfromowner",
+                new ValidCommand(0x5006, new Param[] { Param.Void }));
 
             //Animation Commands
             All.Add("animationplay",

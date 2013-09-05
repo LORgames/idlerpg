@@ -438,7 +438,7 @@ package Game.Scripting {
 					case 0x1001: //Play sound effect
 						EffectsPlayer.Play(EventScript.readShort()); break;
 					case 0x1002: //Spawn Critter
-						var critter:BaseCritter = CritterManager.I.CritterInfo[EventScript.readShort()].CreateCritter(WorldData.CurrentMap, Position.X, Position.Y);
+						var critter:BaseCritter = CritterManager.I.CritterInfo[EventScript.readShort()].CreateCritter(WorldData.CurrentMap, Position.X + EventScript.readShort(), Position.Y + EventScript.readShort());
 						if (critter != null) { critter.Owner = info.CurrentTarget; } break;
 					case 0x1003: //Flat Damage
 					case 0x1005: //% Damage
@@ -621,17 +621,20 @@ package Game.Scripting {
 						if (info.CurrentTarget is BaseCritter) { 
 							(info.CurrentTarget as BaseCritter).PrimaryFaction = EventScript.readShort();
 						} break;
-					case 0x5005: //Set Faction
+					case 0x5005: //Movement stop
 						if (info.CurrentTarget is BaseCritter) { 
 							(info.CurrentTarget as BaseCritter).RequestMove(0, 0);
+						} break;
+					case 0x5006: //Get Target From Owner
+						if (info.CurrentTarget is BaseCritter && ((info.CurrentTarget as BaseCritter).Owner as BaseCritter) != null) {
+							(info.CurrentTarget as BaseCritter).CurrentTarget = ((info.CurrentTarget as BaseCritter).Owner as BaseCritter).CurrentTarget;
 						} break;
 					case 0x6000: //Play Animation
 						info.Invoker.ChangeState(EventScript.readShort(), false); break;
 					case 0x6001: //Loop Animation
 						info.Invoker.ChangeState(EventScript.readShort(), true); break;
 					case 0x6002: //Animation Speed
-						//TODO: change this on both sides so that its not dependant on FPS anymore and is actually a good number?
-						info.Invoker.UpdatePlaybackSpeed((EventScript.readUnsignedShort() * 0.05)); break;
+						info.Invoker.UpdatePlaybackSpeed((EventScript.readUnsignedShort() * 0.01)); break;
 					case 0x8000: //IF without ELSE
 						bParam = CanIf(EventScript, info, Position);
 						if (!bParam) {

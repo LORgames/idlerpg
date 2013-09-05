@@ -14,6 +14,7 @@ using ToolCache.Drawing;
 using System.IO;
 using ToolCache.Map.Regions;
 using ToolCache.Animation;
+using ToolCache.General;
 
 namespace CityTools {
     public partial class CritterEditor : Form {
@@ -196,6 +197,7 @@ namespace CityTools {
 
             numMovementSpeed.Value = critter.MovementSpeed;
             numRange.Value = critter.AlertRange;
+            numAttackRange.Value = critter.AttackRange;
 
             txtScript.Script = critter.AICommands;
 
@@ -287,8 +289,10 @@ namespace CityTools {
             critter.ExperienceGain = (int)numExperience.Value;
             critter.Health = (int)numHealth.Value;
             critter.OneOfAKind = ckbOneOfAKind.Checked;
+
             critter.MovementSpeed = (short)numMovementSpeed.Value;
             critter.AlertRange = (short)numRange.Value;
+            critter.AttackRange = (short)numAttackRange.Value;
 
             critter.NodeGroup = cbBaseGroup.Text;
             critter.AICommands = txtScript.Script;
@@ -396,7 +400,8 @@ namespace CityTools {
         private void pbPreviewDisplay_Paint(object sender, PaintEventArgs e) {
             e.Graphics.Clear(Color.Beige);
 
-            e.Graphics.DrawString("Preview", new Font("Verdana", 10), Brushes.Black, Point.Empty);
+            e.Graphics.DrawString("Preview: Final FPS -WILL- Differ", new Font("Verdana", 10), Brushes.Black, Point.Empty);
+
 
             if (critter is CritterHuman) {
                 PersonDrawer.Draw(e.Graphics, new Point(e.ClipRectangle.Width / 2, e.ClipRectangle.Height - 20), Direction.Down,
@@ -407,6 +412,9 @@ namespace CityTools {
                     cbHumanoidPants.SelectedItem as EquipmentItem,
                     cbHumanoidWeapon.SelectedItem as EquipmentItem,
                     false);
+
+                    e.Graphics.DrawRectangle(Pens.Blue, e.ClipRectangle.Width / 2 - (int)numAttackRange.Value, e.ClipRectangle.Height - 20 - (int)((float)numAttackRange.Value * GlobalSettings.perspectiveSkew) - (int)numBeastOffsetY.Value, (int)numAttackRange.Value * 2, (int)((float)numAttackRange.Value * 2 * GlobalSettings.perspectiveSkew));
+                    e.Graphics.DrawRectangle(Pens.Green, e.ClipRectangle.Width / 2 - (int)numRange.Value, e.ClipRectangle.Height - 20 - (int)((float)numRange.Value * GlobalSettings.perspectiveSkew) - (int)numBeastOffsetY.Value, (int)numRange.Value * 2, (int)((float)numRange.Value * 2 * GlobalSettings.perspectiveSkew));
             } else if (critter is CritterBeast) {
                 CritterBeast cb = (critter as CritterBeast);
 
@@ -422,6 +430,9 @@ namespace CityTools {
                         anim.Draw(e.Graphics, xPos, yPos, 1);
 
                         e.Graphics.DrawRectangle(Pens.Red, (e.ClipRectangle.Width - (int)numBeastRectWidth.Value) / 2, e.ClipRectangle.Height - 20 - ((int)numBeastRectHeight.Value) - (int)numBeastOffsetY.Value, (int)numBeastRectWidth.Value, (int)numBeastRectHeight.Value);
+
+                        e.Graphics.DrawRectangle(Pens.Blue, e.ClipRectangle.Width / 2 - (int)numAttackRange.Value, e.ClipRectangle.Height - 20 - ((int)numBeastRectHeight.Value/2) - (int)((float)numAttackRange.Value * GlobalSettings.perspectiveSkew) - (int)numBeastOffsetY.Value, (int)numAttackRange.Value * 2, (int)((float)numAttackRange.Value * 2 * GlobalSettings.perspectiveSkew));
+                        e.Graphics.DrawRectangle(Pens.Green, e.ClipRectangle.Width / 2 - (int)numRange.Value, e.ClipRectangle.Height - 20 - ((int)numBeastRectHeight.Value/2) - (int)((float)numRange.Value * GlobalSettings.perspectiveSkew) - (int)numBeastOffsetY.Value, (int)numRange.Value * 2, (int)((float)numRange.Value * 2 * GlobalSettings.perspectiveSkew));
                     }
                 }
             }
@@ -627,14 +638,8 @@ namespace CityTools {
             }
         }
 
-        private void numMovementSpeed_ValueChanged(object sender, EventArgs e) {
-            if (_isUpdatingForm) return;
-            _isCritterEdited = true;
-        }
-
-        private void numRange_ValueChanged(object sender, EventArgs e) {
-            if (_isUpdatingForm) return;
-            _isCritterEdited = true;
+        private void redrawTimer_Tick(object sender, EventArgs e) {
+            pbPreviewDisplay.Invalidate();
         }
     }
 }

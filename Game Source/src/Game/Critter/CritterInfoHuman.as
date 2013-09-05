@@ -48,6 +48,7 @@ package Game.Critter {
 			
 			p.SetAlertRangeSqrd(AlertRange*AlertRange);
 			p.MovementSpeed = MovementSpeed;
+			p.AttackRange = AttackRange;
 			
 			return p;
 		}
