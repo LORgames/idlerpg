@@ -13,6 +13,7 @@ package {
 	import Game.Scripting.GlobalVariables;
 	import InputSystems.KeyboardInput;
 	import InputSystems.TouchInput;
+	import SoundSystem.EffectsPlayer;
 	/**
 	 * ...
 	 * @author Paul
@@ -62,6 +63,7 @@ package {
 			new EffectManager();
 			new GlobalVariables();
 			new Factions();
+			EffectsPlayer.Initialize();
 			
 			Clock.I.Start(Main.I.stage);
 		}

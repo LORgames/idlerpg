@@ -28,6 +28,7 @@ namespace ToolToGameExporter {
             info.RemappedObjectIDs = MapObjectCrusher.RemappedItemNameToID;
             info.RemappedCritterIDs = CritterCrusher.NameToRemappedIDs;
             info.RemappedSoundEffectIDs = SoundCrusher.EffectConversions;
+            info.RemappedSoundEffectGroups = SoundCrusher.GroupConversions;
 
             Parser.Parse(script, info);
 

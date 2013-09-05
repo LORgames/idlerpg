@@ -197,8 +197,11 @@ namespace ToolCache.Scripting {
                                 case Param.SoundEffectGroup:
                                     if (!SoundDatabase.EffectGroups.ContainsKey(paramBits[i])) {
                                         info.Errors.Add("Cannot find sound effect group: '" + paramBits[i] + "'");
-                                    }
-                                    break;
+                                    } else if (SoundDatabase.EffectGroups[paramBits[i]].Count == 0) {
+                                        info.Errors.Add("Sound effect group '" + paramBits[i] + "' has no sound effects in it!");
+                                    } else if (info.RemappedSoundEffectGroups != null) {
+                                        AdditionalBytecode.Add((ushort)info.RemappedSoundEffectGroups[paramBits[i]]);
+                                    } break;
                                 case Param.MusicName:
                                     info.Errors.Add("Cannot Param.MusicName yet!");
                                     break;

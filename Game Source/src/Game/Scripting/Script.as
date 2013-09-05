@@ -587,6 +587,8 @@ package Game.Scripting {
 						break;
 					case 0x100D: //Fire a trigger
 						Script.FireTrigger(EventScript.readShort()); break;
+					case 0x100E: //Play a sound from an effect group
+						EffectsPlayer.PlayFromGroup(EventScript.readShort()); break;
 					case 0x4001: //Equip item on the target
 						if (info.CurrentTarget is CritterHuman) {
 							(info.CurrentTarget as CritterHuman).Equipment.EquipSlot(EventScript.readShort(), EventScript.readShort());
