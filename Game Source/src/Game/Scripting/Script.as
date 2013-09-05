@@ -4,6 +4,7 @@ package Game.Scripting {
 	import Debug.Drawer;
 	import EngineTiming.Clock;
 	import EngineTiming.ICleanUp;
+	import flash.geom.Point;
 	import flash.utils.ByteArray;
 	import Game.Critter.BaseCritter;
 	import Game.Critter.CritterHuman;
@@ -411,6 +412,22 @@ package Game.Scripting {
 			}
 		}
 		
+		private function CalculateOffset(myPos:PointX, myOffset:PointX, retVal:PointX):void {
+			if (myPos.D == 0) {
+				retVal.X = myPos.X - myOffset.X;
+				retVal.Y = myPos.Y + myOffset.Y;
+			} else if (myPos.D == 1) {
+				retVal.X = myPos.X + myOffset.X;
+				retVal.Y = myPos.Y + myOffset.Y;
+			} else if (myPos.D == 2) {
+				retVal.Y = myPos.Y - myOffset.X;
+				retVal.X = myPos.X + myOffset.Y;
+			} else if (myPos.D == 3) {
+				retVal.Y = myPos.Y + myOffset.X;
+				retVal.X = myPos.X - myOffset.Y;
+			}
+		}
+		
 		private function ProcessBlock(EventScript:ByteArray, info:ScriptInstance, eventID:int):void {
 			var effectInfo:EffectInfo;
 			
@@ -424,8 +441,10 @@ package Game.Scripting {
 			var Position:PointX = new PointX();
 			info.CurrentTarget.UpdatePointX(Position);
 			
-			var tX:int = Position.X;
-			var tY:int = Position.Y;
+			//var tX:int = Position.X;
+			//var tY:int = Position.Y;
+			var p0:PointX = new PointX();
+			var p1:PointX = new PointX();
 			
 			while (true) {
 				command = EventScript.readUnsignedShort();
@@ -438,7 +457,12 @@ package Game.Scripting {
 					case 0x1001: //Play sound effect
 						EffectsPlayer.Play(EventScript.readShort()); break;
 					case 0x1002: //Spawn Critter
-						var critter:BaseCritter = CritterManager.I.CritterInfo[EventScript.readShort()].CreateCritter(WorldData.CurrentMap, Position.X + EventScript.readShort(), Position.Y + EventScript.readShort());
+						p0.D = EventScript.readShort(); p0.X = EventScript.readShort(); p0.Y = EventScript.readShort();
+						CalculateOffset(Position, p0, p1);
+						
+						var critter:BaseCritter = CritterManager.I.CritterInfo[p0.D].CreateCritter(WorldData.CurrentMap, p1.X, p1.Y);
+						
+						if(info.CurrentTarget is BaseCritter) critter.PrimaryFaction = (info.CurrentTarget as BaseCritter).PrimaryFaction;
 						if (critter != null) { critter.Owner = info.CurrentTarget; } break;
 					case 0x1003: //Flat Damage
 					case 0x1005: //% Damage
@@ -451,40 +475,21 @@ package Game.Scripting {
 						if (info.CurrentTarget is ICleanUp) { Clock.CleanUpList.push(info.CurrentTarget); } break;
 					case 0x1008: //EffectSpawn
 						effectInfo = EffectManager.I.Effects[EventScript.readShort()];
+						p0.X = EventScript.readShort(); p0.Y = EventScript.readShort();
+						CalculateOffset(Position, p0, p1);
 						
-						if (Position.D == 0) {
-							tX = Position.X - EventScript.readShort();
-							tY = Position.Y + EventScript.readShort();
-						} else if (Position.D == 1) {
-							tX = Position.X + EventScript.readShort();
-							tY = Position.Y + EventScript.readShort();
-						} else if (Position.D == 2) {
-							tY = Position.Y - EventScript.readShort();
-							tX = Position.X + EventScript.readShort();
-						} else if (Position.D == 3) {
-							tY = Position.Y + EventScript.readShort();
-							tX = Position.X - EventScript.readShort();
-						}
-						
-						new EffectInstance(effectInfo, tX, tY, Position.D);
+						new EffectInstance(effectInfo, p1.X, p1.Y, Position.D);
 						
 						break;
 					case 0x1009: //EffectSpawnDirectional
 						effectInfo = EffectManager.I.Effects[EventScript.readShort()];
-						
-						tX = Position.X + EventScript.readShort();
-						tY = Position.Y + EventScript.readShort();
-						
-						new EffectInstance(effectInfo, tX, tY, EventScript.readShort());
-						
-						break;
+						p0.X = Position.X + EventScript.readShort(); p0.Y = Position.Y + EventScript.readShort();
+						new EffectInstance(effectInfo, p0.X, p0.Y, EventScript.readShort()); break;
 					case 0x100A: //EffectSpawnDirectionalRelative
 						effectInfo = EffectManager.I.Effects[EventScript.readShort()];
-		
-						tX = Position.X + EventScript.readShort();
-						tY = Position.Y + EventScript.readShort();
-						var direction:int = EventScript.readShort();
-						var tD:int = 0;
+						
+						p0.X = Position.X + EventScript.readShort(); p0.X = Position.Y + EventScript.readShort();
+						var direction:int = EventScript.readShort(); var tD:int = 0;
 						
 						switch (Position.D) {
 							case 0: //critter left
@@ -553,25 +558,14 @@ package Game.Scripting {
 								break;
 						}
 						
-						new EffectInstance(effectInfo, tX, tY, tD);
+						new EffectInstance(effectInfo, p0.X, p0.Y, tD);
 		
 						break;
 					case 0x100B: //SpawnObject
 						var id:int = EventScript.readShort();
 						
-						if (Position.D == 0) {
-							tX = Position.X - EventScript.readShort();
-							tY = Position.Y + EventScript.readShort();
-						} else if (Position.D == 1) {
-							tX = Position.X + EventScript.readShort();
-							tY = Position.Y + EventScript.readShort();
-						} else if (Position.D == 2) {
-							tY = Position.Y - EventScript.readShort();
-							tX = Position.X + EventScript.readShort();
-						} else if (Position.D == 3) {
-							tY = Position.Y + EventScript.readShort();
-							tX = Position.X - EventScript.readShort();
-						}
+						p0.X = EventScript.readShort(); p0.Y = EventScript.readShort();
+						CalculateOffset(Position, p0, p1);
 						
 						var o:ObjectInstance;
 						
@@ -581,7 +575,7 @@ package Game.Scripting {
 							o = new ObjectInstance();
 						}
 						
-						o.SetInformation(WorldData.CurrentMap, id, tX, tY);
+						o.SetInformation(WorldData.CurrentMap, id, p1.X, p1.Y);
 						WorldData.CurrentMap.Objects.push(o);
 						
 						break;

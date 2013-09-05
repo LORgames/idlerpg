@@ -18,6 +18,7 @@ namespace ToolToGameExporter {
             MusicConversions.Clear();
             AmbienceConversions.Clear();
             EffectConversions.Clear();
+            GroupConversions.Clear();
 
             CrushList(SoundDatabase.Music, MusicConversions, "Sound/Music", "Music_");
             CrushList(SoundDatabase.Ambience, AmbienceConversions, "Sound/Ambience", "Ambience_");

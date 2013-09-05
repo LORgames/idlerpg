@@ -283,7 +283,7 @@ package Game.Critter {
 				
 				if (CurrentTarget != null) {
 					if (CurrentTarget is BaseCritter) {
-						if ((CurrentTarget as BaseCritter).CurrentHP <= 0) {
+						if ((CurrentTarget as BaseCritter).CurrentHP <= 0 || (CurrentTarget as BaseCritter).MyRect == null) {
 							CurrentTarget = null;
 							RequestMove(0, 0);
 							return;

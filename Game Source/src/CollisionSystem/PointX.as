@@ -8,7 +8,11 @@ package CollisionSystem {
 		public var Y:int;
 		public var D:int;
 		
-		public function PointX(){ }
+		public function PointX() { }
+		
+		public function toString():String {
+			return "(" + X + ", " + Y + ", " + D + ")";
+		}
 	}
 
 }
