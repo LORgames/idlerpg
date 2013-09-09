@@ -83,14 +83,18 @@ package RenderSystem {
 			while (DirtyObjects.length > 0) {
 				var obj:IObjectLayer = DirtyObjects.pop();
 				
-				i = Main.OrderedLayer.getChildIndex(obj as DisplayObject);
-				
-				if (i > 0 && TrySwap(i)) {
-					i--;
-					while (TrySwap(i--)) { }
-				} else {
-					i++;
-					while (TrySwap(i++)) { }
+				try {
+					i = Main.OrderedLayer.getChildIndex(obj as DisplayObject);
+					
+					if (i > 0 && TrySwap(i)) {
+						i--;
+						while (TrySwap(i--)) { }
+					} else {
+						i++;
+						while (TrySwap(i++)) { }
+					}
+				} catch (e:Error) {
+					trace("DIRTY Object NULL CAUGHT");
 				}
 			}
 			

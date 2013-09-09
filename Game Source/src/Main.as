@@ -8,7 +8,6 @@ package {
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
 	import InputSystems.IInputSystem;
-	import RenderSystem.Camera;
 	import RenderSystem.Renderman;
 	import SoundSystem.MusicPlayer;
 	import Storage.SaveManager;
