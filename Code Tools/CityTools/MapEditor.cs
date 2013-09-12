@@ -151,8 +151,6 @@ namespace CityTools {
                 return base.ProcessCmdKey(ref msg, keyData);
             }
 
-            System.Diagnostics.Debug.WriteLine(FindFocusedControl(this));
-
             this.ActiveControl = mapViewPanel;
 
             if (keyData == Keys.D1) {

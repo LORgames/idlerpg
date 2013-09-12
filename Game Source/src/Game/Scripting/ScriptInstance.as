@@ -29,7 +29,7 @@ package Game.Scripting {
 			}
 			
 			if (initialize) {
-				MyScript.Run(Script.Initialize, this);
+				MyScript.Run(Script.Initialize, this, null);
 			}
 			
 			//Add this to the update scripts thing
@@ -56,14 +56,14 @@ package Game.Scripting {
 			}
 		}
 		
-		public function Run(event:uint, target:IScriptTarget = null):void {
+		public function Run(event:uint, target:IScriptTarget = null, param:Object = null):void {
 			//TODO: Set up variables here
 			
 			if (target != null) {
 				AttachTarget(target);
 			}
 			
-			MyScript.Run(event, this);
+			MyScript.Run(event, this, param);
 			
 			TargetStack.length = 0;
 			CurrentTarget = Invoker;

@@ -15,6 +15,7 @@ namespace ToolCache.Scripting.Types {
         Equipment = 8,
         Object = 16,
         Effect = 32,
-        Region = 64
+        Region = 64,
+        UIElement = 128
     }
 }

@@ -19,6 +19,8 @@ namespace ToolCache.Critters {
 
             NextCritterID = 0;
             ReadDatabase();
+
+            AITypesHelper.Initialize();
         }
 
         private static void ReadDatabase() {

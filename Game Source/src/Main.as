@@ -11,7 +11,7 @@ package {
 	import RenderSystem.Renderman;
 	import SoundSystem.MusicPlayer;
 	import Storage.SaveManager;
-	import WindowSystem.HUD;
+	import UI.UIManager;
 	
 	CONFIG::air {
 		import flash.desktop.NativeApplication;
@@ -30,7 +30,7 @@ package {
 		
 		public static var OrderedLayer:Sprite = new Sprite();
 		public static var Input:IInputSystem;
-		public var hud:HUD;
+		public var hud:UIManager;
 		
 		//Some other important things
 		public var Renderer:Renderman;
@@ -117,7 +117,7 @@ package {
 			
 			stage.addEventListener(Event.RESIZE, Resized);
 			
-			hud = new HUD();
+			hud = new UIManager();
 			this.addChild(hud);
 			
 			//var c:CaveLight = new CaveLight();

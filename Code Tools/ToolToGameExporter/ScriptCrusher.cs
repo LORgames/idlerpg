@@ -82,6 +82,9 @@ namespace ToolToGameExporter {
 
                         //Start the code block
                         f.AddUnsignedShort(0xF0FD);
+                    } else if (command.vc.WillIndent) {
+                        expectedIndentation++;
+                        f.AddUnsignedShort(0xF0FD);
                     }
                 }
             }

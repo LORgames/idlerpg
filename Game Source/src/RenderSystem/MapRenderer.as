@@ -6,6 +6,7 @@ package RenderSystem {
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import Game.Critter.Factions;
 	import Game.Effects.EffectInstance;
 	import Game.Map.Objects.ObjectInstance;
 	import Game.Map.Spawns.SpawnRegion;
@@ -117,16 +118,8 @@ package RenderSystem {
 						var objC:Rect = WorldData.CurrentMap.Critters[xPos].MyRect;
 						if (objC == null) continue;
 						
-						if (WorldData.CurrentMap.Critters[xPos].PrimaryFaction == 1) {
-							DebugLayer.graphics.lineStyle(1, 0xFFFFFF);
-							DebugLayer.graphics.drawRect(objC.X, objC.Y, objC.W, objC.H);
-						} else if (WorldData.CurrentMap.Critters[xPos].PrimaryFaction == 0) {
-							DebugLayer.graphics.lineStyle(1, 0x0);
-							DebugLayer.graphics.drawRect(objC.X, objC.Y, objC.W, objC.H);
-						} else {
-							DebugLayer.graphics.lineStyle(1, 0xFF0000);
-							DebugLayer.graphics.drawRect(objC.X, objC.Y, objC.W, objC.H);
-						}
+						DebugLayer.graphics.lineStyle(1, Factions.GetFactionColour(WorldData.CurrentMap.Critters[xPos].GetFaction()));
+						DebugLayer.graphics.drawRect(objC.X, objC.Y, objC.W, objC.H);
 					}
 				}
 				

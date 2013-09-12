@@ -92,13 +92,19 @@ package Game.Critter
 			
 			//Can we unload this spritesheet?
 			if (TotalUses == 0) {
-				MySpriteSheet.dispose();
-				MySpriteSheet = null;
+				//TODO: This is supposed to dispose but due to budget cuts and retardedness had to comment it out. Therefore the texture is in memory forever. FOREVER!
+				//MySpriteSheet.dispose();
+				//MySpriteSheet = null;
 			}
 		}
 		
 		public function LoadedSpriteSheet(e:BitmapData):void {
 			Global.LoadingTotal--;
+			
+			if (MySpriteSheet == null) {
+				MySpriteSheet = new BitmapData(SpriteSheetWidth, SpriteSheetHeight, true, 0x40FF00FF);
+			}
+			
 			MySpriteSheet.copyPixels(e, e.rect, Global.ZeroPoint);
 		}
 		

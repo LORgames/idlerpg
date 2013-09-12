@@ -62,28 +62,32 @@ namespace ToolToGameExporter {
                 //Tier 0  Crushing. No Dependancies.
                 UpdateEPF(epf, "Amplyfying Sounds...", 12);
                 SoundCrusher.Go();
-                UpdateEPF(epf, "Laying Tiles...", 20);
+                UpdateEPF(epf, "Laying Tiles...", 19);
                 TileCrusher.Go();
-                UpdateEPF(epf, "Entering Portals...", 30);
+                UpdateEPF(epf, "Entering Portals...", 28);
                 PortalCrusher.Go();
 
                 //Tier 1 Crushing. Tier 0 Dependancies
-                UpdateEPF(epf, "Polishing Equipment...", 40);
+                UpdateEPF(epf, "Polishing Equipment...", 37);
                 EquipmentCrusher.Go(); //Requires Sounds.
-                UpdateEPF(epf, "Squishing Objects...", 50);
+                UpdateEPF(epf, "Squishing Objects...", 46);
                 MapObjectCrusher.Go(); //Requires Sounds
-                UpdateEPF(epf, "Firing Arrows...", 60);
+                UpdateEPF(epf, "Firing Arrows...", 55);
                 EffectCrusher.Go(); //Requires Sounds
-                UpdateEPF(epf, "Stocktaking Inventory...", 70);
+                UpdateEPF(epf, "Stocktaking Inventory...", 64);
                 ItemCrusher.Go();
 
                 //Tier 2 Crushing. Tier 1 Dependancies
-                UpdateEPF(epf, "Breeding Critters...", 80);
+                UpdateEPF(epf, "Breeding Critters...", 73);
                 CritterCrusher.Go(); //Requires Equipment
                 
                 //Tier 3 Crushing. Tier 2 Depedancies
-                UpdateEPF(epf, "Navigating Maps...", 90);
+                UpdateEPF(epf, "Navigating Maps...", 82);
                 MapCrusher.Go(); //Requires Portals, Tiles, Sounds and Objects. + Critters
+
+                //Tier 4 Crushing.
+                UpdateEPF(epf, "Breaking the fourth wall...", 91);
+                UICrusher.Go();
 
                 UpdateEPF(epf, "Pushing Information...", 100);
                 if (Directory.Exists(p)) {

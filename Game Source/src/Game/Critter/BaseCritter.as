@@ -10,6 +10,7 @@ package Game.Critter {
 	import Game.Map.MapData;
 	import Game.Map.Portals.Portal;
 	import Game.Map.ScriptRegion;
+	import Game.Map.Spawns.SpawnRegion;
 	import Game.Map.Tiles.TileHelper;
 	import Game.Map.Tiles.TileInstance;
 	import Game.Map.Tiles.TileTemplate;
@@ -29,6 +30,8 @@ package Game.Critter {
 		protected var ControlsLocked:Boolean = false;
 		
 		public var Persistent:Boolean = false;
+		
+		private var ReportedDeath:Boolean = false;
 		public var Owner:IScriptTarget;
 		
 		//Current state information
@@ -234,6 +237,7 @@ package Game.Critter {
 						
 						if (critter != this) {
 							if (critter.MyRect == null) continue;
+							if ((MyAIType & AITypes.Untargetable) > 1 && (critter.MyAIType & AITypes.Untargetable) > 1) continue;
 							if (MyRect.intersects(critter.MyRect)) {
 								MyRect.CalculatePenetration(critter.MyRect, collisionPenetration);
 								collisionTotal++;
@@ -253,9 +257,9 @@ package Game.Critter {
 					MyRect.X = X - MyRect.W / 2;
 					MyRect.Y = Y - MyRect.H / 2;
 				}
-				
-				CheckScriptRegions();
 			}
+			
+			CheckScriptRegions();
 		}
 		
 		private function ProcessAI(dt:Number = 0):void {
@@ -266,7 +270,7 @@ package Game.Critter {
 				if ((MyAIType | AITypes.Aggressive) > 0 && (CurrentTarget == null && (MyAIType | AITypes.ClosestTarget) > 0)) {
 					//Scan for a new target
 					var r:Rect = new Rect(false, null, X - AlertRangeSqrt, Y - AlertRangeSqrt * Global.PerspectiveSkew, AlertRangeSqrt * 2, AlertRangeSqrt * 2 * Global.PerspectiveSkew);
-					Drawer.AddDebugRect(r, PrimaryFaction==1?0xFFFFFF:0x0);
+					Drawer.AddDebugRect(r, Factions.GetFactionColour(PrimaryFaction));
 					
 					var objs:Vector.<IScriptTarget> = new Vector.<IScriptTarget>();
 					CurrentMap.GetObjectsInArea(r, objs, ((MyAIType & AITypes.Supportive) > 0)?ScriptTypes.Ally:ScriptTypes.Enemy, this);
@@ -286,6 +290,14 @@ package Game.Critter {
 						if ((CurrentTarget as BaseCritter).CurrentHP <= 0 || (CurrentTarget as BaseCritter).MyRect == null) {
 							CurrentTarget = null;
 							RequestMove(0, 0);
+							MyScript.Run(Script.AIEvent, null, Script.AIEvent_TargetDied);
+							return;
+						}
+						
+						if (((CurrentTarget as BaseCritter).MyAIType & AITypes.Untargetable) > 0) {
+							CurrentTarget = null;
+							RequestMove(0, 0);
+							MyScript.Run(Script.AIEvent, null, Script.AIEvent_TargetUntargetable);
 							return;
 						}
 					}
@@ -296,12 +308,12 @@ package Game.Critter {
 					var dx:Number = (this.X - p.X);
 					var dy:Number = (this.Y - p.Y) / Global.PerspectiveSkew;
 					
-					Drawer.AddLine(X, Y, p.X, p.Y, PrimaryFaction==1?0xFFFFFF:0x0);
+					Drawer.AddLine(X, Y, p.X, p.Y, Factions.GetFactionColour(PrimaryFaction));
 					
 					var AttackRangeSqrt:int = Math.sqrt(AttackRange) + 1;
 					
 					var rAtk:Rect = new Rect(false, null, X - AttackRangeSqrt, Y - AttackRangeSqrt*Global.PerspectiveSkew, AttackRangeSqrt * 2, AttackRangeSqrt * 2*Global.PerspectiveSkew);
-					Drawer.AddDebugRect(rAtk, PrimaryFaction==1?0xFFFFFF:0x0);
+					Drawer.AddDebugRect(rAtk, Factions.GetFactionColour(PrimaryFaction));
 					
 					if ((CurrentTarget is IMapObject) && (CurrentTarget as IMapObject).HasPerfectCollision(rAtk)) {
 						RequestBasicAttack();
@@ -383,7 +395,8 @@ package Game.Critter {
 				MyScript.Run(Script.Died);
 			}
 			
-			if (Owner != null) {
+			if (Owner != null && !ReportedDeath) {
+				ReportedDeath = true;
 				Owner.AlertMinionDeath(this);
 			}
 			
@@ -394,6 +407,11 @@ package Game.Critter {
 		
 		public function CleanUp():void {
 			if (Persistent) return;
+			
+			if (Owner != null && !ReportedDeath) {
+				ReportedDeath = true;
+				Owner.AlertMinionDeath(this);
+			}
 			
 			if (CurrentMap != null) CurrentMap.CritterPop(this);
 			MyRect = null;
@@ -420,7 +438,11 @@ package Game.Critter {
 		
 		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IScriptTarget):void {
 			if(MyScript != null) {
-				MyScript.Run(Script.Attacked);
+				MyScript.Run(Script.Attacked, null, attacker);
+				
+				if (CurrentTarget != attacker) {
+					MyScript.Run(Script.AIEvent, null, Script.AIEvent_AttackedByNonTarget);
+				}
 			}
 			
 			//TODO: This should do something else :)
@@ -437,7 +459,6 @@ package Game.Critter {
 			
 			if (CurrentHP < 1) {
 				Died();
-				Clock.CleanUpList.push(this);
 			}
 		}
 		
@@ -451,6 +472,16 @@ package Game.Critter {
 		
 		public function GetFaction():int {
 			return PrimaryFaction;
+		}
+		
+		public function SetFaction(newFaction:int):void {
+			PrimaryFaction = newFaction;
+			MyScript.Run(Script.AIEvent, null, Script.AIEvent_FactionChanged);
+		}
+		
+		public function SetOwner(newOwner:IScriptTarget):void {
+			Owner = newOwner;
+			MyScript.Run(Script.AIEvent, null, Script.AIEvent_OwnerChanged);
 		}
 		
 	}

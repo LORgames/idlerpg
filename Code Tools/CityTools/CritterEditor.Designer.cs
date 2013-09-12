@@ -378,7 +378,7 @@ namespace CityTools {
             this.pnlHumanoid.Controls.Add(this.cbHumanoidBody);
             this.pnlHumanoid.Controls.Add(this.cbHumanoidPants);
             this.pnlHumanoid.Controls.Add(this.cbHumanoidShadow);
-            this.pnlHumanoid.Location = new System.Drawing.Point(197, 271);
+            this.pnlHumanoid.Location = new System.Drawing.Point(197, 274);
             this.pnlHumanoid.Name = "pnlHumanoid";
             this.pnlHumanoid.Size = new System.Drawing.Size(226, 252);
             this.pnlHumanoid.TabIndex = 15;
@@ -730,7 +730,7 @@ namespace CityTools {
             this.pnlBeast.Controls.Add(this.btnBeastUp);
             this.pnlBeast.Controls.Add(this.btnBeastLeft);
             this.pnlBeast.Controls.Add(this.ccBeastAnimations);
-            this.pnlBeast.Location = new System.Drawing.Point(197, 274);
+            this.pnlBeast.Location = new System.Drawing.Point(197, 268);
             this.pnlBeast.Name = "pnlBeast";
             this.pnlBeast.Size = new System.Drawing.Size(226, 270);
             this.pnlBeast.TabIndex = 16;
@@ -748,6 +748,16 @@ namespace CityTools {
             // numBeastOffsetY
             // 
             this.numBeastOffsetY.Location = new System.Drawing.Point(159, 245);
+            this.numBeastOffsetY.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numBeastOffsetY.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
             this.numBeastOffsetY.Name = "numBeastOffsetY";
             this.numBeastOffsetY.Size = new System.Drawing.Size(62, 20);
             this.numBeastOffsetY.TabIndex = 28;
@@ -774,6 +784,11 @@ namespace CityTools {
             // numBeastRectHeight
             // 
             this.numBeastRectHeight.Location = new System.Drawing.Point(159, 219);
+            this.numBeastRectHeight.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.numBeastRectHeight.Name = "numBeastRectHeight";
             this.numBeastRectHeight.Size = new System.Drawing.Size(62, 20);
             this.numBeastRectHeight.TabIndex = 25;
@@ -782,6 +797,11 @@ namespace CityTools {
             // numBeastRectWidth
             // 
             this.numBeastRectWidth.Location = new System.Drawing.Point(47, 219);
+            this.numBeastRectWidth.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.numBeastRectWidth.Name = "numBeastRectWidth";
             this.numBeastRectWidth.Size = new System.Drawing.Size(62, 20);
             this.numBeastRectWidth.TabIndex = 24;

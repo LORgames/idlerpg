@@ -37,15 +37,15 @@ namespace ToolCache.Scripting {
             List<string> lines = script.Split('\n').ToList<string>(); //Each line is a new command
 
             for (i = 0; i < lines.Count; i++) {
-                ScriptCommand Command = new ScriptCommand(lines[i], scriptInfo);
+                ScriptCommand Command = new ScriptCommand(lines[i], scriptInfo, (i+1));
 
                 if (Command.Trimmed.Length > 2) {
                     scriptInfo.Commands.Add(Command);
                 }
             }
 
-            foreach (ScriptCommand comm in scriptInfo.Commands) {
-                comm.Parse(scriptInfo);
+            for (i = 0; i < scriptInfo.Commands.Count; i++) {
+                scriptInfo.Commands[i].Parse(scriptInfo);
             }
         }
     }

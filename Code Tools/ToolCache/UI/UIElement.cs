@@ -26,6 +26,7 @@ namespace ToolCache.UI {
         public UIAnchorPoint AnchorPoint = UIAnchorPoint.TopLeft;
         public short SizeX = 0;
         public short SizeY = 0;
+        public string Script = "";
 
         public static UIElement ReadFromBinaryIO(BinaryIO f) {
             UIElement ui = new UIElement();
@@ -38,6 +39,8 @@ namespace ToolCache.UI {
             ui.SizeY = f.GetShort();
 
             ui.AnchorPoint = (UIAnchorPoint)f.GetByte();
+
+            ui.Script = f.GetString();
 
             short totalLayers = f.GetByte();
             while (--totalLayers > -1) {
@@ -56,6 +59,8 @@ namespace ToolCache.UI {
             f.AddShort(SizeY);
 
             f.AddByte((byte)AnchorPoint);
+
+            f.AddString(Script);
 
             f.AddByte((byte)Layers.Count);
             foreach (UILayer layer in Layers) {

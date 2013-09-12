@@ -333,6 +333,7 @@
             // 
             this.txtPortraitName.Name = "txtPortraitName";
             this.txtPortraitName.Size = new System.Drawing.Size(100, 21);
+            this.txtPortraitName.TextChanged += new System.EventHandler(this.Edited);
             // 
             // PortraitEditor
             // 

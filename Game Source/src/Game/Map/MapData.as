@@ -2,6 +2,7 @@ package Game.Map {
 	import CollisionSystem.Rect;
 	import EngineTiming.IUpdatable;
 	import flash.utils.ByteArray;
+	import Game.Critter.AITypes;
 	import Game.Critter.BaseCritter;
 	import Game.Critter.Factions;
 	import Game.Effects.EffectInstance;
@@ -216,11 +217,15 @@ package Game.Map {
 						}
 					}
 					
-					if (type == ScriptTypes.Enemy && !Factions.IsEnemies(primaryfaction, Critters[_tt].PrimaryFaction)) {
+					if ((Critters[_tt].MyAIType & AITypes.Untargetable) > 1) {
 						continue;
 					}
 					
-					if (type == ScriptTypes.Ally && !Factions.IsFriends(primaryfaction, Critters[_tt].PrimaryFaction)) {
+					if (type == ScriptTypes.Enemy && !Factions.IsEnemies(primaryfaction, Critters[_tt].GetFaction())) {
+						continue;
+					}
+					
+					if (type == ScriptTypes.Ally && !Factions.IsFriends(primaryfaction, Critters[_tt].GetFaction())) {
 						continue;
 					}
 					

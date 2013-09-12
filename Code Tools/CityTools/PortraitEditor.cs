@@ -153,6 +153,7 @@ namespace CityTools {
                     _isNew = false;
                 }
             }
+
             PortraitManager.MarginLeft = numMarginLeft.Value;
             PortraitManager.MarginRight = numMarginRight.Value;
             PortraitManager.MarginBottom = numMarginBottom.Value;
@@ -220,7 +221,9 @@ namespace CityTools {
         }
 
         private void Edited(object sender = null, EventArgs e = null) {
-            _isEdited = true;
+            if(!_isUpdating) {
+                _isEdited = true;
+            }
         }
 
         private void pbDisplay_Resize(object sender, EventArgs e) {

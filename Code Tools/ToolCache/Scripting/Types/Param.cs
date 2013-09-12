@@ -24,6 +24,11 @@ namespace ToolCache.Scripting.Types {
         FactionName,
         AnimationName,
         ImageDatabase,
+        AIType,
+        UIPanel,
+        UIElement,
+        UILayer,
+        ScriptTarget,
         Optional = 128 //Optional is a flag, eg: Number|Optional
     }
 }

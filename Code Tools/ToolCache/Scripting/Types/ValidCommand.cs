@@ -11,12 +11,18 @@ namespace ToolCache.Scripting.Types {
         public int MinimumParams;
         public int MaximumParams;
 
-        public ValidCommand(ushort cID, Param[] myParams) {
+        public bool WillIndent;
+        public ushort[] EndIndent;
+
+        public ValidCommand(ushort cID, Param[] myParams, bool willIndent = false, ushort[] endIndent = null) {
             CommandID = cID;
             ExpectedParameters = myParams;
 
+            WillIndent = willIndent;
+            EndIndent = endIndent;
+
             if (myParams.Length == 0) {
-                throw new Exception("0x" + CommandID.ToString("X4") + " cannot have no parametres, if its empty, use Param.Void!");
+                throw new Exception("0x" + CommandID.ToString("X4") + " cannot have no parameters, if its empty, use Param.Void!");
             }
 
             //Do some checking :)

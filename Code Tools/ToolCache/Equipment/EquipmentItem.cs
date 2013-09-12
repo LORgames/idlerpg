@@ -58,9 +58,7 @@ namespace ToolCache.Equipment {
             for (short i = 0; i < totalAnimationSets; i++) {
                 EquipmentAnimationSet eas = EquipmentAnimationSet.LoadFromBinaryIO(f);
 
-                if (eas == null) {
-                    System.Diagnostics.Debug.WriteLine(t.Name + " failed to load an animation...");
-                } else {
+                if (eas != null) {
                     t.Animations.Add(eas.StateName, eas);
                 }
             }

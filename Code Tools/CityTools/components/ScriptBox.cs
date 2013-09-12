@@ -77,5 +77,9 @@ namespace CityTools.Components {
             GlobalVariableEditor gve = new GlobalVariableEditor();
             gve.ShowDialog();
         }
+
+        private void txtScript_SelectionChanged(object sender, EventArgs e) {
+            lblLineNumber.Text = ""+((txtScript.GetLineFromCharIndex(txtScript.SelectionStart))+1);
+        }
     }
 }

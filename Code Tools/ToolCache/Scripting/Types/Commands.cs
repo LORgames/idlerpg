@@ -6,7 +6,10 @@ using System.Text;
 namespace ToolCache.Scripting.Types {
     public class Commands {
         public static Dictionary<string, ValidCommand> All = new Dictionary<string, ValidCommand>();
+
         public static Dictionary<Param, ushort[]> DefaultValues = new Dictionary<Param, ushort[]>();
+        public static Dictionary<String, ushort> ScriptTargets = new Dictionary<string, ushort>();
+
         public static readonly string[] ValidBooleanNames = { "on", "true", "1" };
 
         public static void Initialize() {
@@ -69,6 +72,12 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0x5005, new Param[] { Param.Void }));
             All.Add("gettargetfromowner",
                 new ValidCommand(0x5006, new Param[] { Param.Void }));
+            All.Add("setaitype",
+                new ValidCommand(0x5007, new Param[] { Param.AIType, Param.Boolean }));
+            All.Add("with",
+                new ValidCommand(0x5008, new Param[] { Param.ScriptTarget }, true, new ushort[] { 0x5009 }));
+            All.Add("poptarget",
+                new ValidCommand(0x5009, new Param[] { Param.Void }));
 
             //Animation Commands
             All.Add("animationplay",
@@ -79,10 +88,12 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0x6002, new Param[] { Param.Number }));
 
             //UI Commands
-            All.Add("setvisible",
-                new ValidCommand(0xC000, new Param[] { Param.Boolean }));
             All.Add("replacelayerfromdatabase",
-                new ValidCommand(0xC001, new Param[] { Param.AnimationName, Param.ImageDatabase }));
+                new ValidCommand(0xC001, new Param[] { Param.UILayer, Param.ImageDatabase }));
+            All.Add("uipanelvisible",
+                new ValidCommand(0xC002, new Param[] { Param.UIPanel, Param.Boolean }));
+            All.Add("uilayerredraw",
+                new ValidCommand(0xC003, new Param[] { Param.UIElement }));
 
 
             /////////////////////////////////////////////////////////////////////////
@@ -108,6 +119,14 @@ namespace ToolCache.Scripting.Types {
             DefaultValues.Add(Param.FactionName, new ushort[] { 0 });
             DefaultValues.Add(Param.AnimationName, new ushort[] { 0 });
             DefaultValues.Add(Param.ImageDatabase, new ushort[] { 0 });
+
+            /////////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////// SCRIPT TARGETS
+            /////////////////////////////////////////////////////////////////////////
+
+            ScriptTargets.Add("invoker", 0x0);
+            ScriptTargets.Add("aitarget", 0x1);
+            ScriptTargets.Add("attacker", 0x2);
         }
     }
 }

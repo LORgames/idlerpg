@@ -10,21 +10,41 @@ using ToolCache.General;
 using ToolCache.Effects;
 using ToolCache.Map.Objects;
 using ToolCache.Scripting.Types;
+using ToolCache.UI;
 
 namespace ToolCache.Scripting {
     public class ScriptCommand {
+        private const string VARIABLE_REGEX = "[A-Za-z][A-Za-z0-9_]*";
+
         public string Trimmed = "";
 
         public byte Indent = 0;
         public byte ExpectedIndent = 0;
 
+        private int LineNumber = 0;
         public ushort CommandID = 0xFFFF;
         public List<ushort> AdditionalBytecode = new List<ushort>();
 
         public string Action = "";
         public string Parameters = "";
-        
-        public ScriptCommand(string line, ScriptInfo info) {
+
+        public ValidCommand vc;
+        private bool FurtherParsing = false;
+
+        public ScriptCommand(ushort[] bytecode, byte indent, int lineNumber = -1) {
+            this.LineNumber = lineNumber;
+            this.Indent = indent;
+
+            this.CommandID = bytecode[0];
+
+            for(int i = 1; i < bytecode.Length; i++) {
+                AdditionalBytecode.Add(bytecode[i]);
+            }
+        }
+
+        public ScriptCommand(string line, ScriptInfo info, int lineNumber = -1) {
+            this.LineNumber = lineNumber;
+
             string trimmedStart = line.TrimStart('\t');
             Indent = (byte)(line.Length - trimmedStart.Length);
 
@@ -38,7 +58,7 @@ namespace ToolCache.Scripting {
 
             if (Trimmed.Length > 2) {
                 if (Indent == 0) {
-                    Match m = Regex.Match(Trimmed, "var\\s([A-Za-z][A-Za-z0-9_]*)\\s?=\\s?([0-9]+)");
+                    Match m = Regex.Match(Trimmed, "var\\s("+VARIABLE_REGEX+")\\s?=\\s?([0-9]+)");
 
                     if (m.Success) {
                         //Process this as a variable
@@ -70,7 +90,7 @@ namespace ToolCache.Scripting {
             ValidEvents EventID;
 
             if (!Enum.TryParse<ValidEvents>(Trimmed, out EventID)) {
-                info.Errors.Add("Invalid event: " + Trimmed);
+                info.Errors.Add("Invalid event: " + Trimmed+ ErrorEnding()+ ErrorEnding());
             } else {
                 CommandID = (ushort)EventID;
                 info.EventFlags |= (0x1 << CommandID);
@@ -80,13 +100,11 @@ namespace ToolCache.Scripting {
 
         public void ProcessAction(ScriptInfo info) {
             ushort param0;
-            ushort param1;
             short sparam;
-            string paramPiece;
             string[] paramBits;
             float fparam;
 
-            string validRegex = "([A-Za-z]+)\\(([A-Z,a-z0-9\\.\\(\\)\\s]*)\\)";
+            string validRegex = "([A-Za-z]+)\\(([A-Z,a-z0-9_\\.\\(\\)\\s>]*)\\)";
             Match match = Regex.Match(Trimmed, validRegex);
 
             if (match.Success && match.Index == 0) {
@@ -94,9 +112,9 @@ namespace ToolCache.Scripting {
                 Parameters = match.Groups[2].Value;
 
                 if (!Commands.All.ContainsKey(Action)) {
-                    info.Errors.Add("Cannot find any actions called: " + Action);
+                    info.Errors.Add("Cannot find any actions called: " + Action+ ErrorEnding()+ ErrorEnding());
                 } else {
-                    ValidCommand vc = Commands.All[Action];
+                    vc = Commands.All[Action];
                     paramBits = Parameters.Split(',');
 
                     if (paramBits.Length >= vc.MinimumParams && paramBits.Length <= vc.MaximumParams) {
@@ -115,25 +133,25 @@ namespace ToolCache.Scripting {
                                 case Param.Void: break; //Obviously void does nothing
                                 case Param.Number:
                                     if (!float.TryParse(paramBits[i], out fparam)) {
-                                        info.Errors.Add("Cannot convert " + paramBits[i] + " into a number!");
+                                        info.Errors.Add("Cannot convert " + paramBits[i] + " into a number!"+ ErrorEnding());
                                     } else {
                                         if (fparam > 370 || fparam < -370) {
-                                            info.Errors.Add("Floating point values are limited to the -370 to 370 range!");
+                                            info.Errors.Add("Floating point values are limited to the -370 to 370 range!"+ ErrorEnding());
                                         } else {
                                             AdditionalBytecode.Add((ushort)((short)(fparam * 100)));
                                         }
                                     } break;
                                 case Param.Integer:
                                     if (!ushort.TryParse(paramBits[i], out param0)) {
-                                        info.Errors.Add("Cannot convert '" + paramBits[i] + "' into an integer!");
+                                        info.Errors.Add("Cannot convert '" + paramBits[i] + "' into an integer!"+ ErrorEnding());
                                     } else {
                                         this.AdditionalBytecode.Add(param0);
                                     } break;
                                 case Param.Angle:
                                     if (!short.TryParse(paramBits[i], out sparam)) {
-                                        info.Errors.Add("Cannot convert '" + paramBits[i] + "' into an angle!");
+                                        info.Errors.Add("Cannot convert '" + paramBits[i] + "' into an angle!"+ ErrorEnding());
                                     } else {
-                                        if (sparam < -359 || sparam > 359) info.Warnings.Add("Parameter should be between -359 and 359");
+                                        if (sparam < -359 || sparam > 359) info.Warnings.Add("Parameter should be between -359 and 359"+ ErrorEnding());
                                         this.AdditionalBytecode.Add((ushort)sparam);
                                     } break;
                                 case Param.Boolean:
@@ -141,7 +159,7 @@ namespace ToolCache.Scripting {
                                     AdditionalBytecode.Add((ushort)(isTrue ? 1 : 0));
                                     break;
                                 case Param.String:
-                                    info.Errors.Add("Cannot Param.String yet!");
+                                    info.Errors.Add("Cannot Param.String yet!"+ ErrorEnding());
                                     break;
                                 case Param.Direction:
                                     switch (paramBits[i].ToLower()) {
@@ -149,17 +167,17 @@ namespace ToolCache.Scripting {
                                         case "right": AdditionalBytecode.Add((ushort)1); break;
                                         case "up": AdditionalBytecode.Add((ushort)2); break;
                                         case "down": AdditionalBytecode.Add((ushort)3); break;
-                                        default: info.Errors.Add("Invalid direction: '" + paramBits[i] + "'. Expected one of the following: 'Left', 'Right', 'Up', 'Down'"); break;
+                                        default: info.Errors.Add("Invalid direction: '" + paramBits[i] + "'. Expected one of the following: 'Left', 'Right', 'Up', 'Down'"+ ErrorEnding()); break;
                                     } break;
                                 case Param.CritterName:
                                     if (info.RemappedCritterIDs != null && info.RemappedCritterIDs.ContainsKey(paramBits[i])) {
                                         AdditionalBytecode.Add((ushort)info.RemappedCritterIDs[paramBits[i]]);
                                     } else if (!CritterManager.HasCritter(paramBits[i])) {
-                                        info.Errors.Add("Cannot find Critter: " + paramBits[i]);
+                                        info.Errors.Add("Cannot find Critter: " + paramBits[i]+ ErrorEnding());
                                     } break;
                                 case Param.EffectName:
                                     if (!EffectManager.Effects.ContainsKey(paramBits[i])) {
-                                        info.Errors.Add("Cannot find an effect called: " + paramBits[i]);
+                                        info.Errors.Add("Cannot find an effect called: " + paramBits[i]+ ErrorEnding());
                                         break;
                                     }
 
@@ -167,12 +185,12 @@ namespace ToolCache.Scripting {
                                         if (info.RemappedEffectIDs.ContainsKey(paramBits[i])) {
                                             AdditionalBytecode.Add((ushort)info.RemappedEffectIDs[paramBits[i]]);
                                         } else {
-                                            info.Errors.Add("Cannot find an effect called: " + paramBits[i] + ".\nEffects without animations are skipped when exporting make sure the effect has an animation as well as checking spelling.");
+                                            info.Errors.Add("Cannot find an effect called: " + paramBits[i] + ".\nEffects without animations are skipped when exporting make sure the effect has an animation as well as checking spelling."+ ErrorEnding());
                                         }
                                     } break;
                                 case Param.ObjectName:
                                     if (!MapObjectCache.HasObjectByName(paramBits[i])) {
-                                        info.Errors.Add("Cannot find an object called: " + paramBits[i]);
+                                        info.Errors.Add("Cannot find an object called: " + paramBits[i]+ ErrorEnding());
                                         break;
                                     }
 
@@ -180,54 +198,116 @@ namespace ToolCache.Scripting {
                                         if (info.RemappedObjectIDs.ContainsKey(paramBits[i])) {
                                             AdditionalBytecode.Add((ushort)info.RemappedObjectIDs[paramBits[i]]);
                                         } else {
-                                            info.Errors.Add("Cannot find an object called: " + paramBits[i] + ".");
+                                            info.Errors.Add("Cannot find an object called: " + paramBits[i] + "."+ ErrorEnding());
                                         }
                                     } break;
                                 case Param.ItemName:
-                                    info.Errors.Add("cannot use item name yet.");
+                                    info.Errors.Add("cannot use item name yet."+ ErrorEnding());
                                     break;
                                 case Param.EquipmentName:
                                     if (!EquipmentManager.Equipment.ContainsKey(Parameters)) {
-                                        info.Errors.Add("Cannot find equipment item: '" + paramBits[i] + "'");
+                                        info.Errors.Add("Cannot find equipment item: '" + paramBits[i] + "'"+ ErrorEnding());
                                     } break;
                                 case Param.SoundEffectName:
                                     if (!SoundDatabase.HasEffect(paramBits[i])) {
-                                        info.Errors.Add("Cannot find sound effect: '" + paramBits[i] + "'");
+                                        info.Errors.Add("Cannot find sound effect: '" + paramBits[i] + "'"+ ErrorEnding());
                                     } break;
                                 case Param.SoundEffectGroup:
                                     if (!SoundDatabase.EffectGroups.ContainsKey(paramBits[i])) {
-                                        info.Errors.Add("Cannot find sound effect group: '" + paramBits[i] + "'");
+                                        info.Errors.Add("Cannot find sound effect group: '" + paramBits[i] + "'"+ ErrorEnding());
                                     } else if (SoundDatabase.EffectGroups[paramBits[i]].Count == 0) {
-                                        info.Errors.Add("Sound effect group '" + paramBits[i] + "' has no sound effects in it!");
+                                        info.Errors.Add("Sound effect group '" + paramBits[i] + "' has no sound effects in it!"+ ErrorEnding());
                                     } else if (info.RemappedSoundEffectGroups != null) {
                                         AdditionalBytecode.Add((ushort)info.RemappedSoundEffectGroups[paramBits[i]]);
                                     } break;
                                 case Param.MusicName:
-                                    info.Errors.Add("Cannot Param.MusicName yet!");
+                                    info.Errors.Add("Cannot Param.MusicName yet!"+ ErrorEnding());
                                     break;
                                 case Param.Portrait:
-                                    info.Errors.Add("Cannot Param.Portrait yet!");
+                                    info.Errors.Add("Cannot Param.Portrait yet!"+ ErrorEnding());
                                     break;
                                 case Param.FactionName:
-                                    if (!Factions.Has(Parameters)) {
-                                        info.Errors.Add("Could not find the faction: " + Parameters);
+                                    if (!Factions.Has(paramBits[i])) {
+                                        info.Errors.Add("Could not find the faction: " + paramBits[i]+ ErrorEnding());
                                     } else {
                                         AdditionalBytecode.Add((ushort)Factions.GetID(Parameters));
                                     } break;
                                 case Param.AnimationName:
-                                    if (info.ScriptType == ScriptTypes.Item) {
-                                        info.Errors.Add("Loop animation only applies to objects with state based animation.");
+                                    if (!info.AnimationNames.Contains(Parameters)) {
+                                        info.Errors.Add("Cannot find animation: " + paramBits[i]+ ErrorEnding());
+                                    } break;
+                                case Param.AIType:
+                                    if (!AITypesHelper.StringLowerToValue.ContainsKey(paramBits[i].ToLower())) {
+                                        info.Errors.Add("Cannot find AIType: " + paramBits[i]+ ErrorEnding());
                                         break;
                                     }
 
-                                    if (!info.AnimationNames.Contains(Parameters)) {
-                                        info.Errors.Add("Cannot find animation: " + Parameters);
+                                    AdditionalBytecode.Add(AITypesHelper.StringLowerToValue[paramBits[i].ToLower()]); break;
+                                case Param.UIPanel:
+                                    if (UIManager.GetPanelID(paramBits[i]) > -1) {
+                                        AdditionalBytecode.Add((ushort)UIManager.GetPanelID(paramBits[i]));
+                                    } else {
+                                        info.Errors.Add("Cannot find a UIPanel called " + paramBits[i]+ ErrorEnding());
+                                    } break;
+                                case Param.UIElement:
+                                    if(paramBits[i].Count(c => c == '>') == 1) {
+                                        int panelID = UIManager.GetPanelID(paramBits[i].Split('>')[0]);
+
+                                        if (panelID > -1) {
+                                            AdditionalBytecode.Add((ushort)panelID);
+
+                                            int elementID = UIManager.GetElementID(paramBits[i].Split('>')[1], UIManager.Panels[panelID]);
+
+                                            if (elementID > -1) {
+                                                AdditionalBytecode.Add((ushort)elementID);
+                                            } else {
+                                                info.Errors.Add("Cannot find a UIElement called " + paramBits[i].Split('>')[1]+ ErrorEnding());
+                                            }
+                                        } else {
+                                            info.Errors.Add("Cannot find a UIPanel called " + paramBits[i].Split('>')[0]+ ErrorEnding());
+                                        }
+                                    } else {
+                                        info.Errors.Add("Expecting both a UIPanel and a UIElement but didn't find a '>' seperation character!"+ ErrorEnding());
+                                    } break;
+                                case Param.UILayer:
+                                    if (paramBits[i].Count(c => c == '>') == 2) {
+                                        int panelID = UIManager.GetPanelID(paramBits[i].Split('>')[0]);
+
+                                        if (panelID > -1) {
+                                            AdditionalBytecode.Add((ushort)panelID);
+
+                                            int elementID = UIManager.GetElementID(paramBits[i].Split('>')[1], UIManager.Panels[panelID]);
+
+                                            if (elementID > -1) {
+                                                AdditionalBytecode.Add((ushort)elementID);
+
+                                                int layerID = UIManager.GetPanelID(paramBits[i].Split('>')[2], UIManager.Panels[panelID].Elements[elementID]);
+
+                                                if (layerID > -1) {
+                                                    AdditionalBytecode.Add((ushort)layerID);
+                                                } else {
+                                                    info.Errors.Add("Cannot find a UILayer called " + paramBits[i].Split('>')[2]+ ErrorEnding());
+                                                }
+                                            } else {
+                                                info.Errors.Add("Cannot find a UIElement called " + paramBits[i].Split('>')[1]+ ErrorEnding());
+                                            }
+                                        } else {
+                                            info.Errors.Add("Cannot find a UIPanel called " + paramBits[i].Split('>')[0]+ ErrorEnding());
+                                        }
+                                    } else {
+                                        info.Errors.Add("Expecting a UIPanel, a UIElement and a UILayer but didn't find 2x '>' seperation characters!"+ ErrorEnding());
                                     } break;
                                 case Param.ImageDatabase:
-                                    info.Errors.Add("Cannot Param.ImageDatabase yet!");
+                                    info.Errors.Add("Cannot Param.ImageDatabase yet!"+ ErrorEnding());
                                     break;
+                                case Param.ScriptTarget:
+                                    if (Commands.ScriptTargets.ContainsKey(paramBits[i].ToLower())) {
+                                        AdditionalBytecode.Add(Commands.ScriptTargets[paramBits[i].ToLower()]);
+                                    } else {
+                                        info.Errors.Add("Cannot find a script target called '" + paramBits[i] + "'" + ErrorEnding());
+                                    } break;
                                 default:
-                                    info.Errors.Add("Unknown Param type: " + thisParamType); break;
+                                    info.Errors.Add("Unknown Param type: " + thisParamType+ ErrorEnding()); break;
                             }
                             #endregion
                         }
@@ -243,10 +323,14 @@ namespace ToolCache.Scripting {
                         }
                     } else {
                         if (vc.MinimumParams == vc.MaximumParams) {
-                            info.Errors.Add(Action + " expects " + vc.MinimumParams + " parameters but got " + paramBits.Length);
+                            info.Errors.Add(Action + " expects " + vc.MinimumParams + " parameters but got " + paramBits.Length+ ErrorEnding());
                         } else {
-                            info.Errors.Add(Action + " expects between " + vc.MinimumParams + " and " + vc.MaximumParams + " parameters but got " + paramBits.Length);
+                            info.Errors.Add(Action + " expects between " + vc.MinimumParams + " and " + vc.MaximumParams + " parameters but got " + paramBits.Length+ ErrorEnding());
                         }
+                    }
+
+                    if (vc.WillIndent) {
+                        FurtherParsing = true;
                     }
                 }
             } else {
@@ -263,17 +347,17 @@ namespace ToolCache.Scripting {
                         break;
                     case "else":
                         Parameters = ""; break;
-                    case "foreach":
+                    case "witheach":
                         CommandID = 0x8002; break;
                     default:
                         //See if we have a decrement or increment line (and convert it to the longhand version :)
                         #region CHECK FOR INCREMENT/DECREMENT ++/--
-                        Match m = Regex.Match(Trimmed, "([A-Za-z][A-Za-z0-9_]*)(\\+\\+|--)");
+                        Match m = Regex.Match(Trimmed, "(" + VARIABLE_REGEX + ")(\\+\\+|--)");
 
                         if (m.Success) {
                             string variableName = m.Groups[1].Value;
-                            if (!info.Variables.ContainsKey(variableName)) {
-                                info.Errors.Add("Cannot "+(m.Groups[2].Value=="++"?"Increment":"Decrement")+" a variable because cannot find: " + variableName);
+                            if (!VariableExists(variableName, info)) {
+                                info.Errors.Add("Cannot " + (m.Groups[2].Value == "++" ? "Increment" : "Decrement") + " a variable because cannot find one called '" + variableName + "'"+ ErrorEnding());
                             }
 
                             if (m.Groups[2].Value == "++") {
@@ -285,27 +369,20 @@ namespace ToolCache.Scripting {
                         #endregion
 
                         //Might be a variable line or something :)
-                        m = Regex.Match(Trimmed, "([A-Za-z][A-Za-z0-9_]*)\\s?=\\s?([ A-Za-z0-9*+/\\-%]+)");
+                        m = Regex.Match(Trimmed, "(" + VARIABLE_REGEX + ")\\s?=\\s?([ A-Za-z0-9*+/\\-%_]+)");
 
                         if (m.Success) {
                             #region PROCESS MATH BLOCK
                             //Its a variable assignment line
                             CommandID = 0xB000;
 
-                            if (info.Variables.ContainsKey(m.Groups[1].Value)) {
-                                AdditionalBytecode.Add(0xBFFD);
-                                AdditionalBytecode.Add((ushort)info.Variables[m.Groups[1].Value].Index);
-                            } else if (GlobalVariables.Variables.ContainsKey(m.Groups[1].Value)) {
-                                //TODO: Update this possibly
-                                AdditionalBytecode.Add(0xBFFE);
-                                AdditionalBytecode.Add((ushort)GlobalVariables.Variables[m.Groups[1].Value].Index);
-                            } else {
-                                info.Errors.Add("No variable called: " + m.Groups[1].Value);
+                            if (!WriteVariableIfExists(m.Groups[1].Value, info, false)) {
+                                info.Errors.Add("No variable called: " + m.Groups[1].Value+ ErrorEnding());
                             }
 
                             string mathblock = m.Groups[2].Value;
 
-                            //First lets get rid of the 'and' and 'or' joins
+                            //Find all the maths symbols :)
                             MatchCollection mc = Regex.Matches(mathblock, "(\\+|-|/|\\*|%)");
                             List<string> mathblockBits = new List<string>();
 
@@ -322,29 +399,16 @@ namespace ToolCache.Scripting {
 
                             //Now we process the bits :D
                             foreach(string mathBit in mathblockBits) {
-                                if (short.TryParse(mathBit, out sparam)) {
-                                    AdditionalBytecode.Add(0xBFFF);
-                                    AdditionalBytecode.Add((ushort)sparam);
-                                } else {
-                                    switch (mathBit) {
-                                        case "+": AdditionalBytecode.Add(0xB001); break;
-                                        case "-": AdditionalBytecode.Add(0xB002); break;
-                                        case "*": AdditionalBytecode.Add(0xB003); break;
-                                        case "/": AdditionalBytecode.Add(0xB004); break;
-                                        case "%": AdditionalBytecode.Add(0xB005); break;
-                                        default:
-                                            if (VariableExists(mathBit, info)) {
-                                                if (info.Variables.ContainsKey(mathBit)) {
-                                                    AdditionalBytecode.Add(0xBFFD);
-                                                    AdditionalBytecode.Add((ushort)info.Variables[mathBit].Index);
-                                                } else if (GlobalVariables.Variables.ContainsKey(mathBit)) {
-                                                    AdditionalBytecode.Add(0xBFFE);
-                                                    AdditionalBytecode.Add((ushort)GlobalVariables.Variables[mathBit].Index);
-                                                }
-                                            } else {
-                                                info.Errors.Add("Cannot find a variable called: " + mathBit[0]);
-                                            } break;
-                                    }
+                                switch (mathBit) {
+                                    case "+": AdditionalBytecode.Add(0xB001); break;
+                                    case "-": AdditionalBytecode.Add(0xB002); break;
+                                    case "*": AdditionalBytecode.Add(0xB003); break;
+                                    case "/": AdditionalBytecode.Add(0xB004); break;
+                                    case "%": AdditionalBytecode.Add(0xB005); break;
+                                    default:
+                                        if (!WriteVariableIfExists(mathBit, info)) {
+                                            info.Errors.Add("Cannot find a variable called: '" + mathBit + "'"+ ErrorEnding());
+                                        } break;
                                 }
                             }
 
@@ -352,9 +416,9 @@ namespace ToolCache.Scripting {
                             #endregion
                         } else {
                             if (Parameters != "") {
-                                info.Errors.Add("Unknown command: " + Action + " & " + Parameters);
+                                info.Errors.Add("Unknown command: " + Action + " " + Parameters+ ErrorEnding());
                             } else {
-                                info.Errors.Add("Unknown command: " + Action);
+                                info.Errors.Add("Unknown command: " + Action+ ErrorEnding());
                             }
                         }
                         break;
@@ -362,12 +426,36 @@ namespace ToolCache.Scripting {
             }
         }
 
+        private string ErrorEnding() {
+            return " (on line " + LineNumber + ")";
+        }
+
+        private bool WriteVariableIfExists(string mathBit, ScriptInfo info, bool allowShorts = true) {
+            short sparam;
+
+            if (allowShorts && short.TryParse(mathBit, out sparam)) {
+                AdditionalBytecode.Add(0xBFFF);
+                AdditionalBytecode.Add((ushort)sparam);
+                return true;
+            } else if (info.Variables.ContainsKey(mathBit)) {
+                AdditionalBytecode.Add(0xBFFD);
+                AdditionalBytecode.Add((ushort)info.Variables[mathBit].Index);
+                return true;
+            } else if (GlobalVariables.Variables.ContainsKey(mathBit)) {
+                AdditionalBytecode.Add(0xBFFE);
+                AdditionalBytecode.Add((ushort)GlobalVariables.Variables[mathBit].Index);
+                return true;
+            }
+
+            return false;
+        }
+
         internal void Parse(ScriptInfo Info) {
             int index = Info.Commands.IndexOf(this);
             int i2 = 0;
 
             if (Indent != ExpectedIndent) {
-                Info.Errors.Add("Unexpected Indent! " + Trimmed);
+                Info.Errors.Add("Unexpected Indent! " + Trimmed + ErrorEnding());
             }
 
             if (Action != "") {
@@ -381,17 +469,17 @@ namespace ToolCache.Scripting {
                             CommandID = 0x8000;
                         }
 
-                        if (Parameters == "") Info.Errors.Add("Empty if");
+                        if (Parameters == "") Info.Errors.Add("Empty if"+ ErrorEnding());
                         ProcessParametersOfIf(Info);
                         
                         break;
                     case "else":
                         CommandID = 0x8003;
-                        if (Parameters == "") Info.Errors.Add("Unpaired else!");
+                        if (Parameters == "") Info.Errors.Add("Unpaired else!"+ ErrorEnding());
                         IndentBelow(Info, index);
                         break;
-                    case "foreach":
-                        if (Parameters == "") Info.Errors.Add("Empty foreach");
+                    case "witheach":
+                        if (Parameters == "") Info.Errors.Add("Empty witheach"+ ErrorEnding());
 
                         string[] bits = Regex.Split(Parameters, " in ");
 
@@ -400,15 +488,24 @@ namespace ToolCache.Scripting {
                             ProcessScriptType(Info, bits[0]);
 
                             //Process the other stuff
-                            ProcessArrayParametersOfForEach(bits[1], Info);
+                            ProcessArrayParametersOfWithEach(bits[1], Info);
                         } else {
-                            Info.Errors.Add("foreach should be:- foreach <type> in <array/set>");
+                            Info.Errors.Add("witheach should be:- witheach <type> in <array/set>"+ ErrorEnding());
                         }
 
                         //Indent stuff
                         IndentBelow(Info, index);
 
                         break;
+                    default:
+                        if(FurtherParsing) {
+                            if(vc.WillIndent) {
+                                i2 = IndentBelow(Info, index);
+                                if (Info.Commands.Count > i2) {
+                                    Info.Commands.Insert(i2, new ScriptCommand(vc.EndIndent, Indent, LineNumber));
+                                }
+                            }
+                        } break;
                 }
             } else if (Indent == 0) {
                 i2 = index + 1;
@@ -427,7 +524,7 @@ namespace ToolCache.Scripting {
         private void ProcessScriptType(ScriptInfo Info, string typeName) {
             InternalTypes scriptType;
             if (!Enum.TryParse<InternalTypes>(typeName, out scriptType)) {
-                Info.Errors.Add(typeName + " is not a valid scripting type!");
+                Info.Errors.Add(typeName + " is not a valid scripting type!"+ ErrorEnding());
             } else {
                 AdditionalBytecode.Add((ushort)scriptType);
             }
@@ -498,12 +595,12 @@ namespace ToolCache.Scripting {
                         param0 = (short)Info.AnimationNames.IndexOf(additionalInfo);
                         AdditionalBytecode.Add(0x7006);
                         AdditionalBytecode.Add((ushort)(param0 > -1 ? param0 : 0x0));
-                        if (param0 < 0) Info.Errors.Add("Animation does not exist: " + additionalInfo);
+                        if (param0 < 0) Info.Errors.Add("Animation does not exist: " + additionalInfo+ ErrorEnding());
                         break;
                     case "direction":
                         AdditionalBytecode.Add(0x7007);
                         if (additionalInfo.Length == 0) {
-                            Info.Errors.Add("No direction specified!");
+                            Info.Errors.Add("No direction specified!"+ ErrorEnding());
                             break;
                         }
                         char dl = additionalInfo.ToLower()[0];
@@ -512,29 +609,33 @@ namespace ToolCache.Scripting {
                             case 'r': AdditionalBytecode.Add(0x1); break;
                             case 'u': AdditionalBytecode.Add(0x2); break;
                             case 'd': AdditionalBytecode.Add(0x3); break;
-                            default: Info.Errors.Add("Unknown direction: " + additionalInfo); break;
+                            default: Info.Errors.Add("Unknown direction: " + additionalInfo+ ErrorEnding()); break;
                         } break;
                     case "isfaction":
                         AdditionalBytecode.Add(0x7008);
                         if (Factions.Has(additionalInfo)) {
                             AdditionalBytecode.Add((ushort)Factions.GetID(additionalInfo));
                         } else {
-                            Info.Errors.Add("Could not find faction to compare against '"+additionalInfo+"'");
+                            Info.Errors.Add("Could not find faction to compare against '" + additionalInfo + "'"+ ErrorEnding());
                         }
                         break;
+                    case "aieventis":
+                        AdditionalBytecode.Add(0x7FFF);
+                        if (EventsHelper.AIScriptEvents.ContainsKey(additionalInfo.ToLower())) {
+                            AdditionalBytecode.Add(EventsHelper.AIScriptEvents[additionalInfo.ToLower()]);
+                        } else {
+                            Info.Errors.Add("Cannot find an AIEvent called: " + additionalInfo+ ErrorEnding());
+                        } break;
                     default:
                         //Maybe a variable, lets see if we can find it
-                        Match match = Regex.Match(trueCommand, "([A-Za-z][A-Za-z0-9_]*)\\s?(<=|>=|!=|<>|><|>|<|=)\\s?([A-Za-z][A-Za-z0-9]*|[0-9]+)");
+                        Match match = Regex.Match(trueCommand, "(" + VARIABLE_REGEX + ")\\s?(<=|>=|!=|<>|><|>|<|=)\\s?(" + VARIABLE_REGEX + "|[0-9]+)");
 
                         if(match.Success) {
                             if(VariableExists(match.Groups[1].Value, Info)) {
                                 AdditionalBytecode.Add(0x7009); //This is a variable lookup thing
 
                                 //Add the variable information
-                                if (Info.Variables.ContainsKey(match.Groups[1].Value)) {
-                                    AdditionalBytecode.Add(0xBFFD); //Local variable
-                                    AdditionalBytecode.Add((ushort)Info.Variables[match.Groups[1].Value].Index);
-                                }
+                                WriteVariableIfExists(match.Groups[1].Value, Info, false);
 
                                 //Add the sign
                                 switch (match.Groups[2].Value) {
@@ -547,25 +648,14 @@ namespace ToolCache.Scripting {
                                 }
 
                                 //Add the other value to compare against
-                                if (VariableExists(match.Groups[3].Value, Info)) {
-                                    if (Info.Variables.ContainsKey(match.Groups[3].Value)) {
-                                        AdditionalBytecode.Add(0xBFFD);
-                                        AdditionalBytecode.Add((ushort)Info.Variables[match.Groups[3].Value].Index);
-                                    }
-                                } else {
-                                    //its a number? :)
-                                    if (short.TryParse(match.Groups[3].Value, out param0)) {
-                                        AdditionalBytecode.Add(0xBFFF);
-                                        AdditionalBytecode.Add((ushort)param0);
-                                    } else {
-                                        Info.Errors.Add("Cannot find a variable called '" + match.Groups[3].Value + "'");
-                                    }
+                                if (!WriteVariableIfExists(match.Groups[3].Value, Info)) {
+                                    Info.Errors.Add("Cannot find a variable called '" + match.Groups[3].Value + "'"+ ErrorEnding());
                                 }
                             } else {
-                                Info.Errors.Add(match.Groups[1].Value + " is not a variable.");
+                                Info.Errors.Add(match.Groups[1].Value + " is not a variable."+ ErrorEnding());
                             }
                         } else {
-                            Info.Errors.Add("Cannot understand how to IF this bit " + trueCommand);
+                            Info.Errors.Add("Cannot understand how to IF this bit " + trueCommand+ ErrorEnding());
                         } break;
                 }
             }
@@ -583,43 +673,39 @@ namespace ToolCache.Scripting {
         /// </summary>
         /// <param name="p">The substring after 'in' in foreach [type] in [this function]"/></param>
         /// <param name="Info">The ScriptInfo object for the entire script to pass errors and the like back into</param>
-        private void ProcessArrayParametersOfForEach(string p, ScriptInfo Info) {
+        private void ProcessArrayParametersOfWithEach(string p, ScriptInfo Info) {
             string l = p.ToLower();
 
-            if (l.Contains(" and ") || l.Contains(" or ")) {
-                Info.Errors.Add("FOREACH does not currently support joins AND or OR");
+            string regex = "([A-Za-z]+)\\(([A-Za-z0-9,\\.\\s_]*)\\)";
+            Match m = Regex.Match(p, regex);
+
+            if (!m.Success) {
+                Info.Errors.Add("Poorly structured WITHEACH: " + p+ ErrorEnding());
             } else {
-                string regex = "([A-Za-z]+)\\(([A-Za-z0-9,\\.\\s]*)\\)";
-                Match m = Regex.Match(p, regex);
+                string arrayValue = m.Groups[1].Value.ToLower();
+                string arrayParam = m.Groups[2].Value.ToLower();
 
-                if (!m.Success) {
-                    Info.Errors.Add("Unknown command: " + p);
-                } else {
-                    string arrayValue = m.Groups[1].Value.ToLower();
-                    string arrayParam = m.Groups[2].Value.ToLower();
-
-                    switch (arrayValue) {
-                        case "front":
-                            int totalBits = arrayParam.Split(',').Length;
-                            if (totalBits == 2) {
-                                this.AdditionalBytecode.Add((ushort)0x9000);
-                                VerifyCommaSeperatedShorts(arrayParam, 2, Info);
-                            } else if (totalBits == 3) {
-                                this.AdditionalBytecode.Add((ushort)0x9002);
-                                VerifyCommaSeperatedShorts(arrayParam, 3, Info);
-                            }
-                            break;
-                        case "aoe":
-                            this.AdditionalBytecode.Add((ushort)0x9001);
-                            VerifyCommaSeperatedShorts(arrayParam, 1, Info);
-                            break;
-                        case "myarea":
-                            this.AdditionalBytecode.Add((ushort)0x9003);
-                            break;
-                        default:
-                            Info.Errors.Add("Unknown Array Type: " + arrayValue);
-                            break;
-                    }
+                switch (arrayValue) {
+                    case "front":
+                        int totalBits = arrayParam.Split(',').Length;
+                        if (totalBits == 2) {
+                            this.AdditionalBytecode.Add((ushort)0x9000);
+                            VerifyCommaSeperatedShorts(arrayParam, 2, Info);
+                        } else if (totalBits == 3) {
+                            this.AdditionalBytecode.Add((ushort)0x9002);
+                            VerifyCommaSeperatedShorts(arrayParam, 3, Info);
+                        }
+                        break;
+                    case "aoe":
+                        this.AdditionalBytecode.Add((ushort)0x9001);
+                        VerifyCommaSeperatedShorts(arrayParam, 1, Info);
+                        break;
+                    case "myarea":
+                        this.AdditionalBytecode.Add((ushort)0x9003);
+                        break;
+                    default:
+                        Info.Errors.Add("Unknown Array Type: " + arrayValue+ ErrorEnding());
+                        break;
                 }
             }
         }
@@ -635,13 +721,13 @@ namespace ToolCache.Scripting {
             short value;
 
             if (values.Length != expectedFloats) {
-                Info.Errors.Add("Expecting " + expectedFloats + " values but got " + values.Length);
+                Info.Errors.Add("Expecting " + expectedFloats + " values but got " + values.Length+ ErrorEnding());
                 return;
             }
 
             foreach (string s in values) {
                 if (!short.TryParse(s, out value)) {
-                    Info.Errors.Add("Cannot turn " + s + " into a number.");
+                    Info.Errors.Add("Cannot turn " + s + " into a number."+ ErrorEnding());
                     return;
                 } else {
                     this.AdditionalBytecode.Add((ushort)value);

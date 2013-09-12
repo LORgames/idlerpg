@@ -110,7 +110,7 @@ package Game.Equipment {
 		/* INTERFACE Game.Scripting.IScriptTarget */
 		
 		public function GetFaction():int {
-			return Owner.Owner.PrimaryFaction;
+			return Owner.Owner.GetFaction();
 		}
 	}
 

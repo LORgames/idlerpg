@@ -1,5 +1,4 @@
-package WindowSystem 
-{
+package UI {
 	import flash.text.AntiAliasType;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;

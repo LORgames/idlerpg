@@ -8,7 +8,6 @@ package InputSystems {
 	import Game.Effects.EffectManager;
 	import Game.Map.WorldData;
 	import RenderSystem.Overlays.CaveLight;
-	import WindowSystem.AdvancedScrollWindow.AdvPanel;
 	/**
 	 * ...
 	 * @author Paul
@@ -58,10 +57,6 @@ package InputSystems {
 			
 			if (ke.keyCode == Keyboard.M) {
 				Main.I.stage.addChild(new CaveLight());
-			}
-			
-			if (ke.keyCode == Keyboard.I) {
-				Main.I.hud.addChild(new AdvPanel());
 			}
 			
 			WorldData.ME.RequestMove(xSpeed, ySpeed);

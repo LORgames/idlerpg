@@ -4,7 +4,6 @@ package Game.Scripting {
 	import Debug.Drawer;
 	import EngineTiming.Clock;
 	import EngineTiming.ICleanUp;
-	import flash.geom.Point;
 	import flash.utils.ByteArray;
 	import Game.Critter.BaseCritter;
 	import Game.Critter.CritterHuman;
@@ -19,6 +18,7 @@ package Game.Scripting {
 	import Game.Map.WorldData;
 	import Interfaces.IMapObject;
 	import SoundSystem.EffectsPlayer;
+	import UI.UIPanel;
 	/**
 	 * ...
 	 * @author Paul
@@ -39,13 +39,23 @@ package Game.Scripting {
 		public static const Died:uint = 9;
 		public static const Update:uint = 10;
 		public static const OnTrigger:uint = 11;
-		public static const TOTAL_EVENT_TYPES:uint = 12;
+		public static const AIEvent:uint = 12;
+		public static const TOTAL_EVENT_TYPES:uint = 13;
 		
 		//SCRIPT TYPES
 		public static const CRITTER:int = 0xA000;
 		public static const ENEMY:int = 0xA001;
 		public static const ATTACKABLE:int = 0xA002;
 		public static const ALLY:int = 0xA003;
+		
+		//AI Events
+		public static const AIEvent_TargetDied:int = 0x00;
+        public static const AIEvent_TargetOutOfRange:int = 0x01;
+        public static const AIEvent_TargetUntargetable:int = 0x02;
+        public static const AIEvent_AttackedByNonTarget:int = 0x03;
+        public static const AIEvent_OwnerChanged:int = 0x04;
+        public static const AIEvent_FactionChanged:int = 0x05;
+		
 		
 		//SCRIPT ARRAYS
 		public static const FRONT:int = 0x9000;
@@ -62,7 +72,7 @@ package Game.Scripting {
 			InitialVariables = initalVariables.concat();
 		}
 		
-		internal function Run(eventID:uint, info:ScriptInstance):void {
+		internal function Run(eventID:uint, info:ScriptInstance, param:Object):void {
 			//Reset the reader
 			if (eventID >= TOTAL_EVENT_TYPES) return;
 			if (EventScripts[eventID] == null) return;
@@ -71,7 +81,7 @@ package Game.Scripting {
 			EventScript.position = 0;
 			
 			//trace("Running: Invoker=" + info.Invoker + " Event=" + eventID);
-			ProcessBlock(EventScript, info, eventID);
+			ProcessBlock(EventScript, info, eventID, param);
 			
 			if (EventScript.position != EventScript.length) {
 				trace("SCRIPT UNFINISHED: [" + info.Invoker + " Event="+eventID+ " ScriptPosition=" + EventScript.position + "/" + EventScript.length);
@@ -134,7 +144,7 @@ package Game.Scripting {
 			if (SaveVarType == 0xBFFD) { //Local variable
 				info.Variables[SaveVarID] = runningTally;
 			} else if (SaveVarType == 0xBFFE) { //Global variable
-				info.Variables[SaveVarID] = runningTally;
+				GlobalVariables.Variables[SaveVarID] = runningTally;
 			}
 		}
 		
@@ -145,7 +155,7 @@ package Game.Scripting {
 		 * @param	target	The target of the script if any
 		 * @return	How the IF evaluated, true or false.
 		 */
-		private function CanIf(eventScript:ByteArray, info:ScriptInstance, position:PointX):Boolean {
+		private function CanIf(eventScript:ByteArray, info:ScriptInstance, position:PointX, inputParam:Object):Boolean {
 			//Running values
 			var currentCalculatedValue:Boolean = true;
 			var currentUnprocessedValue:Boolean = true;
@@ -169,7 +179,7 @@ package Game.Scripting {
 						ended = true;
 						break;
 					case 0xF0FD:
-						currentUnprocessedValue = CanIf(eventScript, info, position);
+						currentUnprocessedValue = CanIf(eventScript, info, position, inputParam);
 						trace("\nNested IF:" + currentUnprocessedValue);
 						break;
 					case 0x7000: currentOperation = 0; break; //AND
@@ -198,7 +208,7 @@ package Game.Scripting {
 						currentUnprocessedValue = (position.D == eventScript.readUnsignedShort()); break;
 					case 0x7008: //What faction do i belong to
 						if (info.CurrentTarget is BaseCritter) {
-							currentUnprocessedValue =  ((info.CurrentTarget as BaseCritter).PrimaryFaction == eventScript.readShort());
+							currentUnprocessedValue = ((info.CurrentTarget as BaseCritter).GetFaction() == eventScript.readShort());
 						} else {
 							trace("Unknown target for 0x7008 Target=" + info.CurrentTarget + " Faction=" + eventScript.readShort());
 						} break;
@@ -217,6 +227,11 @@ package Game.Scripting {
 						}
 						
 						break;
+					case 0x7FFF:
+						var whatAIEvent:int = eventScript.readShort();
+						if (inputParam is int) {
+							currentUnprocessedValue = ((inputParam as int) == whatAIEvent);
+						} break;
 					default:
 						trace("@0x" + command.toString(16) + ": Unknown Conditional.");
 						break;
@@ -242,7 +257,7 @@ package Game.Scripting {
 			return currentCalculatedValue;
 		}
 		
-		private function Process_ForEach(eventScript:ByteArray, info:ScriptInstance, position:PointX, eventID:int):void {
+		private function Process_ForEach(eventScript:ByteArray, info:ScriptInstance, position:PointX, eventID:int, param:Object):void {
 			var eType:int = eventScript.readUnsignedShort();
 			var arrayType:int = eventScript.readUnsignedShort();
 			
@@ -257,8 +272,8 @@ package Game.Scripting {
 				switch(arrayType) {
 					case FRONT:
 					case FRONTOFFSET:
-						dim0 = eventScript.readUnsignedShort() * 24;
-						dim1 = eventScript.readUnsignedShort() * 24;
+						dim0 = eventScript.readUnsignedShort();
+						dim1 = eventScript.readUnsignedShort();
 						dim2 = (arrayType == FRONTOFFSET)?eventScript.readShort() : 0;
 						
 						if (position.D < 2) { //Left or right
@@ -285,7 +300,17 @@ package Game.Scripting {
 						
 						break;
 					case AOE:
-						dim0 = eventScript.readUnsignedShort() * 24; dim1 = dim0; break;
+						dim0 = eventScript.readUnsignedShort();
+						
+						rect.X = position.X - dim0;
+						rect.Y = position.Y - dim0*Global.PerspectiveSkew;
+						rect.W = dim0*2;
+						rect.H = dim0*2*Global.PerspectiveSkew;
+						
+						WorldData.CurrentMap.GetObjectsInArea(rect, Objects, eType, info.CurrentTarget);
+						Drawer.AddDebugRect(rect);
+						
+						break;
 					case MYAREA:
 						//something :)
 						break;
@@ -305,7 +330,7 @@ package Game.Scripting {
 				var target:IScriptTarget = Objects[obji];
 				info.AttachTarget(target);
 				
-				ProcessBlock(eventScript, info, eventID);
+				ProcessBlock(eventScript, info, eventID, param);
 				
 				info.PopTarget();
 				eventScript.position = startIndex;
@@ -428,7 +453,7 @@ package Game.Scripting {
 			}
 		}
 		
-		private function ProcessBlock(EventScript:ByteArray, info:ScriptInstance, eventID:int):void {
+		private function ProcessBlock(EventScript:ByteArray, info:ScriptInstance, eventID:int, param:Object):void {
 			var effectInfo:EffectInfo;
 			
 			//Some required variables
@@ -462,8 +487,9 @@ package Game.Scripting {
 						
 						var critter:BaseCritter = CritterManager.I.CritterInfo[p0.D].CreateCritter(WorldData.CurrentMap, p1.X, p1.Y);
 						
-						if(info.CurrentTarget is BaseCritter) critter.PrimaryFaction = (info.CurrentTarget as BaseCritter).PrimaryFaction;
-						if (critter != null) { critter.Owner = info.CurrentTarget; } break;
+						critter.SetFaction(info.CurrentTarget.GetFaction());
+						critter.SetOwner(info.CurrentTarget);
+						break;
 					case 0x1003: //Flat Damage
 					case 0x1005: //% Damage
 					case 0x1006: //Flat DOT
@@ -613,7 +639,7 @@ package Game.Scripting {
 						} break;
 					case 0x5004: //Set Faction
 						if (info.CurrentTarget is BaseCritter) { 
-							(info.CurrentTarget as BaseCritter).PrimaryFaction = EventScript.readShort();
+							(info.CurrentTarget as BaseCritter).SetFaction(EventScript.readShort());
 						} break;
 					case 0x5005: //Movement stop
 						if (info.CurrentTarget is BaseCritter) { 
@@ -622,7 +648,38 @@ package Game.Scripting {
 					case 0x5006: //Get Target From Owner
 						if (info.CurrentTarget is BaseCritter && ((info.CurrentTarget as BaseCritter).Owner as BaseCritter) != null) {
 							(info.CurrentTarget as BaseCritter).CurrentTarget = ((info.CurrentTarget as BaseCritter).Owner as BaseCritter).CurrentTarget;
+						} else {
+							trace("Uh? What target?");
 						} break;
+					case 0x5007: //Set AIType param
+						if (info.CurrentTarget is BaseCritter) {
+							var typeChange:int = EventScript.readShort();
+							var typeOnOff:Boolean = (EventScript.readShort() == 1?true:false);
+							
+							if (typeOnOff) { //Make sure is enabled
+								(info.CurrentTarget as BaseCritter).MyAIType = ((info.CurrentTarget as BaseCritter).MyAIType | typeChange);
+							} else { //Make sure is disabled
+								(info.CurrentTarget as BaseCritter).MyAIType = ((info.CurrentTarget as BaseCritter).MyAIType & ~typeChange);
+							}
+						} else {
+							EventScript.readShort(); // pop the type off
+							EventScript.readShort(); // pop the boolean off 
+						} break;
+					case 0x5008: //With(ScriptTarget)
+						var x:int = EventScript.readShort();
+						if (x == 0x0) { //Invoker
+							info.AttachTarget(info.Invoker);
+						} else if (x == 0x1) { // AITarget
+							if (info.CurrentTarget is BaseCritter && (info.CurrentTarget as BaseCritter).CurrentTarget != null) {
+								info.AttachTarget((info.CurrentTarget as BaseCritter).CurrentTarget);
+							}
+						} else if (x == 0x2) { // Attacker
+							if (eventID == Script.Attacked && param != null && param is IScriptTarget) {
+								info.AttachTarget(param as IScriptTarget);
+							}
+						} break;
+					case 0x5009: //PopTarget()
+						info.PopTarget(); break;
 					case 0x6000: //Play Animation
 						info.Invoker.ChangeState(EventScript.readShort(), false); break;
 					case 0x6001: //Loop Animation
@@ -630,25 +687,25 @@ package Game.Scripting {
 					case 0x6002: //Animation Speed
 						info.Invoker.UpdatePlaybackSpeed((EventScript.readUnsignedShort() * 0.01)); break;
 					case 0x8000: //IF without ELSE
-						bParam = CanIf(EventScript, info, Position);
+						bParam = CanIf(EventScript, info, Position, param);
 						if (!bParam) {
 							EventScript.readUnsignedShort(); //Just pop the 0xF0FD off
 							ReadUntilBalancedClose(EventScript);
 						} else {
-							ProcessBlock(EventScript, info, eventID);
+							ProcessBlock(EventScript, info, eventID, param);
 						} break;
 					case 0x8001: //IF with ELSE
-						bParam = CanIf(EventScript, info, Position);
+						bParam = CanIf(EventScript, info, Position, param);
 						if (bParam) {
 							CallStack.push(true);
-							ProcessBlock(EventScript, info, eventID);
+							ProcessBlock(EventScript, info, eventID, param);
 						} else {
 							EventScript.readUnsignedShort(); //Just pop the 0xF0FD off
 							ReadUntilBalancedClose(EventScript);
 							CallStack.push(false);
 						} break;
 					case 0x8002: //Foreach
-						Process_ForEach(EventScript, info, Position, eventID);
+						Process_ForEach(EventScript, info, Position, eventID, param);
 						break;
 					case 0x8003: //ELSE
 						bParam = CallStack.pop();
@@ -656,8 +713,12 @@ package Game.Scripting {
 							EventScript.readUnsignedShort(); //Just pop the 0xF0FD off
 							ReadUntilBalancedClose(EventScript);
 						} else {
-							ProcessBlock(EventScript, info, eventID);
+							ProcessBlock(EventScript, info, eventID, param);
 						} break;
+					case 0xC002:
+						(Main.I.hud.Panels[EventScript.readShort()] as UIPanel).visible = (EventScript.readShort()==1); break;
+					case 0xC003:
+						Main.I.hud.Panels[EventScript.readShort()].Elements[EventScript.readShort()].Draw(Main.I.stage.stageWidth, Main.I.stage.stageHeight, Main.I.hud); break;
 					default:
 						if (command == 0xF0FD) {
 							deep++;

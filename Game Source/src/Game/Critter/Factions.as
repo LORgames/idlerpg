@@ -33,5 +33,9 @@ package Game.Critter {
 		public static function IsFriends(faction1:int, faction2:int):Boolean {
 			return (Friends[faction1] & (0x1 << faction2)) > 0;
 		}
+		
+		public static function GetFactionColour(faction:int):int {
+			return (0xFF << (faction * 8));
+		}
 	}
 }

@@ -22,6 +22,7 @@ namespace ToolCache.General {
         public static void GoGoGadget() {
             //Internal loading
             Commands.Initialize();
+            EventsHelper.Initialize();
 
             //Tier 0 Loading:
             PortraitManager.Initialize();

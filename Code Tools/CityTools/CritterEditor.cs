@@ -425,8 +425,6 @@ namespace CityTools {
                         float xPos = e.ClipRectangle.Width/2 - anim.Center.X;
                         float yPos = e.ClipRectangle.Height - 20 - (anim.Center.Y*2);
 
-                        System.Diagnostics.Debug.WriteLine(xPos + ", " + yPos);
-
                         anim.Draw(e.Graphics, xPos, yPos, 1);
 
                         e.Graphics.DrawRectangle(Pens.Red, (e.ClipRectangle.Width - (int)numBeastRectWidth.Value) / 2, e.ClipRectangle.Height - 20 - ((int)numBeastRectHeight.Value) - (int)numBeastOffsetY.Value, (int)numBeastRectWidth.Value, (int)numBeastRectHeight.Value);

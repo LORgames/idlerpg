@@ -28,7 +28,6 @@
             this.btnNewUIElement = new System.Windows.Forms.Button();
             this.btnDeleteSelectedUIElements = new System.Windows.Forms.Button();
             this.pnlUIElement = new System.Windows.Forms.Panel();
-            this.scriptUI = new CityTools.Components.ScriptBox();
             this.btnMoveLayerDown = new System.Windows.Forms.Button();
             this.btnMoveLayerUp = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
@@ -69,6 +68,8 @@
             this.txtPanelName = new System.Windows.Forms.TextBox();
             this.pnlUIPanel = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
+            this.btnDelPanel = new System.Windows.Forms.Button();
+            this.scriptUI = new CityTools.Components.ScriptBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbExample)).BeginInit();
             this.pnlUIElement.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUIElementSizeY)).BeginInit();
@@ -148,15 +149,6 @@
             this.pnlUIElement.Name = "pnlUIElement";
             this.pnlUIElement.Size = new System.Drawing.Size(345, 297);
             this.pnlUIElement.TabIndex = 4;
-            // 
-            // scriptUI
-            // 
-            this.scriptUI.Location = new System.Drawing.Point(3, 130);
-            this.scriptUI.Name = "scriptUI";
-            this.scriptUI.Script = "";
-            this.scriptUI.ScriptType = ToolCache.Scripting.Types.ScriptTypes.Unknown;
-            this.scriptUI.Size = new System.Drawing.Size(337, 162);
-            this.scriptUI.TabIndex = 16;
             // 
             // btnMoveLayerDown
             // 
@@ -412,8 +404,12 @@
             "Stretch",
             "StretchToValueX",
             "StretchToValueY",
+            "StretchToValueXNeg",
+            "StretchToValueYNeg",
             "PanX",
             "PanY",
+            "PanXNeg",
+            "PanYNeg",
             "Radial"});
             this.cbLayerType.Location = new System.Drawing.Point(53, 111);
             this.cbLayerType.Name = "cbLayerType";
@@ -465,6 +461,11 @@
             0,
             0,
             0});
+            this.numLayerOffsetY.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
             this.numLayerOffsetY.Name = "numLayerOffsetY";
             this.numLayerOffsetY.Size = new System.Drawing.Size(61, 20);
             this.numLayerOffsetY.TabIndex = 12;
@@ -498,6 +499,11 @@
             0,
             0,
             0});
+            this.numLayerOffsetX.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
             this.numLayerOffsetX.Name = "numLayerOffsetX";
             this.numLayerOffsetX.Size = new System.Drawing.Size(60, 20);
             this.numLayerOffsetX.TabIndex = 11;
@@ -557,20 +563,23 @@
             // 
             // cbUIPanels
             // 
+            this.cbUIPanels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbUIPanels.FormattingEnabled = true;
             this.cbUIPanels.Location = new System.Drawing.Point(12, 12);
             this.cbUIPanels.Name = "cbUIPanels";
-            this.cbUIPanels.Size = new System.Drawing.Size(221, 21);
+            this.cbUIPanels.Size = new System.Drawing.Size(231, 21);
             this.cbUIPanels.TabIndex = 12;
             this.cbUIPanels.SelectedIndexChanged += new System.EventHandler(this.cbUIPanels_SelectedIndexChanged);
             // 
             // btnAddPanel
             // 
-            this.btnAddPanel.Location = new System.Drawing.Point(239, 12);
+            this.btnAddPanel.Image = global::CityTools.Properties.Resources.add;
+            this.btnAddPanel.Location = new System.Drawing.Point(249, 12);
             this.btnAddPanel.Name = "btnAddPanel";
-            this.btnAddPanel.Size = new System.Drawing.Size(118, 23);
+            this.btnAddPanel.Size = new System.Drawing.Size(51, 23);
             this.btnAddPanel.TabIndex = 13;
-            this.btnAddPanel.Text = "Add New Panel";
+            this.btnAddPanel.Text = "Add";
+            this.btnAddPanel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAddPanel.UseVisualStyleBackColor = true;
             this.btnAddPanel.Click += new System.EventHandler(this.btnAddPanel_Click);
             // 
@@ -605,11 +614,33 @@
             this.label11.TabIndex = 15;
             this.label11.Text = "Panel Name";
             // 
+            // btnDelPanel
+            // 
+            this.btnDelPanel.Image = global::CityTools.Properties.Resources.delete;
+            this.btnDelPanel.Location = new System.Drawing.Point(306, 12);
+            this.btnDelPanel.Name = "btnDelPanel";
+            this.btnDelPanel.Size = new System.Drawing.Size(51, 23);
+            this.btnDelPanel.TabIndex = 16;
+            this.btnDelPanel.Text = "Del";
+            this.btnDelPanel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnDelPanel.UseVisualStyleBackColor = true;
+            this.btnDelPanel.Click += new System.EventHandler(this.btnDelPanel_Click);
+            // 
+            // scriptUI
+            // 
+            this.scriptUI.Location = new System.Drawing.Point(3, 130);
+            this.scriptUI.Name = "scriptUI";
+            this.scriptUI.Script = "";
+            this.scriptUI.ScriptType = ToolCache.Scripting.Types.ScriptTypes.Unknown;
+            this.scriptUI.Size = new System.Drawing.Size(337, 162);
+            this.scriptUI.TabIndex = 16;
+            // 
             // UIEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1392, 650);
+            this.Controls.Add(this.btnDelPanel);
             this.Controls.Add(this.pnlUIPanel);
             this.Controls.Add(this.btnAddPanel);
             this.Controls.Add(this.cbUIPanels);
@@ -692,5 +723,6 @@
         private System.Windows.Forms.TextBox txtPanelName;
         private System.Windows.Forms.Panel pnlUIPanel;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button btnDelPanel;
     }
 }

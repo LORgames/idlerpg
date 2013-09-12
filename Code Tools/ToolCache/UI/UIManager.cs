@@ -31,6 +31,12 @@ namespace ToolCache.UI {
             Panels.Add(uiPanel);
         }
 
+        public static void DeletePanel(UIPanel p) {
+            if (Panels.Contains(p)) {
+                Panels.Remove(p);
+            }
+        }
+
         public static void WriteDatabase() {
             BinaryIO f = new BinaryIO();
 
@@ -41,6 +47,45 @@ namespace ToolCache.UI {
             }
 
             f.Encode(name);
+        }
+
+        internal static int GetPanelID(string p) {
+            int i = Panels.Count;
+            string pl = p.ToLower();
+
+            while (--i > -1) {
+                if (Panels[i].Name.ToLower() == pl) {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        internal static int GetElementID(string p, UIPanel uIPanel) {
+            int i = uIPanel.Elements.Count;
+            string pl = p.ToLower();
+
+            while (--i > -1) {
+                if (uIPanel.Elements[i].Name.ToLower() == pl) {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        internal static int GetPanelID(string p, UIElement uIElement) {
+            int i = uIElement.Layers.Count;
+            string pl = p.ToLower();
+
+            while (--i > -1) {
+                if (uIElement.Layers[i].Name.ToLower() == pl) {
+                    return i;
+                }
+            }
+
+            return -1;
         }
     }
 }

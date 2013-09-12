@@ -8,20 +8,59 @@ namespace ToolCache.Scripting.Types {
     /// A list of the events
     /// </summary>
     enum ValidEvents {
-        Attack = 0x0000,
-        Press = 0x0000,
-        Spawn = 0x0001,
-        Attacked = 0x0002,
-        Use = 0x0003,
-        Equip = 0x0004,
-        OnEnter = 0x0004,
-        MinionDied = 0x0005,
-        AnimationEnded = 0x0006,
-        OnExit = 0x0006,
-        StartMoving = 0x0007,
-        EndMoving = 0x0008,
-        Died = 0x0009,
-        Update = 0x000A,
-        OnTrigger = 0x000B
+        Attack = 0x00,
+        Press = 0x00,
+        Spawn = 0x01,
+        Attacked = 0x02,
+        Use = 0x03,
+        Equip = 0x04,
+        OnEnter = 0x04,
+        MinionDied = 0x05,
+        AnimationEnded = 0x06,
+        OnExit = 0x06,
+        StartMoving = 0x07,
+        EndMoving = 0x08,
+        Died = 0x09,
+        Update = 0x0A,
+        OnTrigger = 0x0B,
+        AIEvent = 0x0C
+    }
+
+    /// <summary>
+    /// A list of possible AIEvents
+    /// </summary>
+    enum AIEvents {
+        TargetDied = 0x00,
+        TargetOutOfRange = 0x01,
+        TargetUntargetable = 0x02,
+        AttackedByNonTarget = 0x03,
+        OwnerChanged = 0x04,
+        FactionChanged = 0x05
+    }
+
+    public class EventsHelper {
+        public static Dictionary<string, ushort> ScriptEvents = new Dictionary<string, ushort>();
+        public static Dictionary<string, ushort> AIScriptEvents = new Dictionary<string, ushort>();
+
+        internal static void Initialize() {
+            ScriptEvents.Clear();
+            AIScriptEvents.Clear();
+
+            //Process ValidEvents
+            Array x = Enum.GetValues(typeof(ValidEvents));
+            String[] s = Enum.GetNames(typeof(ValidEvents));
+            for (var i = 0; i < x.Length; i++) {
+                ValidEvents ait = (ValidEvents)x.GetValue(i);
+                string name = s[i];
+                ScriptEvents.Add(name.ToLower(), (ushort)ait);
+            }
+
+            //Process AIEvents
+            x = Enum.GetValues(typeof(AIEvents));
+            foreach (AIEvents ait in x) {
+                string name = ait.ToString();
+                AIScriptEvents.Add(name.ToLower(), (ushort)ait);
+            }
+        }
     }
 }

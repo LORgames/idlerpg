@@ -39,6 +39,8 @@ package {
 			Global.TileSize = b.readShort();
 			Global.FPS = b.readShort();
 			
+			Global.PerspectiveSkew = b.readFloat();
+			
 			Global.HasCharacter = (forBools & 0x2) == 0x0;
 			Global.HasTiles = (forBools & 0x1) == 0x1;
 			
@@ -48,7 +50,6 @@ package {
 			WorldData.Initialize(loadMapName);
 			
 			if (Global.HasCharacter) {
-				
 				//Need more logic to adding input system?
 				if (Multitouch.supportsTouchEvents && Multitouch.maxTouchPoints > 1) {
 					// touch or gesture?

@@ -11,6 +11,24 @@ namespace ToolCache.Critters {
         Aggressive = 8,         // Actively looks for new targets
         Supportive = 16,        // Chooses ally units as targets rather than enemies
         Territorial = 32,       // Defends their spawn zone and returns to it if they get too far away
-        RunAway = 64           // Runs away on low health
+        RunAway = 64,           // Runs away on low health
+        Untargetable = 128,     // Can you target this unit?
+        TargetLowestHP = 256,   // Targets the unit with the lowest HP
+    }
+
+    public class AITypesHelper {
+        public static Dictionary<string, ushort> StringToValue = new Dictionary<string, ushort>();
+        public static Dictionary<string, ushort> StringLowerToValue = new Dictionary<string, ushort>();
+
+        internal static void Initialize() {
+            StringToValue.Clear();
+            Array x = Enum.GetValues(typeof(AITypes));
+
+            foreach (AITypes ait in x) {
+                string name = Enum.GetName(typeof(AITypes), ait);
+                StringToValue.Add(name, (ushort)ait);
+                StringLowerToValue.Add(name.ToLower(), (ushort)ait);
+            }
+        }
     }
 }

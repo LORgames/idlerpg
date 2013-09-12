@@ -58,6 +58,8 @@ namespace CityTools {
             }
 
             cbValue.DataSource = variables;
+
+            if(cbUIPanels.Items.Count > 0) cbUIPanels.SelectedIndex = 0;
         }
 
         private void btnNewUIElement_Click(object sender, EventArgs e) {
@@ -89,7 +91,7 @@ namespace CityTools {
         private void SwitchPanel() {
             SavePanelIfRequired();
 
-            if (cbUIPanels.SelectedItem != null) {
+            if (cbUIPanels.SelectedItem != null && cbUIPanels.SelectedItem is UIPanel) {
                 CurrentPanel = (UIPanel)cbUIPanels.SelectedItem;
                 pnlUIPanel.Enabled = true;
 
@@ -104,6 +106,8 @@ namespace CityTools {
             } else {
                 pnlUIPanel.Enabled = false;
             }
+
+            pbExample.Invalidate();
         }
 
         private void SwitchElement() {
@@ -198,7 +202,7 @@ namespace CityTools {
         private void SavePanelIfRequired() {
             if (CurrentPanel != null) {
                 if (PanelModified) {
-                    CurrentElement.Name = txtPanelName.Text;
+                    CurrentPanel.Name = txtPanelName.Text;
                 }
             }
         }
@@ -220,9 +224,13 @@ namespace CityTools {
         private void UILayerValueChanged(object sender, EventArgs e) {
             if (cbLayerType.SelectedIndex != -1) {
                 if (cbLayerType.Items[cbLayerType.SelectedIndex].ToString() == "StretchToValueX" ||
+                    cbLayerType.Items[cbLayerType.SelectedIndex].ToString() == "StretchToValueXNeg" ||
                     cbLayerType.Items[cbLayerType.SelectedIndex].ToString() == "StretchToValueY" ||
+                    cbLayerType.Items[cbLayerType.SelectedIndex].ToString() == "StretchToValueYNeg" ||
                     cbLayerType.Items[cbLayerType.SelectedIndex].ToString() == "PanX" ||
-                    cbLayerType.Items[cbLayerType.SelectedIndex].ToString() == "PanY") {
+                    cbLayerType.Items[cbLayerType.SelectedIndex].ToString() == "PanXNeg" ||
+                    cbLayerType.Items[cbLayerType.SelectedIndex].ToString() == "PanY" ||
+                    cbLayerType.Items[cbLayerType.SelectedIndex].ToString() == "PanYNeg") {
                     lblValue.Visible = true;
                     cbValue.Visible = true;
                 } else {
@@ -353,6 +361,15 @@ namespace CityTools {
             UIPanel uip = new UIPanel();
             UIManager.AddPanel(uip);
             cbUIPanels.Items.Add(uip);
+            if (cbUIPanels.Items.Count > 0) cbUIPanels.SelectedIndex = cbUIPanels.Items.Count - 1;
+        }
+
+        private void btnDelPanel_Click(object sender, EventArgs e) {
+            if (cbUIPanels.SelectedItem != null && cbUIPanels.SelectedItem is UIPanel) {
+                UIManager.DeletePanel(cbUIPanels.SelectedItem as UIPanel);
+                cbUIPanels.Items.Remove(cbUIPanels.SelectedItem);
+                if (cbUIPanels.Items.Count > 0) cbUIPanels.SelectedIndex = 0;
+            }
         }
     }
 }

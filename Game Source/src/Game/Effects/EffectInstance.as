@@ -42,21 +42,21 @@ package Game.Effects {
 		
 		private var MyLife:int = 0;
 		
-		public function EffectInstance(info:EffectInfo, x:int, y:int, d:int) {
- 			this.Info = info;
+		public function EffectInstance(_info:EffectInfo, _x:int, _y:int, _d:int) {
+ 			this.Info = _info;
 			
 			CopyRect = new Rectangle();
 			CopyRect.width = Info.FrameWidth;
 			CopyRect.height = Info.FrameHeight;
 			
-			X = x;
-			Y = y;
+			X = _x;
+			Y = _y;
+			Direction = _d;
 			
 			this.bitmapData = new BitmapData(Info.FrameWidth, Info.FrameHeight, true, 0x40FF0000);
 			
-			this.Direction = d;
 			Main.OrderedLayer.addChild(this);
-			MyRect = new Rect(true, this, X-Info.W/2, y-Info.H/2, Info.W, info.H);
+			MyRect = new Rect(true, this, X-Info.W/2, Y-Info.H/2, Info.W, Info.H);
 			Renderman.AnimatedObjectsPush(this);
 			
 			this.PlaybackSpeed = 0.2;
@@ -64,10 +64,12 @@ package Game.Effects {
 			
 			Clock.I.Updatables.push(this);
 			
-			MyScript = new ScriptInstance(info.MyScript, this);
+			MyScript = new ScriptInstance(Info.MyScript, this);
 			WorldData.CurrentMap.Effects.push(this);
 			
 			MyLife = Info.Life;
+			
+			Update(0);
 		}
 		
 		/* INTERFACE Interfaces.IMapObject */
@@ -137,8 +139,12 @@ package Game.Effects {
 				}
 			}
 			
-			this.x = X - Info.FrameWidth * 0.5;
-			this.y = Y - Info.FrameHeight;
+			
+            //DrawPositionX = X - (Info.FrameWidth / 2) - Info.X;
+            //DrawPositionY = Y - (Info.FrameHeight) + (Info.H/2) + Info.Y;
+			
+			this.x = X - Info.FrameWidth*0.5 + Info.X;
+			this.y = Y - Info.FrameHeight + MyRect.H*0.5 + Info.Y;
 			
 			MyRect.X = X - MyRect.W * 0.5;
 			MyRect.Y = Y - MyRect.H * 0.5;

@@ -5,7 +5,7 @@ package EngineTiming {
 	import flash.utils.getTimer;
 	import Game.Map.WorldData;
 	import Game.Scripting.Script;
-	import WindowSystem.FPSCounter;
+	import UI.FPSCounter;
 	/**
 	 * ...
 	 * @author Paul

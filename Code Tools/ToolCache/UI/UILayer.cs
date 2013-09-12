@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using ToolCache.General;
+using ToolCache.Scripting;
 
 namespace ToolCache.UI {
     public enum UILayerType {
@@ -12,8 +13,12 @@ namespace ToolCache.UI {
         Stretch,
         StretchToValueX,
         StretchToValueY,
+        StretchToValueXNeg,
+        StretchToValueYNeg,
         PanX,
         PanY,
+        PanXNeg,
+        PanYNeg,
         Radial
     }
 
@@ -81,9 +86,9 @@ namespace ToolCache.UI {
             if (this.ImageFilename != "") {
                 Rectangle thisArea = new Rectangle(0, 0, SizeX, SizeY);
 
-                if (MyType == UILayerType.StretchToValueX) {
+                if (MyType == UILayerType.StretchToValueX || MyType == UILayerType.StretchToValueXNeg) {
                     thisArea.Width = (int)(displayValue * SizeX);
-                } if (MyType == UILayerType.StretchToValueY) {
+                } if (MyType == UILayerType.StretchToValueY || MyType == UILayerType.StretchToValueYNeg) {
                     thisArea.Height = (int)(displayValue * SizeY);
                 }
 
@@ -124,9 +129,12 @@ namespace ToolCache.UI {
                 thisArea.X += canvasArea.X;
                 thisArea.Y += canvasArea.Y;
 
+                if (MyType == UILayerType.StretchToValueXNeg) thisArea.X += (int)((1 - displayValue) * SizeX);
+                if (MyType == UILayerType.StretchToValueYNeg) thisArea.Y += (int)((1 - displayValue) * SizeY);
+
                 Image im = ImageCache.RequestImage(ImageFilename);
 
-                if (MyType == UILayerType.Stretch || MyType == UILayerType.StretchToValueX || MyType == UILayerType.StretchToValueY) {
+                if (MyType == UILayerType.Stretch || MyType == UILayerType.StretchToValueX || MyType == UILayerType.StretchToValueY || MyType == UILayerType.StretchToValueXNeg || MyType == UILayerType.StretchToValueYNeg) {
                     gfx.DrawImage(im, thisArea);
                 } else if (MyType == UILayerType.Static) {
                     gfx.DrawImageUnscaledAndClipped(im, thisArea);
@@ -155,6 +163,13 @@ namespace ToolCache.UI {
 
                         yPos += im.Height;
                     }
+                } else if (MyType == UILayerType.PanX || MyType == UILayerType.PanY || MyType == UILayerType.PanXNeg || MyType == UILayerType.PanYNeg) {
+                    Rectangle r = new Rectangle(thisArea.X, thisArea.Y, im.Width, im.Height);
+                    if (MyType == UILayerType.PanX) r.X += (int)(SizeX * displayValue);
+                    if (MyType == UILayerType.PanY) r.Y += (int)(SizeY * displayValue);
+                    if (MyType == UILayerType.PanXNeg) r.X += (int)(SizeX * (1 - displayValue));
+                    if (MyType == UILayerType.PanYNeg) r.Y += (int)(SizeY * (1 - displayValue));
+                    gfx.DrawImageUnscaledAndClipped(im, r);
                 }
             }
         }

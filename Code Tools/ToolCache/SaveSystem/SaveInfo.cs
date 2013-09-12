@@ -57,7 +57,6 @@ namespace ToolCache.SaveSystem {
 
         private void LoadASCII() {
             string[] lines = File.ReadAllLines(filename);
-            string set = ""; //TODO: When global variables are in, will need to extend saves
 
             foreach(string line in lines) {
                 string variableName = line.Split('=')[0];

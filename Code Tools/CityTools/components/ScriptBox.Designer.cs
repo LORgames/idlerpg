@@ -43,6 +43,7 @@
             this.effectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.arrowScriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnGlobalVariables = new System.Windows.Forms.ToolStripButton();
+            this.lblLineNumber = new System.Windows.Forms.ToolStripLabel();
             this.scriptContextMenu.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -58,6 +59,7 @@
             this.txtScript.TabIndex = 0;
             this.txtScript.Text = "";
             this.txtScript.WordWrap = false;
+            this.txtScript.SelectionChanged += new System.EventHandler(this.txtScript_SelectionChanged);
             this.txtScript.TextChanged += new System.EventHandler(this.txtScript_TextChanged);
             // 
             // scriptContextMenu
@@ -80,7 +82,8 @@
             this.toolStripLabel1,
             this.btnTSParse,
             this.toolStripDropDownButton1,
-            this.btnGlobalVariables});
+            this.btnGlobalVariables,
+            this.lblLineNumber});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(406, 25);
@@ -122,7 +125,7 @@
             this.weaponsToolStripMenuItem,
             this.bootsToolStripMenuItem});
             this.equipmentToolStripMenuItem.Name = "equipmentToolStripMenuItem";
-            this.equipmentToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.equipmentToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.equipmentToolStripMenuItem.Text = "Equipment";
             // 
             // weaponsToolStripMenuItem
@@ -165,7 +168,7 @@
             this.crittersToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.beastToolStripMenuItem});
             this.crittersToolStripMenuItem.Name = "crittersToolStripMenuItem";
-            this.crittersToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.crittersToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.crittersToolStripMenuItem.Text = "Critters";
             // 
             // beastToolStripMenuItem
@@ -187,7 +190,7 @@
             this.effectsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.arrowScriptToolStripMenuItem});
             this.effectsToolStripMenuItem.Name = "effectsToolStripMenuItem";
-            this.effectsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.effectsToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.effectsToolStripMenuItem.Text = "Effects";
             // 
             // arrowScriptToolStripMenuItem
@@ -205,6 +208,13 @@
             this.btnGlobalVariables.Size = new System.Drawing.Size(23, 22);
             this.btnGlobalVariables.Text = "Global Variables";
             this.btnGlobalVariables.Click += new System.EventHandler(this.btnGlobalVariables_Click);
+            // 
+            // lblLineNumber
+            // 
+            this.lblLineNumber.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.lblLineNumber.Name = "lblLineNumber";
+            this.lblLineNumber.Size = new System.Drawing.Size(13, 22);
+            this.lblLineNumber.Text = "0";
             // 
             // ScriptBox
             // 
@@ -243,5 +253,6 @@
         private System.Windows.Forms.ToolStripMenuItem effectsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem arrowScriptToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton btnGlobalVariables;
+        private System.Windows.Forms.ToolStripLabel lblLineNumber;
     }
 }
