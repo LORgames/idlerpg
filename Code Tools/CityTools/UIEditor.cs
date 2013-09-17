@@ -276,7 +276,13 @@ namespace CityTools {
                     Directory.SetCurrentDirectory(dir);
 
                     CurrentLayer.ImageFilename = ".\\UI\\" + Path.GetFileName(openFileDialog1.FileName);
-                    File.Copy(openFileDialog1.FileName, CurrentLayer.ImageFilename, true);
+                    CurrentLayer.ImageFilename = Path.GetFullPath(CurrentLayer.ImageFilename);
+                    string tFN = Path.GetFullPath(openFileDialog1.FileName);
+
+                    if (tFN != CurrentLayer.ImageFilename) {
+                        File.Copy(tFN, CurrentLayer.ImageFilename, true);
+                    }
+
                     ImageCache.ForceCache(CurrentLayer.ImageFilename);
                     pbLayerImage.Image = ImageCache.RequestImage(CurrentLayer.ImageFilename);
                     LayerModified = true;

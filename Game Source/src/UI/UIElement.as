@@ -1,20 +1,26 @@
 package UI 
 {
+	import Game.Critter.BaseCritter;
+	import CollisionSystem.PointX;
 	import CollisionSystem.Rect;
+	import Debug.Drawer;
 	import flash.display.Sprite;
+	import Game.Scripting.IScriptTarget;
 	import Game.Scripting.Script;
+	import Game.Scripting.ScriptInstance;
 	/**
 	 * ...
 	 * @author Paul
 	 */
-	public class UIElement extends Sprite {
+	public class UIElement extends Sprite implements IScriptTarget {
         public var Layers:Vector.<UILayer>;
         public var OffsetX:int = 0;
         public var OffsetY:int = 0;
         public var AnchorPoint:int = 0;
         public var SizeX:int = 0;
         public var SizeY:int = 0;
-        public var MyScript:Script;
+        public var _script:Script;
+        public var MyScript:ScriptInstance;
 		
 		public function UIElement() {
 			
@@ -34,7 +40,7 @@ package UI
                     this.x = w - SizeX - OffsetX;
                     break;
                 default:
-                    this.x = (w - SizeX) / 2;
+                    this.x = (w - SizeX) / 2 - OffsetX;
                     break;
             }
             
@@ -51,7 +57,7 @@ package UI
                     this.y = OffsetY;
                     break;
                 default:
-                    this.y = (h - SizeY) / 2;
+                    this.y = (h - SizeY) / 2 - OffsetY;
                     break;
             }
 			
@@ -62,7 +68,40 @@ package UI
 			}
         }
 		
+		public function Contains(x:int, y:int):Boolean {
+			if (x < this.x) return false;
+			if (y < this.y) return false;
+			if (x > this.x + SizeX) return false;
+			if (y > this.y + SizeY) return false;
+			
+			return true;
+		}
 		
+		/* INTERFACE Game.Scripting.IScriptTarget */
+		public function UpdatePointX(position:PointX):void {
+			position.X = x;
+			position.Y = y;
+		}
+		
+		public function AlertMinionDeath(baseCritter:BaseCritter):void {
+			//how even?
+		}
+		
+		public function ChangeState(stateID:int, isLooping:Boolean):void {
+			//ok?
+		}
+		
+		public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void {
+			//Cool cool
+		}
+		
+		public function GetCurrentState():int {
+			return 0;
+		}
+		
+		public function GetFaction():int {
+			return 0;
+		}
 	}
 
 }

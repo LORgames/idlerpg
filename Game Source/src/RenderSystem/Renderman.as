@@ -94,7 +94,7 @@ package RenderSystem {
 						while (TrySwap(i++)) { }
 					}
 				} catch (e:Error) {
-					trace("DIRTY Object NULL CAUGHT");
+					trace("DIRTY Object NULL CAUGHT Obj="+obj);
 				}
 			}
 			

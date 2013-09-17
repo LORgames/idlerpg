@@ -28,6 +28,7 @@
             this.btnNewUIElement = new System.Windows.Forms.Button();
             this.btnDeleteSelectedUIElements = new System.Windows.Forms.Button();
             this.pnlUIElement = new System.Windows.Forms.Panel();
+            this.scriptUI = new CityTools.Components.ScriptBox();
             this.btnMoveLayerDown = new System.Windows.Forms.Button();
             this.btnMoveLayerUp = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
@@ -69,7 +70,6 @@
             this.pnlUIPanel = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
             this.btnDelPanel = new System.Windows.Forms.Button();
-            this.scriptUI = new CityTools.Components.ScriptBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbExample)).BeginInit();
             this.pnlUIElement.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUIElementSizeY)).BeginInit();
@@ -149,6 +149,15 @@
             this.pnlUIElement.Name = "pnlUIElement";
             this.pnlUIElement.Size = new System.Drawing.Size(345, 297);
             this.pnlUIElement.TabIndex = 4;
+            // 
+            // scriptUI
+            // 
+            this.scriptUI.Location = new System.Drawing.Point(3, 130);
+            this.scriptUI.Name = "scriptUI";
+            this.scriptUI.Script = "";
+            this.scriptUI.ScriptType = ToolCache.Scripting.Types.ScriptTypes.Unknown;
+            this.scriptUI.Size = new System.Drawing.Size(337, 162);
+            this.scriptUI.TabIndex = 16;
             // 
             // btnMoveLayerDown
             // 
@@ -260,6 +269,11 @@
             0,
             0,
             0});
+            this.numUIElementOffsetY.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
             this.numUIElementOffsetY.Name = "numUIElementOffsetY";
             this.numUIElementOffsetY.Size = new System.Drawing.Size(55, 20);
             this.numUIElementOffsetY.TabIndex = 5;
@@ -273,6 +287,11 @@
             0,
             0,
             0});
+            this.numUIElementOffsetX.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
             this.numUIElementOffsetX.Name = "numUIElementOffsetX";
             this.numUIElementOffsetX.Size = new System.Drawing.Size(55, 20);
             this.numUIElementOffsetX.TabIndex = 4;
@@ -625,15 +644,6 @@
             this.btnDelPanel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnDelPanel.UseVisualStyleBackColor = true;
             this.btnDelPanel.Click += new System.EventHandler(this.btnDelPanel_Click);
-            // 
-            // scriptUI
-            // 
-            this.scriptUI.Location = new System.Drawing.Point(3, 130);
-            this.scriptUI.Name = "scriptUI";
-            this.scriptUI.Script = "";
-            this.scriptUI.ScriptType = ToolCache.Scripting.Types.ScriptTypes.Unknown;
-            this.scriptUI.Size = new System.Drawing.Size(337, 162);
-            this.scriptUI.TabIndex = 16;
             // 
             // UIEditor
             // 

@@ -87,6 +87,12 @@ namespace ToolCache.Scripting.Types {
             All.Add("animationspeed",
                 new ValidCommand(0x6002, new Param[] { Param.Number }));
 
+            // Flow control
+            All.Add("continue",
+                new ValidCommand(0x8004, new Param[] { Param.Void }));
+            All.Add("break",
+                new ValidCommand(0x8005, new Param[] { Param.Void }));
+
             //UI Commands
             All.Add("replacelayerfromdatabase",
                 new ValidCommand(0xC001, new Param[] { Param.UILayer, Param.ImageDatabase }));
@@ -127,6 +133,7 @@ namespace ToolCache.Scripting.Types {
             ScriptTargets.Add("invoker", 0x0);
             ScriptTargets.Add("aitarget", 0x1);
             ScriptTargets.Add("attacker", 0x2);
+            ScriptTargets.Add("owner", 0x3);
         }
     }
 }

@@ -33,6 +33,17 @@ package Debug {
 			GetSprite().graphics.drawEllipse(x-r, y-r*0.85, r*2, r*2*0.85);
 		}
 		
+		public static function AddLine(x1:int, y1:int, x2:int, y2:int, c:int = -1):void {
+			var s:Sprite = GetSprite();
+			
+			if (c != -1) {
+				s.graphics.lineStyle(1, c);
+			}
+			
+			s.graphics.moveTo(x1, y1);
+			s.graphics.lineTo(x2, y2);
+		}
+		
 		public static function GetSprite():Sprite {
 			if (!Global.DebugRender) {
 				Empty.graphics.clear();
@@ -52,17 +63,6 @@ package Debug {
 			DrawingObjects.splice(0, 0, spr);
 			
 			return spr;
-		}
-		
-		public static function AddLine(x1:int, y1:int, x2:int, y2:int, c:int = -1):void {
-			var s:Sprite = GetSprite();
-			
-			if (c != -1) {
-				s.graphics.lineStyle(1, c);
-			}
-			
-			s.graphics.moveTo(x1, y1);
-			s.graphics.lineTo(x2, y2);
 		}
 		
 		/* INTERFACE EngineTiming.IOneSecondUpdate */

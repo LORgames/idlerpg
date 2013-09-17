@@ -58,7 +58,7 @@ package Game.Critter
 				myBitmapData = null;
 			}
 			
-			myBitmapData = new BitmapData(Info.SpriteWidth, Info.SpriteHeight, true, 0x0000FF00);
+			myBitmapData = new BitmapData(Info.SpriteWidth, Info.SpriteHeight, true, Global.DebugRender?0x0000FF00:0xFF000000);
 			this.bitmapData = myBitmapData;
 			
 			CurrentPlaybackSpeed = MyCritter.PlaybackSpeed;
@@ -81,6 +81,8 @@ package Game.Critter
 			StartFrame = Owner.Info.AnimationFrameCounts[currentAnimationID*4+currentDirection]
 			EndFrame = Owner.Info.AnimationFrameCounts[currentAnimationID*4+currentDirection+1];
 			CurrentFrame = StartFrame;
+			
+			FrameDT = CurrentPlaybackSpeed;
 		}
 		
 		public function GetTrueY():int {
@@ -110,6 +112,7 @@ package Game.Critter
 					if(CurrentAnimationLooping) {
 						CurrentFrame = StartFrame;
 					} else {
+						CurrentFrame = EndFrame-1;
 						Owner.MyScript.Run(Script.AnimationEnded);
 					}
 				}

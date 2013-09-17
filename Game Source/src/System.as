@@ -1,5 +1,6 @@
 package {
 	import EngineTiming.Clock;
+	import flash.events.MouseEvent;
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
 	import flash.utils.ByteArray;
@@ -12,6 +13,7 @@ package {
 	import Game.Map.WorldData;
 	import Game.Scripting.GlobalVariables;
 	import InputSystems.KeyboardInput;
+	import InputSystems.MouseInput;
 	import InputSystems.TouchInput;
 	import SoundSystem.EffectsPlayer;
 	/**
@@ -49,14 +51,13 @@ package {
 			//Load up everything else as required
 			WorldData.Initialize(loadMapName);
 			
-			if (Global.HasCharacter) {
-				//Need more logic to adding input system?
-				if (Multitouch.supportsTouchEvents && Multitouch.maxTouchPoints > 1) {
-					// touch or gesture?
-					Main.Input = new TouchInput();//new KeyboardInput();
-				} else {
-					Main.Input = new KeyboardInput();
-				}
+			//Need more logic to adding input system?
+			if (Multitouch.supportsTouchEvents && Multitouch.maxTouchPoints > 1) {
+				// touch or gesture?
+				Main.Input = new TouchInput();
+			} else {
+				Main.Input = new MouseInput();
+				//Main.Input = new KeyboardInput();
 			}
 			
 			new EquipmentManager();

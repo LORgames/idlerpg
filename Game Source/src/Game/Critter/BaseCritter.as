@@ -64,7 +64,9 @@ package Game.Critter {
 		
 		//Critter information
 		public var MyAIType:int;
+		
 		public var CurrentHP:int = 1000;
+		public var MaximumHP:int = 1000;
 		
 		public function BaseCritter() {
 			MyRect = new Rect(false, this, 0, 0, 0, 0);
@@ -267,7 +269,7 @@ package Game.Critter {
 			
 			if (WorldData.ME != this && dt > 0) {
 				//AI AGENTS
-				if ((MyAIType | AITypes.Aggressive) > 0 && (CurrentTarget == null && (MyAIType | AITypes.ClosestTarget) > 0)) {
+				if ((MyAIType | AITypes.Aggressive) > 0 && (CurrentTarget == null && ((MyAIType | AITypes.ClosestTarget) > 0 || (MyAIType | AITypes.TargetLowestHealth) > 0))) {
 					//Scan for a new target
 					var r:Rect = new Rect(false, null, X - AlertRangeSqrt, Y - AlertRangeSqrt * Global.PerspectiveSkew, AlertRangeSqrt * 2, AlertRangeSqrt * 2 * Global.PerspectiveSkew);
 					Drawer.AddDebugRect(r, Factions.GetFactionColour(PrimaryFaction));
@@ -275,12 +277,41 @@ package Game.Critter {
 					var objs:Vector.<IScriptTarget> = new Vector.<IScriptTarget>();
 					CurrentMap.GetObjectsInArea(r, objs, ((MyAIType & AITypes.Supportive) > 0)?ScriptTypes.Ally:ScriptTypes.Enemy, this);
 					
+					var best_target_index:int = 0;
+					var this_target_index:int = 0;
+					
 					var i:int = objs.length;
+					
 					while (--i > -1) {
+						if ((MyAIType & AITypes.Supportive) > 0) {
+							if (objs[i] == this) continue;
+						}
+						
 						if (objs[i] is BaseCritter) {
 							var x:BaseCritter = (objs[i] as BaseCritter);
-							CurrentTarget = x;
-							break;
+							
+							if ((MyAIType | AITypes.ClosestTarget) > 0) {
+								this_target_index = (x.X - X) * (x.X - X) + (x.Y - Y) * (x.Y - Y);
+								
+								if (this_target_index < best_target_index || CurrentTarget == null) {
+									CurrentTarget = x;
+									best_target_index = this_target_index;
+								}
+							} else if ((MyAIType | AITypes.TargetLowestHealth) > 0) {
+								this_target_index = x.CurrentHP - x.MaximumHP;
+								
+								if (this_target_index >= 0) continue;
+								
+								trace(x + " HP=" +x.CurrentHP + "/" + x.MaximumHP + " Missing=" + this_target_index);
+								
+								if (this_target_index < best_target_index || CurrentTarget == null) {
+									CurrentTarget = x;
+									best_target_index = this_target_index;
+								}
+							} else {
+								CurrentTarget = x;
+								break;
+							}
 						}
 					}
 				}
@@ -324,16 +355,6 @@ package Game.Critter {
 					} else if (dx * dx + dy * dy > AlertRange*1.25) {
 						procTarget = false;
 						CurrentTarget = null;
-					}
-				}
-				
-				if (!procTarget) {
-					if ((MyAIType & AITypes.Wonder) > 0) {
-						//This should call an AI event probably :)
-					} else {
-						if (moveSpeedX != 0 || moveSpeedY != 0) {
-							RequestMove(0, 0);
-						}
 					}
 				}
 			}
@@ -459,6 +480,8 @@ package Game.Critter {
 			
 			if (CurrentHP < 1) {
 				Died();
+			} else if (CurrentHP > MaximumHP) {
+				CurrentHP = MaximumHP;
 			}
 		}
 		

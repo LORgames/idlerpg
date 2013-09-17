@@ -1,13 +1,15 @@
 package UI {
-	import adobe.utils.CustomActions;
-	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;
 	import Game.General.BinaryLoader;
 	import Game.General.ImageLoader;
+	import Game.Map.ScriptRegion;
+	import Game.Map.WorldData;
 	import Game.Scripting.Script;
+	import Game.Scripting.ScriptInstance;
+	import RenderSystem.Camera;
 	/**
 	 * ...
 	 * @author Paul
@@ -50,7 +52,8 @@ package UI {
 					Panels[i].Elements[j].OffsetY = b.readShort();
 					Panels[i].Elements[j].SizeX = b.readShort();
 					Panels[i].Elements[j].SizeY = b.readShort();
-					Panels[i].Elements[j].MyScript = Script.ReadScript(b);
+					Panels[i].Elements[j]._script = Script.ReadScript(b);
+					Panels[i].Elements[j].MyScript = new ScriptInstance(Panels[i].Elements[j]._script, Panels[i].Elements[j], true);
 					
 					var totalLayers:int = b.readByte();
 					Panels[i].Elements[j].Layers = new Vector.<UILayer>(totalLayers, true);
@@ -102,6 +105,44 @@ package UI {
 		}
 		
 		public function AlertPress(x:int, y:int):void {
+			trace("Looking for touch! X=" + x + " Y=" + y);
+			
+			var i:int = Panels.length;
+			var j:int;
+			
+			//Trying UI first
+			while (--i > -1) {
+				if (!Panels[i].visible) {
+					continue;
+				}
+				
+				j = Panels[i].Elements.length;
+				
+				while (--j > -1) {
+					if (Panels[i].Elements[j].Contains(x, y)) {
+						Panels[i].Elements[j].MyScript.Run(Script.Pressed);
+						return;
+					}
+				}
+			}
+			
+			//Try script regions as well, much more complicated though.
+			i = WorldData.CurrentMap.ScriptRegions.length;
+			var wx:int = x - Camera.X;
+			var wy:int = y - Camera.Y;
+			
+			while (--i > -1) {
+				var s:ScriptRegion = WorldData.CurrentMap.ScriptRegions[i];
+				j = s.Area.length;
+				
+				if (s.Area[j].ContainsPoint(wx, wy)) {
+					s.MyScript.Run(Script.Attack, null, [wx, wy]);
+					return;
+				}
+			}
+		}
+		
+		public function AlertUnpress(x:int, y:int):void {
 			
 		}
 		

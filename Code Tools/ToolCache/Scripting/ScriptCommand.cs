@@ -32,8 +32,9 @@ namespace ToolCache.Scripting {
         private bool FurtherParsing = false;
 
         public ScriptCommand(ushort[] bytecode, byte indent, int lineNumber = -1) {
-            this.LineNumber = lineNumber;
+            this.LineNumber = -lineNumber;
             this.Indent = indent;
+            this.ExpectedIndent = indent; //TODO: Make sure this can't ever be wrong?
 
             this.CommandID = bytecode[0];
 
@@ -104,7 +105,7 @@ namespace ToolCache.Scripting {
             string[] paramBits;
             float fparam;
 
-            string validRegex = "([A-Za-z]+)\\(([A-Z,a-z0-9_\\.\\(\\)\\s>]*)\\)";
+            string validRegex = "([A-Za-z]+)\\(([A-Z,a-z0-9_\\-\\.\\(\\)\\s>]*)\\)";
             Match match = Regex.Match(Trimmed, validRegex);
 
             if (match.Success && match.Index == 0) {
@@ -142,10 +143,10 @@ namespace ToolCache.Scripting {
                                         }
                                     } break;
                                 case Param.Integer:
-                                    if (!ushort.TryParse(paramBits[i], out param0)) {
+                                    if (!short.TryParse(paramBits[i], out sparam)) {
                                         info.Errors.Add("Cannot convert '" + paramBits[i] + "' into an integer!"+ ErrorEnding());
                                     } else {
-                                        this.AdditionalBytecode.Add(param0);
+                                        this.AdditionalBytecode.Add((ushort)sparam);
                                     } break;
                                 case Param.Angle:
                                     if (!short.TryParse(paramBits[i], out sparam)) {
@@ -455,7 +456,7 @@ namespace ToolCache.Scripting {
             int i2 = 0;
 
             if (Indent != ExpectedIndent) {
-                Info.Errors.Add("Unexpected Indent! " + Trimmed + ErrorEnding());
+                Info.Errors.Add("Unexpected Indent! " + Trimmed + " Expected=" + ExpectedIndent + " IndentActual=" + Indent + ErrorEnding());
             }
 
             if (Action != "") {
@@ -479,7 +480,7 @@ namespace ToolCache.Scripting {
                         IndentBelow(Info, index);
                         break;
                     case "witheach":
-                        if (Parameters == "") Info.Errors.Add("Empty witheach"+ ErrorEnding());
+                        if (Parameters == "") Info.Errors.Add("Empty witheach " + ErrorEnding());
 
                         string[] bits = Regex.Split(Parameters, " in ");
 
@@ -745,7 +746,7 @@ namespace ToolCache.Scripting {
         private int IndentBelow(ScriptInfo Info, int index) {
             int i2 = index + 1;
             while (Info.Commands.Count > i2 && Info.Commands[i2].Indent > Indent) {
-                Info.Commands[i2].ExpectedIndent = (byte)(Indent + 1);
+                Info.Commands[i2].ExpectedIndent++;
                 i2++;
             }
 

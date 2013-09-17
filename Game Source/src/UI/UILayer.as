@@ -56,7 +56,7 @@ package UI {
 				case UIAnchorPoint.BottomRight: case UIAnchorPoint.MiddleRight: case UIAnchorPoint.TopRight: //Right
 					this.x = w - SizeX - OffsetX; break;
 				default:
-					this.x = (w - SizeX)/2; break;
+					this.x = (w - SizeX)/2 - OffsetX; break;
 			}
 			
 			//Calculate Y
@@ -66,7 +66,7 @@ package UI {
 				case UIAnchorPoint.TopLeft: case UIAnchorPoint.TopCenter: case UIAnchorPoint.TopRight: //Top
 					this.y = OffsetY; break;
 				default:
-					this.y = (h-SizeY)/2; break;
+					this.y = (h-SizeY)/2 - OffsetY; break;
 			}
 			
 			//Special Layer Types

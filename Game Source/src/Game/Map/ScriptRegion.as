@@ -68,5 +68,4 @@ package Game.Map
 			return 0;
 		}
 	}
-
 }

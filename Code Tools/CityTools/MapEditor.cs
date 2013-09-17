@@ -119,6 +119,21 @@ namespace CityTools {
 
             RedrawTerrain();
 
+
+            if (!GlobalSettings.enableTiles) {
+                int LeftEdge = (int)(Camera.Offset.X / TileTemplate.PIXELS);
+                int TopEdge = (int)(Camera.Offset.Y / TileTemplate.PIXELS);
+
+                int RightEdge = (int)Math.Ceiling(Camera.ViewArea.Right / TileTemplate.PIXELS);
+                int BottomEdge = (int)Math.Ceiling(Camera.ViewArea.Bottom / TileTemplate.PIXELS) + 1;
+
+                if (LeftEdge < 0) LeftEdge = 0;
+                if (TopEdge < 0) TopEdge = 0;
+                if (RightEdge >= MapPieceCache.CurrentPiece.Tiles.numTilesX) RightEdge = MapPieceCache.CurrentPiece.Tiles.numTilesX;
+                if (BottomEdge >= MapPieceCache.CurrentPiece.Tiles.numTilesY) BottomEdge = MapPieceCache.CurrentPiece.Tiles.numTilesY;
+                MapPieceCache.CurrentPiece.Background.Draw(e.Graphics, new Rectangle((int)Math.Floor((LeftEdge * TileTemplate.PIXELS - Camera.Offset.X) * Camera.ZoomLevel), (int)Math.Floor((TopEdge * TileTemplate.PIXELS - Camera.Offset.Y) * Camera.ZoomLevel), (int)Math.Ceiling(TileTemplate.PIXELS * Camera.ZoomLevel * (RightEdge - LeftEdge)), (int)Math.Ceiling(TileTemplate.PIXELS * Camera.ZoomLevel * (BottomEdge - TopEdge))));
+            }
+
             e.Graphics.DrawImage(terrain_buffer.bmp, Point.Empty);
             e.Graphics.DrawImage(objects_buffer.bmp, Point.Empty);
 

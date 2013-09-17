@@ -59,6 +59,7 @@ package Game.Scripting {
 		public function Run(event:uint, target:IScriptTarget = null, param:Object = null):void {
 			//TODO: Set up variables here
 			
+			//TODO: Should make invoker the current target if the current target is not invoker.
 			if (target != null) {
 				AttachTarget(target);
 			}

@@ -32,6 +32,7 @@ package Game.Critter {
 			MyRect.H = MyInfo.CollisionHeight;
 			
 			CurrentHP = MyInfo.Health;
+			MaximumHP = MyInfo.Health;
 			
 			MovementSpeed = MyInfo.MovementSpeed;
 			SetAlertRangeSqrd(MyInfo.AlertRange * MyInfo.AlertRange);

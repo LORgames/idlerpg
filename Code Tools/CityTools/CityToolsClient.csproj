@@ -34,7 +34,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\Pusher\Tools\</OutputPath>
+    <OutputPath>..\..\Tools\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -190,9 +190,6 @@
     <Compile Include="ItemEditor.Designer.cs">
       <DependentUpon>ItemEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="MiscHelpers\GIFEncoding\GIFEncoder.cs" />
-    <Compile Include="MiscHelpers\GIFEncoding\NeuQuant.cs" />
-    <Compile Include="MiscHelpers\GIFEncoding\LZWEncoder.cs" />
     <Compile Include="MiscHelpers\PortalHelper.cs" />
     <Compile Include="MiscHelpers\RegionHelper.cs" />
     <Compile Include="ObjectSystem\ScenicPlacementHelper.cs" />

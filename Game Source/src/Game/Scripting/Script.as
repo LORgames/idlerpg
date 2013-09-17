@@ -26,6 +26,7 @@ package Game.Scripting {
 	public class Script {
 		//EVENT TYPES
 		public static const Attack:uint = 0;
+		public static const Pressed:uint = 0;
 		public static const Initialize:uint = 1;
 		public static const Attacked:uint = 2;
 		public static const Use:uint = 3;
@@ -330,10 +331,15 @@ package Game.Scripting {
 				var target:IScriptTarget = Objects[obji];
 				info.AttachTarget(target);
 				
-				ProcessBlock(eventScript, info, eventID, param);
+				var _continue:Boolean = (ProcessBlock(eventScript, info, eventID, param) == 0);
 				
 				info.PopTarget();
-				eventScript.position = startIndex;
+				
+				if(_continue) {
+					eventScript.position = startIndex;
+				} else {
+					break;
+				}
 			}
 			
 			ReadUntilBalancedClose(eventScript);
@@ -453,7 +459,7 @@ package Game.Scripting {
 			}
 		}
 		
-		private function ProcessBlock(EventScript:ByteArray, info:ScriptInstance, eventID:int, param:Object):void {
+		private function ProcessBlock(EventScript:ByteArray, info:ScriptInstance, eventID:int, param:Object):int {
 			var effectInfo:EffectInfo;
 			
 			//Some required variables
@@ -495,7 +501,7 @@ package Game.Scripting {
 					case 0x1006: //Flat DOT
 					case 0x100C: //% DOT
 						if(info.CurrentTarget is IMapObject) {
-							(info.CurrentTarget as IMapObject).ScriptAttack((command==0x1005||command==0x100C), (command==0x1006||command==0x100C), EventScript.readUnsignedShort(), info.Invoker); break;
+							(info.CurrentTarget as IMapObject).ScriptAttack((command==0x1005||command==0x100C), (command==0x1006||command==0x100C), EventScript.readShort(), info.Invoker); break;
 						} break;
 					case 0x1007: //Destroy
 						if (info.CurrentTarget is ICleanUp) { Clock.CleanUpList.push(info.CurrentTarget); } break;
@@ -677,9 +683,14 @@ package Game.Scripting {
 							if (eventID == Script.Attacked && param != null && param is IScriptTarget) {
 								info.AttachTarget(param as IScriptTarget);
 							}
-						} break;
+						} else if (x == 0x3) { //Owner
+							if (info.CurrentTarget is BaseCritter && (info.CurrentTarget as BaseCritter).Owner != null) {
+								trace("ScriptUP: " + info.CurrentTarget + " to " + (info.CurrentTarget as BaseCritter).Owner);
+								info.AttachTarget((info.CurrentTarget as BaseCritter).Owner);
+							}
+						} info.CurrentTarget.UpdatePointX(Position); break;
 					case 0x5009: //PopTarget()
-						info.PopTarget(); break;
+						info.PopTarget(); info.CurrentTarget.UpdatePointX(Position); break;
 					case 0x6000: //Play Animation
 						info.Invoker.ChangeState(EventScript.readShort(), false); break;
 					case 0x6001: //Loop Animation
@@ -715,6 +726,12 @@ package Game.Scripting {
 						} else {
 							ProcessBlock(EventScript, info, eventID, param);
 						} break;
+					case 0x8004: //Continue
+						ReadUntilBalancedClose(EventScript);
+						return 0;
+					case 0x8005: //Break
+						ReadUntilBalancedClose(EventScript);
+						return 2;
 					case 0xC002:
 						(Main.I.hud.Panels[EventScript.readShort()] as UIPanel).visible = (EventScript.readShort()==1); break;
 					case 0xC003:
@@ -724,16 +741,18 @@ package Game.Scripting {
 							deep++;
 						} else if (command == 0xF0FE) {
 							if (deep <= 1) {
-								return;
+								return 0;
 							}
 							deep--;
 						} else {
-							trace("Unknown Command: 0x" + command.toString(16) + " Event="+eventID + " Position="+EventScript.position+" Length="+EventScript.length+" Invoker="+info.Invoker);
+							trace("Unknown Command: 0x" + MathsEx.ZeroPad(command, 4, 16) + " ("+command.toString()+") Event="+eventID + " Position="+EventScript.position+" Length="+EventScript.length+" Invoker="+info.Invoker + " CurrentTarget="+info.CurrentTarget);
 						}
 						
 						break;
 				}
 			}
+			
+			return 1;
 		}
 		
 		//This updates the scripts if they have Update OR Clock methods

@@ -17,7 +17,7 @@ package InputSystems {
 		
 		public function TouchInput() {
 			Main.I.stage.addEventListener(TouchEvent.TOUCH_BEGIN, TouchDown);
-			//Main.I.stage.addEventListener(TouchEvent.TOUCH_END, TouchUp);
+			Main.I.stage.addEventListener(TouchEvent.TOUCH_END, TouchUp);
 			Main.I.stage.addEventListener(TouchEvent.TOUCH_MOVE, TouchMove);
 		}
 		
@@ -26,7 +26,7 @@ package InputSystems {
 		}
 		
 		private function TouchUp(te:TouchEvent):void {
-			
+			Main.I.hud.AlertUnpress(te.stageX, te.stageY);
 		}
 		
 		private function TouchMove(te:TouchEvent):void {

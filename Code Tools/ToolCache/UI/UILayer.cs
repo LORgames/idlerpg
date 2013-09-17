@@ -105,7 +105,7 @@ namespace ToolCache.UI {
                         thisArea.X = canvasArea.Width - SizeX - OffsetX;
                         break;
                     default:
-                        thisArea.X = (canvasArea.Width - SizeX) / 2;
+                        thisArea.X = (canvasArea.Width - SizeX) / 2 + OffsetX;
                         break;
                 }
 
@@ -122,7 +122,7 @@ namespace ToolCache.UI {
                         thisArea.Y = OffsetY;
                         break;
                     default:
-                        thisArea.Y = (canvasArea.Height - SizeY) / 2;
+                        thisArea.Y = (canvasArea.Height - SizeY) / 2 + OffsetY;
                         break;
                 }
 

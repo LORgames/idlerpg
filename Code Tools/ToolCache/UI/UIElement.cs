@@ -84,7 +84,7 @@ namespace ToolCache.UI {
                     thisArea.X = canvasArea.Width - SizeX - OffsetX;
                     break;
                 default:
-                    thisArea.X = (canvasArea.Width - SizeX) / 2;
+                    thisArea.X = (canvasArea.Width - SizeX) / 2 + OffsetX;
                     break;
             }
             
@@ -101,13 +101,15 @@ namespace ToolCache.UI {
                     thisArea.Y = OffsetY;
                     break;
                 default:
-                    thisArea.Y = (canvasArea.Height - SizeY) / 2;
+                    thisArea.Y = (canvasArea.Height - SizeY) / 2 + OffsetY;
                     break;
             }
 
             foreach (UILayer layer in Layers) {
                 layer.Draw(gfx, thisArea, this, displayValue);
             }
+
+            gfx.DrawRectangle(Pens.Blue, thisArea);
         }
 
         public override string ToString() {
