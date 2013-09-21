@@ -31,6 +31,11 @@ package {
 		public static var HasCharacter:Boolean = false;
 		public static var PerspectiveSkew:Number = 0.85;
 		
+		public static var GV_WX:int = 0;
+		public static var GV_WY:int = 0;
+		public static var GV_LX:int = 0;
+		public static var GV_LY:int = 0;
+		
 		public static var HasLeftRight:Boolean = true;
 		public static var HasUpDown:Boolean = false;
 	}

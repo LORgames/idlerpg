@@ -413,8 +413,8 @@ namespace CityTools {
                     cbHumanoidWeapon.SelectedItem as EquipmentItem,
                     false);
 
-                    e.Graphics.DrawRectangle(Pens.Blue, e.ClipRectangle.Width / 2 - (int)numAttackRange.Value, e.ClipRectangle.Height - 20 - (int)((float)numAttackRange.Value * GlobalSettings.perspectiveSkew) - (int)numBeastOffsetY.Value, (int)numAttackRange.Value * 2, (int)((float)numAttackRange.Value * 2 * GlobalSettings.perspectiveSkew));
-                    e.Graphics.DrawRectangle(Pens.Green, e.ClipRectangle.Width / 2 - (int)numRange.Value, e.ClipRectangle.Height - 20 - (int)((float)numRange.Value * GlobalSettings.perspectiveSkew) - (int)numBeastOffsetY.Value, (int)numRange.Value * 2, (int)((float)numRange.Value * 2 * GlobalSettings.perspectiveSkew));
+                    e.Graphics.DrawRectangle(Pens.Blue, e.ClipRectangle.Width / 2 - (int)numAttackRange.Value, e.ClipRectangle.Height - 20 - (int)((float)numAttackRange.Value * GlobalSettings.PerspectiveSkew) - (int)numBeastOffsetY.Value, (int)numAttackRange.Value * 2, (int)((float)numAttackRange.Value * 2 * GlobalSettings.PerspectiveSkew));
+                    e.Graphics.DrawRectangle(Pens.Green, e.ClipRectangle.Width / 2 - (int)numRange.Value, e.ClipRectangle.Height - 20 - (int)((float)numRange.Value * GlobalSettings.PerspectiveSkew) - (int)numBeastOffsetY.Value, (int)numRange.Value * 2, (int)((float)numRange.Value * 2 * GlobalSettings.PerspectiveSkew));
             } else if (critter is CritterBeast) {
                 CritterBeast cb = (critter as CritterBeast);
 
@@ -429,8 +429,8 @@ namespace CityTools {
 
                         e.Graphics.DrawRectangle(Pens.Red, (e.ClipRectangle.Width - (int)numBeastRectWidth.Value) / 2, e.ClipRectangle.Height - 20 - ((int)numBeastRectHeight.Value) - (int)numBeastOffsetY.Value, (int)numBeastRectWidth.Value, (int)numBeastRectHeight.Value);
 
-                        e.Graphics.DrawRectangle(Pens.Blue, e.ClipRectangle.Width / 2 - (int)numAttackRange.Value, e.ClipRectangle.Height - 20 - ((int)numBeastRectHeight.Value/2) - (int)((float)numAttackRange.Value * GlobalSettings.perspectiveSkew) - (int)numBeastOffsetY.Value, (int)numAttackRange.Value * 2, (int)((float)numAttackRange.Value * 2 * GlobalSettings.perspectiveSkew));
-                        e.Graphics.DrawRectangle(Pens.Green, e.ClipRectangle.Width / 2 - (int)numRange.Value, e.ClipRectangle.Height - 20 - ((int)numBeastRectHeight.Value/2) - (int)((float)numRange.Value * GlobalSettings.perspectiveSkew) - (int)numBeastOffsetY.Value, (int)numRange.Value * 2, (int)((float)numRange.Value * 2 * GlobalSettings.perspectiveSkew));
+                        e.Graphics.DrawRectangle(Pens.Blue, e.ClipRectangle.Width / 2 - (int)numAttackRange.Value, e.ClipRectangle.Height - 20 - ((int)numBeastRectHeight.Value/2) - (int)((float)numAttackRange.Value * GlobalSettings.PerspectiveSkew) - (int)numBeastOffsetY.Value, (int)numAttackRange.Value * 2, (int)((float)numAttackRange.Value * 2 * GlobalSettings.PerspectiveSkew));
+                        e.Graphics.DrawRectangle(Pens.Green, e.ClipRectangle.Width / 2 - (int)numRange.Value, e.ClipRectangle.Height - 20 - ((int)numBeastRectHeight.Value/2) - (int)((float)numRange.Value * GlobalSettings.PerspectiveSkew) - (int)numBeastOffsetY.Value, (int)numRange.Value * 2, (int)((float)numRange.Value * 2 * GlobalSettings.PerspectiveSkew));
                     }
                 }
             }

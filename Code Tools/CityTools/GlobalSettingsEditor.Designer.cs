@@ -44,6 +44,14 @@
             this.numTargetFPS = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
             this.numPerspectiveSkew = new System.Windows.Forms.NumericUpDown();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.cbVariableWX = new System.Windows.Forms.ComboBox();
+            this.cbVariableWY = new System.Windows.Forms.ComboBox();
+            this.cbVariableLX = new System.Windows.Forms.ComboBox();
+            this.cbVariableLY = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudTileSize)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -56,7 +64,7 @@
             this.txtGameName.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.txtGameName.Location = new System.Drawing.Point(126, 3);
             this.txtGameName.Name = "txtGameName";
-            this.txtGameName.Size = new System.Drawing.Size(334, 20);
+            this.txtGameName.Size = new System.Drawing.Size(176, 20);
             this.txtGameName.TabIndex = 0;
             this.txtGameName.TextChanged += new System.EventHandler(this.Edited);
             // 
@@ -147,6 +155,9 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.Controls.Add(this.cbVariableLY, 1, 9);
+            this.tableLayoutPanel1.Controls.Add(this.cbVariableLX, 1, 8);
+            this.tableLayoutPanel1.Controls.Add(this.cbVariableWY, 1, 7);
             this.tableLayoutPanel1.Controls.Add(this.chkDisableCharacter, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.txtGameName, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.label4, 0, 3);
@@ -155,22 +166,31 @@
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.chkEnableTiles, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 6);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 10);
             this.tableLayoutPanel1.Controls.Add(this.label5, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.numTargetFPS, 1, 5);
             this.tableLayoutPanel1.Controls.Add(this.label6, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.numPerspectiveSkew, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.label7, 0, 6);
+            this.tableLayoutPanel1.Controls.Add(this.label8, 0, 7);
+            this.tableLayoutPanel1.Controls.Add(this.label9, 0, 8);
+            this.tableLayoutPanel1.Controls.Add(this.label10, 0, 9);
+            this.tableLayoutPanel1.Controls.Add(this.cbVariableWX, 1, 6);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 7;
+            this.tableLayoutPanel1.RowCount = 11;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(463, 173);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(305, 287);
             this.tableLayoutPanel1.TabIndex = 8;
             // 
             // tableLayoutPanel2
@@ -183,7 +203,7 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel2.Controls.Add(this.btnSave, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnCancel, 1, 0);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(298, 141);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(140, 255);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -214,7 +234,7 @@
             // 
             this.label5.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 118);
+            this.label5.Location = new System.Drawing.Point(3, 124);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(61, 13);
             this.label5.TabIndex = 9;
@@ -222,16 +242,17 @@
             // 
             // numTargetFPS
             // 
-            this.numTargetFPS.Location = new System.Drawing.Point(126, 115);
+            this.numTargetFPS.Location = new System.Drawing.Point(126, 121);
             this.numTargetFPS.Name = "numTargetFPS";
             this.numTargetFPS.Size = new System.Drawing.Size(83, 20);
             this.numTargetFPS.TabIndex = 10;
+            this.numTargetFPS.ValueChanged += new System.EventHandler(this.Edited);
             // 
             // label6
             // 
             this.label6.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 95);
+            this.label6.Location = new System.Drawing.Point(3, 98);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(93, 13);
             this.label6.TabIndex = 11;
@@ -254,6 +275,91 @@
             0,
             0,
             131072});
+            this.numPerspectiveSkew.ValueChanged += new System.EventHandler(this.Edited);
+            // 
+            // label7
+            // 
+            this.label7.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(3, 151);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(105, 13);
+            this.label7.TabIndex = 13;
+            this.label7.Text = "Pressed World X Var";
+            // 
+            // label8
+            // 
+            this.label8.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(3, 178);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(105, 13);
+            this.label8.TabIndex = 14;
+            this.label8.Text = "Pressed World Y Var";
+            // 
+            // label9
+            // 
+            this.label9.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(3, 205);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(103, 13);
+            this.label9.TabIndex = 15;
+            this.label9.Text = "Pressed Local X Var";
+            // 
+            // label10
+            // 
+            this.label10.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(3, 232);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(103, 13);
+            this.label10.TabIndex = 16;
+            this.label10.Text = "Pressed Local Y Var";
+            // 
+            // cbVariableWX
+            // 
+            this.cbVariableWX.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbVariableWX.FormattingEnabled = true;
+            this.cbVariableWX.Location = new System.Drawing.Point(126, 147);
+            this.cbVariableWX.Name = "cbVariableWX";
+            this.cbVariableWX.Size = new System.Drawing.Size(176, 21);
+            this.cbVariableWX.Sorted = true;
+            this.cbVariableWX.TabIndex = 17;
+            this.cbVariableWX.SelectedIndexChanged += new System.EventHandler(this.Edited);
+            // 
+            // cbVariableWY
+            // 
+            this.cbVariableWY.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbVariableWY.FormattingEnabled = true;
+            this.cbVariableWY.Location = new System.Drawing.Point(126, 174);
+            this.cbVariableWY.Name = "cbVariableWY";
+            this.cbVariableWY.Size = new System.Drawing.Size(176, 21);
+            this.cbVariableWY.Sorted = true;
+            this.cbVariableWY.TabIndex = 18;
+            this.cbVariableWY.SelectedIndexChanged += new System.EventHandler(this.Edited);
+            // 
+            // cbVariableLX
+            // 
+            this.cbVariableLX.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbVariableLX.FormattingEnabled = true;
+            this.cbVariableLX.Location = new System.Drawing.Point(126, 201);
+            this.cbVariableLX.Name = "cbVariableLX";
+            this.cbVariableLX.Size = new System.Drawing.Size(176, 21);
+            this.cbVariableLX.Sorted = true;
+            this.cbVariableLX.TabIndex = 19;
+            this.cbVariableLX.SelectedIndexChanged += new System.EventHandler(this.Edited);
+            // 
+            // cbVariableLY
+            // 
+            this.cbVariableLY.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbVariableLY.FormattingEnabled = true;
+            this.cbVariableLY.Location = new System.Drawing.Point(126, 228);
+            this.cbVariableLY.Name = "cbVariableLY";
+            this.cbVariableLY.Size = new System.Drawing.Size(176, 21);
+            this.cbVariableLY.Sorted = true;
+            this.cbVariableLY.TabIndex = 20;
+            this.cbVariableLY.SelectedIndexChanged += new System.EventHandler(this.Edited);
             // 
             // GlobalSettingsEditor
             // 
@@ -263,10 +369,11 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(534, 248);
+            this.ClientSize = new System.Drawing.Size(326, 312);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "GlobalSettingsEditor";
             this.Text = "Global Settings";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GlobalSettingsEditor_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.nudTileSize)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
@@ -296,5 +403,13 @@
         private System.Windows.Forms.NumericUpDown numTargetFPS;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.NumericUpDown numPerspectiveSkew;
+        private System.Windows.Forms.ComboBox cbVariableLY;
+        private System.Windows.Forms.ComboBox cbVariableLX;
+        private System.Windows.Forms.ComboBox cbVariableWY;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ComboBox cbVariableWX;
     }
 }

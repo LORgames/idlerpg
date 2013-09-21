@@ -187,7 +187,7 @@ package Game.Scripting {
 					case 0x7001: currentOperation = 1; break; //OR
 					case 0x7002: isNOTblock = true; break; //NOT
 					case 0x7003: //Random chance
-						param0 = eventScript.readUnsignedShort();
+						param0 = GetNumberFromVariable(eventScript, info);
 						currentUnprocessedValue = Math.random() * 100 < param0;
 						break;
 					case 0x7004: //Is the script owner alive
@@ -488,12 +488,15 @@ package Game.Scripting {
 					case 0x1001: //Play sound effect
 						EffectsPlayer.Play(EventScript.readShort()); break;
 					case 0x1002: //Spawn Critter
-						p0.D = EventScript.readShort(); p0.X = EventScript.readShort(); p0.Y = EventScript.readShort();
+						p0.D = EventScript.readShort(); p0.X = GetNumberFromVariable(EventScript, info); p0.Y = GetNumberFromVariable(EventScript, info);
 						CalculateOffset(Position, p0, p1);
 						
 						var critter:BaseCritter = CritterManager.I.CritterInfo[p0.D].CreateCritter(WorldData.CurrentMap, p1.X, p1.Y);
 						
-						critter.SetFaction(info.CurrentTarget.GetFaction());
+						if(EventScript.readShort()==0) { // Get owner faction?
+							critter.SetFaction(info.CurrentTarget.GetFaction());
+						}
+						
 						critter.SetOwner(info.CurrentTarget);
 						break;
 					case 0x1003: //Flat Damage
@@ -501,13 +504,13 @@ package Game.Scripting {
 					case 0x1006: //Flat DOT
 					case 0x100C: //% DOT
 						if(info.CurrentTarget is IMapObject) {
-							(info.CurrentTarget as IMapObject).ScriptAttack((command==0x1005||command==0x100C), (command==0x1006||command==0x100C), EventScript.readShort(), info.Invoker); break;
+							(info.CurrentTarget as IMapObject).ScriptAttack((command==0x1005||command==0x100C), (command==0x1006||command==0x100C), GetNumberFromVariable(EventScript, info), info.Invoker); break;
 						} break;
 					case 0x1007: //Destroy
 						if (info.CurrentTarget is ICleanUp) { Clock.CleanUpList.push(info.CurrentTarget); } break;
 					case 0x1008: //EffectSpawn
 						effectInfo = EffectManager.I.Effects[EventScript.readShort()];
-						p0.X = EventScript.readShort(); p0.Y = EventScript.readShort();
+						p0.X = GetNumberFromVariable(EventScript, info); p0.Y = GetNumberFromVariable(EventScript, info);
 						CalculateOffset(Position, p0, p1);
 						
 						new EffectInstance(effectInfo, p1.X, p1.Y, Position.D);
@@ -515,12 +518,12 @@ package Game.Scripting {
 						break;
 					case 0x1009: //EffectSpawnDirectional
 						effectInfo = EffectManager.I.Effects[EventScript.readShort()];
-						p0.X = Position.X + EventScript.readShort(); p0.Y = Position.Y + EventScript.readShort();
+						p0.X = Position.X + GetNumberFromVariable(EventScript, info); p0.Y = Position.Y + GetNumberFromVariable(EventScript, info);
 						new EffectInstance(effectInfo, p0.X, p0.Y, EventScript.readShort()); break;
 					case 0x100A: //EffectSpawnDirectionalRelative
 						effectInfo = EffectManager.I.Effects[EventScript.readShort()];
 						
-						p0.X = Position.X + EventScript.readShort(); p0.X = Position.Y + EventScript.readShort();
+						p0.X = Position.X + GetNumberFromVariable(EventScript, info); p0.X = Position.Y + GetNumberFromVariable(EventScript, info);
 						var direction:int = EventScript.readShort(); var tD:int = 0;
 						
 						switch (Position.D) {
@@ -596,7 +599,7 @@ package Game.Scripting {
 					case 0x100B: //SpawnObject
 						var id:int = EventScript.readShort();
 						
-						p0.X = EventScript.readShort(); p0.Y = EventScript.readShort();
+						p0.X = GetNumberFromVariable(EventScript, info); p0.Y = GetNumberFromVariable(EventScript, info);
 						CalculateOffset(Position, p0, p1);
 						
 						var o:ObjectInstance;
@@ -612,7 +615,7 @@ package Game.Scripting {
 						
 						break;
 					case 0x100D: //Fire a trigger
-						Script.FireTrigger(EventScript.readShort()); break;
+						Script.FireTrigger(GetNumberFromVariable(EventScript, info)); break;
 					case 0x100E: //Play a sound from an effect group
 						EffectsPlayer.PlayFromGroup(EventScript.readShort()); break;
 					case 0x4001: //Equip item on the target
@@ -625,12 +628,12 @@ package Game.Scripting {
 						} break;
 					case 0x5001: //Movement speed
 						if (info.CurrentTarget is BaseCritter) { 
-							(info.CurrentTarget as BaseCritter).MovementSpeed = EventScript.readShort();
+							(info.CurrentTarget as BaseCritter).MovementSpeed = GetNumberFromVariable(EventScript, info);
 						} break;
 					case 0x5002: //Movement direction absolute
 					case 0x5003: //Movement direction relative
 						if (info.CurrentTarget is BaseCritter) {
-							var angle:Number = Math.PI * (EventScript.readShort() / 180.0);
+							var angle:Number = Math.PI * (GetNumberFromVariable(EventScript, info) / 180.0);
 							var move:Boolean = (EventScript.readShort() == 1);
 							if (command == 0x5002) {
 								(info.CurrentTarget as BaseCritter).RequestMove(Math.cos(angle), Math.sin(angle), move);
@@ -641,7 +644,7 @@ package Game.Scripting {
 							}
 						} else {
 							trace("0x5003 WRONG TARGET! " + info.CurrentTarget + " @" + eventID);
-							EventScript.readShort(); EventScript.readShort(); //Remove the two shorts
+							GetNumberFromVariable(EventScript, info); EventScript.readShort(); //Remove the two shorts
 						} break;
 					case 0x5004: //Set Faction
 						if (info.CurrentTarget is BaseCritter) { 
@@ -696,7 +699,7 @@ package Game.Scripting {
 					case 0x6001: //Loop Animation
 						info.Invoker.ChangeState(EventScript.readShort(), true); break;
 					case 0x6002: //Animation Speed
-						info.Invoker.UpdatePlaybackSpeed((EventScript.readUnsignedShort() * 0.01)); break;
+						info.Invoker.UpdatePlaybackSpeed((GetNumberFromVariable(EventScript, info) * 0.01)); break;
 					case 0x8000: //IF without ELSE
 						bParam = CanIf(EventScript, info, Position, param);
 						if (!bParam) {
@@ -772,6 +775,10 @@ package Game.Scripting {
 			for (var i:int = 0; i < UpdateScripts.length; i++) {
 				TriggerListeners[i].Run(Script.OnTrigger);
 			}
+		}
+		
+		public function HasEvent(eventID:uint):Boolean {
+			return (EventScripts[eventID] != null);
 		}
 	}
 

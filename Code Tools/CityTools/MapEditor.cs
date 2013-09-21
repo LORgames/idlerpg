@@ -120,7 +120,7 @@ namespace CityTools {
             RedrawTerrain();
 
 
-            if (!GlobalSettings.enableTiles) {
+            if (!GlobalSettings.TilesEnabled) {
                 int LeftEdge = (int)(Camera.Offset.X / TileTemplate.PIXELS);
                 int TopEdge = (int)(Camera.Offset.Y / TileTemplate.PIXELS);
 
@@ -263,14 +263,14 @@ namespace CityTools {
 
             TerrainHelper.DrawTerrain(terrain_buffer);
 
-            if (GlobalSettings.enableTiles) {
+            if (GlobalSettings.TilesEnabled) {
                 PortalHelper.Draw(terrain_buffer);
                 RegionHelper.Draw(terrain_buffer);
             }
 
             ScenicHelper.DrawObjects(objects_buffer);
 
-            if (!GlobalSettings.enableTiles) {
+            if (!GlobalSettings.TilesEnabled) {
                 PortalHelper.Draw(objects_buffer);
                 RegionHelper.Draw(objects_buffer);
             }

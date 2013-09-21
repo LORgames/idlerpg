@@ -22,6 +22,8 @@ package UI
         public var _script:Script;
         public var MyScript:ScriptInstance;
 		
+		public var SupportsTouch:Boolean = false;
+		
 		public function UIElement() {
 			
 		}
@@ -40,7 +42,7 @@ package UI
                     this.x = w - SizeX - OffsetX;
                     break;
                 default:
-                    this.x = (w - SizeX) / 2 - OffsetX;
+                    this.x = (w - SizeX) / 2 + OffsetX;
                     break;
             }
             
@@ -57,7 +59,7 @@ package UI
                     this.y = OffsetY;
                     break;
                 default:
-                    this.y = (h - SizeY) / 2 - OffsetY;
+                    this.y = (h - SizeY) / 2 + OffsetY;
                     break;
             }
 			

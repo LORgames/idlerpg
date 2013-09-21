@@ -20,7 +20,7 @@ package InputSystems {
 			Main.I.stage.addEventListener(MouseEvent.MOUSE_DOWN, TouchDown);
 			Main.I.stage.addEventListener(MouseEvent.MOUSE_UP, TouchUp);
 			Main.I.stage.addEventListener(MouseEvent.MOUSE_MOVE, TouchMove);
-			Main.I.stage.addEventListener(MouseEvent.MOUSE_OUT, MouseLeft);
+			Main.I.stage.addEventListener(MouseEvent.ROLL_OUT, MouseLeft);
 		}
 		
 		private function TouchDown(te:MouseEvent):void {
@@ -38,7 +38,7 @@ package InputSystems {
 		}
 		
 		private function TouchMove(te:MouseEvent):void {
-			if(isMouseDown) Main.I.hud.AlertPress(te.stageX, te.stageY);
+			if(isMouseDown) Main.I.hud.AlertPress(te.stageX, te.stageY, true);
 		}
 	}
 }

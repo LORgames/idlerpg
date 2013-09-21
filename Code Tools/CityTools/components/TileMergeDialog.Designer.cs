@@ -98,7 +98,7 @@ namespace CityTools.Components {
             // 
             this.pbDisplay.Location = new System.Drawing.Point(12, 12);
             this.pbDisplay.Name = "pbDisplay";
-            this.pbDisplay.Size = new System.Drawing.Size(GlobalSettings.tileSize, GlobalSettings.tileSize);
+            this.pbDisplay.Size = new System.Drawing.Size(GlobalSettings.TileSize, GlobalSettings.TileSize);
             this.pbDisplay.TabIndex = 0;
             this.pbDisplay.TabStop = false;
             this.pbDisplay.Paint += new System.Windows.Forms.PaintEventHandler(this.pbDisplay_Paint);

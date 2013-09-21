@@ -184,7 +184,7 @@ namespace CityTools {
             if (ccAnimation.GetAnimation().Frames.Count > 0) {
                 ccAnimation.GetAnimation().Draw(e.Graphics, 26, 26, 1);
             } else {
-                e.Graphics.FillRectangle(Brushes.Beige, 26, 26, GlobalSettings.tileSize, GlobalSettings.tileSize);
+                e.Graphics.FillRectangle(Brushes.Beige, 26, 26, GlobalSettings.TileSize, GlobalSettings.TileSize);
             }
 
             if (ckbShowCollisions.Checked) {
@@ -238,8 +238,8 @@ namespace CityTools {
         }
 
         private void TileEditor_Load(object sender, EventArgs e) {
-            pbDisplay.Width = GlobalSettings.tileSize + 50;
-            pbDisplay.Height = GlobalSettings.tileSize + 50;
+            pbDisplay.Width = GlobalSettings.TileSize + 50;
+            pbDisplay.Height = GlobalSettings.TileSize + 50;
         }
     }
 }

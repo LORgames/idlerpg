@@ -7,6 +7,7 @@ package UI {
 	import Game.General.ImageLoader;
 	import Game.Map.ScriptRegion;
 	import Game.Map.WorldData;
+	import Game.Scripting.GlobalVariables;
 	import Game.Scripting.Script;
 	import Game.Scripting.ScriptInstance;
 	import RenderSystem.Camera;
@@ -54,6 +55,12 @@ package UI {
 					Panels[i].Elements[j].SizeY = b.readShort();
 					Panels[i].Elements[j]._script = Script.ReadScript(b);
 					Panels[i].Elements[j].MyScript = new ScriptInstance(Panels[i].Elements[j]._script, Panels[i].Elements[j], true);
+					
+					//Does the element have Press or PressAndDrag support.
+					if (Panels[i].Elements[j]._script.HasEvent(Script.Attack) || Panels[i].Elements[j]._script.HasEvent(Script.Use)) {
+						Panels[i].Elements[j].SupportsTouch = true;
+						Panels[i].HasTouchElements = true;
+					}
 					
 					var totalLayers:int = b.readByte();
 					Panels[i].Elements[j].Layers = new Vector.<UILayer>(totalLayers, true);
@@ -104,40 +111,57 @@ package UI {
 			}
 		}
 		
-		public function AlertPress(x:int, y:int):void {
-			trace("Looking for touch! X=" + x + " Y=" + y);
+		public function AlertPress(x:int, y:int, dragged:Boolean = false):void {
+			var wx:int = x - Camera.X;
+			var wy:int = y - Camera.Y;
+			GlobalVariables.Variables[Global.GV_WX] = wx;
+			GlobalVariables.Variables[Global.GV_WY] = wy;
 			
 			var i:int = Panels.length;
 			var j:int;
 			
 			//Trying UI first
 			while (--i > -1) {
-				if (!Panels[i].visible) {
+				if (!Panels[i].visible || !Panels[i].HasTouchElements) {
 					continue;
 				}
 				
 				j = Panels[i].Elements.length;
 				
 				while (--j > -1) {
+					if (!Panels[i].Elements[j].SupportsTouch) {
+						continue;
+					}
+					
 					if (Panels[i].Elements[j].Contains(x, y)) {
-						Panels[i].Elements[j].MyScript.Run(Script.Pressed);
-						return;
+						if(!dragged) {
+							Panels[i].Elements[j].MyScript.Run(Script.Pressed);
+						} else {
+							Panels[i].Elements[j].MyScript.Run(Script.Use);
+						} return;
 					}
 				}
 			}
 			
 			//Try script regions as well, much more complicated though.
 			i = WorldData.CurrentMap.ScriptRegions.length;
-			var wx:int = x - Camera.X;
-			var wy:int = y - Camera.Y;
 			
 			while (--i > -1) {
 				var s:ScriptRegion = WorldData.CurrentMap.ScriptRegions[i];
+				if ((dragged && !s.SupportsDrag) || (!dragged && !s.SupportsPress)) {
+					continue;
+				}
+				
 				j = s.Area.length;
 				
-				if (s.Area[j].ContainsPoint(wx, wy)) {
-					s.MyScript.Run(Script.Attack, null, [wx, wy]);
-					return;
+				while(--j > -1) {
+					if (s.Area[j].ContainsPoint(wx, wy)) {
+						if(!dragged) {
+							s.MyScript.Run(Script.Pressed); //Press
+						} else {
+							s.MyScript.Run(Script.Use); //PressAndDrag
+						} return;
+					}
 				}
 			}
 		}

@@ -143,7 +143,7 @@ package Game.Effects {
             //DrawPositionX = X - (Info.FrameWidth / 2) - Info.X;
             //DrawPositionY = Y - (Info.FrameHeight) + (Info.H/2) + Info.Y;
 			
-			this.x = X - Info.FrameWidth*0.5 + Info.X;
+			this.x = X - Info.FrameWidth * 0.5 - Info.X;
 			this.y = Y - Info.FrameHeight + MyRect.H*0.5 + Info.Y;
 			
 			MyRect.X = X - MyRect.W * 0.5;
@@ -170,6 +170,7 @@ package Game.Effects {
 				if (MyLife > 0) {
 					MyLife -= dt;
 					if (MyLife <= 0) {
+						MyScript.Run(Script.Died);
 						Clock.CleanUpList.push(this);
 					}
 				}
@@ -202,7 +203,7 @@ package Game.Effects {
 		
 		/* INTERFACE Game.Scripting.IScriptTarget */
 		
-		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IScriptTarget):void { MyScript.Run(Script.Attacked); }
+		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IScriptTarget):void { if (MyScript == null) return; MyScript.Run(Script.Attacked); }
 		public function AlertMinionDeath(baseCritter:BaseCritter):void { MyScript.Run(Script.MinionDied); }
 		
 		public function UpdatePointX(position:PointX):void {

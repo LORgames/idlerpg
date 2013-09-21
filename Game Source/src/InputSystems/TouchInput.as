@@ -30,7 +30,7 @@ package InputSystems {
 		}
 		
 		private function TouchMove(te:TouchEvent):void {
-			Main.I.hud.AlertPress(te.stageX, te.stageY);
+			Main.I.hud.AlertPress(te.stageX, te.stageY, true);
 		}
 	}
 

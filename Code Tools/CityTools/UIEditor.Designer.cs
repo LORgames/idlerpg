@@ -28,6 +28,7 @@
             this.btnNewUIElement = new System.Windows.Forms.Button();
             this.btnDeleteSelectedUIElements = new System.Windows.Forms.Button();
             this.pnlUIElement = new System.Windows.Forms.Panel();
+            this.btnUILayerAddText = new System.Windows.Forms.Button();
             this.scriptUI = new CityTools.Components.ScriptBox();
             this.btnMoveLayerDown = new System.Windows.Forms.Button();
             this.btnMoveLayerUp = new System.Windows.Forms.Button();
@@ -46,14 +47,18 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtUIName = new System.Windows.Forms.TextBox();
             this.pnlUILayer = new System.Windows.Forms.Panel();
+            this.pnlTextStuff = new System.Windows.Forms.Panel();
+            this.txtTextMessage = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.pnlImageStuff = new System.Windows.Forms.Panel();
             this.cbValue = new System.Windows.Forms.ComboBox();
             this.lblValue = new System.Windows.Forms.Label();
+            this.btnLayerChangeImage = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.txtLayerName = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.cbLayerType = new System.Windows.Forms.ComboBox();
             this.pbLayerImage = new System.Windows.Forms.PictureBox();
-            this.btnLayerChangeImage = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.numLayerOffsetY = new System.Windows.Forms.NumericUpDown();
@@ -77,6 +82,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numUIElementOffsetY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUIElementOffsetX)).BeginInit();
             this.pnlUILayer.SuspendLayout();
+            this.pnlTextStuff.SuspendLayout();
+            this.pnlImageStuff.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLayerImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLayerOffsetY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLayerOffsetX)).BeginInit();
@@ -127,6 +134,7 @@
             // pnlUIElement
             // 
             this.pnlUIElement.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlUIElement.Controls.Add(this.btnUILayerAddText);
             this.pnlUIElement.Controls.Add(this.scriptUI);
             this.pnlUIElement.Controls.Add(this.btnMoveLayerDown);
             this.pnlUIElement.Controls.Add(this.btnMoveLayerUp);
@@ -150,20 +158,33 @@
             this.pnlUIElement.Size = new System.Drawing.Size(345, 297);
             this.pnlUIElement.TabIndex = 4;
             // 
+            // btnUILayerAddText
+            // 
+            this.btnUILayerAddText.Image = global::CityTools.Properties.Resources.add;
+            this.btnUILayerAddText.Location = new System.Drawing.Point(3, 53);
+            this.btnUILayerAddText.Name = "btnUILayerAddText";
+            this.btnUILayerAddText.Size = new System.Drawing.Size(65, 23);
+            this.btnUILayerAddText.TabIndex = 17;
+            this.btnUILayerAddText.Text = "Text";
+            this.btnUILayerAddText.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnUILayerAddText.UseVisualStyleBackColor = true;
+            this.btnUILayerAddText.Click += new System.EventHandler(this.btnUILayerAddText_Click);
+            // 
             // scriptUI
             // 
             this.scriptUI.Location = new System.Drawing.Point(3, 130);
             this.scriptUI.Name = "scriptUI";
             this.scriptUI.Script = "";
-            this.scriptUI.ScriptType = ToolCache.Scripting.Types.ScriptTypes.Unknown;
+            this.scriptUI.ScriptType = ToolCache.Scripting.Types.ScriptTypes.UIElement;
             this.scriptUI.Size = new System.Drawing.Size(337, 162);
             this.scriptUI.TabIndex = 16;
+            this.scriptUI.ScriptUpdated += new System.EventHandler<System.EventArgs>(this.UIElementValueChanged);
             // 
             // btnMoveLayerDown
             // 
-            this.btnMoveLayerDown.Location = new System.Drawing.Point(49, 80);
+            this.btnMoveLayerDown.Location = new System.Drawing.Point(74, 78);
             this.btnMoveLayerDown.Name = "btnMoveLayerDown";
-            this.btnMoveLayerDown.Size = new System.Drawing.Size(40, 23);
+            this.btnMoveLayerDown.Size = new System.Drawing.Size(21, 23);
             this.btnMoveLayerDown.TabIndex = 15;
             this.btnMoveLayerDown.Text = "v";
             this.btnMoveLayerDown.UseVisualStyleBackColor = true;
@@ -171,9 +192,9 @@
             // 
             // btnMoveLayerUp
             // 
-            this.btnMoveLayerUp.Location = new System.Drawing.Point(49, 51);
+            this.btnMoveLayerUp.Location = new System.Drawing.Point(74, 54);
             this.btnMoveLayerUp.Name = "btnMoveLayerUp";
-            this.btnMoveLayerUp.Size = new System.Drawing.Size(40, 23);
+            this.btnMoveLayerUp.Size = new System.Drawing.Size(21, 23);
             this.btnMoveLayerUp.TabIndex = 14;
             this.btnMoveLayerUp.Text = "ʌ";
             this.btnMoveLayerUp.UseVisualStyleBackColor = true;
@@ -216,21 +237,25 @@
             // 
             // btnUILayerDelete
             // 
-            this.btnUILayerDelete.Location = new System.Drawing.Point(3, 80);
+            this.btnUILayerDelete.Image = global::CityTools.Properties.Resources.delete;
+            this.btnUILayerDelete.Location = new System.Drawing.Point(3, 104);
             this.btnUILayerDelete.Name = "btnUILayerDelete";
-            this.btnUILayerDelete.Size = new System.Drawing.Size(40, 23);
+            this.btnUILayerDelete.Size = new System.Drawing.Size(65, 23);
             this.btnUILayerDelete.TabIndex = 10;
-            this.btnUILayerDelete.Text = "Del";
+            this.btnUILayerDelete.Text = "Slcted";
+            this.btnUILayerDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnUILayerDelete.UseVisualStyleBackColor = true;
             this.btnUILayerDelete.Click += new System.EventHandler(this.btnUILayerDelete_Click);
             // 
             // btnUILayerAdd
             // 
-            this.btnUILayerAdd.Location = new System.Drawing.Point(3, 51);
+            this.btnUILayerAdd.Image = global::CityTools.Properties.Resources.add;
+            this.btnUILayerAdd.Location = new System.Drawing.Point(3, 78);
             this.btnUILayerAdd.Name = "btnUILayerAdd";
-            this.btnUILayerAdd.Size = new System.Drawing.Size(40, 23);
+            this.btnUILayerAdd.Size = new System.Drawing.Size(65, 23);
             this.btnUILayerAdd.TabIndex = 9;
-            this.btnUILayerAdd.Text = "Add";
+            this.btnUILayerAdd.Text = "Image";
+            this.btnUILayerAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnUILayerAdd.UseVisualStyleBackColor = true;
             this.btnUILayerAdd.Click += new System.EventHandler(this.btnUILayerAdd_Click);
             // 
@@ -346,14 +371,13 @@
             // pnlUILayer
             // 
             this.pnlUILayer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlUILayer.Controls.Add(this.cbValue);
-            this.pnlUILayer.Controls.Add(this.lblValue);
+            this.pnlUILayer.Controls.Add(this.pnlTextStuff);
+            this.pnlUILayer.Controls.Add(this.pnlImageStuff);
             this.pnlUILayer.Controls.Add(this.label10);
             this.pnlUILayer.Controls.Add(this.txtLayerName);
             this.pnlUILayer.Controls.Add(this.label8);
             this.pnlUILayer.Controls.Add(this.cbLayerType);
             this.pnlUILayer.Controls.Add(this.pbLayerImage);
-            this.pnlUILayer.Controls.Add(this.btnLayerChangeImage);
             this.pnlUILayer.Controls.Add(this.label7);
             this.pnlUILayer.Controls.Add(this.label6);
             this.pnlUILayer.Controls.Add(this.numLayerOffsetY);
@@ -368,11 +392,49 @@
             this.pnlUILayer.Size = new System.Drawing.Size(349, 200);
             this.pnlUILayer.TabIndex = 5;
             // 
+            // pnlTextStuff
+            // 
+            this.pnlTextStuff.Controls.Add(this.txtTextMessage);
+            this.pnlTextStuff.Controls.Add(this.label12);
+            this.pnlTextStuff.Location = new System.Drawing.Point(3, 143);
+            this.pnlTextStuff.Name = "pnlTextStuff";
+            this.pnlTextStuff.Size = new System.Drawing.Size(174, 61);
+            this.pnlTextStuff.TabIndex = 21;
+            this.pnlTextStuff.Visible = false;
+            // 
+            // txtTextMessage
+            // 
+            this.txtTextMessage.Location = new System.Drawing.Point(51, 3);
+            this.txtTextMessage.Name = "txtTextMessage";
+            this.txtTextMessage.Size = new System.Drawing.Size(119, 20);
+            this.txtTextMessage.TabIndex = 20;
+            this.txtTextMessage.TextChanged += new System.EventHandler(this.UILayerValueChanged);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(7, 5);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(34, 13);
+            this.label12.TabIndex = 19;
+            this.label12.Text = "Value";
+            // 
+            // pnlImageStuff
+            // 
+            this.pnlImageStuff.Controls.Add(this.cbValue);
+            this.pnlImageStuff.Controls.Add(this.lblValue);
+            this.pnlImageStuff.Controls.Add(this.btnLayerChangeImage);
+            this.pnlImageStuff.Location = new System.Drawing.Point(6, 138);
+            this.pnlImageStuff.Name = "pnlImageStuff";
+            this.pnlImageStuff.Size = new System.Drawing.Size(174, 61);
+            this.pnlImageStuff.TabIndex = 19;
+            this.pnlImageStuff.Visible = false;
+            // 
             // cbValue
             // 
             this.cbValue.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbValue.FormattingEnabled = true;
-            this.cbValue.Location = new System.Drawing.Point(53, 138);
+            this.cbValue.Location = new System.Drawing.Point(47, 2);
             this.cbValue.Name = "cbValue";
             this.cbValue.Size = new System.Drawing.Size(120, 21);
             this.cbValue.TabIndex = 20;
@@ -381,11 +443,21 @@
             // lblValue
             // 
             this.lblValue.AutoSize = true;
-            this.lblValue.Location = new System.Drawing.Point(13, 141);
+            this.lblValue.Location = new System.Drawing.Point(7, 5);
             this.lblValue.Name = "lblValue";
             this.lblValue.Size = new System.Drawing.Size(34, 13);
             this.lblValue.TabIndex = 19;
             this.lblValue.Text = "Value";
+            // 
+            // btnLayerChangeImage
+            // 
+            this.btnLayerChangeImage.Location = new System.Drawing.Point(46, 34);
+            this.btnLayerChangeImage.Name = "btnLayerChangeImage";
+            this.btnLayerChangeImage.Size = new System.Drawing.Size(121, 23);
+            this.btnLayerChangeImage.TabIndex = 14;
+            this.btnLayerChangeImage.Text = "Change/Assign Image";
+            this.btnLayerChangeImage.UseVisualStyleBackColor = true;
+            this.btnLayerChangeImage.Click += new System.EventHandler(this.btnLayerChangeImage_Click);
             // 
             // label10
             // 
@@ -443,16 +515,6 @@
             this.pbLayerImage.Size = new System.Drawing.Size(165, 187);
             this.pbLayerImage.TabIndex = 15;
             this.pbLayerImage.TabStop = false;
-            // 
-            // btnLayerChangeImage
-            // 
-            this.btnLayerChangeImage.Location = new System.Drawing.Point(52, 170);
-            this.btnLayerChangeImage.Name = "btnLayerChangeImage";
-            this.btnLayerChangeImage.Size = new System.Drawing.Size(121, 23);
-            this.btnLayerChangeImage.TabIndex = 14;
-            this.btnLayerChangeImage.Text = "Change/Assign Image";
-            this.btnLayerChangeImage.UseVisualStyleBackColor = true;
-            this.btnLayerChangeImage.Click += new System.EventHandler(this.btnLayerChangeImage_Click);
             // 
             // label7
             // 
@@ -672,6 +734,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.numUIElementOffsetX)).EndInit();
             this.pnlUILayer.ResumeLayout(false);
             this.pnlUILayer.PerformLayout();
+            this.pnlTextStuff.ResumeLayout(false);
+            this.pnlTextStuff.PerformLayout();
+            this.pnlImageStuff.ResumeLayout(false);
+            this.pnlImageStuff.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLayerImage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLayerOffsetY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLayerOffsetX)).EndInit();
@@ -734,5 +800,10 @@
         private System.Windows.Forms.Panel pnlUIPanel;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button btnDelPanel;
+        private System.Windows.Forms.Button btnUILayerAddText;
+        private System.Windows.Forms.Panel pnlImageStuff;
+        private System.Windows.Forms.Panel pnlTextStuff;
+        private System.Windows.Forms.TextBox txtTextMessage;
+        private System.Windows.Forms.Label label12;
     }
 }

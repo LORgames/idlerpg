@@ -13,6 +13,7 @@ namespace ToolCache.Scripting.Types {
         Spawn = 0x01,
         Attacked = 0x02,
         Use = 0x03,
+        PressAndDrag = 0x03,
         Equip = 0x04,
         OnEnter = 0x04,
         MinionDied = 0x05,

@@ -123,6 +123,8 @@ namespace CityTools {
             // 
             // panel1
             // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.animationList);
             this.panel1.Controls.Add(this.cbAnimations);
@@ -173,6 +175,9 @@ namespace CityTools {
             // 
             // pictureBox1
             // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.Location = new System.Drawing.Point(6, 113);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(310, 180);
@@ -259,6 +264,7 @@ namespace CityTools {
             // 
             // ckbDrawDebug
             // 
+            this.ckbDrawDebug.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ckbDrawDebug.AutoSize = true;
             this.ckbDrawDebug.Location = new System.Drawing.Point(227, 276);
             this.ckbDrawDebug.Name = "ckbDrawDebug";
@@ -413,7 +419,7 @@ namespace CityTools {
             this.tabScripts.Location = new System.Drawing.Point(4, 22);
             this.tabScripts.Name = "tabScripts";
             this.tabScripts.Padding = new System.Windows.Forms.Padding(3);
-            this.tabScripts.Size = new System.Drawing.Size(327, 449);
+            this.tabScripts.Size = new System.Drawing.Size(328, 449);
             this.tabScripts.TabIndex = 1;
             this.tabScripts.Text = "Scripts";
             this.tabScripts.UseVisualStyleBackColor = true;
@@ -425,7 +431,7 @@ namespace CityTools {
             this.scriptEffect.Name = "scriptEffect";
             this.scriptEffect.Script = "";
             this.scriptEffect.ScriptType = ToolCache.Scripting.Types.ScriptTypes.Effect;
-            this.scriptEffect.Size = new System.Drawing.Size(320, 443);
+            this.scriptEffect.Size = new System.Drawing.Size(322, 443);
             this.scriptEffect.TabIndex = 5;
             this.scriptEffect.BeforeParse += new System.EventHandler<CityTools.Components.ScriptInfoArgs>(this.scriptEffect_BeforeParse);
             this.scriptEffect.ScriptUpdated += new System.EventHandler<System.EventArgs>(this.ValueChanged);

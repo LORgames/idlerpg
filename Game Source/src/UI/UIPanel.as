@@ -9,6 +9,8 @@ package UI {
 		public var Elements:Vector.<UIElement>;
 		public var Active:Boolean = false;
 		
+		public var HasTouchElements:Boolean = false;
+		
 		public function UIPanel():void {
 			
 		}

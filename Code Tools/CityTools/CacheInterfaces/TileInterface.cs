@@ -16,7 +16,7 @@ namespace CityTools.CacheInterfaces {
 
             if (MainWindow.instance.listTiles.LargeImageList == null) {
                 MainWindow.instance.listTiles.LargeImageList = new ImageList();
-                MainWindow.instance.listTiles.LargeImageList.ImageSize = new System.Drawing.Size(GlobalSettings.tileSize, GlobalSettings.tileSize);
+                MainWindow.instance.listTiles.LargeImageList.ImageSize = new System.Drawing.Size(GlobalSettings.TileSize, GlobalSettings.TileSize);
                 MainWindow.instance.listTiles.LargeImageList.ColorDepth = ColorDepth.Depth32Bit;
             }
 

@@ -19,6 +19,9 @@ package Game.Map
 		public var _S:Script;
 		public var MyScript:ScriptInstance;
 		
+		public var SupportsPress:Boolean = false;
+		public var SupportsDrag:Boolean = false;
+		
 		public function ScriptRegion() {
 			
 		}
@@ -38,6 +41,14 @@ package Game.Map
 			s._S = Script.ReadScript(b);
 			s.MyScript = new ScriptInstance(s._S, s, true);
 			
+			if (s._S.HasEvent(Script.Attack)) {
+				s.SupportsPress = true;
+			}
+			
+			if (s._S.HasEvent(Script.Use)) {
+				s.SupportsDrag = true;
+			}
+			
 			return s;
 		}
 		
@@ -45,7 +56,7 @@ package Game.Map
 		public function UpdatePointX(position:PointX):void {
 			position.X = 0;
 			position.Y = 0;
-			position.D = 0;
+			position.D = 1;
 		}
 		
 		public function AlertMinionDeath(baseCritter:BaseCritter):void {

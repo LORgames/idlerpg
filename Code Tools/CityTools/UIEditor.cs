@@ -124,6 +124,7 @@ namespace CityTools {
                 numUIElementOffsetY.Value = (decimal)CurrentElement.OffsetY;
                 numUIElementSizeX.Value = (decimal)CurrentElement.SizeX; 
                 numUIElementSizeY.Value = (decimal)CurrentElement.SizeY;
+                scriptUI.Script = CurrentElement.Script;
 
                 listUILayers.Items.Clear();
                 foreach (UILayer layer in CurrentElement.Layers) {
@@ -152,20 +153,32 @@ namespace CityTools {
                 numLayerOffsetY.Value = (decimal)CurrentLayer.OffsetY;
                 cbLayerAnchorPosition.SelectedIndex = (int)CurrentLayer.AnchorPoint;
                 cbLayerType.SelectedIndex = (int)CurrentLayer.MyType;
-
-                for (int i = 0; i < cbValue.Items.Count; i++) {
-                    if (((ScriptVariable)cbValue.Items[i]).Index == CurrentLayer.GlobalVariable) {
-                        cbValue.SelectedIndex = i;
-                        break;
-                    }
-                }
-
                 txtLayerName.Text = CurrentLayer.Name;
 
-                if (CurrentLayer.ImageFilename != "") {
-                    pbLayerImage.Load(CurrentLayer.ImageFilename);
+                if (CurrentLayer is UIImageLayer) {
+                    UIImageLayer CurrentLayerIM = (UIImageLayer)CurrentLayer;
+
+                    for (int i = 0; i < cbValue.Items.Count; i++) {
+                        if (((ScriptVariable)cbValue.Items[i]).Index == CurrentLayerIM.GlobalVariable) {
+                            cbValue.SelectedIndex = i;
+                            break;
+                        }
+                    }
+
+                    pnlImageStuff.Visible = true;
+                    pnlTextStuff.Visible = false;
+
+                    if (CurrentLayerIM.ImageFilename != "") {
+                        pbLayerImage.Load(CurrentLayerIM.ImageFilename);
+                    } else {
+                        pbLayerImage.Image = null;
+                    }
                 } else {
-                    pbLayerImage.Image = null;
+                    UITextLayer CurrentLayerTX = (UITextLayer)CurrentLayer;
+                    txtTextMessage.Text = CurrentLayerTX.Message;
+
+                    pnlImageStuff.Visible = false;
+                    pnlTextStuff.Visible = true;
                 }
                 LayerSwitching = false;
             }
@@ -180,8 +193,13 @@ namespace CityTools {
                     CurrentLayer.OffsetY = (short)numLayerOffsetY.Value;
                     CurrentLayer.AnchorPoint = (UIAnchorPoint)cbLayerAnchorPosition.SelectedIndex;
                     CurrentLayer.MyType = (UILayerType)cbLayerType.SelectedIndex;
-                    CurrentLayer.GlobalVariable = ((ScriptVariable)cbValue.SelectedItem).Index;
                     CurrentLayer.Name = txtLayerName.Text;
+
+                    if (CurrentLayer is UIImageLayer) {
+                        (CurrentLayer as UIImageLayer).GlobalVariable = ((ScriptVariable)cbValue.SelectedItem).Index;
+                    } else if (CurrentLayer is UITextLayer) {
+                        (CurrentLayer as UITextLayer).Message = txtTextMessage.Text;
+                    }
                 }
             }
         }
@@ -190,6 +208,7 @@ namespace CityTools {
             if (CurrentElement != null) {
                 if (ElementModified) {
                     CurrentElement.Name = txtUIName.Text;
+                    CurrentElement.Script = scriptUI.Script;
                     CurrentElement.AnchorPoint = (UIAnchorPoint)cbUIElementAnchor.SelectedIndex;
                     CurrentElement.OffsetX = (short)numUIElementOffsetX.Value;
                     CurrentElement.OffsetY = (short)numUIElementOffsetY.Value;
@@ -214,8 +233,8 @@ namespace CityTools {
 
         private void UIElementValueChanged(object sender, EventArgs e) {
             if (ElementSwitching) return;
-            ElementModified = true;
 
+            ElementModified = true;
             SaveElementIfRequired();
 
             pbExample.Invalidate();
@@ -249,7 +268,17 @@ namespace CityTools {
 
         private void btnUILayerAdd_Click(object sender, EventArgs e) {
             if (CurrentElement != null) {
-                UILayer newLayer = new UILayer();
+                UIImageLayer newLayer = new UIImageLayer();
+                CurrentElement.Layers.Add(newLayer);
+                listUILayers.Items.Add(newLayer);
+                ElementModified = true;
+            }
+        }
+
+
+        private void btnUILayerAddText_Click(object sender, EventArgs e) {
+            if (CurrentElement != null) {
+                UITextLayer newLayer = new UITextLayer();
                 CurrentElement.Layers.Add(newLayer);
                 listUILayers.Items.Add(newLayer);
                 ElementModified = true;
@@ -269,22 +298,23 @@ namespace CityTools {
         }
 
         private void btnLayerChangeImage_Click(object sender, EventArgs e) {
+            if (!(CurrentLayer is UIImageLayer)) return;
             string dir = Directory.GetCurrentDirectory();
 
             if(CurrentLayer != null) {
                 if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
                     Directory.SetCurrentDirectory(dir);
 
-                    CurrentLayer.ImageFilename = ".\\UI\\" + Path.GetFileName(openFileDialog1.FileName);
-                    CurrentLayer.ImageFilename = Path.GetFullPath(CurrentLayer.ImageFilename);
+                    (CurrentLayer as UIImageLayer).ImageFilename = ".\\UI\\" + Path.GetFileName(openFileDialog1.FileName);
+                    (CurrentLayer as UIImageLayer).ImageFilename = Path.GetFullPath((CurrentLayer as UIImageLayer).ImageFilename);
                     string tFN = Path.GetFullPath(openFileDialog1.FileName);
 
-                    if (tFN != CurrentLayer.ImageFilename) {
-                        File.Copy(tFN, CurrentLayer.ImageFilename, true);
+                    if (tFN != (CurrentLayer as UIImageLayer).ImageFilename) {
+                        File.Copy(tFN, (CurrentLayer as UIImageLayer).ImageFilename, true);
                     }
 
-                    ImageCache.ForceCache(CurrentLayer.ImageFilename);
-                    pbLayerImage.Image = ImageCache.RequestImage(CurrentLayer.ImageFilename);
+                    ImageCache.ForceCache((CurrentLayer as UIImageLayer).ImageFilename);
+                    pbLayerImage.Image = ImageCache.RequestImage((CurrentLayer as UIImageLayer).ImageFilename);
                     LayerModified = true;
                 } else {
                     Directory.SetCurrentDirectory(dir);

@@ -108,8 +108,8 @@ namespace ToolToGameExporter {
                     ((InputData)d).result = false;
                 }
 #if !DEBUG
-            } catch {
-                if(!silent) MessageBox.Show("Please close the exporter and try again! (Some kind of caching issue occurred)");
+            } catch (Exception e) {
+                if(!silent) MessageBox.Show("Please close the exporter and try again! (Some kind of caching issue occurred)\n\n"+e.Message);
 
                 try {
                     Directory.Delete(Global.EXPORT_DIRECTORY, true);

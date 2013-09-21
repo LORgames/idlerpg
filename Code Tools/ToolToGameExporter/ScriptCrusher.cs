@@ -134,7 +134,7 @@ namespace ToolToGameExporter {
                 f.AddUnsignedShort(s);
             }
 
-            switch (command.CommandID) {
+            /*switch (command.CommandID) {
                 case 0x1001: //PlaySound
                     f.AddShort(SoundCrusher.EffectConversions[command.Parameters]); break;
                 case 0x4001: //Equip
@@ -144,7 +144,7 @@ namespace ToolToGameExporter {
                     f.AddShort((short)info.AnimationNames.IndexOf(command.Parameters)); break;
                 case 0x6001: //LoopAnimation
                     f.AddShort((short)info.AnimationNames.IndexOf(command.Parameters)); break;
-            }
+            }*/
         }
 
         /// <summary>

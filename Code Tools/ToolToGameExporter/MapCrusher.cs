@@ -53,7 +53,7 @@ namespace ToolToGameExporter {
                 f.AddShort((short)map.Tiles.numTilesX);
                 f.AddShort((short)map.Tiles.numTilesY);
 
-                if (GlobalSettings.enableTiles) {
+                if (GlobalSettings.TilesEnabled) {
                     for (int i = 0; i < map.Tiles.numTilesX; i++) {
                         for (int j = 0; j < map.Tiles.numTilesY; j++) {
                             short _d = map.Tiles[i, j];

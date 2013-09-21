@@ -6,6 +6,8 @@ using System.Text;
 namespace ToolCache.Scripting.Types {
     public class Commands {
         public static Dictionary<string, ValidCommand> All = new Dictionary<string, ValidCommand>();
+        public static Dictionary<string, ValidCommand> MathFunctions = new Dictionary<string, ValidCommand>();
+        public static Dictionary<string, ValidCommand> IfFunctions = new Dictionary<string, ValidCommand>();
 
         public static Dictionary<Param, ushort[]> DefaultValues = new Dictionary<Param, ushort[]>();
         public static Dictionary<String, ushort> ScriptTargets = new Dictionary<string, ushort>();
@@ -17,7 +19,7 @@ namespace ToolCache.Scripting.Types {
             All.Add("soundplay",
                 new ValidCommand(0x1001, new Param[] { Param.SoundEffectName}));
             All.Add("spawn",
-                new ValidCommand(0x1002, new Param[] { Param.CritterName, Param.Integer | Param.Optional, Param.Integer | Param.Optional }));
+                new ValidCommand(0x1002, new Param[] { Param.CritterName, Param.Integer | Param.Optional, Param.Integer | Param.Optional, Param.Boolean | Param.Optional }));
             All.Add("damage",
                 new ValidCommand(0x1003, new Param[] { Param.Integer }));
             All.Add("knockback",
@@ -78,6 +80,8 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0x5008, new Param[] { Param.ScriptTarget }, true, new ushort[] { 0x5009 }));
             All.Add("poptarget",
                 new ValidCommand(0x5009, new Param[] { Param.Void }));
+            All.Add("offsetset",
+                new ValidCommand(0x500A, new Param[] { Param.Integer, Param.Integer }));
 
             //Animation Commands
             All.Add("animationplay",
@@ -101,15 +105,35 @@ namespace ToolCache.Scripting.Types {
             All.Add("uilayerredraw",
                 new ValidCommand(0xC003, new Param[] { Param.UIElement }));
 
+            /////////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////// MATH FUNCTIONS
+            /////////////////////////////////////////////////////////////////////////
+
+            MathFunctions.Add("sin",        new ValidCommand(0x00, new Param[] { Param.Integer }));
+            MathFunctions.Add("cos",        new ValidCommand(0x01, new Param[] { Param.Integer }));
+            MathFunctions.Add("tan",        new ValidCommand(0x02, new Param[] { Param.Integer }));
+            MathFunctions.Add("framenum",   new ValidCommand(0x03, new Param[] { Param.Void }));
+
+            /////////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////// MATH FUNCTIONS
+            /////////////////////////////////////////////////////////////////////////
+
+            IfFunctions.Add("random",   new ValidCommand(0x7003, new Param[] { Param.Integer }));
+            IfFunctions.Add("isalive",  new ValidCommand(0x7004, new Param[] { Param.Void }));
+            IfFunctions.Add("equipped", new ValidCommand(0x7005, new Param[] { Param.EquipmentName }));
+            IfFunctions.Add("animation",new ValidCommand(0x7006, new Param[] { Param.AnimationName }));
+            IfFunctions.Add("direction",new ValidCommand(0x7007, new Param[] { Param.Direction }));
+            IfFunctions.Add("isfaction",new ValidCommand(0x7008, new Param[] { Param.FactionName }));
+            IfFunctions.Add("aieventis",new ValidCommand(0x7FFF, new Param[] { Param.AIEventType }));
 
             /////////////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////// DEFAULT VALUES
             /////////////////////////////////////////////////////////////////////////
 
             DefaultValues.Add(Param.Void, new ushort[] {});
-            DefaultValues.Add(Param.Number, new ushort[] { 0 });
-            DefaultValues.Add(Param.Integer, new ushort[] { 0 });
-            DefaultValues.Add(Param.Angle, new ushort[] { 0 });
+            DefaultValues.Add(Param.Number, new ushort[] { 0xBFFF, 0 });
+            DefaultValues.Add(Param.Integer, new ushort[] { 0xBFFF, 0 });
+            DefaultValues.Add(Param.Angle, new ushort[] { 0xBFFF, 0 });
             DefaultValues.Add(Param.Boolean, new ushort[] { 1 });
             DefaultValues.Add(Param.String, new ushort[] { 0 });
             DefaultValues.Add(Param.Direction, new ushort[] { 0 });

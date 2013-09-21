@@ -25,6 +25,7 @@ namespace ToolCache.Scripting.Types {
         AnimationName,
         ImageDatabase,
         AIType,
+        AIEventType,
         UIPanel,
         UIElement,
         UILayer,

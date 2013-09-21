@@ -39,6 +39,7 @@ namespace ToolToGameExporter {
                     f.AddByte((byte)e.Layers.Count);
 
                     foreach (UILayer l in e.Layers) {
+                        f.AddByte((byte)((l is UIImageLayer) ? 0 : 1));
                         f.AddByte((byte)l.AnchorPoint);
                         f.AddShort(l.OffsetX);
                         f.AddShort(l.OffsetY);
@@ -46,14 +47,21 @@ namespace ToolToGameExporter {
                         f.AddShort(l.SizeY);
 
                         f.AddByte((byte)l.MyType);
-                        f.AddShort((short)l.GlobalVariable);
 
-                        if (imageNames.Contains(l.ImageFilename)) {
-                            f.AddShort((short)imageNames.IndexOf(l.ImageFilename));
-                        } else {
-                            f.AddShort((short)imageNames.Count);
-                            images.Add(ImageCache.RequestImage(l.ImageFilename));
-                            imageNames.Add(l.ImageFilename);
+                        if (l is UIImageLayer) {
+                            UIImageLayer l2 = (UIImageLayer)l;
+                            f.AddShort((short)l2.GlobalVariable);
+
+                            if (imageNames.Contains(l2.ImageFilename)) {
+                                f.AddShort((short)imageNames.IndexOf(l2.ImageFilename));
+                            } else {
+                                f.AddShort((short)imageNames.Count);
+                                images.Add(ImageCache.RequestImage(l2.ImageFilename));
+                                imageNames.Add(l2.ImageFilename);
+                            }
+                        } else if (l is UITextLayer) {
+                            UITextLayer l2 = (UITextLayer)l;
+                            f.AddString(l2.Message);
                         }
                     }
                 }

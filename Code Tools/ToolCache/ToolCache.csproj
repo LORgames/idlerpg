@@ -110,10 +110,12 @@
     <Compile Include="Sound\SoundData.cs" />
     <Compile Include="Sound\SoundDatabase.cs" />
     <Compile Include="UI\UIElement.cs" />
+    <Compile Include="UI\UIImageLayer.cs" />
     <Compile Include="UI\UILayer.cs" />
     <Compile Include="UI\UIManager.cs" />
     <Compile Include="UI\UIPanel.cs" />
     <Compile Include="Map\Regions\Portal.cs" />
+    <Compile Include="UI\UITextLayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

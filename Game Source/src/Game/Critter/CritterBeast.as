@@ -94,7 +94,11 @@ package Game.Critter {
 		}
 		
 		public function toString():String {
-			return "[Critter:" + Info.Name + " Faction=" + PrimaryFaction + "]";
+			if(Info != null) {
+				return "[Critter:" + Info.Name + " Faction=" + PrimaryFaction + "]";
+			} else {
+				return "[Critter: DELETED Faction=" + PrimaryFaction + "]";
+			}
 		}
 		
 		override public function CleanUp():void {

@@ -48,6 +48,11 @@ package {
 			
 			Main.I.stage.frameRate = Global.FPS;
 			
+			Global.GV_WX = b.readShort();
+			Global.GV_WY = b.readShort();
+			Global.GV_LX = b.readShort();
+			Global.GV_LY = b.readShort();
+			
 			//Load up everything else as required
 			WorldData.Initialize(loadMapName);
 			
