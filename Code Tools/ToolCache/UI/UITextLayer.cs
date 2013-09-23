@@ -20,7 +20,7 @@ namespace ToolCache.UI {
             f.AddString(Message);
         }
 
-        private string PrepareString() {
+        public string PrepareString(bool rawID = false) {
             Regex regex = new Regex("{("+ScriptCommand.VARIABLE_REGEX+")}");
             MatchCollection mc = regex.Matches(Message);
 
@@ -33,7 +33,11 @@ namespace ToolCache.UI {
                     builder = builder + Message.Substring(last_end, mc[i].Index-last_end);
 
                     if(GlobalVariables.Variables.ContainsKey(mc[i].Groups[1].Value)) {
-                        builder = builder + GlobalVariables.Variables[mc[i].Groups[1].Value].InitialValue;
+                        if (!rawID) {
+                            builder = builder + GlobalVariables.Variables[mc[i].Groups[1].Value].InitialValue;
+                        } else {
+                            builder = builder + "{" + GlobalVariables.Variables[mc[i].Groups[1].Value].Index + "}";
+                        }
                     } else {
                         builder = builder + "<UNKNOWN VAR>";
                     }
@@ -93,10 +97,10 @@ namespace ToolCache.UI {
                 r.X += canvasArea.X;
                 r.Y += canvasArea.Y;
 
-                if (MyType == UILayerType.PanX) r.X += (int)(SizeX * displayValue);
-                if (MyType == UILayerType.PanY) r.Y += (int)(SizeY * displayValue);
-                if (MyType == UILayerType.PanXNeg) r.X += (int)(SizeX * (1 - displayValue));
-                if (MyType == UILayerType.PanYNeg) r.Y += (int)(SizeY * (1 - displayValue));
+                //if (MyType == UILayerType.PanX) r.X += (int)(SizeX * displayValue);
+                //if (MyType == UILayerType.PanY) r.Y += (int)(SizeY * displayValue);
+                //if (MyType == UILayerType.PanXNeg) r.X += (int)(SizeX * (1 - displayValue));
+                //if (MyType == UILayerType.PanYNeg) r.Y += (int)(SizeY * (1 - displayValue));
 
                 gfx.DrawString(displayString, f, Brushes.White, r.Location);
             }

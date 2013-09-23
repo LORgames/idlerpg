@@ -2,6 +2,7 @@ package {
 	import CollisionSystem.Rect;
 	import flash.display.Bitmap;
 	import flash.geom.Point;
+	import QDMF.IHLNetwork;
 	/**
 	 * ...
 	 * @author Paul
@@ -38,5 +39,8 @@ package {
 		
 		public static var HasLeftRight:Boolean = true;
 		public static var HasUpDown:Boolean = false;
+		
+		//Networking?
+		public static var Network:IHLNetwork;
 	}
 }

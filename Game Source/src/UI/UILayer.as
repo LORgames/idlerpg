@@ -1,9 +1,11 @@
 package UI {
+	import flash.display.Bitmap;
+	import flash.geom.Rectangle;
 	/**
 	 * ...
 	 * @author Paul
 	 */
-	public class UILayer {
+	public class UILayer extends Bitmap {
 		///CONSTANTS
         public static const Static:int = 0;
         public static const Tile:int = 1;
@@ -18,7 +20,23 @@ package UI {
         public static const PanYNeg:int = 10;
         public static const Radial:int = 11;
 		
+		///VARIABLES
+		public var LayerType:int = 0;
+		public var AnchorPoint:int = 0;
+		
+		public var SizeX:int = 0;
+		public var SizeY:int = 0;
+		public var OffsetX:int = 0;
+		public var OffsetY:int = 0;
+		
+		protected var RequiresRedraw:Boolean = true;
+		protected var RedrawRect:Rectangle;
+		
 		public function UILayer() {
+			
+		}
+		
+		public function Draw(w:int, h:int, ui:UIManager):void {
 			
 		}
 		

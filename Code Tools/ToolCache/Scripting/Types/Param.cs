@@ -30,6 +30,7 @@ namespace ToolCache.Scripting.Types {
         UIElement,
         UILayer,
         ScriptTarget,
+        MapName,
         Optional = 128 //Optional is a flag, eg: Number|Optional
     }
 }

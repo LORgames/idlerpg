@@ -27,6 +27,7 @@ namespace ToolCache.Scripting {
         public Dictionary<string, short> RemappedSoundEffectIDs;
         public Dictionary<string, short> RemappedSoundEffectGroups;
         public Dictionary<string, short> RemappedCritterIDs;
+        public Dictionary<string, short> RemappedMapIDs;
 
         public ScriptInfo(string Name, ScriptTypes ScriptType) {
             ScriptName = Name;

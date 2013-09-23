@@ -11,6 +11,7 @@ using ToolCache.Effects;
 using ToolCache.Map.Objects;
 using ToolCache.Scripting.Types;
 using ToolCache.UI;
+using ToolCache.Map;
 
 namespace ToolCache.Scripting {
     public class ScriptCommand {
@@ -415,6 +416,14 @@ namespace ToolCache.Scripting {
                             } else {
                                 info.Errors.Add("Cannot find a script target called '" + paramBits[i] + "'" + ErrorEnding());
                             } break;
+                        case Param.MapName:
+                            if (MapPieceCache.GetMapByName(paramBits[i]) != null) {
+                                if(info.RemappedMapIDs != null) {
+                                    AdditionalBytecode.Add((ushort)info.RemappedMapIDs[paramBits[i]]);
+                                }
+                            } else {
+                                info.Errors.Add("Cannot find a map called '" + paramBits[i] + "'" + ErrorEnding());
+                            } break;
                         default:
                             info.Errors.Add("Unknown Param type: " + thisParamType + ErrorEnding()); break;
                     }
@@ -517,7 +526,7 @@ namespace ToolCache.Scripting {
                         if(FurtherParsing) {
                             if(vc.WillIndent) {
                                 i2 = IndentBelow(Info, index);
-                                if (Info.Commands.Count > i2) {
+                                if (Info.Commands.Count > i2 && vc.EndIndent != null) {
                                     Info.Commands.Insert(i2, new ScriptCommand(vc.EndIndent, Indent, LineNumber));
                                 }
                             }

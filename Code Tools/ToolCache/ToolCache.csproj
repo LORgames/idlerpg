@@ -99,6 +99,7 @@
     <Compile Include="Scripting\GlobalVariables.cs" />
     <Compile Include="Scripting\Parser.cs" />
     <Compile Include="Scripting\ScriptCommand.cs" />
+    <Compile Include="Scripting\ScriptHelper.cs" />
     <Compile Include="Scripting\ScriptInfo.cs" />
     <Compile Include="Scripting\Types\Param.cs" />
     <Compile Include="Scripting\Types\ScriptTypes.cs" />

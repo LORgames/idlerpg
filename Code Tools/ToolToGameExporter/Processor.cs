@@ -58,6 +58,8 @@ namespace ToolToGameExporter {
                 EffectCrusher.Precrush();
                 UpdateEPF(epf, "Measuring Objects...", 6);
                 MapObjectCrusher.Precrush();
+                UpdateEPF(epf, "Navigating the world...", 7);
+                MapCrusher.Precrush();
 
                 //Tier 0  Crushing. No Dependancies.
                 UpdateEPF(epf, "Amplyfying Sounds...", 12);

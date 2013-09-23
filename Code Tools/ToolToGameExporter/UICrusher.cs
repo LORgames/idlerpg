@@ -61,7 +61,7 @@ namespace ToolToGameExporter {
                             }
                         } else if (l is UITextLayer) {
                             UITextLayer l2 = (UITextLayer)l;
-                            f.AddString(l2.Message);
+                            f.AddString(l2.PrepareString(true));
                         }
                     }
                 }

@@ -11,6 +11,7 @@ package UI {
 	import Game.Scripting.Script;
 	import Game.Scripting.ScriptInstance;
 	import RenderSystem.Camera;
+	import Strings.StringEx;
 	/**
 	 * ...
 	 * @author Paul
@@ -67,7 +68,10 @@ package UI {
 					
 					//Load in UILayers
 					for (var k:int = 0; k < totalLayers; k++) {
-						Panels[i].Elements[j].Layers[k] = new UILayer();
+						var layerType:int = b.readByte();
+						
+						if(layerType == 0) Panels[i].Elements[j].Layers[k] = new UILayerImage();
+						if(layerType == 1) Panels[i].Elements[j].Layers[k] = new UILayerText();
 						Panels[i].Elements[j].addChild(Panels[i].Elements[j].Layers[k]);
 						
 						Panels[i].Elements[j].Layers[k].AnchorPoint = b.readByte();
@@ -77,8 +81,14 @@ package UI {
 						Panels[i].Elements[j].Layers[k].SizeY = b.readShort();
 						
 						Panels[i].Elements[j].Layers[k].LayerType = b.readByte();
-						Panels[i].Elements[j].Layers[k].GlobalVariable = b.readShort();
-						Panels[i].Elements[j].Layers[k].ImageRect = b.readShort();
+						
+						if(layerType == 0) {
+							(Panels[i].Elements[j].Layers[k] as UILayerImage).GlobalVariable = b.readShort();
+							(Panels[i].Elements[j].Layers[k] as UILayerImage).ImageRect = b.readShort();
+						} else if (layerType == 1) {
+							(Panels[i].Elements[j].Layers[k] as UILayerText).Message = StringEx.BuildFromCore(BinaryLoader.GetString(b));
+							(Panels[i].Elements[j].Layers[k] as UILayerText).PrepareTF();
+						}
 					}
 				}
 			}

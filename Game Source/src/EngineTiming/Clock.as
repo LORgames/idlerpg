@@ -65,7 +65,6 @@ package EngineTiming {
 				Sec_15_Count += dt;
 				
 				WorldData.CurrentMap.Update(dt);
-				Script.ProcessUpdate();
 				
 				//Update what we need to update
 				i = Updatables.length;
@@ -75,6 +74,7 @@ package EngineTiming {
 				
 				if (Sec_01_Count > 1) {
 					Sec_01_Count -= 1;
+					Script.ProcessUpdate();
 					
 					i = OneSecond.length;
 					while (--i > -1) {

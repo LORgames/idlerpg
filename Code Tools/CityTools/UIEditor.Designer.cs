@@ -371,8 +371,8 @@
             // pnlUILayer
             // 
             this.pnlUILayer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlUILayer.Controls.Add(this.pnlTextStuff);
             this.pnlUILayer.Controls.Add(this.pnlImageStuff);
+            this.pnlUILayer.Controls.Add(this.pnlTextStuff);
             this.pnlUILayer.Controls.Add(this.label10);
             this.pnlUILayer.Controls.Add(this.txtLayerName);
             this.pnlUILayer.Controls.Add(this.label8);

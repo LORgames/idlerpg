@@ -44,6 +44,10 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0x100D, new Param[] { Param.Integer }));
             All.Add("soundgroupplay",
                 new ValidCommand(0x100E, new Param[] { Param.SoundEffectGroup }));
+            All.Add("netsync",
+                new ValidCommand(0x100D, new Param[] { Param.Void }, true));
+            All.Add("mapchange",
+                new ValidCommand(0x100F, new Param[] { Param.MapName }));
 
             //Quest and Inventory Commands
             All.Add("saydialogue",

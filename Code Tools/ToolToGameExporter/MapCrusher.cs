@@ -12,6 +12,18 @@ using ToolCache.Scripting.Types;
 
 namespace ToolToGameExporter {
     internal class MapCrusher {
+        public static Dictionary<string, short> RemappedMapIDs = new Dictionary<string, short>();
+        
+        public static void Precrush() {
+            RemappedMapIDs.Clear();
+
+            short x = 0;
+
+            foreach (MapPiece map in MapPieceCache.Pieces) {
+                if (!map.isLoaded) map.Load(true);
+                RemappedMapIDs.Add(map.Name, x++);
+            }
+        }
 
         public static void Go() {
             BinaryIO m = new BinaryIO();
@@ -23,7 +35,7 @@ namespace ToolToGameExporter {
                 BinaryIO f = new BinaryIO();
 
                 if (!map.isLoaded) map.Load(true);
-                
+
                 m.AddString(map.Name);
                 f.AddString(map.Name);
 
