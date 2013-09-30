@@ -54,7 +54,7 @@ package Game.Map {
 			var loadMapID:int = 0;
 			
 			var i:int = totalMaps;
-			while(--i > -1) {
+			for (i = 0; i < totalMaps; i++) {
 				var s:String = BinaryLoader.GetString(data);
 				
 				var p:int = data.readByte();

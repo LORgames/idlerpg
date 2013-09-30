@@ -31,6 +31,7 @@ namespace ToolCache.Scripting.Types {
         UILayer,
         ScriptTarget,
         MapName,
+        NetworkType,
         Optional = 128 //Optional is a flag, eg: Number|Optional
     }
 }

@@ -1,4 +1,5 @@
 package Game.Map {
+	import CollisionSystem.PointX;
 	import CollisionSystem.Rect;
 	import EngineTiming.IUpdatable;
 	import flash.utils.ByteArray;
@@ -16,6 +17,8 @@ package Game.Map {
 	import Game.Map.Tiles.TileHelper;
 	import Game.Map.Tiles.TileInstance;
 	import Game.Scripting.IScriptTarget;
+	import Game.Scripting.Script;
+	import Game.Scripting.ScriptInstance;
 	import Game.Scripting.ScriptTypes;
 	import Interfaces.IMapObject;
 	import SoundSystem.MusicPlayer;
@@ -23,7 +26,7 @@ package Game.Map {
 	 * ...
 	 * @author Paul
 	 */
-	public class MapData implements IUpdatable {
+	public class MapData implements IUpdatable, IScriptTarget {
 		public var Name:String = "";
 		public var Music:int = 0;
 		
@@ -49,6 +52,9 @@ package Game.Map {
 		private var ExpectedAtPortalID:int = -1;
 		public var Dying:Boolean = false;
 		public var Boundaries:Rect = new Rect(true, null);
+		
+		private var _script:Script;
+		public var MyScript:ScriptInstance;
 		
 		public function MapData() {
 			
@@ -158,6 +164,9 @@ package Game.Map {
 				Spawns[TotalObjects].PreSpawn();
 			}
 			
+			_script = Script.ReadScript(b);
+			MyScript = new ScriptInstance(_script, this);
+			
 			Global.LoadingTotal--;
 			
 			MusicPlayer.PlaySong(Music);
@@ -250,12 +259,6 @@ package Game.Map {
 			}
 			Objects = null;
 			
-			i = Spawns.length;
-			while (--i > -1) {
-				Spawns[i].CleanUp();
-				Spawns[i] = null;
-			}
-			Spawns = null;
 			
 			i = Portals.length;
 			while (--i > -1) {
@@ -269,6 +272,13 @@ package Game.Map {
 				Critters.pop().CleanUp();
 			}
 			
+			i = Spawns.length;
+			while (--i > -1) {
+				Spawns[i].CleanUp();
+				Spawns[i] = null;
+			}
+			Spawns = null;
+			
 			i = Tiles.length;
 			while (--i > 0) {
 				Tiles[i].CleanUp();
@@ -280,6 +290,14 @@ package Game.Map {
 			while (--i > 0) {
 				Effects[i].CleanUp();
 			}
+			
+			i = ScriptRegions.length;
+			while (--i > 0) {
+				ScriptRegions[i].CleanUp();
+			}
+			
+			MyScript.CleanUp();
+			_script.CleanUp();
 			
 			Dying = false;
 		}
@@ -324,6 +342,14 @@ package Game.Map {
 				Effects.splice(i, 1);
 			}
 		}
+		
+		/* INTERFACE Game.Scripting.IScriptTarget */
+		public function UpdatePointX(position:PointX):void { position.X = 0; position.Y = 0; position.D = 1; }
+		public function AlertMinionDeath(baseCritter:BaseCritter):void {}
+		public function ChangeState(stateID:int, isLooping:Boolean):void {}
+		public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void {}
+		public function GetCurrentState():int { return -1; }
+		public function GetFaction():int { return -1; }
 	}
 
 }

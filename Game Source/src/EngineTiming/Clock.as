@@ -21,6 +21,7 @@ package EngineTiming {
 		private var Sec_15_Count:Number = 0;
 		
 		private var ExpectedFrameRate:Number = 0;
+		private var Stopped:Boolean = false;
 		
 		public static var FPSTF:FPSCounter;
         private var last:uint = getTimer();
@@ -44,6 +45,8 @@ package EngineTiming {
 		}
 		
 		public function Tick(e:Event):void {
+			if (Stopped) return;
+			
 			if (FPSTF != null) {
 				ticks++;
 				var now:uint = getTimer();
@@ -119,7 +122,7 @@ package EngineTiming {
 		}
 		
 		static public function Stop():void {
-			
+			Clock.I.Stopped = true;
 		}
 	}
 

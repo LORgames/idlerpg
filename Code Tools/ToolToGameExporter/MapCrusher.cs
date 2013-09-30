@@ -21,8 +21,11 @@ namespace ToolToGameExporter {
 
             foreach (MapPiece map in MapPieceCache.Pieces) {
                 if (!map.isLoaded) map.Load(true);
-                RemappedMapIDs.Add(map.Name, x++);
+                RemappedMapIDs.Add(map.Name, x);
+                x++;
             }
+
+            return;
         }
 
         public static void Go() {
@@ -141,6 +144,10 @@ namespace ToolToGameExporter {
                     ScriptInfo info = new ScriptInfo("Map."+map.Name+":ScriptRegion."+sr.Name, ScriptTypes.Region);
                     ScriptCrusher.ProcessScript(info, sr.Script, f);
                 }
+
+                //Script
+                ScriptInfo s = new ScriptInfo("Map." + map.Name, ScriptTypes.Map);
+                ScriptCrusher.ProcessScript(s, map.Script, f);
 
                 f.Encode(Global.EXPORT_DIRECTORY + "/Map_" + map.Name + ".bin");
             }

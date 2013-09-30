@@ -45,9 +45,15 @@ namespace ToolCache.Scripting.Types {
             All.Add("soundgroupplay",
                 new ValidCommand(0x100E, new Param[] { Param.SoundEffectGroup }));
             All.Add("netsync",
-                new ValidCommand(0x100D, new Param[] { Param.Void }, true));
+                new ValidCommand(0x100F, new Param[] { Param.Void }, true));
             All.Add("mapchange",
-                new ValidCommand(0x100F, new Param[] { Param.MapName }));
+                new ValidCommand(0x1010, new Param[] { Param.MapName }));
+            All.Add("nethost",
+                new ValidCommand(0x1011, new Param[] { Param.NetworkType }));
+            All.Add("nethost",
+                new ValidCommand(0x1011, new Param[] { Param.NetworkType })); //TODO: This
+            All.Add("netconnect",
+                new ValidCommand(0x1011, new Param[] { Param.NetworkType, Param.String })); //TODO: This
 
             //Quest and Inventory Commands
             All.Add("saydialogue",

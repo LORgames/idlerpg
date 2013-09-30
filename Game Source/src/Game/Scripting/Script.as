@@ -17,6 +17,8 @@ package Game.Scripting {
 	import Game.Map.Objects.ObjectTemplate;
 	import Game.Map.WorldData;
 	import Interfaces.IMapObject;
+	import RenderSystem.MapRenderer;
+	import RenderSystem.Renderman;
 	import SoundSystem.EffectsPlayer;
 	import UI.UIPanel;
 	/**
@@ -618,6 +620,14 @@ package Game.Scripting {
 						Script.FireTrigger(GetNumberFromVariable(EventScript, info)); break;
 					case 0x100E: //Play a sound from an effect group
 						EffectsPlayer.PlayFromGroup(EventScript.readShort()); break;
+					case 0x100F: //Network sync... somehow?
+						break;
+					case 0x1010: //Change map
+						var mapID:int = EventScript.readShort();
+						Main.I.Renderer.FadeToBlack(null, WorldData.Maps[mapID]);
+						WorldData.CurrentMap.CleanUp();
+						WorldData.CurrentMap.LoadMap(WorldData.Maps[mapID]);
+						break;
 					case 0x4001: //Equip item on the target
 						if (info.CurrentTarget is CritterHuman) {
 							(info.CurrentTarget as CritterHuman).Equipment.EquipSlot(EventScript.readShort(), EventScript.readShort());
@@ -779,6 +789,18 @@ package Game.Scripting {
 		
 		public function HasEvent(eventID:uint):Boolean {
 			return (EventScripts[eventID] != null);
+		}
+		
+		public function CleanUp():void {
+			var i:int = EventScripts.length;
+			
+			while(--i > 0) {
+				if(EventScripts[i] != null) EventScripts[i].clear();
+				EventScripts[i] = null;
+			}
+			EventScripts = null;
+			
+			InitialVariables = null;
 		}
 	}
 

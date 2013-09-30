@@ -8,11 +8,12 @@ package Game.Map
 	import Game.Scripting.IScriptTarget;
 	import Game.Scripting.Script;
 	import Game.Scripting.ScriptInstance;
+	import EngineTiming.ICleanUp;
 	/**
 	 * ...
 	 * @author Paul
 	 */
-	public class ScriptRegion implements IScriptTarget {
+	public class ScriptRegion implements IScriptTarget, ICleanUp {
 		public var Map:MapData;
 		public var Area:Vector.<Rect>;
 		
@@ -77,6 +78,22 @@ package Game.Map
 		
 		public function GetFaction():int {
 			return 0;
+		}
+		
+		public function CleanUp():void {
+			Map = null;
+			
+			var i:int;
+			
+			i = Area.length;
+			while (--i > -1) {
+				Area[i].Owner = null;
+				Area[i] = null;
+			}
+			Area = null;
+			
+			MyScript.CleanUp();
+			_S.CleanUp();
 		}
 	}
 }

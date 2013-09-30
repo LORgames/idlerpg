@@ -91,6 +91,15 @@ package UI {
 						}
 					}
 				}
+				
+				//Run element spawn scripts
+				//i = Panels.length;
+				//while(--i > -1) {
+				//	j = Panels[i].Elements.length;
+				//	while (--j > -1) {
+				//		Panels[i].Elements[j].MyScript.Run(Script.Initialize);
+				//	}
+				//}
 			}
 			
 			var totalRects:int = b.readShort();
