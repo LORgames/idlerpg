@@ -20,7 +20,7 @@ package Game.Map {
 	import Game.Scripting.Script;
 	import Game.Scripting.ScriptInstance;
 	import Game.Scripting.ScriptTypes;
-	import Interfaces.IMapObject;
+	import RenderSystem.Camera;
 	import SoundSystem.MusicPlayer;
 	/**
 	 * ...
@@ -180,6 +180,8 @@ package Game.Map {
 					WorldData.ME.ShiftMaps(this, 281);
 				}
 			}
+			
+			Main.I.Resized();
 		}
 		
 		public function GetObjectsInArea(rect:Rect, objects:Vector.<IScriptTarget>, type:int, scanner:IScriptTarget = null):void {
@@ -350,6 +352,16 @@ package Game.Map {
 		public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void {}
 		public function GetCurrentState():int { return -1; }
 		public function GetFaction():int { return -1; }
+		
+		public function Resize():void {
+			if(SizeX > 0) {
+				Camera.Z = Main.I.stage.stageWidth / SizeX;
+			} else {
+				Camera.Z = 1;
+				Camera.Y = 0;
+				Camera.X = 0;
+			}
+		}
 	}
 
 }

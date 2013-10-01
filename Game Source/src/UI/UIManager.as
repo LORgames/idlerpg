@@ -131,8 +131,9 @@ package UI {
 		}
 		
 		public function AlertPress(x:int, y:int, dragged:Boolean = false):void {
-			var wx:int = x - Camera.X;
-			var wy:int = y - Camera.Y;
+			var wx:int = (x - Camera.X) / Camera.Z;
+			var wy:int = (y - Camera.Y) / Camera.Z;
+			
 			GlobalVariables.Variables[Global.GV_WX] = wx;
 			GlobalVariables.Variables[Global.GV_WY] = wy;
 			

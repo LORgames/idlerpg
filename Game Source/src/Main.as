@@ -7,6 +7,7 @@ package {
 	import flash.system.Capabilities;
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
+	import Game.Map.WorldData;
 	import InputSystems.IInputSystem;
 	import RenderSystem.Renderman;
 	import SoundSystem.MusicPlayer;
@@ -40,7 +41,7 @@ package {
 			
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
-			stage.quality = StageQuality.LOW;
+			//stage.quality = StageQuality.LOW;
 			
 			stage.addEventListener(Event.DEACTIVATE, OnLostFocus);
 			
@@ -136,14 +137,17 @@ package {
 			}
 		}
 		
-		private function Resized(e:* = null):void {
+		public function Resized(e:* = null):void {
 			if (Capabilities.screenDPI > 250) {
 				//Camera.Z = 2;
 				//TODO: Some global setting thing for ZoomMode
 			}
 			
+			WorldData.CurrentMap.Resize();
+			
 			Renderer.Resized();
 			hud.Resized();
+			
 		}
 	}
 }
