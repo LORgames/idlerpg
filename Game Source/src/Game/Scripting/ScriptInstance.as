@@ -17,6 +17,8 @@ package Game.Scripting {
 		public var MyScript:Script;
 		
 		public function ScriptInstance(script:Script, invoker:IScriptTarget, initialize:Boolean = true) {
+			if (script == null) return;
+			
 			MyScript = script;
 			Variables = script.InitialVariables.concat();
 			

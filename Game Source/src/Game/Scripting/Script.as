@@ -1,4 +1,5 @@
 package Game.Scripting {
+	import adobe.utils.CustomActions;
 	import CollisionSystem.PointX;
 	import CollisionSystem.Rect;
 	import Debug.Drawer;
@@ -12,14 +13,24 @@ package Game.Scripting {
 	import Game.Effects.EffectInstance;
 	import Game.Effects.EffectManager;
 	import Game.Equipment.EquipmentItem;
+	import Game.General.BinaryLoader;
 	import Game.Map.Objects.ObjectInstance;
 	import Game.Map.Objects.ObjectInstanceAnimated;
 	import Game.Map.Objects.ObjectTemplate;
 	import Game.Map.WorldData;
 	import Interfaces.IMapObject;
+	import QDMF.Connectors.SocketClient;
+	import QDMF.Connectors.SocketHost;
+	import QDMF.Packet;
+	import QDMF.PacketFactory;
 	import RenderSystem.MapRenderer;
 	import RenderSystem.Renderman;
 	import SoundSystem.EffectsPlayer;
+	import Strings.StringComponentGV;
+	import Strings.StringEx;
+	import UI.UIElement;
+	import UI.UILayer;
+	import UI.UILayerText;
 	import UI.UIPanel;
 	/**
 	 * ...
@@ -69,6 +80,7 @@ package Game.Scripting {
 		//Script information
 		internal var EventScripts:Vector.<ByteArray>;
 		internal var InitialVariables:Vector.<int>;
+		internal var NetSync:int = 0;
 		
 		public function Script(commandBlock:Vector.<ByteArray>, initalVariables:Vector.<int>) {
 			EventScripts = commandBlock;
@@ -81,7 +93,9 @@ package Game.Scripting {
 			if (EventScripts[eventID] == null) return;
 			
 			var EventScript:ByteArray = EventScripts[eventID];
+			
 			EventScript.position = 0;
+			NetSync = 0;
 			
 			//trace("Running: Invoker=" + info.Invoker + " Event=" + eventID);
 			ProcessBlock(EventScript, info, eventID, param);
@@ -170,7 +184,10 @@ package Game.Scripting {
 			//The current command, need to remove the top of the stack here because its 0xFF0D
 			var command:int = eventScript.readUnsignedShort();
 			var ended:Boolean = false;
+			
 			var param0:int;
+			var param1:int;
+			var param2:int;
 			
 			while (!ended) {
 				command = eventScript.readUnsignedShort();
@@ -216,22 +233,50 @@ package Game.Scripting {
 							trace("Unknown target for 0x7008 Target=" + info.CurrentTarget + " Faction=" + eventScript.readShort());
 						} break;
 					case 0x7009: //Math comparison function
-						var value1:int = GetNumberFromVariable(eventScript, info);
+						param1 = GetNumberFromVariable(eventScript, info);
 						var comparisonInstruction:int = eventScript.readUnsignedShort();
-						var value2:int = GetNumberFromVariable(eventScript, info);
+						param2 = GetNumberFromVariable(eventScript, info);
 						
 						switch(comparisonInstruction) {
-							case 0xBE00: currentUnprocessedValue = (value1 == value2); break; // =
-							case 0xBE01: currentUnprocessedValue = (value1 < value2); break; // <
-							case 0xBE02: currentUnprocessedValue = (value1 > value2); break; // >
-							case 0xBE03: currentUnprocessedValue = (value1 <= value2); break; // <=
-							case 0xBE04: currentUnprocessedValue = (value1 >= value2); break; // >=
-							case 0xBE05: currentUnprocessedValue = (value1 != value2); break; // !=
+							case 0xBE00: currentUnprocessedValue = (param1 == param2); break; // =
+							case 0xBE01: currentUnprocessedValue = (param1 < param2); break; // <
+							case 0xBE02: currentUnprocessedValue = (param1 > param2); break; // >
+							case 0xBE03: currentUnprocessedValue = (param1 <= param2); break; // <=
+							case 0xBE04: currentUnprocessedValue = (param1 >= param2); break; // >=
+							case 0xBE05: currentUnprocessedValue = (param1 != param2); break; // !=
 						}
 						
 						break;
-					case 0x7FFF:
-						var whatAIEvent:int = eventScript.readShort();
+					case 0x700A: //Spend Variable
+						param0 = eventScript.readUnsignedShort();
+						param1 = eventScript.readShort();
+						param2 = 0;
+						
+						var cost:int = GetNumberFromVariable(eventScript, info);
+						
+						if (param0 == 0xBFFD) { //Local
+							param2 = info.Variables[param1];
+						} else if (param0 == 0xBFFE) { //Global
+							param2 = GlobalVariables.Variables[param1];
+						}
+						
+						if (param2 >= cost) {
+							param2 -= cost;
+							
+							if (param0 == 0xBFFD) { //Local
+								info.Variables[param1] = param2;
+							} else if (param0 == 0xBFFE) { //Global
+								GlobalVariables.Variables[param1] = param2;
+							}
+							
+							currentUnprocessedValue = true;
+						} else {
+							currentUnprocessedValue = false;
+						}
+						
+						break;
+					case 0x7FFF: //AI Event, Trigger Event etc
+						var whatAIEvent:int = GetNumberFromVariable(eventScript, info);
 						if (inputParam is int) {
 							currentUnprocessedValue = ((inputParam as int) == whatAIEvent);
 						} break;
@@ -500,6 +545,9 @@ package Game.Scripting {
 						}
 						
 						critter.SetOwner(info.CurrentTarget);
+						
+						if (NetSync > 0 && Global.Network != null) PacketFactory.N(Vector.<int>([0x1002, p0.D, 0xBFFF, p1.X, 0xBFFF, p1.Y, 0x1]));
+						
 						break;
 					case 0x1003: //Flat Damage
 					case 0x1005: //% Damage
@@ -511,11 +559,14 @@ package Game.Scripting {
 					case 0x1007: //Destroy
 						if (info.CurrentTarget is ICleanUp) { Clock.CleanUpList.push(info.CurrentTarget); } break;
 					case 0x1008: //EffectSpawn
-						effectInfo = EffectManager.I.Effects[EventScript.readShort()];
+						p0.D = EventScript.readShort();
+						effectInfo = EffectManager.I.Effects[p0.D];
 						p0.X = GetNumberFromVariable(EventScript, info); p0.Y = GetNumberFromVariable(EventScript, info);
 						CalculateOffset(Position, p0, p1);
 						
 						new EffectInstance(effectInfo, p1.X, p1.Y, Position.D);
+						
+						if (NetSync > 0 && Global.Network != null) PacketFactory.N(Vector.<int>([0x1008, p0.D, 0xBFFF, p1.X, 0xBFFF, p1.Y]));
 						
 						break;
 					case 0x1009: //EffectSpawnDirectional
@@ -615,19 +666,60 @@ package Game.Scripting {
 						o.SetInformation(WorldData.CurrentMap, id, p1.X, p1.Y);
 						WorldData.CurrentMap.Objects.push(o);
 						
+						if (NetSync > 0 && Global.Network != null) PacketFactory.N(Vector.<int>([0x100B, id, 0xBFFF, p1.X, 0xBFFF, p1.Y]));
+						
 						break;
 					case 0x100D: //Fire a trigger
 						Script.FireTrigger(GetNumberFromVariable(EventScript, info)); break;
 					case 0x100E: //Play a sound from an effect group
 						EffectsPlayer.PlayFromGroup(EventScript.readShort()); break;
 					case 0x100F: //Network sync... somehow?
+						NetSync++;
 						break;
 					case 0x1010: //Change map
 						var mapID:int = EventScript.readShort();
 						Main.I.Renderer.FadeToBlack(null, WorldData.Maps[mapID]);
 						WorldData.CurrentMap.CleanUp();
 						WorldData.CurrentMap.LoadMap(WorldData.Maps[mapID]);
+						
+						if (NetSync > 0 && Global.Network != null) PacketFactory.N(Vector.<int>([0x1010, mapID]));
 						break;
+					case 0x1011: //NetHost
+						p0.X = EventScript.readShort();
+						p0.Y = GetNumberFromVariable(EventScript, info);
+						
+						if (p0.X == 0) { //LAN
+							Global.Network = new SocketHost();
+							Global.Network.Connect("", p0.Y, Main.I);
+						} else {
+							trace("Unknown network type!");
+						} break;
+					case 0x1012: //NetConnect
+						p0.X = EventScript.readShort();
+						var s:String = GetWonkyString(EventScript);
+						p0.Y = GetNumberFromVariable(EventScript, info);
+						
+						trace("Hostname = " + s + ":" + p0.Y);
+						
+						if(p0.X == 0) { //LAN
+							Global.Network = new SocketClient();
+							Global.Network.Connect(s, p0.Y, Main.I);
+						} else {
+							trace("Unknown network type!");
+						} break;
+					case 0x1013: //NetClose
+						if (Global.Network != null) {
+							Global.Network.Close();
+							Global.Network = null;
+						}
+						break;
+					case 0x1014: //Spawn Enabled
+						p0.X = EventScript.readShort();
+						p0.Y = EventScript.readShort();
+						
+						if (WorldData.CurrentMap.Spawns.length > p0.X) {
+							WorldData.CurrentMap.Spawns[p0.X].SetEnabled(p0.Y == 1);
+						} break;
 					case 0x4001: //Equip item on the target
 						if (info.CurrentTarget is CritterHuman) {
 							(info.CurrentTarget as CritterHuman).Equipment.EquipSlot(EventScript.readShort(), EventScript.readShort());
@@ -698,7 +790,6 @@ package Game.Scripting {
 							}
 						} else if (x == 0x3) { //Owner
 							if (info.CurrentTarget is BaseCritter && (info.CurrentTarget as BaseCritter).Owner != null) {
-								trace("ScriptUP: " + info.CurrentTarget + " to " + (info.CurrentTarget as BaseCritter).Owner);
 								info.AttachTarget((info.CurrentTarget as BaseCritter).Owner);
 							}
 						} info.CurrentTarget.UpdatePointX(Position); break;
@@ -745,10 +836,27 @@ package Game.Scripting {
 					case 0x8005: //Break
 						ReadUntilBalancedClose(EventScript);
 						return 2;
-					case 0xC002:
-						(Main.I.hud.Panels[EventScript.readShort()] as UIPanel).visible = (EventScript.readShort()==1); break;
-					case 0xC003:
+					case 0xC002: //Hide Panel
+						p0.D = EventScript.readShort();
+						p0.X = EventScript.readShort();
+						(Main.I.hud.Panels[p0.D] as UIPanel).visible = (p0.X == 1);
+						if (NetSync > 0 && Global.Network != null) PacketFactory.N(Vector.<int>([0xC002, p0.D, p0.X]));
+						break;
+					case 0xC003: //Redraw Panel
 						Main.I.hud.Panels[EventScript.readShort()].Elements[EventScript.readShort()].Draw(Main.I.stage.stageWidth, Main.I.stage.stageHeight, Main.I.hud); break;
+					case 0xC004: //Update UIText
+						var p:UIElement = Main.I.hud.Panels[EventScript.readShort()].Elements[EventScript.readShort()];
+						var l:UILayer = p.Layers[EventScript.readShort()];
+						if (l is UILayerText) {
+							s = GetWonkyString(EventScript);
+							(l as UILayerText).Message = StringEx.BuildFromCore(s);
+							p.Draw(Main.I.stage.stageWidth, Main.I.stage.stageHeight, Main.I.hud);
+						}
+						break;
+					case 0xCFFF: //Trace
+						Main.I.Log("[SCRIPT: " + info.Invoker + "] " + StringEx.BuildFromCore(GetWonkyString(EventScript)).GetBuilt()); break;
+					case 0xF001: //Up a netsync level
+						NetSync--; break;
 					default:
 						if (command == 0xF0FD) {
 							deep++;
@@ -768,6 +876,23 @@ package Game.Scripting {
 			return 1;
 		}
 		
+		private function GetWonkyString(eventScript:ByteArray):String {
+			var stringType:int = eventScript.readShort();
+			
+			var s:String;
+			var b:int = eventScript.readUnsignedShort();
+			
+			if (stringType == 0) { 
+				s = GlobalVariables.Strings[b];
+			} else {
+				eventScript.position -= 2; //wind it back
+				s = BinaryLoader.GetString(eventScript);
+				if ((b % 2) == 1) eventScript.position++; //Just get it off the top...
+			}
+			
+			return s;
+		}
+		
 		//This updates the scripts if they have Update OR Clock methods
 		internal static var UpdateScripts:Vector.<ScriptInstance> = new Vector.<ScriptInstance>();
 		public static function ProcessUpdate():void {
@@ -779,11 +904,13 @@ package Game.Scripting {
 		//This updates all the triggers when a trigger is fired
 		internal static var TriggerListeners:Vector.<ScriptInstance> = new Vector.<ScriptInstance>();
 		public static function FireTrigger(triggerID:int):void {
+			trace("SCRIPT TRIGGER: " + triggerID);
+			
 			//TODO: Make this actually work properly! (more details follow)
 			//It should be able to support multiple triggers firing at the same time
 			//Some kind of stack system would be ideal.
-			for (var i:int = 0; i < UpdateScripts.length; i++) {
-				TriggerListeners[i].Run(Script.OnTrigger);
+			for (var i:int = 0; i < TriggerListeners.length; i++) {
+				TriggerListeners[i].Run(Script.OnTrigger, null, triggerID);
 			}
 		}
 		

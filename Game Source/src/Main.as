@@ -1,4 +1,5 @@
 package {
+	import Debug.ILogger;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageQuality;
@@ -25,7 +26,7 @@ package {
 	 * ...
 	 * @author Paul
 	 */
-	public class Main extends Sprite {
+	public class Main extends Sprite implements ILogger {
 		//So can link back to this
 		public static var I:Main;
 		
@@ -41,7 +42,7 @@ package {
 			
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
-			//stage.quality = StageQuality.LOW;
+			stage.quality = StageQuality.LOW;
 			
 			stage.addEventListener(Event.DEACTIVATE, OnLostFocus);
 			
@@ -68,7 +69,7 @@ package {
 			//Important Things
 			SaveManager.Initialize();
 			
-			var loadMap:String = "Tutorial Fair";
+			var loadMap:String = "Menu";
 			
 			CONFIG::air {
 				if ((e as InvokeEvent).arguments.length > 0) {
@@ -148,6 +149,12 @@ package {
 			Renderer.Resized();
 			hud.Resized();
 			
+		}
+		
+		/* INTERFACE Debug.ILogger */
+		
+		public function Log(message:String):void {
+			trace(message);
 		}
 	}
 }

@@ -101,7 +101,7 @@ namespace ToolCache.Scripting {
         }
 
         public void ProcessAction(ScriptInfo info) {
-            string validRegex = "([A-Za-z]+)\\(([A-Z,a-z0-9_\\-\\.\\(\\)\\s>]*)\\)";
+            string validRegex = "([A-Za-z]+)\\(([A-Z,a-z0-9_\\-\\.\\(\\)\\s>\"!@#\\$%\\^&\\*\\(\\){}]*)\\)";
             Match match = Regex.Match(Trimmed, validRegex);
 
             if (match.Success && match.Index == 0) {
@@ -252,8 +252,31 @@ namespace ToolCache.Scripting {
                             AdditionalBytecode.Add((ushort)(isTrue ? 1 : 0));
                             break;
                         case Param.String:
-                            info.Errors.Add("Cannot Param.String yet!" + ErrorEnding());
-                            break;
+                            Match strM = Regex.Match(paramBits[i], "\"([A-Za-z 0-9\\.\\(\\)!@#\\$%\\^&\\*<>'{}_\\-]*)\"");
+
+                            if (GlobalVariables.StringTable.ContainsKey(paramBits[i])) {
+                                AdditionalBytecode.Add(0x0); //Static String
+                                info.Errors.Add("Cannot correctly use StringTable yet!" + ErrorEnding());
+                            } else if(strM.Success) {
+                                AdditionalBytecode.Add(0x1); //Encoded String
+
+                                //TODO: Move that function elsewhere so don't waste so much memory!
+                                UITextLayer x = new UITextLayer();
+                                x.Message = strM.Groups[1].Value;
+                                
+                                Byte[] encoded = Encoding.UTF8.GetBytes(x.PrepareString(true));
+                                AdditionalBytecode.Add((ushort)encoded.Length);
+
+                                for(int z = 0; z < encoded.Length; z = z+2) {
+                                    int z0 = encoded[z + 0];
+                                    int z1 = encoded.Length == z+1 ? 0 : encoded[z + 1];
+
+                                    ushort y = (ushort)((z0 << 8) | z1);
+                                    AdditionalBytecode.Add(y);
+                                }
+                            } else {
+                                info.Errors.Add("String does not suit the requirements for encoding!" + ErrorEnding());
+                            } break;
                         case Param.Direction:
                             switch (paramBits[i].ToLower()) {
                                 case "left": AdditionalBytecode.Add((ushort)0); break;
@@ -349,6 +372,7 @@ namespace ToolCache.Scripting {
                             AdditionalBytecode.Add(AITypesHelper.StringLowerToValue[paramBits[i].ToLower()]); break;
                         case Param.AIEventType:
                             if (EventsHelper.AIScriptEvents.ContainsKey(paramBits[i].ToLower())) {
+                                AdditionalBytecode.Add(0xBFFF); //Static number
                                 AdditionalBytecode.Add(EventsHelper.AIScriptEvents[paramBits[i].ToLower()]);
                             } else {
                                 info.Errors.Add("Cannot find an AIEvent called: " + paramBits[i] + ErrorEnding());
@@ -422,7 +446,32 @@ namespace ToolCache.Scripting {
                                     AdditionalBytecode.Add((ushort)info.RemappedMapIDs[paramBits[i]]);
                                 }
                             } else {
-                                info.Errors.Add("Cannot find a map called '" + paramBits[i] + "'" + ErrorEnding());
+                                info.Errors.Add("Cannot find a map called '" + paramBits[i] + "', capitalization matters with map names! " + ErrorEnding());
+                            } break;
+                        case Param.SpawnRegion:
+                            if (info.ScriptType == ScriptTypes.Map && info.CurrentMap != null) {
+                                int z = -1;
+
+                                for(int y = 0; y < info.CurrentMap.Spawns.Count; y++) {
+                                    if(info.CurrentMap.Spawns[y].Name == paramBits[i]) {
+                                        z = y;
+                                        break;
+                                    }
+                                }
+                                
+                                if(z > -1) {
+                                    AdditionalBytecode.Add((ushort)z);
+                                } else {
+                                    info.Errors.Add("Cannot find a spawn region called " + paramBits[i] + ErrorEnding());
+                                }
+                            } else {
+                                info.Errors.Add("Only Map Scripts can control spawn regions!" + ErrorEnding());
+                            } break;
+                        case Param.NetworkType:
+                            if (Commands.NetworkTypes.ContainsKey(paramBits[i].ToLower())) {
+                                AdditionalBytecode.Add(Commands.NetworkTypes[paramBits[i].ToLower()]);
+                            } else {
+                                info.Errors.Add("Cannot find a network type called '" + paramBits[i] + "' perhaps its unsupported at the moment.");
                             } break;
                         default:
                             info.Errors.Add("Unknown Param type: " + thisParamType + ErrorEnding()); break;
@@ -590,10 +639,9 @@ namespace ToolCache.Scripting {
                     trueCommand = pb.Substring(0, pb.IndexOf('('));
                     additionalInfo = pb.Substring(pb.IndexOf('(') + 1, pb.Length - (pb.LastIndexOf('(') + 2));
                 }
-                trueCommand = trueCommand.ToLower();
 
-                if (Commands.IfFunctions.ContainsKey(trueCommand)) {
-                    ValidCommand vc = Commands.IfFunctions[trueCommand];
+                if (Commands.IfFunctions.ContainsKey(trueCommand.ToLower())) {
+                    ValidCommand vc = Commands.IfFunctions[trueCommand.ToLower()];
                     AdditionalBytecode.Add(vc.CommandID);
                     ProcessParams(Info, vc, additionalInfo);
                 } else {

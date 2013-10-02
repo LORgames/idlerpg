@@ -61,13 +61,16 @@ namespace CityTools {
                 if(animationList.GetAnimation() != null) {
                     animationList.GetAnimation().Draw(e.Graphics, 0, 0, 1);
                 }
-
+                
                 if (ckbDrawDebug.Checked) {
-                    Image im = ImageCache.RequestImage(animationList.GetAnimation().Frames[0]);
-                    if(im != null) {
-                        int x = im.Width/2 - (int)(numSizeX.Value/2) + (int)numOffsetX.Value;
-                        int y = im.Height - (int)(numSizeY.Value) - (int)numOffsetY.Value;
-                        e.Graphics.DrawRectangle(Pens.Red, x, y, (int)numSizeX.Value, (int)numSizeY.Value);
+                    AnimatedObject anim = animationList.GetAnimation();
+                    if (anim.Frames.Count > 0) {
+                        Image im = ImageCache.RequestImage(anim.Frames[0]);
+                        if (im != null) {
+                            int x = im.Width / 2 - (int)(numSizeX.Value / 2) + (int)numOffsetX.Value;
+                            int y = im.Height - (int)(numSizeY.Value) - (int)numOffsetY.Value;
+                            e.Graphics.DrawRectangle(Pens.Red, x, y, (int)numSizeX.Value, (int)numSizeY.Value);
+                        }
                     }
                 }
             }

@@ -24,7 +24,6 @@ adl "%APP_XML%" "%APP_DIR%" -- map=Menu+debug=Yes+showfps=Yes
 if errorlevel 1 goto end
 goto end
 
-
 :ios-debug
 echo.
 echo Packaging application for debugging on iOS %INTERPRETER%

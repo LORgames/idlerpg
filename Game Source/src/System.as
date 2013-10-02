@@ -12,9 +12,14 @@ package {
 	import Game.General.ImageLoader;
 	import Game.Map.WorldData;
 	import Game.Scripting.GlobalVariables;
+	import Game.Scripting.NetworkScriptExec;
+	import Game.Scripting.Script;
 	import InputSystems.KeyboardInput;
 	import InputSystems.MouseInput;
 	import InputSystems.TouchInput;
+	import QDMF.IPacketProcessor;
+	import QDMF.Packet;
+	import QDMF.PacketController;
 	import SoundSystem.EffectsPlayer;
 	/**
 	 * ...
@@ -30,6 +35,8 @@ package {
 			ImageLoader.Initialize();
 			
 			BinaryLoader.Load("Data/Settings.bin", ParseSettings, NoSettings);
+			
+			NetworkScriptExec.Launch();
 		}
 		
 		private function ParseSettings(b:ByteArray):void {

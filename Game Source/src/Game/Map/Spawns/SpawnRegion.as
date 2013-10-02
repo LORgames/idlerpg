@@ -25,6 +25,7 @@ package Game.Map.Spawns {
         public var Timeout:int = 60;
 		
 		private var UsedTimeout:int;
+		private var Enabled:Boolean = true;
 		
 		public var Critters:Vector.<BaseCritter>;
 
@@ -136,6 +137,8 @@ package Game.Map.Spawns {
 		/* INTERFACE EngineTiming.IOneSecondUpdate */
 		
 		public function UpdateOneSecond():void {
+			if (!Enabled) return;
+			
 			UsedTimeout++;
 			
 			if (UsedTimeout >= Timeout) {
@@ -183,6 +186,10 @@ package Game.Map.Spawns {
 		
 		public function GetFaction():int {
 			return 0;
+		}
+		
+		public function SetEnabled(b:Boolean):void {
+			Enabled = b;
 		}
 	}
 }

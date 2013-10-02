@@ -30,7 +30,7 @@ package RenderSystem {
 		public function Resized():void {
 			this.bitmapData = null;
 			if(data != null) data.dispose();
-			data = new BitmapData(Main.I.stage.stageWidth/Camera.Z, Main.I.stage.stageHeight/Camera.Z, false);
+			data = new BitmapData(Main.I.stage.stageWidth/Camera.Z, Main.I.stage.stageHeight/Camera.Z, false, 0x0);
 			this.bitmapData = data;
 			
 			fullRect.width = data.width;

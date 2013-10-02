@@ -10,7 +10,7 @@ using System.Drawing;
 namespace ToolCache.Map.Tiles {
     public class TileTemplate {
         //Some constants
-        public const int PIXELS = 48;
+        public static int PIXELS = GlobalSettings.TileSize;
 
         //Editor Information
         public short TileID = 0;

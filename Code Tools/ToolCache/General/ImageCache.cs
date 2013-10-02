@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.IO;
+using System.Windows.Forms;
 
 namespace ToolCache.General {
     public class ImageCache {
@@ -14,6 +15,11 @@ namespace ToolCache.General {
             //Hopefully more often then not its already cached :)
             if (img_store.ContainsKey(filename)) {
                 return img_store[filename];
+            }
+
+            if (!File.Exists(filename)) {
+                MessageBox.Show("File does not exist! Cannot Cache Missing Files: " + filename);
+                return null;
             }
 
             //If its not cached, then boohoo...

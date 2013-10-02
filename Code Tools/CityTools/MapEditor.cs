@@ -410,5 +410,9 @@ namespace CityTools {
                 DrawWithObject((listObjects.SelectedItems[0].Tag as MapObject).ObjectID.ToString());
             }
         }
+
+        private void scriptMap_BeforeParse(object sender, ScriptInfoArgs e) {
+            e.Info.CurrentMap = MapPieceCache.CurrentPiece;
+        }
     }
 }

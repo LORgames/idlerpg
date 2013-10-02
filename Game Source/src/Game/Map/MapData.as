@@ -355,7 +355,7 @@ package Game.Map {
 		
 		public function Resize():void {
 			if(SizeX > 0) {
-				Camera.Z = Main.I.stage.stageWidth / SizeX;
+				Camera.Z = Math.floor(Main.I.stage.stageWidth / SizeX*2) / 2;
 			} else {
 				Camera.Z = 1;
 				Camera.Y = 0;

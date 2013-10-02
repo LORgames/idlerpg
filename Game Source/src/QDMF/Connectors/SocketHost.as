@@ -7,8 +7,10 @@ package QDMF.Connectors {
 	import flash.net.ServerSocket;
 	import flash.net.Socket;
 	import flash.utils.ByteArray;
+	import Game.Scripting.Script;
 	import QDMF.IHLNetwork;
 	import QDMF.Packet;
+	import QDMF.SocketTriggers;
 	/**
 	 * ...
 	 * @author Paul
@@ -24,20 +26,33 @@ package QDMF.Connectors {
 		
 		/* INTERFACE QDMF.IHLNetwork */
 		
-		public function Connect(Hostname:String, Pin:int, Logger:ILogger):void {
+		public function Connect(Hostname:String, Port:int, Logger:ILogger):void {
 			this.Logger = Logger;
 			
 			//Does nothing :)
-			HostSocket.bind(Pin, Hostname);
+			HostSocket.bind(Port, Hostname);
             HostSocket.addEventListener(ServerSocketConnectEvent.CONNECT, OnConnect );
             HostSocket.listen();
-            Logger.Log("Your pin is: " + (HostSocket.localPort*13-1456));
 		}
 		
 		private function OnConnect(e:ServerSocketConnectEvent):void {
 			Client = e.socket;
             Client.addEventListener(ProgressEvent.SOCKET_DATA, SocketDataHandler);
+			Client.addEventListener(Event.CLOSE, CloseHandler);
+			
             Logger.Log("Connection from " + Client.remoteAddress + ":" + Client.remotePort);
+			
+			Script.FireTrigger(SocketTriggers.SOCKET_CONNECT);
+		}
+
+		private function CloseHandler(event:Event):void {
+			Logger.Log("Disconnected.");
+			
+			Client.removeEventListener(ProgressEvent.SOCKET_DATA, SocketDataHandler);
+			Client.removeEventListener(Event.CLOSE, CloseHandler);
+			Client = null;
+			
+			Script.FireTrigger(SocketTriggers.SOCKET_DISCONNECT);
 		}
 		
 		private function SocketDataHandler(event:ProgressEvent):void {
@@ -66,6 +81,15 @@ package QDMF.Connectors {
 			return false;
 		}
 		
+		public function Close():void {
+			if (Client != null) {
+				Client.close();
+			}
+			
+			if (HostSocket != null) {
+				HostSocket.close();
+				HostSocket = null;
+			}
+		}
 	}
-
 }

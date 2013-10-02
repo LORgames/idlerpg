@@ -90,7 +90,7 @@ package Game.General {
 		
 		public static function GetString(b:ByteArray):String {
 			var l:int = b.readShort();
-			return b.readMultiByte(l, "iso-8859-1"); //map name
+			return b.readMultiByte(l, "utf-8"); //map name
 		}
 	}
 

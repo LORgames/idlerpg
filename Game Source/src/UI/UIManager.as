@@ -164,6 +164,7 @@ package UI {
 			}
 			
 			//Try script regions as well, much more complicated though.
+			if (WorldData.CurrentMap.ScriptRegions == null) return;
 			i = WorldData.CurrentMap.ScriptRegions.length;
 			
 			while (--i > -1) {

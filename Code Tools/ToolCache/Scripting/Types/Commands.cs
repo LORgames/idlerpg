@@ -10,7 +10,9 @@ namespace ToolCache.Scripting.Types {
         public static Dictionary<string, ValidCommand> IfFunctions = new Dictionary<string, ValidCommand>();
 
         public static Dictionary<Param, ushort[]> DefaultValues = new Dictionary<Param, ushort[]>();
-        public static Dictionary<String, ushort> ScriptTargets = new Dictionary<string, ushort>();
+
+        public static Dictionary<string, ushort> ScriptTargets = new Dictionary<string, ushort>();
+        public static Dictionary<string, ushort> NetworkTypes = new Dictionary<string, ushort>();
 
         public static readonly string[] ValidBooleanNames = { "on", "true", "1" };
 
@@ -45,15 +47,17 @@ namespace ToolCache.Scripting.Types {
             All.Add("soundgroupplay",
                 new ValidCommand(0x100E, new Param[] { Param.SoundEffectGroup }));
             All.Add("netsync",
-                new ValidCommand(0x100F, new Param[] { Param.Void }, true));
+                new ValidCommand(0x100F, new Param[] { Param.Void }, true, new ushort[] { 0xF001 }));
             All.Add("mapchange",
                 new ValidCommand(0x1010, new Param[] { Param.MapName }));
             All.Add("nethost",
-                new ValidCommand(0x1011, new Param[] { Param.NetworkType }));
-            All.Add("nethost",
-                new ValidCommand(0x1011, new Param[] { Param.NetworkType })); //TODO: This
+                new ValidCommand(0x1011, new Param[] { Param.NetworkType, Param.Integer }));
             All.Add("netconnect",
-                new ValidCommand(0x1011, new Param[] { Param.NetworkType, Param.String })); //TODO: This
+                new ValidCommand(0x1012, new Param[] { Param.NetworkType, Param.String, Param.Integer }));
+            All.Add("netclose",
+                new ValidCommand(0x1013, new Param[] { Param.Void }));
+            All.Add("spawnactive",
+                new ValidCommand(0x1014, new Param[] { Param.SpawnRegion, Param.Boolean }));
 
             //Quest and Inventory Commands
             All.Add("saydialogue",
@@ -114,6 +118,11 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0xC002, new Param[] { Param.UIPanel, Param.Boolean }));
             All.Add("uilayerredraw",
                 new ValidCommand(0xC003, new Param[] { Param.UIElement }));
+            All.Add("uitextchange",
+                new ValidCommand(0xC004, new Param[] { Param.UILayer, Param.String }));
+
+            All.Add("trace",
+                new ValidCommand(0xCFFF, new Param[] { Param.String }));
 
             /////////////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////// MATH FUNCTIONS
@@ -134,7 +143,10 @@ namespace ToolCache.Scripting.Types {
             IfFunctions.Add("animation",new ValidCommand(0x7006, new Param[] { Param.AnimationName }));
             IfFunctions.Add("direction",new ValidCommand(0x7007, new Param[] { Param.Direction }));
             IfFunctions.Add("isfaction",new ValidCommand(0x7008, new Param[] { Param.FactionName }));
+            //0x7009 is MATH COMPARE!
+            IfFunctions.Add("spend",    new ValidCommand(0x700A, new Param[] { Param.Integer, Param.Integer }));
             IfFunctions.Add("aieventis",new ValidCommand(0x7FFF, new Param[] { Param.AIEventType }));
+            IfFunctions.Add("triggeris",new ValidCommand(0x7FFF, new Param[] { Param.Integer }));
 
             /////////////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////// DEFAULT VALUES
@@ -145,20 +157,15 @@ namespace ToolCache.Scripting.Types {
             DefaultValues.Add(Param.Integer, new ushort[] { 0xBFFF, 0 });
             DefaultValues.Add(Param.Angle, new ushort[] { 0xBFFF, 0 });
             DefaultValues.Add(Param.Boolean, new ushort[] { 1 });
-            DefaultValues.Add(Param.String, new ushort[] { 0 });
-            DefaultValues.Add(Param.Direction, new ushort[] { 0 });
-            DefaultValues.Add(Param.CritterName, new ushort[] { 0 });
-            DefaultValues.Add(Param.EffectName, new ushort[] { 0 });
-            DefaultValues.Add(Param.ObjectName, new ushort[] { 0 });
-            DefaultValues.Add(Param.ItemName, new ushort[] { 0 });
-            DefaultValues.Add(Param.EquipmentName, new ushort[] { 0 });
-            DefaultValues.Add(Param.SoundEffectName, new ushort[] { 0 });
-            DefaultValues.Add(Param.SoundEffectGroup, new ushort[] { 0 });
-            DefaultValues.Add(Param.MusicName, new ushort[] { 0 });
-            DefaultValues.Add(Param.Portrait, new ushort[] { 0 });
-            DefaultValues.Add(Param.FactionName, new ushort[] { 0 });
-            DefaultValues.Add(Param.AnimationName, new ushort[] { 0 });
-            DefaultValues.Add(Param.ImageDatabase, new ushort[] { 0 });
+
+            Array types = Enum.GetValues(typeof(Param));
+
+            foreach(Param x in types) {
+                if (!DefaultValues.ContainsKey(x)) {
+                    DefaultValues.Add(x, new ushort[] { 0 });
+                    System.Diagnostics.Debug.WriteLine("No Default format for Param." + x + " setting as ushort[]{0};");
+                }
+            }
 
             /////////////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////// SCRIPT TARGETS
@@ -168,6 +175,13 @@ namespace ToolCache.Scripting.Types {
             ScriptTargets.Add("aitarget", 0x1);
             ScriptTargets.Add("attacker", 0x2);
             ScriptTargets.Add("owner", 0x3);
+
+            /////////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////// NETWORK TYPES
+            /////////////////////////////////////////////////////////////////////////
+
+            NetworkTypes.Add("lan", 0x0);
+            NetworkTypes.Add("bluetooth", 0xB);
         }
     }
 }

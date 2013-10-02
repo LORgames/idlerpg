@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using ToolCache.General;
+using System.IO;
 
 namespace ToolCache.UI {
     public class UIImageLayer : UILayer {
@@ -15,13 +16,15 @@ namespace ToolCache.UI {
             base.ReadFromBinaryIOX(f);
             GlobalVariable = f.GetInt();
             ImageFilename = f.GetString();
+
+            ImageFilename = "UI\\" + Path.GetFileName(ImageFilename);
         }
 
         internal override void WriteToBinaryIO(BinaryIO f) {
             base.WriteToBinaryIO(f);
 
             f.AddInt(GlobalVariable);
-            f.AddString(ImageFilename);
+            f.AddString(Path.GetFileName(ImageFilename));
         }
 
         internal override void Draw(System.Drawing.Graphics gfx, System.Drawing.Rectangle canvasArea, UIElement owner, float displayValue) {

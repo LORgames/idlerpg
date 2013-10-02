@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ToolCache.Scripting.Types;
+using ToolCache.Map;
 
 namespace ToolCache.Scripting {
     public class ScriptInfo {
@@ -21,6 +22,7 @@ namespace ToolCache.Scripting {
         public List<string> AnimationNames = new List<string>();
 
         //This is a list of the exporter defined remappings
+        public MapPiece CurrentMap;
         public Dictionary<string, short> RemappedEquipmentIDs;
         public Dictionary<string, short> RemappedEffectIDs;
         public Dictionary<string, short> RemappedObjectIDs;

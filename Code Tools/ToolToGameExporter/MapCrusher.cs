@@ -92,8 +92,9 @@ namespace ToolToGameExporter {
                 if (map.Spawns.Count > 255) Processor.Errors.Add(new ProcessingError("Map", map.Name + ":Spawns", "Can only have upto 255 spawns per map."));
                 f.AddByte((byte)map.Spawns.Count);
 
-                for (int i = 0; i < map.Spawns.Count; i++) {
-                    SpawnRegion sr = map.Spawns[i];
+                int g = map.Spawns.Count;
+                while (--g > -1) {
+                    SpawnRegion sr = map.Spawns[g];
 
                     // All the spawn information (thats relevant)
                     f.AddByte((byte)sr.MaxSpawn);
@@ -147,6 +148,7 @@ namespace ToolToGameExporter {
 
                 //Script
                 ScriptInfo s = new ScriptInfo("Map." + map.Name, ScriptTypes.Map);
+                s.CurrentMap = map;
                 ScriptCrusher.ProcessScript(s, map.Script, f);
 
                 f.Encode(Global.EXPORT_DIRECTORY + "/Map_" + map.Name + ".bin");

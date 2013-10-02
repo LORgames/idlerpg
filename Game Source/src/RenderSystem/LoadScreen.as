@@ -11,6 +11,7 @@ package RenderSystem {
 		public var RealAlpha:uint = 255;
 		
 		public function LoadScreen() {
+			RealAlpha = 0;
 			this.bitmapData = new BitmapData(1, 1, true, 0x000000 | RealAlpha << 24);
 		}
 		
@@ -21,9 +22,7 @@ package RenderSystem {
 		}
 		
 		public function Draw():void {
-			this.bitmapData.setPixel32(0, 0, 0x000000 | RealAlpha << 24);
+			//this.bitmapData.setPixel32(0, 0, 0x000000 | RealAlpha << 24);
 		}
-		
 	}
-	
 }
