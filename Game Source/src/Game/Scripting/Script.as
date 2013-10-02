@@ -381,10 +381,9 @@ package Game.Scripting {
 				var _continue:Boolean = (ProcessBlock(eventScript, info, eventID, param) == 0);
 				
 				info.PopTarget();
+				eventScript.position = startIndex;
 				
-				if(_continue) {
-					eventScript.position = startIndex;
-				} else {
+				if(!_continue) {
 					break;
 				}
 			}
