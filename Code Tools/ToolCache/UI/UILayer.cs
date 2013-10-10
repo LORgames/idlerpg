@@ -7,21 +7,6 @@ using ToolCache.General;
 using ToolCache.Scripting;
 
 namespace ToolCache.UI {
-    public enum UILayerType {
-        Static,
-        Tile,
-        Stretch,
-        StretchToValueX,
-        StretchToValueY,
-        StretchToValueXNeg,
-        StretchToValueYNeg,
-        PanX,
-        PanY,
-        PanXNeg,
-        PanYNeg,
-        Radial
-    }
-
     public class UILayer {
         public UILayerType MyType = UILayerType.Static;
         public UIAnchorPoint AnchorPoint = UIAnchorPoint.TopLeft;
@@ -84,7 +69,7 @@ namespace ToolCache.UI {
             return "Unnamed";
         }
 
-        internal virtual void Draw(Graphics gfx, Rectangle canvasArea, UIElement owner, float displayValue) {
+        internal virtual void Draw(Graphics gfx, Rectangle canvasArea, UIElement owner, float displayValue, bool drawRect) {
             
         }
     }

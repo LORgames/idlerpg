@@ -30,6 +30,7 @@ namespace ToolToGameExporter {
             info.RemappedSoundEffectIDs = SoundCrusher.EffectConversions;
             info.RemappedSoundEffectGroups = SoundCrusher.GroupConversions;
             info.RemappedMapIDs = MapCrusher.RemappedMapIDs;
+            info.RemappedFunctionIDs = GlobalVariableCrusher.RemappedFunctionNames;
 
             Parser.Parse(script, info);
 
@@ -43,14 +44,16 @@ namespace ToolToGameExporter {
             /////// VARIABLES
             ///////////////////////////////////////////////////////////////////////////////////
 
-            List<ScriptVariable> Vars = info.Variables.Values.ToList();
-            Vars.Sort((x, y) => x.Index.CompareTo(y.Index));
+            if (info.ScriptType != ScriptTypes.Function) {
+                List<ScriptVariable> Vars = info.Variables.Values.ToList();
+                Vars.Sort((x, y) => x.Index.CompareTo(y.Index));
 
-            int variableID = Vars.Count;
-            f.AddShort((short)variableID);
+                int variableID = Vars.Count;
+                f.AddShort((short)variableID);
 
-            while (--variableID > -1) {
-                f.AddShort(Vars[variableID].InitialValue);
+                while (--variableID > -1) {
+                    f.AddShort(Vars[variableID].InitialValue);
+                }
             }
 
             ///////////////////////////////////////////////////////////////////////////////////
@@ -69,7 +72,7 @@ namespace ToolToGameExporter {
                 expectedIndentation = UpdateIndentation(info, f, expectedIndentation, command);
 
                 //Is this an event, lets process it as such
-                if (command.Indent == 0) {
+                if (command.Indent == 0 && info.ScriptType != ScriptTypes.Function) {
                     f.AddUnsignedShort(command.CommandID);
                     f.AddUnsignedShort(0xF0FD); //Start Block
                     expectedIndentation++;
@@ -78,7 +81,7 @@ namespace ToolToGameExporter {
                     ProcessAdditionalBytesForCommands(info, f, command);
 
                     //Update the expected indentation if we're adding foreach, if etc
-                    if ((command.CommandID & 0x8000) == 0x8000) {
+                    if (command.CommandID >= 0x8000 && command.CommandID < 0x8004) {
                         expectedIndentation++;
 
                         //Start the code block

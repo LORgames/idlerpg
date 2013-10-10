@@ -6,11 +6,13 @@ package UI {
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
+	import flash.text.AntiAliasType;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
 	import Game.Scripting.GlobalVariables;
 	import Strings.StringEx;
+	import UI.Fonts;
 	/**
 	 * ...
 	 * @author Paul
@@ -22,15 +24,18 @@ package UI {
 		private var LastMessage:String = "";
 		private var tf:TextField;
 		
+		public var Colour:int = 0;
+		public var Align:int = 0;
+		public var FontSize:int = 0;
+		public var FontFamily:int = 0;
+		public var WordWrap:Boolean = false;
+		
 		public function UILayerText() {
 			
 		}
 		
 		public function PrepareTF():void {
-			tf = new TextField();
-			tf.selectable = false;
-			tf.setTextFormat(new TextFormat("Verdana", 10, 0xFFFFFF));
-			tf.autoSize = TextFieldAutoSize.LEFT;
+			tf = Fonts.GetTextField(FontSize, 3, Colour);
 			tf.text = Message.GetBuilt();
 		}
 		
@@ -42,12 +47,12 @@ package UI {
 			
 			//Calculate X
 			switch (AnchorPoint) {
-				case UIAnchorPoint.BottomLeft: case UIAnchorPoint.MiddleLeft: case UIAnchorPoint.TopLeft: //Left
+				case UIAnchorPoint.BottomLeft: case UIAnchorPoint.MiddleLeft: case UIAnchorPoint.TopLeft:
 					this.x = OffsetX; break;
-				case UIAnchorPoint.BottomRight: case UIAnchorPoint.MiddleRight: case UIAnchorPoint.TopRight: //Right
+				case UIAnchorPoint.BottomRight: case UIAnchorPoint.MiddleRight: case UIAnchorPoint.TopRight:
 					this.x = w - SizeX - OffsetX; break;
 				default:
-					this.x = (w - SizeX)/2 + OffsetX; break;
+					this.x = (w - SizeX) / 2 + OffsetX; break;
 			}
 			
 			//Calculate Y
@@ -58,6 +63,32 @@ package UI {
 					this.y = OffsetY; break;
 				default:
 					this.y = (h-SizeY)/2 + OffsetY; break;
+			}
+			
+			//Calculate X
+                switch (Align) {
+                    case UIAnchorPoint.BottomCenter: case UIAnchorPoint.MiddleCenter: case UIAnchorPoint.TopCenter:
+                        if (WordWrap) {
+							tf.autoSize = TextFieldAutoSize.CENTER;
+                        } else {
+                            this.x -= tf.width / 2;
+                        }
+                        break;
+                    case UIAnchorPoint.BottomRight: case UIAnchorPoint.MiddleRight: case UIAnchorPoint.TopRight:
+                        if (WordWrap) {
+							tf.autoSize = TextFieldAutoSize.RIGHT;
+                        } else {
+                            this.x -= tf.width;
+                        }
+                        break;
+                }
+			
+			//Calculate Y
+			switch (Align) {
+				case UIAnchorPoint.BottomLeft: case UIAnchorPoint.BottomCenter: case UIAnchorPoint.BottomRight:
+					this.y -= tf.height; break;
+				case UIAnchorPoint.MiddleLeft: case UIAnchorPoint.MiddleCenter: case UIAnchorPoint.MiddleRight:
+					this.y -= tf.height / 2; break;
 			}
 			
 			//Special Layer Types

@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using ToolCache.General;
 using ToolCache.Scripting;
+using ToolCache.Scripting.Extensions;
 
 namespace CityTools {
     public partial class GlobalSettingsEditor : Form {
@@ -27,7 +28,7 @@ namespace CityTools {
             numPerspectiveSkew.Value = (decimal)GlobalSettings.PerspectiveSkew;
 
             int i = 0;
-            foreach (string s in GlobalVariables.Variables.Keys) {
+            foreach (string s in Variables.GlobalVariables.Keys) {
                 cbVariableWX.Items.Add(s);
                 cbVariableWY.Items.Add(s);
                 cbVariableLX.Items.Add(s);

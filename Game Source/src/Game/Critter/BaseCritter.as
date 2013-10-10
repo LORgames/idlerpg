@@ -7,6 +7,7 @@ package Game.Critter {
 	import EngineTiming.IUpdatable;
 	import flash.display.Graphics;
 	import flash.geom.Point;
+	import flash.text.TextField;
 	import Game.Map.MapData;
 	import Game.Map.Portals.Portal;
 	import Game.Map.ScriptRegion;
@@ -21,6 +22,7 @@ package Game.Critter {
 	import Game.Scripting.ScriptInstance;
 	import Game.Scripting.ScriptTypes;
 	import Interfaces.IMapObject;
+	import RenderSystem.Camera;
 	/**
 	 * ...
 	 * @author Paul
@@ -33,6 +35,8 @@ package Game.Critter {
 		
 		private var ReportedDeath:Boolean = false;
 		public var Owner:IScriptTarget;
+		
+		public var tf:TextField;
 		
 		//Current state information
 		public var isMoving:Boolean = false;
@@ -71,6 +75,7 @@ package Game.Critter {
 		public function BaseCritter() {
 			MyRect = new Rect(false, this, 0, 0, 0, 0);
 			Clock.I.Updatables.push(this);
+			tf = Drawer.GetTextField();
 		}
 		
 		protected function CheckScriptRegions():void {
@@ -184,6 +189,10 @@ package Game.Critter {
 			//Store these in case
 			var prevX:int = X;
 			var prevY:int = Y;
+			
+			tf.text = CurrentHP + " / " + MaximumHP;
+			tf.x = (X + Camera.X) * Camera.Z - tf.width/2;
+			tf.y = (Y + Camera.Y) * Camera.Z - 60;
 			
 			//Process the things
 			X += moveSpeedX * dt / CurrentMovementCost;
@@ -441,6 +450,11 @@ package Game.Critter {
 				MyScript.CleanUp();
 				MyScript = null;
 			}
+			
+			tf.text = "";
+			tf.parent.removeChild(tf);
+			tf = null;
+			
 			
 			Clock.I.Remove(this);
 		}

@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using ToolCache.General;
+using System.ComponentModel;
+using System.Drawing;
+using System.Drawing.Text;
 
 namespace ToolCache.UI {
     public class UIManager {
@@ -11,9 +14,33 @@ namespace ToolCache.UI {
 
         public static List<UIPanel> Panels = new List<UIPanel>();
 
+        public static BindingList<FontFamily> Fonts = new BindingList<FontFamily>();
+
         public static void Initialize() {
+            InstallFonts();
             Panels.Clear();
             ReadDatabase();
+        }
+
+        private static void InstallFonts() {
+            Fonts.Clear();
+
+            AddFont("Arial");
+            AddFont("Verdana");
+            AddFont("Calibri");
+            AddFont("Bangers");
+            AddFont("Jing Jing");
+            AddFont("Visitor TT1 BRK");
+        }
+
+        private static void AddFont(string p) {
+            FontFamily f = new FontFamily(p);
+
+            if (f.Name == p) {
+                Fonts.Add(f);
+            } else {
+                Fonts.Add(new FontFamily(GenericFontFamilies.Serif));
+            }
         }
 
         internal static void ReadDatabase() {

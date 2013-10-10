@@ -41,6 +41,8 @@ package UI {
 				Panels[i] = new UIPanel();
 				this.addChild(Panels[i]);
 				
+				Panels[i].visible = (b.readByte() == 1);
+				
 				var totalElements:int = b.readByte();
 				Panels[i].Elements = new Vector.<UIElement>(totalElements, true);
 				
@@ -87,6 +89,13 @@ package UI {
 							(Panels[i].Elements[j].Layers[k] as UILayerImage).ImageRect = b.readShort();
 						} else if (layerType == 1) {
 							(Panels[i].Elements[j].Layers[k] as UILayerText).Message = StringEx.BuildFromCore(BinaryLoader.GetString(b));
+							
+							(Panels[i].Elements[j].Layers[k] as UILayerText).Colour = b.readInt();
+							(Panels[i].Elements[j].Layers[k] as UILayerText).Align = b.readByte();
+							(Panels[i].Elements[j].Layers[k] as UILayerText).FontSize = b.readByte();
+							(Panels[i].Elements[j].Layers[k] as UILayerText).FontFamily = b.readByte();
+							(Panels[i].Elements[j].Layers[k] as UILayerText).WordWrap = b.readByte() == 1;
+							
 							(Panels[i].Elements[j].Layers[k] as UILayerText).PrepareTF();
 						}
 					}

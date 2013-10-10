@@ -15,15 +15,14 @@ package UI {
 		
 		public function FPSCounter() {
 			super();
-			autoSize = TextFieldAutoSize.LEFT;
-			selectable = false;
-			defaultTextFormat = new TextFormat(Fonts.Debug, 20, 0x000000);
+			
+			Fonts.SetupTextFormat(this, 5, 20, 0x0);
 			
 			this.background = true;
 			this.backgroundColor = 0xFFFF00;
 			
 			UpdateInfo("0.0");
-			this.y = 50;
+			this.y = 80;
 			
 			Clock.FPSTF = this;
 		}

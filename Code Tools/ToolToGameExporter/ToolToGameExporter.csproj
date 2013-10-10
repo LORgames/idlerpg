@@ -65,7 +65,9 @@
     </Compile>
     <Compile Include="GameSettingsExporter.cs" />
     <Compile Include="GlobalVariableCrusher.cs" />
+    <Compile Include="Helpers\CygonRectanglePacker.cs" />
     <Compile Include="Helpers\MaxRects.cs" />
+    <Compile Include="Helpers\RectanglePacker.cs" />
     <Compile Include="ItemCrusher.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

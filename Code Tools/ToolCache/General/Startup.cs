@@ -16,6 +16,7 @@ using ToolCache.SaveSystem;
 using ToolCache.Scripting;
 using ToolCache.NPC;
 using ToolCache.Scripting.Types;
+using ToolCache.Scripting.Extensions;
 
 namespace ToolCache.General {
     public class Startup {
@@ -26,7 +27,7 @@ namespace ToolCache.General {
 
             //Tier 0 Loading:
             PortraitManager.Initialize();
-            GlobalVariables.Initialize();
+            Variables.Initialize();
             SoundDatabase.Initialize();
             ElementManager.Initialize();
             Factions.Initialize();

@@ -27,7 +27,7 @@ namespace ToolCache.UI {
             f.AddString(Path.GetFileName(ImageFilename));
         }
 
-        internal override void Draw(System.Drawing.Graphics gfx, System.Drawing.Rectangle canvasArea, UIElement owner, float displayValue) {
+        internal override void Draw(System.Drawing.Graphics gfx, System.Drawing.Rectangle canvasArea, UIElement owner, float displayValue, bool drawRect) {
             if (this.ImageFilename != "") {
                 Rectangle thisArea = new Rectangle(0, 0, SizeX, SizeY);
 
@@ -77,7 +77,9 @@ namespace ToolCache.UI {
                 if (MyType == UILayerType.StretchToValueXNeg) thisArea.X += (int)((1 - displayValue) * SizeX);
                 if (MyType == UILayerType.StretchToValueYNeg) thisArea.Y += (int)((1 - displayValue) * SizeY);
 
+                if (!File.Exists(ImageFilename)) return;
                 Image im = ImageCache.RequestImage(ImageFilename);
+                if (im == null) return;
 
                 if (MyType == UILayerType.Stretch || MyType == UILayerType.StretchToValueX || MyType == UILayerType.StretchToValueY || MyType == UILayerType.StretchToValueXNeg || MyType == UILayerType.StretchToValueYNeg) {
                     gfx.DrawImage(im, thisArea);

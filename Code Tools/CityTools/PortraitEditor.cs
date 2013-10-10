@@ -11,6 +11,7 @@ using System.IO;
 using ToolCache.General;
 using ToolCache.Scripting;
 using System.Drawing.Imaging;
+using ToolCache.Scripting.Extensions;
 
 namespace CityTools {
     public partial class PortraitEditor : Form {
@@ -182,7 +183,7 @@ namespace CityTools {
                             string filename = ((string[])data)[i];
                             string ext = Path.GetExtension(filename).ToLower();
                             if (ext == ".png") {
-                                string expectedName = GlobalVariables.FixVariableName(txtPortraitName.Text);
+                                string expectedName = Variables.FixVariableName(txtPortraitName.Text);
                                 string nFilename = "Portraits/" + expectedName + ".png";
 
                                 if (Path.GetFullPath(nFilename) == Path.GetFullPath(filename)) {

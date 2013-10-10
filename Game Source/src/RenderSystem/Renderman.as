@@ -40,7 +40,7 @@ package RenderSystem {
 			
 			Main.I.addChild(map.DebugLayer);
 			
-			MapText = Fonts.GetTextField(60, Fonts.Header);
+			MapText = Fonts.GetTextField(60, 3);
 			Main.I.addChild(MapText);
 		}
 		

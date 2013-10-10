@@ -7,7 +7,6 @@ package UI {
 	
 	public class UIPanel extends Sprite {
 		public var Elements:Vector.<UIElement>;
-		public var Active:Boolean = false;
 		
 		public var HasTouchElements:Boolean = false;
 		

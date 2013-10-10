@@ -12,6 +12,7 @@ using ToolCache.Map.Objects;
 using ToolCache.Scripting.Types;
 using ToolCache.UI;
 using ToolCache.Map;
+using ToolCache.Scripting.Extensions;
 
 namespace ToolCache.Scripting {
     public class ScriptCommand {
@@ -66,8 +67,12 @@ namespace ToolCache.Scripting {
                         //Process this as a variable
                         ProcessVariable(info, m);
                     } else {
-                        //Process this as an Event
-                        ProcessEvent(info);
+                        if (info.ScriptType != ScriptTypes.Function) {
+                            //Process this as an Event
+                            ProcessEvent(info);
+                        } else {
+                            ProcessAction(info);
+                        }
                     }
                 } else {
                     //Process this as an action
@@ -254,7 +259,7 @@ namespace ToolCache.Scripting {
                         case Param.String:
                             Match strM = Regex.Match(paramBits[i], "\"([A-Za-z 0-9\\.\\(\\)!@#\\$%\\^&\\*<>'{}_\\-]*)\"");
 
-                            if (GlobalVariables.StringTable.ContainsKey(paramBits[i])) {
+                            if (Variables.StringTable.ContainsKey(paramBits[i])) {
                                 AdditionalBytecode.Add(0x0); //Static String
                                 info.Errors.Add("Cannot correctly use StringTable yet!" + ErrorEnding());
                             } else if(strM.Success) {
@@ -471,7 +476,15 @@ namespace ToolCache.Scripting {
                             if (Commands.NetworkTypes.ContainsKey(paramBits[i].ToLower())) {
                                 AdditionalBytecode.Add(Commands.NetworkTypes[paramBits[i].ToLower()]);
                             } else {
-                                info.Errors.Add("Cannot find a network type called '" + paramBits[i] + "' perhaps its unsupported at the moment.");
+                                info.Errors.Add("Cannot find a network type called '" + paramBits[i] + "' perhaps its unsupported at the moment."+ErrorEnding());
+                            } break;
+                        case Param.Function:
+                            if (Variables.FunctionTable.ContainsKey(paramBits[i])) {
+                                if (info.RemappedFunctionIDs != null) {
+                                    AdditionalBytecode.Add((ushort)info.RemappedFunctionIDs[paramBits[i]]);
+                                }
+                            } else {
+                                info.Errors.Add("Cannot find a function called '" + paramBits[i] + "' perhaps the capitalization is wrong. It matters with functions!" + ErrorEnding());
                             } break;
                         default:
                             info.Errors.Add("Unknown Param type: " + thisParamType + ErrorEnding()); break;
@@ -515,9 +528,9 @@ namespace ToolCache.Scripting {
                 AdditionalBytecode.Add(0xBFFD);
                 AdditionalBytecode.Add((ushort)info.Variables[mathBit].Index);
                 return true;
-            } else if (GlobalVariables.Variables.ContainsKey(mathBit)) {
+            } else if (Variables.GlobalVariables.ContainsKey(mathBit)) {
                 AdditionalBytecode.Add(0xBFFE);
-                AdditionalBytecode.Add((ushort)GlobalVariables.Variables[mathBit].Index);
+                AdditionalBytecode.Add((ushort)Variables.GlobalVariables[mathBit].Index);
                 return true;
             }
 
@@ -689,7 +702,7 @@ namespace ToolCache.Scripting {
         }
 
         private bool VariableExists(string p, ScriptInfo Info) {
-            return (Info.Variables.ContainsKey(p) || GlobalVariables.Variables.ContainsKey(p));
+            return (Info.Variables.ContainsKey(p) || Variables.GlobalVariables.ContainsKey(p));
         }
 
         /// <summary>

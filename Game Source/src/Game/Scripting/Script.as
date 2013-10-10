@@ -1,5 +1,4 @@
 package Game.Scripting {
-	import adobe.utils.CustomActions;
 	import CollisionSystem.PointX;
 	import CollisionSystem.Rect;
 	import Debug.Drawer;
@@ -21,12 +20,8 @@ package Game.Scripting {
 	import Interfaces.IMapObject;
 	import QDMF.Connectors.SocketClient;
 	import QDMF.Connectors.SocketHost;
-	import QDMF.Packet;
 	import QDMF.PacketFactory;
-	import RenderSystem.MapRenderer;
-	import RenderSystem.Renderman;
 	import SoundSystem.EffectsPlayer;
-	import Strings.StringComponentGV;
 	import Strings.StringEx;
 	import UI.UIElement;
 	import UI.UILayer;
@@ -89,7 +84,7 @@ package Game.Scripting {
 		
 		internal function Run(eventID:uint, info:ScriptInstance, param:Object):void {
 			//Reset the reader
-			if (eventID >= TOTAL_EVENT_TYPES) return;
+			if (eventID >= EventScripts.length) return;
 			if (EventScripts[eventID] == null) return;
 			
 			var EventScript:ByteArray = EventScripts[eventID];
@@ -402,7 +397,7 @@ package Game.Scripting {
 				return GlobalVariables.Variables[varID];
 			}
 			
-			return varID; //Hopefully is a static number
+			return varID; //Hopefully is a constant number
 		}
 		
 		//This function is responsible for reading scripts in and creating script objects
@@ -719,6 +714,12 @@ package Game.Scripting {
 						if (WorldData.CurrentMap.Spawns.length > p0.X) {
 							WorldData.CurrentMap.Spawns[p0.X].SetEnabled(p0.Y == 1);
 						} break;
+					case 0x1015: //NetSyncVar
+						p0.X = EventScript.readUnsignedShort(); //SHOULD BE 0xBFFE
+						p0.Y = EventScript.readUnsignedShort(); //SHOULD BE < 1000
+						if (p0.X == 0xBFFE && Global.Network != null) PacketFactory.N(Vector.<int>([0xB000, 0xBFFE, p0.Y, 0xBFFF, GlobalVariables.Variables[p0.Y], 0xBF01]));
+						
+						break;
 					case 0x4001: //Equip item on the target
 						if (info.CurrentTarget is CritterHuman) {
 							(info.CurrentTarget as CritterHuman).Equipment.EquipSlot(EventScript.readShort(), EventScript.readShort());
@@ -835,8 +836,12 @@ package Game.Scripting {
 					case 0x8005: //Break
 						ReadUntilBalancedClose(EventScript);
 						return 2;
+					case 0x8006: //Call a global function
+						p0.X = EventScript.readShort(); //Function ID
+						GlobalVariables.Functions.Run(p0.X, info, param);
+						break;
 					case 0xC002: //Hide Panel
-						p0.D = EventScript.readShort();
+						p0.D = EventScript.readUnsignedShort();
 						p0.X = EventScript.readShort();
 						(Main.I.hud.Panels[p0.D] as UIPanel).visible = (p0.X == 1);
 						if (NetSync > 0 && Global.Network != null) PacketFactory.N(Vector.<int>([0xC002, p0.D, p0.X]));
@@ -870,6 +875,8 @@ package Game.Scripting {
 						
 						break;
 				}
+				
+				if (EventScript.position == EventScript.length) return 0;
 			}
 			
 			return 1;

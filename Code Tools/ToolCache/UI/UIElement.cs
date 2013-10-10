@@ -6,18 +6,6 @@ using ToolCache.General;
 using System.Drawing;
 
 namespace ToolCache.UI {
-    public enum UIAnchorPoint {
-        TopLeft,
-        TopCenter,
-        TopRight,
-        MiddleLeft,
-        MiddleCenter,
-        MiddleRight,
-        BottomLeft,
-        BottomCenter,
-        BottomRight
-    }
-
     public class UIElement {
         public List<UILayer> Layers = new List<UILayer>();
         public string Name = "";
@@ -68,7 +56,7 @@ namespace ToolCache.UI {
             }
         }
 
-        public void Draw(Graphics gfx, Rectangle canvasArea, float displayValue) {
+        public void Draw(Graphics gfx, Rectangle canvasArea, float displayValue, bool drawRect) {
             Rectangle thisArea = new Rectangle(0, 0, SizeX, SizeY);
 
             //Calculate X
@@ -106,10 +94,10 @@ namespace ToolCache.UI {
             }
 
             foreach (UILayer layer in Layers) {
-                layer.Draw(gfx, thisArea, this, displayValue);
+                layer.Draw(gfx, thisArea, this, displayValue, drawRect);
             }
 
-            gfx.DrawRectangle(Pens.Blue, thisArea);
+            if (drawRect) gfx.DrawRectangle(Pens.Blue, thisArea);
         }
 
         public override string ToString() {

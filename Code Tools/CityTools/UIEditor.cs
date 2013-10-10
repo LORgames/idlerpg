@@ -12,6 +12,7 @@ using ToolCache.General;
 using System.Drawing.Drawing2D;
 using ToolCache.Scripting;
 using ToolCache.Scripting.Types;
+using ToolCache.Scripting.Extensions;
 
 namespace CityTools {
     public partial class UIEditor : Form {
@@ -22,11 +23,8 @@ namespace CityTools {
         private Image bgImage;
 
         private bool PanelSwitching = false;
-        private bool PanelModified = false;
         private bool ElementSwitching = false;
-        private bool ElementModified = false;
         private bool LayerSwitching = false;
-        private bool LayerModified = false;
 
         public UIEditor() {
             InitializeComponent();
@@ -39,7 +37,7 @@ namespace CityTools {
             }
 
             foreach (UIPanel panel in UIManager.Panels) {
-                cbUIPanels.Items.Add(panel);
+                listUIPanels.Items.Add(panel);
             }
 
             BindingList<ScriptVariable> variables = new BindingList<ScriptVariable>();
@@ -53,13 +51,16 @@ namespace CityTools {
 
             variables.Add(temp);
 
-            foreach (KeyValuePair<string, ScriptVariable> pair in GlobalVariables.Variables) {
+            foreach (KeyValuePair<string, ScriptVariable> pair in Variables.GlobalVariables) {
                 variables.Add(pair.Value);
             }
 
             cbValue.DataSource = variables;
 
-            if(cbUIPanels.Items.Count > 0) cbUIPanels.SelectedIndex = 0;
+            cbTextFontFamily.DataSource = UIManager.Fonts;
+            cbTextFontFamily.DisplayMember = "Name";
+
+            if(listUIPanels.Items.Count > 0) listUIPanels.SelectedIndex = 0;
         }
 
         private void btnNewUIElement_Click(object sender, EventArgs e) {
@@ -68,7 +69,7 @@ namespace CityTools {
                 CurrentPanel.Elements.Add(newElement);
                 listUIElements.Items.Add(newElement);
                 listUIElements.SelectedItem = newElement;
-                PanelModified = true;
+                SavePanel();
             }
         }
 
@@ -80,8 +81,11 @@ namespace CityTools {
                     CurrentPanel.Elements.Remove(ui);
                     listUIElements.Items.Remove(ui);
                 }
-                PanelModified = true;
+
+                SavePanel();
             }
+
+            pbExample.Invalidate();
         }
 
         private void listUIElements_SelectedIndexChanged(object sender, EventArgs e) {
@@ -89,14 +93,13 @@ namespace CityTools {
         }
 
         private void SwitchPanel() {
-            SavePanelIfRequired();
-
-            if (cbUIPanels.SelectedItem != null && cbUIPanels.SelectedItem is UIPanel) {
-                CurrentPanel = (UIPanel)cbUIPanels.SelectedItem;
+            if (listUIPanels.SelectedItem != null && listUIPanels.SelectedItem is UIPanel) {
+                CurrentPanel = (UIPanel)listUIPanels.SelectedItem;
                 pnlUIPanel.Enabled = true;
 
                 PanelSwitching = true;
                 txtPanelName.Text = CurrentPanel.Name;
+                ckbEnabled.Checked = CurrentPanel.Enabled;
 
                 listUIElements.Items.Clear();
                 foreach (UIElement element in CurrentPanel.Elements) {
@@ -107,17 +110,26 @@ namespace CityTools {
                 pnlUIPanel.Enabled = false;
             }
 
+            listUILayers.Items.Clear();
+
+            pnlUILayer.Enabled = false;
+            pnlUIElement.Enabled = false;
+
+            CurrentElement = null;
+            CurrentLayer = null;
+
+            scriptUI.Text = "";
+
             pbExample.Invalidate();
         }
 
         private void SwitchElement() {
-            SaveElementIfRequired();
-
             if (listUIElements.SelectedItem != null) {
+                ElementSwitching = true;
+
                 CurrentElement = (UIElement)listUIElements.SelectedItem;
                 pnlUIElement.Enabled = true;
 
-                ElementSwitching = true;
                 txtUIName.Text = CurrentElement.Name;
                 cbUIElementAnchor.SelectedIndex = (int)CurrentElement.AnchorPoint;
                 numUIElementOffsetX.Value = (decimal)CurrentElement.OffsetX;
@@ -133,15 +145,15 @@ namespace CityTools {
 
                 ElementSwitching = false;
             } else {
+                CurrentElement = null;
                 pnlUIElement.Enabled = false;
             }
 
             pnlUILayer.Enabled = false;
+            CurrentLayer = null;
         }
 
         private void SwitchLayer() {
-            SaveLayerIfRequired();
-
             if (CurrentElement != null && listUILayers.SelectedItem != null) {
                 CurrentLayer = (UILayer)listUILayers.SelectedItem;
                 pnlUILayer.Enabled = true;
@@ -168,7 +180,7 @@ namespace CityTools {
                     pnlImageStuff.Visible = true;
                     pnlTextStuff.Visible = false;
 
-                    if (CurrentLayerIM.ImageFilename != "") {
+                    if (CurrentLayerIM.ImageFilename != "UI\\" && CurrentLayerIM.ImageFilename != "") {
                         pbLayerImage.Load(CurrentLayerIM.ImageFilename);
                     } else {
                         pbLayerImage.Image = null;
@@ -177,65 +189,71 @@ namespace CityTools {
                     UITextLayer CurrentLayerTX = (UITextLayer)CurrentLayer;
                     txtTextMessage.Text = CurrentLayerTX.Message;
 
+                    cbTextAlign.SelectedIndex = (int)CurrentLayerTX.Align;
+                    cbTextFontFamily.SelectedIndex = CurrentLayerTX.FontFamily;
+                    numTextSize.Value = CurrentLayerTX.FontSize;
+                    ckbTextWordWrap.Checked = CurrentLayerTX.WordWrap;
+                    pbTextColour.Invalidate();
+
                     pnlImageStuff.Visible = false;
                     pnlTextStuff.Visible = true;
                 }
                 LayerSwitching = false;
             }
+
+            pbLayerImage.Visible = pnlImageStuff.Visible;
         }
 
-        private void SaveLayerIfRequired() {
+        private void SaveLayer() {
             if (CurrentLayer != null) {
-                if (LayerModified) {
-                    CurrentLayer.SizeX = (short)numLayerWidth.Value;
-                    CurrentLayer.SizeY = (short)numLayerHeight.Value;
-                    CurrentLayer.OffsetX = (short)numLayerOffsetX.Value;
-                    CurrentLayer.OffsetY = (short)numLayerOffsetY.Value;
-                    CurrentLayer.AnchorPoint = (UIAnchorPoint)cbLayerAnchorPosition.SelectedIndex;
-                    CurrentLayer.MyType = (UILayerType)cbLayerType.SelectedIndex;
-                    CurrentLayer.Name = txtLayerName.Text;
+                CurrentLayer.SizeX = (short)numLayerWidth.Value;
+                CurrentLayer.SizeY = (short)numLayerHeight.Value;
+                CurrentLayer.OffsetX = (short)numLayerOffsetX.Value;
+                CurrentLayer.OffsetY = (short)numLayerOffsetY.Value;
+                CurrentLayer.AnchorPoint = (UIAnchorPoint)cbLayerAnchorPosition.SelectedIndex;
+                CurrentLayer.MyType = (UILayerType)cbLayerType.SelectedIndex;
+                CurrentLayer.Name = txtLayerName.Text;
 
-                    if (CurrentLayer is UIImageLayer) {
-                        (CurrentLayer as UIImageLayer).GlobalVariable = ((ScriptVariable)cbValue.SelectedItem).Index;
-                    } else if (CurrentLayer is UITextLayer) {
-                        (CurrentLayer as UITextLayer).Message = txtTextMessage.Text;
-                    }
+                if (CurrentLayer is UIImageLayer) {
+                    (CurrentLayer as UIImageLayer).GlobalVariable = ((ScriptVariable)cbValue.SelectedItem).Index;
+                } else if (CurrentLayer is UITextLayer) {
+                    (CurrentLayer as UITextLayer).Message = txtTextMessage.Text;
+                    (CurrentLayer as UITextLayer).Align = (UIAnchorPoint)cbTextAlign.SelectedIndex; ;
+                    (CurrentLayer as UITextLayer).FontFamily = cbTextFontFamily.SelectedIndex;
+                    (CurrentLayer as UITextLayer).FontSize = (int)numTextSize.Value;
+                    (CurrentLayer as UITextLayer).WordWrap = ckbTextWordWrap.Checked;
                 }
             }
         }
 
-        private void SaveElementIfRequired() {
+        private void SaveElement() {
             if (CurrentElement != null) {
-                if (ElementModified) {
-                    CurrentElement.Name = txtUIName.Text;
-                    CurrentElement.Script = scriptUI.Script;
-                    CurrentElement.AnchorPoint = (UIAnchorPoint)cbUIElementAnchor.SelectedIndex;
-                    CurrentElement.OffsetX = (short)numUIElementOffsetX.Value;
-                    CurrentElement.OffsetY = (short)numUIElementOffsetY.Value;
-                    CurrentElement.SizeX = (short)numUIElementSizeX.Value;
-                    CurrentElement.SizeY = (short)numUIElementSizeY.Value;
-                }
+                CurrentElement.Name = txtUIName.Text;
+                CurrentElement.Script = scriptUI.Script;
+                CurrentElement.AnchorPoint = (UIAnchorPoint)cbUIElementAnchor.SelectedIndex;
+                CurrentElement.OffsetX = (short)numUIElementOffsetX.Value;
+                CurrentElement.OffsetY = (short)numUIElementOffsetY.Value;
+                CurrentElement.SizeX = (short)numUIElementSizeX.Value;
+                CurrentElement.SizeY = (short)numUIElementSizeY.Value;
             }
         }
 
-        private void SavePanelIfRequired() {
+        private void SavePanel() {
             if (CurrentPanel != null) {
-                if (PanelModified) {
-                    CurrentPanel.Name = txtPanelName.Text;
-                }
+                CurrentPanel.Name = txtPanelName.Text;
+                CurrentPanel.Enabled = ckbEnabled.Checked;
             }
         }
 
         private void UIEditor_FormClosing(object sender, FormClosingEventArgs e) {
-            SaveElementIfRequired();
+            SaveElement();
             UIManager.WriteDatabase();
         }
 
         private void UIElementValueChanged(object sender, EventArgs e) {
             if (ElementSwitching) return;
 
-            ElementModified = true;
-            SaveElementIfRequired();
+            SaveElement();
 
             pbExample.Invalidate();
         }
@@ -259,9 +277,8 @@ namespace CityTools {
             }
 
             if (LayerSwitching) return;
-            LayerModified = true;
 
-            SaveLayerIfRequired();
+            SaveLayer();
 
             pbExample.Invalidate();
         }
@@ -271,7 +288,7 @@ namespace CityTools {
                 UIImageLayer newLayer = new UIImageLayer();
                 CurrentElement.Layers.Add(newLayer);
                 listUILayers.Items.Add(newLayer);
-                ElementModified = true;
+                SaveElement();
             }
         }
 
@@ -281,7 +298,8 @@ namespace CityTools {
                 UITextLayer newLayer = new UITextLayer();
                 CurrentElement.Layers.Add(newLayer);
                 listUILayers.Items.Add(newLayer);
-                ElementModified = true;
+
+                SaveElement();
             }
         }
 
@@ -293,7 +311,8 @@ namespace CityTools {
                     CurrentElement.Layers.Remove(layer);
                     listUILayers.Items.Remove(layer);
                 }
-                ElementModified = true;
+
+                SaveElement();
             }
         }
 
@@ -315,7 +334,8 @@ namespace CityTools {
 
                     ImageCache.ForceCache((CurrentLayer as UIImageLayer).ImageFilename);
                     pbLayerImage.Image = ImageCache.RequestImage((CurrentLayer as UIImageLayer).ImageFilename);
-                    LayerModified = true;
+
+                    SaveLayer();
                 } else {
                     Directory.SetCurrentDirectory(dir);
                 }
@@ -334,9 +354,19 @@ namespace CityTools {
             e.Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
             e.Graphics.PixelOffsetMode = PixelOffsetMode.Half;
 
+            foreach (Object x in listUIPanels.CheckedItems) {
+                UIPanel p = (UIPanel)x;
+
+                if (p != null && p != CurrentPanel) {
+                    foreach (UIElement element in p.Elements) {
+                        element.Draw(e.Graphics, e.ClipRectangle, percent, ckbDrawDebug.Checked);
+                    }
+                }
+            }
+
             if (CurrentPanel != null) {
                 foreach (UIElement element in CurrentPanel.Elements) {
-                    element.Draw(e.Graphics, e.ClipRectangle, percent);
+                    element.Draw(e.Graphics, e.ClipRectangle, percent, ckbDrawDebug.Checked);
                 }
             }
         }
@@ -370,6 +400,31 @@ namespace CityTools {
             SwapCurrentLayerBy(1);
         }
 
+        private void SwapCurrentElementBy(int delta) {
+            if (CurrentElement != null && CurrentPanel != null) {
+                int nDex0 = listUIElements.SelectedIndex;
+                int nDex1 = nDex0 + delta;
+
+                if (nDex1 >= 0 && nDex1 < CurrentPanel.Elements.Count) {
+                    CurrentPanel.Elements.RemoveAt(nDex0);
+                    CurrentPanel.Elements.Insert(nDex1, CurrentElement);
+
+                    listUIElements.Items.RemoveAt(nDex0);
+                    listUIElements.Items.Insert(nDex1, CurrentElement);
+                }
+
+                pbExample.Invalidate();
+            }
+        }
+
+        private void btnMoveElementUp_Click(object sender, EventArgs e) {
+            SwapCurrentElementBy(-1);
+        }
+
+        private void btnMoveElementDown_Click(object sender, EventArgs e) {
+            SwapCurrentElementBy(1);
+        }
+
         private void UIEditor_Activated(object sender, EventArgs e) {
             pbExample.Invalidate();
             pbLayerImage.Invalidate();
@@ -380,15 +435,14 @@ namespace CityTools {
             pbLayerImage.Invalidate();
         }
 
-        private void cbUIPanels_SelectedIndexChanged(object sender, EventArgs e) {
+        private void listUIPanels_SelectedIndexChanged(object sender, EventArgs e) {
             SwitchPanel();
         }
 
         private void UIPanelValueChanged(object sender, EventArgs e) {
             if (PanelSwitching) return;
-            PanelModified = true;
 
-            SavePanelIfRequired();
+            SavePanel();
 
             pbExample.Invalidate();
         }
@@ -396,16 +450,64 @@ namespace CityTools {
         private void btnAddPanel_Click(object sender, EventArgs e) {
             UIPanel uip = new UIPanel();
             UIManager.AddPanel(uip);
-            cbUIPanels.Items.Add(uip);
-            if (cbUIPanels.Items.Count > 0) cbUIPanels.SelectedIndex = cbUIPanels.Items.Count - 1;
+            listUIPanels.Items.Add(uip);
+            if (listUIPanels.Items.Count > 0) listUIPanels.SelectedIndex = listUIPanels.Items.Count - 1;
         }
 
         private void btnDelPanel_Click(object sender, EventArgs e) {
-            if (cbUIPanels.SelectedItem != null && cbUIPanels.SelectedItem is UIPanel) {
-                UIManager.DeletePanel(cbUIPanels.SelectedItem as UIPanel);
-                cbUIPanels.Items.Remove(cbUIPanels.SelectedItem);
-                if (cbUIPanels.Items.Count > 0) cbUIPanels.SelectedIndex = 0;
+            if (listUIPanels.SelectedItem != null && listUIPanels.SelectedItem is UIPanel) {
+                UIManager.DeletePanel(listUIPanels.SelectedItem as UIPanel);
+                listUIPanels.Items.Remove(listUIPanels.SelectedItem);
+                if (listUIPanels.Items.Count > 0) listUIPanels.SelectedIndex = 0;
             }
+
+            pbExample.Invalidate();
+        }
+
+        private void pbTextColour_Click(object sender, EventArgs e) {
+            if (CurrentLayer is UITextLayer) {
+                colorDialog1.Color = ((UITextLayer)CurrentLayer).Colour;
+                colorDialog1.ShowDialog();
+                ((UITextLayer)CurrentLayer).Colour = colorDialog1.Color;
+                pbTextColour.Invalidate();
+            }
+        }
+
+        private void pbTextColour_Paint(object sender, PaintEventArgs e) {
+            if (CurrentLayer is UITextLayer) {
+                Color x = ((UITextLayer)CurrentLayer).Colour;
+
+                e.Graphics.Clear(x);
+            }
+        }
+
+        private void ckbDrawDebug_CheckedChanged(object sender, EventArgs e) {
+            pbExample.Invalidate();
+        }
+
+        private void SwapCurrentPanelBy(int delta) {
+            if (CurrentPanel != null) {
+                int nDex0 = listUIPanels.SelectedIndex;
+                int nDex1 = nDex0 + delta;
+
+                if (nDex1 >= 0 && nDex1 < UIManager.Panels.Count) {
+                    UIManager.Panels.RemoveAt(nDex0);
+                    UIManager.Panels.Insert(nDex1, CurrentPanel);
+
+                    listUIPanels.Items.RemoveAt(nDex0);
+                    listUIPanels.Items.Insert(nDex1, CurrentPanel);
+                }
+
+                pbExample.Invalidate();
+            }
+        }
+
+        private void btnMoveSelectedPanelUp_Click(object sender, EventArgs e) {
+            SwapCurrentPanelBy(-1);
+        }
+
+        private void btnMoveSelectedPanelDown_Click(object sender, EventArgs e) {
+            SwapCurrentPanelBy(1);
         }
     }
 }

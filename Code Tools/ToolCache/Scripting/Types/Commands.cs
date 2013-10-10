@@ -58,6 +58,8 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0x1013, new Param[] { Param.Void }));
             All.Add("spawnactive",
                 new ValidCommand(0x1014, new Param[] { Param.SpawnRegion, Param.Boolean }));
+            All.Add("netsyncvar",
+                new ValidCommand(0x1015, new Param[] { Param.Integer }));
 
             //Quest and Inventory Commands
             All.Add("saydialogue",
@@ -110,6 +112,8 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0x8004, new Param[] { Param.Void }));
             All.Add("break",
                 new ValidCommand(0x8005, new Param[] { Param.Void }));
+            All.Add("call",
+                new ValidCommand(0x8006, new Param[] { Param.Function }));
 
             //UI Commands
             All.Add("replacelayerfromdatabase",

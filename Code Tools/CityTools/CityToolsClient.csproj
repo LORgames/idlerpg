@@ -346,6 +346,7 @@
     <EmbeddedResource Include="WorldEditor.resx">
       <DependentUpon>WorldEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Properties\DataSources\ToolCache.UI.UIManager.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

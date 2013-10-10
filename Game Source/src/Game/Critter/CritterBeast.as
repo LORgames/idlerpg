@@ -1,11 +1,7 @@
 package Game.Critter {
-	import Game.Equipment.EquipmentSet;
-	import Game.Scripting.Script;
 	import Game.Map.MapData;
-	import Game.Map.WorldData;
+	import Game.Scripting.Script;
 	import Game.Scripting.ScriptInstance;
-	import Interfaces.IMapObject;
-	import RenderSystem.Camera;
 	import RenderSystem.Renderman;
 	/**
 	 * ...

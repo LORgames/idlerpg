@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using ToolCache.Scripting;
 using ToolCache.Scripting.Types;
+using ToolCache.Scripting.Extensions;
 
 namespace CityTools {
     public partial class GlobalVariableEditor : Form {
@@ -15,6 +16,8 @@ namespace CityTools {
         EventHandler removedHandler;
         EventHandler addedHandler2;
         EventHandler removedHandler2;
+        EventHandler addedHandler3;
+        EventHandler removedHandler3;
 
         public GlobalVariableEditor() {
             InitializeComponent();
@@ -23,19 +26,27 @@ namespace CityTools {
             removedHandler = new EventHandler(Variables_ItemRemoved);
             addedHandler2 = new EventHandler(new EventHandler(String_ItemAdded));
             removedHandler2 = new EventHandler(String_ItemRemoved);
+            addedHandler3 = new EventHandler(new EventHandler(Function_ItemAdded));
+            removedHandler3 = new EventHandler(Function_ItemRemoved);
 
-            GlobalVariables.VerifyStats();
-            GlobalVariables.Variables.ItemAdded += addedHandler;
-            GlobalVariables.Variables.ItemRemoved += removedHandler;
-            GlobalVariables.StringTable.ItemAdded += addedHandler2;
-            GlobalVariables.StringTable.ItemRemoved += removedHandler2;
+            Variables.VerifyStats();
+            Variables.GlobalVariables.ItemAdded += addedHandler;
+            Variables.GlobalVariables.ItemRemoved += removedHandler;
+            Variables.StringTable.ItemAdded += addedHandler2;
+            Variables.StringTable.ItemRemoved += removedHandler2;
+            Variables.FunctionTable.ItemAdded += addedHandler3;
+            Variables.FunctionTable.ItemRemoved += removedHandler3;
 
-            foreach (ScriptVariable sv in GlobalVariables.Variables.Values) {
+            foreach (ScriptVariable sv in Variables.GlobalVariables.Values) {
                 listVariables.Items.Add(sv.lvi);
             }
 
-            foreach (String key in GlobalVariables.StringTable.Keys) {
+            foreach (String key in Variables.StringTable.Keys) {
                 AddString(key);
+            }
+
+            foreach (ScriptFunction key in Variables.FunctionTable.Values) {
+                listFunctions.Items.Add(key);
             }
         }
         private void GlobalVariableEditor_FormClosing(object sender, FormClosingEventArgs e) {
@@ -43,16 +54,20 @@ namespace CityTools {
                 listVariables.Items.Remove(lvi);
             }
 
-            GlobalVariables.Variables.ItemAdded -= addedHandler;
-            GlobalVariables.Variables.ItemRemoved -= removedHandler;
-            GlobalVariables.StringTable.ItemAdded -= addedHandler2;
-            GlobalVariables.StringTable.ItemRemoved -= removedHandler2;
-            GlobalVariables.SaveDatabase();
+            SaveFunctionIfRequired();
+
+            Variables.GlobalVariables.ItemAdded -= addedHandler;
+            Variables.GlobalVariables.ItemRemoved -= removedHandler;
+            Variables.StringTable.ItemAdded -= addedHandler2;
+            Variables.StringTable.ItemRemoved -= removedHandler2;
+            Variables.FunctionTable.ItemAdded -= addedHandler3;
+            Variables.FunctionTable.ItemRemoved -= removedHandler3;
+            Variables.SaveDatabase();
         }
 
         void Variables_ItemAdded(object sender, EventArgs e) {
-            if(GlobalVariables.Variables.ContainsKey(sender.ToString())) {
-                listVariables.Items.Add(GlobalVariables.Variables[sender.ToString()].lvi);
+            if (Variables.GlobalVariables.ContainsKey(sender.ToString())) {
+                listVariables.Items.Add(Variables.GlobalVariables[sender.ToString()].lvi);
             }
         }
         void Variables_ItemRemoved(object sender, EventArgs e) {
@@ -92,18 +107,26 @@ namespace CityTools {
             lvis = null;
         }
 
+        void Function_ItemAdded(object sender, EventArgs e) {
+            listFunctions.Items.Add(sender);
+        }
+
+        void Function_ItemRemoved(object sender, EventArgs e) {
+            listFunctions.Items.Remove(sender);
+        }
+
         private void AddString(string key) {
-            if (GlobalVariables.StringTable.ContainsKey(key)) {
+            if (Variables.StringTable.ContainsKey(key)) {
                 ListViewItem lvi = new ListViewItem();
                 lvi.Text = key;
-                lvi.SubItems.Add(GlobalVariables.StringTable[lvi.Text]);
+                lvi.SubItems.Add(Variables.StringTable[lvi.Text]);
                 listString.Items.Add(lvi);
             }
         }
 
         private void txtNewVariable_KeyDown(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Enter) {
-                string newVariable = GlobalVariables.FixVariableName(txtNewVariable.Text.Trim());
+                string newVariable = Variables.FixVariableName(txtNewVariable.Text.Trim());
 
                 ScriptVariable s = new ScriptVariable();
                 s.Name = newVariable;
@@ -111,12 +134,29 @@ namespace CityTools {
                 s.Index = 0;
 
                 if (s.Name.Length > 0) {
-                    GlobalVariables.AddVariableToDatabase(s);
+                    Variables.AddVariableToDatabase(s);
                 }
 
                 txtNewVariable.Text = "";
             }
         }
+
+        private void txtNewFunctionName_KeyDown(object sender, KeyEventArgs e) {
+            if (e.KeyCode == Keys.Enter) {
+                string newFunction = txtNewFunctionName.Text.Trim();
+
+                ScriptFunction s = new ScriptFunction();
+                s.Name = newFunction;
+                s.Script = "";
+
+                if (s.Name.Length > 0) {
+                    Variables.FunctionTable.Add(s.Name, s);
+                }
+
+                txtNewFunctionName.Text = "";
+            }
+        }
+
         private void btnVarDeleteSelected_Click(object sender, EventArgs e) {
             List<String> keys = new List<string>();
 
@@ -125,7 +165,7 @@ namespace CityTools {
             }
 
             foreach (String key in keys) {
-                GlobalVariables.Variables.Remove(key);
+                Variables.GlobalVariables.Remove(key);
             }
 
             keys.Clear();
@@ -134,10 +174,10 @@ namespace CityTools {
 
         private void txtNewStringName_KeyDown(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Enter) {
-                string newVariable = GlobalVariables.FixVariableName(txtNewStringName.Text.Trim());
+                string newVariable = Variables.FixVariableName(txtNewStringName.Text.Trim());
 
                 if (newVariable.Length > 0) {
-                    GlobalVariables.StringTable.Add(newVariable, "");
+                    Variables.StringTable.Add(newVariable, "");
                 }
 
                 txtNewStringName.Text = "";
@@ -151,7 +191,7 @@ namespace CityTools {
             }
 
             foreach (String key in keys) {
-                GlobalVariables.StringTable.Remove(key);
+                Variables.StringTable.Remove(key);
             }
 
             keys.Clear();
@@ -161,9 +201,9 @@ namespace CityTools {
         void listString_SubItemEndEditing(object sender, Components.SubItemEndEditingEventArgs e) {
             string key = e.Item.Text;
 
-            if (GlobalVariables.StringTable.ContainsKey(key)) {
+            if (Variables.StringTable.ContainsKey(key)) {
                 e.DisplayText = txtHiddenStringEditing.Text;
-                GlobalVariables.StringTable[key] = txtHiddenStringEditing.Text;
+                Variables.StringTable[key] = txtHiddenStringEditing.Text;
             }
         }
 
@@ -184,6 +224,28 @@ namespace CityTools {
 
             s.InitialValue = (short)numIntegerChanger.Value;
             e.DisplayText = numIntegerChanger.Value.ToString();
+        }
+
+        private ScriptFunction currentFunction;
+        private void listFunctions_SelectedIndexChanged(object sender, EventArgs e) {
+            if (listFunctions.SelectedItem is ScriptFunction) {
+                SaveFunctionIfRequired();
+
+                currentFunction = (listFunctions.SelectedItem as ScriptFunction);
+                txtFunctionName.Text = currentFunction.Name;
+                scriptFunction.Script = currentFunction.Script;
+
+                txtFunctionName.Enabled = true;
+                scriptFunction.Enabled = true;
+            }
+        }
+
+        private void SaveFunctionIfRequired() {
+            if (currentFunction != null) {
+                currentFunction.Script = scriptFunction.Script;
+                currentFunction.Name = txtFunctionName.Text;
+                Variables.UpdatedFunction(currentFunction);
+            }
         }
     }
 }

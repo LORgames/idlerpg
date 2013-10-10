@@ -296,7 +296,9 @@ package Game.Map {
 			i = ScriptRegions.length;
 			while (--i > 0) {
 				ScriptRegions[i].CleanUp();
+				ScriptRegions[i] = null;
 			}
+			ScriptRegions = null;
 			
 			MyScript.CleanUp();
 			_script.CleanUp();

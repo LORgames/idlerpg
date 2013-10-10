@@ -278,16 +278,18 @@ namespace ToolToGameExporter.Helpers {
             if (width > maxSize && height > maxSize) return null;
             if (width > maxSize || height > maxSize) { int temp = width; width = height; height = temp; }
 
-            MaxRects bp = new MaxRects(width, height);
+            CygonRectanglePacker bp = new CygonRectanglePacker(width, height);
             Rectangle[] rects = new Rectangle[textures.Length];
 
             texture = new Bitmap(width, height);
 
             for (int i = 0; i < textures.Length; i++) {
                 Image tex = textures[i];
-                Rectangle rect = bp.Insert(tex.Width, tex.Height);
+                Rectangle rect = Rectangle.Empty;
+                rect.Size = new Size(tex.Width, tex.Height);
+                rect.Location = bp.Pack(tex.Width, tex.Height);
 
-                if (rect.Width == 0 || rect.Height == 0) {
+                if (rect.X == -1) {
                     return PackTextures(textures, width * (width <= height ? 2 : 1), height * (height < width ? 2 : 1), maxSize, out texture);
                 }
 

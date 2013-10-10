@@ -8,12 +8,15 @@ using System.Drawing;
 namespace ToolCache.UI {
     public class UIPanel {
         public List<UIElement> Elements = new List<UIElement>();
+
         public string Name = "";
+        public bool Enabled = false;
 
         public static UIPanel ReadFromBinaryIO(BinaryIO f) {
             UIPanel ui = new UIPanel();
 
             ui.Name = f.GetString();
+            ui.Enabled = f.GetByte() == 1;
 
             short totalElements = f.GetShort();
             while (--totalElements > -1) {
@@ -25,6 +28,7 @@ namespace ToolCache.UI {
 
         internal void WriteToBinaryIO(BinaryIO f) {
             f.AddString(Name);
+            f.AddByte((byte)(Enabled ? 1 : 0));
 
             f.AddShort((short)Elements.Count);
             foreach (UIElement element in Elements) {
@@ -32,9 +36,9 @@ namespace ToolCache.UI {
             }
         }
 
-        public void Draw(Graphics gfx, Rectangle canvasArea, float displayValue) {
+        public void Draw(Graphics gfx, Rectangle canvasArea, float displayValue, bool drawRect) {
             foreach (UIElement element in Elements) {
-                element.Draw(gfx, canvasArea, displayValue);
+                element.Draw(gfx, canvasArea, displayValue, drawRect);
             }
         }
 

@@ -16,6 +16,7 @@ namespace ToolCache.Scripting.Types {
         Object = 16,
         Effect = 32,
         Region = 64,
-        UIElement = 128
+        UIElement = 128,
+        Function = 256
     }
 }

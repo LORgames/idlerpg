@@ -33,6 +33,7 @@ namespace ToolCache.Scripting.Types {
         MapName,
         SpawnRegion,
         NetworkType,
+        Function,
         Optional = 128 //Optional is a flag, eg: Number|Optional
     }
 }

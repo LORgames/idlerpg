@@ -96,7 +96,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Scripting\GlobalVariables.cs" />
+    <Compile Include="Scripting\Extensions\ScriptFunction.cs" />
+    <Compile Include="Scripting\Extensions\Variables.cs" />
     <Compile Include="Scripting\Parser.cs" />
     <Compile Include="Scripting\ScriptCommand.cs" />
     <Compile Include="Scripting\ScriptHelper.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="UI\UIPanel.cs" />
     <Compile Include="Map\Regions\Portal.cs" />
     <Compile Include="UI\UITextLayer.cs" />
+    <Compile Include="UI\UITypes.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

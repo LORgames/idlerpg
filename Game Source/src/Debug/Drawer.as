@@ -3,6 +3,8 @@ package Debug {
 	import EngineTiming.Clock;
 	import EngineTiming.IUpdatable;
 	import flash.display.Sprite;
+	import flash.text.TextField;
+	import UI.Fonts;
 	/**
 	 * ...
 	 * @author Paul
@@ -63,6 +65,14 @@ package Debug {
 			DrawingObjects.splice(0, 0, spr);
 			
 			return spr;
+		}
+		
+		static public function GetTextField():TextField {
+			var tf:TextField = Fonts.GetTextField(12, 3, 0x0);
+			
+			Main.I.addChild(tf);
+			
+			return tf;
 		}
 		
 		/* INTERFACE EngineTiming.IOneSecondUpdate */

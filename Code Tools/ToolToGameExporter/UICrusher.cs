@@ -22,6 +22,8 @@ namespace ToolToGameExporter {
             f.AddByte((byte)UIManager.Panels.Count);
 
             foreach (UIPanel p in UIManager.Panels) {
+                f.AddByte((byte)(p.Enabled?1:0));
+
                 if (p.Elements.Count > 255) Processor.Errors.Add(new ProcessingError("UI Exporter", p.Name+":Elements", "Cannot export more than 255 UIElements for a single UIPanel."));
                 f.AddByte((byte)p.Elements.Count);
 
@@ -62,10 +64,18 @@ namespace ToolToGameExporter {
                         } else if (l is UITextLayer) {
                             UITextLayer l2 = (UITextLayer)l;
                             f.AddString(l2.PrepareString(true));
+
+                            f.AddInt(l2.Colour.ToArgb());
+                            f.AddByte((byte)l2.Align);
+                            f.AddByte((byte)l2.FontSize);
+                            f.AddByte((byte)l2.FontFamily);
+                            f.AddByte((byte)(l2.WordWrap ? 1 : 0));
                         }
                     }
                 }
             }
+
+            //images.Sort((Image a, Image b) => (b.Size.Width * b.Size.Height).CompareTo(a.Size.Width * a.Size.Height));
 
             Bitmap atlas;
             Rectangle[] rects = MaxRects.PackTextures(images.ToArray(), 256, 256, 2048, out atlas);

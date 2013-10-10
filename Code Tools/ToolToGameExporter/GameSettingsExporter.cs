@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ToolCache.General;
 using ToolCache.Scripting;
+using ToolCache.Scripting.Extensions;
 
 namespace ToolToGameExporter {
     internal class GameSettingsExporter {
@@ -22,10 +23,10 @@ namespace ToolToGameExporter {
 
             f.AddFloat(GlobalSettings.PerspectiveSkew);
 
-            f.AddShort((short)(GlobalSettings.VariablePressedWorldX == "" ? 0 : GlobalVariables.Variables[GlobalSettings.VariablePressedWorldX].Index));
-            f.AddShort((short)(GlobalSettings.VariablePressedWorldY == "" ? 0 : GlobalVariables.Variables[GlobalSettings.VariablePressedWorldY].Index));
-            f.AddShort((short)(GlobalSettings.VariablePressedLocalX == "" ? 0 : GlobalVariables.Variables[GlobalSettings.VariablePressedLocalX].Index));
-            f.AddShort((short)(GlobalSettings.VariablePressedLocalY == "" ? 0 : GlobalVariables.Variables[GlobalSettings.VariablePressedLocalY].Index));
+            f.AddShort((short)(GlobalSettings.VariablePressedWorldX == "" ? 0 : Variables.GlobalVariables[GlobalSettings.VariablePressedWorldX].Index));
+            f.AddShort((short)(GlobalSettings.VariablePressedWorldY == "" ? 0 : Variables.GlobalVariables[GlobalSettings.VariablePressedWorldY].Index));
+            f.AddShort((short)(GlobalSettings.VariablePressedLocalX == "" ? 0 : Variables.GlobalVariables[GlobalSettings.VariablePressedLocalX].Index));
+            f.AddShort((short)(GlobalSettings.VariablePressedLocalY == "" ? 0 : Variables.GlobalVariables[GlobalSettings.VariablePressedLocalY].Index));
 
             f.Encode(Global.EXPORT_DIRECTORY + "/Settings.bin");
         }
