@@ -13,7 +13,7 @@ namespace ToolCache.UI {
         private const string name = General.Settings.Database + "UserInterface.bin";
 
         public static List<UIPanel> Panels = new List<UIPanel>();
-        public static List<UILibrary> Libraries = new List<UILibrary>();
+        public static BindingList<UILibrary> Libraries = new BindingList<UILibrary>();
 
         public static BindingList<FontFamily> Fonts = new BindingList<FontFamily>();
 

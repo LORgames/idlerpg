@@ -49,19 +49,19 @@
             this.txtFunctionName = new System.Windows.Forms.TextBox();
             this.scriptFunction = new CityTools.Components.ScriptBox();
             this.listFunctions = new System.Windows.Forms.ListBox();
-            this.statusStrip3 = new System.Windows.Forms.StatusStrip();
+            this.statusStripFunctions = new System.Windows.Forms.StatusStrip();
             this.toolStripSplitButton2 = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.txtNewFunctionName = new System.Windows.Forms.ToolStripTextBox();
             this.btnDeleteFunction = new System.Windows.Forms.ToolStripDropDownButton();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.listLibraries = new System.Windows.Forms.ListBox();
-            this.statusStrip4 = new System.Windows.Forms.StatusStrip();
+            this.pnlUILibrary = new System.Windows.Forms.FlowLayoutPanel();
+            this.lstLibraries = new System.Windows.Forms.ListBox();
+            this.statusStripUILibraries = new System.Windows.Forms.StatusStrip();
             this.toolStripSplitButton3 = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.txtNewLibraryName = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.pnlUILibrary = new System.Windows.Forms.FlowLayoutPanel();
             this.tabGroupVariableTypes.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numIntegerChanger)).BeginInit();
@@ -69,9 +69,9 @@
             this.tabPage2.SuspendLayout();
             this.statusStrip2.SuspendLayout();
             this.tabPage3.SuspendLayout();
-            this.statusStrip3.SuspendLayout();
+            this.statusStripFunctions.SuspendLayout();
             this.tabPage4.SuspendLayout();
-            this.statusStrip4.SuspendLayout();
+            this.statusStripUILibraries.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabGroupVariableTypes
@@ -149,7 +149,7 @@
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(729, 22);
             this.statusStrip1.TabIndex = 1;
-            this.statusStrip1.Text = "statusStrip1";
+            this.statusStrip1.Text = "statusStripInts";
             // 
             // btnVarAddVariable
             // 
@@ -244,7 +244,7 @@
             this.statusStrip2.Name = "statusStrip2";
             this.statusStrip2.Size = new System.Drawing.Size(729, 22);
             this.statusStrip2.TabIndex = 3;
-            this.statusStrip2.Text = "statusStrip2";
+            this.statusStrip2.Text = "statusStripStrings";
             // 
             // toolStripSplitButton1
             // 
@@ -284,7 +284,7 @@
             this.tabPage3.Controls.Add(this.txtFunctionName);
             this.tabPage3.Controls.Add(this.scriptFunction);
             this.tabPage3.Controls.Add(this.listFunctions);
-            this.tabPage3.Controls.Add(this.statusStrip3);
+            this.tabPage3.Controls.Add(this.statusStripFunctions);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(735, 409);
@@ -332,16 +332,16 @@
             this.listFunctions.TabIndex = 0;
             this.listFunctions.SelectedIndexChanged += new System.EventHandler(this.listFunctions_SelectedIndexChanged);
             // 
-            // statusStrip3
+            // statusStripFunctions
             // 
-            this.statusStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusStripFunctions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSplitButton2,
             this.btnDeleteFunction});
-            this.statusStrip3.Location = new System.Drawing.Point(0, 387);
-            this.statusStrip3.Name = "statusStrip3";
-            this.statusStrip3.Size = new System.Drawing.Size(735, 22);
-            this.statusStrip3.TabIndex = 4;
-            this.statusStrip3.Text = "statusStrip3";
+            this.statusStripFunctions.Location = new System.Drawing.Point(0, 387);
+            this.statusStripFunctions.Name = "statusStripFunctions";
+            this.statusStripFunctions.Size = new System.Drawing.Size(735, 22);
+            this.statusStripFunctions.TabIndex = 4;
+            this.statusStripFunctions.Text = "statusStrip3";
             // 
             // toolStripSplitButton2
             // 
@@ -377,8 +377,8 @@
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.pnlUILibrary);
-            this.tabPage4.Controls.Add(this.listLibraries);
-            this.tabPage4.Controls.Add(this.statusStrip4);
+            this.tabPage4.Controls.Add(this.lstLibraries);
+            this.tabPage4.Controls.Add(this.statusStripUILibraries);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Size = new System.Drawing.Size(735, 409);
@@ -386,25 +386,37 @@
             this.tabPage4.Text = "UI Libraries";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // listLibraries
+            // pnlUILibrary
             // 
-            this.listLibraries.Dock = System.Windows.Forms.DockStyle.Left;
-            this.listLibraries.FormattingEnabled = true;
-            this.listLibraries.Location = new System.Drawing.Point(0, 0);
-            this.listLibraries.Name = "listLibraries";
-            this.listLibraries.Size = new System.Drawing.Size(189, 387);
-            this.listLibraries.TabIndex = 1;
+            this.pnlUILibrary.AllowDrop = true;
+            this.pnlUILibrary.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlUILibrary.Location = new System.Drawing.Point(189, 0);
+            this.pnlUILibrary.Name = "pnlUILibrary";
+            this.pnlUILibrary.Size = new System.Drawing.Size(546, 387);
+            this.pnlUILibrary.TabIndex = 6;
+            this.pnlUILibrary.DragDrop += new System.Windows.Forms.DragEventHandler(this.pnlUILibrary_DragDrop);
+            this.pnlUILibrary.DragOver += new System.Windows.Forms.DragEventHandler(this.pnlUILibrary_DragOver);
             // 
-            // statusStrip4
+            // lstLibraries
             // 
-            this.statusStrip4.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lstLibraries.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lstLibraries.FormattingEnabled = true;
+            this.lstLibraries.Location = new System.Drawing.Point(0, 0);
+            this.lstLibraries.Name = "lstLibraries";
+            this.lstLibraries.Size = new System.Drawing.Size(189, 387);
+            this.lstLibraries.TabIndex = 1;
+            this.lstLibraries.SelectedIndexChanged += new System.EventHandler(this.lstLibraries_SelectedIndexChanged);
+            // 
+            // statusStripUILibraries
+            // 
+            this.statusStripUILibraries.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSplitButton3,
             this.toolStripDropDownButton1});
-            this.statusStrip4.Location = new System.Drawing.Point(0, 387);
-            this.statusStrip4.Name = "statusStrip4";
-            this.statusStrip4.Size = new System.Drawing.Size(735, 22);
-            this.statusStrip4.TabIndex = 5;
-            this.statusStrip4.Text = "statusStrip4";
+            this.statusStripUILibraries.Location = new System.Drawing.Point(0, 387);
+            this.statusStripUILibraries.Name = "statusStripUILibraries";
+            this.statusStripUILibraries.Size = new System.Drawing.Size(735, 22);
+            this.statusStripUILibraries.TabIndex = 5;
+            this.statusStripUILibraries.Text = "statusStrip4";
             // 
             // toolStripSplitButton3
             // 
@@ -437,14 +449,6 @@
             this.toolStripDropDownButton1.Size = new System.Drawing.Size(111, 20);
             this.toolStripDropDownButton1.Text = "Delete Selected";
             // 
-            // pnlUILibrary
-            // 
-            this.pnlUILibrary.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlUILibrary.Location = new System.Drawing.Point(189, 0);
-            this.pnlUILibrary.Name = "pnlUILibrary";
-            this.pnlUILibrary.Size = new System.Drawing.Size(546, 387);
-            this.pnlUILibrary.TabIndex = 6;
-            // 
             // GlobalVariableEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -466,12 +470,12 @@
             this.statusStrip2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
-            this.statusStrip3.ResumeLayout(false);
-            this.statusStrip3.PerformLayout();
+            this.statusStripFunctions.ResumeLayout(false);
+            this.statusStripFunctions.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
-            this.statusStrip4.ResumeLayout(false);
-            this.statusStrip4.PerformLayout();
+            this.statusStripUILibraries.ResumeLayout(false);
+            this.statusStripUILibraries.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -504,14 +508,14 @@
         private System.Windows.Forms.ListBox listFunctions;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtFunctionName;
-        private System.Windows.Forms.StatusStrip statusStrip3;
+        private System.Windows.Forms.StatusStrip statusStripFunctions;
         private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton2;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripTextBox txtNewFunctionName;
         private System.Windows.Forms.ToolStripDropDownButton btnDeleteFunction;
         private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.ListBox listLibraries;
-        private System.Windows.Forms.StatusStrip statusStrip4;
+        private System.Windows.Forms.ListBox lstLibraries;
+        private System.Windows.Forms.StatusStrip statusStripUILibraries;
         private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton3;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
         private System.Windows.Forms.ToolStripTextBox txtNewLibraryName;

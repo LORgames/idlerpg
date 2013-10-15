@@ -9,6 +9,9 @@ using System.Windows.Forms;
 using ToolCache.Scripting;
 using ToolCache.Scripting.Types;
 using ToolCache.Scripting.Extensions;
+using ToolCache.UI;
+using System.IO;
+using CityTools.Components;
 
 namespace CityTools {
     public partial class GlobalVariableEditor : Form {
@@ -21,6 +24,9 @@ namespace CityTools {
 
         public GlobalVariableEditor() {
             InitializeComponent();
+
+            lstLibraries.DataSource = UIManager.Libraries;
+            lstLibraries.DisplayMember = Name;
 
             addedHandler = new EventHandler(new EventHandler(Variables_ItemAdded));
             removedHandler = new EventHandler(Variables_ItemRemoved);
@@ -250,7 +256,68 @@ namespace CityTools {
         }
 
         private void txtNewLibraryName_KeyDown(object sender, KeyEventArgs e) {
+            if (e.KeyCode == Keys.Enter) {
+                string newVariable = txtNewLibraryName.Text.Trim();
 
+                if (newVariable.Length > 0) {
+                    UIManager.AddLibrary(new UILibrary(newVariable));
+                }
+
+                txtNewLibraryName.Text = "";
+            }
+        }
+
+        private void pnlUILibrary_DragDrop(object sender, DragEventArgs e) {
+            if (lstLibraries.SelectedItem == null) return;
+
+            if ((e.AllowedEffect & DragDropEffects.Copy) == DragDropEffects.Copy) {
+                string[] data = (string[])e.Data.GetData(DataFormats.FileDrop);
+                if (data != null) {
+                    for (int i = 0; i < data.Length; i++) {
+                        if (data.GetValue(i) is String) {
+                            string filename = ((string[])data)[i];
+                            string ext = Path.GetExtension(filename).ToLower();
+
+                            string nFilename = "UI/" + Path.GetFileNameWithoutExtension(filename) + ".png";
+
+                            if (ext == ".png") {
+                                //Add animation
+                                if (Path.GetFullPath(nFilename) == Path.GetFullPath(filename)) {
+                                    //Don't need to do anything, its the same file
+                                } else if (!File.Exists(nFilename)) {
+                                    File.Copy(filename, nFilename);
+                                } else if (MessageBox.Show("Overwrite " + nFilename + "?", "Overwrite?", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+                                    File.Copy(filename, nFilename, true);
+                                }
+
+                                (lstLibraries.SelectedItem as UILibrary).Images.Add(nFilename);
+                                AddImageToLibrary(nFilename);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void AddImageToLibrary(string nFilename) {
+            if (lstLibraries.SelectedItem != null) {
+                UILibraryElement uile = new UILibraryElement(nFilename, lstLibraries.SelectedItem as UILibrary);
+                pnlUILibrary.Controls.Add(uile);
+            }
+        }
+
+        private void pnlUILibrary_DragOver(object sender, DragEventArgs e) {
+            e.Effect = DragDropEffects.Copy;
+        }
+
+        private void lstLibraries_SelectedIndexChanged(object sender, EventArgs e) {
+            if (lstLibraries.SelectedItem != null) {
+                pnlUILibrary.Controls.Clear();
+
+                for (int i = 0; i < (lstLibraries.SelectedItem as UILibrary).Images.Count; i++) {
+                    AddImageToLibrary((lstLibraries.SelectedItem as UILibrary).Images[i]);
+                }
+            }
         }
     }
 }
