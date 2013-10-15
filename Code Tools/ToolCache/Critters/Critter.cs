@@ -17,7 +17,10 @@ namespace ToolCache.Critters {
         public int AIType = 0;
 
         public int ExperienceGain = 0;
+        
         public int Health = 0;
+        public int Defense = 0;
+
         public bool OneOfAKind = false;
 
         public short MovementSpeed = 125;
@@ -43,7 +46,10 @@ namespace ToolCache.Critters {
             f.AddInt(AIType);
 
             f.AddInt(ExperienceGain);
+            
             f.AddInt(Health);
+            f.AddInt(Defense);
+
             f.AddByte(OneOfAKind ? (byte)1 : (byte)0);
 
             f.AddShort(MovementSpeed);
@@ -73,7 +79,10 @@ namespace ToolCache.Critters {
             AIType = f.GetInt();
 
             ExperienceGain = f.GetInt();
+
             Health = f.GetInt();
+            Defense = f.GetInt();
+
             OneOfAKind = f.GetByte()==1;
             
             MovementSpeed = f.GetShort();
@@ -116,6 +125,7 @@ namespace ToolCache.Critters {
 
             temp.ExperienceGain = this.ExperienceGain;
             temp.Health = this.Health;
+            temp.Defense = this.Defense;
             temp.OneOfAKind = this.OneOfAKind;
             temp.MovementSpeed = this.MovementSpeed;
             temp.AlertRange = this.AlertRange;

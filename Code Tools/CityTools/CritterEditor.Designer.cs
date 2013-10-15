@@ -36,6 +36,8 @@ namespace CityTools {
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabInfo = new System.Windows.Forms.TabPage();
+            this.numDefence = new System.Windows.Forms.NumericUpDown();
+            this.label16 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.numAttackRange = new System.Windows.Forms.NumericUpDown();
             this.txtMonsterName = new System.Windows.Forms.TextBox();
@@ -115,6 +117,7 @@ namespace CityTools {
             this.toolsMainTools.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabInfo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numDefence)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAttackRange)).BeginInit();
             this.pnlHumanoid.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreviewDisplay)).BeginInit();
@@ -235,6 +238,8 @@ namespace CityTools {
             // 
             // tabInfo
             // 
+            this.tabInfo.Controls.Add(this.numDefence);
+            this.tabInfo.Controls.Add(this.label16);
             this.tabInfo.Controls.Add(this.label1);
             this.tabInfo.Controls.Add(this.numAttackRange);
             this.tabInfo.Controls.Add(this.txtMonsterName);
@@ -270,10 +275,42 @@ namespace CityTools {
             this.tabInfo.Text = "Information";
             this.tabInfo.UseVisualStyleBackColor = true;
             // 
+            // numDefence
+            // 
+            this.numDefence.Location = new System.Drawing.Point(87, 83);
+            this.numDefence.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.numDefence.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.numDefence.Name = "numDefence";
+            this.numDefence.Size = new System.Drawing.Size(104, 20);
+            this.numDefence.TabIndex = 26;
+            this.numDefence.Value = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.numDefence.ValueChanged += new System.EventHandler(this.ValueChanged);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(30, 85);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(51, 13);
+            this.label16.TabIndex = 27;
+            this.label16.Text = "Defence:";
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 189);
+            this.label1.Location = new System.Drawing.Point(8, 215);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(73, 13);
             this.label1.TabIndex = 25;
@@ -281,7 +318,7 @@ namespace CityTools {
             // 
             // numAttackRange
             // 
-            this.numAttackRange.Location = new System.Drawing.Point(87, 187);
+            this.numAttackRange.Location = new System.Drawing.Point(87, 213);
             this.numAttackRange.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -308,16 +345,16 @@ namespace CityTools {
             // listGroups
             // 
             this.listGroups.FormattingEnabled = true;
-            this.listGroups.Location = new System.Drawing.Point(6, 449);
+            this.listGroups.Location = new System.Drawing.Point(6, 434);
             this.listGroups.Name = "listGroups";
-            this.listGroups.Size = new System.Drawing.Size(183, 95);
+            this.listGroups.Size = new System.Drawing.Size(185, 82);
             this.listGroups.TabIndex = 4;
             this.listGroups.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listAIType_KeyDown);
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 402);
+            this.label7.Location = new System.Drawing.Point(6, 387);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(47, 13);
             this.label7.TabIndex = 7;
@@ -326,7 +363,7 @@ namespace CityTools {
             // btnAddGroup
             // 
             this.btnAddGroup.Image = ((System.Drawing.Image)(resources.GetObject("btnAddGroup.Image")));
-            this.btnAddGroup.Location = new System.Drawing.Point(170, 418);
+            this.btnAddGroup.Location = new System.Drawing.Point(170, 403);
             this.btnAddGroup.Name = "btnAddGroup";
             this.btnAddGroup.Size = new System.Drawing.Size(21, 21);
             this.btnAddGroup.TabIndex = 6;
@@ -335,7 +372,7 @@ namespace CityTools {
             // 
             // btnAddToSpawnList
             // 
-            this.btnAddToSpawnList.Location = new System.Drawing.Point(6, 226);
+            this.btnAddToSpawnList.Location = new System.Drawing.Point(6, 522);
             this.btnAddToSpawnList.Name = "btnAddToSpawnList";
             this.btnAddToSpawnList.Size = new System.Drawing.Size(185, 23);
             this.btnAddToSpawnList.TabIndex = 19;
@@ -349,7 +386,7 @@ namespace CityTools {
             this.cbAddGroup.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbAddGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbAddGroup.FormattingEnabled = true;
-            this.cbAddGroup.Location = new System.Drawing.Point(6, 418);
+            this.cbAddGroup.Location = new System.Drawing.Point(6, 403);
             this.cbAddGroup.Name = "cbAddGroup";
             this.cbAddGroup.Size = new System.Drawing.Size(158, 21);
             this.cbAddGroup.TabIndex = 5;
@@ -357,7 +394,7 @@ namespace CityTools {
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(18, 163);
+            this.label22.Location = new System.Drawing.Point(18, 189);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(63, 13);
             this.label22.TabIndex = 23;
@@ -523,7 +560,7 @@ namespace CityTools {
             this.listAIType.FormattingEnabled = true;
             this.listAIType.Location = new System.Drawing.Point(6, 302);
             this.listAIType.Name = "listAIType";
-            this.listAIType.Size = new System.Drawing.Size(185, 95);
+            this.listAIType.Size = new System.Drawing.Size(185, 82);
             this.listAIType.TabIndex = 4;
             this.listAIType.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listAIType_KeyDown);
             // 
@@ -549,7 +586,7 @@ namespace CityTools {
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(24, 137);
+            this.label14.Location = new System.Drawing.Point(24, 163);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(57, 13);
             this.label14.TabIndex = 22;
@@ -587,7 +624,7 @@ namespace CityTools {
             // 
             // numRange
             // 
-            this.numRange.Location = new System.Drawing.Point(87, 161);
+            this.numRange.Location = new System.Drawing.Point(87, 187);
             this.numRange.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -633,7 +670,7 @@ namespace CityTools {
             0,
             0,
             0});
-            this.numMovementSpeed.Location = new System.Drawing.Point(87, 135);
+            this.numMovementSpeed.Location = new System.Drawing.Point(87, 161);
             this.numMovementSpeed.Maximum = new decimal(new int[] {
             250,
             0,
@@ -684,7 +721,7 @@ namespace CityTools {
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(12, 86);
+            this.label15.Location = new System.Drawing.Point(12, 112);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(69, 13);
             this.label15.TabIndex = 18;
@@ -694,7 +731,7 @@ namespace CityTools {
             // 
             this.ckbOneOfAKind.AutoSize = true;
             this.ckbOneOfAKind.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.ckbOneOfAKind.Location = new System.Drawing.Point(6, 112);
+            this.ckbOneOfAKind.Location = new System.Drawing.Point(6, 138);
             this.ckbOneOfAKind.Name = "ckbOneOfAKind";
             this.ckbOneOfAKind.Size = new System.Drawing.Size(94, 17);
             this.ckbOneOfAKind.TabIndex = 13;
@@ -705,7 +742,7 @@ namespace CityTools {
             // cbBaseGroup
             // 
             this.cbBaseGroup.FormattingEnabled = true;
-            this.cbBaseGroup.Location = new System.Drawing.Point(87, 83);
+            this.cbBaseGroup.Location = new System.Drawing.Point(87, 109);
             this.cbBaseGroup.Name = "cbBaseGroup";
             this.cbBaseGroup.Size = new System.Drawing.Size(104, 21);
             this.cbBaseGroup.TabIndex = 17;
@@ -1137,6 +1174,7 @@ namespace CityTools {
             this.tabControl1.ResumeLayout(false);
             this.tabInfo.ResumeLayout(false);
             this.tabInfo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numDefence)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAttackRange)).EndInit();
             this.pnlHumanoid.ResumeLayout(false);
             this.pnlHumanoid.PerformLayout();
@@ -1246,5 +1284,7 @@ namespace CityTools {
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown numAttackRange;
         private System.Windows.Forms.Timer redrawTimer;
+        private System.Windows.Forms.NumericUpDown numDefence;
+        private System.Windows.Forms.Label label16;
     }
 }

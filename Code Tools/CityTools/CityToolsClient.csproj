@@ -116,6 +116,12 @@
     <Compile Include="Components\TileMergeDialog.Designer.cs">
       <DependentUpon>TileMergeDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\UILibraryElement.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\UILibraryElement.Designer.cs">
+      <DependentUpon>UILibraryElement.cs</DependentUpon>
+    </Compile>
     <Compile Include="Core\Camera.cs" />
     <Compile Include="Core\DrawingHelper.cs" />
     <Compile Include="CritterEditor.cs">
@@ -271,6 +277,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Components\TileMergeDialog.resx">
       <DependentUpon>TileMergeDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\UILibraryElement.resx">
+      <DependentUpon>UILibraryElement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CritterEditor.resx">
       <DependentUpon>CritterEditor.cs</DependentUpon>

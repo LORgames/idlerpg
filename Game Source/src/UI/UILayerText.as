@@ -4,6 +4,7 @@ package UI {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
+	import flash.display.StageQuality;
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
 	import flash.text.AntiAliasType;
@@ -106,7 +107,9 @@ package UI {
 			//if (!RequiresRedraw) return;
 			
 			tf.text = Message.GetBuilt();
+			Main.I.stage.quality = StageQuality.BEST;
 			this.bitmapData = new BitmapData(tf.width, tf.height, true, 0x00);
+			Main.I.stage.quality = StageQuality.LOW;
 			this.bitmapData.draw(tf);
 		}
 		

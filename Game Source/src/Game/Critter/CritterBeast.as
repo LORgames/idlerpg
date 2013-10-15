@@ -29,6 +29,7 @@ package Game.Critter {
 			
 			CurrentHP = MyInfo.Health;
 			MaximumHP = MyInfo.Health;
+			CurrentDefence = MyInfo.Defence;
 			
 			MovementSpeed = MyInfo.MovementSpeed;
 			SetAlertRangeSqrd(MyInfo.AlertRange * MyInfo.AlertRange);

@@ -183,6 +183,7 @@ namespace CityTools {
                 txtNewStringName.Text = "";
             }
         }
+
         private void btnDeleteStrings_Click(object sender, EventArgs e) {
             List<String> keys = new List<string>();
 
@@ -246,6 +247,10 @@ namespace CityTools {
                 currentFunction.Name = txtFunctionName.Text;
                 Variables.UpdatedFunction(currentFunction);
             }
+        }
+
+        private void txtNewLibraryName_KeyDown(object sender, KeyEventArgs e) {
+
         }
     }
 }

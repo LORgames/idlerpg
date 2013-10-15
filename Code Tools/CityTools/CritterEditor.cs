@@ -191,6 +191,7 @@ namespace CityTools {
 
             numExperience.Value = critter.ExperienceGain;
             numHealth.Value = critter.Health;
+            numDefence.Value = critter.Defense;
 
             ckbOneOfAKind.Checked = critter.OneOfAKind;
             cbBaseGroup.Text = critter.NodeGroup;
@@ -288,6 +289,7 @@ namespace CityTools {
             critter.Name = txtMonsterName.Text;
             critter.ExperienceGain = (int)numExperience.Value;
             critter.Health = (int)numHealth.Value;
+            critter.Defense = (int)numDefence.Value;
             critter.OneOfAKind = ckbOneOfAKind.Checked;
 
             critter.MovementSpeed = (short)numMovementSpeed.Value;

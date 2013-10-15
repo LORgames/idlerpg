@@ -41,6 +41,7 @@ namespace ToolToGameExporter {
 
                 f.AddInt(c.ExperienceGain);
                 f.AddInt(c.Health);
+                f.AddInt(c.Defense);
 
                 f.AddShort(c.MovementSpeed);
                 f.AddShort(c.AlertRange);

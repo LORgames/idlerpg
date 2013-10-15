@@ -16,7 +16,7 @@ package UI {
 		public static function GetTextField(fontSize:int, fontNumber:int, colour:int = 0xFFFFFF):TextField {
 			var tf:TextField = new TextField();
 			tf.embedFonts = true;
-			tf.antiAliasType = AntiAliasType.NORMAL;
+			tf.antiAliasType = AntiAliasType.ADVANCED;
 			tf.autoSize = TextFieldAutoSize.LEFT;
 			tf.selectable = false;
 			tf.defaultTextFormat = new TextFormat("_FONT_"+fontNumber, fontSize, colour);

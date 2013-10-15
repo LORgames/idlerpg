@@ -71,6 +71,7 @@ package Game.Critter {
 		
 		public var CurrentHP:int = 1000;
 		public var MaximumHP:int = 1000;
+		public var CurrentDefence:int = 0;
 		
 		public function BaseCritter() {
 			MyRect = new Rect(false, this, 0, 0, 0, 0);
@@ -190,7 +191,7 @@ package Game.Critter {
 			var prevX:int = X;
 			var prevY:int = Y;
 			
-			tf.text = CurrentHP + " / " + MaximumHP;
+			tf.text = "";// CurrentHP + " / " + MaximumHP;
 			tf.x = (X + Camera.X) * Camera.Z - tf.width/2;
 			tf.y = (Y + Camera.Y) * Camera.Z - 60;
 			
@@ -472,8 +473,8 @@ package Game.Critter {
 		public function GetCurrentState():int { /* Needs to be handed down */ return 0; }
 		
 		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IScriptTarget):void {
-			if(MyScript != null) {
-				MyScript.Run(Script.Attacked, null, attacker);
+			if (MyScript != null) {
+				if(amount > 0) MyScript.Run(Script.Attacked, null, attacker);
 				
 				if (CurrentTarget != attacker) {
 					MyScript.Run(Script.AIEvent, null, Script.AIEvent_AttackedByNonTarget);
@@ -487,9 +488,14 @@ package Game.Critter {
 				CurrentHP -= CurrentHP * (amount / 100);
 			} else if (isDOT) {
 				
-			} else {
+			} else if(amount < 0) { //HEAL!
+					
+			} else { //ATTACK
+				var preCalc:int = amount - CurrentDefence;
+				if (preCalc < 0) preCalc = 1;
+				
 				//Flat damage
-				CurrentHP -= amount;
+				CurrentHP -= preCalc;
 			}
 			
 			if (CurrentHP < 1) {

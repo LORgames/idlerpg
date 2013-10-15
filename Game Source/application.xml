@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <application xmlns="http://ns.adobe.com/air/application/3.8">
-  <id>com.LORgames.iRPG</id>
-  <versionNumber>0.4</versionNumber>
+  <id>com.LORgames.CastleRush</id>
+  <versionNumber>0.7</versionNumber>
   <supportedProfiles>desktop extendedDesktop mobileDevice</supportedProfiles>
   <filename>iRPG</filename>
-  <name>iRPG</name>
+  <name>Castle Rush</name>
   <copyright>LORgames 2013</copyright>
   <android>
     <manifestAdditions><![CDATA[<manifest android:installLocation="auto">
@@ -34,7 +34,7 @@
     <requestedDisplayResolution>high</requestedDisplayResolution>
   </iPhone>
   <initialWindow>
-    <title>iRPG</title>
+    <title>Castle Rush</title>
     <content>iRPG.swf</content>
     <visible>true</visible>
     <fullScreen>true</fullScreen>
@@ -65,6 +65,6 @@
 	Android manifest documentation:
 	http://developer.android.com/guide/topics/manifest/manifest-intro.html
 	-->
-  <installFolder>LORgames/iRPG</installFolder>
-  <programMenuFolder>LORgames/iRPG</programMenuFolder>
+  <installFolder>LORgames/CastleRush</installFolder>
+  <programMenuFolder>LORgames/CastleRush</programMenuFolder>
 </application>

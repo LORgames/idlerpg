@@ -13,6 +13,7 @@ namespace ToolCache.UI {
         private const string name = General.Settings.Database + "UserInterface.bin";
 
         public static List<UIPanel> Panels = new List<UIPanel>();
+        public static List<UILibrary> Libraries = new List<UILibrary>();
 
         public static BindingList<FontFamily> Fonts = new BindingList<FontFamily>();
 
@@ -29,7 +30,7 @@ namespace ToolCache.UI {
             AddFont("Verdana");
             AddFont("Calibri");
             AddFont("Bangers");
-            AddFont("Jing Jing");
+            AddFont("Comic Sans MS");//AddFont("Jing Jing"); //SHOULD be JingJing
             AddFont("Visitor TT1 BRK");
         }
 
@@ -51,11 +52,23 @@ namespace ToolCache.UI {
                 while (--totalPanels > -1) {
                     AddPanel(UIPanel.ReadFromBinaryIO(f));
                 }
+
+                if (!f.IsEndOfFile()) {
+                    short totalLibraries = f.GetShort();
+
+                    while (--totalLibraries > -1) {
+                        AddLibrary(UILibrary.ReadFromBinaryIO(f));
+                    }
+                }
             }
         }
 
         public static void AddPanel(UIPanel uiPanel) {
             Panels.Add(uiPanel);
+        }
+
+        public static void AddLibrary(UILibrary uiLib) {
+            Libraries.Add(uiLib);
         }
 
         public static void DeletePanel(UIPanel p) {
@@ -71,6 +84,12 @@ namespace ToolCache.UI {
 
             foreach (UIPanel panel in Panels) {
                 panel.WriteToBinaryIO(f);
+            }
+
+            f.AddShort((short)Libraries.Count);
+
+            foreach (UILibrary lib in Libraries) {
+                lib.WriteToBinaryIO(f);
             }
 
             f.Encode(name);
