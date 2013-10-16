@@ -61,7 +61,7 @@
             this.toolStripSplitButton3 = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.txtNewLibraryName = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btnDeleteLibraries = new System.Windows.Forms.ToolStripDropDownButton();
             this.tabGroupVariableTypes.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numIntegerChanger)).BeginInit();
@@ -411,7 +411,7 @@
             // 
             this.statusStripUILibraries.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSplitButton3,
-            this.toolStripDropDownButton1});
+            this.btnDeleteLibraries});
             this.statusStripUILibraries.Location = new System.Drawing.Point(0, 387);
             this.statusStripUILibraries.Name = "statusStripUILibraries";
             this.statusStripUILibraries.Size = new System.Drawing.Size(735, 22);
@@ -441,13 +441,14 @@
             this.txtNewLibraryName.Size = new System.Drawing.Size(100, 21);
             this.txtNewLibraryName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtNewLibraryName_KeyDown);
             // 
-            // toolStripDropDownButton1
+            // btnDeleteLibraries
             // 
-            this.toolStripDropDownButton1.Image = global::CityTools.Properties.Resources.delete;
-            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(111, 20);
-            this.toolStripDropDownButton1.Text = "Delete Selected";
+            this.btnDeleteLibraries.Image = global::CityTools.Properties.Resources.delete;
+            this.btnDeleteLibraries.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnDeleteLibraries.Name = "btnDeleteLibraries";
+            this.btnDeleteLibraries.Size = new System.Drawing.Size(111, 20);
+            this.btnDeleteLibraries.Text = "Delete Selected";
+            this.btnDeleteLibraries.Click += new System.EventHandler(this.btnDeleteLibraries_Click);
             // 
             // GlobalVariableEditor
             // 
@@ -519,7 +520,7 @@
         private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton3;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
         private System.Windows.Forms.ToolStripTextBox txtNewLibraryName;
-        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
+        private System.Windows.Forms.ToolStripDropDownButton btnDeleteLibraries;
         private System.Windows.Forms.FlowLayoutPanel pnlUILibrary;
     }
 }

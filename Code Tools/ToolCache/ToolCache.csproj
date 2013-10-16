@@ -111,6 +111,7 @@
     <Compile Include="Scripting\Types\Commands.cs" />
     <Compile Include="Sound\SoundData.cs" />
     <Compile Include="Sound\SoundDatabase.cs" />
+    <Compile Include="UI\UILibraryLayer.cs" />
     <Compile Include="UI\UIElement.cs" />
     <Compile Include="UI\UIImageLayer.cs" />
     <Compile Include="UI\UILayer.cs" />

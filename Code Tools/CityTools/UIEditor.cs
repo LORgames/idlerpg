@@ -56,6 +56,7 @@ namespace CityTools {
             }
 
             cbValue.DataSource = variables;
+            cbUILayerLibrary.DataSource = UIManager.Libraries;
 
             cbTextFontFamily.DataSource = UIManager.Fonts;
             cbTextFontFamily.DisplayMember = "Name";
@@ -167,6 +168,10 @@ namespace CityTools {
                 cbLayerType.SelectedIndex = (int)CurrentLayer.MyType;
                 txtLayerName.Text = CurrentLayer.Name;
 
+                pnlImageStuff.Visible = false;
+                pnlTextStuff.Visible = false;
+                pnlUILayerLibrary.Visible = false;
+
                 if (CurrentLayer is UIImageLayer) {
                     UIImageLayer CurrentLayerIM = (UIImageLayer)CurrentLayer;
 
@@ -178,14 +183,13 @@ namespace CityTools {
                     }
 
                     pnlImageStuff.Visible = true;
-                    pnlTextStuff.Visible = false;
 
                     if (CurrentLayerIM.ImageFilename != "UI\\" && CurrentLayerIM.ImageFilename != "") {
                         pbLayerImage.Load(CurrentLayerIM.ImageFilename);
                     } else {
                         pbLayerImage.Image = null;
                     }
-                } else {
+                } else if (CurrentLayer is UITextLayer) {
                     UITextLayer CurrentLayerTX = (UITextLayer)CurrentLayer;
                     txtTextMessage.Text = CurrentLayerTX.Message;
 
@@ -195,9 +199,23 @@ namespace CityTools {
                     ckbTextWordWrap.Checked = CurrentLayerTX.WordWrap;
                     pbTextColour.Invalidate();
 
-                    pnlImageStuff.Visible = false;
                     pnlTextStuff.Visible = true;
+                } else if (CurrentLayer is UILibraryLayer) {
+                    UILibraryLayer CurrentLayerLI = (UILibraryLayer)CurrentLayer;
+
+                    if (CurrentLayerLI.LibraryName == "" && UIManager.Libraries.Count > 0) {
+                        CurrentLayerLI.LibraryName = UIManager.Libraries[0].Name;
+                    }
+
+                    cbUILayerLibrary.Text = CurrentLayerLI.LibraryName;
+                    numUILayerLibraryIndex.Value = CurrentLayerLI.DefaultIndex;
+
+                    pnlUILayerLibrary.Visible = true;
+                } else {
+                    throw new Exception("Unknown Layer TYPE!");
                 }
+
+
                 LayerSwitching = false;
             }
 
@@ -222,6 +240,11 @@ namespace CityTools {
                     (CurrentLayer as UITextLayer).FontFamily = cbTextFontFamily.SelectedIndex;
                     (CurrentLayer as UITextLayer).FontSize = (int)numTextSize.Value;
                     (CurrentLayer as UITextLayer).WordWrap = ckbTextWordWrap.Checked;
+                } else if (CurrentLayer is UILibraryLayer) {
+                    (CurrentLayer as UILibraryLayer).LibraryName = cbUILayerLibrary.Text;
+                    (CurrentLayer as UILibraryLayer).DefaultIndex = (int)numUILayerLibraryIndex.Value;
+                } else {
+                    throw new Exception("Unknown Layer Type!");
                 }
             }
         }
@@ -299,6 +322,15 @@ namespace CityTools {
                 CurrentElement.Layers.Add(newLayer);
                 listUILayers.Items.Add(newLayer);
 
+                SaveElement();
+            }
+        }
+
+        private void btnUILayerAddDatabase_Click(object sender, EventArgs e) {
+            if (CurrentElement != null) {
+                UILibraryLayer newLayer = new UILibraryLayer();
+                CurrentElement.Layers.Add(newLayer);
+                listUILayers.Items.Add(newLayer);
                 SaveElement();
             }
         }

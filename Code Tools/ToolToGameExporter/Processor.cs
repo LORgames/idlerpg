@@ -48,8 +48,6 @@ namespace ToolToGameExporter {
                 //Precrush. No Dependancies.
                 UpdateEPF(epf, "Setting an Example...", 1);
                 GameSettingsExporter.Go();
-                UpdateEPF(epf, "Calculating Standard Deviations...", 2);
-                GlobalVariableCrusher.Go();
                 UpdateEPF(epf, "Applying Diplomacy...", 3);
                 FactionCrusher.Go();
                 UpdateEPF(epf, "Counting Monsters...", 4);
@@ -60,6 +58,8 @@ namespace ToolToGameExporter {
                 MapObjectCrusher.Precrush();
                 UpdateEPF(epf, "Navigating the world...", 7);
                 MapCrusher.Precrush();
+                UpdateEPF(epf, "Calculating Standard Deviations...", 2);
+                GlobalVariableCrusher.Go();
 
                 //Tier 0  Crushing. No Dependancies.
                 UpdateEPF(epf, "Amplyfying Sounds...", 12);

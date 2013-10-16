@@ -319,5 +319,22 @@ namespace CityTools {
                 }
             }
         }
+
+        private void btnDeleteLibraries_Click(object sender, EventArgs e) {
+            if (lstLibraries.SelectedItems.Count > 0) {
+                List<UILibrary> toDelete = new List<UILibrary>();
+
+                for (int i = 0; i < lstLibraries.SelectedItems.Count; i++) {
+                    toDelete.Add(lstLibraries.SelectedItems[i] as UILibrary);
+                }
+
+                for (int i = 0; i < toDelete.Count; i++) {
+                    UIManager.Libraries.Remove(toDelete[i]);
+                }
+
+                toDelete.Clear();
+                toDelete = null;
+            }
+        }
     }
 }

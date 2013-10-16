@@ -60,6 +60,8 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0x1014, new Param[] { Param.SpawnRegion, Param.Boolean }));
             All.Add("netsyncvar",
                 new ValidCommand(0x1015, new Param[] { Param.Integer }));
+            All.Add("Offsets",
+                new ValidCommand(0x1016, new Param[] { Param.UILayer, Param.Integer, Param.Integer }));
 
             //Quest and Inventory Commands
             All.Add("saydialogue",
@@ -124,6 +126,8 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0xC003, new Param[] { Param.UIElement }));
             All.Add("uitextchange",
                 new ValidCommand(0xC004, new Param[] { Param.UILayer, Param.String }));
+            All.Add("uioffsets",
+                new ValidCommand(0xC005, new Param[] { Param.UILayer, Param.Integer, Param.Integer }));
 
             All.Add("trace",
                 new ValidCommand(0xCFFF, new Param[] { Param.String }));

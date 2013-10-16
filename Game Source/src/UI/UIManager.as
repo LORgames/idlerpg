@@ -2,6 +2,7 @@ package UI {
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
+	import flash.security.XMLSignatureEnvelopedTransformer;
 	import flash.utils.ByteArray;
 	import Game.General.BinaryLoader;
 	import Game.General.ImageLoader;
@@ -21,9 +22,24 @@ package UI {
 		public var ImageCutouts:Vector.<BitmapData>;
 		public var TextureAtlas:BitmapData;
 		
+		public var Libraries:Vector.<UILibrary>;
+		
 		public function UIManager() {
-			ImageLoader.Load("Data/UIAtlas.png", LoadedAtlas);
+			BinaryLoader.Load("Data/UILibrary.bin", ParseLibraries);
 			Global.LoadingTotal++;
+		}
+		
+		public function ParseLibraries(b:ByteArray):void {
+			var totalLibraries:int = b.readShort();
+			
+			Libraries = new Vector.<UILibrary>(totalLibraries, true);
+			
+			for (var i:int = 0; i < totalLibraries; i++) {
+				Libraries[i] = new UILibrary(b, i);
+			}
+			
+			ImageLoader.Load("Data/UIAtlas.png", LoadedAtlas);
+			//Not counting up or down the Global.LoadingTotal because it would be -1 and +1
 		}
 		
 		public function LoadedAtlas(b:BitmapData):void {
@@ -72,8 +88,9 @@ package UI {
 					for (var k:int = 0; k < totalLayers; k++) {
 						var layerType:int = b.readByte();
 						
-						if(layerType == 0) Panels[i].Elements[j].Layers[k] = new UILayerImage();
-						if(layerType == 1) Panels[i].Elements[j].Layers[k] = new UILayerText();
+						if (layerType == 0) Panels[i].Elements[j].Layers[k] = new UILayerImage();
+						if (layerType == 1) Panels[i].Elements[j].Layers[k] = new UILayerText();
+						if (layerType == 2) Panels[i].Elements[j].Layers[k] = new UILayerLibrary();
 						Panels[i].Elements[j].addChild(Panels[i].Elements[j].Layers[k]);
 						
 						Panels[i].Elements[j].Layers[k].AnchorPoint = b.readByte();
@@ -97,6 +114,9 @@ package UI {
 							(Panels[i].Elements[j].Layers[k] as UILayerText).WordWrap = b.readByte() == 1;
 							
 							(Panels[i].Elements[j].Layers[k] as UILayerText).PrepareTF();
+						} else if (layerType == 2) {
+							(Panels[i].Elements[j].Layers[k] as UILayerLibrary).Library = Libraries[b.readShort()];
+							(Panels[i].Elements[j].Layers[k] as UILayerLibrary).ID = b.readShort();
 						}
 					}
 				}
