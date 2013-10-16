@@ -23,28 +23,10 @@ package UI {
 			///////////////////////////////////////////// Update the position
 			var thisArea:Rect = new Rect(false, null, 0, 0, SizeX, SizeY);
 			
-			//Calculate X
-			switch (AnchorPoint) {
-				case UIAnchorPoint.BottomLeft: case UIAnchorPoint.MiddleLeft: case UIAnchorPoint.TopLeft: //Left
-					this.x = OffsetX; break;
-				case UIAnchorPoint.BottomRight: case UIAnchorPoint.MiddleRight: case UIAnchorPoint.TopRight: //Right
-					this.x = w - SizeX - OffsetX; break;
-				default:
-					this.x = (w - SizeX)/2 + OffsetX; break;
-			}
-			
-			//Calculate Y
-			switch (AnchorPoint) {
-				case UIAnchorPoint.BottomLeft:case UIAnchorPoint.BottomCenter:case UIAnchorPoint.BottomRight: //Bottom
-					this.y = h - SizeY - OffsetY; break;
-				case UIAnchorPoint.TopLeft: case UIAnchorPoint.TopCenter: case UIAnchorPoint.TopRight: //Top
-					this.y = OffsetY; break;
-				default:
-					this.y = (h-SizeY)/2 + OffsetY; break;
-			}
+			FixPosition();
 			
 			///////////////////////////////////////////// Redraw if required
-			if (!RequiresRedraw) return;
+			//if (!RequiresRedraw) return;
 			
 			var bmpd:BitmapData = Library.ImageCutouts[ID];
 			var m:Matrix = new Matrix();
@@ -74,7 +56,6 @@ package UI {
 				RequiresRedraw = false;
 			}
 		}
-		
 	}
 
 }

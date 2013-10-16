@@ -282,19 +282,19 @@ package Game.Map {
 			Spawns = null;
 			
 			i = Tiles.length;
-			while (--i > 0) {
+			while (--i > -1) {
 				Tiles[i].CleanUp();
 				Tiles[i] = null;
 			}
 			Tiles = null;
 			
 			i = Effects.length;
-			while (--i > 0) {
+			while (--i > -1) {
 				Effects[i].CleanUp();
 			}
 			
 			i = ScriptRegions.length;
-			while (--i > 0) {
+			while (--i > -1) {
 				ScriptRegions[i].CleanUp();
 				ScriptRegions[i] = null;
 			}

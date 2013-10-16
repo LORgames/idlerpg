@@ -25,6 +25,7 @@ package Game.Scripting {
 	import Strings.StringEx;
 	import UI.UIElement;
 	import UI.UILayer;
+	import UI.UILayerLibrary;
 	import UI.UILayerText;
 	import UI.UIPanel;
 	/**
@@ -518,6 +519,9 @@ package Game.Scripting {
 			var p0:PointX = new PointX();
 			var p1:PointX = new PointX();
 			
+			var uiE:UIElement;
+			var uiL:UILayer;
+			
 			while (true) {
 				command = EventScript.readUnsignedShort();
 				//trace("\t0x" + MathsEx.ZeroPad(command, 4, 16) + " Deep=" + deep + " CurrentTarget=" + info.CurrentTarget);
@@ -849,12 +853,31 @@ package Game.Scripting {
 					case 0xC003: //Redraw Panel
 						Main.I.hud.Panels[EventScript.readShort()].Elements[EventScript.readShort()].Draw(Main.I.stage.stageWidth, Main.I.stage.stageHeight, Main.I.hud); break;
 					case 0xC004: //Update UIText
-						var p:UIElement = Main.I.hud.Panels[EventScript.readShort()].Elements[EventScript.readShort()];
-						var l:UILayer = p.Layers[EventScript.readShort()];
-						if (l is UILayerText) {
+						uiE = Main.I.hud.Panels[EventScript.readShort()].Elements[EventScript.readShort()];
+						uiL = uiE.Layers[EventScript.readShort()];
+						
+						if (uiL is UILayerText) {
 							s = GetWonkyString(EventScript);
-							(l as UILayerText).Message = StringEx.BuildFromCore(s);
-							p.Draw(Main.I.stage.stageWidth, Main.I.stage.stageHeight, Main.I.hud);
+							(uiL as UILayerText).Message = StringEx.BuildFromCore(s);
+							uiE.Draw(Main.I.stage.stageWidth, Main.I.stage.stageHeight, Main.I.hud);
+						}
+						break;
+					case 0xC005: //Change offsets for UILayer
+						uiE = Main.I.hud.Panels[EventScript.readShort()].Elements[EventScript.readShort()];
+						uiL = uiE.Layers[EventScript.readShort()];
+						
+						uiL.OffsetX = GetNumberFromVariable(EventScript, info) + 1;
+						uiL.OffsetY = GetNumberFromVariable(EventScript, info) + 1;
+						uiL.FixPosition();
+						
+						break;
+					case 0xC006: //Change layer database
+						uiE = Main.I.hud.Panels[EventScript.readShort()].Elements[EventScript.readShort()];
+						uiL = uiE.Layers[EventScript.readShort()];
+						
+						if (uiL is UILayerLibrary) {
+							(uiL as UILayerLibrary).ID = GetNumberFromVariable(EventScript, info);
+							uiE.Draw(Main.I.stage.stageWidth, Main.I.stage.stageHeight, Main.I.hud);
 						}
 						break;
 					case 0xCFFF: //Trace

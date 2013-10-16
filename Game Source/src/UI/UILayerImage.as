@@ -24,25 +24,9 @@ package UI {
 			var thisArea:Rect = new Rect(false, null, 0, 0, SizeX, SizeY);
 			var displayValue:Number = GlobalVariables.Variables[GlobalVariable]/100.0;
 			
-			//Calculate X
-			switch (AnchorPoint) {
-				case UIAnchorPoint.BottomLeft: case UIAnchorPoint.MiddleLeft: case UIAnchorPoint.TopLeft: //Left
-					this.x = OffsetX; break;
-				case UIAnchorPoint.BottomRight: case UIAnchorPoint.MiddleRight: case UIAnchorPoint.TopRight: //Right
-					this.x = w - SizeX - OffsetX; break;
-				default:
-					this.x = (w - SizeX)/2 + OffsetX; break;
-			}
-			
-			//Calculate Y
-			switch (AnchorPoint) {
-				case UIAnchorPoint.BottomLeft:case UIAnchorPoint.BottomCenter:case UIAnchorPoint.BottomRight: //Bottom
-					this.y = h - SizeY - OffsetY; break;
-				case UIAnchorPoint.TopLeft: case UIAnchorPoint.TopCenter: case UIAnchorPoint.TopRight: //Top
-					this.y = OffsetY; break;
-				default:
-					this.y = (h-SizeY)/2 + OffsetY; break;
-			}
+			pw = w;
+			ph = h;
+			FixPosition();
 			
 			//Special Layer Types
 			if (LayerType == StretchToValueXNeg) {

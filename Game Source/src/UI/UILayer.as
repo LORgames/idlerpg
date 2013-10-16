@@ -32,12 +32,37 @@ package UI {
 		protected var RequiresRedraw:Boolean = true;
 		protected var RedrawRect:Rectangle;
 		
+		public static var pw:int; //Stage Width
+		public static var ph:int; //Stage Height
+		
 		public function UILayer() {
 			
 		}
 		
 		public function Draw(w:int, h:int, ui:UIManager):void {
 			
+		}
+		
+		public function FixPosition():void {
+			//Calculate X
+			switch (AnchorPoint) {
+				case UIAnchorPoint.BottomLeft: case UIAnchorPoint.MiddleLeft: case UIAnchorPoint.TopLeft: //Left
+					this.x = OffsetX; break;
+				case UIAnchorPoint.BottomRight: case UIAnchorPoint.MiddleRight: case UIAnchorPoint.TopRight: //Right
+					this.x = pw - SizeX - OffsetX; break;
+				default:
+					this.x = (pw - SizeX)/2 + OffsetX; break;
+			}
+			
+			//Calculate Y
+			switch (AnchorPoint) {
+				case UIAnchorPoint.BottomLeft:case UIAnchorPoint.BottomCenter:case UIAnchorPoint.BottomRight: //Bottom
+					this.y = ph - SizeY - OffsetY; break;
+				case UIAnchorPoint.TopLeft: case UIAnchorPoint.TopCenter: case UIAnchorPoint.TopRight: //Top
+					this.y = OffsetY; break;
+				default:
+					this.y = (ph-SizeY)/2 + OffsetY; break;
+			}
 		}
 		
 	}

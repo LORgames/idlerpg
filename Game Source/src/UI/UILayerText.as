@@ -37,6 +37,14 @@ package UI {
 		
 		public function PrepareTF():void {
 			tf = Fonts.GetTextField(FontSize, 3, Colour);
+			
+			if (WordWrap) {
+				//tf.autoSize = TextFieldAutoSize.NONE;
+				tf.multiline = true;
+				tf.wordWrap = true;
+				tf.width = SizeX;
+			}
+			
 			tf.text = Message.GetBuilt();
 		}
 		
