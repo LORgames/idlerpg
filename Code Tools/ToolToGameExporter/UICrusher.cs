@@ -125,6 +125,8 @@ namespace ToolToGameExporter {
             f.AddShort((short)i);
 
             while (--i > -1) {
+                images.Clear();
+
                 uil = UIManager.Libraries[i];
                 RemappedLibraryNames.Add(uil.Name);
 

@@ -97,6 +97,7 @@
             this.btnMoveSelectedPanelDown = new System.Windows.Forms.Button();
             this.btnMoveSelectedPanelUp = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.cbTextInputType = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbExample)).BeginInit();
             this.pnlUIElement.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUIElementSizeY)).BeginInit();
@@ -530,6 +531,7 @@
             // 
             // pnlTextStuff
             // 
+            this.pnlTextStuff.Controls.Add(this.cbTextInputType);
             this.pnlTextStuff.Controls.Add(this.label16);
             this.pnlTextStuff.Controls.Add(this.pbTextColour);
             this.pnlTextStuff.Controls.Add(this.label15);
@@ -543,14 +545,14 @@
             this.pnlTextStuff.Controls.Add(this.label12);
             this.pnlTextStuff.Location = new System.Drawing.Point(179, -1);
             this.pnlTextStuff.Name = "pnlTextStuff";
-            this.pnlTextStuff.Size = new System.Drawing.Size(165, 173);
+            this.pnlTextStuff.Size = new System.Drawing.Size(165, 196);
             this.pnlTextStuff.TabIndex = 21;
             this.pnlTextStuff.Visible = false;
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(14, 139);
+            this.label16.Location = new System.Drawing.Point(14, 168);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(31, 13);
             this.label16.TabIndex = 30;
@@ -559,7 +561,7 @@
             // pbTextColour
             // 
             this.pbTextColour.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbTextColour.Location = new System.Drawing.Point(51, 137);
+            this.pbTextColour.Location = new System.Drawing.Point(51, 166);
             this.pbTextColour.Name = "pbTextColour";
             this.pbTextColour.Size = new System.Drawing.Size(108, 20);
             this.pbTextColour.TabIndex = 29;
@@ -976,6 +978,22 @@
             this.btnMoveSelectedPanelUp.UseVisualStyleBackColor = true;
             this.btnMoveSelectedPanelUp.Click += new System.EventHandler(this.btnMoveSelectedPanelUp_Click);
             // 
+            // cbTextInputType
+            // 
+            this.cbTextInputType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbTextInputType.FormattingEnabled = true;
+            this.cbTextInputType.Items.AddRange(new object[] {
+            "None",
+            "Done",
+            "Go",
+            "Next",
+            "Search"});
+            this.cbTextInputType.Location = new System.Drawing.Point(51, 137);
+            this.cbTextInputType.Name = "cbTextInputType";
+            this.cbTextInputType.Size = new System.Drawing.Size(108, 21);
+            this.cbTextInputType.TabIndex = 31;
+            this.cbTextInputType.SelectedIndexChanged += new System.EventHandler(this.UILayerValueChanged);
+            // 
             // UIEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1104,5 +1122,6 @@
         private System.Windows.Forms.NumericUpDown numUILayerLibraryIndex;
         private System.Windows.Forms.ComboBox cbUILayerLibrary;
         private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.ComboBox cbTextInputType;
     }
 }

@@ -130,6 +130,8 @@ package {
 		}
 		
 		private function OnLostFocus(e:Event):void {
+			SaveManager.Save("");
+			
 			// auto-close if mobile device :)
 			CONFIG::air {
 				if (Multitouch.supportsTouchEvents && Multitouch.maxTouchPoints > 1) {

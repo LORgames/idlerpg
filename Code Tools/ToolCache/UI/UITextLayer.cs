@@ -14,7 +14,10 @@ namespace ToolCache.UI {
         public UIAnchorPoint Align = UIAnchorPoint.TopLeft;
         public int FontFamily = 0;
         public int FontSize = 20;
+        
         public bool WordWrap = false;
+        public byte InputType = 0;
+
         public Color Colour = Color.White;
 
         protected override void ReadFromBinaryIOX(General.BinaryIO f) {
@@ -24,7 +27,11 @@ namespace ToolCache.UI {
             Align = (UIAnchorPoint)f.GetByte();
             FontFamily = f.GetByte();
             FontSize = f.GetByte();
-            WordWrap = f.GetByte()==1;
+
+            byte info = f.GetByte();
+
+            WordWrap = (info & 1) == 1;
+            InputType = (byte)(info>>1);
 
             Colour = Color.FromArgb(f.GetInt());
         }
@@ -36,7 +43,9 @@ namespace ToolCache.UI {
             f.AddByte((byte)Align);
             f.AddByte((byte)FontFamily);
             f.AddByte((byte)FontSize);
-            f.AddByte((byte)(WordWrap?1:0));
+
+            byte info = (byte)((WordWrap ? 1 : 0) | (InputType<<1));
+            f.AddByte(info);
 
             f.AddInt(Colour.ToArgb());
         }

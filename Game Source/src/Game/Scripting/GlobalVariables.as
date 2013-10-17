@@ -1,6 +1,7 @@
 package Game.Scripting {
 	import flash.utils.ByteArray;
 	import Game.General.BinaryLoader;
+	import Storage.SaveManager;
 	/**
 	 * ...
 	 * @author Paul
@@ -24,6 +25,8 @@ package Game.Scripting {
 			for (var i:int = 0; i < Variables.length; i++) {
 				Variables[i] = b.readShort();
 			}
+			
+			SaveManager.Load("");
 			
 			Global.LoadingTotal--;
 		}
