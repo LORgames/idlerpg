@@ -13,7 +13,6 @@ package Game.Effects {
 		public function EffectManager() {
 			I = this;
 			BinaryLoader.Load("Data/EffectInfo.bin", ParseEffectFile);
-			Global.LoadingTotal++;
 		}
 		
 		public function ParseEffectFile(b:ByteArray):void {
@@ -56,8 +55,6 @@ package Game.Effects {
 				e.MyScript = Script.ReadScript(b);
 				e.FinishedLoadingData();
 			}
-			
-			Global.LoadingTotal--;
 		}
 		
 	}

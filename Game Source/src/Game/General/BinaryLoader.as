@@ -41,6 +41,7 @@ package Game.General {
 		}
 		
 		private static function Event_LoadingCompleted(e:Event):void {
+			Global.LoadingTotal--;
 			currentInfo.SuccessCallback(loader.data);
 			CurrentLoadingEnded();
 		}
@@ -84,6 +85,7 @@ package Game.General {
 			if(error != null) l.FailureCallback = error;
 			if(progress != null) l.ProgressCallback = progress;
 			loadQueue.push(l);
+			Global.LoadingTotal++;
 			
 			ProcessNext();
 		}

@@ -53,7 +53,6 @@ package Game.Map.Tiles {
 			if (!Global.HasTiles) return;
 			
 			BinaryLoader.Load("Data/TileInfo.bin", LoadedTiles);
-			Global.LoadingTotal++;
 		}
 		
 		private static function LoadedTiles(e:ByteArray):void {
@@ -92,8 +91,6 @@ package Game.Map.Tiles {
 				Tiles[i] = tt;
 				runningTileCount += tt.TotalFrames;
 			}
-			
-			Global.LoadingTotal--;
 		}
 		
 		//The constants

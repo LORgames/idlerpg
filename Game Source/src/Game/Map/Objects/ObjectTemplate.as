@@ -55,7 +55,6 @@ package Game.Map.Objects {
 			
 			if (!isLoading) {
 				isLoading = true;
-				Global.LoadingTotal++;
 				ImageLoader.Load("Data/Object_" + ObjectID + ".png", LoadedBitmap);
 			}
 			
@@ -82,7 +81,6 @@ package Game.Map.Objects {
 		
 		private function LoadedBitmap(e:BitmapData):void {
 			SpriteAtlas = e.clone();
-			Global.LoadingTotal--;
 			ChangeState(0);
 		}
 		
@@ -138,7 +136,6 @@ package Game.Map.Objects {
 		
 		public static function LoadObjectInfo():void {
 			BinaryLoader.Load("Data/ObjectInfo.bin", LoadedObjects);
-			Global.LoadingTotal++;
 		}
 		
 		private static function LoadedObjects(b:ByteArray):void {
@@ -192,8 +189,6 @@ package Game.Map.Objects {
 				
 				Objects[i] = obj;
 			}
-			
-			Global.LoadingTotal--;
 		}
 	}
 

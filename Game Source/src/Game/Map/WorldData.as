@@ -35,13 +35,10 @@ package Game.Map {
 			
 			if(Global.HasTiles) {
 				ImageLoader.Load("Data/TileSheet.png", LoadedTileSet);
-				Global.LoadingTotal++;
 			}
 			
 			TileTemplate.LoadTileInfo();
 			ObjectTemplate.LoadObjectInfo();
-			
-			Global.LoadingTotal++;
 		}
 		
 		public static function ParseWorldFile(data:ByteArray):void {
@@ -78,13 +75,10 @@ package Game.Map {
 			if (totalMaps > 0) {
 				CurrentMap.LoadMap(Maps[loadMapID]);
 			}
-			
-			Global.LoadingTotal--;
 		}
 		
 		public static function LoadedTileSet(e:BitmapData):void {
 			TileSheet = e.clone();
-			Global.LoadingTotal--;
 		}
 		
 		public static function UpdatePlayerPosition():void {

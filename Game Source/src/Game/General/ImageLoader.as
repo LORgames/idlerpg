@@ -66,6 +66,7 @@ package Game.General {
 			currentInfo.Clear();
 			UnusedObjects.push(currentInfo);
 			currentInfo = null;
+			Global.LoadingTotal--;
 			
 			ProcessNext();
 		}
@@ -83,6 +84,7 @@ package Game.General {
 			if(error != null) l.FailureCallback = error;
 			if(progress != null) l.ProgressCallback = progress;
 			loadQueue.push(l);
+			Global.LoadingTotal++;
 			
 			ProcessNext();
 		}

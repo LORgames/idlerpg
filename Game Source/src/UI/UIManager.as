@@ -26,7 +26,6 @@ package UI {
 		
 		public function UIManager() {
 			BinaryLoader.Load("Data/UILibrary.bin", ParseLibraries);
-			Global.LoadingTotal++;
 		}
 		
 		public function ParseLibraries(b:ByteArray):void {
@@ -143,7 +142,6 @@ package UI {
 			}
 			
 			if (Global.DebugFPS) this.addChild(new FPSCounter());
-			Global.LoadingTotal--;
 			Resized();
 		}
 		

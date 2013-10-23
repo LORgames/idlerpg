@@ -25,13 +25,11 @@ package UI {
 				Rectangles[i] = new Rectangle(b.readShort(), b.readShort(), b.readShort(), b.readShort());
 			}
 			
-			Global.LoadingTotal++;
 			ImageLoader.Load("Data/UILibrary_" + id + ".png", LoadedAtlas);
 		}
 		
 		public function LoadedAtlas(b:BitmapData):void {
 			TextureAtlas = b.clone();
-			Global.LoadingTotal--;
 			
 			for (var i:int = 0; i < Rectangles.length; i++) {
 				ImageCutouts[i] = new BitmapData(Rectangles[i].width, Rectangles[i].height);

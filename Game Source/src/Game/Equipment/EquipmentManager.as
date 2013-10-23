@@ -24,7 +24,6 @@ package Game.Equipment {
 		public function EquipmentManager() {
 			I = this;
 			BinaryLoader.Load("Data/EquipmentInfo.bin", ParseEquipmentFile);
-			Global.LoadingTotal++;
 		}
 		
 		public function ParseEquipmentFile(b:ByteArray):void {
@@ -53,9 +52,6 @@ package Game.Equipment {
 			if(Global.HasCharacter) {
 				SetupPlayerEquipment();
 			}
-			
-			//And reset the loading total while some images load
-			Global.LoadingTotal--;
 		}
 		
 		private function SetupPlayerEquipment():void {

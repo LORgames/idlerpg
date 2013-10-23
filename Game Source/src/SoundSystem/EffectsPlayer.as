@@ -15,7 +15,6 @@ package SoundSystem {
 		
 		public static function Initialize():void {
 			BinaryLoader.Load("Data/EffectGroups.bin", ParseGroupsFile);
-			Global.LoadingTotal++;
 		}
 		
 		public static function ParseGroupsFile(b:ByteArray):void {
@@ -35,8 +34,6 @@ package SoundSystem {
 					numbers.push(b.readShort());
 				}
 			}
-			
-			Global.LoadingTotal--;
 		}
 		
 		public static function PlayFromGroup(gid:int = 0):void {

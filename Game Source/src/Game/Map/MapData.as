@@ -66,8 +66,6 @@ package Game.Map {
 			if (portalID != -1) firstload = true;
 			
 			BinaryLoader.Load("Data/Map_" + mapname + ".bin", ParseData);
-			
-			Global.LoadingTotal++;
 		}
 		
 		public function ParseData(b:ByteArray):void {
@@ -166,8 +164,6 @@ package Game.Map {
 			
 			_script = Script.ReadScript(b);
 			MyScript = new ScriptInstance(_script, this);
-			
-			Global.LoadingTotal--;
 			
 			MusicPlayer.PlaySong(Music);
 			

@@ -282,6 +282,20 @@ package Game.Critter {
 				if ((MyAIType | AITypes.Aggressive) > 0 && (CurrentTarget == null && ((MyAIType | AITypes.ClosestTarget) > 0 || (MyAIType | AITypes.TargetLowestHealth) > 0))) {
 					//Scan for a new target
 					var r:Rect = new Rect(false, null, X - AlertRangeSqrt, Y - AlertRangeSqrt * Global.PerspectiveSkew, AlertRangeSqrt * 2, AlertRangeSqrt * 2 * Global.PerspectiveSkew);
+					
+					
+					if ((MyAIType & AITypes.BlindBehind) > 0) {
+						if (direction < 2) { //Left or right
+							r.W /= 2;
+							//if (direction == 0) r.X -= r.W; //Left
+							if (direction == 1) r.X += r.W; //Right
+						} else {
+							r.H /= 2;
+							//if (direction == 2) r.Y -= r.H; //Up
+							if (direction == 3) r.Y += r.H; //Down
+						}
+					}
+					
 					Drawer.AddDebugRect(r, Factions.GetFactionColour(PrimaryFaction));
 					
 					var objs:Vector.<IScriptTarget> = new Vector.<IScriptTarget>();
@@ -300,14 +314,17 @@ package Game.Critter {
 						if (objs[i] is BaseCritter) {
 							var x:BaseCritter = (objs[i] as BaseCritter);
 							
-							if ((MyAIType | AITypes.ClosestTarget) > 0) {
+							//If I'm a support unit and the unit is unsupportable, continue looking for something else
+							if ((MyAIType & AITypes.Supportive) > 0 && (x.MyAIType & AITypes.Unsupportable) > 0) { continue; }
+							
+							if ((MyAIType & AITypes.ClosestTarget) > 0) {
 								this_target_index = (x.X - X) * (x.X - X) + (x.Y - Y) * (x.Y - Y);
 								
 								if (this_target_index < best_target_index || CurrentTarget == null) {
 									CurrentTarget = x;
 									best_target_index = this_target_index;
 								}
-							} else if ((MyAIType | AITypes.TargetLowestHealth) > 0) {
+							} else if ((MyAIType & AITypes.TargetLowestHealth) > 0) {
 								this_target_index = x.CurrentHP - x.MaximumHP;
 								
 								if (this_target_index >= 0) continue;
@@ -359,12 +376,13 @@ package Game.Critter {
 					if ((CurrentTarget is IMapObject) && (CurrentTarget as IMapObject).HasPerfectCollision(rAtk)) {
 						RequestBasicAttack();
 						procTarget = true;
-					} else if ((MyAIType & AITypes.Aggressive)) {
-						RequestMove( -dx, -dy);
-						procTarget = true;
 					} else if (dx * dx + dy * dy > AlertRange*1.25) {
 						procTarget = false;
 						CurrentTarget = null;
+						MyScript.Run(Script.AIEvent, null, Script.AIEvent_TargetOutOfRange);
+					} else if ((MyAIType & AITypes.Aggressive)) {
+						RequestMove( -dx, -dy);
+						procTarget = true;
 					}
 				}
 			}
@@ -517,6 +535,12 @@ package Game.Critter {
 			return PrimaryFaction;
 		}
 		
+		public function HasFaction(factionID:int):Boolean {
+			if (factionID == PrimaryFaction) return true;
+			
+			return false;
+		}
+		
 		public function SetFaction(newFaction:int):void {
 			PrimaryFaction = newFaction;
 			MyScript.Run(Script.AIEvent, null, Script.AIEvent_FactionChanged);
@@ -526,6 +550,5 @@ package Game.Critter {
 			Owner = newOwner;
 			MyScript.Run(Script.AIEvent, null, Script.AIEvent_OwnerChanged);
 		}
-		
 	}
 }

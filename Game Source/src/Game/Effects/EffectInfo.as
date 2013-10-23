@@ -36,12 +36,10 @@ package Game.Effects
 		
 		public function FinishedLoadingData():void {
 			ImageLoader.Load("Data/Effect_" + ID + ".png", LoadedAtlas);
-			Global.LoadingTotal++;
 		}
 		
 		private function LoadedAtlas(e:BitmapData):void {
 			SpriteAtlas = e.clone();
-			Global.LoadingTotal--;
 		}
 	}
 }

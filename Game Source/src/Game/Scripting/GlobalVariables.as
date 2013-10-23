@@ -12,8 +12,6 @@ package Game.Scripting {
 		public static var Functions:Script;
 		
 		public function GlobalVariables() {
-			Global.LoadingTotal += 3;
-			
 			BinaryLoader.Load("Data\\Variables.bin", LoadedVariables);
 			BinaryLoader.Load("Data\\Strings.bin", LoadedStrings);
 			BinaryLoader.Load("Data\\Functions.bin", LoadedFunctions);
@@ -27,8 +25,6 @@ package Game.Scripting {
 			}
 			
 			SaveManager.Load("");
-			
-			Global.LoadingTotal--;
 		}
 		
 		public function LoadedStrings(b:ByteArray):void {
@@ -37,8 +33,6 @@ package Game.Scripting {
 			for (var i:int = 0; i < Strings.length; i++) {
 				Strings[i] = BinaryLoader.GetString(b);
 			}
-			
-			Global.LoadingTotal--;
 		}
 		
 		public function LoadedFunctions(b:ByteArray):void {
@@ -68,10 +62,8 @@ package Game.Scripting {
 			if (b.position != b.length) {
 				throw new Error("DID NOT FINISH READING THE SCRIPT!");
 			} else {
-				
+				//TODO: this shouldn't be blank i think? why is there a lack of comments?
 			}
-			
-			Global.LoadingTotal--;
 		}
 	}
 }

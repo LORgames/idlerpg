@@ -13,5 +13,7 @@ package Game.Critter {
         public static const RunAway:int = 64;      			// Not Implemented. Runs away on low HP.
 		public static const Untargetable:int = 128;			// Can the unit be targetted by other AI entities
 		public static const TargetLowestHealth:int = 256;	// Picks the lowest health unit of the units in range to target
+		public static const BlindBehind:int = 512;			// Picks the lowest health unit of the units in range to target
+		public static const Unsupportable:int = 1024;		// Picks the lowest health unit of the units in range to target
 	}
 }

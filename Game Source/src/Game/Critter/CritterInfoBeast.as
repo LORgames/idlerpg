@@ -78,9 +78,7 @@ package Game.Critter
 			TotalUses++;
 			
 			if (MySpriteSheet == null) {
-				MySpriteSheet = new BitmapData(SpriteSheetWidth, SpriteSheetHeight, true, 0x40FF00FF);
-				
-				Global.LoadingTotal++;
+				MySpriteSheet = new BitmapData(SpriteSheetWidth, SpriteSheetHeight, true, (Global.DebugRender)?0x40FF0080:0x00FFFFFF);
 				ImageLoader.Load("Data/Critter_" + ID + ".png", LoadedSpriteSheet);
 			}
 			
@@ -99,8 +97,6 @@ package Game.Critter
 		}
 		
 		public function LoadedSpriteSheet(e:BitmapData):void {
-			Global.LoadingTotal--;
-			
 			if (MySpriteSheet == null) {
 				MySpriteSheet = new BitmapData(SpriteSheetWidth, SpriteSheetHeight, true, 0x40FF00FF);
 			}
