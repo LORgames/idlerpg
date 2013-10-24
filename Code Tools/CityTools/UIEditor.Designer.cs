@@ -58,6 +58,7 @@
             this.lblValue = new System.Windows.Forms.Label();
             this.btnLayerChangeImage = new System.Windows.Forms.Button();
             this.pnlTextStuff = new System.Windows.Forms.Panel();
+            this.cbTextInputType = new System.Windows.Forms.ComboBox();
             this.label16 = new System.Windows.Forms.Label();
             this.pbTextColour = new System.Windows.Forms.PictureBox();
             this.label15 = new System.Windows.Forms.Label();
@@ -97,7 +98,6 @@
             this.btnMoveSelectedPanelDown = new System.Windows.Forms.Button();
             this.btnMoveSelectedPanelUp = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.cbTextInputType = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbExample)).BeginInit();
             this.pnlUIElement.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUIElementSizeY)).BeginInit();
@@ -419,7 +419,6 @@
             // 
             this.pnlUILayer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.pnlUILayer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlUILayer.Controls.Add(this.pnlUILayerLibrary);
             this.pnlUILayer.Controls.Add(this.pnlImageStuff);
             this.pnlUILayer.Controls.Add(this.pnlTextStuff);
             this.pnlUILayer.Controls.Add(this.pbLayerImage);
@@ -435,6 +434,7 @@
             this.pnlUILayer.Controls.Add(this.label5);
             this.pnlUILayer.Controls.Add(this.numLayerHeight);
             this.pnlUILayer.Controls.Add(this.numLayerWidth);
+            this.pnlUILayer.Controls.Add(this.pnlUILayerLibrary);
             this.pnlUILayer.Enabled = false;
             this.pnlUILayer.Location = new System.Drawing.Point(12, 448);
             this.pnlUILayer.Name = "pnlUILayer";
@@ -508,6 +508,7 @@
             this.cbValue.Name = "cbValue";
             this.cbValue.Size = new System.Drawing.Size(98, 21);
             this.cbValue.TabIndex = 20;
+            this.cbValue.DropDown += new System.EventHandler(this.cbResizeWidth_DropDown);
             this.cbValue.SelectedIndexChanged += new System.EventHandler(this.UILayerValueChanged);
             // 
             // lblValue
@@ -548,6 +549,22 @@
             this.pnlTextStuff.Size = new System.Drawing.Size(165, 196);
             this.pnlTextStuff.TabIndex = 21;
             this.pnlTextStuff.Visible = false;
+            // 
+            // cbTextInputType
+            // 
+            this.cbTextInputType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbTextInputType.FormattingEnabled = true;
+            this.cbTextInputType.Items.AddRange(new object[] {
+            "None",
+            "Done",
+            "Go",
+            "Next",
+            "Search"});
+            this.cbTextInputType.Location = new System.Drawing.Point(51, 137);
+            this.cbTextInputType.Name = "cbTextInputType";
+            this.cbTextInputType.Size = new System.Drawing.Size(108, 21);
+            this.cbTextInputType.TabIndex = 31;
+            this.cbTextInputType.SelectedIndexChanged += new System.EventHandler(this.UILayerValueChanged);
             // 
             // label16
             // 
@@ -977,22 +994,6 @@
             this.btnMoveSelectedPanelUp.Text = "ʌ";
             this.btnMoveSelectedPanelUp.UseVisualStyleBackColor = true;
             this.btnMoveSelectedPanelUp.Click += new System.EventHandler(this.btnMoveSelectedPanelUp_Click);
-            // 
-            // cbTextInputType
-            // 
-            this.cbTextInputType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbTextInputType.FormattingEnabled = true;
-            this.cbTextInputType.Items.AddRange(new object[] {
-            "None",
-            "Done",
-            "Go",
-            "Next",
-            "Search"});
-            this.cbTextInputType.Location = new System.Drawing.Point(51, 137);
-            this.cbTextInputType.Name = "cbTextInputType";
-            this.cbTextInputType.Size = new System.Drawing.Size(108, 21);
-            this.cbTextInputType.TabIndex = 31;
-            this.cbTextInputType.SelectedIndexChanged += new System.EventHandler(this.UILayerValueChanged);
             // 
             // UIEditor
             // 

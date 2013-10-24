@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animation\AnimatedObject.cs" />
+    <Compile Include="Critters\BuffManager.cs" />
     <Compile Include="Elements\Element.cs" />
     <Compile Include="Elements\ElementManager.cs" />
     <Compile Include="Critters\AITypes.cs" />

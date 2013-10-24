@@ -191,7 +191,7 @@ package Game.Critter {
 			var prevX:int = X;
 			var prevY:int = Y;
 			
-			tf.text = "";// CurrentHP + " / " + MaximumHP;
+			tf.text = CurrentHP + " / " + MaximumHP;
 			tf.x = (X + Camera.X) * Camera.Z - tf.width/2;
 			tf.y = (Y + Camera.Y) * Camera.Z - 60;
 			
@@ -492,7 +492,7 @@ package Game.Critter {
 		
 		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IScriptTarget):void {
 			if (MyScript != null) {
-				if(amount > 0) MyScript.Run(Script.Attacked, null, attacker);
+				if(amount > 0) MyScript.Run(Script.Attacked, null, [attacker, amount]);
 				
 				if (CurrentTarget != attacker) {
 					MyScript.Run(Script.AIEvent, null, Script.AIEvent_AttackedByNonTarget);
@@ -507,7 +507,8 @@ package Game.Critter {
 			} else if (isDOT) {
 				
 			} else if(amount < 0) { //HEAL!
-					
+				//Flat damage
+				CurrentHP -= amount;
 			} else { //ATTACK
 				var preCalc:int = amount - CurrentDefence;
 				if (preCalc < 0) preCalc = 1;

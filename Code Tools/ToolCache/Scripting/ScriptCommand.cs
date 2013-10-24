@@ -156,7 +156,8 @@ namespace ToolCache.Scripting {
                         #endregion
 
                         //Might be a variable line or something :)
-                        m = Regex.Match(Trimmed, "(" + VARIABLE_REGEX + ")\\s?=\\s?([ A-Za-z0-9*+/\\-%_\\(\\)]+)");
+                        m = Regex.Match(Trimmed, "(" + VARIABLE_REGEX + ")\\s?=(.+)");
+                        Regex mathcomreg = new Regex("([A-Za-z0-9]+)\\((.+)\\)");
 
                         if (m.Success) {
                             #region PROCESS MATH BLOCK
@@ -167,10 +168,10 @@ namespace ToolCache.Scripting {
                                 info.Errors.Add("No variable called: " + m.Groups[1].Value+ ErrorEnding());
                             }
 
-                            string mathblock = m.Groups[2].Value;
+                            string mathblock = m.Groups[2].Value.Trim();
 
                             //Find all the maths symbols :)
-                            MatchCollection mc = Regex.Matches(mathblock, "(\\+|-|/|\\*|%)");
+                            MatchCollection mc = Regex.Matches(mathblock, "(\\+|-|/|\\*|%|\\||&|\\^|~|{|})");
                             List<string> mathblockBits = new List<string>();
 
                             int endOfLast = 0;
@@ -182,7 +183,7 @@ namespace ToolCache.Scripting {
                                 endOfLast = mathPieceMatch.Index + mathPieceMatch.Length;
                             }
 
-                            mathblockBits.Add(mathblock.Substring(endOfLast));
+                            mathblockBits.Add(mathblock.Substring(endOfLast).Trim());
 
                             //Now we process the bits :D
                             foreach(string mathBit in mathblockBits) {
@@ -192,9 +193,29 @@ namespace ToolCache.Scripting {
                                     case "*": AdditionalBytecode.Add(0xB003); break;
                                     case "/": AdditionalBytecode.Add(0xB004); break;
                                     case "%": AdditionalBytecode.Add(0xB005); break;
+                                    case "|": AdditionalBytecode.Add(0xB006); break;
+                                    case "&": AdditionalBytecode.Add(0xB007); break;
+                                    case "^": AdditionalBytecode.Add(0xB008); break;
+                                    case "~": AdditionalBytecode.Add(0xB009); break;
+                                    case "{": AdditionalBytecode.Add(0xB00A); break;
+                                    case "}": AdditionalBytecode.Add(0xB00B); break;
                                     default:
                                         if (!WriteVariableIfExists(mathBit, info)) {
-                                            info.Errors.Add("Cannot find a variable called: '" + mathBit + "'"+ ErrorEnding());
+                                            //Hopefully we have a math command :)
+                                            Match mathcommatch = mathcomreg.Match(mathBit);
+
+                                            if (mathcommatch.Success) {
+                                                if(Commands.MathFunctions.ContainsKey(mathcommatch.Groups[1].Value.ToLower())) {
+                                                    ValidCommand vcp = Commands.MathFunctions[mathcommatch.Groups[1].Value.ToLower()];
+                                                    AdditionalBytecode.Add(0xBFFC);
+                                                    AdditionalBytecode.Add(vcp.CommandID);
+                                                    ProcessParams(info, vcp, mathcommatch.Groups[2].Value);
+                                                } else {
+                                                    info.Errors.Add("Cannot find a math command called: " + mathcommatch.Groups[1].Value + ErrorEnding());
+                                                }
+                                            } else {
+                                                info.Errors.Add("Cannot find a variable called: '" + mathBit + "'" + ErrorEnding());
+                                            }
                                         } break;
                                 }
                             }
@@ -360,7 +381,6 @@ namespace ToolCache.Scripting {
                             if (!Factions.Has(paramBits[i])) {
                                 info.Errors.Add("Could not find the faction: " + paramBits[i] + ErrorEnding());
                             } else {
-                                System.Diagnostics.Debug.WriteLine("Faction=" + Factions.GetID(paramBits[i]));
                                 AdditionalBytecode.Add((ushort)Factions.GetID(paramBits[i]));
                             } break;
                         case Param.AnimationName:
@@ -513,6 +533,10 @@ namespace ToolCache.Scripting {
             }
         }
 
+        /// <summary>
+        /// Adds an ending section to error and warning messages
+        /// </summary>
+        /// <returns>The line ending for messages</returns>
         private string ErrorEnding() {
             return " (on line " + LineNumber + ")";
         }
@@ -701,6 +725,12 @@ namespace ToolCache.Scripting {
             AdditionalBytecode.Add(0xF0FE); //End the parameter block
         }
 
+        /// <summary>
+        /// Check to make sure a variable exists
+        /// </summary>
+        /// <param name="p">The name of the variable</param>
+        /// <param name="Info">The current info object</param>
+        /// <returns>True if the variable exists, false otherwise</returns>
         private bool VariableExists(string p, ScriptInfo Info) {
             return (Info.Variables.ContainsKey(p) || Variables.GlobalVariables.ContainsKey(p));
         }

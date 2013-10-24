@@ -62,6 +62,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuffsEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BuffsEditor.Designer.cs">
+      <DependentUpon>BuffsEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="CacheInterfaces\SaveInterface.cs" />
     <Compile Include="CacheInterfaces\ScriptRegionInterface.cs" />
     <Compile Include="CacheInterfaces\SpawnRegionInterface.cs" />
@@ -257,6 +263,9 @@
     <Compile Include="WorldEditor.Designer.cs">
       <DependentUpon>WorldEditor.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="BuffsEditor.resx">
+      <DependentUpon>BuffsEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Components\ImageSelector_ImagePnl.resx">
       <DependentUpon>ImageSelector_ImagePnl.cs</DependentUpon>
     </EmbeddedResource>
@@ -487,6 +496,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Neutral.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\attach1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

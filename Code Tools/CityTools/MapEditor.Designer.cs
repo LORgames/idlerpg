@@ -149,6 +149,7 @@
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.timerRedrawAll = new System.Windows.Forms.Timer(this.components);
             this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.btnBuffEditor = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.main_splitter)).BeginInit();
             this.main_splitter.Panel1.SuspendLayout();
             this.main_splitter.Panel2.SuspendLayout();
@@ -244,7 +245,7 @@
             this.btnGlobalSettingsEditor.Image = global::CityTools.Properties.Resources.Monster;
             this.btnGlobalSettingsEditor.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnGlobalSettingsEditor.Name = "btnGlobalSettingsEditor";
-            this.btnGlobalSettingsEditor.Size = new System.Drawing.Size(116, 22);
+            this.btnGlobalSettingsEditor.Size = new System.Drawing.Size(125, 22);
             this.btnGlobalSettingsEditor.Text = "Global Settings (G)";
             // 
             // cbMapPieces
@@ -312,10 +313,11 @@
             this.btnSoundEditor,
             this.btnTileEditorTool,
             this.btnUIEditor,
-            this.btnWorldEditor});
+            this.btnWorldEditor,
+            this.btnBuffEditor});
             this.btnOtherToolsMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnOtherToolsMenu.Name = "btnOtherToolsMenu";
-            this.btnOtherToolsMenu.Size = new System.Drawing.Size(76, 22);
+            this.btnOtherToolsMenu.Size = new System.Drawing.Size(82, 22);
             this.btnOtherToolsMenu.Text = "Other Tools";
             // 
             // btnCritterEditor
@@ -325,68 +327,68 @@
             this.btnFactionEditor});
             this.btnCritterEditor.Image = global::CityTools.Properties.Resources.Monster;
             this.btnCritterEditor.Name = "btnCritterEditor";
-            this.btnCritterEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnCritterEditor.Size = new System.Drawing.Size(216, 22);
             this.btnCritterEditor.Text = "Critter Editor (C)";
             // 
             // btnShadowTool
             // 
             this.btnShadowTool.Name = "btnShadowTool";
-            this.btnShadowTool.Size = new System.Drawing.Size(170, 22);
+            this.btnShadowTool.Size = new System.Drawing.Size(167, 22);
             this.btnShadowTool.Text = "Shadow Tool";
             // 
             // btnFactionEditor
             // 
             this.btnFactionEditor.Name = "btnFactionEditor";
-            this.btnFactionEditor.Size = new System.Drawing.Size(170, 22);
+            this.btnFactionEditor.Size = new System.Drawing.Size(167, 22);
             this.btnFactionEditor.Text = "Faction Editor (Q)";
             // 
             // btnEffectEditor
             // 
             this.btnEffectEditor.Image = global::CityTools.Properties.Resources.bomb;
             this.btnEffectEditor.Name = "btnEffectEditor";
-            this.btnEffectEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnEffectEditor.Size = new System.Drawing.Size(216, 22);
             this.btnEffectEditor.Text = "Effect Editor (F)";
             // 
             // btnEquipmentEditor
             // 
             this.btnEquipmentEditor.Image = global::CityTools.Properties.Resources.mouse;
             this.btnEquipmentEditor.Name = "btnEquipmentEditor";
-            this.btnEquipmentEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnEquipmentEditor.Size = new System.Drawing.Size(216, 22);
             this.btnEquipmentEditor.Text = "Equipment Editor (E)";
             // 
             // btnItemEditor
             // 
             this.btnItemEditor.Image = global::CityTools.Properties.Resources.bell;
             this.btnItemEditor.Name = "btnItemEditor";
-            this.btnItemEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnItemEditor.Size = new System.Drawing.Size(216, 22);
             this.btnItemEditor.Text = "Item Editor (I)";
             // 
             // btnObjectEditor
             // 
             this.btnObjectEditor.Image = global::CityTools.Properties.Resources.attach;
             this.btnObjectEditor.Name = "btnObjectEditor";
-            this.btnObjectEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnObjectEditor.Size = new System.Drawing.Size(216, 22);
             this.btnObjectEditor.Text = "Object Template Editor (O)";
             // 
             // btnPortraitEditor
             // 
             this.btnPortraitEditor.Image = global::CityTools.Properties.Resources.Humanoid;
             this.btnPortraitEditor.Name = "btnPortraitEditor";
-            this.btnPortraitEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnPortraitEditor.Size = new System.Drawing.Size(216, 22);
             this.btnPortraitEditor.Text = "Portrait Editor (P)";
             // 
             // btnSaveEditor
             // 
             this.btnSaveEditor.Image = global::CityTools.Properties.Resources.disk;
             this.btnSaveEditor.Name = "btnSaveEditor";
-            this.btnSaveEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnSaveEditor.Size = new System.Drawing.Size(216, 22);
             this.btnSaveEditor.Text = "Save File Editor (V)";
             // 
             // btnSoundEditor
             // 
             this.btnSoundEditor.Image = global::CityTools.Properties.Resources.music;
             this.btnSoundEditor.Name = "btnSoundEditor";
-            this.btnSoundEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnSoundEditor.Size = new System.Drawing.Size(216, 22);
             this.btnSoundEditor.Text = "Sound Editor (Z)";
             // 
             // btnTileEditorTool
@@ -395,27 +397,27 @@
             this.btnTileMerger});
             this.btnTileEditorTool.Image = global::CityTools.Properties.Resources.application_double;
             this.btnTileEditorTool.Name = "btnTileEditorTool";
-            this.btnTileEditorTool.Size = new System.Drawing.Size(214, 22);
+            this.btnTileEditorTool.Size = new System.Drawing.Size(216, 22);
             this.btnTileEditorTool.Text = "Tile Editor (T)";
             // 
             // btnTileMerger
             // 
             this.btnTileMerger.Name = "btnTileMerger";
-            this.btnTileMerger.Size = new System.Drawing.Size(138, 22);
+            this.btnTileMerger.Size = new System.Drawing.Size(134, 22);
             this.btnTileMerger.Text = "Tile Merger";
             // 
             // btnUIEditor
             // 
             this.btnUIEditor.Image = global::CityTools.Properties.Resources.application_view_gallery;
             this.btnUIEditor.Name = "btnUIEditor";
-            this.btnUIEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnUIEditor.Size = new System.Drawing.Size(216, 22);
             this.btnUIEditor.Text = "UI Editor (U)";
             // 
             // btnWorldEditor
             // 
             this.btnWorldEditor.Image = global::CityTools.Properties.Resources.world;
             this.btnWorldEditor.Name = "btnWorldEditor";
-            this.btnWorldEditor.Size = new System.Drawing.Size(214, 22);
+            this.btnWorldEditor.Size = new System.Drawing.Size(216, 22);
             this.btnWorldEditor.Text = "World Editor (X)";
             // 
             // toolStripSeparator2
@@ -433,7 +435,7 @@
             this.btnExport.Image = global::CityTools.Properties.Resources.bug;
             this.btnExport.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(83, 22);
+            this.btnExport.Size = new System.Drawing.Size(84, 22);
             this.btnExport.Text = "Test (F5)";
             // 
             // ckbExportDebugRender
@@ -469,7 +471,7 @@
             this.cbExportSave.Items.AddRange(new object[] {
             "No Save"});
             this.cbExportSave.Name = "cbExportSave";
-            this.cbExportSave.Size = new System.Drawing.Size(121, 21);
+            this.cbExportSave.Size = new System.Drawing.Size(121, 23);
             // 
             // toolStripSeparator3
             // 
@@ -486,7 +488,7 @@
             this.btnViewMenu.Image = ((System.Drawing.Image)(resources.GetObject("btnViewMenu.Image")));
             this.btnViewMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnViewMenu.Name = "btnViewMenu";
-            this.btnViewMenu.Size = new System.Drawing.Size(42, 22);
+            this.btnViewMenu.Size = new System.Drawing.Size(45, 22);
             this.btnViewMenu.Text = "View";
             // 
             // mnuShowGrids
@@ -496,28 +498,28 @@
             this.ckbShowObjectBases,
             this.ckbShowTileBases});
             this.mnuShowGrids.Name = "mnuShowGrids";
-            this.mnuShowGrids.Size = new System.Drawing.Size(127, 22);
+            this.mnuShowGrids.Size = new System.Drawing.Size(121, 22);
             this.mnuShowGrids.Text = "Grids";
             // 
             // ckbShowTileGrid
             // 
             this.ckbShowTileGrid.CheckOnClick = true;
             this.ckbShowTileGrid.Name = "ckbShowTileGrid";
-            this.ckbShowTileGrid.Size = new System.Drawing.Size(194, 22);
+            this.ckbShowTileGrid.Size = new System.Drawing.Size(190, 22);
             this.ckbShowTileGrid.Text = "Show Outlines (1)";
             // 
             // ckbShowObjectBases
             // 
             this.ckbShowObjectBases.CheckOnClick = true;
             this.ckbShowObjectBases.Name = "ckbShowObjectBases";
-            this.ckbShowObjectBases.Size = new System.Drawing.Size(194, 22);
+            this.ckbShowObjectBases.Size = new System.Drawing.Size(190, 22);
             this.ckbShowObjectBases.Text = "Show Object Bases (2)";
             // 
             // ckbShowTileBases
             // 
             this.ckbShowTileBases.CheckOnClick = true;
             this.ckbShowTileBases.Name = "ckbShowTileBases";
-            this.ckbShowTileBases.Size = new System.Drawing.Size(194, 22);
+            this.ckbShowTileBases.Size = new System.Drawing.Size(190, 22);
             this.ckbShowTileBases.Text = "Show Tile Bases (3)";
             // 
             // viewportToolStripMenuItem
@@ -527,7 +529,7 @@
             this.txtViewportWidth,
             this.txtViewportHeight});
             this.viewportToolStripMenuItem.Name = "viewportToolStripMenuItem";
-            this.viewportToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.viewportToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.viewportToolStripMenuItem.Text = "Viewport";
             // 
             // ckbViewportEnabled
@@ -541,14 +543,14 @@
             // 
             this.txtViewportWidth.AutoToolTip = true;
             this.txtViewportWidth.Name = "txtViewportWidth";
-            this.txtViewportWidth.Size = new System.Drawing.Size(100, 21);
+            this.txtViewportWidth.Size = new System.Drawing.Size(100, 23);
             this.txtViewportWidth.Text = "800";
             this.txtViewportWidth.ToolTipText = "Viewport Width";
             // 
             // txtViewportHeight
             // 
             this.txtViewportHeight.Name = "txtViewportHeight";
-            this.txtViewportHeight.Size = new System.Drawing.Size(100, 21);
+            this.txtViewportHeight.Size = new System.Drawing.Size(100, 23);
             this.txtViewportHeight.Text = "600";
             this.txtViewportHeight.ToolTipText = "Viewport Height";
             // 
@@ -560,7 +562,7 @@
             // lblHighlightedCell
             // 
             this.lblHighlightedCell.Name = "lblHighlightedCell";
-            this.lblHighlightedCell.Size = new System.Drawing.Size(24, 22);
+            this.lblHighlightedCell.Size = new System.Drawing.Size(27, 15);
             this.lblHighlightedCell.Text = "Cell";
             // 
             // toolpanel_splitter
@@ -1411,6 +1413,13 @@
             this.colorDialog.FullOpen = true;
             this.colorDialog.SolidColorOnly = true;
             // 
+            // btnBuffEditor
+            // 
+            this.btnBuffEditor.Image = global::CityTools.Properties.Resources.attach1;
+            this.btnBuffEditor.Name = "btnBuffEditor";
+            this.btnBuffEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnBuffEditor.Text = "Buff Editor (B)";
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1574,6 +1583,7 @@
         internal System.Windows.Forms.ComboBox cbSpawnRegionFaction;
         private System.Windows.Forms.Label label9;
         internal System.Windows.Forms.Button btnDeleteSelectedCritters;
+        internal System.Windows.Forms.ToolStripMenuItem btnBuffEditor;
     }
 }
 

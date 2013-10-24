@@ -104,7 +104,7 @@ package Game.Scripting {
 			}
 		}
 		
-		private function ProcessMathCommand(eventScript:ByteArray, info:ScriptInstance):void {
+		private function ProcessMathCommand(eventScript:ByteArray, info:ScriptInstance, param:Object):void {
 			var SaveVarType:int = eventScript.readUnsignedShort();
 			var SaveVarID:int = eventScript.readShort();
 			
@@ -120,18 +120,8 @@ package Game.Scripting {
 				if (nextVarType == 0xBF01) break;
 				
 				if (nextVarType > 0xBFF0) { //is a variable
-					switch (nextVarType) {
-						case 0xBFFF: //Static value
-							nextValue = eventScript.readShort(); break;
-						case 0xBFFD: //Local variable
-							nextValue = info.Variables[eventScript.readShort()]; break;
-						case 0xBFFE: //Global variable
-							nextValue = GlobalVariables.Variables[eventScript.readShort()]; break;
-							break;
-						default:
-							trace("Unknown variable type");
-							break;
-					}
+					eventScript.position -= 2;
+					nextValue = GetNumberFromVariable(eventScript, info, param);
 					
 					//apply the operation :)
 					switch (currentOperation) {
@@ -145,6 +135,18 @@ package Game.Scripting {
 							runningTally /= nextValue; break;
 						case 0xB005: //Modulus
 							runningTally %= nextValue; break;
+						case 0xB006: //Binary OR
+							runningTally |= nextValue; break;
+						case 0xB007: //Binary AND
+							runningTally &= nextValue; break;
+						case 0xB008: //Binary XOR
+							runningTally ^= nextValue; break;
+						case 0xB009: //Binary NOT
+							runningTally = ~nextValue; break;
+						case 0xB00A: //Binary Left Shift
+							runningTally = runningTally << nextValue; break;
+						case 0xB00B: //Binary Right Shift
+							runningTally = runningTally >> nextValue; break;
 						default:
 							trace("Unknown math operation!");
 							break;
@@ -202,7 +204,7 @@ package Game.Scripting {
 					case 0x7001: currentOperation = 1; break; //OR
 					case 0x7002: isNOTblock = true; break; //NOT
 					case 0x7003: //Random chance
-						param0 = GetNumberFromVariable(eventScript, info);
+						param0 = GetNumberFromVariable(eventScript, info, inputParam);
 						currentUnprocessedValue = Math.random() * 100 < param0;
 						break;
 					case 0x7004: //Is the script owner alive
@@ -229,9 +231,9 @@ package Game.Scripting {
 							trace("Unknown target for 0x7008 Target=" + info.CurrentTarget + " Faction=" + eventScript.readShort());
 						} break;
 					case 0x7009: //Math comparison function
-						param1 = GetNumberFromVariable(eventScript, info);
+						param1 = GetNumberFromVariable(eventScript, info, inputParam);
 						var comparisonInstruction:int = eventScript.readUnsignedShort();
-						param2 = GetNumberFromVariable(eventScript, info);
+						param2 = GetNumberFromVariable(eventScript, info, inputParam);
 						
 						switch(comparisonInstruction) {
 							case 0xBE00: currentUnprocessedValue = (param1 == param2); break; // =
@@ -248,7 +250,7 @@ package Game.Scripting {
 						param1 = eventScript.readShort();
 						param2 = 0;
 						
-						var cost:int = GetNumberFromVariable(eventScript, info);
+						var cost:int = GetNumberFromVariable(eventScript, info, inputParam);
 						
 						if (param0 == 0xBFFD) { //Local
 							param2 = info.Variables[param1];
@@ -272,7 +274,7 @@ package Game.Scripting {
 						
 						break;
 					case 0x7FFF: //AI Event, Trigger Event etc
-						var whatAIEvent:int = GetNumberFromVariable(eventScript, info);
+						var whatAIEvent:int = GetNumberFromVariable(eventScript, info, inputParam);
 						if (inputParam is int) {
 							currentUnprocessedValue = ((inputParam as int) == whatAIEvent);
 						} break;
@@ -388,17 +390,57 @@ package Game.Scripting {
 		}
 		
 		
-		private function GetNumberFromVariable(eventScript:ByteArray, info:ScriptInstance):int {
+		private function GetNumberFromVariable(eventScript:ByteArray, info:ScriptInstance, inputParam:Object):int {
 			var varType:int = eventScript.readUnsignedShort();
 			var varID:int = eventScript.readShort();
 			
-			if (varType == 0xBFFD) { //Local variable
+			if (varType == 0xBFFC) { //Math function
+				return ProcessMathFunction(varID, eventScript, info, inputParam);
+			} else if (varType == 0xBFFD) { //Local variable
 				return info.Variables[varID];
 			} else if (varType == 0xBFFE) { //Global variable
 				return GlobalVariables.Variables[varID];
+			} else if (varType == 0xBFFF) { //Static value
+				return varID;
 			}
 			
-			return varID; //Hopefully is a constant number
+			return 0; //No idea what else it should be
+		}
+		
+		private function ProcessMathFunction(functionID:int, eventScript:ByteArray, info:ScriptInstance, inputParam:Object):int {
+			var p:int = 0;
+			var q:int = 0;
+			var r:int = 0;
+			
+			switch(functionID) {
+				case 0x00: //Sin
+					p = GetNumberFromVariable(eventScript, info, inputParam);
+					return int(10000*Math.sin(p / 180 * Math.PI));
+				case 0x01: //Cos
+					p = GetNumberFromVariable(eventScript, info, inputParam);
+					return int(10000*Math.cos(p / 180 * Math.PI));
+				case 0x02: //Tan
+					p = GetNumberFromVariable(eventScript, info, inputParam);
+					return int(10000*Math.tan(p / 180 * Math.PI));
+				case 0x03: //Invoker
+					return int(info.Invoker[GetWonkyString(eventScript)]);
+				case 0x04: //Target
+					return int(info.CurrentTarget[GetWonkyString(eventScript)]);
+				case 0x05: //Power
+					p = GetNumberFromVariable(eventScript, info, inputParam);
+					q = GetNumberFromVariable(eventScript, info, inputParam);
+					return int(Math.pow(p, q));
+				case 0x06: //Param getting
+					p = GetNumberFromVariable(eventScript, info, inputParam);
+					if (inputParam is Array) {
+						return int(inputParam[p]);
+					} else {
+						return int(inputParam);
+					}
+				default:
+					trace("Unknown Math Command: " + functionID);
+					return 0;
+			}
 		}
 		
 		//This function is responsible for reading scripts in and creating script objects
@@ -501,7 +543,7 @@ package Game.Scripting {
 			}
 		}
 		
-		private function ProcessBlock(EventScript:ByteArray, info:ScriptInstance, eventID:int, param:Object):int {
+		private function ProcessBlock(EventScript:ByteArray, info:ScriptInstance, eventID:int, inputParam:Object):int {
 			var effectInfo:EffectInfo;
 			
 			//Some required variables
@@ -527,13 +569,13 @@ package Game.Scripting {
 				//trace("\t0x" + MathsEx.ZeroPad(command, 4, 16) + " Deep=" + deep + " CurrentTarget=" + info.CurrentTarget);
 				
 				if (command == 0xFFFF) { break; }
-				if (command == 0xB000) { ProcessMathCommand(EventScript, info); continue; }
+				if (command == 0xB000) { ProcessMathCommand(EventScript, info, inputParam); continue; }
 				
 				switch(command) {
 					case 0x1001: //Play sound effect
 						EffectsPlayer.Play(EventScript.readShort()); break;
 					case 0x1002: //Spawn Critter
-						p0.D = EventScript.readShort(); p0.X = GetNumberFromVariable(EventScript, info); p0.Y = GetNumberFromVariable(EventScript, info);
+						p0.D = EventScript.readShort(); p0.X = GetNumberFromVariable(EventScript, info, inputParam); p0.Y = GetNumberFromVariable(EventScript, info, inputParam);
 						CalculateOffset(Position, p0, p1);
 						
 						var critter:BaseCritter = CritterManager.I.CritterInfo[p0.D].CreateCritter(WorldData.CurrentMap, p1.X, p1.Y);
@@ -552,14 +594,14 @@ package Game.Scripting {
 					case 0x1006: //Flat DOT
 					case 0x100C: //% DOT
 						if(info.CurrentTarget is IMapObject) {
-							(info.CurrentTarget as IMapObject).ScriptAttack((command==0x1005||command==0x100C), (command==0x1006||command==0x100C), GetNumberFromVariable(EventScript, info), info.Invoker); break;
+							(info.CurrentTarget as IMapObject).ScriptAttack((command==0x1005||command==0x100C), (command==0x1006||command==0x100C), GetNumberFromVariable(EventScript, info, inputParam), info.Invoker); break;
 						} break;
 					case 0x1007: //Destroy
 						if (info.CurrentTarget is ICleanUp) { Clock.CleanUpList.push(info.CurrentTarget); } break;
 					case 0x1008: //EffectSpawn
 						p0.D = EventScript.readShort();
 						effectInfo = EffectManager.I.Effects[p0.D];
-						p0.X = GetNumberFromVariable(EventScript, info); p0.Y = GetNumberFromVariable(EventScript, info);
+						p0.X = GetNumberFromVariable(EventScript, info, inputParam); p0.Y = GetNumberFromVariable(EventScript, info, inputParam);
 						CalculateOffset(Position, p0, p1);
 						
 						new EffectInstance(effectInfo, p1.X, p1.Y, Position.D);
@@ -569,12 +611,12 @@ package Game.Scripting {
 						break;
 					case 0x1009: //EffectSpawnDirectional
 						effectInfo = EffectManager.I.Effects[EventScript.readShort()];
-						p0.X = Position.X + GetNumberFromVariable(EventScript, info); p0.Y = Position.Y + GetNumberFromVariable(EventScript, info);
+						p0.X = Position.X + GetNumberFromVariable(EventScript, info, inputParam); p0.Y = Position.Y + GetNumberFromVariable(EventScript, info, inputParam);
 						new EffectInstance(effectInfo, p0.X, p0.Y, EventScript.readShort()); break;
 					case 0x100A: //EffectSpawnDirectionalRelative
 						effectInfo = EffectManager.I.Effects[EventScript.readShort()];
 						
-						p0.X = Position.X + GetNumberFromVariable(EventScript, info); p0.X = Position.Y + GetNumberFromVariable(EventScript, info);
+						p0.X = Position.X + GetNumberFromVariable(EventScript, info, inputParam); p0.X = Position.Y + GetNumberFromVariable(EventScript, info, inputParam);
 						var direction:int = EventScript.readShort(); var tD:int = 0;
 						
 						switch (Position.D) {
@@ -650,7 +692,7 @@ package Game.Scripting {
 					case 0x100B: //SpawnObject
 						var id:int = EventScript.readShort();
 						
-						p0.X = GetNumberFromVariable(EventScript, info); p0.Y = GetNumberFromVariable(EventScript, info);
+						p0.X = GetNumberFromVariable(EventScript, info, inputParam); p0.Y = GetNumberFromVariable(EventScript, info, inputParam);
 						CalculateOffset(Position, p0, p1);
 						
 						var o:ObjectInstance;
@@ -668,7 +710,7 @@ package Game.Scripting {
 						
 						break;
 					case 0x100D: //Fire a trigger
-						Script.FireTrigger(GetNumberFromVariable(EventScript, info)); break;
+						Script.FireTrigger(GetNumberFromVariable(EventScript, info, inputParam)); break;
 					case 0x100E: //Play a sound from an effect group
 						EffectsPlayer.PlayFromGroup(EventScript.readShort()); break;
 					case 0x100F: //Network sync... somehow?
@@ -684,7 +726,7 @@ package Game.Scripting {
 						break;
 					case 0x1011: //NetHost
 						p0.X = EventScript.readShort();
-						p0.Y = GetNumberFromVariable(EventScript, info);
+						p0.Y = GetNumberFromVariable(EventScript, info, inputParam);
 						
 						if (p0.X == 0) { //LAN
 							Global.Network = new SocketHost();
@@ -695,7 +737,7 @@ package Game.Scripting {
 					case 0x1012: //NetConnect
 						p0.X = EventScript.readShort();
 						var s:String = GetWonkyString(EventScript);
-						p0.Y = GetNumberFromVariable(EventScript, info);
+						p0.Y = GetNumberFromVariable(EventScript, info, inputParam);
 						
 						trace("Hostname = " + s + ":" + p0.Y);
 						
@@ -734,12 +776,12 @@ package Game.Scripting {
 						} break;
 					case 0x5001: //Movement speed
 						if (info.CurrentTarget is BaseCritter) { 
-							(info.CurrentTarget as BaseCritter).MovementSpeed = GetNumberFromVariable(EventScript, info);
+							(info.CurrentTarget as BaseCritter).MovementSpeed = GetNumberFromVariable(EventScript, info, inputParam);
 						} break;
 					case 0x5002: //Movement direction absolute
 					case 0x5003: //Movement direction relative
 						if (info.CurrentTarget is BaseCritter) {
-							var angle:Number = Math.PI * (GetNumberFromVariable(EventScript, info) / 180.0);
+							var angle:Number = Math.PI * (GetNumberFromVariable(EventScript, info, inputParam) / 180.0);
 							var move:Boolean = (EventScript.readShort() == 1);
 							if (command == 0x5002) {
 								(info.CurrentTarget as BaseCritter).RequestMove(Math.cos(angle), Math.sin(angle), move);
@@ -750,7 +792,7 @@ package Game.Scripting {
 							}
 						} else {
 							trace("0x5003 WRONG TARGET! " + info.CurrentTarget + " @" + eventID);
-							GetNumberFromVariable(EventScript, info); EventScript.readShort(); //Remove the two shorts
+							GetNumberFromVariable(EventScript, info, inputParam); EventScript.readShort(); //Remove the two shorts
 						} break;
 					case 0x5004: //Set Faction
 						if (info.CurrentTarget is BaseCritter) { 
@@ -789,8 +831,12 @@ package Game.Scripting {
 								info.AttachTarget((info.CurrentTarget as BaseCritter).CurrentTarget);
 							}
 						} else if (x == 0x2) { // Attacker
-							if (eventID == Script.Attacked && param != null && param is IScriptTarget) {
-								info.AttachTarget(param as IScriptTarget);
+							if (eventID == Script.Attacked && inputParam != null) {
+								if (inputParam is IScriptTarget) {
+									info.AttachTarget(inputParam as IScriptTarget);
+								} else if (inputParam is Array && (inputParam as Array).length > 0 && (inputParam as Array)[0] is IScriptTarget) {
+									info.AttachTarget((inputParam as Array)[0]);
+								}
 							}
 						} else if (x == 0x3) { //Owner
 							if (info.CurrentTarget is BaseCritter && (info.CurrentTarget as BaseCritter).Owner != null) {
@@ -804,27 +850,27 @@ package Game.Scripting {
 					case 0x6001: //Loop Animation
 						info.Invoker.ChangeState(EventScript.readShort(), true); break;
 					case 0x6002: //Animation Speed
-						info.Invoker.UpdatePlaybackSpeed((GetNumberFromVariable(EventScript, info) * 0.01)); break;
+						info.Invoker.UpdatePlaybackSpeed((GetNumberFromVariable(EventScript, info, inputParam) * 0.01)); break;
 					case 0x8000: //IF without ELSE
-						bParam = CanIf(EventScript, info, Position, param);
+						bParam = CanIf(EventScript, info, Position, inputParam);
 						if (!bParam) {
 							EventScript.readUnsignedShort(); //Just pop the 0xF0FD off
 							ReadUntilBalancedClose(EventScript);
 						} else {
-							ProcessBlock(EventScript, info, eventID, param);
+							ProcessBlock(EventScript, info, eventID, inputParam);
 						} break;
 					case 0x8001: //IF with ELSE
-						bParam = CanIf(EventScript, info, Position, param);
+						bParam = CanIf(EventScript, info, Position, inputParam);
 						if (bParam) {
 							CallStack.push(true);
-							ProcessBlock(EventScript, info, eventID, param);
+							ProcessBlock(EventScript, info, eventID, inputParam);
 						} else {
 							EventScript.readUnsignedShort(); //Just pop the 0xF0FD off
 							ReadUntilBalancedClose(EventScript);
 							CallStack.push(false);
 						} break;
 					case 0x8002: //Foreach
-						Process_ForEach(EventScript, info, Position, eventID, param);
+						Process_ForEach(EventScript, info, Position, eventID, inputParam);
 						break;
 					case 0x8003: //ELSE
 						bParam = CallStack.pop();
@@ -832,7 +878,7 @@ package Game.Scripting {
 							EventScript.readUnsignedShort(); //Just pop the 0xF0FD off
 							ReadUntilBalancedClose(EventScript);
 						} else {
-							ProcessBlock(EventScript, info, eventID, param);
+							ProcessBlock(EventScript, info, eventID, inputParam);
 						} break;
 					case 0x8004: //Continue
 						ReadUntilBalancedClose(EventScript);
@@ -842,7 +888,7 @@ package Game.Scripting {
 						return 2;
 					case 0x8006: //Call a global function
 						p0.X = EventScript.readShort(); //Function ID
-						GlobalVariables.Functions.Run(p0.X, info, param);
+						GlobalVariables.Functions.Run(p0.X, info, inputParam);
 						break;
 					case 0xC002: //Hide Panel
 						p0.D = EventScript.readUnsignedShort();
@@ -860,14 +906,13 @@ package Game.Scripting {
 							s = GetWonkyString(EventScript);
 							(uiL as UILayerText).Message = StringEx.BuildFromCore(s);
 							uiE.Draw(Main.I.stage.stageWidth, Main.I.stage.stageHeight, Main.I.hud);
-						}
-						break;
+						} break;
 					case 0xC005: //Change offsets for UILayer
 						uiE = Main.I.hud.Panels[EventScript.readShort()].Elements[EventScript.readShort()];
 						uiL = uiE.Layers[EventScript.readShort()];
 						
-						uiL.OffsetX = GetNumberFromVariable(EventScript, info) + 1;
-						uiL.OffsetY = GetNumberFromVariable(EventScript, info) + 1;
+						uiL.OffsetX = GetNumberFromVariable(EventScript, info, inputParam) + 1;
+						uiL.OffsetY = GetNumberFromVariable(EventScript, info, inputParam) + 1;
 						uiL.FixPosition();
 						
 						break;
@@ -876,7 +921,7 @@ package Game.Scripting {
 						uiL = uiE.Layers[EventScript.readShort()];
 						
 						if (uiL is UILayerLibrary) {
-							(uiL as UILayerLibrary).ID = GetNumberFromVariable(EventScript, info);
+							(uiL as UILayerLibrary).ID = GetNumberFromVariable(EventScript, info, inputParam);
 							uiE.Draw(Main.I.stage.stageWidth, Main.I.stage.stageHeight, Main.I.hud);
 						}
 						break;

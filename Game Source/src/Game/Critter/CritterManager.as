@@ -15,7 +15,7 @@ package Game.Critter {
 		public function CritterManager() {
 			I = this;
 			BinaryLoader.Load("Data/CritterInfo.bin", ParseCritterFile);
-			BinaryLoader.Load("Data/CritterBuffs.bin", ParseBuffFile);
+			//BinaryLoader.Load("Data/CritterBuffs.bin", ParseBuffFile);
 		}
 		
 		public function ParseCritterFile(b:ByteArray):void {
@@ -43,7 +43,5 @@ package Game.Critter {
 				CritterBuffs[i] = new CritterBuffInfo(b);
 			}
 		}
-		
 	}
-
 }

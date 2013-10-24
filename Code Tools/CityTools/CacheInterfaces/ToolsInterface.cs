@@ -29,6 +29,7 @@ namespace CityTools.CacheInterfaces {
             MainWindow.instance.btnPortraitEditor.Click += new EventHandler(btnPortraitEditor_Click);
             MainWindow.instance.btnGlobalSettingsEditor.Click += new EventHandler(btnGlobalSettingsEditor_Click);
             MainWindow.instance.btnFactionEditor.Click += new EventHandler(btnFactionEditor_Click);
+            MainWindow.instance.btnBuffEditor.Click += new EventHandler(btnBuffEditor_Click);
         }
 
         public static bool ProcessKeys(Keys keyData) {
@@ -62,6 +63,8 @@ namespace CityTools.CacheInterfaces {
                 OpenGlobalSettingsEditor(); return true;
             } else if (keyData == Keys.Q) {
                 OpenFactionEditor(); return true;
+            } else if (keyData == Keys.B) {
+                OpenBuffEditor(); return true;
             }
 
             return false;
@@ -150,6 +153,11 @@ namespace CityTools.CacheInterfaces {
             FactionEditor t = new FactionEditor();
             t.ShowDialog(MainWindow.instance);
             SpawnRegionInterface.UpdateSpawnRegionFactions();
+        }
+
+        private static void OpenBuffEditor() {
+            BuffsEditor t = new BuffsEditor();
+            t.ShowDialog(MainWindow.instance);
         }
 
         private static void ExportAndRun() {
@@ -259,6 +267,10 @@ namespace CityTools.CacheInterfaces {
 
         private static void btnFactionEditor_Click(object sender, EventArgs e) {
             OpenFactionEditor();
+        }
+
+        static void btnBuffEditor_Click(object sender, EventArgs e) {
+            OpenBuffEditor();
         }
     }
 }

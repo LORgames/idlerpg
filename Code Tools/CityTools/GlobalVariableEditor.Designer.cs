@@ -159,19 +159,19 @@
             this.btnVarAddVariable.Image = global::CityTools.Properties.Resources.add;
             this.btnVarAddVariable.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnVarAddVariable.Name = "btnVarAddVariable";
-            this.btnVarAddVariable.Size = new System.Drawing.Size(99, 20);
+            this.btnVarAddVariable.Size = new System.Drawing.Size(106, 20);
             this.btnVarAddVariable.Text = "Add Variable";
             // 
             // typeTheNameOfTheNewVariableAndPressEnterToAddItToolStripMenuItem
             // 
             this.typeTheNameOfTheNewVariableAndPressEnterToAddItToolStripMenuItem.Name = "typeTheNameOfTheNewVariableAndPressEnterToAddItToolStripMenuItem";
-            this.typeTheNameOfTheNewVariableAndPressEnterToAddItToolStripMenuItem.Size = new System.Drawing.Size(379, 22);
+            this.typeTheNameOfTheNewVariableAndPressEnterToAddItToolStripMenuItem.Size = new System.Drawing.Size(389, 22);
             this.typeTheNameOfTheNewVariableAndPressEnterToAddItToolStripMenuItem.Text = "Type the name of the new variable and press enter to add it.";
             // 
             // txtNewVariable
             // 
             this.txtNewVariable.Name = "txtNewVariable";
-            this.txtNewVariable.Size = new System.Drawing.Size(100, 21);
+            this.txtNewVariable.Size = new System.Drawing.Size(100, 23);
             this.txtNewVariable.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtNewVariable_KeyDown);
             // 
             // btnVarDeleteSelected
@@ -179,7 +179,7 @@
             this.btnVarDeleteSelected.Image = global::CityTools.Properties.Resources.delete;
             this.btnVarDeleteSelected.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnVarDeleteSelected.Name = "btnVarDeleteSelected";
-            this.btnVarDeleteSelected.Size = new System.Drawing.Size(111, 20);
+            this.btnVarDeleteSelected.Size = new System.Drawing.Size(116, 20);
             this.btnVarDeleteSelected.Text = "Delete Selected";
             this.btnVarDeleteSelected.Click += new System.EventHandler(this.btnVarDeleteSelected_Click);
             // 
@@ -254,19 +254,19 @@
             this.toolStripSplitButton1.Image = global::CityTools.Properties.Resources.add;
             this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripSplitButton1.Name = "toolStripSplitButton1";
-            this.toolStripSplitButton1.Size = new System.Drawing.Size(99, 20);
+            this.toolStripSplitButton1.Size = new System.Drawing.Size(106, 20);
             this.toolStripSplitButton1.Text = "Add Variable";
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(379, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(389, 22);
             this.toolStripMenuItem1.Text = "Type the name of the new variable and press enter to add it.";
             // 
             // txtNewStringName
             // 
             this.txtNewStringName.Name = "txtNewStringName";
-            this.txtNewStringName.Size = new System.Drawing.Size(100, 21);
+            this.txtNewStringName.Size = new System.Drawing.Size(100, 23);
             this.txtNewStringName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtNewStringName_KeyDown);
             // 
             // btnDeleteStrings
@@ -274,7 +274,7 @@
             this.btnDeleteStrings.Image = global::CityTools.Properties.Resources.delete;
             this.btnDeleteStrings.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnDeleteStrings.Name = "btnDeleteStrings";
-            this.btnDeleteStrings.Size = new System.Drawing.Size(111, 20);
+            this.btnDeleteStrings.Size = new System.Drawing.Size(116, 20);
             this.btnDeleteStrings.Text = "Delete Selected";
             this.btnDeleteStrings.Click += new System.EventHandler(this.btnDeleteStrings_Click);
             // 
@@ -329,6 +329,7 @@
             this.listFunctions.Location = new System.Drawing.Point(0, 0);
             this.listFunctions.Name = "listFunctions";
             this.listFunctions.Size = new System.Drawing.Size(189, 387);
+            this.listFunctions.Sorted = true;
             this.listFunctions.TabIndex = 0;
             this.listFunctions.SelectedIndexChanged += new System.EventHandler(this.listFunctions_SelectedIndexChanged);
             // 
@@ -351,19 +352,19 @@
             this.toolStripSplitButton2.Image = global::CityTools.Properties.Resources.add;
             this.toolStripSplitButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripSplitButton2.Name = "toolStripSplitButton2";
-            this.toolStripSplitButton2.Size = new System.Drawing.Size(102, 20);
+            this.toolStripSplitButton2.Size = new System.Drawing.Size(111, 20);
             this.toolStripSplitButton2.Text = "Add Function";
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(393, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(405, 22);
             this.toolStripMenuItem2.Text = "Type the name of the new function and press enter to create it.";
             // 
             // txtNewFunctionName
             // 
             this.txtNewFunctionName.Name = "txtNewFunctionName";
-            this.txtNewFunctionName.Size = new System.Drawing.Size(100, 21);
+            this.txtNewFunctionName.Size = new System.Drawing.Size(100, 23);
             this.txtNewFunctionName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtNewFunctionName_KeyDown);
             // 
             // btnDeleteFunction
@@ -371,7 +372,7 @@
             this.btnDeleteFunction.Image = global::CityTools.Properties.Resources.delete;
             this.btnDeleteFunction.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnDeleteFunction.Name = "btnDeleteFunction";
-            this.btnDeleteFunction.Size = new System.Drawing.Size(111, 20);
+            this.btnDeleteFunction.Size = new System.Drawing.Size(116, 20);
             this.btnDeleteFunction.Text = "Delete Selected";
             // 
             // tabPage4
@@ -404,6 +405,7 @@
             this.lstLibraries.Location = new System.Drawing.Point(0, 0);
             this.lstLibraries.Name = "lstLibraries";
             this.lstLibraries.Size = new System.Drawing.Size(189, 387);
+            this.lstLibraries.Sorted = true;
             this.lstLibraries.TabIndex = 1;
             this.lstLibraries.SelectedIndexChanged += new System.EventHandler(this.lstLibraries_SelectedIndexChanged);
             // 
@@ -426,19 +428,19 @@
             this.toolStripSplitButton3.Image = global::CityTools.Properties.Resources.add;
             this.toolStripSplitButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripSplitButton3.Name = "toolStripSplitButton3";
-            this.toolStripSplitButton3.Size = new System.Drawing.Size(94, 20);
+            this.toolStripSplitButton3.Size = new System.Drawing.Size(100, 20);
             this.toolStripSplitButton3.Text = "Add Library";
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(384, 22);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(393, 22);
             this.toolStripMenuItem3.Text = "Type the name of the new library and press enter to create it.";
             // 
             // txtNewLibraryName
             // 
             this.txtNewLibraryName.Name = "txtNewLibraryName";
-            this.txtNewLibraryName.Size = new System.Drawing.Size(100, 21);
+            this.txtNewLibraryName.Size = new System.Drawing.Size(100, 23);
             this.txtNewLibraryName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtNewLibraryName_KeyDown);
             // 
             // btnDeleteLibraries
@@ -446,7 +448,7 @@
             this.btnDeleteLibraries.Image = global::CityTools.Properties.Resources.delete;
             this.btnDeleteLibraries.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnDeleteLibraries.Name = "btnDeleteLibraries";
-            this.btnDeleteLibraries.Size = new System.Drawing.Size(111, 20);
+            this.btnDeleteLibraries.Size = new System.Drawing.Size(116, 20);
             this.btnDeleteLibraries.Text = "Delete Selected";
             this.btnDeleteLibraries.Click += new System.EventHandler(this.btnDeleteLibraries_Click);
             // 

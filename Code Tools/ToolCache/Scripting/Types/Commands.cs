@@ -138,10 +138,13 @@ namespace ToolCache.Scripting.Types {
             ////////////////////////////////////////////////// MATH FUNCTIONS
             /////////////////////////////////////////////////////////////////////////
 
-            MathFunctions.Add("sin",        new ValidCommand(0x00, new Param[] { Param.Integer }));
-            MathFunctions.Add("cos",        new ValidCommand(0x01, new Param[] { Param.Integer }));
-            MathFunctions.Add("tan",        new ValidCommand(0x02, new Param[] { Param.Integer }));
-            MathFunctions.Add("framenum",   new ValidCommand(0x03, new Param[] { Param.Void }));
+            MathFunctions.Add("sin",    new ValidCommand(0x00, new Param[] { Param.Integer }));
+            MathFunctions.Add("cos",    new ValidCommand(0x01, new Param[] { Param.Integer }));
+            MathFunctions.Add("tan",    new ValidCommand(0x02, new Param[] { Param.Integer }));
+            MathFunctions.Add("invoker",new ValidCommand(0x03, new Param[] { Param.String }));
+            MathFunctions.Add("target", new ValidCommand(0x04, new Param[] { Param.String }));
+            MathFunctions.Add("pow",    new ValidCommand(0x05, new Param[] { Param.Integer, Param.Integer }));
+            MathFunctions.Add("param",  new ValidCommand(0x06, new Param[] { Param.Integer }));
 
             /////////////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////// MATH FUNCTIONS

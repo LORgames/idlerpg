@@ -14,6 +14,8 @@ namespace ToolCache.Critters {
         RunAway = 64,           // Runs away on low health
         Untargetable = 128,     // Can you target this unit?
         TargetLowestHP = 256,   // Targets the unit with the lowest HP
+        BlindBehind = 512,      // Targets the unit with the lowest HP
+        Unsupportable = 1024,   // Targets the unit with the lowest HP
     }
 
     public class AITypesHelper {

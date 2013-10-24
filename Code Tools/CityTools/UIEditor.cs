@@ -544,5 +544,31 @@ namespace CityTools {
         private void btnMoveSelectedPanelDown_Click(object sender, EventArgs e) {
             SwapCurrentPanelBy(1);
         }
+
+        private void cbResizeWidth_DropDown(object sender, EventArgs e) {
+            ComboBox senderComboBox = (ComboBox)sender;
+
+            if (senderComboBox == null) return;
+
+            int width = senderComboBox.DropDownWidth;
+            Graphics g = senderComboBox.CreateGraphics();
+            Font font = senderComboBox.Font;
+            int vertScrollBarWidth =
+                (senderComboBox.Items.Count > senderComboBox.MaxDropDownItems)
+                ? SystemInformation.VerticalScrollBarWidth : 0;
+
+            int newWidth;
+
+            for (int i = 0; i < senderComboBox.Items.Count; i++) {
+                string s = senderComboBox.Items[i].ToString();
+                newWidth = (int)g.MeasureString(s, font).Width
+                    + vertScrollBarWidth;
+                if (width < newWidth) {
+                    width = newWidth;
+                }
+            }
+
+            senderComboBox.DropDownWidth = width;
+        }
     }
 }

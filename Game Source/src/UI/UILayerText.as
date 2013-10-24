@@ -39,17 +39,23 @@ package UI {
 			tf = Fonts.GetTextField(FontSize, 3, Colour);
 			
 			if (WordWrap) {
-				//tf.autoSize = TextFieldAutoSize.NONE;
 				tf.multiline = true;
 				tf.wordWrap = true;
 				tf.width = SizeX;
 			}
 			
+			RequiresRedraw = true;
 			tf.text = Message.GetBuilt();
 		}
 		
 		public override function Draw(w:int, h:int, ui:UIManager):void {
 			if (tf == null) return;
+			
+			var newMessage:String = Message.GetBuilt();
+			if (!RequiresRedraw && tf.text == newMessage) return;
+			
+			RequiresRedraw = false;
+			tf.text = newMessage;
 			
 			///////////////////////////////////////////// Update the position
 			var thisArea:Rect = new Rect(false, null, 0, 0, tf.width, tf.height);
@@ -75,22 +81,22 @@ package UI {
 			}
 			
 			//Calculate X
-                switch (Align) {
-                    case UIAnchorPoint.BottomCenter: case UIAnchorPoint.MiddleCenter: case UIAnchorPoint.TopCenter:
-                        if (WordWrap) {
-							tf.autoSize = TextFieldAutoSize.CENTER;
-                        } else {
-                            this.x -= tf.width / 2;
-                        }
-                        break;
-                    case UIAnchorPoint.BottomRight: case UIAnchorPoint.MiddleRight: case UIAnchorPoint.TopRight:
-                        if (WordWrap) {
-							tf.autoSize = TextFieldAutoSize.RIGHT;
-                        } else {
-                            this.x -= tf.width;
-                        }
-                        break;
-                }
+			switch (Align) {
+				case UIAnchorPoint.BottomCenter: case UIAnchorPoint.MiddleCenter: case UIAnchorPoint.TopCenter:
+					if (WordWrap) {
+						tf.autoSize = TextFieldAutoSize.CENTER;
+					} else {
+						this.x -= tf.width / 2;
+					}
+					break;
+				case UIAnchorPoint.BottomRight: case UIAnchorPoint.MiddleRight: case UIAnchorPoint.TopRight:
+					if (WordWrap) {
+						tf.autoSize = TextFieldAutoSize.RIGHT;
+					} else {
+						this.x -= tf.width;
+					}
+					break;
+			}
 			
 			//Calculate Y
 			switch (Align) {
@@ -100,27 +106,11 @@ package UI {
 					this.y -= tf.height / 2; break;
 			}
 			
-			//Special Layer Types
-			/*if (LayerType == PanX) {
-				this.x += (int)(SizeX * displayValue);
-			} else if (LayerType == PanY) {
-				this.y += (int)(SizeY * displayValue);
-			} else if (LayerType == PanXNeg) {
-				this.x += (int)(SizeX * (1 - displayValue));
-			} else if (LayerType == PanYNeg) {
-				this.y += (int)(SizeY * (1 - displayValue));
-			}*/
-			
 			///////////////////////////////////////////// Redraw if required
-			//if (!RequiresRedraw) return;
-			
-			tf.text = Message.GetBuilt();
 			Main.I.stage.quality = StageQuality.BEST;
-			this.bitmapData = new BitmapData(tf.width, tf.height, true, 0x00);
+			this.bitmapData = new BitmapData(tf.width*1.02, tf.height, true, 0x0);
 			Main.I.stage.quality = StageQuality.LOW;
 			this.bitmapData.draw(tf);
 		}
-		
 	}
-
 }

@@ -26,6 +26,7 @@ namespace ToolCache.General {
             EventsHelper.Initialize();
 
             //Tier 0 Loading:
+            BuffManager.Initialize();
             PortraitManager.Initialize();
             Variables.Initialize();
             SoundDatabase.Initialize();
