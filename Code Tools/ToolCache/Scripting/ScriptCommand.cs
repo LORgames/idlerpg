@@ -344,7 +344,7 @@ namespace ToolCache.Scripting {
                                 }
                             } break;
                         case Param.ItemName:
-                            info.Errors.Add("cannot use item name yet." + ErrorEnding());
+                            info.Errors.Add("Cannot use item name yet." + ErrorEnding());
                             break;
                         case Param.EquipmentName:
                             if (!EquipmentManager.Equipment.ContainsKey(Parameters)) {
@@ -456,9 +456,6 @@ namespace ToolCache.Scripting {
                             } else {
                                 info.Errors.Add("Expecting a UIPanel, a UIElement and a UILayer but didn't find 2x '>' seperation characters!" + ErrorEnding());
                             } break;
-                        case Param.ImageDatabase:
-                            info.Errors.Add("Cannot Param.ImageDatabase yet!" + ErrorEnding());
-                            break;
                         case Param.ScriptTarget:
                             if (Commands.ScriptTargets.ContainsKey(paramBits[i].ToLower())) {
                                 AdditionalBytecode.Add(Commands.ScriptTargets[paramBits[i].ToLower()]);

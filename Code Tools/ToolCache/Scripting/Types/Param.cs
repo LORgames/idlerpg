@@ -23,7 +23,6 @@ namespace ToolCache.Scripting.Types {
         Portrait,
         FactionName,
         AnimationName,
-        ImageDatabase,
         AIType,
         AIEventType,
         UIPanel,

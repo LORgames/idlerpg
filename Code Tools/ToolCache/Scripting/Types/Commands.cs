@@ -62,6 +62,8 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0x1015, new Param[] { Param.Integer }));
             All.Add("offset",
                 new ValidCommand(0x1016, new Param[] { Param.Integer, Param.Integer }));
+            All.Add("paramset",
+                new ValidCommand(0x1017, new Param[] { Param.String, Param.Integer }));
 
             //Quest and Inventory Commands
             All.Add("saydialogue",
@@ -118,8 +120,6 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0x8006, new Param[] { Param.Function }));
 
             //UI Commands
-            All.Add("replacelayerfromdatabase",
-                new ValidCommand(0xC001, new Param[] { Param.UILayer, Param.ImageDatabase }));
             All.Add("uipanelvisible",
                 new ValidCommand(0xC002, new Param[] { Param.UIPanel, Param.Boolean }));
             All.Add("uilayerredraw",
@@ -130,6 +130,8 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0xC005, new Param[] { Param.UILayer, Param.Integer, Param.Integer }));
             All.Add("uisetlibraryid",
                 new ValidCommand(0xC006, new Param[] { Param.UILayer, Param.Integer }));
+            All.Add("uilayerplay",
+                new ValidCommand(0xC007, new Param[] { Param.UILayer, Param.Integer }));
 
             All.Add("trace",
                 new ValidCommand(0xCFFF, new Param[] { Param.String }));
@@ -158,6 +160,7 @@ namespace ToolCache.Scripting.Types {
             IfFunctions.Add("isfaction",new ValidCommand(0x7008, new Param[] { Param.FactionName }));
             //0x7009 is MATH COMPARE!
             IfFunctions.Add("spend",    new ValidCommand(0x700A, new Param[] { Param.Integer, Param.Integer }));
+            IfFunctions.Add("hastarget",new ValidCommand(0x700B, new Param[] { Param.Void }));
             IfFunctions.Add("aieventis",new ValidCommand(0x7FFF, new Param[] { Param.AIEventType }));
             IfFunctions.Add("triggeris",new ValidCommand(0x7FFF, new Param[] { Param.Integer }));
 

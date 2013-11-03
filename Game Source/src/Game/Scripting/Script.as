@@ -273,6 +273,9 @@ package Game.Scripting {
 						}
 						
 						break;
+					case 0x700B: //Has Target
+						
+						break;
 					case 0x7FFF: //AI Event, Trigger Event etc
 						var whatAIEvent:int = GetNumberFromVariable(eventScript, info, inputParam);
 						if (inputParam is int) {
@@ -766,6 +769,13 @@ package Game.Scripting {
 						if (p0.X == 0xBFFE && Global.Network != null) PacketFactory.N(Vector.<int>([0xB000, 0xBFFE, p0.Y, 0xBFFF, GlobalVariables.Variables[p0.Y], 0xBF01]));
 						
 						break;
+					case 0x1017: //Param Set ADVANCED PROGRAMMING COMMAND
+						var objName:String = GetWonkyString(EventScript);
+						p0.X = GetNumberFromVariable(EventScript, info, inputParam);
+						
+						if (info.CurrentTarget[objName] is int) {
+							info.CurrentTarget[objName] = p0.X;
+						} break;
 					case 0x4001: //Equip item on the target
 						if (info.CurrentTarget is CritterHuman) {
 							(info.CurrentTarget as CritterHuman).Equipment.EquipSlot(EventScript.readShort(), EventScript.readShort());
@@ -961,7 +971,10 @@ package Game.Scripting {
 			} else {
 				eventScript.position -= 2; //wind it back
 				s = BinaryLoader.GetString(eventScript);
-				if ((b % 2) == 1) eventScript.position++; //Just get it off the top...
+				trace(b);
+				trace(s);
+				eventScript.position++;
+				//if ((b % 2) == 1) eventScript.position++; //Just get it off the top...
 			}
 			
 			return s;

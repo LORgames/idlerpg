@@ -41,7 +41,8 @@ package SoundSystem
 			if(channel) channel.removeEventListener(Event.SOUND_COMPLETE, FinishedPlaying);
 			
 			channel = snd.play(80);
-			channel.addEventListener(Event.SOUND_COMPLETE, FinishedPlaying);
+			
+			if(channel != null) channel.addEventListener(Event.SOUND_COMPLETE, FinishedPlaying);
 		}
 	}
 
