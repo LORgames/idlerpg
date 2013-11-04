@@ -46,6 +46,10 @@
   <ItemGroup>
     <Compile Include="Animation\AnimatedObject.cs" />
     <Compile Include="Critters\BuffManager.cs" />
+    <Compile Include="DataLibrary\DBCell.cs" />
+    <Compile Include="DataLibrary\DBLibrary.cs" />
+    <Compile Include="DataLibrary\DBLibraryManager.cs" />
+    <Compile Include="DataLibrary\DBRow.cs" />
     <Compile Include="Elements\Element.cs" />
     <Compile Include="Elements\ElementManager.cs" />
     <Compile Include="Critters\AITypes.cs" />
