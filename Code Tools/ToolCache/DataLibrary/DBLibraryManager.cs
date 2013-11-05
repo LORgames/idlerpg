@@ -37,7 +37,8 @@ namespace ToolCache.DataLibrary {
             f.AddShort((short)Libraries.Count);
 
             for (int i = 0; i < Libraries.Count; i++) {
-
+                f.AddString(Libraries[i].Name);
+                Libraries[i].WriteToBinaryIO(f);
             }
 
             f.Encode(DATABASE_FILENAME);
@@ -45,10 +46,16 @@ namespace ToolCache.DataLibrary {
 
         public static DBLibrary AddLibrary(string name) {
             DBLibrary dbl = new DBLibrary(name);
-
             Libraries.Add(dbl);
-
             return dbl;
+        }
+
+        public static void DeleteLibrary(string name) {
+            for (int i = Libraries.Count; i > -1; --i) {
+                if (Libraries[i].Name == name) {
+                    Libraries.RemoveAt(i);
+                }
+            }
         }
     }
 }

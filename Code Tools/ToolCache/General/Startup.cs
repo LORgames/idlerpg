@@ -17,6 +17,7 @@ using ToolCache.Scripting;
 using ToolCache.NPC;
 using ToolCache.Scripting.Types;
 using ToolCache.Scripting.Extensions;
+using ToolCache.DataLibrary;
 
 namespace ToolCache.General {
     public class Startup {
@@ -50,6 +51,7 @@ namespace ToolCache.General {
 
             //Tier 4 Loading:
             SaveManager.Initialize();
+            DBLibraryManager.Initialize();
         }
     }
 }

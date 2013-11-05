@@ -62,6 +62,8 @@
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.txtNewLibraryName = new System.Windows.Forms.ToolStripTextBox();
             this.btnDeleteLibraries = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.databaseEditor1 = new CityTools.Components.DatabaseEditing.DatabaseEditor();
             this.tabGroupVariableTypes.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numIntegerChanger)).BeginInit();
@@ -72,6 +74,7 @@
             this.statusStripFunctions.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.statusStripUILibraries.SuspendLayout();
+            this.tabPage5.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabGroupVariableTypes
@@ -80,6 +83,7 @@
             this.tabGroupVariableTypes.Controls.Add(this.tabPage2);
             this.tabGroupVariableTypes.Controls.Add(this.tabPage3);
             this.tabGroupVariableTypes.Controls.Add(this.tabPage4);
+            this.tabGroupVariableTypes.Controls.Add(this.tabPage5);
             this.tabGroupVariableTypes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabGroupVariableTypes.ItemSize = new System.Drawing.Size(50, 18);
             this.tabGroupVariableTypes.Location = new System.Drawing.Point(0, 0);
@@ -452,6 +456,25 @@
             this.btnDeleteLibraries.Text = "Delete Selected";
             this.btnDeleteLibraries.Click += new System.EventHandler(this.btnDeleteLibraries_Click);
             // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.databaseEditor1);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(735, 409);
+            this.tabPage5.TabIndex = 4;
+            this.tabPage5.Text = "Databases";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // databaseEditor1
+            // 
+            this.databaseEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.databaseEditor1.Location = new System.Drawing.Point(3, 3);
+            this.databaseEditor1.Name = "databaseEditor1";
+            this.databaseEditor1.Size = new System.Drawing.Size(729, 403);
+            this.databaseEditor1.TabIndex = 0;
+            // 
             // GlobalVariableEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -479,6 +502,7 @@
             this.tabPage4.PerformLayout();
             this.statusStripUILibraries.ResumeLayout(false);
             this.statusStripUILibraries.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -524,5 +548,7 @@
         private System.Windows.Forms.ToolStripTextBox txtNewLibraryName;
         private System.Windows.Forms.ToolStripDropDownButton btnDeleteLibraries;
         private System.Windows.Forms.FlowLayoutPanel pnlUILibrary;
+        private System.Windows.Forms.TabPage tabPage5;
+        private Components.DatabaseEditing.DatabaseEditor databaseEditor1;
     }
 }

@@ -79,6 +79,12 @@
     <Compile Include="CacheInterfaces\ToolsInterface.cs" />
     <Compile Include="Components\BufferedPaint\BufferedPainter.cs" />
     <Compile Include="Components\BufferedPaint\Interop.cs" />
+    <Compile Include="Components\DatabaseEditing\DatabaseEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\DatabaseEditing\DatabaseEditor.Designer.cs">
+      <DependentUpon>DatabaseEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Components\GroupedComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -265,6 +271,9 @@
     </Compile>
     <EmbeddedResource Include="BuffsEditor.resx">
       <DependentUpon>BuffsEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\DatabaseEditing\DatabaseEditor.resx">
+      <DependentUpon>DatabaseEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\ImageSelector_ImagePnl.resx">
       <DependentUpon>ImageSelector_ImagePnl.cs</DependentUpon>
