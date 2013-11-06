@@ -6,6 +6,7 @@ package {
 	import flash.utils.ByteArray;
 	import Game.Critter.CritterManager;
 	import Game.Critter.Factions;
+	import Game.Data.DataManager;
 	import Game.Effects.EffectManager;
 	import Game.Equipment.EquipmentManager;
 	import Game.General.BinaryLoader;
@@ -78,6 +79,7 @@ package {
 			new GlobalVariables();
 			new Factions();
 			EffectsPlayer.Initialize();
+			new DataManager();
 			
 			Clock.I.Start(Main.I.stage);
 		}

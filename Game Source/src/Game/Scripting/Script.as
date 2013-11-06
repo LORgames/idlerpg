@@ -569,7 +569,7 @@ package Game.Scripting {
 			
 			while (true) {
 				command = EventScript.readUnsignedShort();
-				//trace("\t0x" + MathsEx.ZeroPad(command, 4, 16) + " Deep=" + deep + " CurrentTarget=" + info.CurrentTarget);
+				trace("\t0x" + MathsEx.ZeroPad(command, 4, 16) + " Deep=" + deep + " CurrentTarget=" + info.CurrentTarget);
 				
 				if (command == 0xFFFF) { break; }
 				if (command == 0xB000) { ProcessMathCommand(EventScript, info, inputParam); continue; }
@@ -637,8 +637,7 @@ package Game.Scripting {
 									case 3: //relative down
 										tD = 1; //right
 										break;
-								}
-								break;
+								} break;
 							case 1: //critter right
 								switch (direction) {
 									case 0: //relative left
@@ -653,8 +652,7 @@ package Game.Scripting {
 									case 3: //relative down
 										tD = 0; //left
 										break;
-								}
-								break;
+								} break;
 							case 2: //critter up
 								switch (direction) {
 									case 0: //relative left
@@ -669,8 +667,7 @@ package Game.Scripting {
 									case 3: //relative down
 										tD = 3; //down
 										break;
-								}
-								break;
+								} break;
 							case 3: //critter down
 								switch (direction) {
 									case 0: //relative left
@@ -685,8 +682,7 @@ package Game.Scripting {
 									case 3: //relative down
 										tD = 2; //up
 										break;
-								}
-								break;
+								} break;
 						}
 						
 						new EffectInstance(effectInfo, p0.X, p0.Y, tD);
@@ -964,17 +960,13 @@ package Game.Scripting {
 			var stringType:int = eventScript.readShort();
 			
 			var s:String;
-			var b:int = eventScript.readUnsignedShort();
 			
 			if (stringType == 0) { 
-				s = GlobalVariables.Strings[b];
+				s = GlobalVariables.Strings[eventScript.readUnsignedShort()];
 			} else {
-				eventScript.position -= 2; //wind it back
 				s = BinaryLoader.GetString(eventScript);
-				trace(b);
-				trace(s);
-				eventScript.position++;
-				//if ((b % 2) == 1) eventScript.position++; //Just get it off the top...
+				//Encoded so that everything is always 2 bytes :)
+				if(eventScript.position%2 == 1) eventScript.position++;
 			}
 			
 			return s;

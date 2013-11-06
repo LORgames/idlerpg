@@ -92,6 +92,7 @@ package Game.General {
 		
 		public static function GetString(b:ByteArray):String {
 			var l:int = b.readShort();
+			trace("READ STRING LENGTH=" + l);
 			return b.readMultiByte(l, "utf-8"); //map name
 		}
 	}

@@ -24,7 +24,7 @@ namespace CityTools.Components.DatabaseEditing {
             }
 
             //string[] names = Enum.GetNames(typeof(Param));
-            string[] names = new string[] { "Integer", "String" };
+            string[] names = new string[] { "Integer", "String", "Number" };
             foreach (string s in names) {
                 cbAddDatabaseColumnType.Items.Add(s);
             }

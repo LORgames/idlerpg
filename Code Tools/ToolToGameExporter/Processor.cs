@@ -48,48 +48,54 @@ namespace ToolToGameExporter {
                 //Precrush. No Dependancies.
                 UpdateEPF(epf, "Setting an Example...", 1);
                 GameSettingsExporter.Go();
-                UpdateEPF(epf, "Applying Diplomacy...", 3);
+                UpdateEPF(epf, "Applying Diplomacy...", 2);
                 FactionCrusher.Go();
-                UpdateEPF(epf, "Counting Monsters...", 4);
+                UpdateEPF(epf, "Counting Monsters...", 3);
                 CritterCrusher.Precrush();
-                UpdateEPF(epf, "Evaluating Projectiles...", 5);
+                UpdateEPF(epf, "Evaluating Projectiles...", 4);
                 EffectCrusher.Precrush();
-                UpdateEPF(epf, "Measuring Objects...", 6);
+                UpdateEPF(epf, "Measuring Objects...", 5);
                 MapObjectCrusher.Precrush();
-                UpdateEPF(epf, "Navigating the world...", 7);
+                UpdateEPF(epf, "Navigating the world...", 6);
                 MapCrusher.Precrush();
-                UpdateEPF(epf, "Calculating Standard Deviations...", 2);
+                UpdateEPF(epf, "Calculating Standard Deviations...", 7);
                 GlobalVariableCrusher.Go();
+                UpdateEPF(epf, "Counting Coins...", 8);
+                DatabaseCrusher.Precrush();
 
                 //Tier 0  Crushing. No Dependancies.
-                UpdateEPF(epf, "Amplyfying Sounds...", 12);
+                UpdateEPF(epf, "Amplyfying Sounds...", 10);
                 SoundCrusher.Go();
-                UpdateEPF(epf, "Laying Tiles...", 19);
+                UpdateEPF(epf, "Laying Tiles...", 20);
                 TileCrusher.Go();
-                UpdateEPF(epf, "Entering Portals...", 28);
+                UpdateEPF(epf, "Entering Portals...", 25);
                 PortalCrusher.Go();
 
                 //Tier 1 Crushing. Tier 0 Dependancies
-                UpdateEPF(epf, "Polishing Equipment...", 37);
+                UpdateEPF(epf, "Polishing Equipment...", 30);
                 EquipmentCrusher.Go(); //Requires Sounds.
-                UpdateEPF(epf, "Squishing Objects...", 46);
+                UpdateEPF(epf, "Squishing Objects...", 40);
                 MapObjectCrusher.Go(); //Requires Sounds
-                UpdateEPF(epf, "Firing Arrows...", 55);
+                UpdateEPF(epf, "Firing Arrows...", 50);
                 EffectCrusher.Go(); //Requires Sounds
-                UpdateEPF(epf, "Stocktaking Inventory...", 64);
+                UpdateEPF(epf, "Stocktaking Inventory...", 60);
                 ItemCrusher.Go();
 
                 //Tier 2 Crushing. Tier 1 Dependancies
-                UpdateEPF(epf, "Breeding Critters...", 73);
+                UpdateEPF(epf, "Breeding Critters...", 70);
                 CritterCrusher.Go(); //Requires Equipment
                 
                 //Tier 3 Crushing. Tier 2 Depedancies
-                UpdateEPF(epf, "Navigating Maps...", 82);
+                UpdateEPF(epf, "Navigating Maps...", 80);
                 MapCrusher.Go(); //Requires Portals, Tiles, Sounds and Objects. + Critters
 
                 //Tier 4 Crushing.
-                UpdateEPF(epf, "Breaking the fourth wall...", 91);
+                UpdateEPF(epf, "Breaking the fourth wall...", 90);
                 UICrusher.Go();
+                
+                //Tier N Crushing. Requires everything.
+                UpdateEPF(epf, "Archiving Knowledge...", 95);
+                DatabaseCrusher.Go();
 
                 UpdateEPF(epf, "Pushing Information...", 100);
                 if (Directory.Exists(p)) {
@@ -99,6 +105,7 @@ namespace ToolToGameExporter {
                 Directory.Move(Global.EXPORT_DIRECTORY, p);
 
                 UpdateEPF(epf, "Complete", 100);
+                
                 if (Errors.Count == 0) {
                     if (!silent) {
                         MessageBox.Show("Exported To Data Folder");

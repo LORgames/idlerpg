@@ -10,6 +10,8 @@ namespace ToolCache.DataLibrary {
         private Param myType = Param.Void;
 
         private short id = 0;
+        private float _f = 0;
+
         private string label = "";
 
         public DBCell(Param myType) {
@@ -28,6 +30,9 @@ namespace ToolCache.DataLibrary {
             if (myType == Param.Integer) {
                 id = f.GetShort();
                 label = id.ToString();
+            } else if (myType == Param.Number) {
+                _f = f.GetFloat();
+                label = _f.ToString();
             } else {
                 label = f.GetString();
             }
@@ -42,8 +47,24 @@ namespace ToolCache.DataLibrary {
                 if(short.TryParse(p, out id)) {
                     label = id.ToString();
                 }
+            } else if(myType == Param.Number) {
+                if(float.TryParse(p, out _f)) {
+                    label = _f.ToString();
+                }
             } else {
                 label = p;
+            }
+        }
+
+        public void PackIntoOptimized(BinaryIO f) {
+            if (myType == Param.Integer) {
+                f.AddShort(id);
+            } else if (myType == Param.String) {
+                f.AddString(label);
+            } else if (myType == Param.Number) {
+                f.AddFloat(_f);
+            } else {
+                throw new Exception("Cannot encode this param type!");
             }
         }
     }

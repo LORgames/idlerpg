@@ -64,6 +64,10 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0x1016, new Param[] { Param.Integer, Param.Integer }));
             All.Add("paramset",
                 new ValidCommand(0x1017, new Param[] { Param.String, Param.Integer }));
+            All.Add("tween",
+                new ValidCommand(0x1018, new Param[] { Param.String, Param.Integer, Param.Integer, Param.Number }));
+            All.Add("tweento",
+                new ValidCommand(0x1019, new Param[] { Param.String, Param.Integer, Param.Number }));
 
             //Quest and Inventory Commands
             All.Add("saydialogue",

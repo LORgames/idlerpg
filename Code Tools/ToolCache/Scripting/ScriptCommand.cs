@@ -106,7 +106,7 @@ namespace ToolCache.Scripting {
         }
 
         public void ProcessAction(ScriptInfo info) {
-            string validRegex = "([A-Za-z]+)\\(([A-Z,a-z0-9_\\-\\.\\(\\)\\s>\"!@#\\$%\\^&\\*\\(\\){}]*)\\)";
+            string validRegex = "([A-Za-z]+)\\(([A-Z,a-z0-9_~\\-\\.\\(\\)\\s>\"!@#\\$%\\^&\\*\\(\\){}]*)\\)";
             Match match = Regex.Match(Trimmed, validRegex);
 
             if (match.Success && match.Index == 0) {
@@ -238,6 +238,7 @@ namespace ToolCache.Scripting {
             short sparam;
             float fparam;
             string[] paramBits = ParamString.Split(',');
+            string[] subParamBits;
 
             if (paramBits.Length >= vcp.MinimumParams && paramBits.Length <= vcp.MaximumParams) {
                 for (int i = 0; i < paramBits.Length; i++) {
@@ -254,16 +255,31 @@ namespace ToolCache.Scripting {
                             if (!float.TryParse(paramBits[i], out fparam)) {
                                 info.Errors.Add("Cannot convert " + paramBits[i] + " into a number!" + ErrorEnding());
                             } else {
-                                if (fparam > 370 || fparam < -370) {
-                                    info.Errors.Add("Floating point values are limited to the -370 to 370 range!" + ErrorEnding());
-                                } else {
-                                    this.AdditionalBytecode.Add((ushort)0xBFFF); //Static number indicator
-                                    AdditionalBytecode.Add((ushort)((short)(fparam * 100)));
-                                }
+                                this.AdditionalBytecode.Add((ushort)0xBFFC); //Static float point indicator
+                                byte[] floatBytes = BitConverter.GetBytes(fparam);
+                                if (BitConverter.IsLittleEndian) { Array.Reverse(floatBytes); }
+
+                                sparam = (short)((floatBytes[0] << 8) & floatBytes[1]);
+                                AdditionalBytecode.Add((ushort)sparam);
+
+                                sparam = (short)((floatBytes[2] << 8) & floatBytes[3]);
+                                AdditionalBytecode.Add((ushort)sparam);
                             } break;
                         case Param.Integer:
                             if (!WriteVariableIfExists(paramBits[i], info)) {
-                                info.Errors.Add("Cannot convert '" + paramBits[i] + "' into an integer!" + ErrorEnding());
+                                if (paramBits[i][0] == '~' && paramBits[i].Length > 3) {
+                                    subParamBits = paramBits[i].Substring(1).Split('>');
+
+                                    if (subParamBits.Length == 3) {
+                                        string database = subParamBits[0];
+                                        string column = subParamBits[1];
+                                        string row = subParamBits[2];
+                                    } else {
+                                        info.Errors.Add("Cannot extract parameter data!"+ErrorEnding())
+                                    }
+                                } else {
+                                    info.Errors.Add("Cannot convert '" + paramBits[i] + "' into an integer!" + ErrorEnding());
+                                }
                             } break;
                         case Param.Angle:
                             if (!short.TryParse(paramBits[i], out sparam)) {
