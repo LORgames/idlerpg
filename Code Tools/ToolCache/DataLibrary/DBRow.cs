@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ToolCache.General;
 using ToolCache.Scripting.Types;
+using System.Windows.Forms;
 
 namespace ToolCache.DataLibrary {
     public class DBRow {
@@ -28,6 +29,22 @@ namespace ToolCache.DataLibrary {
             for (int i = 0; i < Cells.Count; i++) {
                 Cells[i].WriteToBinaryIO(f);
             }
+        }
+
+        public ListViewItem GetListViewItem() {
+            ListViewItem lvi = new ListViewItem();
+            lvi.Tag = this;
+
+            if (Cells.Count > 0) {
+                lvi.Name = Cells[0].ToString();
+                lvi.Text = lvi.Name;
+
+                for (int i = 1; i < Cells.Count; i++) {
+                    lvi.SubItems.Add(Cells[i].ToString());
+                }
+            }
+
+            return lvi;
         }
     }
 }

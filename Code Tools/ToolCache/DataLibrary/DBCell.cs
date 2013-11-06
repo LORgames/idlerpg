@@ -36,5 +36,15 @@ namespace ToolCache.DataLibrary {
         public override string ToString() {
             return label;
         }
+
+        public void SetString(string p) {
+            if (myType == Param.Integer) {
+                if(short.TryParse(p, out id)) {
+                    label = id.ToString();
+                }
+            } else {
+                label = p;
+            }
+        }
     }
 }

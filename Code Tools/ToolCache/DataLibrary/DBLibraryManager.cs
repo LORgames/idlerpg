@@ -14,6 +14,7 @@ namespace ToolCache.DataLibrary {
 
         public static void Initialize() {
             Libraries.Clear();
+            LoadDatabase();
         }
 
         private static void LoadDatabase() {
@@ -56,6 +57,10 @@ namespace ToolCache.DataLibrary {
                     Libraries.RemoveAt(i);
                 }
             }
+        }
+
+        public static DBLibrary[] GetLibraries() {
+            return Libraries.ToArray();
         }
     }
 }

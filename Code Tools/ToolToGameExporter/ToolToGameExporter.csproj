@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CritterCrusher.cs" />
+    <Compile Include="DatabaseCrusher.cs" />
     <Compile Include="EffectCrusher.cs" />
     <Compile Include="EquipmentCrusher.cs" />
     <Compile Include="ExportProgressForm.cs">

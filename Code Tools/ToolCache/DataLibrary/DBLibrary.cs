@@ -50,7 +50,7 @@ namespace ToolCache.DataLibrary {
             }
         }
 
-        private DBRow InsertEmptyRow() {
+        public DBRow InsertEmptyRow() {
             DBRow r = new DBRow(this);
             Rows.Add(r);
             return r;
@@ -80,6 +80,18 @@ namespace ToolCache.DataLibrary {
                     r.Cells.RemoveAt(index);
                 }
             }
+        }
+
+        public override string ToString() {
+            return Name;
+        }
+
+        public string[] GetColumnNames() {
+            return Column_Names.ToArray();
+        }
+
+        public Param GetColumnType(int p) {
+            return Column_Types[p];
         }
     }
 }
