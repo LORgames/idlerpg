@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.IO;
 using ToolCache.Animation;
 using ToolCache.General;
+using CityTools.Components.GIFSupport;
 
 namespace CityTools.Components {
     public partial class AnimationList : UserControl {
@@ -162,6 +163,39 @@ namespace CityTools.Components {
             numFramerate.Enabled = false;
             numFramerate.Visible = false;
             lblAnimation.Text = "ANIM:";
+        }
+
+        private void btnSaveGIF_Click(object sender, EventArgs e) {
+            if (_anim != null && _anim.Frames.Count > 1) {
+                if (saveDialogue.ShowDialog() == DialogResult.OK) {
+                    String[] imageFilePaths = _anim.Frames.ToArray();
+                    AnimatedGifEncoder encoder = new AnimatedGifEncoder();
+
+                    List<Image> cleanupList = new List<Image>();
+
+                    encoder.Start(saveDialogue.FileName);
+                    encoder.SetDelay((int)(1000 * _anim.PlaybackSpeed));
+                    encoder.SetRepeat(0); //-1:no repeat,0:always repeat
+                    //encoder.SetTransparent();
+
+                    for (int i = 0; i < _anim.Frames.Count; i++) {
+                        Image bmp = GIFImageHelper.RequestGIFSuitableImage(_anim.Frames[i]);
+                        encoder.AddFrame(bmp);
+                        cleanupList.Add(bmp);
+                    }
+                    encoder.Finish();
+
+                    while (cleanupList.Count > 0) {
+                        cleanupList[0].Dispose();
+                        cleanupList.RemoveAt(0);
+                    }
+
+                    cleanupList.Clear();
+                    cleanupList = null;
+                }
+            } else {
+                MessageBox.Show("The animation requires at least 2 frames to be exported as an animation!");
+            }
         }
     }
 }

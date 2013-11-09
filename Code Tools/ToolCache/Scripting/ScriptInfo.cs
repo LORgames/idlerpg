@@ -21,17 +21,6 @@ namespace ToolCache.Scripting {
         public Dictionary<String, ScriptVariable> Variables = new Dictionary<string, ScriptVariable>();
         public List<string> AnimationNames = new List<string>();
 
-        //This is a list of the exporter defined remappings
-        public MapPiece CurrentMap;
-        public Dictionary<string, short> RemappedEquipmentIDs;
-        public Dictionary<string, short> RemappedEffectIDs;
-        public Dictionary<string, short> RemappedObjectIDs;
-        public Dictionary<string, short> RemappedSoundEffectIDs;
-        public Dictionary<string, short> RemappedSoundEffectGroups;
-        public Dictionary<string, short> RemappedCritterIDs;
-        public Dictionary<string, short> RemappedMapIDs;
-        public Dictionary<string, short> RemappedFunctionIDs;
-
         public ScriptInfo(string Name, ScriptTypes ScriptType) {
             ScriptName = Name;
             this.ScriptType = ScriptType;

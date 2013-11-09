@@ -28,6 +28,8 @@ namespace CityTools.Components {
             this.panelControls = new System.Windows.Forms.Panel();
             this.numFramerate = new System.Windows.Forms.NumericUpDown();
             this.lblAnimation = new System.Windows.Forms.Label();
+            this.btnSaveGIF = new System.Windows.Forms.Button();
+            this.saveDialogue = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -61,6 +63,7 @@ namespace CityTools.Components {
             // 
             // panelControls
             // 
+            this.panelControls.Controls.Add(this.btnSaveGIF);
             this.panelControls.Controls.Add(this.numFramerate);
             this.panelControls.Controls.Add(this.lblAnimation);
             this.panelControls.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -107,6 +110,23 @@ namespace CityTools.Components {
             this.lblAnimation.TabIndex = 0;
             this.lblAnimation.Text = "FPS";
             // 
+            // btnSaveGIF
+            // 
+            this.btnSaveGIF.Image = global::CityTools.Properties.Resources.disk;
+            this.btnSaveGIF.Location = new System.Drawing.Point(2, 73);
+            this.btnSaveGIF.Name = "btnSaveGIF";
+            this.btnSaveGIF.Size = new System.Drawing.Size(48, 23);
+            this.btnSaveGIF.TabIndex = 2;
+            this.btnSaveGIF.Text = "GIF";
+            this.btnSaveGIF.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnSaveGIF.UseVisualStyleBackColor = true;
+            this.btnSaveGIF.Click += new System.EventHandler(this.btnSaveGIF_Click);
+            // 
+            // saveDialogue
+            // 
+            this.saveDialogue.DefaultExt = "gif";
+            this.saveDialogue.FileName = "Animation.gif";
+            // 
             // AnimationList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -131,6 +151,8 @@ namespace CityTools.Components {
         private System.Windows.Forms.Panel panelControls;
         private System.Windows.Forms.NumericUpDown numFramerate;
         private System.Windows.Forms.Label lblAnimation;
+        private System.Windows.Forms.Button btnSaveGIF;
+        private System.Windows.Forms.SaveFileDialog saveDialogue;
 
     }
 }

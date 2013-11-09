@@ -13,6 +13,7 @@ using ToolCache.Scripting.Types;
 using ToolCache.UI;
 using ToolCache.Map;
 using ToolCache.Scripting.Extensions;
+using ToolCache.DataLibrary;
 
 namespace ToolCache.Scripting {
     public class ScriptCommand {
@@ -249,6 +250,12 @@ namespace ToolCache.Scripting {
                         thisParamType = thisParamType ^ Param.Optional;
                     }
 
+                    if (paramBits[i].Length > 5 && paramBits[i][0] == '~') {
+                        if (LinkDatabase(paramBits[i], info, thisParamType)) {
+                            continue;
+                        }
+                    }
+
                     switch (thisParamType) {
                         case Param.Void: break; //Obviously void does nothing
                         case Param.Number:
@@ -267,19 +274,7 @@ namespace ToolCache.Scripting {
                             } break;
                         case Param.Integer:
                             if (!WriteVariableIfExists(paramBits[i], info)) {
-                                if (paramBits[i][0] == '~' && paramBits[i].Length > 3) {
-                                    subParamBits = paramBits[i].Substring(1).Split('>');
-
-                                    if (subParamBits.Length == 3) {
-                                        string database = subParamBits[0];
-                                        string column = subParamBits[1];
-                                        string row = subParamBits[2];
-                                    } else {
-                                        info.Errors.Add("Cannot extract parameter data!"+ErrorEnding())
-                                    }
-                                } else {
-                                    info.Errors.Add("Cannot convert '" + paramBits[i] + "' into an integer!" + ErrorEnding());
-                                }
+                                info.Errors.Add("Cannot convert '" + paramBits[i] + "' into an integer!" + ErrorEnding());
                             } break;
                         case Param.Angle:
                             if (!short.TryParse(paramBits[i], out sparam)) {
@@ -546,6 +541,95 @@ namespace ToolCache.Scripting {
             }
         }
 
+        private bool LinkDatabase(string databaseIdentifier, ScriptInfo info, Param expectedType) {
+            if (databaseIdentifier[0] != '~') {
+                info.Errors.Add("Database identifiers always begin with a '~' character!" + ErrorEnding());
+                return false;
+            }
+
+            if (databaseIdentifier.Length < 6) {
+                info.Errors.Add("Database identifiers must be at least 5 characters long!" + ErrorEnding());
+                return false;
+            }
+
+            string[] subParamBits = databaseIdentifier.Substring(1).Split('>');
+            short sparam;
+            bool useVar;
+
+            if (subParamBits.Length == 3) {
+                string database = subParamBits[0];
+                string column = subParamBits[1];
+                string row = subParamBits[2];
+
+                DataLibrary.DBLibrary lib = DataLibrary.DBLibraryManager.GetLibrary(database);
+
+                if (lib == null) {
+                    info.Errors.Add("Cannot find a database named '" + database + "'" + ErrorEnding());
+                } else {
+                    if (info.RemappedDatabaseNames != null) {
+                        if (info.RemappedDatabaseNames.ContainsKey(database)) {
+                            AdditionalBytecode.Add((ushort)info.RemappedDatabaseNames[database]);
+                        } else {
+                            info.Errors.Add("The database was not compiled for exporting. Perhaps it is empty?" + ErrorEnding());
+                        }
+                    }
+
+                    sparam = 0;
+                    useVar = false;
+
+                    //Now find the column
+                    if (!short.TryParse(column, out sparam)) {
+                        if (!VariableExists(column, info)) {
+                            sparam = (short)lib.GetColumnID(column);
+                            if (sparam == -1) {
+                                info.Errors.Add("Cannot find a column called '" + column + "'" + ErrorEnding());
+                                return false;
+                            }
+                        } else {
+                            useVar = true;
+                        }
+                    }
+
+                    if (!useVar && lib.Column_Names.Count <= sparam) {
+                        info.Errors.Add("Database '" + database + "' does not have " + sparam + " columns!" + ErrorEnding());
+                        return false;
+                    }
+
+                    //Now that we have the column, lets make sure its valid
+                    if (lib.GetColumnType(sparam) == expectedType) {
+                        //Put the column id into the bytecode
+                        if (useVar) {
+                            WriteVariableIfExists(column, info);
+                        } else {
+                            WriteVariableIfExists(sparam.ToString(), info);
+                        }
+                    } else {
+                        info.Errors.Add("Cannot turn a " + lib.GetColumnType(sparam) + " into an "+expectedType+"!" + ErrorEnding());
+                    }
+
+                    //Now find the row
+                    sparam = 0;
+                    useVar = false;
+
+                    if (!WriteVariableIfExists(row, info)) {
+                        info.Errors.Add("Sorry, we don't yet support named rows!" + ErrorEnding());
+                    }
+
+                    if (lib.Rows.Count > sparam) {
+                        AdditionalBytecode.Add((ushort)sparam);
+                    } else {
+                        info.Errors.Add("Database '" + database + "' does not have " + sparam + " rows!" + ErrorEnding());
+                        return false;
+                    }
+                }
+            } else {
+                info.Errors.Add("Cannot extract parameter data!" + ErrorEnding());
+                return false;
+            }
+
+            return true;
+        }
+
         /// <summary>
         /// Adds an ending section to error and warning messages
         /// </summary>
@@ -701,7 +785,7 @@ namespace ToolCache.Scripting {
                         case "not": AdditionalBytecode.Add(0x7002); break;
                         default:
                             //Maybe a variable, lets see if we can find it
-                            Match match = Regex.Match(oriCommand, "(" + VARIABLE_REGEX + ")\\s?(<=|>=|!=|<>|><|>|<|=)\\s?(" + VARIABLE_REGEX + "|[0-9]+)");
+                            Match match = Regex.Match(oriCommand, "(" + VARIABLE_REGEX + ")\\s?(<=|>=|!=|<>|><|>|<|=)\\s?(" + VARIABLE_REGEX + "|-?[0-9]+)");
 
                             if (match.Success) {
                                 if (VariableExists(match.Groups[1].Value, Info)) {

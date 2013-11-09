@@ -93,5 +93,17 @@ namespace ToolCache.DataLibrary {
         public Param GetColumnType(int p) {
             return Column_Types[p];
         }
+
+        internal int GetColumnID(string column) {
+            string _name = column.ToLower();
+
+            for(int i = 0; i < Column_Names.Count; i++) {
+                if (Column_Names[i].ToLower() == _name) {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
     }
 }

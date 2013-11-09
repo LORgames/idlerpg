@@ -85,6 +85,10 @@
     <Compile Include="Components\DatabaseEditing\DatabaseEditor.Designer.cs">
       <DependentUpon>DatabaseEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\GIFSupport\AnimatedGifEncoder.cs" />
+    <Compile Include="Components\GIFSupport\GIFImageHelper.cs" />
+    <Compile Include="Components\GIFSupport\LZWEncoder.cs" />
+    <Compile Include="Components\GIFSupport\NeuQuant.cs" />
     <Compile Include="Components\GroupedComboBox.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -8,7 +8,7 @@ using ToolCache.Scripting.Types;
 
 namespace ToolToGameExporter {
     public class DatabaseCrusher {
-        public static Dictionary<String, short> DatabaseIDs = new Dictionary<string, short>();
+        public static Dictionary<string, short> DatabaseIDs = new Dictionary<string, short>();
         
         public static void Precrush() {
             DatabaseIDs.Clear();

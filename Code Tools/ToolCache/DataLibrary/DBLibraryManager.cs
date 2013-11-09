@@ -62,5 +62,17 @@ namespace ToolCache.DataLibrary {
         public static DBLibrary[] GetLibraries() {
             return Libraries.ToArray();
         }
+
+        internal static DBLibrary GetLibrary(string libraryName) {
+            string comp = libraryName.ToLower();
+
+            foreach(DBLibrary lib in Libraries) {
+                if (lib.Name.ToLower() == comp) {
+                    return lib;
+                }
+            }
+
+            return null;
+        }
     }
 }

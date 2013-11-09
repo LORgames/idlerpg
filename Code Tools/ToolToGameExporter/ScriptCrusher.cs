@@ -31,6 +31,7 @@ namespace ToolToGameExporter {
             info.RemappedSoundEffectGroups = SoundCrusher.GroupConversions;
             info.RemappedMapIDs = MapCrusher.RemappedMapIDs;
             info.RemappedFunctionIDs = GlobalVariableCrusher.RemappedFunctionNames;
+            info.RemappedDatabaseNames = DatabaseCrusher.DatabaseIDs;
 
             Parser.Parse(script, info);
 
