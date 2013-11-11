@@ -66,7 +66,12 @@ namespace ToolToGameExporter {
                             }
                         } else if (l is UITextLayer) {
                             UITextLayer l2 = (UITextLayer)l;
-                            f.AddString(l2.PrepareString(true));
+
+                            try {
+                                f.AddString(l2.PrepareString(true));
+                            } catch(Exception ex) {
+                                Processor.Errors.Add(new ProcessingError("Bad String", p.Name + ">" + e.Name + ">" + l2.Name, ex.Message));
+                            }
 
                             f.AddInt(l2.Colour.ToArgb());
                             f.AddByte((byte)l2.Align);

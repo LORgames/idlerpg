@@ -15,6 +15,7 @@ namespace ToolToGameExporter {
         public static Dictionary<string, short> RemappedMapIDs = new Dictionary<string, short>();
         
         public static void Precrush() {
+            ExportCrushers.RemappedMapIDs = RemappedMapIDs;
             RemappedMapIDs.Clear();
 
             short x = 0;
@@ -148,7 +149,7 @@ namespace ToolToGameExporter {
 
                 //Script
                 ScriptInfo s = new ScriptInfo("Map." + map.Name, ScriptTypes.Map);
-                s.CurrentMap = map;
+                ExportCrushers.CurrentMap = map;
                 ScriptCrusher.ProcessScript(s, map.Script, f);
 
                 f.Encode(Global.EXPORT_DIRECTORY + "/Map_" + map.Name + ".bin");

@@ -22,6 +22,7 @@ namespace ToolToGameExporter {
 
         public static void Go() {
             MappedEquipmentIDs.Clear();
+            ExportCrushers.RemappedEquipmentIDs = MappedEquipmentIDs;
 
             foreach (EquipmentTypes et in equipmenttypes) {
                 short id = 0;

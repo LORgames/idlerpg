@@ -11,6 +11,7 @@ namespace ToolToGameExporter {
         public static Dictionary<string, short> DatabaseIDs = new Dictionary<string, short>();
         
         public static void Precrush() {
+            ExportCrushers.RemappedDatabaseNames = DatabaseIDs;
             DatabaseIDs.Clear();
 
             short i = 0;

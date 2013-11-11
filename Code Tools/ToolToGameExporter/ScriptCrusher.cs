@@ -23,16 +23,7 @@ namespace ToolToGameExporter {
             ///////////////////////////////////////////////////////////////////////////////////
             /////// PRECOMPILER
             ///////////////////////////////////////////////////////////////////////////////////
-            info.RemappedEquipmentIDs = EquipmentCrusher.MappedEquipmentIDs;
-            info.RemappedEffectIDs = EffectCrusher.RemappedEffectNames;
-            info.RemappedObjectIDs = MapObjectCrusher.RemappedItemNameToID;
-            info.RemappedCritterIDs = CritterCrusher.NameToRemappedIDs;
-            info.RemappedSoundEffectIDs = SoundCrusher.EffectConversions;
-            info.RemappedSoundEffectGroups = SoundCrusher.GroupConversions;
-            info.RemappedMapIDs = MapCrusher.RemappedMapIDs;
-            info.RemappedFunctionIDs = GlobalVariableCrusher.RemappedFunctionNames;
-            info.RemappedDatabaseNames = DatabaseCrusher.DatabaseIDs;
-
+            
             Parser.Parse(script, info);
 
             if (info.Errors.Count > 0) {

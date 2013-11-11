@@ -18,6 +18,8 @@ namespace ToolToGameExporter {
             RemappedCritterIDs.Clear();
             NameToRemappedIDs.Clear();
 
+            ExportCrushers.RemappedCritterIDs = NameToRemappedIDs;
+
             short nextID = 0;
 
             foreach (Critter c in CritterManager.Critters.Values) {

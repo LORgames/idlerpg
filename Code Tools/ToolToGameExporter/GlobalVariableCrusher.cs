@@ -20,6 +20,7 @@ namespace ToolToGameExporter {
         }
 
         private static void Precrush() {
+            ExportCrushers.RemappedFunctionIDs = RemappedFunctionNames;
             RemappedFunctionNames.Clear();
 
             List<ScriptFunction> ls = Variables.FunctionTable.Values.ToList<ScriptFunction>();

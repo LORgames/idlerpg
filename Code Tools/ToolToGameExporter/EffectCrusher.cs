@@ -15,6 +15,8 @@ namespace ToolToGameExporter {
 
         public static void Precrush() {
             RemappedEffectNames.Clear();
+            ExportCrushers.RemappedEffectIDs = RemappedEffectNames;
+
             short nextID = 0;
 
             foreach (Effect e in EffectManager.Effects.Values) {

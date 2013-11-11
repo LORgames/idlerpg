@@ -52,7 +52,7 @@ namespace ToolCache.UI {
         }
 
         public string PrepareString(bool rawID = false) {
-            Regex regex = new Regex("{(~?[A-Za-z0-9_>]*):?([0-9]+)?}");
+            Regex regex = new Regex("{(~?[A-Za-z0-9_>]+):?([0-9]+)?}");
             MatchCollection mc = regex.Matches(Message);
 
             if (mc.Count > 0) {
@@ -69,12 +69,24 @@ namespace ToolCache.UI {
                     }
 
                     if (mc[i].Groups[1].Value[0] == '~') { //Database entry
-                        builder = builder + LinkDatabase(mc[i].Groups[1].Value.Substring(1), rawID);
+                        try {
+                            if (!rawID) {
+                                builder = builder + LinkDatabase(mc[i].Groups[1].Value.Substring(1), rawID).PadLeft(paddingLength, '0');
+                            } else {
+                                builder = builder + "{" + LinkDatabase(mc[i].Groups[1].Value.Substring(1), rawID) + ":" + paddingLength + "}";
+                            }
+                        } catch (Exception e) {
+                            if (rawID) {
+                                throw e;
+                            } else {
+                                builder = builder + e.Message;
+                            }
+                        }
                     } else if(Variables.GlobalVariables.ContainsKey(mc[i].Groups[1].Value)) {
                         if (!rawID) {
                             builder = builder + Variables.GlobalVariables[mc[i].Groups[1].Value].InitialValue.ToString().PadLeft(paddingLength, '0');
                         } else {
-                            builder = builder + "{" + Variables.GlobalVariables[mc[i].Groups[1].Value].Index + "}";
+                            builder = builder + "{" + Variables.GlobalVariables[mc[i].Groups[1].Value].Index + ":" + paddingLength + "}";
                         }
                     } else {
                         builder = builder + "<UNKNOWN VAR>";
@@ -92,17 +104,17 @@ namespace ToolCache.UI {
         }
 
         private string LinkDatabase(string databaseIdentifier, bool isRaw) {
-            if (databaseIdentifier[0] != '~') {
-                return "BAD DATABASE INDICATOR";
+            if (databaseIdentifier.Length < 5) {
+                throw new Exception("A database identification should be at least 5 characters...");
             }
 
-            if (databaseIdentifier.Length < 6) {
-                return "BAD DATABASE LENGTH!";
-            }
+            string[] subParamBits = databaseIdentifier.Split('>');
+            short colID;
+            short rowID;
 
-            string[] subParamBits = databaseIdentifier.Substring(1).Split('>');
-            short sparam;
             bool useVar;
+
+            string retString = "";
 
             if (subParamBits.Length == 3) {
                 string database = subParamBits[0];
@@ -112,62 +124,74 @@ namespace ToolCache.UI {
                 DataLibrary.DBLibrary lib = DataLibrary.DBLibraryManager.GetLibrary(database);
 
                 if (lib == null) {
-                    return "Cannot find a database named '" + database + "'";
+                    throw new Exception("Cannot find a database named '" + database + "'");
                 }
 
                 if (isRaw && ExportCrushers.RemappedDatabaseNames != null) {
                     if (ExportCrushers.RemappedDatabaseNames.ContainsKey(database)) {
-                        AdditionalBytecode.Add((ushort)ExportCrushers.RemappedDatabaseNames[database]);
+                        retString += ExportCrushers.RemappedDatabaseNames[database] + ":";
                     } else {
-                        return "The database was not compiled for exporting. Perhaps it is empty?";
+                        throw new Exception("The database was not compiled for exporting. Perhaps it is empty?");
                     }
                 }
-                
 
-                sparam = 0;
+                colID = 0;
                 useVar = false;
 
                 //Now find the column
-                if (!short.TryParse(column, out sparam)) {
-                    if (!VariableExists(column, info)) {
-                        sparam = (short)lib.GetColumnID(column);
-                        if (sparam == -1) {
-                            return "Cannot find a column called '" + column + "'";
+                if (!short.TryParse(column, out colID)) {
+                    if (!Variables.GlobalVariables.ContainsKey(column)) {
+                        colID = (short)lib.GetColumnID(column);
+                        if (colID == -1) {
+                            throw new Exception("Cannot find a column called '" + column + "'");
                         }
                     } else {
                         useVar = true;
+                        if (isRaw) {
+                            colID = (short)Variables.GlobalVariables[column].Index;
+                        } else {
+                            colID = (short)Variables.GlobalVariables[column].InitialValue;
+                        }
                     }
                 }
 
-                if (!useVar && lib.Column_Names.Count <= sparam) {
-                    return "Database '" + database + "' does not have " + sparam + " columns!";
-                }
-
-                if (useVar) {
-                    WriteVariableIfExists(column, info);
+                if (!useVar && lib.Column_Names.Count <= colID) {
+                    throw new Exception("Database '" + database + "' does not have " + colID + " columns!");
                 } else {
-                    WriteVariableIfExists(sparam.ToString(), info);
+                    retString += (useVar ? "b" : "a") + colID + ":";
                 }
 
                 //Now find the row
-                sparam = 0;
+                rowID = 0;
                 useVar = false;
 
-                if (!WriteVariableIfExists(row, info)) {
-                    return "Sorry, we don't yet support named rows!";
+                if (!short.TryParse(row, out rowID)) {
+                    if (!Variables.GlobalVariables.ContainsKey(row)) {
+                        throw new Exception("Sorry, we don't yet support named rows!");
+                    } else {
+                        useVar = true;
+                        if (isRaw) {
+                            rowID = (short)Variables.GlobalVariables[row].Index;
+                        } else {
+                            rowID = (short)Variables.GlobalVariables[row].InitialValue;
+                        }
+                    }
                 }
 
-                if (lib.Rows.Count > sparam) {
-                    AdditionalBytecode.Add((ushort)sparam);
+                if (!useVar && lib.Rows.Count <= rowID) {
+                    throw new Exception("Database '" + database + "' does not have " + rowID + " rows!");
                 } else {
-                    info.Errors.Add("Database '" + database + "' does not have " + sparam + " rows!" + ErrorEnding());
-                    return false;
+                    retString += (useVar ? "b" : "a") + rowID;
+                }
+
+                if (isRaw) {
+                    return retString;
+                } else {
+                    return lib.Rows[rowID].Cells[colID].ToString();
                 }
             } else {
                 return "You need 3 parts for a database ID!";
             }
-
-            return "Unexpected issue? Shouldn't have gotten here!";
         }
 
         internal override void Draw(System.Drawing.Graphics gfx, System.Drawing.Rectangle canvasArea, UIElement owner, float displayValue, bool drawRect) {

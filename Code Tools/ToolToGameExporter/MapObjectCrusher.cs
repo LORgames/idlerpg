@@ -20,6 +20,8 @@ namespace ToolToGameExporter {
             RealignedItemIndexes.Clear();
             RemappedItemNameToID.Clear();
 
+            ExportCrushers.RemappedObjectIDs = RemappedItemNameToID;
+
             short highestIndex = 0;
 
             foreach (MapObject t in MapObjectCache.ObjectTypes.Values) {

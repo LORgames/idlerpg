@@ -412,7 +412,7 @@ namespace CityTools {
         }
 
         private void scriptMap_BeforeParse(object sender, ScriptInfoArgs e) {
-            e.Info.CurrentMap = MapPieceCache.CurrentPiece;
+            ExportCrushers.CurrentMap = MapPieceCache.CurrentPiece;
         }
     }
 }
