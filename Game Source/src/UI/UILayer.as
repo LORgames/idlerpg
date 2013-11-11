@@ -64,7 +64,5 @@ package UI {
 					this.y = (ph-SizeY)/2 + OffsetY; break;
 			}
 		}
-		
 	}
-
 }

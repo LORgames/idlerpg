@@ -135,7 +135,7 @@ namespace ToolCache.Scripting.Types {
             All.Add("uisetlibraryid",
                 new ValidCommand(0xC006, new Param[] { Param.UILayer, Param.Integer }));
             All.Add("uilayerplay",
-                new ValidCommand(0xC007, new Param[] { Param.UILayer, Param.Integer }));
+                new ValidCommand(0xC007, new Param[] { Param.UILayer, Param.Number, Param.Boolean | Param.Optional }));
 
             All.Add("trace",
                 new ValidCommand(0xCFFF, new Param[] { Param.String }));

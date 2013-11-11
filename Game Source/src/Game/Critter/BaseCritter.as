@@ -191,9 +191,11 @@ package Game.Critter {
 			var prevX:int = X;
 			var prevY:int = Y;
 			
-			tf.text = CurrentHP + " / " + MaximumHP;
-			tf.x = (X + Camera.X) * Camera.Z - tf.width/2;
-			tf.y = (Y + Camera.Y) * Camera.Z - 60;
+			CONFIG::debug {
+				tf.text = CurrentHP + " / " + MaximumHP;
+				tf.x = (X + Camera.X) * Camera.Z - tf.width/2;
+				tf.y = (Y + Camera.Y) * Camera.Z - 60;
+			}
 			
 			//Process the things
 			X += moveSpeedX * dt / CurrentMovementCost;

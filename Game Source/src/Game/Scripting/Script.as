@@ -393,7 +393,7 @@ package Game.Scripting {
 		}
 		
 		
-		private function GetNumberFromVariable(eventScript:ByteArray, info:ScriptInstance, inputParam:Object):int {
+		private function GetNumberFromVariable(eventScript:ByteArray, info:ScriptInstance, inputParam:Object):Number {
 			var varType:int = eventScript.readUnsignedShort();
 			var varID:int = eventScript.readShort();
 			
@@ -405,6 +405,9 @@ package Game.Scripting {
 				return GlobalVariables.Variables[varID];
 			} else if (varType == 0xBFFF) { //Static value
 				return varID;
+			} else if (varType == 0xBFFB) { //FLOATING POINT
+				eventScript.position -= 2;
+				return eventScript.readFloat();
 			}
 			
 			return 0; //No idea what else it should be
@@ -569,7 +572,7 @@ package Game.Scripting {
 			
 			while (true) {
 				command = EventScript.readUnsignedShort();
-				trace("\t0x" + MathsEx.ZeroPad(command, 4, 16) + " Deep=" + deep + " CurrentTarget=" + info.CurrentTarget);
+				//trace("\t0x" + MathsEx.ZeroPad(command, 4, 16) + " Deep=" + deep + " CurrentTarget=" + info.CurrentTarget);
 				
 				if (command == 0xFFFF) { break; }
 				if (command == 0xB000) { ProcessMathCommand(EventScript, info, inputParam); continue; }
@@ -929,7 +932,19 @@ package Game.Scripting {
 						if (uiL is UILayerLibrary) {
 							(uiL as UILayerLibrary).ID = GetNumberFromVariable(EventScript, info, inputParam);
 							uiE.Draw(Main.I.stage.stageWidth, Main.I.stage.stageHeight, Main.I.hud);
-						}
+						} break;
+					case 0xC007: //UI Layer Play
+						uiE = Main.I.hud.Panels[EventScript.readShort()].Elements[EventScript.readShort()];
+						uiL = uiE.Layers[EventScript.readShort()];
+						
+						if (uiL is UILayerLibrary) {
+							var time:Number = GetNumberFromVariable(EventScript, info, inputParam);
+							bParam = (EventScript.readShort() == 1);
+							(uiL as UILayerLibrary).Play(time, bParam);
+							//(uiL as UILayerLibrary).ID = GetNumberFromVariable(EventScript, info, inputParam);
+							//uiE.Draw(Main.I.stage.stageWidth, Main.I.stage.stageHeight, Main.I.hud);
+						} break;
+						
 						break;
 					case 0xCFFF: //Trace
 						Main.I.Log("[SCRIPT: " + info.Invoker + "] " + StringEx.BuildFromCore(GetWonkyString(EventScript)).GetBuilt()); break;

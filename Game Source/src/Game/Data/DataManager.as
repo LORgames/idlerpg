@@ -15,6 +15,7 @@ package Game.Data {
 		
 		private var startID_DB:Vector.<int> = new Vector.<int>();
 		private var startID_Rows:Vector.<int> = new Vector.<int>();
+		private var typeID_Cols:Vector.<int> = new Vector.<int>();
 		
 		public function DataManager() {
 			I = this;
@@ -38,6 +39,7 @@ package Game.Data {
 				
 				for (j = 0; j < totalColumns; j++) {
 					var type:int = b.readByte();
+					typeID_Cols.push(type);
 					
 					if (type == 0) {
 						startID_Rows.push(ints.length);
@@ -56,15 +58,40 @@ package Game.Data {
 		}
 		
 		public function GetIntegerFromCell(dbID:int, columnID:int, rowID:int):int {
-			return 0;
+			var dbStartIndex:int = startID_DB[dbID];
+			var rwStartIndex:int = startID_Rows[dbStartIndex + columnID];
+			
+			return ints[rwStartIndex + rowID];
 		}
 		
 		public function GetStringFromCell(dbID:int, columnID:int, rowID:int):String {
-			return "";
+			var dbStartIndex:int = startID_DB[dbID];
+			var rwStartIndex:int = startID_Rows[dbStartIndex + columnID];
+			
+			return strings[rwStartIndex + rowID];
 		}
 		
 		public function GetFloatFromCell(dbID:int, columnID:int, rowID:int):Number {
-			return 0.0;
+			var dbStartIndex:int = startID_DB[dbID];
+			var rwStartIndex:int = startID_Rows[dbStartIndex + columnID];
+			
+			return floats[rwStartIndex + rowID];
+		}
+		
+		public function GetCellAsString(dbID:int, columnID:int, rowID:int):String {
+			var dbStartIndex:int = startID_DB[dbID];
+			var rwStartIndex:int = startID_Rows[dbStartIndex + columnID];
+			var type:int = typeID_Cols[dbStartIndex + columnID];
+			
+			if (type == 0) {
+				return ""+ints[rwStartIndex + rowID];
+			} else if (type == 1) {
+				return ""+strings[rwStartIndex + rowID];
+			} else if (type == 2) {
+				return ""+floats[rwStartIndex + rowID];
+			}
+			
+			return "{ERROR}";
 		}
 		
 	}

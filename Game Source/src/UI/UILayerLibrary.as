@@ -1,22 +1,31 @@
 package UI {
 	import CollisionSystem.Rect;
+	import EngineTiming.Clock;
+	import EngineTiming.IUpdatable;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
+	import Game.Critter.CritterAnimationSet;
 	import Game.Scripting.GlobalVariables;
 	/**
 	 * ...
 	 * @author Paul
 	 */
-	public class UILayerLibrary extends UILayer {
+	public class UILayerLibrary extends UILayer implements IUpdatable {
 		///VARIABLES
         public var Library:UILibrary;
 		public var ID:int = 0;
 		
-		public function UILayerLibrary() {
-			
+		private var _playUp:Boolean = true;
+		private var _playTick:Number = 0;
+		private var _currTick:Number = 0;
+		private var isPlaying:Boolean = false;
+		private var _currPar:UIElement = null;
+		
+		public function UILayerLibrary(par:UIElement) {
+			_currPar = par;
 		}
 		
 		public override function Draw(w:int, h:int, ui:UIManager):void {
@@ -54,6 +63,56 @@ package UI {
 			} else if (LayerType == Tile) {
 				//TODO: Cannot draw 'tile' types easily?
 				RequiresRedraw = false;
+			}
+		}
+		
+		public function Play(time:Number, playReverse:Boolean):void {
+			if (!isPlaying) {
+				Clock.I.Updatables.push(this);
+				isPlaying = true;
+			}
+			
+			_playTick = (time / Library.TotalFrames);
+			_currTick = 0;
+			_playUp = !playReverse;
+			
+			if (playReverse) ID = Library.TotalFrames - 1;
+			else ID = 0;
+			
+			Update(0);
+		}
+		
+		private function StopPlaying():void {
+			isPlaying = false;
+			Clock.I.Remove(this);
+		}
+		
+		/* INTERFACE EngineTiming.IUpdatable */
+		
+		public function Update(dt:Number):void {
+			_currTick += dt;
+			var _redraw:Boolean = false;
+			
+			while (_currTick > _playTick) {
+				if (_playUp) ID++;
+				else ID--;
+				
+				_currTick -= _playTick;
+				
+				_redraw = true;
+			}
+			
+			if (ID >= Library.TotalFrames) {
+				ID = Library.TotalFrames - 1;
+				StopPlaying();
+			} else if (ID <= 0) {
+				ID = 0;
+				StopPlaying();
+			}
+			
+			if (_redraw) {
+				RequiresRedraw = true;
+				_currPar.Draw(Main.I.stage.stageWidth, Main.I.stage.stageHeight, Main.I.hud);
 			}
 		}
 	}

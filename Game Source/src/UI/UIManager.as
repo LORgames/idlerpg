@@ -89,7 +89,7 @@ package UI {
 						
 						if (layerType == 0) Panels[i].Elements[j].Layers[k] = new UILayerImage();
 						if (layerType == 1) Panels[i].Elements[j].Layers[k] = new UILayerText();
-						if (layerType == 2) Panels[i].Elements[j].Layers[k] = new UILayerLibrary();
+						if (layerType == 2) Panels[i].Elements[j].Layers[k] = new UILayerLibrary(Panels[i].Elements[j]);
 						Panels[i].Elements[j].addChild(Panels[i].Elements[j].Layers[k]);
 						
 						Panels[i].Elements[j].Layers[k].AnchorPoint = b.readByte();

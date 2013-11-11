@@ -262,14 +262,14 @@ namespace ToolCache.Scripting {
                             if (!float.TryParse(paramBits[i], out fparam)) {
                                 info.Errors.Add("Cannot convert " + paramBits[i] + " into a number!" + ErrorEnding());
                             } else {
-                                this.AdditionalBytecode.Add((ushort)0xBFFC); //Static float point indicator
+                                this.AdditionalBytecode.Add((ushort)0xBFFB); //Static float point indicator
                                 byte[] floatBytes = BitConverter.GetBytes(fparam);
                                 if (BitConverter.IsLittleEndian) { Array.Reverse(floatBytes); }
 
-                                sparam = (short)((floatBytes[0] << 8) & floatBytes[1]);
+                                sparam = (short)((floatBytes[0] << 8) | floatBytes[1]);
                                 AdditionalBytecode.Add((ushort)sparam);
 
-                                sparam = (short)((floatBytes[2] << 8) & floatBytes[3]);
+                                sparam = (short)((floatBytes[2] << 8) | floatBytes[3]);
                                 AdditionalBytecode.Add((ushort)sparam);
                             } break;
                         case Param.Integer:

@@ -1,5 +1,4 @@
-package Strings 
-{
+package Strings {
 	/**
 	 * ...
 	 * @author Paul

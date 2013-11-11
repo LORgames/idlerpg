@@ -15,13 +15,14 @@ package UI {
 		private var TextureAtlas:BitmapData;
 		public var ImageCutouts:Vector.<BitmapData>;
 		public var Rectangles:Vector.<Rectangle>;
+		public var TotalFrames:int = 0;
 		
 		public function UILibrary(b:ByteArray, id:int) {
-			var totalRects:int = b.readShort();
-			Rectangles = new Vector.<Rectangle>(totalRects, true);
-			ImageCutouts = new Vector.<BitmapData>(totalRects, true);
+			TotalFrames = b.readShort();
+			Rectangles = new Vector.<Rectangle>(TotalFrames, true);
+			ImageCutouts = new Vector.<BitmapData>(TotalFrames, true);
 			
-			for (var i:int = 0; i < totalRects; i++) {
+			for (var i:int = 0; i < TotalFrames; i++) {
 				Rectangles[i] = new Rectangle(b.readShort(), b.readShort(), b.readShort(), b.readShort());
 			}
 			

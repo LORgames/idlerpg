@@ -73,7 +73,7 @@ namespace ToolCache.UI {
                             if (!rawID) {
                                 builder = builder + LinkDatabase(mc[i].Groups[1].Value.Substring(1), rawID).PadLeft(paddingLength, '0');
                             } else {
-                                builder = builder + "{" + LinkDatabase(mc[i].Groups[1].Value.Substring(1), rawID) + ":" + paddingLength + "}";
+                                builder = builder + "{" + LinkDatabase(mc[i].Groups[1].Value.Substring(1), rawID) + (paddingLength!=0?(":" + paddingLength):"") + "}";
                             }
                         } catch (Exception e) {
                             if (rawID) {
@@ -86,7 +86,7 @@ namespace ToolCache.UI {
                         if (!rawID) {
                             builder = builder + Variables.GlobalVariables[mc[i].Groups[1].Value].InitialValue.ToString().PadLeft(paddingLength, '0');
                         } else {
-                            builder = builder + "{" + Variables.GlobalVariables[mc[i].Groups[1].Value].Index + ":" + paddingLength + "}";
+                            builder = builder + "{" + Variables.GlobalVariables[mc[i].Groups[1].Value].Index + (paddingLength != 0 ? (":" + paddingLength) : "") + "}";
                         }
                     } else {
                         builder = builder + "<UNKNOWN VAR>";
