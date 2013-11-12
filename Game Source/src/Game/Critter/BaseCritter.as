@@ -278,13 +278,13 @@ package Game.Critter {
 		
 		private function ProcessAI(dt:Number = 0):void {
 			var procTarget:Boolean = false;
+			var _OldTarget:IScriptTarget = CurrentTarget;
 			
 			if (WorldData.ME != this && dt > 0) {
 				//AI AGENTS
-				if ((MyAIType | AITypes.Aggressive) > 0 && (CurrentTarget == null && ((MyAIType | AITypes.ClosestTarget) > 0 || (MyAIType | AITypes.TargetLowestHealth) > 0))) {
+				if ((MyAIType | AITypes.Aggressive) > 0 && (CurrentTarget == null || (MyAIType | AITypes.ClosestTarget) > 0 || (MyAIType | AITypes.TargetLowestHealth) > 0)) {
 					//Scan for a new target
 					var r:Rect = new Rect(false, null, X - AlertRangeSqrt, Y - AlertRangeSqrt * Global.PerspectiveSkew, AlertRangeSqrt * 2, AlertRangeSqrt * 2 * Global.PerspectiveSkew);
-					
 					
 					if ((MyAIType & AITypes.BlindBehind) > 0) {
 						if (direction < 2) { //Left or right
@@ -344,6 +344,8 @@ package Game.Critter {
 						}
 					}
 				}
+				
+				if(CurrentTarget != _OldTarget) MyScript.Run(Script.AIEvent, null, Script.AIEvent_TargetChanged);
 				
 				if (CurrentTarget != null) {
 					if (CurrentTarget is BaseCritter) {

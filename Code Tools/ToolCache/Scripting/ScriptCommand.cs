@@ -514,6 +514,18 @@ namespace ToolCache.Scripting {
                             } else {
                                 info.Errors.Add("Cannot find a function called '" + paramBits[i] + "' perhaps the capitalization is wrong. It matters with functions!" + ErrorEnding());
                             } break;
+                        case Param.Buff:
+                            if (BuffManager.HasBuff(paramBits[i])) {
+                                if (ExportCrushers.RemappedBuffIDs != null) {
+                                    if (ExportCrushers.RemappedBuffIDs.ContainsKey(paramBits[i])) {
+                                        AdditionalBytecode.Add((ushort)ExportCrushers.RemappedBuffIDs[paramBits[i]]);
+                                    } else {
+                                        info.Errors.Add("Buff '" + paramBits[i] + "' was not exported correctly?" + ErrorEnding());
+                                    }
+                                }
+                            } else {
+                                info.Errors.Add("There isn't a buff called '" + paramBits[i] + "'." + ErrorEnding());
+                            } break;
                         default:
                             info.Errors.Add("Unknown Param type: " + thisParamType + ErrorEnding()); break;
                     }
@@ -866,6 +878,9 @@ namespace ToolCache.Scripting {
                         break;
                     case "myarea":
                         this.AdditionalBytecode.Add((ushort)0x9003);
+                        break;
+                    case "map":
+                        this.AdditionalBytecode.Add((ushort)0x9004);
                         break;
                     default:
                         Info.Errors.Add("Unknown Array Type: " + arrayValue+ ErrorEnding());

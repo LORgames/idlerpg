@@ -36,7 +36,8 @@ namespace ToolCache.Scripting.Types {
         TargetUntargetable = 0x02,
         AttackedByNonTarget = 0x03,
         OwnerChanged = 0x04,
-        FactionChanged = 0x05
+        FactionChanged = 0x05,
+        TargetChanged = 0x06
     }
 
     public class EventsHelper {

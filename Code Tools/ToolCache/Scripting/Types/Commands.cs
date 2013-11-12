@@ -68,6 +68,8 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0x1018, new Param[] { Param.String, Param.Integer, Param.Integer, Param.Number }));
             All.Add("tweento",
                 new ValidCommand(0x1019, new Param[] { Param.String, Param.Integer, Param.Number }));
+            All.Add("applybuff",
+                new ValidCommand(0x101A, new Param[] { Param.Buff }));
 
             //Quest and Inventory Commands
             All.Add("saydialogue",
@@ -165,6 +167,7 @@ namespace ToolCache.Scripting.Types {
             //0x7009 is MATH COMPARE!
             IfFunctions.Add("spend",    new ValidCommand(0x700A, new Param[] { Param.Integer, Param.Integer }));
             IfFunctions.Add("hastarget",new ValidCommand(0x700B, new Param[] { Param.Void }));
+            IfFunctions.Add("hasbuff",  new ValidCommand(0x700C, new Param[] { Param.Buff }));
             IfFunctions.Add("aieventis",new ValidCommand(0x7FFF, new Param[] { Param.AIEventType }));
             IfFunctions.Add("triggeris",new ValidCommand(0x7FFF, new Param[] { Param.Integer }));
 

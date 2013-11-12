@@ -68,7 +68,9 @@ namespace CityTools {
             Variables.StringTable.ItemRemoved -= removedHandler2;
             Variables.FunctionTable.ItemAdded -= addedHandler3;
             Variables.FunctionTable.ItemRemoved -= removedHandler3;
+
             Variables.SaveDatabase();
+            UIManager.WriteDatabase();
         }
 
         void Variables_ItemAdded(object sender, EventArgs e) {

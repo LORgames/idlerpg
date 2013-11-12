@@ -65,6 +65,7 @@ package Game.Scripting {
         public static const AIEvent_AttackedByNonTarget:int = 0x03;
         public static const AIEvent_OwnerChanged:int = 0x04;
         public static const AIEvent_FactionChanged:int = 0x05;
+        public static const AIEvent_TargetChanged:int = 0x06;
 		
 		
 		//SCRIPT ARRAYS
@@ -72,6 +73,7 @@ package Game.Scripting {
 		public static const FRONTOFFSET:int = 0x9002;
 		public static const AOE:int = 0x9001;
 		public static const MYAREA:int = 0x9003;
+		public static const MAP:int = 0x9004;
 		
 		//Script information
 		internal var EventScripts:Vector.<ByteArray>;
@@ -360,6 +362,14 @@ package Game.Scripting {
 						Drawer.AddDebugRect(rect);
 						
 						break;
+					case MAP:
+						if(eType != Script.CRITTER) {
+							WorldData.CurrentMap.GetObjectsInArea(null, Objects, eType, info.CurrentTarget);
+						} else {
+							for (var i:int = 0; i < WorldData.CurrentMap.Critters.length; i++) {
+								Objects.push(WorldData.CurrentMap.Critters[i]);
+							}
+						} break;
 					case MYAREA:
 						//something :)
 						break;
@@ -374,10 +384,14 @@ package Game.Scripting {
 			//Now we're in the loop bit :)
 			var startIndex:int = eventScript.position;
 			
+			trace("LOOP Type=" + info.Invoker + " Objects=" + Objects.length);
+			
 			var obji:int = Objects.length;
-			while(--obji > -1) {
+			while (--obji > -1) {
 				var target:IScriptTarget = Objects[obji];
 				info.AttachTarget(target);
+				
+				trace("MAP LOOP Pos=" + eventScript.position + " LoopAt=" + startIndex + " Invoker=" + info.Invoker + " CurrentTarget=" + info.CurrentTarget);
 				
 				var _continue:Boolean = (ProcessBlock(eventScript, info, eventID, param) == 0);
 				
@@ -429,9 +443,19 @@ package Game.Scripting {
 					p = GetNumberFromVariable(eventScript, info, inputParam);
 					return int(10000*Math.tan(p / 180 * Math.PI));
 				case 0x03: //Invoker
-					return int(info.Invoker[GetWonkyString(eventScript)]);
+					try {
+						return int(info.Invoker[GetWonkyString(eventScript)]);
+					} catch (e:Error) {
+						trace("Cannot get param from invoker!" + e.message);
+						return 0;
+					}
 				case 0x04: //Target
-					return int(info.CurrentTarget[GetWonkyString(eventScript)]);
+					try {
+						return int(info.CurrentTarget[GetWonkyString(eventScript)]);
+					} catch (e:Error) {
+						trace("Cannot get param from target!" + e.message);
+						return 0;
+					}
 				case 0x05: //Power
 					p = GetNumberFromVariable(eventScript, info, inputParam);
 					q = GetNumberFromVariable(eventScript, info, inputParam);
@@ -601,6 +625,8 @@ package Game.Scripting {
 					case 0x100C: //% DOT
 						if(info.CurrentTarget is IMapObject) {
 							(info.CurrentTarget as IMapObject).ScriptAttack((command==0x1005||command==0x100C), (command==0x1006||command==0x100C), GetNumberFromVariable(EventScript, info, inputParam), info.Invoker); break;
+						} else {
+							GetNumberFromVariable(EventScript, info, inputParam);
 						} break;
 					case 0x1007: //Destroy
 						if (info.CurrentTarget is ICleanUp) { Clock.CleanUpList.push(info.CurrentTarget); } break;
@@ -775,6 +801,20 @@ package Game.Scripting {
 						if (info.CurrentTarget[objName] is int) {
 							info.CurrentTarget[objName] = p0.X;
 						} break;
+					case 0x1018: //Tween
+						var objName:String = GetWonkyString(EventScript);				//Param Name
+						p0.X = GetNumberFromVariable(EventScript, info, inputParam); 	//Initial Value
+						p0.Y = GetNumberFromVariable(EventScript, info, inputParam); 	//Final Value
+						var time:Number = GetNumberFromVariable(EventScript, info, inputParam);
+						break;
+					case 0x1019: //TweenTo
+						var objName:String = GetWonkyString(EventScript);				//Param Name
+						p0.X = GetNumberFromVariable(EventScript, info, inputParam); 	//Final Value
+						var time:Number = GetNumberFromVariable(EventScript, info, inputParam);
+						break;
+					case 0x101A: //Apply Buff
+						p0.X = GetNumberFromVariable(EventScript, info, inputParam);	//Buff ID
+						break;
 					case 0x4001: //Equip item on the target
 						if (info.CurrentTarget is CritterHuman) {
 							(info.CurrentTarget as CritterHuman).Equipment.EquipSlot(EventScript.readShort(), EventScript.readShort());

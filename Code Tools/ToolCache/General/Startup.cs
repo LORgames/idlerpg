@@ -27,7 +27,6 @@ namespace ToolCache.General {
             EventsHelper.Initialize();
 
             //Tier 0 Loading:
-            BuffManager.Initialize();
             PortraitManager.Initialize();
             Variables.Initialize();
             SoundDatabase.Initialize();
@@ -38,6 +37,7 @@ namespace ToolCache.General {
             GlobalSettings.Initialize();
 
             //Tier 1 Loading:
+            BuffManager.Initialize(); // Needs to load AFTER UI
             MapObjectCache.Initialize();
             TileCache.Initialize();
             EquipmentManager.Initialize();

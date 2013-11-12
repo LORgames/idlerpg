@@ -181,6 +181,8 @@ package Game.Map {
 		}
 		
 		public function GetObjectsInArea(rect:Rect, objects:Vector.<IScriptTarget>, type:int, scanner:IScriptTarget = null):void {
+			if (rect == null) rect = new Rect(false, null, 0, 0, SizeX, SizeY);
+			
 			var primaryfaction:int = scanner.GetFaction();
 			
 			var _tiles:Vector.<TileInstance> = TileHelper.GetTiles(rect, this);

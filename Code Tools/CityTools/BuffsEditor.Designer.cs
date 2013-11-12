@@ -31,6 +31,7 @@
             this.btnDuplicate = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.ckbShowIcon = new System.Windows.Forms.CheckBox();
             this.ckbIsDebuff = new System.Windows.Forms.CheckBox();
             this.btnOpenLibrary = new System.Windows.Forms.Button();
             this.numIconID = new System.Windows.Forms.NumericUpDown();
@@ -42,7 +43,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.scriptBox1 = new CityTools.Components.ScriptBox();
-            this.ckbShowIcon = new System.Windows.Forms.CheckBox();
             this.toolsMainTools.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -157,6 +157,19 @@
             this.splitContainer2.SplitterDistance = 103;
             this.splitContainer2.TabIndex = 0;
             // 
+            // ckbShowIcon
+            // 
+            this.ckbShowIcon.AutoSize = true;
+            this.ckbShowIcon.Checked = true;
+            this.ckbShowIcon.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ckbShowIcon.Location = new System.Drawing.Point(385, 35);
+            this.ckbShowIcon.Name = "ckbShowIcon";
+            this.ckbShowIcon.Size = new System.Drawing.Size(138, 17);
+            this.ckbShowIcon.TabIndex = 9;
+            this.ckbShowIcon.Text = "Show Icon Over Critters";
+            this.ckbShowIcon.UseVisualStyleBackColor = true;
+            this.ckbShowIcon.CheckedChanged += new System.EventHandler(this.ValueChanged);
+            // 
             // ckbIsDebuff
             // 
             this.ckbIsDebuff.AutoSize = true;
@@ -244,22 +257,9 @@
             this.scriptBox1.Location = new System.Drawing.Point(0, 0);
             this.scriptBox1.Name = "scriptBox1";
             this.scriptBox1.Script = "";
-            this.scriptBox1.ScriptType = ToolCache.Scripting.Types.ScriptTypes.Unknown;
+            this.scriptBox1.ScriptType = ToolCache.Scripting.Types.ScriptTypes.Buff;
             this.scriptBox1.Size = new System.Drawing.Size(577, 379);
             this.scriptBox1.TabIndex = 0;
-            // 
-            // ckbShowIcon
-            // 
-            this.ckbShowIcon.AutoSize = true;
-            this.ckbShowIcon.Checked = true;
-            this.ckbShowIcon.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ckbShowIcon.Location = new System.Drawing.Point(385, 35);
-            this.ckbShowIcon.Name = "ckbShowIcon";
-            this.ckbShowIcon.Size = new System.Drawing.Size(138, 17);
-            this.ckbShowIcon.TabIndex = 9;
-            this.ckbShowIcon.Text = "Show Icon Over Critters";
-            this.ckbShowIcon.UseVisualStyleBackColor = true;
-            this.ckbShowIcon.CheckedChanged += new System.EventHandler(this.ValueChanged);
             // 
             // BuffsEditor
             // 

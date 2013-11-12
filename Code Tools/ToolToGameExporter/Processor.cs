@@ -60,7 +60,9 @@ namespace ToolToGameExporter {
                 MapCrusher.Precrush();
                 UpdateEPF(epf, "Calculating Standard Deviations...", 7);
                 GlobalVariableCrusher.Go();
-                UpdateEPF(epf, "Counting Coins...", 8);
+                UpdateEPF(epf, "Purchasing Salves and Lotions...", 8);
+                BuffCrusher.Precrush();
+                UpdateEPF(epf, "Counting Coins...", 9);
                 DatabaseCrusher.Precrush();
 
                 //Tier 0  Crushing. No Dependancies.
@@ -80,6 +82,8 @@ namespace ToolToGameExporter {
                 EffectCrusher.Go(); //Requires Sounds
                 UpdateEPF(epf, "Stocktaking Inventory...", 60);
                 ItemCrusher.Go();
+                UpdateEPF(epf, "Experimenting with Steroids...", 65);
+                BuffCrusher.Go();
 
                 //Tier 2 Crushing. Tier 1 Dependancies
                 UpdateEPF(epf, "Breeding Critters...", 70);
@@ -101,7 +105,7 @@ namespace ToolToGameExporter {
                 if (Directory.Exists(p)) {
                     Directory.Delete(p, true);
                 }
-
+                
                 Directory.Move(Global.EXPORT_DIRECTORY, p);
 
                 UpdateEPF(epf, "Complete", 100);

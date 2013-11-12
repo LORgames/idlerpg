@@ -19,7 +19,10 @@ namespace ToolCache.UI {
 
         public static void Initialize() {
             InstallFonts();
+
             Panels.Clear();
+            Libraries.Clear();
+
             ReadDatabase();
         }
 

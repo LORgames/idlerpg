@@ -43,6 +43,16 @@ namespace ToolCache.Critters {
 
             f.Encode(Settings.Database + "Buffs.bin");
         }
+
+        internal static bool HasBuff(string p) {
+            string lookup = p.ToLower();
+
+            for (int i = 0; i < Buffs.Count; i++) {
+                if (Buffs[i].Name.ToLower() == lookup) return true;
+            }
+
+            return false;
+        }
     }
 
     public class Buff {

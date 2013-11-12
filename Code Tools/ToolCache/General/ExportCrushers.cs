@@ -20,5 +20,6 @@ namespace ToolCache.General {
         public static Dictionary<string, short> RemappedMapIDs;
         public static Dictionary<string, short> RemappedFunctionIDs;
         public static Dictionary<string, short> RemappedDatabaseNames;
+        public static Dictionary<string, short> RemappedBuffIDs;
     }
 }

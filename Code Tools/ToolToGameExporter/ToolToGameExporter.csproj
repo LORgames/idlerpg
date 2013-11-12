@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuffCrusher.cs" />
     <Compile Include="CritterCrusher.cs" />
     <Compile Include="DatabaseCrusher.cs" />
     <Compile Include="EffectCrusher.cs" />
