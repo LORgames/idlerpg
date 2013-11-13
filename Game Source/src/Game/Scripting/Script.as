@@ -467,6 +467,16 @@ package Game.Scripting {
 					} else {
 						return int(inputParam);
 					}
+				case 0x07: //Random Between 2 Numbers
+					p = GetNumberFromVariable(eventScript, info, inputParam);
+					q = GetNumberFromVariable(eventScript, info, inputParam);
+					if (p == q) {
+						return p;
+					} else if (p < q) {
+						return Math.random() * (q - p) + p;
+					} else {
+						return Math.random() * (p - q) + q;
+					}
 				default:
 					trace("Unknown Math Command: " + functionID);
 					return 0;

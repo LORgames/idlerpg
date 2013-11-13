@@ -153,6 +153,7 @@ namespace ToolCache.Scripting.Types {
             MathFunctions.Add("target", new ValidCommand(0x04, new Param[] { Param.String }));
             MathFunctions.Add("pow",    new ValidCommand(0x05, new Param[] { Param.Integer, Param.Integer }));
             MathFunctions.Add("param",  new ValidCommand(0x06, new Param[] { Param.Integer }));
+            MathFunctions.Add("random", new ValidCommand(0x07, new Param[] { Param.Integer, Param.Integer | Param.Optional }));
 
             /////////////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////// MATH FUNCTIONS

@@ -21,5 +21,24 @@ namespace ToolCache.General {
         public static Dictionary<string, short> RemappedFunctionIDs;
         public static Dictionary<string, short> RemappedDatabaseNames;
         public static Dictionary<string, short> RemappedBuffIDs;
+
+        public static void BlankAll() {
+            CurrentMap = null;
+
+            RemappedEquipmentIDs = null;
+            RemappedEffectIDs = null;
+            RemappedObjectIDs = null;
+            
+            MusicConversions = null;
+            AmbienceConversions = null;
+            RemappedSoundEffectIDs = null;
+            RemappedSoundEffectGroups = null;
+
+            RemappedCritterIDs = null;
+            RemappedMapIDs = null;
+            RemappedFunctionIDs = null;
+            RemappedDatabaseNames = null;
+            RemappedBuffIDs = null;
+        }
     }
 }

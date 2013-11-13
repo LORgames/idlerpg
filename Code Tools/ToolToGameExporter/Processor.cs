@@ -25,6 +25,8 @@ namespace ToolToGameExporter {
 
             epf.ShowDialog();
 
+            ToolCache.General.ExportCrushers.BlankAll();
+
             return d.result;
         }
 
