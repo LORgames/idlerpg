@@ -46,6 +46,7 @@ namespace CityTools.Components.DatabaseEditing {
             if (disposing && (components != null)) {
                 components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
@@ -85,12 +86,38 @@ namespace CityTools.Components.DatabaseEditing {
         private void lvLibrary_SubItemClicked(object sender, SubItemEventArgs e) {
             System.Diagnostics.Debug.WriteLine(e.Item + "|" + e.SubItem);
 
-            Control c = GetRelevantControl(CurrentDatabase.GetColumnType(e.SubItem), true);
+            if (e.SubItem < e.Item.SubItems.Count - 2) {
+                Control c = GetRelevantControl(CurrentDatabase.GetColumnType(e.SubItem), true);
 
-            if(c == null) {
-                MessageBox.Show("Sorry, that column type is not currently editable!");
-            } else {
-                lvLibrary.StartEditing(c, e.Item, e.SubItem);
+                if (c == null) {
+                    MessageBox.Show("Sorry, that column type is not currently editable!");
+                } else {
+                    lvLibrary.StartEditing(c, e.Item, e.SubItem);
+                }
+            } else { //Move up or down
+                int r = lvLibrary.Items.IndexOf(e.Item);
+
+                if (e.SubItem == e.Item.SubItems.Count - 1) { //Move Down
+                    if (r < lvLibrary.Items.Count - 1) {
+                        System.Diagnostics.Debug.WriteLine("Move Down " + r);
+                        lvLibrary.Items.RemoveAt(r);
+                        lvLibrary.Items.Insert(r + 1, e.Item);
+
+                        DBRow row = CurrentDatabase.Rows[r];
+                        CurrentDatabase.Rows.RemoveAt(r);
+                        CurrentDatabase.Rows.Insert(r + 1, row);
+                    }
+                } else { //Move Up
+                    if (r > 0) {
+                        System.Diagnostics.Debug.WriteLine("Move Up " + r);
+                        lvLibrary.Items.RemoveAt(r);
+                        lvLibrary.Items.Insert(r - 1, e.Item);
+
+                        DBRow row = CurrentDatabase.Rows[r];
+                        CurrentDatabase.Rows.RemoveAt(r);
+                        CurrentDatabase.Rows.Insert(r - 1, row); 
+                    }
+                }
             }
         }
 
@@ -142,6 +169,9 @@ namespace CityTools.Components.DatabaseEditing {
                     lvLibrary.Columns.Add(Columns[i]);
                 }
 
+                lvLibrary.Columns.Add("▲", 25, HorizontalAlignment.Center);
+                lvLibrary.Columns.Add("▼", 25, HorizontalAlignment.Center);
+
                 InsertAllItems();
             }
         }
@@ -149,7 +179,7 @@ namespace CityTools.Components.DatabaseEditing {
         private void InsertAllItems() {
             if (CurrentDatabase != null) {
                 for (int i = 0; i < CurrentDatabase.Rows.Count; i++) {
-                    lvLibrary.Items.Add(CurrentDatabase.Rows[i].GetListViewItem());
+                    lvLibrary.Items.Add(GetProcessedRow(CurrentDatabase.Rows[i]));
                 }
             }
         }
@@ -157,8 +187,17 @@ namespace CityTools.Components.DatabaseEditing {
         private void btnAddRow_Click(object sender, EventArgs e) {
             if (CurrentDatabase != null) {
                 DBRow dbr = CurrentDatabase.InsertEmptyRow();
-                lvLibrary.Items.Add(dbr.GetListViewItem());
+                lvLibrary.Items.Add(GetProcessedRow(dbr));
             }
+        }
+
+        private ListViewItem GetProcessedRow(DBRow r) {
+            ListViewItem lvi = r.GetListViewItem();
+
+            lvi.SubItems.Add("▲");
+            lvi.SubItems.Add("▼");
+
+            return lvi;
         }
     }
 }

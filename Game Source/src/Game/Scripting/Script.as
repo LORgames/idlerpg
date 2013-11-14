@@ -613,7 +613,7 @@ package Game.Scripting {
 				
 				switch(command) {
 					case 0x1001: //Play sound effect
-						EffectsPlayer.Play(EventScript.readShort()); break;
+						EffectsPlayer.Play(EventScript.readUnsignedShort()); break;
 					case 0x1002: //Spawn Critter
 						p0.D = EventScript.readShort(); p0.X = GetNumberFromVariable(EventScript, info, inputParam); p0.Y = GetNumberFromVariable(EventScript, info, inputParam);
 						CalculateOffset(Position, p0, p1);
@@ -658,7 +658,7 @@ package Game.Scripting {
 					case 0x100A: //EffectSpawnDirectionalRelative
 						effectInfo = EffectManager.I.Effects[EventScript.readShort()];
 						
-						p0.X = Position.X + GetNumberFromVariable(EventScript, info, inputParam); p0.X = Position.Y + GetNumberFromVariable(EventScript, info, inputParam);
+						p0.X = Position.X + GetNumberFromVariable(EventScript, info, inputParam); p0.Y = Position.Y + GetNumberFromVariable(EventScript, info, inputParam);
 						var direction:int = EventScript.readShort(); var tD:int = 0;
 						
 						switch (Position.D) {
@@ -947,6 +947,7 @@ package Game.Scripting {
 						return 2;
 					case 0x8006: //Call a global function
 						p0.X = EventScript.readShort(); //Function ID
+						trace("Calling Function=" + p0.X);
 						GlobalVariables.Functions.Run(p0.X, info, inputParam);
 						break;
 					case 0xC002: //Hide Panel
@@ -982,6 +983,8 @@ package Game.Scripting {
 						if (uiL is UILayerLibrary) {
 							(uiL as UILayerLibrary).ID = GetNumberFromVariable(EventScript, info, inputParam);
 							uiE.Draw(Main.I.stage.stageWidth, Main.I.stage.stageHeight, Main.I.hud);
+						} else {
+							GetNumberFromVariable(EventScript, info, inputParam);//Just pop it off
 						} break;
 					case 0xC007: //UI Layer Play
 						uiE = Main.I.hud.Panels[EventScript.readShort()].Elements[EventScript.readShort()];
@@ -991,13 +994,12 @@ package Game.Scripting {
 							var time:Number = GetNumberFromVariable(EventScript, info, inputParam);
 							bParam = (EventScript.readShort() == 1);
 							(uiL as UILayerLibrary).Play(time, bParam);
-							//(uiL as UILayerLibrary).ID = GetNumberFromVariable(EventScript, info, inputParam);
-							//uiE.Draw(Main.I.stage.stageWidth, Main.I.stage.stageHeight, Main.I.hud);
+						} else {
+							GetNumberFromVariable(EventScript, info, inputParam); //Just pop it off
+							EventScript.readShort(); //Pop them off as well
 						} break;
-						
-						break;
 					case 0xCFFF: //Trace
-						Main.I.Log("[SCRIPT: " + info.Invoker + "] " + StringEx.BuildFromCore(GetWonkyString(EventScript)).GetBuilt()); break;
+						Main.I.Log("[" + info.Invoker + "] " + StringEx.BuildFromCore(GetWonkyString(EventScript)).GetBuilt()); break;
 					case 0xF001: //Up a netsync level
 						NetSync--; break;
 					default:

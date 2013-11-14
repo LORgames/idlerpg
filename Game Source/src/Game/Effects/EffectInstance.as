@@ -202,7 +202,6 @@ package Game.Effects {
 		}
 		
 		/* INTERFACE Game.Scripting.IScriptTarget */
-		
 		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IScriptTarget):void { if (MyScript == null) return; MyScript.Run(Script.Attacked); }
 		public function AlertMinionDeath(baseCritter:BaseCritter):void { MyScript.Run(Script.MinionDied); }
 		

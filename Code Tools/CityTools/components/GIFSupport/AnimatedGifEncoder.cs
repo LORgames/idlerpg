@@ -156,7 +156,7 @@ namespace CityTools.Components.GIFSupport {
                 }
                 WritePixels(); // encode and write pixel data
                 firstFrame = false;
-            } catch (IOException e) {
+            } catch (IOException) {
                 ok = false;
             }
 
@@ -178,7 +178,7 @@ namespace CityTools.Components.GIFSupport {
                 if (closeStream) {
                     fs.Close();
                 }
-            } catch (IOException e) {
+            } catch (IOException) {
                 ok = false;
             }
 
@@ -254,7 +254,7 @@ namespace CityTools.Components.GIFSupport {
             fs = os;
             try {
                 WriteString("GIF89a"); // header
-            } catch (IOException e) {
+            } catch (IOException) {
                 ok = false;
             }
             return started = ok;
@@ -273,7 +273,7 @@ namespace CityTools.Components.GIFSupport {
                 fs = new FileStream(file, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None);
                 ok = Start(fs);
                 closeStream = true;
-            } catch (IOException e) {
+            } catch (IOException) {
                 ok = false;
             }
             return started = ok;

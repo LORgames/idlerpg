@@ -10,16 +10,8 @@ using ToolCache.Scripting.Extensions;
 namespace ToolToGameExporter {
     internal class GlobalVariableCrusher {
         public static Dictionary<string, short> RemappedFunctionNames = new Dictionary<string, short>();
-
-        public static void Go() {
-            Precrush();
-
-            ExportVariables();
-            ExportStrings();
-            ExportFunctions();
-        }
-
-        private static void Precrush() {
+        
+        internal static void Precrush() {
             ExportCrushers.RemappedFunctionIDs = RemappedFunctionNames;
             RemappedFunctionNames.Clear();
 
@@ -27,6 +19,13 @@ namespace ToolToGameExporter {
             for (int i = 0; i < ls.Count; i++) {
                 RemappedFunctionNames.Add(ls[i].Name, (short)i);
             }
+
+            ExportVariables();
+            ExportStrings();
+        }
+
+        public static void Go() {
+            ExportFunctions();
         }
 
         private static void ExportVariables() {

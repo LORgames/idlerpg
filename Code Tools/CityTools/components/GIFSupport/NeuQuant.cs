@@ -360,7 +360,7 @@ namespace CityTools.Components.GIFSupport {
            ----------------------------------------------------------------------------------- */
         public void Unbiasnet() {
 
-            int i, j;
+            int i;
 
             for (i = 0; i < netsize; i++) {
                 network[i][0] >>= netbiasshift;
@@ -395,7 +395,7 @@ namespace CityTools.Components.GIFSupport {
                         p[0] -= (a * (p[0] - b)) / alpharadbias;
                         p[1] -= (a * (p[1] - g)) / alpharadbias;
                         p[2] -= (a * (p[2] - r)) / alpharadbias;
-                    } catch (Exception e) {
+                    } catch {
                     } // prevents 1.3 miscompilation
                 }
                 if (k > lo) {
@@ -404,7 +404,7 @@ namespace CityTools.Components.GIFSupport {
                         p[0] -= (a * (p[0] - b)) / alpharadbias;
                         p[1] -= (a * (p[1] - g)) / alpharadbias;
                         p[2] -= (a * (p[2] - r)) / alpharadbias;
-                    } catch (Exception e) {
+                    } catch (Exception) {
                     }
                 }
             }

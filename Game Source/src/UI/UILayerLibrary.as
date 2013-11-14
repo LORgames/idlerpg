@@ -74,11 +74,16 @@ package UI {
 			
 			_playTick = (time / Library.TotalFrames);
 			_currTick = 0;
-			_playUp = !playReverse;
 			
-			if (playReverse) ID = Library.TotalFrames - 1;
-			else ID = 0;
+			if (playReverse) {
+				ID = Library.TotalFrames - 1;
+				_playUp = false;
+			} else {
+				ID = 0;
+				_playUp = true;
+			}
 			
+			RequiresRedraw = true;
 			Update(0);
 		}
 		
@@ -91,27 +96,28 @@ package UI {
 		
 		public function Update(dt:Number):void {
 			_currTick += dt;
-			var _redraw:Boolean = false;
 			
 			while (_currTick > _playTick) {
-				if (_playUp) ID++;
-				else ID--;
+				if (_playUp) {
+					ID++;
+				} else {
+					ID--;
+				}
 				
 				_currTick -= _playTick;
 				
-				_redraw = true;
+				RequiresRedraw = true;
 			}
 			
 			if (ID >= Library.TotalFrames) {
 				ID = Library.TotalFrames - 1;
 				StopPlaying();
-			} else if (ID <= 0) {
+			} else if (ID < 0) {
 				ID = 0;
 				StopPlaying();
 			}
 			
-			if (_redraw) {
-				RequiresRedraw = true;
+			if (RequiresRedraw) {
 				_currPar.Draw(Main.I.stage.stageWidth, Main.I.stage.stageHeight, Main.I.hud);
 			}
 		}

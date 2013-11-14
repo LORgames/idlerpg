@@ -289,12 +289,10 @@ package Game.Critter {
 					if ((MyAIType & AITypes.BlindBehind) > 0) {
 						if (direction < 2) { //Left or right
 							r.W /= 2;
-							//if (direction == 0) r.X -= r.W; //Left
-							if (direction == 1) r.X += r.W; //Right
-						} else {
+							if (direction == 1) r.X += r.W; //Shift the area Right
+						} else { // Up or Down
 							r.H /= 2;
-							//if (direction == 2) r.Y -= r.H; //Up
-							if (direction == 3) r.Y += r.H; //Down
+							if (direction == 3) r.Y += r.H; //Shift the area Down
 						}
 					}
 					
@@ -345,8 +343,6 @@ package Game.Critter {
 					}
 				}
 				
-				if(CurrentTarget != _OldTarget) MyScript.Run(Script.AIEvent, null, Script.AIEvent_TargetChanged);
-				
 				if (CurrentTarget != null) {
 					if (CurrentTarget is BaseCritter) {
 						if ((CurrentTarget as BaseCritter).CurrentHP <= 0 || (CurrentTarget as BaseCritter).MyRect == null) {
@@ -380,15 +376,17 @@ package Game.Critter {
 					if ((CurrentTarget is IMapObject) && (CurrentTarget as IMapObject).HasPerfectCollision(rAtk)) {
 						RequestBasicAttack();
 						procTarget = true;
-					} else if (dx * dx + dy * dy > AlertRange*1.25) {
+					} else if (dx * dx + dy * dy > AlertRange) {
 						procTarget = false;
 						CurrentTarget = null;
 						MyScript.Run(Script.AIEvent, null, Script.AIEvent_TargetOutOfRange);
-					} else if ((MyAIType & AITypes.Aggressive)) {
+					} else {
 						RequestMove( -dx, -dy);
 						procTarget = true;
 					}
 				}
+				
+				if(CurrentTarget != _OldTarget) MyScript.Run(Script.AIEvent, null, Script.AIEvent_TargetChanged);
 			}
 		}
 		

@@ -61,7 +61,7 @@ namespace ToolToGameExporter {
                 UpdateEPF(epf, "Navigating the world...", 6);
                 MapCrusher.Precrush();
                 UpdateEPF(epf, "Calculating Standard Deviations...", 7);
-                GlobalVariableCrusher.Go();
+                GlobalVariableCrusher.Precrush();
                 UpdateEPF(epf, "Purchasing Salves and Lotions...", 8);
                 BuffCrusher.Precrush();
                 UpdateEPF(epf, "Counting Coins...", 9);
@@ -70,10 +70,12 @@ namespace ToolToGameExporter {
                 //Tier 0  Crushing. No Dependancies.
                 UpdateEPF(epf, "Amplyfying Sounds...", 10);
                 SoundCrusher.Go();
-                UpdateEPF(epf, "Laying Tiles...", 20);
+                UpdateEPF(epf, "Laying Tiles...", 15);
                 TileCrusher.Go();
-                UpdateEPF(epf, "Entering Portals...", 25);
+                UpdateEPF(epf, "Entering Portals...", 20);
                 PortalCrusher.Go();
+                UpdateEPF(epf, "Organizing Functions... Sending Invites...", 25);
+                GlobalVariableCrusher.Go();
 
                 //Tier 1 Crushing. Tier 0 Dependancies
                 UpdateEPF(epf, "Polishing Equipment...", 30);
