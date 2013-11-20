@@ -49,7 +49,12 @@ package Game.Critter {
 				Animation.ChangeDirection(direction);
 			}
 			
-			Animation.x = int(this.X) - Animation.width/2;
+			if (direction < 2) { //Left or right
+				Animation.x = int(this.X) - Animation.width / 2 + (direction==0?-Info.CollisionOffsetX:Info.CollisionOffsetX);
+			} else {
+				Animation.x = int(this.X) - Animation.width / 2;
+			}
+			
 			Animation.y = int(this.Y) - Animation.height + MyRect.H / 2 + Info.CollisionOffsetY;
 			
 			Renderman.DirtyObjects.push(Animation);

@@ -6,8 +6,8 @@
     <movie input="" />
     <movie path="bin\iRPG.swf" />
     <movie fps="20" />
-    <movie width="1024" />
-    <movie height="768" />
+    <movie width="800" />
+    <movie height="480" />
     <movie version="3" />
     <movie minorVersion="8" />
     <movie platform="AIR Mobile" />
