@@ -37,6 +37,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.chkDisableCharacter = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.cbVariableLY = new System.Windows.Forms.ComboBox();
+            this.cbVariableLX = new System.Windows.Forms.ComboBox();
+            this.cbVariableWY = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
@@ -47,11 +50,10 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
             this.cbVariableWX = new System.Windows.Forms.ComboBox();
-            this.cbVariableWY = new System.Windows.Forms.ComboBox();
-            this.cbVariableLX = new System.Windows.Forms.ComboBox();
-            this.cbVariableLY = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.cbDefaultMap = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudTileSize)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -166,7 +168,6 @@
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.chkEnableTiles, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 10);
             this.tableLayoutPanel1.Controls.Add(this.label5, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.numTargetFPS, 1, 5);
             this.tableLayoutPanel1.Controls.Add(this.label6, 0, 4);
@@ -176,9 +177,12 @@
             this.tableLayoutPanel1.Controls.Add(this.label9, 0, 8);
             this.tableLayoutPanel1.Controls.Add(this.label10, 0, 9);
             this.tableLayoutPanel1.Controls.Add(this.cbVariableWX, 1, 6);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 11);
+            this.tableLayoutPanel1.Controls.Add(this.label11, 0, 10);
+            this.tableLayoutPanel1.Controls.Add(this.cbDefaultMap, 1, 10);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 11;
+            this.tableLayoutPanel1.RowCount = 12;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -190,8 +194,42 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(305, 287);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(305, 314);
             this.tableLayoutPanel1.TabIndex = 8;
+            // 
+            // cbVariableLY
+            // 
+            this.cbVariableLY.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbVariableLY.FormattingEnabled = true;
+            this.cbVariableLY.Location = new System.Drawing.Point(126, 228);
+            this.cbVariableLY.Name = "cbVariableLY";
+            this.cbVariableLY.Size = new System.Drawing.Size(176, 21);
+            this.cbVariableLY.Sorted = true;
+            this.cbVariableLY.TabIndex = 20;
+            this.cbVariableLY.SelectedIndexChanged += new System.EventHandler(this.Edited);
+            // 
+            // cbVariableLX
+            // 
+            this.cbVariableLX.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbVariableLX.FormattingEnabled = true;
+            this.cbVariableLX.Location = new System.Drawing.Point(126, 201);
+            this.cbVariableLX.Name = "cbVariableLX";
+            this.cbVariableLX.Size = new System.Drawing.Size(176, 21);
+            this.cbVariableLX.Sorted = true;
+            this.cbVariableLX.TabIndex = 19;
+            this.cbVariableLX.SelectedIndexChanged += new System.EventHandler(this.Edited);
+            // 
+            // cbVariableWY
+            // 
+            this.cbVariableWY.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbVariableWY.FormattingEnabled = true;
+            this.cbVariableWY.Location = new System.Drawing.Point(126, 174);
+            this.cbVariableWY.Name = "cbVariableWY";
+            this.cbVariableWY.Size = new System.Drawing.Size(176, 21);
+            this.cbVariableWY.Sorted = true;
+            this.cbVariableWY.TabIndex = 18;
+            this.cbVariableWY.SelectedIndexChanged += new System.EventHandler(this.Edited);
             // 
             // tableLayoutPanel2
             // 
@@ -203,7 +241,7 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel2.Controls.Add(this.btnSave, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnCancel, 1, 0);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(140, 255);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(140, 282);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -307,16 +345,6 @@
             this.label9.TabIndex = 15;
             this.label9.Text = "Pressed Local X Var";
             // 
-            // label10
-            // 
-            this.label10.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(3, 232);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(103, 13);
-            this.label10.TabIndex = 16;
-            this.label10.Text = "Pressed Local Y Var";
-            // 
             // cbVariableWX
             // 
             this.cbVariableWX.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -328,38 +356,35 @@
             this.cbVariableWX.TabIndex = 17;
             this.cbVariableWX.SelectedIndexChanged += new System.EventHandler(this.Edited);
             // 
-            // cbVariableWY
+            // label10
             // 
-            this.cbVariableWY.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbVariableWY.FormattingEnabled = true;
-            this.cbVariableWY.Location = new System.Drawing.Point(126, 174);
-            this.cbVariableWY.Name = "cbVariableWY";
-            this.cbVariableWY.Size = new System.Drawing.Size(176, 21);
-            this.cbVariableWY.Sorted = true;
-            this.cbVariableWY.TabIndex = 18;
-            this.cbVariableWY.SelectedIndexChanged += new System.EventHandler(this.Edited);
+            this.label10.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(3, 232);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(103, 13);
+            this.label10.TabIndex = 16;
+            this.label10.Text = "Pressed Local Y Var";
             // 
-            // cbVariableLX
+            // label11
             // 
-            this.cbVariableLX.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbVariableLX.FormattingEnabled = true;
-            this.cbVariableLX.Location = new System.Drawing.Point(126, 201);
-            this.cbVariableLX.Name = "cbVariableLX";
-            this.cbVariableLX.Size = new System.Drawing.Size(176, 21);
-            this.cbVariableLX.Sorted = true;
-            this.cbVariableLX.TabIndex = 19;
-            this.cbVariableLX.SelectedIndexChanged += new System.EventHandler(this.Edited);
+            this.label11.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(3, 259);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(65, 13);
+            this.label11.TabIndex = 21;
+            this.label11.Text = "Default Map";
             // 
-            // cbVariableLY
+            // cbDefaultMap
             // 
-            this.cbVariableLY.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbVariableLY.FormattingEnabled = true;
-            this.cbVariableLY.Location = new System.Drawing.Point(126, 228);
-            this.cbVariableLY.Name = "cbVariableLY";
-            this.cbVariableLY.Size = new System.Drawing.Size(176, 21);
-            this.cbVariableLY.Sorted = true;
-            this.cbVariableLY.TabIndex = 20;
-            this.cbVariableLY.SelectedIndexChanged += new System.EventHandler(this.Edited);
+            this.cbDefaultMap.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbDefaultMap.FormattingEnabled = true;
+            this.cbDefaultMap.Location = new System.Drawing.Point(126, 255);
+            this.cbDefaultMap.Name = "cbDefaultMap";
+            this.cbDefaultMap.Size = new System.Drawing.Size(176, 21);
+            this.cbDefaultMap.Sorted = true;
+            this.cbDefaultMap.TabIndex = 22;
             // 
             // GlobalSettingsEditor
             // 
@@ -369,7 +394,7 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(326, 312);
+            this.ClientSize = new System.Drawing.Size(326, 348);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "GlobalSettingsEditor";
             this.Text = "Global Settings";
@@ -409,7 +434,9 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ComboBox cbVariableWX;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ComboBox cbDefaultMap;
     }
 }

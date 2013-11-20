@@ -82,9 +82,6 @@ package {
 						var param:String = (arg.split("=")[0] as String).toLowerCase();
 						
 						switch(param) {
-							case "map":
-								loadMap = arg.substr(4);
-								break;
 							case "debug":
 								if (arg.substr(6) == "Yes") {
 									Global.DebugRender = true;
@@ -115,7 +112,7 @@ package {
 			//Set up some other things
 			Renderer = new Renderman();
 			Renderer.FadeToBlack(null, "Loading...");
-			new System(loadMap);
+			new System();
 			
 			stage.addEventListener(Event.RESIZE, Resized);
 			

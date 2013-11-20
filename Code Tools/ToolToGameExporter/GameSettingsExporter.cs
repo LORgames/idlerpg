@@ -29,6 +29,8 @@ namespace ToolToGameExporter {
             f.AddShort((short)(GlobalSettings.VariablePressedLocalX == "" ? 0 : Variables.GlobalVariables[GlobalSettings.VariablePressedLocalX].Index));
             f.AddShort((short)(GlobalSettings.VariablePressedLocalY == "" ? 0 : Variables.GlobalVariables[GlobalSettings.VariablePressedLocalY].Index));
 
+            f.AddString(GlobalSettings.DefaultMap);
+
             f.Encode(Global.EXPORT_DIRECTORY + "/Settings.bin");
         }
     }

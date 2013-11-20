@@ -22,6 +22,8 @@ namespace ToolCache.General {
         public static string VariablePressedLocalX = "";
         public static string VariablePressedLocalY = "";
 
+        public static string DefaultMap = "";
+
         internal static void Initialize() {
             if (File.Exists(DATABASE + FILENAME)) {
                 Load();
@@ -47,6 +49,7 @@ namespace ToolCache.General {
                         case "PressedWY": VariablePressedWorldY = variableProperty; break;
                         case "PressedLX": VariablePressedLocalX = variableProperty; break;
                         case "PressedLY": VariablePressedLocalY = variableProperty; break;
+                        case "DefaultMap": DefaultMap = variableProperty; break;
                         default:
                             MessageBox.Show("Unknown variable '" + variableName + "' in global settings");
                             break;
@@ -68,6 +71,8 @@ namespace ToolCache.General {
             lines.Add("PressedWY=" + VariablePressedWorldY.ToString());
             lines.Add("PressedLX=" + VariablePressedLocalX.ToString());
             lines.Add("PressedLY=" + VariablePressedLocalY.ToString());
+
+            lines.Add("DefaultMap=" + DefaultMap.ToString());
 
             File.WriteAllLines(DATABASE + FILENAME, lines);
         }

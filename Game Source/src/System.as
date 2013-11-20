@@ -27,11 +27,7 @@ package {
 	 * @author Paul
 	 */
 	public class System {
-		private var loadMapName:String;
-		
-		public function System(mapToLoad:String) {
-			loadMapName = mapToLoad;
-			
+		public function System() {
 			BinaryLoader.Initialize();
 			ImageLoader.Initialize();
 			
@@ -41,7 +37,7 @@ package {
 		}
 		
 		private function ParseSettings(b:ByteArray):void {
-			Main.I.Renderer.FadeToBlack(null, loadMapName);
+			Main.I.Renderer.FadeToBlack(null, Global.DefaultMap);
 			
 			//Load in the data from the Settings file
 			Global.GameName = BinaryLoader.GetString(b);
@@ -61,8 +57,10 @@ package {
 			Global.GV_LX = b.readShort();
 			Global.GV_LY = b.readShort();
 			
+			Global.DefaultMap = BinaryLoader.GetString(b);
+			
 			//Load up everything else as required
-			WorldData.Initialize(loadMapName);
+			WorldData.Initialize(Global.DefaultMap);
 			
 			//Need more logic to adding input system?
 			if (Multitouch.supportsTouchEvents && Multitouch.maxTouchPoints > 1) {

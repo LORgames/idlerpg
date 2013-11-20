@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using ToolCache.General;
 using ToolCache.Scripting;
 using ToolCache.Scripting.Extensions;
+using ToolCache.Map;
 
 namespace CityTools {
     public partial class GlobalSettingsEditor : Form {
@@ -42,6 +43,13 @@ namespace CityTools {
                 i++;
             }
 
+            foreach (MapPiece m in MapPieceCache.Pieces) {
+                cbDefaultMap.Items.Add(m.Name);
+                if (m.Name == GlobalSettings.DefaultMap) {
+                    cbDefaultMap.SelectedItem = m.Name;
+                }
+            }
+
             cbVariableWX.SelectedText = GlobalSettings.VariablePressedWorldX;
             cbVariableWY.SelectedText = GlobalSettings.VariablePressedWorldY;
             cbVariableLX.SelectedText = GlobalSettings.VariablePressedLocalX;
@@ -68,6 +76,8 @@ namespace CityTools {
                 GlobalSettings.VariablePressedWorldY = cbVariableWY.SelectedItem==null?"":cbVariableWY.SelectedItem.ToString();
                 GlobalSettings.VariablePressedLocalX = cbVariableLX.SelectedItem==null?"":cbVariableLX.SelectedItem.ToString();
                 GlobalSettings.VariablePressedLocalY = cbVariableLY.SelectedItem==null?"":cbVariableLY.SelectedItem.ToString();
+
+                GlobalSettings.DefaultMap = cbDefaultMap.SelectedItem.ToString();
 
                 GlobalSettings.Save();
             }

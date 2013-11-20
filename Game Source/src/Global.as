@@ -37,6 +37,8 @@ package {
 		public static var GV_LX:int = 0;
 		public static var GV_LY:int = 0;
 		
+		public static var DefaultMap:String = "";
+		
 		public static var HasLeftRight:Boolean = true;
 		public static var HasUpDown:Boolean = false;
 		
