@@ -9,6 +9,8 @@ using ToolCache.Storage;
 
 namespace ToolCache.NPC {
     public class PortraitManager {
+        private const string DATABASE_FILENAME = "Portraits";
+
         public static DictionaryEx<string, Portrait> Portraits = new DictionaryEx<string, Portrait>();
 
         public static decimal MarginLeft = 0;
@@ -25,9 +27,9 @@ namespace ToolCache.NPC {
         }
 
         private static void LoadFromBinaryIO() {
-            if(File.Exists(Settings.Database + "Portraits.bin")) {
-                BinaryIO f = new BinaryIO(File.ReadAllBytes(Settings.Database + "Portraits.bin"));
+            IStorage f = StorageHelper.LoadStorage(DATABASE_FILENAME, StorageTypes.UTF);
 
+            if (f != null) {
                 MarginLeft = f.GetShort();
                 MarginRight = f.GetByte();
                 MarginBottom = f.GetByte();
@@ -41,11 +43,13 @@ namespace ToolCache.NPC {
                     Portrait p = Portrait.LoadFromBinaryIO(f);
                     Portraits.Add(p.Name, p);
                 }
+
+                f.Dispose();
             }
         }
 
         public static void SaveToBinaryIO() {
-            BinaryIO f = new BinaryIO();
+            IStorage f = StorageHelper.WriteStorage(StorageTypes.UTF);
 
             f.AddShort((short)MarginLeft);
             f.AddByte((byte)MarginRight);
@@ -62,7 +66,9 @@ namespace ToolCache.NPC {
                 p.SaveToBinaryIO(f);
             }
 
-            f.Encode(Settings.Database + "Portraits.bin");
+            StorageHelper.Save(f, DATABASE_FILENAME);
+
+            f.Dispose();
         }
     }
 }

@@ -10,7 +10,7 @@ using ToolCache.Storage;
 
 namespace ToolCache.Map.Objects {
     public class MapObjectCache {
-        public const string RESOLVED_DATABASE_FILENAME = "Objects";
+        private const string DATABASE_FILENAME = "Objects";
 
         public static Dictionary<short, MapObject> ObjectTypes = new Dictionary<short, MapObject>();
         private static Dictionary<string, List<short>> GroupsToObjectUUIDS = new Dictionary<string, List<short>>();
@@ -46,7 +46,7 @@ namespace ToolCache.Map.Objects {
 
         private static void ReadDatabase() {
             // Load object types from file
-            IStorage f = StorageHelper.LoadStorage(RESOLVED_DATABASE_FILENAME, StorageTypes.UTF);
+            IStorage f = StorageHelper.LoadStorage(DATABASE_FILENAME, StorageTypes.UTF);
 
             if (f != null) {
                 int totalObjects = f.GetInt();
@@ -70,7 +70,9 @@ namespace ToolCache.Map.Objects {
                 kvp.Value.WriteToBinaryIO(f);
             }
 
-            StorageHelper.Save(f, RESOLVED_DATABASE_FILENAME);
+            StorageHelper.Save(f, DATABASE_FILENAME);
+
+            f.Dispose();
         }
 
         public static void AddObject(MapObject m) {

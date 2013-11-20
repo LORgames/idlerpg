@@ -8,7 +8,7 @@ using ToolCache.Storage;
 
 namespace ToolCache.Sound {
     public class SoundDatabase {
-        private const string FILENAME = Settings.Database + "Sounds.bin";
+        private const string DATABASE_FILENAME = "Sounds";
 
         public static List<SoundData> Music = new List<SoundData>();
         public static List<SoundData> Ambience = new List<SoundData>();
@@ -25,9 +25,9 @@ namespace ToolCache.Sound {
         }
 
         private static void ReadDatabase() {
-            if (File.Exists(FILENAME)) {
-                BinaryIO f = new BinaryIO(File.ReadAllBytes(FILENAME));
+            IStorage f = StorageHelper.LoadStorage(DATABASE_FILENAME, StorageTypes.UTF);
 
+            if (f != null) {
                 //First load music
                 short totalMusic = f.GetShort();
                 while (--totalMusic > -1) {
@@ -72,11 +72,13 @@ namespace ToolCache.Sound {
                         }
                     }
                 }
+
+                f.Dispose();
             }
         }
 
         public static void SaveDatabase() {
-            BinaryIO f = new BinaryIO();
+            IStorage f = StorageHelper.WriteStorage(StorageTypes.UTF);
 
             f.AddShort((short)Music.Count);
             foreach (SoundData s in Music) {
@@ -105,7 +107,9 @@ namespace ToolCache.Sound {
                 }
             }
 
-            f.Encode(FILENAME);
+            StorageHelper.Save(f, DATABASE_FILENAME);
+
+            f.Dispose();
         }
 
         internal static bool HasEffect(string EffectName) {

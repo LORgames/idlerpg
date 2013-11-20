@@ -10,6 +10,8 @@ using ToolCache.Storage;
 
 namespace ToolCache.Critters {
     public class BuffManager {
+        private const string RESOLVED_DATABASE_FILENAME = "Buffs";
+
         public static BindingList<Buff> Buffs = new BindingList<Buff>();
 
         public static void Initialize() {
@@ -22,19 +24,21 @@ namespace ToolCache.Critters {
         }
 
         private static void LoadDatabase() {
-            if (File.Exists(Settings.Database + "Buffs.bin")) {
-                BinaryIO f = new BinaryIO(File.ReadAllBytes(Settings.Database + "Buffs.bin"));
+            IStorage f = StorageHelper.LoadStorage(RESOLVED_DATABASE_FILENAME, StorageTypes.UTF);
 
+            if (f != null) {
                 short totalBuffs = f.GetShort();
 
                 while (--totalBuffs > -1) {
                     Buffs.Add(Buff.ReadFromBinaryIO(f));
                 }
+
+                f.Dispose();
             }
         }
 
         public static void SaveDatabase() {
-            BinaryIO f = new BinaryIO();
+            IStorage f = StorageHelper.WriteStorage(StorageTypes.UTF);
 
             f.AddShort((short)Buffs.Count);
 
@@ -42,7 +46,9 @@ namespace ToolCache.Critters {
                 b.WriteToBinaryIO(f);
             }
 
-            f.Encode(Settings.Database + "Buffs.bin");
+            StorageHelper.Save(f, RESOLVED_DATABASE_FILENAME);
+
+            f.Dispose();
         }
 
         internal static bool HasBuff(string p) {

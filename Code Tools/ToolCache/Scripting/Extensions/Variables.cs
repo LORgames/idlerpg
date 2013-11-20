@@ -11,6 +11,8 @@ using ToolCache.Storage;
 
 namespace ToolCache.Scripting.Extensions {
     public class Variables {
+        private const string DATABASE_FILENAME = "GlobalFunctions";
+
         public static DictionaryEx<string, ScriptVariable> GlobalVariables = new DictionaryEx<string, ScriptVariable>();
         public static DictionaryEx<string, string> StringTable = new DictionaryEx<string, string>();
         public static DictionaryEx<string, ScriptFunction> FunctionTable = new DictionaryEx<string, ScriptFunction>();
@@ -71,9 +73,9 @@ namespace ToolCache.Scripting.Extensions {
         }
 
         private static void LoadFunctions() {
-            if (File.Exists(Settings.Database + "GlobalFunctions.bin")) {
-                BinaryIO f = new BinaryIO(File.ReadAllBytes(Settings.Database + "GlobalFunctions.bin"));
+            IStorage f = StorageHelper.LoadStorage(DATABASE_FILENAME, StorageTypes.UTF);
 
+            if (f != null) {
                 short i = f.GetShort();
 
                 while (--i > -1) {
@@ -122,7 +124,7 @@ namespace ToolCache.Scripting.Extensions {
         }
 
         private static void SaveFunctions() {
-            BinaryIO f = new BinaryIO();
+            IStorage f = StorageHelper.WriteStorage(StorageTypes.UTF);
 
             f.AddShort((short)FunctionTable.Count);
 
@@ -131,7 +133,9 @@ namespace ToolCache.Scripting.Extensions {
                 f.AddString(kvp.Value.Script);
             }
 
-            f.Encode(Settings.Database + "GlobalFunctions.bin");
+            StorageHelper.Save(f, DATABASE_FILENAME);
+
+            f.Dispose();
         }
 
         public static void AddVariableToDatabase(ScriptVariable s) {

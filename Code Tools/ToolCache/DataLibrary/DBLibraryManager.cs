@@ -9,7 +9,7 @@ using ToolCache.Storage;
 
 namespace ToolCache.DataLibrary {
     public class DBLibraryManager {
-        private const string DATABASE_FILENAME = Settings.Database + "DBLibraries.bin";
+        private const string DATABASE_FILENAME = "DBLibraries";
 
         private static List<DBLibrary> Libraries = new List<DBLibrary>();
 
@@ -19,9 +19,9 @@ namespace ToolCache.DataLibrary {
         }
 
         private static void LoadDatabase() {
-            if (File.Exists(DATABASE_FILENAME)) {
-                BinaryIO f = new BinaryIO(File.ReadAllBytes(DATABASE_FILENAME));
+            IStorage f = StorageHelper.LoadStorage(DATABASE_FILENAME, StorageTypes.UTF);
 
+            if (f != null) {
                 short totalEffects = f.GetShort();
 
                 while (--totalEffects > -1) {
@@ -30,11 +30,13 @@ namespace ToolCache.DataLibrary {
 
                     x.ReadFromBinaryIO(f);
                 }
+
+                f.Dispose();
             }
         }
 
         public static void WriteDatabase() {
-            BinaryIO f = new BinaryIO();
+            IStorage f = StorageHelper.WriteStorage(StorageTypes.UTF);
 
             f.AddShort((short)Libraries.Count);
 
@@ -43,7 +45,7 @@ namespace ToolCache.DataLibrary {
                 Libraries[i].WriteToBinaryIO(f);
             }
 
-            f.Encode(DATABASE_FILENAME);
+            StorageHelper.Save(f, DATABASE_FILENAME);
         }
 
         public static DBLibrary AddLibrary(string name) {

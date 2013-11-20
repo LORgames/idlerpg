@@ -11,7 +11,7 @@ namespace ToolCache.Equipment {
     public enum EquipmentTypes { Body, Legs, Weapon, Head, Headgear, Shadow };
 
     public class EquipmentManager {
-        private const string FILENAME = Settings.Database + "Equipment.bin";
+        private const string DATABASE_FILENAME = "Equipment";
 
         public static Dictionary<string, EquipmentItem> Equipment = new Dictionary<string, EquipmentItem>();
         public static Dictionary<EquipmentTypes, List<EquipmentItem>> TypeLists = new Dictionary<EquipmentTypes, List<EquipmentItem>>();
@@ -28,20 +28,22 @@ namespace ToolCache.Equipment {
         }
 
         private static void LoadFromDatabase() {
-            if (File.Exists(FILENAME)) {
-                BinaryIO f = new BinaryIO(File.ReadAllBytes(FILENAME));
+            IStorage f = StorageHelper.LoadStorage(DATABASE_FILENAME, StorageTypes.UTF);
 
+            if (f != null) {
                 int totalItems = f.GetInt();
 
                 for (int i = 0; i < totalItems; i++) {
                     EquipmentItem ei = EquipmentItem.UnpackFromBinaryIO(f);
                     AddEquipment(ei);
                 }
+
+                f.Dispose();
             }
         }
 
         public static void SaveDatabase() {
-            BinaryIO f = new BinaryIO();
+            IStorage f = StorageHelper.WriteStorage(StorageTypes.UTF);
 
             f.AddInt(Equipment.Count);
 
@@ -49,7 +51,9 @@ namespace ToolCache.Equipment {
                 ei.PackIntoBinaryIO(f);
             }
 
-            f.Encode(FILENAME);
+            StorageHelper.Save(f, DATABASE_FILENAME);
+
+            f.Dispose();
         }
 
         public static void AddEquipment(EquipmentItem currentEquipment) {

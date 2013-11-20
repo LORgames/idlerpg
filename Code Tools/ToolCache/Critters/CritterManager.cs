@@ -8,7 +8,7 @@ using ToolCache.Storage;
 
 namespace ToolCache.Critters {
     public class CritterManager {
-        public const string DATABASE_FILENAME = "Critters";
+        private const string DATABASE_FILENAME = "Critters";
 
         public static Dictionary<short, Critter> Critters = new Dictionary<short, Critter>();
         public static short NextCritterID = 0;
@@ -59,6 +59,7 @@ namespace ToolCache.Critters {
             }
 
             StorageHelper.Save(f, DATABASE_FILENAME);
+
             f.Dispose();
         }
 

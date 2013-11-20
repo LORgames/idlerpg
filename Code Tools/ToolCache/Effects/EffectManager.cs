@@ -8,7 +8,7 @@ using ToolCache.Storage;
 
 namespace ToolCache.Effects {
     public class EffectManager {
-        private const string filename = General.Settings.Database + "Effects.bin";
+        private const string DATABASE_FILENAME = "Effects";
 
         public static Dictionary<String, Effect> Effects = new Dictionary<string, Effect>();
         public static Dictionary<String, List<Effect>> EffectsInGroups = new Dictionary<string, List<Effect>>();
@@ -21,19 +21,21 @@ namespace ToolCache.Effects {
         }
 
         private static void ReadDatabase() {
-            if (File.Exists(filename)) {
-                BinaryIO f = new BinaryIO(File.ReadAllBytes(filename));
+            IStorage f = StorageHelper.LoadStorage(DATABASE_FILENAME, StorageTypes.UTF);
 
+            if (f != null) {
                 short totalEffects = f.GetShort();
 
                 while (--totalEffects > -1) {
                     AddEffect(Effect.ReadFromBinaryIO(f));
                 }
+
+                f.Dispose();
             }
         }
 
         public static void WriteDatabase() {
-            BinaryIO f = new BinaryIO();
+            IStorage f = StorageHelper.WriteStorage(StorageTypes.UTF);
 
             f.AddShort((short)Effects.Count);
 
@@ -41,7 +43,9 @@ namespace ToolCache.Effects {
                 fx.WriteToBinaryIO(f);
             }
 
-            f.Encode(filename);
+            StorageHelper.Save(f, DATABASE_FILENAME);
+
+            f.Dispose();
         }
 
         public static void AddEffect(Effect e) {

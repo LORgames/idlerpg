@@ -8,7 +8,7 @@ using ToolCache.Storage;
 
 namespace ToolCache.Critters {
     public class Factions {
-        public const string FILENAME = Settings.Database + "/Factions.utf";
+        private const string DATABASE_FILENAME = "Factions";
         
         private static Dictionary<String, short> FactionNameToID = new Dictionary<string, short>();
         private static Dictionary<short, Faction> AllFactions = new Dictionary<short, Faction>();
@@ -51,37 +51,37 @@ namespace ToolCache.Critters {
         }
 
         private static void ReadDatabase() {
-            if (File.Exists(FILENAME)) {
-                UTFIO b = new UTFIO(File.ReadAllText(FILENAME));
+            IStorage f = StorageHelper.LoadStorage(DATABASE_FILENAME, StorageTypes.UTF);
 
-                short totalFactions = b.GetShort();
+            if (f != null) {
+                short totalFactions = f.GetShort();
 
                 while (--totalFactions > -1) {
-                    AddFaction(b.GetString());
+                    AddFaction(f.GetString());
                 }
 
-                short totalFriends = b.GetShort();
-                short totalEnemies = b.GetShort();
+                short totalFriends = f.GetShort();
+                short totalEnemies = f.GetShort();
 
                 while (--totalFriends > -1) {
-                    SetRelationship(b.GetShort(), b.GetShort(), 1);
+                    SetRelationship(f.GetShort(), f.GetShort(), 1);
                 }
 
                 while (--totalEnemies > -1) {
-                    SetRelationship(b.GetShort(), b.GetShort(), 2);
+                    SetRelationship(f.GetShort(), f.GetShort(), 2);
                 }
 
-                b.Dispose();
+                f.Dispose();
             }
         }
 
         public static void SaveDatabase() {
-            UTFIO b = new UTFIO();
+            IStorage f = StorageHelper.WriteStorage(StorageTypes.UTF);
 
             List<short[]> FriendsPairs = new List<short[]>();
             List<short[]> EnemiesPairs = new List<short[]>();
 
-            b.AddShort((short)AllFactions.Count);  //Repack from id 0 as well :)
+            f.AddShort((short)AllFactions.Count);  //Repack from id 0 as well :)
 
             //Repacking ID's as required...
             Dictionary<int, int> RepackedIDs = new Dictionary<int, int>();
@@ -91,39 +91,40 @@ namespace ToolCache.Critters {
                 RepackedIDs.Add(kvp.Value.ID, nextID);
                 nextID++;
 
-                b.AddString(kvp.Value.Name);
+                f.AddString(kvp.Value.Name);
             }
 
 
-            foreach (Faction f in AllFactions.Values) {
-                foreach(short i in f.Friends) {
-                    if (f.ID < i) {
-                        FriendsPairs.Add(new short[]{f.ID, i});
+            foreach (Faction faction in AllFactions.Values) {
+                foreach (short i in faction.Friends) {
+                    if (faction.ID < i) {
+                        FriendsPairs.Add(new short[] { faction.ID, i });
                     }
                 }
 
-                foreach (short i in f.Enemies) {
-                    if (f.ID < i) {
-                        EnemiesPairs.Add(new short[]{f.ID, i});
+                foreach (short i in faction.Enemies) {
+                    if (faction.ID < i) {
+                        EnemiesPairs.Add(new short[] { faction.ID, i });
                     }
                 }
             }
 
-            b.AddShort((short)FriendsPairs.Count); // 0 Allied Factions
-            b.AddShort((short)EnemiesPairs.Count); // 0 Enemy Factions
+            f.AddShort((short)FriendsPairs.Count); // 0 Allied Factions
+            f.AddShort((short)EnemiesPairs.Count); // 0 Enemy Factions
 
             foreach (short[] ray in FriendsPairs) {
-                b.AddShort(ray[0]);
-                b.AddShort(ray[1]);
+                f.AddShort(ray[0]);
+                f.AddShort(ray[1]);
             }
 
             foreach (short[] ray in EnemiesPairs) {
-                b.AddShort(ray[0]);
-                b.AddShort(ray[1]);
+                f.AddShort(ray[0]);
+                f.AddShort(ray[1]);
             }
 
-            b.Encode(FILENAME);
-            b.Dispose();
+            StorageHelper.Save(f, DATABASE_FILENAME);
+
+            f.Dispose();
 
             Initialize(); //Dump everything and load it back up to reset the numbers
         }
