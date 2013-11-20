@@ -2,7 +2,7 @@ package Game.Equipment {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.geom.Rectangle;
-	import Game.Scripting.Script;
+	import Scripting.Script;
 	import RenderSystem.IAnimated;
 	import RenderSystem.Renderman;
 	/**

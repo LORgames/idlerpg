@@ -10,6 +10,7 @@ using System.Drawing.Imaging;
 using ToolCache.Animation;
 using ToolCache.Scripting;
 using ToolCache.Scripting.Types;
+using ToolCache.Storage;
 
 namespace ToolToGameExporter {
     internal class EquipmentCrusher {

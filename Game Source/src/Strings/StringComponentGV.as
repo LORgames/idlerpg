@@ -1,5 +1,5 @@
 package Strings {
-	import Game.Scripting.GlobalVariables;
+	import Scripting.GlobalVariables;
 	/**
 	 * ...
 	 * @author Paul

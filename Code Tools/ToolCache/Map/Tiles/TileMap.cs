@@ -5,6 +5,7 @@ using System.Text;
 using ToolCache.General;
 using ToolCache.Map.Objects;
 using ToolCache.Map.Regions;
+using ToolCache.Storage;
 
 namespace ToolCache.Map.Tiles {
     public class TileMap {
@@ -42,7 +43,7 @@ namespace ToolCache.Map.Tiles {
             Map.WorldRectangle = new System.Drawing.Rectangle(0, 0, numTilesX * TileTemplate.PIXELS, numTilesY * TileTemplate.PIXELS);
         }
 
-        public void LoadMapFromFile(BinaryIO mapFile) {
+        public void LoadMapFromFile(IStorage mapFile) {
             numTilesX = mapFile.GetInt();
             numTilesY = mapFile.GetInt();
 
@@ -57,7 +58,7 @@ namespace ToolCache.Map.Tiles {
             Map.WorldRectangle = new System.Drawing.Rectangle(0, 0, numTilesX * TileTemplate.PIXELS, numTilesY * TileTemplate.PIXELS);
         }
 
-        public void SaveMap(BinaryIO mapFile) {
+        public void SaveMap(IStorage mapFile) {
             mapFile.AddInt(numTilesX);
             mapFile.AddInt(numTilesY);
 

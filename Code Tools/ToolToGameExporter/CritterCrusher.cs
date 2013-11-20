@@ -8,6 +8,7 @@ using ToolCache.Scripting;
 using ToolCache.Animation;
 using System.Drawing;
 using ToolCache.Scripting.Types;
+using ToolCache.Storage;
 
 namespace ToolToGameExporter {
     internal class CritterCrusher {
@@ -56,12 +57,13 @@ namespace ToolToGameExporter {
                 ScriptCrusher.ProcessScript(script, c.AICommands, f);
 
                 //Adding factions
-                if (c.Groups.Count + 1 > 8) Processor.Errors.Add(new ProcessingError("Critter", c.Name, "A critter can only belong to upto 8 Factions!"));
+                if (c.Groups.Count + 1 > 8) Processor.Errors.Add(new ProcessingError("Critter", c.Name, "A critter should only belong to upto 8 Groups!"));
                 f.AddByte((byte)(c.Groups.Count + 1));
 
                 if (FactionCrusher.RemappedFactionIDs.ContainsKey(c.NodeGroup)) {
                     f.AddByte((byte)FactionCrusher.RemappedFactionIDs[c.NodeGroup]);
                 } else {
+                    Processor.Warnings.Add(new ProcessingError("Critter", c.Name, "Cannot find the primary faction " + c.NodeGroup));
                     f.AddByte(0); //TODO: this should find a better faction to use instead
                 }
 

@@ -5,6 +5,7 @@ using System.Text;
 using ToolCache.Animation;
 using ToolCache.General;
 using System.Drawing;
+using ToolCache.Storage;
 
 namespace ToolCache.Equipment {
     public class EquipmentAnimationSet {
@@ -49,7 +50,7 @@ namespace ToolCache.Equipment {
             }
         }
 
-        internal static EquipmentAnimationSet LoadFromBinaryIO(BinaryIO f) {
+        internal static EquipmentAnimationSet LoadFromBinaryIO(IStorage f) {
             EquipmentAnimationSet eas = new EquipmentAnimationSet(false);
 
             //Set information
@@ -88,7 +89,7 @@ namespace ToolCache.Equipment {
             return frames;
         }
 
-        internal void SaveToBinaryIO(BinaryIO f) {
+        internal void SaveToBinaryIO(IStorage f) {
             //Set information
             f.AddString(StateName);
 

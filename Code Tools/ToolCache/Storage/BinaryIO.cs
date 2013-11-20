@@ -7,8 +7,8 @@ using System.IO;
 using System.Drawing;
 using System.Net.Sockets;
 
-namespace ToolCache.General {
-    public class BinaryIO {
+namespace ToolCache.Storage {
+    public class BinaryIO : IStorage {
 
         private List<Byte> out_data;
         private Byte[] in_data;
@@ -142,13 +142,13 @@ namespace ToolCache.General {
 
         public override string ToString() {
             if(in_data != null) {
-                return "[NMI: " + in_data.Length + "B]";
+                return "[BinaryIO-IN: " + in_data.Length + "B]";
             } else {
-                return "[NMO: " + out_data.Count + "B]";
+                return "[BinaryIO-OUT: " + out_data.Count + "B]";
             }
         }
 
-        internal void Flip() {
+        public void Flip() {
             if (out_data != null) {
                 out_data.RemoveRange(0, 6);
                 in_data = out_data.ToArray();
@@ -173,7 +173,7 @@ namespace ToolCache.General {
             }
         }
 
-        internal bool IsEndOfFile() {
+        public bool IsEndOfFile() {
             return (seemlessReadIndex == in_data.Length);
         }
     }

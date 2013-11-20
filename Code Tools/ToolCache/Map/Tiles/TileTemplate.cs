@@ -6,6 +6,7 @@ using ToolCache.Animation;
 using ToolCache.General;
 using ToolCache.Map.Objects;
 using System.Drawing;
+using ToolCache.Storage;
 
 namespace ToolCache.Map.Tiles {
     public class TileTemplate {
@@ -25,7 +26,7 @@ namespace ToolCache.Map.Tiles {
         //Gameplay Information
         public float movementCost = 1; // 1 = normal, 2 = twice as slow, 0.5 = twice as fast (32 bits)
 
-        internal void LoadFromFile(General.BinaryIO f) {
+        internal void LoadFromFile(IStorage f) {
             TileID = f.GetShort();
             TileName = f.GetString();
             TileGroup = f.GetString();
@@ -40,7 +41,7 @@ namespace ToolCache.Map.Tiles {
             }
         }
 
-        internal void SaveToFile(BinaryIO f) {
+        internal void SaveToFile(IStorage f) {
             f.AddShort(TileID);
             f.AddString(TileName);
             f.AddString(TileGroup);

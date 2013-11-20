@@ -3,7 +3,7 @@ package Game.Equipment {
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	import Game.Critter.CritterHuman;
-	import Game.Scripting.Script;
+	import Scripting.Script;
 	import RenderSystem.IObjectLayer;
 	/**
 	 * ...

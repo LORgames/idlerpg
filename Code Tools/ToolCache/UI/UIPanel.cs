@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ToolCache.General;
 using System.Drawing;
+using ToolCache.Storage;
 
 namespace ToolCache.UI {
     public class UIPanel {
@@ -12,7 +13,7 @@ namespace ToolCache.UI {
         public string Name = "";
         public bool Enabled = false;
 
-        public static UIPanel ReadFromBinaryIO(BinaryIO f) {
+        public static UIPanel ReadFromBinaryIO(IStorage f) {
             UIPanel ui = new UIPanel();
 
             ui.Name = f.GetString();
@@ -26,7 +27,7 @@ namespace ToolCache.UI {
             return ui;
         }
 
-        internal void WriteToBinaryIO(BinaryIO f) {
+        internal void WriteToBinaryIO(IStorage f) {
             f.AddString(Name);
             f.AddByte((byte)(Enabled ? 1 : 0));
 

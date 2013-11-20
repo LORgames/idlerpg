@@ -1,6 +1,6 @@
 package Interfaces {
 	import CollisionSystem.Rect;
-	import Game.Scripting.IScriptTarget;
+	import Scripting.IScriptTarget;
 	/**
 	 * ...
 	 * @author Paul

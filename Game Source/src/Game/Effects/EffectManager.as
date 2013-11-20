@@ -1,7 +1,7 @@
 package Game.Effects {
 	import flash.utils.ByteArray;
-	import Game.General.BinaryLoader;
-	import Game.Scripting.Script;
+	import Loaders.BinaryLoader;
+	import Scripting.Script;
 	/**
 	 * ...
 	 * @author Paul

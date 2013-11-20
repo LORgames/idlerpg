@@ -1,6 +1,6 @@
 package Game.Critter {
 	import flash.utils.ByteArray;
-	import Game.General.BinaryLoader;
+	import Loaders.BinaryLoader;
 	/**
 	 * ...
 	 * @author Paul

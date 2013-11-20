@@ -8,7 +8,7 @@ package UI {
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
 	import Game.Critter.CritterAnimationSet;
-	import Game.Scripting.GlobalVariables;
+	import Scripting.GlobalVariables;
 	/**
 	 * ...
 	 * @author Paul

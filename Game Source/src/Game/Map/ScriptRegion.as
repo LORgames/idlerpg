@@ -1,13 +1,12 @@
-package Game.Map 
-{
+package Game.Map {
 	import Game.Critter.BaseCritter;
 	import adobe.utils.CustomActions;
 	import CollisionSystem.PointX;
 	import CollisionSystem.Rect;
 	import flash.utils.ByteArray;
-	import Game.Scripting.IScriptTarget;
-	import Game.Scripting.Script;
-	import Game.Scripting.ScriptInstance;
+	import Scripting.IScriptTarget;
+	import Scripting.Script;
+	import Scripting.ScriptInstance;
 	import EngineTiming.ICleanUp;
 	/**
 	 * ...
@@ -53,7 +52,7 @@ package Game.Map
 			return s;
 		}
 		
-		/* INTERFACE Game.Scripting.IScriptTarget */
+		/* INTERFACE Scripting.IScriptTarget */
 		public function UpdatePointX(position:PointX):void {
 			position.X = 0;
 			position.Y = 0;

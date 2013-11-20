@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ToolCache.General;
+using ToolCache.Storage;
 
 namespace ToolCache.Elements {
     public class Element {
@@ -35,7 +36,7 @@ namespace ToolCache.Elements {
             }
         }
 
-        internal void PackIntoBinaryIO(BinaryIO f) {
+        internal void PackIntoBinaryIO(IStorage f) {
             f.AddShort(ElementID);
             f.AddString(ElementName);
 
@@ -47,7 +48,7 @@ namespace ToolCache.Elements {
         }
 
         //Factory method
-        internal static Element UnpackFromBinaryIO(BinaryIO f) {
+        internal static Element UnpackFromBinaryIO(IStorage f) {
             Element e = new Element();
             e.ElementID = f.GetShort();
             e.ElementName = f.GetString();

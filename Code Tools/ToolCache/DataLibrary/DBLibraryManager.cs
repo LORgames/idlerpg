@@ -5,6 +5,7 @@ using System.Text;
 using System.ComponentModel;
 using ToolCache.General;
 using System.IO;
+using ToolCache.Storage;
 
 namespace ToolCache.DataLibrary {
     public class DBLibraryManager {

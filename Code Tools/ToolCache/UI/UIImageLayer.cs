@@ -5,6 +5,7 @@ using System.Text;
 using System.Drawing;
 using ToolCache.General;
 using System.IO;
+using ToolCache.Storage;
 
 namespace ToolCache.UI {
     public class UIImageLayer : UILayer {
@@ -12,7 +13,7 @@ namespace ToolCache.UI {
         public string ImageFilename = "";
         public int GlobalVariable = 0;
 
-        protected override void ReadFromBinaryIOX(BinaryIO f) {
+        protected override void ReadFromBinaryIOX(IStorage f) {
             base.ReadFromBinaryIOX(f);
             GlobalVariable = f.GetInt();
             ImageFilename = f.GetString();
@@ -20,7 +21,7 @@ namespace ToolCache.UI {
             ImageFilename = "UI\\" + Path.GetFileName(ImageFilename);
         }
 
-        internal override void WriteToBinaryIO(BinaryIO f) {
+        internal override void WriteToBinaryIO(IStorage f) {
             base.WriteToBinaryIO(f);
 
             f.AddInt(GlobalVariable);

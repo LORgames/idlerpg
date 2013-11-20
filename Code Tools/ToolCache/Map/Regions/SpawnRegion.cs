@@ -5,6 +5,7 @@ using System.Text;
 using System.Drawing;
 using ToolCache.General;
 using System.Windows.Forms;
+using ToolCache.Storage;
 
 namespace ToolCache.Map.Regions {
     public class SpawnRegion : RegionBase {
@@ -15,7 +16,7 @@ namespace ToolCache.Map.Regions {
         public short Timeout = 60;
         public string Faction = "";
 
-        public static SpawnRegion LoadFromBinaryIO(BinaryIO f) {
+        public static SpawnRegion LoadFromBinaryIO(IStorage f) {
             SpawnRegion s = new SpawnRegion();
 
             UnpackNameAndAreas(f, s);
@@ -34,7 +35,7 @@ namespace ToolCache.Map.Regions {
             return s;
         }
 
-        public void SaveToBinaryIO(BinaryIO f) {
+        public void SaveToBinaryIO(IStorage f) {
             WriteNameAndAreas(f);
 
             f.AddByte(SpawnOnLoad);

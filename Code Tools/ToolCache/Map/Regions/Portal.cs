@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using ToolCache.General;
+using ToolCache.Storage;
 
 namespace ToolCache.Map.Regions {
     public class Portal : IComparable<Portal> {
@@ -16,7 +17,7 @@ namespace ToolCache.Map.Regions {
 
         public MapPiece Map;
 
-        internal void Save(BinaryIO f) {
+        internal void Save(IStorage f) {
             f.AddString(Name);
             f.AddShort(ID);
             f.AddShort(ExitID);
@@ -64,7 +65,7 @@ namespace ToolCache.Map.Regions {
             return p;
         }
 
-        public static Portal LoadPortal(MapPiece map, BinaryIO f) {
+        public static Portal LoadPortal(MapPiece map, IStorage f) {
             Portal p = new Portal();
             p.Map = map;
 

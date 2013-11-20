@@ -1,4 +1,4 @@
-package Game.Scripting {
+package Scripting {
 	import CollisionSystem.PointX;
 	import CollisionSystem.Rect;
 	import Debug.Drawer;
@@ -12,7 +12,7 @@ package Game.Scripting {
 	import Game.Effects.EffectInstance;
 	import Game.Effects.EffectManager;
 	import Game.Equipment.EquipmentItem;
-	import Game.General.BinaryLoader;
+	import Loaders.BinaryLoader;
 	import Game.Map.Objects.ObjectInstance;
 	import Game.Map.Objects.ObjectInstanceAnimated;
 	import Game.Map.Objects.ObjectTemplate;
@@ -590,6 +590,8 @@ package Game.Scripting {
 			var command:uint = 0;
 			var CallStack:Vector.<Boolean> = new Vector.<Boolean>();
 			var bParam:Boolean;
+			var objName:String;
+			var fParam:Number;
 			
 			var deep:int = 0;
 			
@@ -620,7 +622,7 @@ package Game.Scripting {
 						
 						var critter:BaseCritter = CritterManager.I.CritterInfo[p0.D].CreateCritter(WorldData.CurrentMap, p1.X, p1.Y);
 						
-						if(EventScript.readShort()==0) { // Get owner faction?
+						if(EventScript.readShort() == 0) { // Get owner faction?
 							critter.SetFaction(info.CurrentTarget.GetFaction());
 						}
 						
@@ -802,25 +804,24 @@ package Game.Scripting {
 						p0.X = EventScript.readUnsignedShort(); //SHOULD BE 0xBFFE
 						p0.Y = EventScript.readUnsignedShort(); //SHOULD BE < 1000
 						if (p0.X == 0xBFFE && Global.Network != null) PacketFactory.N(Vector.<int>([0xB000, 0xBFFE, p0.Y, 0xBFFF, GlobalVariables.Variables[p0.Y], 0xBF01]));
-						
 						break;
 					case 0x1017: //Param Set ADVANCED PROGRAMMING COMMAND
-						var objName:String = GetWonkyString(EventScript);
+						objName = GetWonkyString(EventScript);
 						p0.X = GetNumberFromVariable(EventScript, info, inputParam);
 						
 						if (info.CurrentTarget[objName] is int) {
 							info.CurrentTarget[objName] = p0.X;
 						} break;
 					case 0x1018: //Tween
-						var objName:String = GetWonkyString(EventScript);				//Param Name
+						objName = GetWonkyString(EventScript);							//Param Name
 						p0.X = GetNumberFromVariable(EventScript, info, inputParam); 	//Initial Value
 						p0.Y = GetNumberFromVariable(EventScript, info, inputParam); 	//Final Value
-						var time:Number = GetNumberFromVariable(EventScript, info, inputParam);
+						fParam = GetNumberFromVariable(EventScript, info, inputParam);
 						break;
 					case 0x1019: //TweenTo
-						var objName:String = GetWonkyString(EventScript);				//Param Name
+						objName = GetWonkyString(EventScript);							//Param Name
 						p0.X = GetNumberFromVariable(EventScript, info, inputParam); 	//Final Value
-						var time:Number = GetNumberFromVariable(EventScript, info, inputParam);
+						fParam = GetNumberFromVariable(EventScript, info, inputParam);
 						break;
 					case 0x101A: //Apply Buff
 						p0.X = GetNumberFromVariable(EventScript, info, inputParam);	//Buff ID
@@ -947,7 +948,6 @@ package Game.Scripting {
 						return 2;
 					case 0x8006: //Call a global function
 						p0.X = EventScript.readShort(); //Function ID
-						trace("Calling Function=" + p0.X);
 						GlobalVariables.Functions.Run(p0.X, info, inputParam);
 						break;
 					case 0xC002: //Hide Panel

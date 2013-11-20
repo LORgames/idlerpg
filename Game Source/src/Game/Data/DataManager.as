@@ -1,7 +1,7 @@
 package Game.Data {
 	import adobe.utils.CustomActions;
 	import flash.utils.ByteArray;
-	import Game.General.BinaryLoader;
+	import Loaders.BinaryLoader;
 	/**
 	 * ...
 	 * @author ...

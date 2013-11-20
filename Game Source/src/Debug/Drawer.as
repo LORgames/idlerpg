@@ -46,7 +46,7 @@ package Debug {
 			s.graphics.lineTo(x2, y2);
 		}
 		
-		public static function GetSprite():Sprite {
+		private static function GetSprite():Sprite {
 			if (!Global.DebugRender) {
 				Empty.graphics.clear();
 				return Empty;

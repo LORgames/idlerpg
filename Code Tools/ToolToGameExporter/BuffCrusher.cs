@@ -5,6 +5,7 @@ using System.Text;
 using ToolCache.Critters;
 using ToolCache.General;
 using ToolCache.Scripting;
+using ToolCache.Storage;
 
 namespace ToolToGameExporter {
     public class BuffCrusher {

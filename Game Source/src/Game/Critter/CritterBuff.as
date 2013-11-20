@@ -1,9 +1,9 @@
 package Game.Critter 
 {
 	import CollisionSystem.PointX;
-	import Game.Scripting.IScriptTarget;
-	import Game.Scripting.Script;
-	import Game.Scripting.ScriptInstance;
+	import Scripting.IScriptTarget;
+	import Scripting.Script;
+	import Scripting.ScriptInstance;
 	/**
 	 * ...
 	 * @author Paul
@@ -22,7 +22,7 @@ package Game.Critter
 			myScript = new ScriptInstance(CritterManager.I.CritterBuffs[buffID]._Script, this, true);
 		}
 		
-		/* INTERFACE Game.Scripting.IScriptTarget */
+		/* INTERFACE Scripting.IScriptTarget */
 		
 		public function UpdatePointX(position:PointX):void {
 			critter.UpdatePointX(position);

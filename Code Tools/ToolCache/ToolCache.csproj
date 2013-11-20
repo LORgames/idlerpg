@@ -66,7 +66,10 @@
     <Compile Include="Equipment\EquipmentAnimationSet.cs" />
     <Compile Include="Equipment\EquipmentItem.cs" />
     <Compile Include="Equipment\EquipmentManager.cs" />
-    <Compile Include="General\BinaryIO.cs" />
+    <Compile Include="Storage\BinaryIO.cs" />
+    <Compile Include="Storage\IStorage.cs" />
+    <Compile Include="Storage\StorageHelper.cs" />
+    <Compile Include="Storage\UTFIO.cs" />
     <Compile Include="General\DictionaryEx.cs" />
     <Compile Include="General\ExportCrushers.cs" />
     <Compile Include="General\ImageCache.cs" />

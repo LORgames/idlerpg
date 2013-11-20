@@ -5,7 +5,7 @@ package UI {
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
-	import Game.Scripting.GlobalVariables;
+	import Scripting.GlobalVariables;
 	/**
 	 * ...
 	 * @author Paul

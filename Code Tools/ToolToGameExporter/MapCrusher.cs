@@ -9,6 +9,7 @@ using ToolCache.Map.Regions;
 using System.Drawing;
 using ToolCache.Scripting;
 using ToolCache.Scripting.Types;
+using ToolCache.Storage;
 
 namespace ToolToGameExporter {
     internal class MapCrusher {

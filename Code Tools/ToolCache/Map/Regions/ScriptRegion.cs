@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using ToolCache.General;
+using ToolCache.Storage;
 
 namespace ToolCache.Map.Regions {
     public class ScriptRegion : RegionBase {
         public string Script = "";
 
-        public static ScriptRegion LoadFromBinaryIO(BinaryIO f) {
+        public static ScriptRegion LoadFromBinaryIO(IStorage f) {
             ScriptRegion s = new ScriptRegion();
 
             UnpackNameAndAreas(f, s);
@@ -18,7 +19,7 @@ namespace ToolCache.Map.Regions {
             return s;
         }
 
-        public void SaveToBinaryIO(BinaryIO f) {
+        public void SaveToBinaryIO(IStorage f) {
             WriteNameAndAreas(f);
             f.AddString(Script);
         }

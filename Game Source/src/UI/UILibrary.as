@@ -5,8 +5,8 @@ package UI {
 	import flash.display.BitmapData;
 	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;
-	import Game.General.BinaryLoader;
-	import Game.General.ImageLoader;
+	import Loaders.BinaryLoader;
+	import Loaders.ImageLoader;
 	/**
 	 * ...
 	 * @author Paul

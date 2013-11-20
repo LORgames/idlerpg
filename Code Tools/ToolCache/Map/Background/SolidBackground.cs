@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using ToolCache.General;
+using ToolCache.Storage;
 
 namespace ToolCache.Map.Background {
     public class SolidBackground : IBackground {
@@ -13,16 +14,16 @@ namespace ToolCache.Map.Background {
             myColour = colour;
         }
 
-        public SolidBackground(BinaryIO f) {
+        public SolidBackground(IStorage f) {
             LoadFromBinary(f);
         }
 
-        public void LoadFromBinary(BinaryIO f) {
+        public void LoadFromBinary(IStorage f) {
             int colourARGB = f.GetInt();
             myColour = Color.FromArgb(colourARGB);
         }
 
-        public void SaveToBinary(BinaryIO f) {
+        public void SaveToBinary(IStorage f) {
             f.AddByte((byte)BackgroundTypes.Solid);
             f.AddInt(myColour.ToArgb());
         }

@@ -1,8 +1,8 @@
 package Game.Critter {
 	import flash.utils.ByteArray;
-	import Game.Scripting.Script;
+	import Scripting.Script;
 	import Game.Map.MapData;
-	import Game.Scripting.ScriptInstance;
+	import Scripting.ScriptInstance;
 	/**
 	 * ...
 	 * @author Paul

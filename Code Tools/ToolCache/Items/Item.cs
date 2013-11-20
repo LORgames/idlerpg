@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ToolCache.General;
+using ToolCache.Storage;
 
 namespace ToolCache.Items {
     public class Item {
@@ -30,7 +31,7 @@ namespace ToolCache.Items {
             return Category + ":" + Name;
         }
 
-        internal void WriteToBinaryIO(BinaryIO f) {
+        internal void WriteToBinaryIO(IStorage f) {
             f.AddShort(ID);
             f.AddString(Category);
             f.AddString(Name);
@@ -49,7 +50,7 @@ namespace ToolCache.Items {
             f.AddByte((byte)(isQuestItem ? 1 : 0));
         }
 
-        internal static Item LoadFromBinaryIO(BinaryIO f) {
+        internal static Item LoadFromBinaryIO(IStorage f) {
             Item t = new Item();
 
             t.ID = f.GetShort();

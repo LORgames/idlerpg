@@ -1,7 +1,7 @@
 package Game.Critter {
 	import Game.Map.MapData;
-	import Game.Scripting.Script;
-	import Game.Scripting.ScriptInstance;
+	import Scripting.Script;
+	import Scripting.ScriptInstance;
 	import RenderSystem.Renderman;
 	/**
 	 * ...

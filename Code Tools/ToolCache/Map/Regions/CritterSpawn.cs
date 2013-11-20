@@ -5,6 +5,7 @@ using System.Text;
 using ToolCache.General;
 using System.Windows.Forms;
 using ToolCache.Critters;
+using ToolCache.Storage;
 
 namespace ToolCache.Map.Regions {
     public class CritterSpawn {
@@ -17,7 +18,7 @@ namespace ToolCache.Map.Regions {
             critterID = id;
         }
 
-        internal static CritterSpawn LoadFromBinaryIO(BinaryIO f) {
+        internal static CritterSpawn LoadFromBinaryIO(IStorage f) {
             CritterSpawn c = new CritterSpawn();
 
             c.critterID = f.GetShort();
@@ -26,7 +27,7 @@ namespace ToolCache.Map.Regions {
             return c;
         }
 
-        internal void WriteToBinaryIO(BinaryIO f) {
+        internal void WriteToBinaryIO(IStorage f) {
             f.AddShort(critterID);
             f.AddFloat(spawnChance);
         }

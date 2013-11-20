@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ToolCache.General;
 using ToolCache.Scripting.Types;
+using ToolCache.Storage;
 
 namespace ToolCache.DataLibrary {
     public class DBCell {
@@ -18,7 +19,7 @@ namespace ToolCache.DataLibrary {
             this.myType = myType;
         }
 
-        public void WriteToBinaryIO(BinaryIO f) {
+        public void WriteToBinaryIO(IStorage f) {
             if (myType == Param.Integer) {
                 f.AddShort(id);
             } else {
@@ -26,7 +27,7 @@ namespace ToolCache.DataLibrary {
             }
         }
 
-        internal void ReadFromBinaryIO(BinaryIO f) {
+        internal void ReadFromBinaryIO(IStorage f) {
             if (myType == Param.Integer) {
                 id = f.GetShort();
                 label = id.ToString();
@@ -56,7 +57,7 @@ namespace ToolCache.DataLibrary {
             }
         }
 
-        public void PackIntoOptimized(BinaryIO f) {
+        public void PackIntoOptimized(IStorage f) {
             if (myType == Param.Integer) {
                 f.AddShort(id);
             } else if (myType == Param.String) {

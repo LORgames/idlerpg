@@ -247,6 +247,7 @@ namespace CityTools {
                 numBeastFPS.Value = (decimal)beast.playbackSpeed;
                 numBeastRectWidth.Value = (decimal)beast.rectWidth;
                 numBeastRectHeight.Value = (decimal)beast.rectHeight;
+                numBeastOffsetX.Value = (decimal)beast.rectOffsetX;
                 numBeastOffsetY.Value = (decimal)beast.rectOffsetY;
 
                 cbBeastState.Items.Clear();
@@ -351,6 +352,7 @@ namespace CityTools {
                 beast.playbackSpeed = (float)numBeastFPS.Value;
                 beast.rectWidth = (short)numBeastRectWidth.Value;
                 beast.rectHeight = (short)numBeastRectHeight.Value;
+                beast.rectOffsetX = (short)numBeastOffsetX.Value;
                 beast.rectOffsetY = (short)numBeastOffsetY.Value;
             }
 
@@ -426,6 +428,12 @@ namespace CityTools {
 
                         float xPos = e.ClipRectangle.Width/2 - anim.Center.X;
                         float yPos = e.ClipRectangle.Height - 20 - (anim.Center.Y*2);
+
+                        if (direction == Direction.Left) {
+                            xPos -= (int)numBeastOffsetX.Value;
+                        } else if (direction == Direction.Right) {
+                            xPos += (int)numBeastOffsetX.Value;
+                        }
 
                         anim.Draw(e.Graphics, xPos, yPos, 1);
 

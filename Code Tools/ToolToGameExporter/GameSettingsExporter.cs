@@ -5,6 +5,7 @@ using System.Text;
 using ToolCache.General;
 using ToolCache.Scripting;
 using ToolCache.Scripting.Extensions;
+using ToolCache.Storage;
 
 namespace ToolToGameExporter {
     internal class GameSettingsExporter {

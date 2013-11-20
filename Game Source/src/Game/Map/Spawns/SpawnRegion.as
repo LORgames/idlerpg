@@ -7,7 +7,7 @@ package Game.Map.Spawns {
 	import Game.Critter.BaseCritter;
 	import Game.Critter.CritterManager;
 	import Game.Map.MapData;
-	import Game.Scripting.IScriptTarget;
+	import Scripting.IScriptTarget;
 	import Interfaces.IMapObject;
 	/**
 	 * ...
@@ -150,7 +150,7 @@ package Game.Map.Spawns {
 			}
 		}
 		
-		/* INTERFACE Game.Scripting.IScriptTarget */
+		/* INTERFACE Scripting.IScriptTarget */
 		
 		public function AlertMinionDeath(minion:BaseCritter):void {
 			var i:int = Critters.indexOf(minion);
@@ -182,7 +182,7 @@ package Game.Map.Spawns {
 			return 0;
 		}
 		
-		/* INTERFACE Game.Scripting.IScriptTarget */
+		/* INTERFACE Scripting.IScriptTarget */
 		
 		public function GetFaction():int {
 			return 0;

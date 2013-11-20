@@ -4,13 +4,13 @@ package UI {
 	import flash.geom.Rectangle;
 	import flash.security.XMLSignatureEnvelopedTransformer;
 	import flash.utils.ByteArray;
-	import Game.General.BinaryLoader;
-	import Game.General.ImageLoader;
+	import Loaders.BinaryLoader;
+	import Loaders.ImageLoader;
 	import Game.Map.ScriptRegion;
 	import Game.Map.WorldData;
-	import Game.Scripting.GlobalVariables;
-	import Game.Scripting.Script;
-	import Game.Scripting.ScriptInstance;
+	import Scripting.GlobalVariables;
+	import Scripting.Script;
+	import Scripting.ScriptInstance;
 	import RenderSystem.Camera;
 	import Strings.StringEx;
 	/**

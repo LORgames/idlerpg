@@ -6,6 +6,7 @@ using ToolCache.Animation;
 using ToolCache.General;
 using System.Drawing;
 using ToolCache.Equipment;
+using ToolCache.Storage;
 
 namespace ToolCache.Critters {
     public class CritterAnimationSet {
@@ -40,7 +41,7 @@ namespace ToolCache.Critters {
             }
         }
 
-        internal static CritterAnimationSet LoadFromBinaryIO(BinaryIO f) {
+        internal static CritterAnimationSet LoadFromBinaryIO(IStorage f) {
             CritterAnimationSet eas = new CritterAnimationSet(false);
 
             //Set information
@@ -55,7 +56,7 @@ namespace ToolCache.Critters {
             return eas;
         }
 
-        internal void SaveToBinaryIO(BinaryIO f) {
+        internal void SaveToBinaryIO(IStorage f) {
             //Set information
             f.AddString(State);
 

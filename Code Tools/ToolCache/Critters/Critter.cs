@@ -5,6 +5,7 @@ using System.Text;
 using ToolCache.General;
 using ToolCache.Drawing;
 using System.Windows.Forms;
+using ToolCache.Storage;
 
 namespace ToolCache.Critters {
     public enum CritterTypes { Humanoid, NonHumanoid }
@@ -37,7 +38,7 @@ namespace ToolCache.Critters {
 
         public TreeNode EditorNode = null;
 
-        internal virtual void PackIntoBinaryIO(BinaryIO f) {
+        internal virtual void PackIntoBinaryIO(IStorage f) {
             f.AddByte((byte)CritterType);
 
             f.AddShort(ID);
@@ -72,7 +73,7 @@ namespace ToolCache.Critters {
         public virtual void Draw(LBuffer buffer) { } //Does nothing by design
 
         ///////////////////////Statics
-        internal void BaseLoad(BinaryIO f) {
+        internal void BaseLoad(IStorage f) {
             ID = f.GetShort();
             Name = f.GetString();
 

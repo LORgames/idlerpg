@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ToolCache.General;
 using System.IO;
+using ToolCache.Storage;
 
 namespace ToolCache.Items {
     public class ItemDatabase {

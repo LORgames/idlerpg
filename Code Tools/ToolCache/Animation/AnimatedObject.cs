@@ -6,6 +6,7 @@ using ToolCache.General;
 using ToolCache.Drawing;
 using System.Drawing;
 using System.Drawing.Imaging;
+using ToolCache.Storage;
 
 namespace ToolCache.Animation {
     public class AnimatedObject {
@@ -35,7 +36,7 @@ namespace ToolCache.Animation {
             }
         }
 
-        internal void PackIntoBinaryIO(BinaryIO f) {
+        internal void PackIntoBinaryIO(IStorage f) {
             f.AddByte((byte)Frames.Count);
             f.AddFloat(PlaybackSpeed);
 
@@ -45,7 +46,7 @@ namespace ToolCache.Animation {
         }
 
         // Static Unpacker
-        internal static AnimatedObject UnpackFromBinaryIO(BinaryIO f) {
+        internal static AnimatedObject UnpackFromBinaryIO(IStorage f) {
             AnimatedObject animation = new AnimatedObject();
 
             animation.TotalFrames = f.GetByte();

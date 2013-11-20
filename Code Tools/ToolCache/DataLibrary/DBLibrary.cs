@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ToolCache.Scripting.Types;
 using ToolCache.General;
+using ToolCache.Storage;
 
 namespace ToolCache.DataLibrary {
     public class DBLibrary {
@@ -18,7 +19,7 @@ namespace ToolCache.DataLibrary {
             Name = name;
         }
 
-        internal void ReadFromBinaryIO(BinaryIO f) {
+        internal void ReadFromBinaryIO(IStorage f) {
             short totalColumns = f.GetShort();
 
             for (int i = 0; i < totalColumns; i++) {
@@ -35,7 +36,7 @@ namespace ToolCache.DataLibrary {
             }
         }
 
-        internal void WriteToBinaryIO(BinaryIO f) {
+        internal void WriteToBinaryIO(IStorage f) {
             f.AddShort((short)Column_Names.Count);
 
             for (int i = 0; i < Column_Names.Count; i++) {

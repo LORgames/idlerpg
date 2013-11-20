@@ -1,8 +1,8 @@
 package Game.Equipment {
 	import flash.display.BitmapData;
 	import flash.geom.Point;
-	import Game.General.ImageLoader;
-	import Game.Scripting.Script;
+	import Loaders.ImageLoader;
+	import Scripting.Script;
 	/**
 	 * ...
 	 * @author Paul

@@ -8,6 +8,7 @@ using ToolCache.General;
 using ToolToGameExporter.Helpers;
 using ToolCache.Scripting;
 using ToolCache.Scripting.Types;
+using ToolCache.Storage;
 
 namespace ToolToGameExporter {
     public class UICrusher {

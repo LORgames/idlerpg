@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using ToolCache.General;
+using ToolCache.Storage;
 
 namespace ToolCache.Map.Regions {
     public class RegionBase {
         public List<Rectangle> Areas = new List<Rectangle>();
         public string Name = "Unnamed Region";
 
-        protected static void UnpackNameAndAreas(BinaryIO f, RegionBase s) {
+        protected static void UnpackNameAndAreas(IStorage f, RegionBase s) {
             s.Name = f.GetString();
             
             int totalAreas = f.GetByte(); //How many rectangles
@@ -25,7 +26,7 @@ namespace ToolCache.Map.Regions {
             }
         }
 
-        protected void WriteNameAndAreas(BinaryIO f) {
+        protected void WriteNameAndAreas(IStorage f) {
             f.AddString(Name);
 
             CleanUpAreas();

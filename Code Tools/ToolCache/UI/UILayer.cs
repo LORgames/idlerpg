@@ -5,6 +5,7 @@ using System.Text;
 using System.Drawing;
 using ToolCache.General;
 using ToolCache.Scripting;
+using ToolCache.Storage;
 
 namespace ToolCache.UI {
     public class UILayer {
@@ -22,7 +23,7 @@ namespace ToolCache.UI {
 
         }
 
-        internal static UILayer ReadFromBinaryIO(BinaryIO f) {
+        internal static UILayer ReadFromBinaryIO(IStorage f) {
             byte type = f.GetByte();
 
             UILayer ul;
@@ -41,7 +42,7 @@ namespace ToolCache.UI {
             return ul;
         }
 
-        protected virtual void ReadFromBinaryIOX(BinaryIO f) {
+        protected virtual void ReadFromBinaryIOX(IStorage f) {
             Name = f.GetString();
 
             MyType = (UILayerType)f.GetByte();
@@ -53,7 +54,7 @@ namespace ToolCache.UI {
             OffsetY = f.GetShort();
         }
 
-        internal virtual void WriteToBinaryIO(BinaryIO f) {
+        internal virtual void WriteToBinaryIO(IStorage f) {
             if (this is UIImageLayer) f.AddByte(0); //0 for UIImageLayer
             else if (this is UITextLayer) f.AddByte(1); //1 for UITextLayer
             else if (this is UILibraryLayer) f.AddByte(2); //2 for UILibraryLayer

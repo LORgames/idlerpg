@@ -5,6 +5,7 @@ using System.Text;
 using System.Drawing;
 using ToolCache.General;
 using System.IO;
+using ToolCache.Storage;
 
 namespace ToolCache.UI {
     public class UILibraryLayer : UILayer {
@@ -12,7 +13,7 @@ namespace ToolCache.UI {
         public string LibraryName = "";
         public int DefaultIndex = 0;
 
-        protected override void ReadFromBinaryIOX(BinaryIO f) {
+        protected override void ReadFromBinaryIOX(IStorage f) {
             //LIBRARIES WILL ALWAYS BE NULL AT THIS POINT, LIBRARIES ARE LOADED AFTER LAYERS.
 
             base.ReadFromBinaryIOX(f);
@@ -20,7 +21,7 @@ namespace ToolCache.UI {
             DefaultIndex = f.GetInt();
         }
 
-        internal override void WriteToBinaryIO(BinaryIO f) {
+        internal override void WriteToBinaryIO(IStorage f) {
             base.WriteToBinaryIO(f);
 
             f.AddString(LibraryName);

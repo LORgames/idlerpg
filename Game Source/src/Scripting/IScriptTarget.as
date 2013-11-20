@@ -1,4 +1,4 @@
-package Game.Scripting {
+package Scripting {
 	import CollisionSystem.PointX;
 	import Game.Critter.BaseCritter;
 	/**

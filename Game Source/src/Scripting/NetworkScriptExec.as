@@ -1,4 +1,4 @@
-package Game.Scripting {
+package Scripting {
 	import Game.Critter.BaseCritter;
 	import CollisionSystem.PointX;
 	import flash.utils.ByteArray;
@@ -43,7 +43,7 @@ package Game.Scripting {
 			return false;
 		}
 		
-		/* INTERFACE Game.Scripting.IScriptTarget */
+		/* INTERFACE Scripting.IScriptTarget */
 		
 		public function UpdatePointX(position:PointX):void {
 			position.D = 1;

@@ -2,8 +2,8 @@ package Game.Equipment {
 	import CollisionSystem.PointX;
 	import flash.geom.Point;
 	import Game.Critter.BaseCritter;
-	import Game.Scripting.IScriptTarget;
-	import Game.Scripting.ScriptInstance;
+	import Scripting.IScriptTarget;
+	import Scripting.ScriptInstance;
 	/**
 	 * ...
 	 * @author Paul
@@ -72,7 +72,7 @@ package Game.Equipment {
 			Layer2 = null;
 		}
 		
-		/* INTERFACE Game.Scripting.IScriptTarget */
+		/* INTERFACE Scripting.IScriptTarget */
 		
 		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IScriptTarget):void {
 			
@@ -107,7 +107,7 @@ package Game.Equipment {
 			return "[Equipment:"+this.Info.Name+"]";
 		}
 		
-		/* INTERFACE Game.Scripting.IScriptTarget */
+		/* INTERFACE Scripting.IScriptTarget */
 		
 		public function GetFaction():int {
 			return Owner.Owner.GetFaction();

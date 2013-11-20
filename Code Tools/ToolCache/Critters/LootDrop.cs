@@ -5,6 +5,7 @@ using System.Text;
 using ToolCache.General;
 using System.Windows.Forms;
 using ToolCache.Items;
+using ToolCache.Storage;
 
 namespace ToolCache.Critters {
     public class LootDrop {
@@ -14,7 +15,7 @@ namespace ToolCache.Critters {
         float DropChance;
         byte SetID;
 
-        internal static LootDrop Unpack(BinaryIO f) {
+        internal static LootDrop Unpack(IStorage f) {
             LootDrop loot = new LootDrop();
             loot.ItemID = f.GetShort();
             loot.Minimum = f.GetShort();
@@ -25,7 +26,7 @@ namespace ToolCache.Critters {
             return loot;
         }
 
-        internal void Pack(BinaryIO f) {
+        internal void Pack(IStorage f) {
             f.AddShort(ItemID);
             f.AddShort(Minimum);
             f.AddShort(Maximum);

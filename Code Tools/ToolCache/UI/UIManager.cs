@@ -7,10 +7,11 @@ using ToolCache.General;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Text;
+using ToolCache.Storage;
 
 namespace ToolCache.UI {
     public class UIManager {
-        private const string name = General.Settings.Database + "UserInterface.bin";
+        private const string FILENAME = "UserInterface";
 
         public static List<UIPanel> Panels = new List<UIPanel>();
         public static BindingList<UILibrary> Libraries = new BindingList<UILibrary>();
@@ -48,8 +49,9 @@ namespace ToolCache.UI {
         }
 
         internal static void ReadDatabase() {
-            if (File.Exists(name)) {
-                BinaryIO f = new BinaryIO(File.ReadAllBytes(name));
+            IStorage f = StorageHelper.LoadStorage(FILENAME, StorageTypes.UTF);
+
+            if (f != null) {
                 short totalPanels = f.GetShort();
 
                 while (--totalPanels > -1) {
@@ -63,6 +65,8 @@ namespace ToolCache.UI {
                         AddLibrary(UILibrary.ReadFromBinaryIO(f));
                     }
                 }
+
+                f.Dispose();
             }
         }
 
@@ -81,7 +85,7 @@ namespace ToolCache.UI {
         }
 
         public static void WriteDatabase() {
-            BinaryIO f = new BinaryIO();
+            IStorage f = StorageHelper.WriteStorage(StorageTypes.UTF);
 
             f.AddShort((short)Panels.Count);
 
@@ -95,7 +99,7 @@ namespace ToolCache.UI {
                 lib.WriteToBinaryIO(f);
             }
 
-            f.Encode(name);
+            StorageHelper.Save(f, FILENAME);
         }
 
         internal static int GetPanelID(string p) {

@@ -4,9 +4,9 @@ package Game.Map.Objects {
 	import flash.geom.Rectangle;
 	import flash.geom.Vector3D;
 	import flash.utils.ByteArray;
-	import Game.General.BinaryLoader;
-	import Game.General.ImageLoader;
-	import Game.Scripting.Script;
+	import Loaders.BinaryLoader;
+	import Loaders.ImageLoader;
+	import Scripting.Script;
 	import RenderSystem.IAnimated;
 	import RenderSystem.Renderman;
 	/**

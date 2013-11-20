@@ -1,8 +1,8 @@
 package Game.Map.Objects {
 	import flash.display.BitmapData;
 	import flash.geom.Rectangle;
-	import Game.Scripting.IScriptTarget;
-	import Game.Scripting.Script;
+	import Scripting.IScriptTarget;
+	import Scripting.Script;
 	import Game.Map.MapData;
 	import Interfaces.IMapObject;
 	import RenderSystem.IAnimated;

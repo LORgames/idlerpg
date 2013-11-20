@@ -1,4 +1,4 @@
-package Game.Scripting {
+package Scripting {
 	import EngineTiming.ICleanUp;
 	import flash.display.Screen;
 	import flash.geom.Vector3D;

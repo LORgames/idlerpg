@@ -7,6 +7,7 @@ using ToolCache.General;
 using ToolCache.Critters;
 using System.Text.RegularExpressions;
 using ToolCache.Scripting.Types;
+using ToolCache.Storage;
 
 namespace ToolCache.Scripting.Extensions {
     public class Variables {

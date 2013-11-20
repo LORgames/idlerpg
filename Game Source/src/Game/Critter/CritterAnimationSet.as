@@ -4,7 +4,7 @@ package Game.Critter
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.geom.Rectangle;
-	import Game.Scripting.Script;
+	import Scripting.Script;
 	import RenderSystem.IObjectLayer;
 	import RenderSystem.IAnimated;
 	import RenderSystem.Renderman;

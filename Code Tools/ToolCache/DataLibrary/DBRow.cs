@@ -5,6 +5,7 @@ using System.Text;
 using ToolCache.General;
 using ToolCache.Scripting.Types;
 using System.Windows.Forms;
+using ToolCache.Storage;
 
 namespace ToolCache.DataLibrary {
     public class DBRow {
@@ -19,13 +20,13 @@ namespace ToolCache.DataLibrary {
             }
         }
 
-        internal void ReadFromBinaryIO(BinaryIO f) {
+        internal void ReadFromBinaryIO(IStorage f) {
             for (int i = 0; i < Cells.Count; i++) {
                 Cells[i].ReadFromBinaryIO(f);
             }
         }
 
-        internal void WriteToBinaryIO(BinaryIO f) {
+        internal void WriteToBinaryIO(IStorage f) {
             for (int i = 0; i < Cells.Count; i++) {
                 Cells[i].WriteToBinaryIO(f);
             }

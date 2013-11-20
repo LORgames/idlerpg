@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ToolCache.General;
+using ToolCache.Storage;
 
 namespace ToolCache.Critters {
     public class CritterBeast : Critter {
@@ -19,7 +20,7 @@ namespace ToolCache.Critters {
             CritterType = CritterTypes.NonHumanoid;
         }
 
-        internal static CritterBeast LoadBeastoid(BinaryIO f) {
+        internal static CritterBeast LoadBeastoid(IStorage f) {
             CritterBeast c = new CritterBeast();
             
             //Load basic information
@@ -44,7 +45,7 @@ namespace ToolCache.Critters {
             return c;
         }
 
-        internal override void PackIntoBinaryIO(General.BinaryIO f) {
+        internal override void PackIntoBinaryIO(IStorage f) {
             base.PackIntoBinaryIO(f);
 
             ValidateAnimations();

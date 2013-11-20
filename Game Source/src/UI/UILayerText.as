@@ -11,7 +11,7 @@ package UI {
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
-	import Game.Scripting.GlobalVariables;
+	import Scripting.GlobalVariables;
 	import Strings.StringEx;
 	import UI.Fonts;
 	/**

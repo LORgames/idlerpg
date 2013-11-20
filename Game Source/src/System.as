@@ -9,12 +9,12 @@ package {
 	import Game.Data.DataManager;
 	import Game.Effects.EffectManager;
 	import Game.Equipment.EquipmentManager;
-	import Game.General.BinaryLoader;
-	import Game.General.ImageLoader;
+	import Loaders.BinaryLoader;
+	import Loaders.ImageLoader;
 	import Game.Map.WorldData;
-	import Game.Scripting.GlobalVariables;
-	import Game.Scripting.NetworkScriptExec;
-	import Game.Scripting.Script;
+	import Scripting.GlobalVariables;
+	import Scripting.NetworkScriptExec;
+	import Scripting.Script;
 	import InputSystems.KeyboardInput;
 	import InputSystems.MouseInput;
 	import InputSystems.TouchInput;

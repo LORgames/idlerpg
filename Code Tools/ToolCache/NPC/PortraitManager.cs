@@ -5,6 +5,7 @@ using System.Text;
 using ToolCache.General;
 using System.IO;
 using System.Drawing;
+using ToolCache.Storage;
 
 namespace ToolCache.NPC {
     public class PortraitManager {

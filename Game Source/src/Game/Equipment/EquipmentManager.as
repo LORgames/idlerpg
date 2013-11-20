@@ -2,9 +2,9 @@ package Game.Equipment {
 	import adobe.utils.CustomActions;
 	import flash.geom.Point;
 	import flash.utils.ByteArray;
-	import Game.General.BinaryLoader;
-	import Game.General.ImageLoader;
-	import Game.Scripting.Script;
+	import Loaders.BinaryLoader;
+	import Loaders.ImageLoader;
+	import Scripting.Script;
 	import Game.Map.WorldData;
 	import Storage.SaveManager;
 	/**

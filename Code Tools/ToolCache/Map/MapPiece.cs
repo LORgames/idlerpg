@@ -10,6 +10,7 @@ using ToolCache.Map.Objects;
 using ToolCache.Map.Tiles;
 using ToolCache.Map.Regions;
 using ToolCache.Map.Background;
+using ToolCache.Storage;
 
 namespace ToolCache.Map {
     public class MapPiece {

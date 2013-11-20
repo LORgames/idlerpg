@@ -7,7 +7,7 @@ package Game.Map {
 	import Game.Critter.BaseCritter;
 	import Game.Critter.Factions;
 	import Game.Effects.EffectInstance;
-	import Game.General.BinaryLoader;
+	import Loaders.BinaryLoader;
 	import Game.Map.Objects.ObjectInstance;
 	import Game.Map.Objects.ObjectInstanceAnimated;
 	import Game.Map.Objects.ObjectTemplate;
@@ -16,10 +16,10 @@ package Game.Map {
 	import Game.Map.Spawns.SpawnRegion;
 	import Game.Map.Tiles.TileHelper;
 	import Game.Map.Tiles.TileInstance;
-	import Game.Scripting.IScriptTarget;
-	import Game.Scripting.Script;
-	import Game.Scripting.ScriptInstance;
-	import Game.Scripting.ScriptTypes;
+	import Scripting.IScriptTarget;
+	import Scripting.Script;
+	import Scripting.ScriptInstance;
+	import Scripting.ScriptTypes;
 	import RenderSystem.Camera;
 	import SoundSystem.MusicPlayer;
 	/**
@@ -345,7 +345,7 @@ package Game.Map {
 			}
 		}
 		
-		/* INTERFACE Game.Scripting.IScriptTarget */
+		/* INTERFACE Scripting.IScriptTarget */
 		public function UpdatePointX(position:PointX):void { position.X = 0; position.Y = 0; position.D = 1; }
 		public function AlertMinionDeath(baseCritter:BaseCritter):void {}
 		public function ChangeState(stateID:int, isLooping:Boolean):void {}
@@ -355,7 +355,7 @@ package Game.Map {
 		
 		public function Resize():void {
 			if(SizeX > 0) {
-				Camera.Z = Math.floor(Main.I.stage.stageWidth / SizeX*2) / 2;
+				Camera.Z = Main.I.stage.stageWidth / SizeX; //Math.floor(Main.I.stage.stageWidth / SizeX*2) / 2;
 			} else {
 				Camera.Z = 1;
 				Camera.Y = 0;

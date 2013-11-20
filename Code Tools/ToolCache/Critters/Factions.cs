@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using ToolCache.General;
 using System.IO;
+using ToolCache.Storage;
 
 namespace ToolCache.Critters {
     public class Factions {
-        public const string FILENAME = Settings.Database + "/Factions.bin";
-
+        public const string FILENAME = Settings.Database + "/Factions.utf";
+        
         private static Dictionary<String, short> FactionNameToID = new Dictionary<string, short>();
         private static Dictionary<short, Faction> AllFactions = new Dictionary<short, Faction>();
         private static short NextID = 0;
@@ -51,7 +52,7 @@ namespace ToolCache.Critters {
 
         private static void ReadDatabase() {
             if (File.Exists(FILENAME)) {
-                BinaryIO b = new BinaryIO(File.ReadAllBytes(FILENAME));
+                UTFIO b = new UTFIO(File.ReadAllText(FILENAME));
 
                 short totalFactions = b.GetShort();
 
@@ -75,7 +76,7 @@ namespace ToolCache.Critters {
         }
 
         public static void SaveDatabase() {
-            BinaryIO b = new BinaryIO();
+            UTFIO b = new UTFIO();
 
             List<short[]> FriendsPairs = new List<short[]>();
             List<short[]> EnemiesPairs = new List<short[]>();

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ToolCache.General;
 using System.Drawing;
+using ToolCache.Storage;
 
 namespace ToolCache.UI {
     public class UIElement {
@@ -16,7 +17,7 @@ namespace ToolCache.UI {
         public short SizeY = 0;
         public string Script = "";
 
-        public static UIElement ReadFromBinaryIO(BinaryIO f) {
+        public static UIElement ReadFromBinaryIO(IStorage f) {
             UIElement ui = new UIElement();
 
             ui.Name = f.GetString();
@@ -38,7 +39,7 @@ namespace ToolCache.UI {
             return ui;
         }
 
-        internal void WriteToBinaryIO(BinaryIO f) {
+        internal void WriteToBinaryIO(IStorage f) {
             f.AddString(Name);
 
             f.AddShort(OffsetX);

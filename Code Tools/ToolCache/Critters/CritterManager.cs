@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using ToolCache.General;
 using System.IO;
+using ToolCache.Storage;
 
 namespace ToolCache.Critters {
     public class CritterManager {
-        public const string DATABASE_FILENAME = Settings.Database + "/Critters.bin";
+        public const string DATABASE_FILENAME = "Critters";
 
         public static Dictionary<short, Critter> Critters = new Dictionary<short, Critter>();
         public static short NextCritterID = 0;
@@ -24,10 +25,10 @@ namespace ToolCache.Critters {
         }
 
         private static void ReadDatabase() {
-            // Load object types from file
-            if (File.Exists(DATABASE_FILENAME)) {
-                BinaryIO f = new BinaryIO(File.ReadAllBytes(DATABASE_FILENAME));
+            IStorage f = StorageHelper.LoadStorage(DATABASE_FILENAME, StorageTypes.UTF);
 
+            // Load object types from file
+            if (f != null) {
                 short totalObjects = f.GetShort();
 
                 for (int i = 0; i < totalObjects; i++) {
@@ -49,7 +50,7 @@ namespace ToolCache.Critters {
         }
 
         public static void SaveDatabase() {
-            BinaryIO f = new BinaryIO();
+            IStorage f = StorageHelper.WriteStorage(StorageTypes.UTF);
 
             f.AddShort((short)Critters.Count);
 
@@ -57,7 +58,7 @@ namespace ToolCache.Critters {
                 c.PackIntoBinaryIO(f);
             }
 
-            f.Encode(DATABASE_FILENAME);
+            StorageHelper.Save(f, DATABASE_FILENAME);
             f.Dispose();
         }
 

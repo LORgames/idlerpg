@@ -6,6 +6,7 @@ using ToolCache.General;
 using ToolCache.Equipment;
 using ToolCache.Scripting;
 using ToolCache.Scripting.Types;
+using ToolCache.Storage;
 
 namespace ToolToGameExporter {
     /// <summary>

@@ -9,6 +9,7 @@ package RenderSystem {
 	import Game.Critter.Factions;
 	import Game.Effects.EffectInstance;
 	import Game.Map.Objects.ObjectInstance;
+	import Game.Map.ScriptRegion;
 	import Game.Map.Spawns.SpawnRegion;
 	import Game.Map.Tiles.TileInstance;
 	import Game.Map.Tiles.TileTemplate;
@@ -133,6 +134,19 @@ package RenderSystem {
 					
 					while (--yPos > -1) {
 						DebugLayer.graphics.drawRect(objX.Area[yPos].X, objX.Area[yPos].Y, objX.Area[yPos].W, objX.Area[yPos].H);
+					}
+				}
+				
+				//Draw all the script regions
+				DebugLayer.graphics.lineStyle(1, 0xFF00FF);
+				xPos = WorldData.CurrentMap.ScriptRegions.length;
+				
+				while (--xPos > -1) {
+					var objT:ScriptRegion = WorldData.CurrentMap.ScriptRegions[xPos];
+					yPos = objT.Area.length;
+					
+					while (--yPos > -1) {
+						DebugLayer.graphics.drawRect(objT.Area[yPos].X, objT.Area[yPos].Y, objT.Area[yPos].W, objT.Area[yPos].H);
 					}
 				}
 				

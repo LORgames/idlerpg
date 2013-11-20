@@ -4,7 +4,7 @@ package EngineTiming {
 	import flash.text.TextField;
 	import flash.utils.getTimer;
 	import Game.Map.WorldData;
-	import Game.Scripting.Script;
+	import Scripting.Script;
 	import UI.FPSCounter;
 	/**
 	 * ...

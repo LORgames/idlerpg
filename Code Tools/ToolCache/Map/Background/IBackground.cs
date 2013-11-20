@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using ToolCache.General;
 using System.Drawing;
+using ToolCache.Storage;
 
 namespace ToolCache.Map.Background {
     public interface IBackground {
-        void LoadFromBinary(BinaryIO f);
-        void SaveToBinary(BinaryIO f);
+        void LoadFromBinary(IStorage f);
+        void SaveToBinary(IStorage f);
 
         void Draw(Graphics gfx, Rectangle r);
     }

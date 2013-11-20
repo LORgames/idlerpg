@@ -7,21 +7,22 @@ using System.Text.RegularExpressions;
 using ToolCache.Scripting;
 using ToolCache.Scripting.Extensions;
 using ToolCache.General;
+using ToolCache.Storage;
 
 namespace ToolCache.UI {
     public class UITextLayer : UILayer {
         public string Message = "";
 
         public UIAnchorPoint Align = UIAnchorPoint.TopLeft;
-        public int FontFamily = 0;
-        public int FontSize = 20;
+        public int FontFamily = 0;          //Font family ID
+        public int FontSize = 20;           //Font size in pixels
         
-        public bool WordWrap = false;
-        public byte InputType = 0;
+        public bool WordWrap = false;       //Is this a box or just a line
+        public byte InputType = 0;          //Is this box an input field or not
 
-        public Color Colour = Color.White;
+        public Color Colour = Color.White;  //Font colour for the text
 
-        protected override void ReadFromBinaryIOX(General.BinaryIO f) {
+        protected override void ReadFromBinaryIOX(IStorage f) {
             base.ReadFromBinaryIOX(f);
             Message = f.GetString();
 
@@ -37,7 +38,7 @@ namespace ToolCache.UI {
             Colour = Color.FromArgb(f.GetInt());
         }
 
-        internal override void WriteToBinaryIO(General.BinaryIO f) {
+        internal override void WriteToBinaryIO(IStorage f) {
             base.WriteToBinaryIO(f);
             f.AddString(Message);
 
@@ -198,7 +199,7 @@ namespace ToolCache.UI {
             if (this.Message != "") {
                 string displayString = PrepareString();
 
-                Font f = new Font(UIManager.Fonts[FontFamily], FontSize);
+                Font f = new Font(UIManager.Fonts[FontFamily], (int)(FontSize*0.75));
                 SizeF size = gfx.MeasureString(displayString, f, WordWrap?SizeX:0);
 
                 RectangleF r = new RectangleF(0, 0, WordWrap?SizeX:size.Width, size.Height);

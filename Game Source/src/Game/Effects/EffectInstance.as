@@ -10,10 +10,10 @@ package Game.Effects {
 	import flash.geom.Rectangle;
 	import Game.Critter.BaseCritter;
 	import Game.Map.WorldData;
-	import Game.Scripting.IScriptTarget;
-	import Game.Scripting.Script;
-	import Game.Scripting.ScriptInstance;
-	import Game.Scripting.ScriptTypes;
+	import Scripting.IScriptTarget;
+	import Scripting.Script;
+	import Scripting.ScriptInstance;
+	import Scripting.ScriptTypes;
 	import Interfaces.IMapObject;
 	import RenderSystem.IAnimated;
 	import RenderSystem.IObjectLayer;
@@ -201,7 +201,7 @@ package Game.Effects {
 			WorldData.CurrentMap.EffectPop(this);
 		}
 		
-		/* INTERFACE Game.Scripting.IScriptTarget */
+		/* INTERFACE Scripting.IScriptTarget */
 		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IScriptTarget):void { if (MyScript == null) return; MyScript.Run(Script.Attacked); }
 		public function AlertMinionDeath(baseCritter:BaseCritter):void { MyScript.Run(Script.MinionDied); }
 		
@@ -234,7 +234,7 @@ package Game.Effects {
 			return CurrentState;
 		}
 		
-		/* INTERFACE Game.Scripting.IScriptTarget */
+		/* INTERFACE Scripting.IScriptTarget */
 		
 		public function GetFaction():int {
 			return 0;

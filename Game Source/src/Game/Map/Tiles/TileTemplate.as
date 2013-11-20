@@ -3,7 +3,7 @@ package Game.Map.Tiles {
 	import CollisionSystem.Rect;
 	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;
-	import Game.General.BinaryLoader;
+	import Loaders.BinaryLoader;
 	import RenderSystem.IAnimated;
 	import RenderSystem.Renderman;
 	/**

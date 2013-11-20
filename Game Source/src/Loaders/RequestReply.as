@@ -1,4 +1,4 @@
-package Game.General {
+package Loaders {
 	import flash.events.ProgressEvent;
 	/**
 	 * ...

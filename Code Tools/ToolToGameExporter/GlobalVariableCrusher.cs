@@ -6,6 +6,7 @@ using ToolCache.General;
 using ToolCache.Scripting;
 using ToolCache.Scripting.Types;
 using ToolCache.Scripting.Extensions;
+using ToolCache.Storage;
 
 namespace ToolToGameExporter {
     internal class GlobalVariableCrusher {

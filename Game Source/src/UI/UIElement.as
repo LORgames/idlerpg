@@ -5,9 +5,9 @@ package UI
 	import CollisionSystem.Rect;
 	import Debug.Drawer;
 	import flash.display.Sprite;
-	import Game.Scripting.IScriptTarget;
-	import Game.Scripting.Script;
-	import Game.Scripting.ScriptInstance;
+	import Scripting.IScriptTarget;
+	import Scripting.Script;
+	import Scripting.ScriptInstance;
 	/**
 	 * ...
 	 * @author Paul
@@ -79,7 +79,7 @@ package UI
 			return true;
 		}
 		
-		/* INTERFACE Game.Scripting.IScriptTarget */
+		/* INTERFACE Scripting.IScriptTarget */
 		public function UpdatePointX(position:PointX):void {
 			position.X = x;
 			position.Y = y;

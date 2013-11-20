@@ -5,6 +5,7 @@ using System.Text;
 using ToolCache.Sound;
 using System.IO;
 using ToolCache.General;
+using ToolCache.Storage;
 
 namespace ToolToGameExporter {
     internal class SoundCrusher {

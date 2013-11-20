@@ -36,6 +36,25 @@ namespace CityTools {
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabInfo = new System.Windows.Forms.TabPage();
+            this.pnlBeast = new System.Windows.Forms.Panel();
+            this.label23 = new System.Windows.Forms.Label();
+            this.numBeastOffsetX = new System.Windows.Forms.NumericUpDown();
+            this.label21 = new System.Windows.Forms.Label();
+            this.numBeastOffsetY = new System.Windows.Forms.NumericUpDown();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.numBeastRectHeight = new System.Windows.Forms.NumericUpDown();
+            this.numBeastRectWidth = new System.Windows.Forms.NumericUpDown();
+            this.label18 = new System.Windows.Forms.Label();
+            this.numBeastFPS = new System.Windows.Forms.NumericUpDown();
+            this.lblBeastDirection = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.cbBeastState = new System.Windows.Forms.ComboBox();
+            this.btnBeastRight = new System.Windows.Forms.Button();
+            this.btnBeastDown = new System.Windows.Forms.Button();
+            this.btnBeastUp = new System.Windows.Forms.Button();
+            this.btnBeastLeft = new System.Windows.Forms.Button();
+            this.ccBeastAnimations = new CityTools.Components.AnimationList();
             this.numDefence = new System.Windows.Forms.NumericUpDown();
             this.label16 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -76,23 +95,6 @@ namespace CityTools {
             this.label15 = new System.Windows.Forms.Label();
             this.ckbOneOfAKind = new System.Windows.Forms.CheckBox();
             this.cbBaseGroup = new System.Windows.Forms.ComboBox();
-            this.pnlBeast = new System.Windows.Forms.Panel();
-            this.label21 = new System.Windows.Forms.Label();
-            this.numBeastOffsetY = new System.Windows.Forms.NumericUpDown();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.numBeastRectHeight = new System.Windows.Forms.NumericUpDown();
-            this.numBeastRectWidth = new System.Windows.Forms.NumericUpDown();
-            this.label18 = new System.Windows.Forms.Label();
-            this.numBeastFPS = new System.Windows.Forms.NumericUpDown();
-            this.lblBeastDirection = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.cbBeastState = new System.Windows.Forms.ComboBox();
-            this.btnBeastRight = new System.Windows.Forms.Button();
-            this.btnBeastDown = new System.Windows.Forms.Button();
-            this.btnBeastUp = new System.Windows.Forms.Button();
-            this.btnBeastLeft = new System.Windows.Forms.Button();
-            this.ccBeastAnimations = new CityTools.Components.AnimationList();
             this.tabScripts = new System.Windows.Forms.TabPage();
             this.txtScript = new CityTools.Components.ScriptBox();
             this.tabLoot = new System.Windows.Forms.TabPage();
@@ -117,6 +119,12 @@ namespace CityTools {
             this.toolsMainTools.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabInfo.SuspendLayout();
+            this.pnlBeast.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numBeastOffsetX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numBeastOffsetY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numBeastRectHeight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numBeastRectWidth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numBeastFPS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numDefence)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAttackRange)).BeginInit();
             this.pnlHumanoid.SuspendLayout();
@@ -125,11 +133,6 @@ namespace CityTools {
             ((System.ComponentModel.ISupportInitialize)(this.numExperience)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMovementSpeed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numHealth)).BeginInit();
-            this.pnlBeast.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numBeastOffsetY)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numBeastRectHeight)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numBeastRectWidth)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numBeastFPS)).BeginInit();
             this.tabScripts.SuspendLayout();
             this.tabLoot.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -197,7 +200,7 @@ namespace CityTools {
             // 
             this.btnCreateHumanoidCritter.Image = ((System.Drawing.Image)(resources.GetObject("btnCreateHumanoidCritter.Image")));
             this.btnCreateHumanoidCritter.Name = "btnCreateHumanoidCritter";
-            this.btnCreateHumanoidCritter.Size = new System.Drawing.Size(135, 22);
+            this.btnCreateHumanoidCritter.Size = new System.Drawing.Size(131, 22);
             this.btnCreateHumanoidCritter.Text = "Humanoid";
             this.btnCreateHumanoidCritter.Click += new System.EventHandler(this.btnCreateHumanoidCritter_Click);
             // 
@@ -205,7 +208,7 @@ namespace CityTools {
             // 
             this.btnCreateBeastCritter.Image = ((System.Drawing.Image)(resources.GetObject("btnCreateBeastCritter.Image")));
             this.btnCreateBeastCritter.Name = "btnCreateBeastCritter";
-            this.btnCreateBeastCritter.Size = new System.Drawing.Size(135, 22);
+            this.btnCreateBeastCritter.Size = new System.Drawing.Size(131, 22);
             this.btnCreateBeastCritter.Text = "Beast Man";
             this.btnCreateBeastCritter.Click += new System.EventHandler(this.btnCreateBeastCritter_Click);
             // 
@@ -238,6 +241,7 @@ namespace CityTools {
             // 
             // tabInfo
             // 
+            this.tabInfo.Controls.Add(this.pnlBeast);
             this.tabInfo.Controls.Add(this.numDefence);
             this.tabInfo.Controls.Add(this.label16);
             this.tabInfo.Controls.Add(this.label1);
@@ -266,7 +270,6 @@ namespace CityTools {
             this.tabInfo.Controls.Add(this.label15);
             this.tabInfo.Controls.Add(this.ckbOneOfAKind);
             this.tabInfo.Controls.Add(this.cbBaseGroup);
-            this.tabInfo.Controls.Add(this.pnlBeast);
             this.tabInfo.Location = new System.Drawing.Point(4, 22);
             this.tabInfo.Name = "tabInfo";
             this.tabInfo.Padding = new System.Windows.Forms.Padding(3);
@@ -274,6 +277,265 @@ namespace CityTools {
             this.tabInfo.TabIndex = 0;
             this.tabInfo.Text = "Information";
             this.tabInfo.UseVisualStyleBackColor = true;
+            // 
+            // pnlBeast
+            // 
+            this.pnlBeast.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.pnlBeast.Controls.Add(this.label23);
+            this.pnlBeast.Controls.Add(this.numBeastOffsetX);
+            this.pnlBeast.Controls.Add(this.label21);
+            this.pnlBeast.Controls.Add(this.numBeastOffsetY);
+            this.pnlBeast.Controls.Add(this.label20);
+            this.pnlBeast.Controls.Add(this.label19);
+            this.pnlBeast.Controls.Add(this.numBeastRectHeight);
+            this.pnlBeast.Controls.Add(this.numBeastRectWidth);
+            this.pnlBeast.Controls.Add(this.label18);
+            this.pnlBeast.Controls.Add(this.numBeastFPS);
+            this.pnlBeast.Controls.Add(this.lblBeastDirection);
+            this.pnlBeast.Controls.Add(this.label17);
+            this.pnlBeast.Controls.Add(this.cbBeastState);
+            this.pnlBeast.Controls.Add(this.btnBeastRight);
+            this.pnlBeast.Controls.Add(this.btnBeastDown);
+            this.pnlBeast.Controls.Add(this.btnBeastUp);
+            this.pnlBeast.Controls.Add(this.btnBeastLeft);
+            this.pnlBeast.Controls.Add(this.ccBeastAnimations);
+            this.pnlBeast.Location = new System.Drawing.Point(197, 268);
+            this.pnlBeast.Name = "pnlBeast";
+            this.pnlBeast.Size = new System.Drawing.Size(226, 270);
+            this.pnlBeast.TabIndex = 16;
+            this.pnlBeast.Visible = false;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(0, 247);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(45, 13);
+            this.label23.TabIndex = 31;
+            this.label23.Text = "OffsetX:";
+            // 
+            // numBeastOffsetX
+            // 
+            this.numBeastOffsetX.Location = new System.Drawing.Point(47, 245);
+            this.numBeastOffsetX.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numBeastOffsetX.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+            this.numBeastOffsetX.Name = "numBeastOffsetX";
+            this.numBeastOffsetX.Size = new System.Drawing.Size(62, 20);
+            this.numBeastOffsetX.TabIndex = 30;
+            this.numBeastOffsetX.ValueChanged += new System.EventHandler(this.BeastRectValueChanged);
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(112, 247);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(45, 13);
+            this.label21.TabIndex = 29;
+            this.label21.Text = "OffsetY:";
+            // 
+            // numBeastOffsetY
+            // 
+            this.numBeastOffsetY.Location = new System.Drawing.Point(159, 245);
+            this.numBeastOffsetY.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numBeastOffsetY.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+            this.numBeastOffsetY.Name = "numBeastOffsetY";
+            this.numBeastOffsetY.Size = new System.Drawing.Size(62, 20);
+            this.numBeastOffsetY.TabIndex = 28;
+            this.numBeastOffsetY.ValueChanged += new System.EventHandler(this.BeastRectValueChanged);
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(112, 221);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(41, 13);
+            this.label20.TabIndex = 27;
+            this.label20.Text = "Height:";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(3, 221);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(38, 13);
+            this.label19.TabIndex = 26;
+            this.label19.Text = "Width:";
+            // 
+            // numBeastRectHeight
+            // 
+            this.numBeastRectHeight.Location = new System.Drawing.Point(159, 219);
+            this.numBeastRectHeight.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numBeastRectHeight.Name = "numBeastRectHeight";
+            this.numBeastRectHeight.Size = new System.Drawing.Size(62, 20);
+            this.numBeastRectHeight.TabIndex = 25;
+            this.numBeastRectHeight.ValueChanged += new System.EventHandler(this.BeastRectValueChanged);
+            // 
+            // numBeastRectWidth
+            // 
+            this.numBeastRectWidth.Location = new System.Drawing.Point(47, 219);
+            this.numBeastRectWidth.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numBeastRectWidth.Name = "numBeastRectWidth";
+            this.numBeastRectWidth.Size = new System.Drawing.Size(62, 20);
+            this.numBeastRectWidth.TabIndex = 24;
+            this.numBeastRectWidth.ValueChanged += new System.EventHandler(this.BeastRectValueChanged);
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(50, 197);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(79, 13);
+            this.label18.TabIndex = 23;
+            this.label18.Text = "Animation FPS:";
+            // 
+            // numBeastFPS
+            // 
+            this.numBeastFPS.DecimalPlaces = 2;
+            this.numBeastFPS.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            131072});
+            this.numBeastFPS.Location = new System.Drawing.Point(135, 193);
+            this.numBeastFPS.Maximum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.numBeastFPS.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            131072});
+            this.numBeastFPS.Name = "numBeastFPS";
+            this.numBeastFPS.Size = new System.Drawing.Size(86, 20);
+            this.numBeastFPS.TabIndex = 22;
+            this.numBeastFPS.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            65536});
+            this.numBeastFPS.ValueChanged += new System.EventHandler(this.ValueChanged);
+            // 
+            // lblBeastDirection
+            // 
+            this.lblBeastDirection.AutoSize = true;
+            this.lblBeastDirection.Location = new System.Drawing.Point(180, 6);
+            this.lblBeastDirection.Name = "lblBeastDirection";
+            this.lblBeastDirection.Size = new System.Drawing.Size(25, 13);
+            this.lblBeastDirection.TabIndex = 21;
+            this.lblBeastDirection.Text = "Left";
+            this.lblBeastDirection.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(3, 6);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(35, 13);
+            this.label17.TabIndex = 20;
+            this.label17.Text = "State:";
+            // 
+            // cbBeastState
+            // 
+            this.cbBeastState.FormattingEnabled = true;
+            this.cbBeastState.Location = new System.Drawing.Point(44, 3);
+            this.cbBeastState.Name = "cbBeastState";
+            this.cbBeastState.Size = new System.Drawing.Size(106, 21);
+            this.cbBeastState.TabIndex = 19;
+            // 
+            // btnBeastRight
+            // 
+            this.btnBeastRight.AllowDrop = true;
+            this.btnBeastRight.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnBeastRight.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnBeastRight.Location = new System.Drawing.Point(59, 134);
+            this.btnBeastRight.Name = "btnBeastRight";
+            this.btnBeastRight.Size = new System.Drawing.Size(50, 52);
+            this.btnBeastRight.TabIndex = 18;
+            this.btnBeastRight.Text = "Right";
+            this.btnBeastRight.UseVisualStyleBackColor = false;
+            this.btnBeastRight.DragDrop += new System.Windows.Forms.DragEventHandler(this.btnBeastDirection_DragDrop);
+            this.btnBeastRight.DragOver += new System.Windows.Forms.DragEventHandler(this.btnBeastDirection_DragEnter);
+            this.btnBeastRight.MouseEnter += new System.EventHandler(this.btnBeastDirection_MouseEnter);
+            // 
+            // btnBeastDown
+            // 
+            this.btnBeastDown.AllowDrop = true;
+            this.btnBeastDown.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnBeastDown.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnBeastDown.Location = new System.Drawing.Point(171, 134);
+            this.btnBeastDown.Name = "btnBeastDown";
+            this.btnBeastDown.Size = new System.Drawing.Size(50, 52);
+            this.btnBeastDown.TabIndex = 17;
+            this.btnBeastDown.Text = "Down";
+            this.btnBeastDown.UseVisualStyleBackColor = false;
+            this.btnBeastDown.DragDrop += new System.Windows.Forms.DragEventHandler(this.btnBeastDirection_DragDrop);
+            this.btnBeastDown.DragOver += new System.Windows.Forms.DragEventHandler(this.btnBeastDirection_DragEnter);
+            this.btnBeastDown.MouseEnter += new System.EventHandler(this.btnBeastDirection_MouseEnter);
+            // 
+            // btnBeastUp
+            // 
+            this.btnBeastUp.AllowDrop = true;
+            this.btnBeastUp.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnBeastUp.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnBeastUp.Location = new System.Drawing.Point(115, 134);
+            this.btnBeastUp.Name = "btnBeastUp";
+            this.btnBeastUp.Size = new System.Drawing.Size(50, 52);
+            this.btnBeastUp.TabIndex = 16;
+            this.btnBeastUp.Text = "Up";
+            this.btnBeastUp.UseVisualStyleBackColor = false;
+            this.btnBeastUp.DragDrop += new System.Windows.Forms.DragEventHandler(this.btnBeastDirection_DragDrop);
+            this.btnBeastUp.DragOver += new System.Windows.Forms.DragEventHandler(this.btnBeastDirection_DragEnter);
+            this.btnBeastUp.MouseEnter += new System.EventHandler(this.btnBeastDirection_MouseEnter);
+            // 
+            // btnBeastLeft
+            // 
+            this.btnBeastLeft.AllowDrop = true;
+            this.btnBeastLeft.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnBeastLeft.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnBeastLeft.Location = new System.Drawing.Point(3, 134);
+            this.btnBeastLeft.Name = "btnBeastLeft";
+            this.btnBeastLeft.Size = new System.Drawing.Size(50, 52);
+            this.btnBeastLeft.TabIndex = 15;
+            this.btnBeastLeft.Text = "Left";
+            this.btnBeastLeft.UseVisualStyleBackColor = false;
+            this.btnBeastLeft.DragDrop += new System.Windows.Forms.DragEventHandler(this.btnBeastDirection_DragDrop);
+            this.btnBeastLeft.DragOver += new System.Windows.Forms.DragEventHandler(this.btnBeastDirection_DragEnter);
+            this.btnBeastLeft.MouseEnter += new System.EventHandler(this.btnBeastDirection_MouseEnter);
+            // 
+            // ccBeastAnimations
+            // 
+            this.ccBeastAnimations.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ccBeastAnimations.Location = new System.Drawing.Point(3, 28);
+            this.ccBeastAnimations.Name = "ccBeastAnimations";
+            this.ccBeastAnimations.Size = new System.Drawing.Size(218, 103);
+            this.ccBeastAnimations.TabIndex = 0;
+            this.ccBeastAnimations.AnimationChanged += new CityTools.ChangedEventHandler(this.ccBeastAnimations_AnimationChanged);
             // 
             // numDefence
             // 
@@ -415,7 +677,7 @@ namespace CityTools {
             this.pnlHumanoid.Controls.Add(this.cbHumanoidBody);
             this.pnlHumanoid.Controls.Add(this.cbHumanoidPants);
             this.pnlHumanoid.Controls.Add(this.cbHumanoidShadow);
-            this.pnlHumanoid.Location = new System.Drawing.Point(197, 274);
+            this.pnlHumanoid.Location = new System.Drawing.Point(203, 274);
             this.pnlHumanoid.Name = "pnlHumanoid";
             this.pnlHumanoid.Size = new System.Drawing.Size(226, 252);
             this.pnlHumanoid.TabIndex = 15;
@@ -748,236 +1010,6 @@ namespace CityTools {
             this.cbBaseGroup.TabIndex = 17;
             this.cbBaseGroup.TextChanged += new System.EventHandler(this.ValueChanged);
             // 
-            // pnlBeast
-            // 
-            this.pnlBeast.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.pnlBeast.Controls.Add(this.label21);
-            this.pnlBeast.Controls.Add(this.numBeastOffsetY);
-            this.pnlBeast.Controls.Add(this.label20);
-            this.pnlBeast.Controls.Add(this.label19);
-            this.pnlBeast.Controls.Add(this.numBeastRectHeight);
-            this.pnlBeast.Controls.Add(this.numBeastRectWidth);
-            this.pnlBeast.Controls.Add(this.label18);
-            this.pnlBeast.Controls.Add(this.numBeastFPS);
-            this.pnlBeast.Controls.Add(this.lblBeastDirection);
-            this.pnlBeast.Controls.Add(this.label17);
-            this.pnlBeast.Controls.Add(this.cbBeastState);
-            this.pnlBeast.Controls.Add(this.btnBeastRight);
-            this.pnlBeast.Controls.Add(this.btnBeastDown);
-            this.pnlBeast.Controls.Add(this.btnBeastUp);
-            this.pnlBeast.Controls.Add(this.btnBeastLeft);
-            this.pnlBeast.Controls.Add(this.ccBeastAnimations);
-            this.pnlBeast.Location = new System.Drawing.Point(197, 268);
-            this.pnlBeast.Name = "pnlBeast";
-            this.pnlBeast.Size = new System.Drawing.Size(226, 270);
-            this.pnlBeast.TabIndex = 16;
-            this.pnlBeast.Visible = false;
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(112, 247);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(45, 13);
-            this.label21.TabIndex = 29;
-            this.label21.Text = "OffsetY:";
-            // 
-            // numBeastOffsetY
-            // 
-            this.numBeastOffsetY.Location = new System.Drawing.Point(159, 245);
-            this.numBeastOffsetY.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.numBeastOffsetY.Minimum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            -2147483648});
-            this.numBeastOffsetY.Name = "numBeastOffsetY";
-            this.numBeastOffsetY.Size = new System.Drawing.Size(62, 20);
-            this.numBeastOffsetY.TabIndex = 28;
-            this.numBeastOffsetY.ValueChanged += new System.EventHandler(this.BeastRectValueChanged);
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(112, 221);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(41, 13);
-            this.label20.TabIndex = 27;
-            this.label20.Text = "Height:";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(3, 221);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(38, 13);
-            this.label19.TabIndex = 26;
-            this.label19.Text = "Width:";
-            // 
-            // numBeastRectHeight
-            // 
-            this.numBeastRectHeight.Location = new System.Drawing.Point(159, 219);
-            this.numBeastRectHeight.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.numBeastRectHeight.Name = "numBeastRectHeight";
-            this.numBeastRectHeight.Size = new System.Drawing.Size(62, 20);
-            this.numBeastRectHeight.TabIndex = 25;
-            this.numBeastRectHeight.ValueChanged += new System.EventHandler(this.BeastRectValueChanged);
-            // 
-            // numBeastRectWidth
-            // 
-            this.numBeastRectWidth.Location = new System.Drawing.Point(47, 219);
-            this.numBeastRectWidth.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.numBeastRectWidth.Name = "numBeastRectWidth";
-            this.numBeastRectWidth.Size = new System.Drawing.Size(62, 20);
-            this.numBeastRectWidth.TabIndex = 24;
-            this.numBeastRectWidth.ValueChanged += new System.EventHandler(this.BeastRectValueChanged);
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(50, 197);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(79, 13);
-            this.label18.TabIndex = 23;
-            this.label18.Text = "Animation FPS:";
-            // 
-            // numBeastFPS
-            // 
-            this.numBeastFPS.DecimalPlaces = 2;
-            this.numBeastFPS.Increment = new decimal(new int[] {
-            5,
-            0,
-            0,
-            131072});
-            this.numBeastFPS.Location = new System.Drawing.Point(135, 193);
-            this.numBeastFPS.Maximum = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            this.numBeastFPS.Minimum = new decimal(new int[] {
-            5,
-            0,
-            0,
-            131072});
-            this.numBeastFPS.Name = "numBeastFPS";
-            this.numBeastFPS.Size = new System.Drawing.Size(86, 20);
-            this.numBeastFPS.TabIndex = 22;
-            this.numBeastFPS.Value = new decimal(new int[] {
-            2,
-            0,
-            0,
-            65536});
-            this.numBeastFPS.ValueChanged += new System.EventHandler(this.ValueChanged);
-            // 
-            // lblBeastDirection
-            // 
-            this.lblBeastDirection.AutoSize = true;
-            this.lblBeastDirection.Location = new System.Drawing.Point(180, 6);
-            this.lblBeastDirection.Name = "lblBeastDirection";
-            this.lblBeastDirection.Size = new System.Drawing.Size(25, 13);
-            this.lblBeastDirection.TabIndex = 21;
-            this.lblBeastDirection.Text = "Left";
-            this.lblBeastDirection.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(3, 6);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(35, 13);
-            this.label17.TabIndex = 20;
-            this.label17.Text = "State:";
-            // 
-            // cbBeastState
-            // 
-            this.cbBeastState.FormattingEnabled = true;
-            this.cbBeastState.Location = new System.Drawing.Point(44, 3);
-            this.cbBeastState.Name = "cbBeastState";
-            this.cbBeastState.Size = new System.Drawing.Size(106, 21);
-            this.cbBeastState.TabIndex = 19;
-            // 
-            // btnBeastRight
-            // 
-            this.btnBeastRight.AllowDrop = true;
-            this.btnBeastRight.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnBeastRight.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnBeastRight.Location = new System.Drawing.Point(59, 134);
-            this.btnBeastRight.Name = "btnBeastRight";
-            this.btnBeastRight.Size = new System.Drawing.Size(50, 52);
-            this.btnBeastRight.TabIndex = 18;
-            this.btnBeastRight.Text = "Right";
-            this.btnBeastRight.UseVisualStyleBackColor = false;
-            this.btnBeastRight.DragDrop += new System.Windows.Forms.DragEventHandler(this.btnBeastDirection_DragDrop);
-            this.btnBeastRight.DragOver += new System.Windows.Forms.DragEventHandler(this.btnBeastDirection_DragEnter);
-            this.btnBeastRight.MouseEnter += new System.EventHandler(this.btnBeastDirection_MouseEnter);
-            // 
-            // btnBeastDown
-            // 
-            this.btnBeastDown.AllowDrop = true;
-            this.btnBeastDown.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnBeastDown.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnBeastDown.Location = new System.Drawing.Point(171, 134);
-            this.btnBeastDown.Name = "btnBeastDown";
-            this.btnBeastDown.Size = new System.Drawing.Size(50, 52);
-            this.btnBeastDown.TabIndex = 17;
-            this.btnBeastDown.Text = "Down";
-            this.btnBeastDown.UseVisualStyleBackColor = false;
-            this.btnBeastDown.DragDrop += new System.Windows.Forms.DragEventHandler(this.btnBeastDirection_DragDrop);
-            this.btnBeastDown.DragOver += new System.Windows.Forms.DragEventHandler(this.btnBeastDirection_DragEnter);
-            this.btnBeastDown.MouseEnter += new System.EventHandler(this.btnBeastDirection_MouseEnter);
-            // 
-            // btnBeastUp
-            // 
-            this.btnBeastUp.AllowDrop = true;
-            this.btnBeastUp.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnBeastUp.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnBeastUp.Location = new System.Drawing.Point(115, 134);
-            this.btnBeastUp.Name = "btnBeastUp";
-            this.btnBeastUp.Size = new System.Drawing.Size(50, 52);
-            this.btnBeastUp.TabIndex = 16;
-            this.btnBeastUp.Text = "Up";
-            this.btnBeastUp.UseVisualStyleBackColor = false;
-            this.btnBeastUp.DragDrop += new System.Windows.Forms.DragEventHandler(this.btnBeastDirection_DragDrop);
-            this.btnBeastUp.DragOver += new System.Windows.Forms.DragEventHandler(this.btnBeastDirection_DragEnter);
-            this.btnBeastUp.MouseEnter += new System.EventHandler(this.btnBeastDirection_MouseEnter);
-            // 
-            // btnBeastLeft
-            // 
-            this.btnBeastLeft.AllowDrop = true;
-            this.btnBeastLeft.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnBeastLeft.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnBeastLeft.Location = new System.Drawing.Point(3, 134);
-            this.btnBeastLeft.Name = "btnBeastLeft";
-            this.btnBeastLeft.Size = new System.Drawing.Size(50, 52);
-            this.btnBeastLeft.TabIndex = 15;
-            this.btnBeastLeft.Text = "Left";
-            this.btnBeastLeft.UseVisualStyleBackColor = false;
-            this.btnBeastLeft.DragDrop += new System.Windows.Forms.DragEventHandler(this.btnBeastDirection_DragDrop);
-            this.btnBeastLeft.DragOver += new System.Windows.Forms.DragEventHandler(this.btnBeastDirection_DragEnter);
-            this.btnBeastLeft.MouseEnter += new System.EventHandler(this.btnBeastDirection_MouseEnter);
-            // 
-            // ccBeastAnimations
-            // 
-            this.ccBeastAnimations.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ccBeastAnimations.Location = new System.Drawing.Point(3, 28);
-            this.ccBeastAnimations.Name = "ccBeastAnimations";
-            this.ccBeastAnimations.Size = new System.Drawing.Size(218, 103);
-            this.ccBeastAnimations.TabIndex = 0;
-            this.ccBeastAnimations.AnimationChanged += new CityTools.ChangedEventHandler(this.ccBeastAnimations_AnimationChanged);
-            // 
             // tabScripts
             // 
             this.tabScripts.Controls.Add(this.txtScript);
@@ -1174,6 +1206,13 @@ namespace CityTools {
             this.tabControl1.ResumeLayout(false);
             this.tabInfo.ResumeLayout(false);
             this.tabInfo.PerformLayout();
+            this.pnlBeast.ResumeLayout(false);
+            this.pnlBeast.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numBeastOffsetX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numBeastOffsetY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numBeastRectHeight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numBeastRectWidth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numBeastFPS)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numDefence)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAttackRange)).EndInit();
             this.pnlHumanoid.ResumeLayout(false);
@@ -1183,12 +1222,6 @@ namespace CityTools {
             ((System.ComponentModel.ISupportInitialize)(this.numExperience)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMovementSpeed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numHealth)).EndInit();
-            this.pnlBeast.ResumeLayout(false);
-            this.pnlBeast.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numBeastOffsetY)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numBeastRectHeight)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numBeastRectWidth)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numBeastFPS)).EndInit();
             this.tabScripts.ResumeLayout(false);
             this.tabLoot.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
@@ -1286,5 +1319,7 @@ namespace CityTools {
         private System.Windows.Forms.Timer redrawTimer;
         private System.Windows.Forms.NumericUpDown numDefence;
         private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.NumericUpDown numBeastOffsetX;
     }
 }

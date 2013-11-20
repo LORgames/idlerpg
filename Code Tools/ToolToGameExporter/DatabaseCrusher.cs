@@ -5,6 +5,7 @@ using System.Text;
 using ToolCache.DataLibrary;
 using ToolCache.General;
 using ToolCache.Scripting.Types;
+using ToolCache.Storage;
 
 namespace ToolToGameExporter {
     public class DatabaseCrusher {

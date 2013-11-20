@@ -1,6 +1,6 @@
 package Strings {
 	import Game.Data.DataManager;
-	import Game.Scripting.GlobalVariables;
+	import Scripting.GlobalVariables;
 	/**
 	 * ...
 	 * @author Paul

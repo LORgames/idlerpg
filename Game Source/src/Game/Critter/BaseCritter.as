@@ -16,11 +16,11 @@ package Game.Critter {
 	import Game.Map.Tiles.TileInstance;
 	import Game.Map.Tiles.TileTemplate;
 	import Game.Map.WorldData;
-	import Game.Scripting.GlobalVariables;
-	import Game.Scripting.IScriptTarget;
-	import Game.Scripting.Script;
-	import Game.Scripting.ScriptInstance;
-	import Game.Scripting.ScriptTypes;
+	import Scripting.GlobalVariables;
+	import Scripting.IScriptTarget;
+	import Scripting.Script;
+	import Scripting.ScriptInstance;
+	import Scripting.ScriptTypes;
 	import Interfaces.IMapObject;
 	import RenderSystem.Camera;
 	/**
@@ -282,7 +282,7 @@ package Game.Critter {
 			
 			if (WorldData.ME != this && dt > 0) {
 				//AI AGENTS
-				if ((MyAIType | AITypes.Aggressive) > 0 && (CurrentTarget == null || (MyAIType | AITypes.ClosestTarget) > 0 || (MyAIType | AITypes.TargetLowestHealth) > 0)) {
+				if ((MyAIType & AITypes.Aggressive) > 0 && (CurrentTarget == null || (MyAIType & AITypes.ClosestTarget) > 0 || (MyAIType & AITypes.TargetLowestHealth) > 0)) {
 					//Scan for a new target
 					var r:Rect = new Rect(false, null, X - AlertRangeSqrt, Y - AlertRangeSqrt * Global.PerspectiveSkew, AlertRangeSqrt * 2, AlertRangeSqrt * 2 * Global.PerspectiveSkew);
 					
@@ -296,7 +296,9 @@ package Game.Critter {
 						}
 					}
 					
+					// Draw the targetting area
 					Drawer.AddDebugRect(r, Factions.GetFactionColour(PrimaryFaction));
+					
 					
 					var objs:Vector.<IScriptTarget> = new Vector.<IScriptTarget>();
 					CurrentMap.GetObjectsInArea(r, objs, ((MyAIType & AITypes.Supportive) > 0)?ScriptTypes.Ally:ScriptTypes.Enemy, this);
@@ -328,8 +330,6 @@ package Game.Critter {
 								this_target_index = x.CurrentHP - x.MaximumHP;
 								
 								if (this_target_index >= 0) continue;
-								
-								trace(x + " HP=" +x.CurrentHP + "/" + x.MaximumHP + " Missing=" + this_target_index);
 								
 								if (this_target_index < best_target_index || CurrentTarget == null) {
 									CurrentTarget = x;
@@ -381,7 +381,7 @@ package Game.Critter {
 						CurrentTarget = null;
 						MyScript.Run(Script.AIEvent, null, Script.AIEvent_TargetOutOfRange);
 					} else {
-						RequestMove( -dx, -dy);
+						RequestMove(-dx, -dy);
 						procTarget = true;
 					}
 				}
@@ -480,7 +480,7 @@ package Game.Critter {
 			Clock.I.Remove(this);
 		}
 		
-		/* INTERFACE Game.Scripting.IScriptTarget */
+		/* INTERFACE Scripting.IScriptTarget */
 		
 		public function AlertMinionDeath(minion:BaseCritter):void {
 			if (CurrentHP > 0) {
@@ -532,7 +532,7 @@ package Game.Critter {
 			position.D = direction;
 		}
 		
-		/* INTERFACE Game.Scripting.IScriptTarget */
+		/* INTERFACE Scripting.IScriptTarget */
 		
 		public function GetFaction():int {
 			return PrimaryFaction;

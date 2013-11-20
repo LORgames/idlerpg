@@ -4,8 +4,8 @@ package Storage.SaveAdv
 	import flash.events.NetStatusEvent;
 	import flash.net.SharedObject;
 	import flash.net.SharedObjectFlushStatus;
-	import Game.Scripting.GlobalVariables;
-	import Game.Scripting.Script;
+	import Scripting.GlobalVariables;
+	import Scripting.Script;
 	import Storage.SaveInfo;
 	/**
 	 * ...

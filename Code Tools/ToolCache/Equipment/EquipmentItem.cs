@@ -5,6 +5,7 @@ using System.Text;
 using ToolCache.General;
 using System.Drawing;
 using ToolCache.Animation;
+using ToolCache.Storage;
 
 namespace ToolCache.Equipment {
     public class EquipmentItem {
@@ -41,7 +42,7 @@ namespace ToolCache.Equipment {
             }
         }
 
-        public static EquipmentItem UnpackFromBinaryIO(BinaryIO f) {
+        public static EquipmentItem UnpackFromBinaryIO(IStorage f) {
             EquipmentItem t = new EquipmentItem(false);
 
             t.Name = f.GetString();
@@ -101,7 +102,7 @@ namespace ToolCache.Equipment {
             }
         }
 
-        public void PackIntoBinaryIO(BinaryIO f) {
+        public void PackIntoBinaryIO(IStorage f) {
             f.AddString(Name);
             f.AddByte((byte)Type);
 

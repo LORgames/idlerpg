@@ -7,7 +7,7 @@ package QDMF.Connectors {
 	import flash.net.ServerSocket;
 	import flash.net.Socket;
 	import flash.utils.ByteArray;
-	import Game.Scripting.Script;
+	import Scripting.Script;
 	import QDMF.IHLNetwork;
 	import QDMF.Packet;
 	import QDMF.SocketTriggers;

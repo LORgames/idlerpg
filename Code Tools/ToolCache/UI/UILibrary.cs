@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ToolCache.General;
+using ToolCache.Storage;
 
 namespace ToolCache.UI {
     public class UILibrary {
@@ -13,7 +14,7 @@ namespace ToolCache.UI {
             Name = name;
         }
 
-        internal static UILibrary ReadFromBinaryIO(BinaryIO f) {
+        internal static UILibrary ReadFromBinaryIO(IStorage f) {
             UILibrary lib = new UILibrary(f.GetString());
 
             int i = f.GetShort();
@@ -25,7 +26,7 @@ namespace ToolCache.UI {
             return lib;
         }
 
-        internal void WriteToBinaryIO(BinaryIO f) {
+        internal void WriteToBinaryIO(IStorage f) {
             f.AddString(Name);
 
             int i = 0;

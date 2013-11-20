@@ -6,10 +6,11 @@ using ToolCache.General;
 using System.IO;
 using ToolCache.Animation;
 using System.Drawing;
+using ToolCache.Storage;
 
 namespace ToolCache.Map.Objects {
     public class MapObjectCache {
-        public const string RESOLVED_DATABASE_FILENAME = Settings.Database + "Objects.bin";
+        public const string RESOLVED_DATABASE_FILENAME = "Objects";
 
         public static Dictionary<short, MapObject> ObjectTypes = new Dictionary<short, MapObject>();
         private static Dictionary<string, List<short>> GroupsToObjectUUIDS = new Dictionary<string, List<short>>();
@@ -45,9 +46,9 @@ namespace ToolCache.Map.Objects {
 
         private static void ReadDatabase() {
             // Load object types from file
-            if (File.Exists(RESOLVED_DATABASE_FILENAME)) {
-                BinaryIO f = new BinaryIO(File.ReadAllBytes(RESOLVED_DATABASE_FILENAME));
+            IStorage f = StorageHelper.LoadStorage(RESOLVED_DATABASE_FILENAME, StorageTypes.UTF);
 
+            if (f != null) {
                 int totalObjects = f.GetInt();
 
                 //This is where we load the BASIC information
@@ -55,18 +56,21 @@ namespace ToolCache.Map.Objects {
                     MapObject m = MapObject.LoadFromBinaryIO(f);
                     AddObject(m);
                 }
+
+                f.Dispose();
             }
         }
 
         public static void WriteDatabase() {
-            BinaryIO f = new BinaryIO();
+            IStorage f = StorageHelper.WriteStorage(StorageTypes.UTF);
+
             f.AddInt(ObjectTypes.Count);
 
             foreach (KeyValuePair<short, MapObject> kvp in ObjectTypes) {
                 kvp.Value.WriteToBinaryIO(f);
             }
 
-            f.Encode(RESOLVED_DATABASE_FILENAME);
+            StorageHelper.Save(f, RESOLVED_DATABASE_FILENAME);
         }
 
         public static void AddObject(MapObject m) {

@@ -5,6 +5,7 @@ using System.Text;
 using ToolCache.Animation;
 using System.Drawing;
 using ToolCache.General;
+using ToolCache.Storage;
 
 namespace ToolCache.Map.Objects {
     public class MapObject {
@@ -26,7 +27,7 @@ namespace ToolCache.Map.Objects {
             Animations["Default"] = new AnimatedObject();
         }
 
-        internal static MapObject LoadFromBinaryIO(BinaryIO f) {
+        internal static MapObject LoadFromBinaryIO(IStorage f) {
             MapObject m = new MapObject();
 
             m.ObjectID = f.GetShort();
@@ -66,7 +67,7 @@ namespace ToolCache.Map.Objects {
             return m;
         }
 
-        internal void WriteToBinaryIO(BinaryIO f) {
+        internal void WriteToBinaryIO(IStorage f) {
             CleanUpAnimations();
 
             f.AddShort(ObjectID);

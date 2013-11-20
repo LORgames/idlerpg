@@ -14,16 +14,16 @@ namespace CityTools {
         [STAThread]
         static void Main() {
 #if (!DEBUG)
-            try {
+            //try {
 #endif
                 ToolCache.General.Startup.GoGoGadget();
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new MainWindow());
 #if (!DEBUG)
-            } catch (Exception ex) {
-                MessageBox.Show("Message:\n" + ex.Message + "\n\nStack:\n" + ex.StackTrace);
-            }
+            //} catch (Exception ex) {
+            //    MessageBox.Show("Message:\n" + ex.Message + "\n\nStack:\n" + ex.StackTrace);
+            //}
 #endif
         }
     }

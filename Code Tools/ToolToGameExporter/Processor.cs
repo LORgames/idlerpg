@@ -10,6 +10,7 @@ namespace ToolToGameExporter {
     public class Processor {
 
         internal static List<ProcessingError> Errors = new List<ProcessingError>();
+        internal static List<ProcessingError> Warnings = new List<ProcessingError>();
 
         public static bool Go(string p, bool silent = false) {
             Thread t = new Thread(new ParameterizedThreadStart(TaskMon));

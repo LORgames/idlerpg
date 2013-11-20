@@ -6,5 +6,4 @@ package RenderSystem {
 	public interface IAnimated {
 		function UpdateAnimation(dt:Number):void;
 	}
-	
 }

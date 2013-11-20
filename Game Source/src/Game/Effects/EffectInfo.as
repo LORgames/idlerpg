@@ -1,7 +1,7 @@
 package Game.Effects {
 	import flash.display.BitmapData;
-	import Game.General.ImageLoader;
-	import Game.Scripting.Script;
+	import Loaders.ImageLoader;
+	import Scripting.Script;
 	/**
 	 * ...
 	 * @author Paul

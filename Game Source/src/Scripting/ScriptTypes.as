@@ -1,4 +1,4 @@
-package Game.Scripting {
+package Scripting {
 	/**
 	 * ...
 	 * @author Paul

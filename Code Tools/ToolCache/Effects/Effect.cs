@@ -5,6 +5,7 @@ using System.Text;
 using ToolCache.Animation;
 using System.Drawing;
 using ToolCache.General;
+using ToolCache.Storage;
 
 namespace ToolCache.Effects {
     public class Effect {
@@ -23,7 +24,7 @@ namespace ToolCache.Effects {
         public Rectangle Area = new Rectangle();
         public Boolean IsSolid = true;
 
-        internal static Effect ReadFromBinaryIO(BinaryIO f) {
+        internal static Effect ReadFromBinaryIO(IStorage f) {
             Effect e = new Effect();
 
             e.Name = f.GetString();
@@ -54,7 +55,7 @@ namespace ToolCache.Effects {
             return e;
         }
 
-        internal void WriteToBinaryIO(BinaryIO f) {
+        internal void WriteToBinaryIO(IStorage f) {
             CleanUpAnimations();
 
             f.AddString(Name);

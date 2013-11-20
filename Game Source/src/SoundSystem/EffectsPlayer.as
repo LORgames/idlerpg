@@ -3,7 +3,7 @@ package SoundSystem {
 	import flash.media.Sound;
 	import flash.net.URLRequest;
 	import flash.utils.ByteArray;
-	import Game.General.BinaryLoader;
+	import Loaders.BinaryLoader;
 	/**
 	 * ...
 	 * @author Paul

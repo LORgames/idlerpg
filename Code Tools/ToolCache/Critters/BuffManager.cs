@@ -6,6 +6,7 @@ using ToolCache.General;
 using System.ComponentModel;
 using System.IO;
 using ToolCache.UI;
+using ToolCache.Storage;
 
 namespace ToolCache.Critters {
     public class BuffManager {
@@ -69,7 +70,7 @@ namespace ToolCache.Critters {
             Name = "Unnamed";
         }
 
-        public static Buff ReadFromBinaryIO(BinaryIO f) {
+        public static Buff ReadFromBinaryIO(IStorage f) {
             Buff b = new Buff();
 
             b.Name = f.GetString();
@@ -87,7 +88,7 @@ namespace ToolCache.Critters {
             return b;
         }
 
-        public void WriteToBinaryIO(BinaryIO f) {
+        public void WriteToBinaryIO(IStorage f) {
             f.AddString(Name);
             f.AddShort(IconID);
 

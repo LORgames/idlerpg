@@ -1,17 +1,19 @@
-package Game.General {
-	import flash.display.Bitmap;
-	import flash.display.Loader;
+package Loaders {
+	import adobe.utils.CustomActions;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
 	import flash.events.SecurityErrorEvent;
+	import flash.net.URLLoader;
+	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
+	import flash.utils.ByteArray;
 	/**
 	 * ...
 	 * @author Paul
 	 */
-	public class ImageLoader {
-		private static var loader:Loader = new Loader();
+	public class BinaryLoader {
+		private static var loader:URLLoader = new URLLoader();
 		
 		private static var currentInfo:RequestReply = null;
 		private static var loadQueue:Vector.<RequestReply> = new Vector.<RequestReply>();
@@ -21,10 +23,12 @@ package Game.General {
 		
 		public static function Initialize():void {
 			//Add Event Listeners
-			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, Event_LoadingCompleted);
-			loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS, Event_LoadProgress);
-			loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, Event_IOError);
-			loader.contentLoaderInfo.addEventListener(SecurityErrorEvent.SECURITY_ERROR, Event_SecurityError);
+			loader.addEventListener(Event.COMPLETE, Event_LoadingCompleted);
+			loader.addEventListener(ProgressEvent.PROGRESS, Event_LoadProgress);
+			loader.addEventListener(IOErrorEvent.IO_ERROR, Event_IOError);
+			loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, Event_SecurityError);
+			
+			loader.dataFormat = URLLoaderDataFormat.BINARY;
 		}
 		
 		private static function ProcessNext():void {
@@ -37,10 +41,8 @@ package Game.General {
 		}
 		
 		private static function Event_LoadingCompleted(e:Event):void {
-			var image:Bitmap = Bitmap(loader.content); 
-			currentInfo.SuccessCallback(image.bitmapData);
-			image.bitmapData.dispose();
-			
+			Global.LoadingTotal--;
+			currentInfo.SuccessCallback(loader.data);
 			CurrentLoadingEnded();
 		}
 		
@@ -66,7 +68,6 @@ package Game.General {
 			currentInfo.Clear();
 			UnusedObjects.push(currentInfo);
 			currentInfo = null;
-			Global.LoadingTotal--;
 			
 			ProcessNext();
 		}
@@ -87,6 +88,11 @@ package Game.General {
 			Global.LoadingTotal++;
 			
 			ProcessNext();
+		}
+		
+		public static function GetString(b:ByteArray):String {
+			var l:int = b.readShort();
+			return b.readMultiByte(l, "utf-8"); //map name
 		}
 	}
 

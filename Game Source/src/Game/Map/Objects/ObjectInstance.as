@@ -7,9 +7,9 @@ package Game.Map.Objects {
 	import Game.Map.MapData;
 	import Game.Map.Tiles.TileHelper;
 	import Game.Map.Tiles.TileInstance;
-	import Game.Scripting.IScriptTarget;
-	import Game.Scripting.Script;
-	import Game.Scripting.ScriptInstance;
+	import Scripting.IScriptTarget;
+	import Scripting.Script;
+	import Scripting.ScriptInstance;
 	import Interfaces.IMapObject;
 	import RenderSystem.IObjectLayer;
 	/**
@@ -161,7 +161,7 @@ package Game.Map.Objects {
 			}
 		}
 		
-		/* INTERFACE Game.Scripting.IScriptTarget */
+		/* INTERFACE Scripting.IScriptTarget */
 		public function ChangeState(stateID:int, isLooping:Boolean):void {
 			if(isLooping) {
 				Template.ChangeState(stateID);
@@ -182,7 +182,7 @@ package Game.Map.Objects {
 			return 0;// Template.CurrentAnimation;
 		}
 		
-		/* INTERFACE Game.Scripting.IScriptTarget */
+		/* INTERFACE Scripting.IScriptTarget */
 		
 		public function GetFaction():int {
 			return 0;

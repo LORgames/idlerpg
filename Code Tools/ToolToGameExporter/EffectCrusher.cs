@@ -8,6 +8,7 @@ using ToolCache.Animation;
 using ToolCache.Scripting;
 using System.Drawing;
 using ToolCache.Scripting.Types;
+using ToolCache.Storage;
 
 namespace ToolToGameExporter {
     internal class EffectCrusher {

@@ -3,8 +3,8 @@ package Game.Map {
 	import flash.display.BitmapData;
 	import flash.utils.ByteArray;
 	import Game.Critter.CritterHuman;
-	import Game.General.BinaryLoader;
-	import Game.General.ImageLoader;
+	import Loaders.BinaryLoader;
+	import Loaders.ImageLoader;
 	import Game.Map.Objects.ObjectTemplate;
 	import Game.Map.Tiles.TileTemplate;
 	/**

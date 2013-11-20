@@ -1,6 +1,6 @@
-package Game.Scripting {
+package Scripting {
 	import flash.utils.ByteArray;
-	import Game.General.BinaryLoader;
+	import Loaders.BinaryLoader;
 	import Storage.SaveManager;
 	/**
 	 * ...
