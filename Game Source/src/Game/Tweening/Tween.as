@@ -12,7 +12,11 @@ package Game.Tweening {
 			
 		}
 		
-		public function Assign(obj:Object, param:String, value0:int, value1:int):void {
+		public function Assign(obj:Object, param:String, value0:int, value1:int, time:Number):void {
+			//TODO: This
+		}
+		
+		public function Update():void {
 			
 		}
 	}

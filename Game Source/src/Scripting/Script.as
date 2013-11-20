@@ -12,6 +12,7 @@ package Scripting {
 	import Game.Effects.EffectInstance;
 	import Game.Effects.EffectManager;
 	import Game.Equipment.EquipmentItem;
+	import Game.Tweening.TweenManager;
 	import Loaders.BinaryLoader;
 	import Game.Map.Objects.ObjectInstance;
 	import Game.Map.Objects.ObjectInstanceAnimated;
@@ -817,11 +818,13 @@ package Scripting {
 						p0.X = GetNumberFromVariable(EventScript, info, inputParam); 	//Initial Value
 						p0.Y = GetNumberFromVariable(EventScript, info, inputParam); 	//Final Value
 						fParam = GetNumberFromVariable(EventScript, info, inputParam);
+						TweenManager.StartTweenBetween(info.CurrentTarget, objName, p0.X, p0.Y, fParam);
 						break;
 					case 0x1019: //TweenTo
 						objName = GetWonkyString(EventScript);							//Param Name
 						p0.X = GetNumberFromVariable(EventScript, info, inputParam); 	//Final Value
 						fParam = GetNumberFromVariable(EventScript, info, inputParam);
+						TweenManager.StartTweenTo(info.CurrentTarget, objName, p0.X, fParam);
 						break;
 					case 0x101A: //Apply Buff
 						p0.X = GetNumberFromVariable(EventScript, info, inputParam);	//Buff ID

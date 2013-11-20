@@ -4,6 +4,7 @@ package EngineTiming {
 	import flash.text.TextField;
 	import flash.utils.getTimer;
 	import Game.Map.WorldData;
+	import Game.Tweening.TweenManager;
 	import Scripting.Script;
 	import UI.FPSCounter;
 	/**
@@ -68,6 +69,7 @@ package EngineTiming {
 				Sec_15_Count += dt;
 				
 				WorldData.CurrentMap.Update(dt);
+				TweenManager.Update(dt);
 				
 				//Update what we need to update
 				i = Updatables.length;
