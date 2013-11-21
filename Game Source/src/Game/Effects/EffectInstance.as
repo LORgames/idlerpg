@@ -31,6 +31,9 @@ package Game.Effects {
 		public var X:int = 0;
 		public var Y:int = 0;
 		
+		public var OffsetX:int = 0;
+		public var OffsetY:int = 0;
+		
 		public var CurrentState:int = 0;
 		public var StartFrame:int = 0;
 		public var EndFrame:int = 0;
@@ -44,6 +47,9 @@ package Game.Effects {
 		
 		public function EffectInstance(_info:EffectInfo, _x:int, _y:int, _d:int) {
  			this.Info = _info;
+			
+			OffsetX = Info.X;
+			OffsetY = Info.Y;
 			
 			CopyRect = new Rectangle();
 			CopyRect.width = Info.FrameWidth;
@@ -122,6 +128,8 @@ package Game.Effects {
 		/* INTERFACE EngineTiming.IUpdatable */
 		
 		public function Update(dt:Number):void {
+			trace("Effect Type=" + Info.Name + " X=" + X + " Y=" + Y + " OffsetX=" + OffsetX + " OffsetY=" + OffsetY);
+			
 			if (Info.MovementSpeed != 0) {
 				switch(Direction) {
 					case 0:
@@ -139,12 +147,11 @@ package Game.Effects {
 				}
 			}
 			
-			
             //DrawPositionX = X - (Info.FrameWidth / 2) - Info.X;
             //DrawPositionY = Y - (Info.FrameHeight) + (Info.H/2) + Info.Y;
 			
-			this.x = X - Info.FrameWidth * 0.5 - Info.X;
-			this.y = Y - Info.FrameHeight + MyRect.H*0.5 + Info.Y;
+			this.x = X - Info.FrameWidth * 0.5 - OffsetX;
+			this.y = Y - Info.FrameHeight + MyRect.H*0.5 + OffsetY;
 			
 			MyRect.X = X - MyRect.W * 0.5;
 			MyRect.Y = Y - MyRect.H * 0.5;
@@ -238,6 +245,12 @@ package Game.Effects {
 		
 		public function GetFaction():int {
 			return 0;
+		}
+		
+		override public function toString():String {
+			if (Info != null) return "[EffectInstance Type=" + Info.Name + " X=" +X + " Y=" + Y + "]";
+			
+			return "[EffectInstance NULL]";
 		}
 		
 	}

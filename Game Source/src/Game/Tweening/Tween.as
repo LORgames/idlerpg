@@ -21,11 +21,14 @@ package Game.Tweening {
 			this.value0 = value0;
 			this.value1 = value1;
 			this.countdown = time;
+			this.param = param;
 			this.obj[this.param] = this.value0;
 			this.valueShift = (int)((value1 - value0) / time);
 		}
 		
 		public function Update(dt:Number):void {
+			trace("TweenUpdate Obj="+obj+" Param=" + param + " V0=" + value0 + " V1=" + value1 + " T=" + countdown + " vShift=" + valueShift + " dt="+dt);
+			
 			countdown -= dt;
 			obj[param] += (int)(valueShift * dt);
 			if (valueShift > 0) {

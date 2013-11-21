@@ -77,6 +77,13 @@ package EngineTiming {
 					Updatables[i].Update(dt);
 				}
 				
+				if (WorldData.CurrentMap != null) {
+					i = WorldData.CurrentMap.Critters.length;
+					while (--i > -1) {
+						WorldData.CurrentMap.Critters[i].PostUpdate();
+					}
+				}
+				
 				if (Sec_01_Count > 1) {
 					Sec_01_Count -= 1;
 					Script.ProcessUpdate();

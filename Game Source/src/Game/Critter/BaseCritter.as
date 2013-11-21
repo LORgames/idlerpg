@@ -276,6 +276,14 @@ package Game.Critter {
 			CheckScriptRegions();
 		}
 		
+		public function PostUpdate():void {
+			if (CurrentHP < 1) {
+				Died();
+			} else if (CurrentHP > MaximumHP) {
+				CurrentHP = MaximumHP;
+			}
+		}
+		
 		private function ProcessAI(dt:Number = 0):void {
 			var procTarget:Boolean = false;
 			var _OldTarget:IScriptTarget = CurrentTarget;
@@ -517,12 +525,6 @@ package Game.Critter {
 				
 				//Flat damage
 				CurrentHP -= preCalc;
-			}
-			
-			if (CurrentHP < 1) {
-				Died();
-			} else if (CurrentHP > MaximumHP) {
-				CurrentHP = MaximumHP;
 			}
 		}
 		

@@ -277,8 +277,17 @@ package Scripting {
 						
 						break;
 					case 0x700B: //Has Target
-						
+						//TODO: this
 						break;
+					case 0x700C: //Has Buff
+						//TODO: this
+						break;
+					case 0x700D: //Is In Group
+						if (info.CurrentTarget is BaseCritter) {
+							currentUnprocessedValue = ((info.CurrentTarget as BaseCritter).HasFaction(eventScript.readShort()));
+						} else {
+							trace("Unknown target for 0x700D Target=" + info.CurrentTarget + " Faction=" + eventScript.readShort());
+						} break;
 					case 0x7FFF: //AI Event, Trigger Event etc
 						var whatAIEvent:int = GetNumberFromVariable(eventScript, info, inputParam);
 						if (inputParam is int) {
@@ -385,7 +394,7 @@ package Scripting {
 			//Now we're in the loop bit :)
 			var startIndex:int = eventScript.position;
 			
-			trace("LOOP Type=" + info.Invoker + " Objects=" + Objects.length);
+			//trace("LOOP Type=" + info.Invoker + " Objects=" + Objects.length);
 			
 			var obji:int = Objects.length;
 			while (--obji > -1) {
@@ -913,7 +922,7 @@ package Scripting {
 					case 0x6001: //Loop Animation
 						info.Invoker.ChangeState(EventScript.readShort(), true); break;
 					case 0x6002: //Animation Speed
-						info.Invoker.UpdatePlaybackSpeed((GetNumberFromVariable(EventScript, info, inputParam) * 0.01)); break;
+						info.Invoker.UpdatePlaybackSpeed(GetNumberFromVariable(EventScript, info, inputParam)); break;
 					case 0x8000: //IF without ELSE
 						bParam = CanIf(EventScript, info, Position, inputParam);
 						if (!bParam) {

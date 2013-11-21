@@ -169,6 +169,7 @@ namespace ToolCache.Scripting.Types {
             IfFunctions.Add("spend",    new ValidCommand(0x700A, new Param[] { Param.Integer, Param.Integer }));
             IfFunctions.Add("hastarget",new ValidCommand(0x700B, new Param[] { Param.Void }));
             IfFunctions.Add("hasbuff",  new ValidCommand(0x700C, new Param[] { Param.Buff }));
+            IfFunctions.Add("hastype",  new ValidCommand(0x700D, new Param[] { Param.FactionName }));
             IfFunctions.Add("aieventis",new ValidCommand(0x7FFF, new Param[] { Param.AIEventType }));
             IfFunctions.Add("triggeris",new ValidCommand(0x7FFF, new Param[] { Param.Integer }));
 

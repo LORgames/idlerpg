@@ -36,7 +36,7 @@ package Game.Tweening {
 		}
 		
 		private static function GetInactiveTween():Tween {
-			if (_InactiveTweens.length = 0) {
+			if (_InactiveTweens.length == 0) {
 				return new Tween();
 			} else {
 				return _InactiveTweens.pop();
