@@ -315,7 +315,7 @@ namespace ToolCache.Scripting {
                                 info.Errors.Add("String does not suit the requirements for encoding!" + ErrorEnding());
                             } break;
                         case Param.Direction:
-                            switch (paramBits[i].ToLower()) {
+                            switch (paramBits[i].ToLower()) { 
                                 case "left": AdditionalBytecode.Add((ushort)0); break;
                                 case "right": AdditionalBytecode.Add((ushort)1); break;
                                 case "up": AdditionalBytecode.Add((ushort)2); break;

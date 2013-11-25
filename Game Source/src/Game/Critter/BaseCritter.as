@@ -213,63 +213,67 @@ package Game.Critter {
 			var collisionPenetration:Point = new Point();
 			var collisionTotal:int = 0;
 			
-			//Check if the critter tried to leave the map boundaries
-			if (MyRect.X < 0 || MyRect.Y < 0 || MyRect.X + MyRect.H > CurrentMap.SizeX || MyRect.Y + MyRect.W > CurrentMap.SizeY) {
-				//Undo the changes: no leaving the map
-				X = prevX;
-				Y = prevY;
-				
-				MyRect.X = X - MyRect.W / 2;
-				MyRect.Y = Y - MyRect.H / 2;
-			} else {
-				//They didn't leave the map? Lets try solid objects
-				while (--i > -1) {
-					//Look for collision in the tile.
-					var rs:Vector.<Rect> = tiles[i].SolidRectangles;
-					j = rs.length;
-					
-					while (--j > -1) {
-						if (rs[j].intersects(MyRect)) {
-							MyRect.CalculatePenetration(rs[j], collisionPenetration);
-							collisionTotal++;
-						}
-					}
-					
-					//No collision so lets update the movement speed
-					if (Global.HasTiles && TileTemplate.Tiles[tiles[i].TileID].movementCost > CurrentMovementCost) {
-						CurrentMovementCost = TileTemplate.Tiles[tiles[i].TileID].movementCost;
-					}
-				}
-				
-				//Scan against critters
-				if (collisionPenetration.x == 0 || collisionPenetration.y == 0) {
-					var totalCritters:int = CurrentMap.Critters.length;
-					var critter:BaseCritter;
-					
-					while (--totalCritters > -1) {
-						critter = CurrentMap.Critters[totalCritters];
-						
-						if (critter != this) {
-							if (critter.MyRect == null) continue;
-							if ((MyAIType & AITypes.Untargetable) > 1 && (critter.MyAIType & AITypes.Untargetable) > 1) continue;
-							if (MyRect.intersects(critter.MyRect)) {
-								MyRect.CalculatePenetration(critter.MyRect, collisionPenetration);
-								collisionTotal++;
-							}
-						}
-					}
-				}
-				
-				if (collisionPenetration.x != 0 || collisionPenetration.y != 0) {
-					//Undo the changes
-					if((Math.abs(collisionPenetration.x) < Math.abs(collisionPenetration.y)  && collisionPenetration.x != 0) || collisionPenetration.y == 0) {
-						X += collisionPenetration.x;
-					} else {
-						Y += collisionPenetration.y;
-					}
+			//Make sure this object can actually move... then do collision detection magic.
+			trace("Critter Speed=" + MovementSpeed + " Name=" + this);
+			if(MovementSpeed > 0) {
+				//Check if the critter tried to leave the map boundaries
+				if (MyRect.X < 0 || MyRect.Y < 0 || MyRect.X + MyRect.H > CurrentMap.SizeX || MyRect.Y + MyRect.W > CurrentMap.SizeY) {
+					//Undo the changes: no leaving the map
+					X = prevX;
+					Y = prevY;
 					
 					MyRect.X = X - MyRect.W / 2;
 					MyRect.Y = Y - MyRect.H / 2;
+				} else {
+					//They didn't leave the map? Lets try solid objects
+					while (--i > -1) {
+						//Look for collision in the tile.
+						var rs:Vector.<Rect> = tiles[i].SolidRectangles;
+						j = rs.length;
+						
+						while (--j > -1) {
+							if (rs[j].intersects(MyRect)) {
+								MyRect.CalculatePenetration(rs[j], collisionPenetration);
+								collisionTotal++;
+							}
+						}
+						
+						//No collision so lets update the movement speed
+						if (Global.HasTiles && TileTemplate.Tiles[tiles[i].TileID].movementCost > CurrentMovementCost) {
+							CurrentMovementCost = TileTemplate.Tiles[tiles[i].TileID].movementCost;
+						}
+					}
+					
+					//Scan against critters
+					if (collisionPenetration.x == 0 || collisionPenetration.y == 0) {
+						var totalCritters:int = CurrentMap.Critters.length;
+						var critter:BaseCritter;
+						
+						while (--totalCritters > -1) {
+							critter = CurrentMap.Critters[totalCritters];
+							
+							if (critter != this) {
+								if (critter.MyRect == null) continue;
+								if ((MyAIType & AITypes.Untargetable) > 1 && (critter.MyAIType & AITypes.Untargetable) > 1) continue;
+								if (MyRect.intersects(critter.MyRect)) {
+									MyRect.CalculatePenetration(critter.MyRect, collisionPenetration);
+									collisionTotal++;
+								}
+							}
+						}
+					}
+					
+					if (collisionPenetration.x != 0 || collisionPenetration.y != 0) {
+						//Undo the changes
+						if((Math.abs(collisionPenetration.x) < Math.abs(collisionPenetration.y)  && collisionPenetration.x != 0) || collisionPenetration.y == 0) {
+							X += collisionPenetration.x;
+						} else {
+							Y += collisionPenetration.y;
+						}
+						
+						MyRect.X = X - MyRect.W / 2;
+						MyRect.Y = Y - MyRect.H / 2;
+					}
 				}
 			}
 			
