@@ -239,7 +239,6 @@ namespace ToolCache.Scripting {
             short sparam;
             float fparam;
             string[] paramBits = ParamString.Split(',');
-            string[] subParamBits;
 
             if (paramBits.Length >= vcp.MinimumParams && paramBits.Length <= vcp.MaximumParams) {
                 for (int i = 0; i < paramBits.Length; i++) {
@@ -859,32 +858,14 @@ namespace ToolCache.Scripting {
                 Info.Errors.Add("Poorly structured WITHEACH: " + p+ ErrorEnding());
             } else {
                 string arrayValue = m.Groups[1].Value.ToLower();
-                string arrayParam = m.Groups[2].Value.ToLower();
+                string arrayParam = m.Groups[2].Value;
 
-                switch (arrayValue) {
-                    case "front":
-                        int totalBits = arrayParam.Split(',').Length;
-                        if (totalBits == 2) {
-                            this.AdditionalBytecode.Add((ushort)0x9000);
-                            VerifyCommaSeperatedShorts(arrayParam, 2, Info);
-                        } else if (totalBits == 3) {
-                            this.AdditionalBytecode.Add((ushort)0x9002);
-                            VerifyCommaSeperatedShorts(arrayParam, 3, Info);
-                        }
-                        break;
-                    case "aoe":
-                        this.AdditionalBytecode.Add((ushort)0x9001);
-                        VerifyCommaSeperatedShorts(arrayParam, 1, Info);
-                        break;
-                    case "myarea":
-                        this.AdditionalBytecode.Add((ushort)0x9003);
-                        break;
-                    case "map":
-                        this.AdditionalBytecode.Add((ushort)0x9004);
-                        break;
-                    default:
-                        Info.Errors.Add("Unknown Array Type: " + arrayValue+ ErrorEnding());
-                        break;
+                if (Commands.ZoneFunctions.ContainsKey(arrayValue)) {
+                    ValidCommand vc = Commands.ZoneFunctions[arrayValue];
+                    AdditionalBytecode.Add(vc.CommandID);
+                    ProcessParams(Info, vc, arrayParam);
+                } else {
+                    Info.Errors.Add("Unknown Array Type: " + arrayValue + ErrorEnding());
                 }
             }
         }

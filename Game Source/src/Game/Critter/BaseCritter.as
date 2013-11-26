@@ -214,7 +214,6 @@ package Game.Critter {
 			var collisionTotal:int = 0;
 			
 			//Make sure this object can actually move... then do collision detection magic.
-			trace("Critter Speed=" + MovementSpeed + " Name=" + this);
 			if(MovementSpeed > 0) {
 				//Check if the critter tried to leave the map boundaries
 				if (MyRect.X < 0 || MyRect.Y < 0 || MyRect.X + MyRect.H > CurrentMap.SizeX || MyRect.Y + MyRect.W > CurrentMap.SizeY) {
@@ -293,8 +292,17 @@ package Game.Critter {
 			var _OldTarget:IScriptTarget = CurrentTarget;
 			
 			if (WorldData.ME != this && dt > 0) {
+				//Check to see if the current target is still an enemy
+				if (CurrentTarget != null) {
+					if ((MyAIType & AITypes.Supportive) == 0 && !Factions.IsEnemies(PrimaryFaction, CurrentTarget.GetFaction())) {
+						CurrentTarget = null;
+					} else if ((MyAIType & AITypes.Supportive) > 0 && !Factions.IsFriends(PrimaryFaction, CurrentTarget.GetFaction())) {
+						CurrentTarget = null;
+					}
+				}
+				
 				//AI AGENTS
-				if ((MyAIType & AITypes.Aggressive) > 0 && (CurrentTarget == null || (MyAIType & AITypes.ClosestTarget) > 0 || (MyAIType & AITypes.TargetLowestHealth) > 0)) {
+				if (CurrentTarget == null || ((MyAIType & AITypes.Aggressive) > 0 && ((MyAIType & AITypes.ClosestTarget) > 0 || (MyAIType & AITypes.TargetLowestHealth) > 0))) {
 					//Scan for a new target
 					var r:Rect = new Rect(false, null, X - AlertRangeSqrt, Y - AlertRangeSqrt * Global.PerspectiveSkew, AlertRangeSqrt * 2, AlertRangeSqrt * 2 * Global.PerspectiveSkew);
 					

@@ -71,10 +71,10 @@ package Scripting {
 		
 		//SCRIPT ARRAYS
 		public static const FRONT:int = 0x9000;
-		public static const FRONTOFFSET:int = 0x9002;
 		public static const AOE:int = 0x9001;
 		public static const MYAREA:int = 0x9003;
 		public static const MAP:int = 0x9004;
+		public static const FACTIONMAP:int = 0x9004;
 		
 		//Script information
 		internal var EventScripts:Vector.<ByteArray>;
@@ -322,6 +322,7 @@ package Scripting {
 			var eType:int = eventScript.readUnsignedShort();
 			var arrayType:int = eventScript.readUnsignedShort();
 			
+			var i:int;
 			var dim0:int;
 			var dim1:int;
 			var dim2:int;
@@ -332,10 +333,9 @@ package Scripting {
 			while(arrayType != 0xF0FD) {
 				switch(arrayType) {
 					case FRONT:
-					case FRONTOFFSET:
-						dim0 = eventScript.readUnsignedShort();
-						dim1 = eventScript.readUnsignedShort();
-						dim2 = (arrayType == FRONTOFFSET)?eventScript.readShort() : 0;
+						dim0 = GetNumberFromVariable(eventScript, info, param)
+						dim1 = GetNumberFromVariable(eventScript, info, param)
+						dim2 = GetNumberFromVariable(eventScript, info, param)
 						
 						if (position.D < 2) { //Left or right
 							rect.X = (position.D == 1)? position.X : position.X - dim0; //if right center else offcenter
@@ -361,7 +361,7 @@ package Scripting {
 						
 						break;
 					case AOE:
-						dim0 = eventScript.readUnsignedShort();
+						dim0 = GetNumberFromVariable(eventScript, info, param);
 						
 						rect.X = position.X - dim0;
 						rect.Y = position.Y - dim0*Global.PerspectiveSkew;
@@ -376,8 +376,19 @@ package Scripting {
 						if(eType != Script.CRITTER) {
 							WorldData.CurrentMap.GetObjectsInArea(null, Objects, eType, info.CurrentTarget);
 						} else {
-							for (var i:int = 0; i < WorldData.CurrentMap.Critters.length; i++) {
+							for (i = 0; i < WorldData.CurrentMap.Critters.length; i++) {
 								Objects.push(WorldData.CurrentMap.Critters[i]);
+							}
+						} break;
+					case FACTIONMAP:
+						dim0 = GetNumberFromVariable(eventScript, info, param);
+						if(eType != Script.CRITTER) {
+							//We have a serious problem.
+						} else {
+							for (i = 0; i < WorldData.CurrentMap.Critters.length; i++) {
+								if(WorldData.CurrentMap.Critters[i].GetFaction() == dim0) {
+									Objects.push(WorldData.CurrentMap.Critters[i]);
+								}
 							}
 						} break;
 					case MYAREA:
@@ -632,7 +643,7 @@ package Scripting {
 						
 						var critter:BaseCritter = CritterManager.I.CritterInfo[p0.D].CreateCritter(WorldData.CurrentMap, p1.X, p1.Y);
 						
-						if(EventScript.readShort() == 0) { // Get owner faction?
+						if(EventScript.readShort() == 0 && info.CurrentTarget.GetFaction() >= 0) { // Get owner faction?
 							critter.SetFaction(info.CurrentTarget.GetFaction());
 						}
 						
@@ -837,6 +848,15 @@ package Scripting {
 						break;
 					case 0x101A: //Apply Buff
 						p0.X = GetNumberFromVariable(EventScript, info, inputParam);	//Buff ID
+						break;
+					case 0x101B: //TweenChild
+						objName = GetWonkyString(EventScript);							//Param Name
+						var objX:Object = info.CurrentTarget[objName];
+						objName = GetWonkyString(EventScript);
+						p0.X = GetNumberFromVariable(EventScript, info, inputParam); 	//Initial Value
+						p0.Y = GetNumberFromVariable(EventScript, info, inputParam); 	//Final Value
+						fParam = GetNumberFromVariable(EventScript, info, inputParam);
+						TweenManager.StartTweenBetween(objX, objName, p0.X, p0.Y, fParam);
 						break;
 					case 0x4001: //Equip item on the target
 						if (info.CurrentTarget is CritterHuman) {

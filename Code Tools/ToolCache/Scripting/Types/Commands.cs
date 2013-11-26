@@ -9,6 +9,8 @@ namespace ToolCache.Scripting.Types {
         public static Dictionary<string, ValidCommand> MathFunctions = new Dictionary<string, ValidCommand>();
         public static Dictionary<string, ValidCommand> IfFunctions = new Dictionary<string, ValidCommand>();
 
+        public static Dictionary<string, ValidCommand> ZoneFunctions = new Dictionary<string, ValidCommand>();
+
         public static Dictionary<Param, ushort[]> DefaultValues = new Dictionary<Param, ushort[]>();
 
         public static Dictionary<string, ushort> ScriptTargets = new Dictionary<string, ushort>();
@@ -70,6 +72,8 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0x1019, new Param[] { Param.String, Param.Integer, Param.Number }));
             All.Add("applybuff",
                 new ValidCommand(0x101A, new Param[] { Param.Buff }));
+            All.Add("tweenchild",
+                new ValidCommand(0x101B, new Param[] { Param.String, Param.String, Param.Integer, Param.Integer, Param.Number }));
 
             //Quest and Inventory Commands
             All.Add("saydialogue",
@@ -156,7 +160,7 @@ namespace ToolCache.Scripting.Types {
             MathFunctions.Add("random", new ValidCommand(0x07, new Param[] { Param.Integer, Param.Integer | Param.Optional }));
 
             /////////////////////////////////////////////////////////////////////////
-            ////////////////////////////////////////////////// MATH FUNCTIONS
+            ////////////////////////////////////////////////// IF FUNCTIONS
             /////////////////////////////////////////////////////////////////////////
 
             IfFunctions.Add("random",   new ValidCommand(0x7003, new Param[] { Param.Integer }));
@@ -173,6 +177,16 @@ namespace ToolCache.Scripting.Types {
             IfFunctions.Add("aieventis",new ValidCommand(0x7FFF, new Param[] { Param.AIEventType }));
             IfFunctions.Add("triggeris",new ValidCommand(0x7FFF, new Param[] { Param.Integer }));
 
+            /////////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////// ZONE FUNCTIONS
+            /////////////////////////////////////////////////////////////////////////
+
+            ZoneFunctions.Add("front", new ValidCommand(0x9000, new Param[] { Param.Integer, Param.Integer, Param.Integer | Param.Optional }));
+            ZoneFunctions.Add("aoe", new ValidCommand(0x9001, new Param[] { Param.Integer }));
+            ZoneFunctions.Add("myarea", new ValidCommand(0x9003, new Param[] { Param.Void }));
+            ZoneFunctions.Add("map", new ValidCommand(0x9004, new Param[] { Param.Void }));
+            ZoneFunctions.Add("factionmap", new ValidCommand(0x9005, new Param[] { Param.FactionName }));
+            
             /////////////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////// DEFAULT VALUES
             /////////////////////////////////////////////////////////////////////////

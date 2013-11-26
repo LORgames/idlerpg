@@ -323,6 +323,11 @@ namespace CityTools {
             0,
             0,
             0});
+            this.numOffsetY.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
             this.numOffsetY.Name = "numOffsetY";
             this.numOffsetY.Size = new System.Drawing.Size(59, 20);
             this.numOffsetY.TabIndex = 16;
