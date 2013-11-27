@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace ToolCache.Scripting.Types {
-    public struct ScriptVariable {
+    public class ScriptVariable {
         public string Name;
         public int Index;
         public short InitialValue;

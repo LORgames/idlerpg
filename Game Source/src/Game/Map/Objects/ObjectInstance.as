@@ -135,7 +135,7 @@ package Game.Map.Objects {
 			return "[OBJ=" + Template.ObjectID + "]";
 		}
 		
-		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IScriptTarget):void {
+		public function ScriptAttack(isPercent:Boolean, amount:int, pierce:int, attacker:IScriptTarget):void {
 			MyScript.Run(Script.Attacked, attacker);
 		}
 		

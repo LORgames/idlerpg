@@ -128,8 +128,6 @@ package Game.Effects {
 		/* INTERFACE EngineTiming.IUpdatable */
 		
 		public function Update(dt:Number):void {
-			trace("Effect Type=" + Info.Name + " X=" + X + " Y=" + Y + " OffsetX=" + OffsetX + " OffsetY=" + OffsetY);
-			
 			if (Info.MovementSpeed != 0) {
 				switch(Direction) {
 					case 0:
@@ -209,7 +207,7 @@ package Game.Effects {
 		}
 		
 		/* INTERFACE Scripting.IScriptTarget */
-		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IScriptTarget):void { if (MyScript == null) return; MyScript.Run(Script.Attacked); }
+		public function ScriptAttack(isPercent:Boolean, amount:int, pierce:int, attacker:IScriptTarget):void { if (MyScript == null) return; MyScript.Run(Script.Attacked); }
 		public function AlertMinionDeath(baseCritter:BaseCritter):void { MyScript.Run(Script.MinionDied); }
 		
 		public function UpdatePointX(position:PointX):void {

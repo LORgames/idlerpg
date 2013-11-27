@@ -108,6 +108,16 @@
             // numIntegerChanger
             // 
             this.numIntegerChanger.Location = new System.Drawing.Point(429, 228);
+            this.numIntegerChanger.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.numIntegerChanger.Minimum = new decimal(new int[] {
+            32768,
+            0,
+            0,
+            -2147483648});
             this.numIntegerChanger.Name = "numIntegerChanger";
             this.numIntegerChanger.Size = new System.Drawing.Size(120, 20);
             this.numIntegerChanger.TabIndex = 2;

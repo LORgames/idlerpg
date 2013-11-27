@@ -383,6 +383,10 @@ package Game.Critter {
 					var p:PointX = new PointX();;
 					CurrentTarget.UpdatePointX(p);
 					
+					if (CurrentTarget is BaseCritter) {
+						p = MathsEx.ClosestPointToAABB(this.X, this.Y, (CurrentTarget as BaseCritter).MyRect);
+					}
+					
 					var dx:Number = (this.X - p.X);
 					var dy:Number = (this.Y - p.Y) / Global.PerspectiveSkew;
 					
@@ -512,7 +516,7 @@ package Game.Critter {
 		public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void { /* Definately needs to be handed down to children. */ }
 		public function GetCurrentState():int { /* Needs to be handed down */ return 0; }
 		
-		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IScriptTarget):void {
+		public function ScriptAttack(isPercent:Boolean, amount:int, pierce:int, attacker:IScriptTarget):void {
 			if (MyScript != null) {
 				if(amount > 0) MyScript.Run(Script.Attacked, null, [attacker, amount]);
 				
@@ -522,18 +526,15 @@ package Game.Critter {
 			}
 			
 			//TODO: This should do something else :)
-			if (isDOT && isPercent) {
-				
-			} else if (isPercent) {
+			if (isPercent) {
 				CurrentHP -= CurrentHP * (amount / 100);
-			} else if (isDOT) {
-				
 			} else if(amount < 0) { //HEAL!
 				//Flat damage
 				CurrentHP -= amount;
 			} else { //ATTACK
 				var preCalc:int = amount - CurrentDefence;
 				if (preCalc < 0) preCalc = 1;
+				preCalc += pierce;
 				
 				//Flat damage
 				CurrentHP -= preCalc;

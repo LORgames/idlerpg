@@ -653,11 +653,15 @@ package Scripting {
 						
 						break;
 					case 0x1003: //Flat Damage
-					case 0x1005: //% Damage
-					case 0x1006: //Flat DOT
-					case 0x100C: //% DOT
 						if(info.CurrentTarget is IMapObject) {
-							(info.CurrentTarget as IMapObject).ScriptAttack((command==0x1005||command==0x100C), (command==0x1006||command==0x100C), GetNumberFromVariable(EventScript, info, inputParam), info.Invoker); break;
+							(info.CurrentTarget as IMapObject).ScriptAttack(false, GetNumberFromVariable(EventScript, info, inputParam), GetNumberFromVariable(EventScript, info, inputParam), info.Invoker); break;
+						} else {
+							GetNumberFromVariable(EventScript, info, inputParam);
+							GetNumberFromVariable(EventScript, info, inputParam);
+						} break;
+					case 0x1005: //% Damage
+						if(info.CurrentTarget is IMapObject) {
+							(info.CurrentTarget as IMapObject).ScriptAttack(true, GetNumberFromVariable(EventScript, info, inputParam), 0, info.Invoker); break;
 						} else {
 							GetNumberFromVariable(EventScript, info, inputParam);
 						} break;

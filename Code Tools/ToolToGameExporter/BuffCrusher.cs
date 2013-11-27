@@ -6,6 +6,7 @@ using ToolCache.Critters;
 using ToolCache.General;
 using ToolCache.Scripting;
 using ToolCache.Storage;
+using ToolCache.Scripting.Types;
 
 namespace ToolToGameExporter {
     public class BuffCrusher {
@@ -35,7 +36,7 @@ namespace ToolToGameExporter {
                 f.AddByte((byte)(b.isDebuff?1:0));
                 f.AddFloat(b.Duration);
 
-                ScriptInfo info = new ScriptInfo("Buff>" + b.Name, ToolCache.Scripting.Types.ScriptTypes.Buff);
+                ScriptInfo info = new ScriptInfo("Buff>" + b.Name, ScriptTypes.Buff);
                 ScriptCrusher.ProcessScript(info, b.Script, f);
             }
 

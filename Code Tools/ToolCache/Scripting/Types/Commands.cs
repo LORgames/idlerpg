@@ -25,13 +25,11 @@ namespace ToolCache.Scripting.Types {
             All.Add("spawn",
                 new ValidCommand(0x1002, new Param[] { Param.CritterName, Param.Integer | Param.Optional, Param.Integer | Param.Optional, Param.Boolean | Param.Optional }));
             All.Add("damage",
-                new ValidCommand(0x1003, new Param[] { Param.Integer }));
+                new ValidCommand(0x1003, new Param[] { Param.Integer, Param.Integer | Param.Optional }));
             All.Add("knockback",
                 new ValidCommand(0x1004, new Param[] { Param.Integer }));
             All.Add("damagepercent",
                 new ValidCommand(0x1005, new Param[] { Param.Integer }));
-            All.Add("dot",
-                new ValidCommand(0x1006, new Param[] { Param.Integer, Param.Integer }));
             All.Add("destroy",
                 new ValidCommand(0x1007, new Param[] { Param.Void }));
             All.Add("effectspawn",
@@ -42,8 +40,6 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0x100A, new Param[] { Param.EffectName, Param.Integer | Param.Optional, Param.Integer | Param.Optional, Param.Direction | Param.Optional }));
             All.Add("objectspawn",
                 new ValidCommand(0x100B, new Param[] { Param.ObjectName, Param.Integer | Param.Optional, Param.Integer | Param.Optional }));
-            All.Add("dotpercent",
-                new ValidCommand(0x100C, new Param[] { Param.CritterName, Param.Integer | Param.Optional, Param.Integer | Param.Optional }));
             All.Add("triggerfire",
                 new ValidCommand(0x100D, new Param[] { Param.Integer }));
             All.Add("soundgroupplay",

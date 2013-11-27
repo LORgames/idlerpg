@@ -78,6 +78,7 @@ namespace CityTools {
                 listVariables.Items.Add(Variables.GlobalVariables[sender.ToString()].lvi);
             }
         }
+
         void Variables_ItemRemoved(object sender, EventArgs e) {
             List<ListViewItem> lvis = new List<ListViewItem>();
 
@@ -98,6 +99,7 @@ namespace CityTools {
         void String_ItemAdded(object sender, EventArgs e) {
             AddString(sender.ToString());
         }
+
         void String_ItemRemoved(object sender, EventArgs e) {
             List<ListViewItem> lvis = new List<ListViewItem>();
 

@@ -105,7 +105,7 @@ package Game.Map.Objects {
 			}
 		}
 		
-		override public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IScriptTarget):void {
+		override public function ScriptAttack(isPercent:Boolean, amount:int, pierce:int, attacker:IScriptTarget):void {
 			MyScript.Run(Script.Attacked, attacker);
 		}
 		
