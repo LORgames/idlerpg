@@ -40,7 +40,7 @@ namespace ToolToGameExporter {
                 ScriptCrusher.ProcessScript(info, b.Script, f);
             }
 
-            f.Encode(Global.EXPORT_DIRECTORY + "\\BuffData.bin");
+            f.Encode(Global.EXPORT_DIRECTORY + "\\CritterBuffs.bin");
         }
 
     }

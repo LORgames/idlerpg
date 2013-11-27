@@ -7,6 +7,7 @@ package Game.Map {
 	import Game.Critter.BaseCritter;
 	import Game.Critter.Factions;
 	import Game.Effects.EffectInstance;
+	import Interfaces.IMapObject;
 	import Loaders.BinaryLoader;
 	import Game.Map.Objects.ObjectInstance;
 	import Game.Map.Objects.ObjectInstanceAnimated;
@@ -205,10 +206,10 @@ package Game.Map {
 						
 						r = _tiles[_tt].SolidRectangles[_tr];
 						
-						if (r.Owner != null) {
-							if (objects.indexOf(r.Owner) == -1) {
+						if (r.Owner != null && r.Owner is IScriptTarget) {
+							if (objects.indexOf(r.Owner as IScriptTarget) == -1) {
 								if (r.intersects(rect)) {
-									objects.push(r.Owner);
+									objects.push(r.Owner as IScriptTarget);
 								}
 							}
 						}

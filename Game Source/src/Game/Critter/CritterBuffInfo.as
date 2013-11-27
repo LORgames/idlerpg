@@ -1,5 +1,6 @@
 package Game.Critter {
 	import flash.utils.ByteArray;
+	import Loaders.BinaryLoader;
 	import Scripting.Script;
 	/**
 	 * ...
@@ -16,7 +17,17 @@ package Game.Critter {
 		public var _Script:Script;
 		
 		public function CritterBuffInfo(b:ByteArray) {
+			name = BinaryLoader.GetString(b);
+			iconID = b.readShort();
 			
+			showIcon = b.readByte() == 1;
+			isDebuff = b.readByte() == 1;
+			
+			duration = b.readFloat();
+			
+			_Script = Script.ReadScript(b);
+			
+			trace("Loaded Buff: " + name);
 		}
 	}
 }
