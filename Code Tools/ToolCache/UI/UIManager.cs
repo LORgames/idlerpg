@@ -42,6 +42,7 @@ namespace ToolCache.UI {
             FontFamily f;
             try {
                 f = new FontFamily(p);
+                Fonts.Add(f);
             } catch (Exception ex) {
                 System.Windows.Forms.MessageBox.Show("Cannot find specified font \"" + p + "\". Defaulting to generic font.");
                 f = new FontFamily(GenericFontFamilies.Serif);
