@@ -9,11 +9,15 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using ToolCache.Scripting;
 using ToolCache.Scripting.Types;
+using System.Text.RegularExpressions;
 
 namespace CityTools.Components {
     public partial class ScriptBox : UserControl {
         public event EventHandler<ScriptInfoArgs> BeforeParse;
         public event EventHandler<EventArgs> ScriptUpdated;
+        private FindAndReplaceDialog findAndReplace;
+        private int lastFindIndex = -1;
+        private string lastFindText = "";
 
         //Property for the internal script stuff, this will do formatting and stuff later
         public string Script {
@@ -39,6 +43,8 @@ namespace CityTools.Components {
 
         public ScriptBox() {
             InitializeComponent();
+
+            findAndReplace = new FindAndReplaceDialog();
 
             //Set the distance for tabs
             txtScript.SelectionTabs = new int[]{20, 40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 240, 260, 280, 300 };
@@ -80,6 +86,35 @@ namespace CityTools.Components {
 
         private void txtScript_SelectionChanged(object sender, EventArgs e) {
             lblLineNumber.Text = ""+((txtScript.GetLineFromCharIndex(txtScript.SelectionStart))+1);
+        }
+
+        private void txtScript_KeyDown(object sender, KeyEventArgs e) {
+            if (e.Control && e.KeyCode == Keys.F) {
+                findAndReplace.OnFind += new EventHandler(OnFind);
+                findAndReplace.OnReplace += new EventHandler(OnReplace);
+                findAndReplace.Show();
+            }
+        }
+
+        private void OnFind(object sender, EventArgs e) {
+            if (lastFindText != findAndReplace.Find) {
+                lastFindIndex = txtScript.Find(findAndReplace.Find, 0, RichTextBoxFinds.None);
+                lastFindText = "";
+            } else {
+                lastFindIndex = txtScript.Find(findAndReplace.Find, lastFindIndex + findAndReplace.Find.Length, RichTextBoxFinds.None);
+            }
+            if (lastFindIndex != -1) {
+                this.ParentForm.Activate();
+                txtScript.Select();
+                lastFindText = findAndReplace.Find;
+            } else {
+                MessageBox.Show("Could not find text");
+                lastFindText = "";
+            }
+        }
+
+        private void OnReplace(object sender, EventArgs e) {
+            txtScript.Text = txtScript.Text.Replace(findAndReplace.Find, findAndReplace.Replace);
         }
     }
 }

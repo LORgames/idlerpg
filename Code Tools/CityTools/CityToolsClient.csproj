@@ -85,6 +85,12 @@
     <Compile Include="Components\DatabaseEditing\DatabaseEditor.Designer.cs">
       <DependentUpon>DatabaseEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\FindAndReplaceDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Components\FindAndReplaceDialog.Designer.cs">
+      <DependentUpon>FindAndReplaceDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Components\GIFSupport\AnimatedGifEncoder.cs" />
     <Compile Include="Components\GIFSupport\GIFImageHelper.cs" />
     <Compile Include="Components\GIFSupport\LZWEncoder.cs" />
@@ -278,6 +284,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Components\DatabaseEditing\DatabaseEditor.resx">
       <DependentUpon>DatabaseEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\FindAndReplaceDialog.resx">
+      <DependentUpon>FindAndReplaceDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\ImageSelector_ImagePnl.resx">
       <DependentUpon>ImageSelector_ImagePnl.cs</DependentUpon>
