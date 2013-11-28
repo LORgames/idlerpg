@@ -512,7 +512,10 @@ namespace CityTools {
             lblBeastDirection.Text = direction.ToString();
 
             if (critter is CritterBeast) {
-                ccBeastAnimations.ChangeToAnimation((critter as CritterBeast).GetAnimation(cbBeastState.Text).GetDirection(direction));
+                CritterAnimationSet animSet = (critter as CritterBeast).GetAnimation(cbBeastState.Text);
+                AnimatedObject animObj = animSet.GetDirection(direction);
+                animObj.PlaybackSpeed = (float)numBeastFPS.Value;
+                ccBeastAnimations.ChangeToAnimation(animObj);
             }
 
             pbPreviewDisplay.Invalidate();

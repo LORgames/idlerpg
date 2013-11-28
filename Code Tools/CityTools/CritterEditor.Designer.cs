@@ -200,7 +200,7 @@ namespace CityTools {
             // 
             this.btnCreateHumanoidCritter.Image = ((System.Drawing.Image)(resources.GetObject("btnCreateHumanoidCritter.Image")));
             this.btnCreateHumanoidCritter.Name = "btnCreateHumanoidCritter";
-            this.btnCreateHumanoidCritter.Size = new System.Drawing.Size(131, 22);
+            this.btnCreateHumanoidCritter.Size = new System.Drawing.Size(124, 22);
             this.btnCreateHumanoidCritter.Text = "Humanoid";
             this.btnCreateHumanoidCritter.Click += new System.EventHandler(this.btnCreateHumanoidCritter_Click);
             // 
@@ -208,7 +208,7 @@ namespace CityTools {
             // 
             this.btnCreateBeastCritter.Image = ((System.Drawing.Image)(resources.GetObject("btnCreateBeastCritter.Image")));
             this.btnCreateBeastCritter.Name = "btnCreateBeastCritter";
-            this.btnCreateBeastCritter.Size = new System.Drawing.Size(131, 22);
+            this.btnCreateBeastCritter.Size = new System.Drawing.Size(124, 22);
             this.btnCreateBeastCritter.Text = "Beast Man";
             this.btnCreateBeastCritter.Click += new System.EventHandler(this.btnCreateBeastCritter_Click);
             // 
@@ -865,9 +865,9 @@ namespace CityTools {
             // 
             // pbPreviewDisplay
             // 
-            this.pbPreviewDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbPreviewDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pbPreviewDisplay.Location = new System.Drawing.Point(197, 6);
             this.pbPreviewDisplay.Name = "pbPreviewDisplay";
             this.pbPreviewDisplay.Size = new System.Drawing.Size(317, 259);
