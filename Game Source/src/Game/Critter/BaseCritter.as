@@ -1,4 +1,5 @@
 package Game.Critter {
+	import adobe.utils.CustomActions;
 	import CollisionSystem.PointX;
 	import CollisionSystem.Rect;
 	import Debug.Drawer;
@@ -65,6 +66,7 @@ package Game.Critter {
 		
 		public var MyScript:ScriptInstance;
 		private var ActiveScriptRegions:Vector.<ScriptRegion> = new Vector.<ScriptRegion>();
+		public var ActiveBuffs:Vector.<CritterBuff> = new Vector.<CritterBuff>();
 		
 		//Critter information
 		public var MyAIType:int;
@@ -500,6 +502,11 @@ package Game.Critter {
 			tf.parent.removeChild(tf);
 			tf = null;
 			
+			for (var i:int = 0 ; i < ActiveBuffs.length; i++) {
+				ActiveBuffs[i].CleanUp(false);
+			}
+			ActiveBuffs.length = 0;
+			ActiveBuffs = null;
 			
 			Clock.I.Remove(this);
 		}
@@ -567,6 +574,42 @@ package Game.Critter {
 		public function SetOwner(newOwner:IScriptTarget):void {
 			Owner = newOwner;
 			MyScript.Run(Script.AIEvent, null, Script.AIEvent_OwnerChanged);
+		}
+		
+		public function ApplyBuff(buffID:int):void {
+			if (CritterManager.I.CritterBuffs[buffID].isStackable) {
+				var b:CritterBuff = CritterManager.I.GetBuff();
+				b.ApplyToCritter(buffID, this);
+				ActiveBuffs.push(b);
+			}
+		}
+		
+		public function HasBuff(buffID:int):Boolean {
+			if (ActiveBuffs.length == 0) return false;
+			
+			for (var i:int = 0; i < ActiveBuffs.length; i++) {
+				if (ActiveBuffs[i].info.ID == buffID) {
+					return true;
+				}
+			}
+			
+			return false;
+		}
+		
+		public function RemoveBuff(buff:CritterBuff):void {
+			var i:int = ActiveBuffs.indexOf(buff);
+			
+			if (i > -1) {
+				ActiveBuffs.splice(i, 1);
+			}
+		}
+		
+		public function RemoveBuffByID(buffID:int):void {
+			for (var i:int = ActiveBuffs.length; i > -1; --i) {
+				if (ActiveBuffs[i].info.ID == buffID) {
+					ActiveBuffs.splice(i, 1);
+				}
+			}
 		}
 	}
 }

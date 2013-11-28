@@ -161,9 +161,11 @@ package UI {
 			var wx:int = (x - Camera.X) / Camera.Z;
 			var wy:int = (y - Camera.Y) / Camera.Z;
 			
+			if (GlobalVariables.Variables == null) return;
 			GlobalVariables.Variables[Global.GV_WX] = wx;
 			GlobalVariables.Variables[Global.GV_WY] = wy;
 			
+			if (Panels == null) return;
 			var i:int = Panels.length;
 			var j:int;
 			

@@ -56,7 +56,7 @@ package Game.Critter {
 		}
 		
 		public function CreateCritter(map:MapData, x:int, y:int):BaseCritter {
-			trace("CritterInfoBase cannot accurately create a critter!");
+			Main.I.Log("CritterInfoBase cannot accurately create a critter!");
 			return null;
 		}
 	}

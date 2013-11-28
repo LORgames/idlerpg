@@ -33,7 +33,7 @@ package Storage {
 		
 		static public function Load(key:String):void {
 			//for (var i:int = Saves.length - 1; i > -1; --i) {
-			//	trace("SaveKEY: " + Saves[i].key);
+			//	Main.I.Log("SaveKEY: " + Saves[i].key);
 			//	if (Saves[i].key == key) {
 			//		CurrentSave = Saves[i];
 			//		return;

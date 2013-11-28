@@ -18,6 +18,7 @@ namespace ToolToGameExporter {
 
             for (int i = 0; i < BuffManager.Buffs.Count; i++) {
                 RemappedBuffIDs.Add(BuffManager.Buffs[i].Name, (short)i);
+                System.Diagnostics.Debug.WriteLine("Mapped " + BuffManager.Buffs[i].Name + " to " + i);
             }
 
             ExportCrushers.RemappedBuffIDs = RemappedBuffIDs;
@@ -42,6 +43,5 @@ namespace ToolToGameExporter {
 
             f.Encode(Global.EXPORT_DIRECTORY + "\\CritterBuffs.bin");
         }
-
     }
 }

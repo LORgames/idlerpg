@@ -31,7 +31,7 @@ package Scripting {
 		
 		public function ProcessPacket(p:Packet):Boolean {
 			if (p.type == 7) {
-				trace("RECV IMPORTANT PACKET!");
+				Main.I.Log("RECV IMPORTANT PACKET!");
 				
 				tb.clear();
 				p.bytes.readBytes(tb, 0);

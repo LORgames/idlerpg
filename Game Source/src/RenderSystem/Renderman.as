@@ -94,7 +94,7 @@ package RenderSystem {
 						while (TrySwap(i++)) { }
 					}
 				} catch (e:Error) {
-					trace("DIRTY Object NULL CAUGHT Obj="+obj);
+					Main.I.Log("DIRTY Object NULL CAUGHT Obj="+obj);
 				}
 			}
 			
@@ -193,7 +193,7 @@ package RenderSystem {
 			if (i > -1) {
 				AnimatedObjects.splice(i, 1);
 			} else {
-				trace(animation + " is not in the queue");
+				Main.I.Log(animation + " is not in the queue");
 			}
 		}
 	}

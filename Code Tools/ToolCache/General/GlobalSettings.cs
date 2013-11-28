@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace ToolCache.General {
     public class GlobalSettings {
@@ -21,6 +22,21 @@ namespace ToolCache.General {
         public static string VariablePressedWorldY = "";
         public static string VariablePressedLocalX = "";
         public static string VariablePressedLocalY = "";
+
+        private static byte GIFColourR = 255;
+        private static byte GIFColourG = 255;
+        private static byte GIFColourB = 255;
+
+        public static Color GIFColour {
+            get {
+                return Color.FromArgb(GIFColourR, GIFColourG, GIFColourB);
+            }
+            set {
+                GIFColourR = value.R;
+                GIFColourG = value.G;
+                GIFColourB = value.B;
+            }
+        }
 
         public static string DefaultMap = "";
 
@@ -50,6 +66,9 @@ namespace ToolCache.General {
                         case "PressedLX": VariablePressedLocalX = variableProperty; break;
                         case "PressedLY": VariablePressedLocalY = variableProperty; break;
                         case "DefaultMap": DefaultMap = variableProperty; break;
+                        case "GIFBackgroundR": GIFColourR = byte.Parse(variableProperty); break;
+                        case "GIFBackgroundG": GIFColourG = byte.Parse(variableProperty); break;
+                        case "GIFBackgroundB": GIFColourB = byte.Parse(variableProperty); break;
                         default:
                             MessageBox.Show("Unknown variable '" + variableName + "' in global settings");
                             break;
@@ -73,6 +92,10 @@ namespace ToolCache.General {
             lines.Add("PressedLY=" + VariablePressedLocalY.ToString());
 
             lines.Add("DefaultMap=" + DefaultMap.ToString());
+
+            lines.Add("GIFBackgroundR=" + GIFColourR.ToString());
+            lines.Add("GIFBackgroundG=" + GIFColourG.ToString());
+            lines.Add("GIFBackgroundB=" + GIFColourB.ToString());
 
             File.WriteAllLines(DATABASE + FILENAME, lines);
         }

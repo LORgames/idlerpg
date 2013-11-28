@@ -96,13 +96,13 @@ package Scripting {
 			EventScript.position = 0;
 			NetSync = 0;
 			
-			//trace("Running: Invoker=" + info.Invoker + " Event=" + eventID);
+			//Main.I.Log("Running: Invoker=" + info.Invoker + " Event=" + eventID + " CurrentTarget=" + info.CurrentTarget);
 			ProcessBlock(EventScript, info, eventID, param);
 			
 			if (EventScript.position != EventScript.length) {
-				trace("SCRIPT UNFINISHED: [" + info.Invoker + " Event="+eventID+ " ScriptPosition=" + EventScript.position + "/" + EventScript.length);
+				Main.I.Log("SCRIPT UNFINISHED: [" + info.Invoker + " Event="+eventID+ " ScriptPosition=" + EventScript.position + "/" + EventScript.length);
 				if (EventScript.position + 2 <= EventScript.length) {
-					trace("\t\tEOF: 0x" + MathsEx.ZeroPad(EventScript.readUnsignedShort(), 0, 16));
+					Main.I.Log("\t\tEOF: 0x" + MathsEx.ZeroPad(EventScript.readUnsignedShort(), 0, 16));
 				}
 			}
 		}
@@ -151,7 +151,7 @@ package Scripting {
 						case 0xB00B: //Binary Right Shift
 							runningTally = runningTally >> nextValue; break;
 						default:
-							trace("Unknown math operation!");
+							Main.I.Log("Unknown math operation!");
 							break;
 					}
 				} else { //is an operation hopefully
@@ -192,7 +192,7 @@ package Scripting {
 			
 			while (!ended) {
 				command = eventScript.readUnsignedShort();
-				//trace("\t0x" + MathsEx.ZeroPad(command, 4, 16) + " IFPARAM");
+				//Main.I.Log("\t0x" + MathsEx.ZeroPad(command, 4, 16) + " IFPARAM");
 				currentUnprocessedValue = true;
 				
 				switch(command) {
@@ -201,7 +201,7 @@ package Scripting {
 						break;
 					case 0xF0FD:
 						currentUnprocessedValue = CanIf(eventScript, info, position, inputParam);
-						trace("\nNested IF:" + currentUnprocessedValue);
+						Main.I.Log("\nNested IF:" + currentUnprocessedValue);
 						break;
 					case 0x7000: currentOperation = 0; break; //AND
 					case 0x7001: currentOperation = 1; break; //OR
@@ -220,7 +220,7 @@ package Scripting {
 						if (info.CurrentTarget is CritterHuman) {
 							currentUnprocessedValue = (info.CurrentTarget as CritterHuman).Equipment.IsEquipped(eventScript.readUnsignedShort(), eventScript.readUnsignedShort());
 						} else {
-							trace("Unknown invoker for if equipped");
+							Main.I.Log("Unknown invoker for if equipped");
 						}
 						break;
 					case 0x7006: //Is an animation playing
@@ -231,7 +231,7 @@ package Scripting {
 						if (info.CurrentTarget is BaseCritter) {
 							currentUnprocessedValue = ((info.CurrentTarget as BaseCritter).GetFaction() == eventScript.readShort());
 						} else {
-							trace("Unknown target for 0x7008 Target=" + info.CurrentTarget + " Faction=" + eventScript.readShort());
+							Main.I.Log("Unknown target for 0x7008 Target=" + info.CurrentTarget + " Faction=" + eventScript.readShort());
 						} break;
 					case 0x7009: //Math comparison function
 						param1 = GetNumberFromVariable(eventScript, info, inputParam);
@@ -286,7 +286,7 @@ package Scripting {
 						if (info.CurrentTarget is BaseCritter) {
 							currentUnprocessedValue = ((info.CurrentTarget as BaseCritter).HasFaction(eventScript.readShort()));
 						} else {
-							trace("Unknown target for 0x700D Target=" + info.CurrentTarget + " Faction=" + eventScript.readShort());
+							Main.I.Log("Unknown target for 0x700D Target=" + info.CurrentTarget + " Faction=" + eventScript.readShort());
 						} break;
 					case 0x7FFF: //AI Event, Trigger Event etc
 						var whatAIEvent:int = GetNumberFromVariable(eventScript, info, inputParam);
@@ -294,22 +294,22 @@ package Scripting {
 							currentUnprocessedValue = ((inputParam as int) == whatAIEvent);
 						} break;
 					default:
-						trace("@0x" + command.toString(16) + ": Unknown Conditional.");
+						Main.I.Log("@0x" + command.toString(16) + ": Unknown Conditional.");
 						break;
 				}
 				
 				if (command != 0xF0FE && command != 0x7000 && command != 0x7001 && command != 0x7002) { //if not operation
 					if (isNOTblock) {
-						//trace("\tNOT " + currentUnprocessedValue);
+						//Main.I.Log("\tNOT " + currentUnprocessedValue);
 						currentUnprocessedValue = !currentUnprocessedValue;
 						isNOTblock = false;
 					}
 					
 					if (currentOperation == 0) { //AND
-						//trace("\tAND (" + currentCalculatedValue + " && " + currentUnprocessedValue + ") = " +(currentCalculatedValue && currentUnprocessedValue));
+						//Main.I.Log("\tAND (" + currentCalculatedValue + " && " + currentUnprocessedValue + ") = " +(currentCalculatedValue && currentUnprocessedValue));
 						currentCalculatedValue = (currentCalculatedValue && currentUnprocessedValue);
 					} else if (currentOperation == 1) { //OR
-						//trace("\tOR (" + currentCalculatedValue + " || " + currentUnprocessedValue + ") = " + (currentCalculatedValue || currentUnprocessedValue));
+						//Main.I.Log("\tOR (" + currentCalculatedValue + " || " + currentUnprocessedValue + ") = " + (currentCalculatedValue || currentUnprocessedValue));
 						currentCalculatedValue = (currentCalculatedValue || currentUnprocessedValue);
 					}
 				}
@@ -395,7 +395,7 @@ package Scripting {
 						//something :)
 						break;
 					default:
-						trace("Unknown ArrayType.");
+						Main.I.Log("Unknown ArrayType.");
 						break;
 				}
 				
@@ -405,14 +405,14 @@ package Scripting {
 			//Now we're in the loop bit :)
 			var startIndex:int = eventScript.position;
 			
-			//trace("LOOP Type=" + info.Invoker + " Objects=" + Objects.length);
+			//Main.I.Log("LOOP Type=" + info.Invoker + " Objects=" + Objects.length);
 			
 			var obji:int = Objects.length;
 			while (--obji > -1) {
 				var target:IScriptTarget = Objects[obji];
 				info.AttachTarget(target);
 				
-				trace("MAP LOOP Pos=" + eventScript.position + " LoopAt=" + startIndex + " Invoker=" + info.Invoker + " CurrentTarget=" + info.CurrentTarget);
+				Main.I.Log("MAP LOOP Pos=" + eventScript.position + " LoopAt=" + startIndex + " Invoker=" + info.Invoker + " CurrentTarget=" + info.CurrentTarget);
 				
 				var _continue:Boolean = (ProcessBlock(eventScript, info, eventID, param) == 0);
 				
@@ -467,14 +467,14 @@ package Scripting {
 					try {
 						return int(info.Invoker[GetWonkyString(eventScript)]);
 					} catch (e:Error) {
-						trace("Cannot get param from invoker!" + e.message);
+						Main.I.Log("Cannot get param from invoker!" + e.message);
 						return 0;
 					}
 				case 0x04: //Target
 					try {
 						return int(info.CurrentTarget[GetWonkyString(eventScript)]);
 					} catch (e:Error) {
-						trace("Cannot get param from target!" + e.message);
+						Main.I.Log("Cannot get param from target!" + e.message);
 						return 0;
 					}
 				case 0x05: //Power
@@ -499,7 +499,7 @@ package Scripting {
 						return Math.random() * (p - q) + q;
 					}
 				default:
-					trace("Unknown Math Command: " + functionID);
+					Main.I.Log("Unknown Math Command: " + functionID);
 					return 0;
 			}
 		}
@@ -629,7 +629,7 @@ package Scripting {
 			
 			while (true) {
 				command = EventScript.readUnsignedShort();
-				//trace("\t0x" + MathsEx.ZeroPad(command, 4, 16) + " Deep=" + deep + " CurrentTarget=" + info.CurrentTarget);
+				//Main.I.Log("\t0x" + MathsEx.ZeroPad(command, 4, 16) + " Deep=" + deep + " CurrentTarget=" + info.CurrentTarget);
 				
 				if (command == 0xFFFF) { break; }
 				if (command == 0xB000) { ProcessMathCommand(EventScript, info, inputParam); continue; }
@@ -797,20 +797,20 @@ package Scripting {
 							Global.Network = new SocketHost();
 							Global.Network.Connect("", p0.Y, Main.I);
 						} else {
-							trace("Unknown network type!");
+							Main.I.Log("Unknown network type!");
 						} break;
 					case 0x1012: //NetConnect
 						p0.X = EventScript.readShort();
 						var s:String = GetWonkyString(EventScript);
 						p0.Y = GetNumberFromVariable(EventScript, info, inputParam);
 						
-						trace("Hostname = " + s + ":" + p0.Y);
+						Main.I.Log("Hostname = " + s + ":" + p0.Y);
 						
 						if(p0.X == 0) { //LAN
 							Global.Network = new SocketClient();
 							Global.Network.Connect(s, p0.Y, Main.I);
 						} else {
-							trace("Unknown network type!");
+							Main.I.Log("Unknown network type!");
 						} break;
 					case 0x1013: //NetClose
 						if (Global.Network != null) {
@@ -851,7 +851,10 @@ package Scripting {
 						TweenManager.StartTweenTo(info.CurrentTarget, objName, p0.X, fParam);
 						break;
 					case 0x101A: //Apply Buff
-						p0.X = GetNumberFromVariable(EventScript, info, inputParam);	//Buff ID
+						p0.X = EventScript.readShort();	//Buff ID
+						if (info.CurrentTarget is BaseCritter) {
+							(info.CurrentTarget as BaseCritter).ApplyBuff(p0.X);
+						}
 						break;
 					case 0x101B: //TweenChild
 						objName = GetWonkyString(EventScript);							//Param Name
@@ -887,7 +890,7 @@ package Scripting {
 								c.RequestMove(Math.cos(angle), Math.sin(angle), move);
 							}
 						} else {
-							trace("0x5003 WRONG TARGET! " + info.CurrentTarget + " @" + eventID);
+							Main.I.Log("0x5003 WRONG TARGET! " + info.CurrentTarget + " @" + eventID);
 							GetNumberFromVariable(EventScript, info, inputParam); EventScript.readShort(); //Remove the two shorts
 						} break;
 					case 0x5004: //Set Faction
@@ -902,7 +905,7 @@ package Scripting {
 						if (info.CurrentTarget is BaseCritter && ((info.CurrentTarget as BaseCritter).Owner as BaseCritter) != null) {
 							(info.CurrentTarget as BaseCritter).CurrentTarget = ((info.CurrentTarget as BaseCritter).Owner as BaseCritter).CurrentTarget;
 						} else {
-							trace("Uh? What target?");
+							Main.I.Log("Uh? What target?");
 						} break;
 					case 0x5007: //Set AIType param
 						if (info.CurrentTarget is BaseCritter) {
@@ -1034,7 +1037,7 @@ package Scripting {
 							GetNumberFromVariable(EventScript, info, inputParam); //Just pop it off
 							EventScript.readShort(); //Pop them off as well
 						} break;
-					case 0xCFFF: //Trace
+					case 0xCFFF: //Main.I.Log
 						Main.I.Log("[" + info.Invoker + "] " + StringEx.BuildFromCore(GetWonkyString(EventScript)).GetBuilt()); break;
 					case 0xF001: //Up a netsync level
 						NetSync--; break;
@@ -1047,7 +1050,7 @@ package Scripting {
 							}
 							deep--;
 						} else {
-							trace("Unknown Command: 0x" + MathsEx.ZeroPad(command, 4, 16) + " ("+command.toString()+") Event="+eventID + " Position="+EventScript.position+" Length="+EventScript.length+" Invoker="+info.Invoker + " CurrentTarget="+info.CurrentTarget);
+							Main.I.Log("Unknown Command: 0x" + MathsEx.ZeroPad(command, 4, 16) + " ("+command.toString()+") Event="+eventID + " Position="+EventScript.position+" Length="+EventScript.length+" Invoker="+info.Invoker + " CurrentTarget="+info.CurrentTarget);
 						}
 						
 						break;
@@ -1086,7 +1089,7 @@ package Scripting {
 		//This updates all the triggers when a trigger is fired
 		internal static var TriggerListeners:Vector.<ScriptInstance> = new Vector.<ScriptInstance>();
 		public static function FireTrigger(triggerID:int):void {
-			trace("SCRIPT TRIGGER: " + triggerID);
+			Main.I.Log("SCRIPT TRIGGER: " + triggerID);
 			
 			//TODO: Make this actually work properly! (more details follow)
 			//It should be able to support multiple triggers firing at the same time

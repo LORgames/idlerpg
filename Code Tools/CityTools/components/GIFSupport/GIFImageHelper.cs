@@ -12,7 +12,9 @@ namespace CityTools.Components.GIFSupport {
 
             Bitmap bmp = new Bitmap(im);
             using (Graphics g = Graphics.FromImage(bmp)) {
-                g.Clear(Color.White);
+                g.Clear(GlobalSettings.GIFColour);
+
+                g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
                 g.DrawImage(im, Point.Empty);
             }
 

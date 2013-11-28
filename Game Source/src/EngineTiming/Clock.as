@@ -53,7 +53,7 @@ package EngineTiming {
 				var now:uint = getTimer();
 				var delta:uint = now - last;
 				if (delta >= 1000) {
-					//trace(ticks / delta * 1000+" ticks:"+ticks+" delta:"+delta);
+					//Main.I.Log(ticks / delta * 1000+" ticks:"+ticks+" delta:"+delta);
 					var fps:Number = ticks / delta * 1000;
 					FPSTF.UpdateInfo(fps.toFixed(1));
 					ticks = 0;

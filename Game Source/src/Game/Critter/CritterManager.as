@@ -43,5 +43,10 @@ package Game.Critter {
 				CritterBuffs[i] = new CritterBuffInfo(b);
 			}
 		}
+		
+		public function GetBuff():CritterBuff {
+			//TODO: Pool these objects.
+			return new CritterBuff();
+		}
 	}
 }

@@ -83,12 +83,12 @@ package Scripting {
 			
 			if (MyScript.EventScripts[Script.Update] != null) {
 				i = Script.UpdateScripts.indexOf(this);
-				if (i > -1) { Script.UpdateScripts.splice(i, 1); } else { trace("FAILED TO SPLICE! UPDATE SCRIPT!"); }
+				if (i > -1) { Script.UpdateScripts.splice(i, 1); } else { Main.I.Log("FAILED TO SPLICE! UPDATE SCRIPT!"); }
 			}
 			
 			if (MyScript.EventScripts[Script.OnTrigger] != null) {
 				i = Script.TriggerListeners.indexOf(this);
-				if (i > -1) { Script.TriggerListeners.splice(i, 1); } else { trace("FAILED TO SPLICE! TRIGGER SCRIPT!"); }
+				if (i > -1) { Script.TriggerListeners.splice(i, 1); } else { Main.I.Log("FAILED TO SPLICE! TRIGGER SCRIPT!"); }
 			}
 			
 			MyScript = null;

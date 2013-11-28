@@ -97,5 +97,17 @@ namespace CityTools {
                 }
             }
         }
+
+        private void pbGIFBackground_Paint(object sender, PaintEventArgs e) {
+            e.Graphics.Clear(GlobalSettings.GIFColour);
+        }
+
+        private void pbGIFBackground_Click(object sender, EventArgs e) {
+            colorPicker.Color = GlobalSettings.GIFColour;
+            if (colorPicker.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+                GlobalSettings.GIFColour = colorPicker.Color;
+                pbGIFBackground.Invalidate();
+            }
+        }
     }
 }

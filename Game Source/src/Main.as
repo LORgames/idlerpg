@@ -5,7 +5,9 @@ package {
 	import flash.display.StageQuality;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
+	import flash.events.KeyboardEvent;
 	import flash.system.Capabilities;
+	import flash.ui.Keyboard;
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
 	import Game.Map.WorldData;
@@ -53,7 +55,8 @@ package {
 					//stage.nativeWindow.maximize();
 				}
 				
-				NativeApplication.nativeApplication.addEventListener(InvokeEvent.INVOKE, OnInvoke);
+				NativeApplication.nativeApplication.addEventListener(InvokeEvent.INVOKE, OnInvoke, false, 0, true);
+				NativeApplication.nativeApplication.addEventListener(KeyboardEvent.KEY_DOWN, HardwareKeyDown, false, 0, true);
 			}
 			
 			if(CONFIG::air == false) {
@@ -103,7 +106,7 @@ package {
 							case "save":
 								SaveManager.Load(arg.substr(6)); break;
 							default:
-								trace("Unknown Param: " + arg);
+								Main.I.Log("Unknown Param: " + arg);
 						}
 					}
 				}
@@ -154,6 +157,18 @@ package {
 		
 		public function Log(message:String):void {
 			trace(message);
+		}
+		
+		public function HardwareKeyDown(event:KeyboardEvent):void {
+			switch (event.keyCode) {
+				case Keyboard.BACK:
+					event.preventDefault();
+					break;
+				case Keyboard.MENU:
+					break;
+				case Keyboard.SEARCH:
+					break;
+			}
 		}
 	}
 }
