@@ -39,12 +39,13 @@ namespace ToolCache.UI {
         }
 
         private static void AddFont(string p) {
-            FontFamily f = new FontFamily(p);
-
-            if (f.Name == p) {
+            FontFamily f;
+            try {
+                f = new FontFamily(p);
+            } catch (Exception ex) {
+                System.Windows.Forms.MessageBox.Show("Cannot find specified font \"" + p + "\". Defaulting to generic font.");
+                f = new FontFamily(GenericFontFamilies.Serif);
                 Fonts.Add(f);
-            } else {
-                Fonts.Add(new FontFamily(GenericFontFamilies.Serif));
             }
         }
 
