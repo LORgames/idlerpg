@@ -183,6 +183,9 @@ package UI {
 					}
 					
 					if (Panels[i].Elements[j].Contains(x, y)) {
+						GlobalVariables.Variables[Global.GV_LX] = wx - Panels[i].Elements[j].x;
+						GlobalVariables.Variables[Global.GV_LY] = wy - Panels[i].Elements[j].y;
+						
 						if(!dragged) {
 							Panels[i].Elements[j].MyScript.Run(Script.Pressed);
 						} else {
