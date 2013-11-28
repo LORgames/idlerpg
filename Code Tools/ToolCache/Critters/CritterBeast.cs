@@ -57,6 +57,10 @@ namespace ToolCache.Critters {
             f.AddShort(rectOffsetX);
             f.AddShort(rectOffsetY);
 
+            if (Animations.Count == 0) {
+                Animations.Add("Default", new CritterAnimationSet());
+            }
+
             f.AddByte((byte)Animations.Count);
 
             Animations["Default"].SaveToBinaryIO(f);
