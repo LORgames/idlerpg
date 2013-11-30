@@ -46,8 +46,8 @@ package Game.Map {
 		public var ScriptRegions:Vector.<ScriptRegion>;
 		
 		public var Portals:Vector.<Portal>;
-		public var Critters:Vector.<BaseCritter> = new Vector.<BaseCritter>();
-		public var Effects:Vector.<EffectInstance> = new Vector.<EffectInstance>;
+		public var Critters:Vector.<BaseCritter> = new Vector.<BaseCritter>(256, true);
+		public var Effects:Vector.<EffectInstance> = new Vector.<EffectInstance>(256, true);
 		
 		private static var firstload:Boolean = true;
 		private var ExpectedAtPortalID:int = -1;

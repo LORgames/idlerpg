@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<application xmlns="http://ns.adobe.com/air/application/3.9">
+<application xmlns="http://ns.adobe.com/air/application/3.8">
   <id>com.LORgames.CastleRush</id>
   <versionNumber>0.8</versionNumber>
   <supportedProfiles>desktop extendedDesktop mobileDevice</supportedProfiles>
