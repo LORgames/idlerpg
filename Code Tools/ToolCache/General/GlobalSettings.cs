@@ -15,7 +15,6 @@ namespace ToolCache.General {
         public static int GameFPS = 20;
         public static bool TilesEnabled = true;
         public static int TileSize = 48;
-        public static bool CharacterDisabled = false;
         public static float PerspectiveSkew = 0.85f;
 
         public static string VariablePressedWorldX = "";
@@ -27,15 +26,13 @@ namespace ToolCache.General {
         private static byte GIFColourG = 255;
         private static byte GIFColourB = 255;
 
+        public static byte PlayerTotal = 2;         //Maximum critters in multiplayer
+        public static byte PlayerCritters = 32;     //Maximum critters per player
+        public static short PlayerTurnLength = 200; //Turn length minimum in milliseconds
+
         public static Color GIFColour {
-            get {
-                return Color.FromArgb(GIFColourR, GIFColourG, GIFColourB);
-            }
-            set {
-                GIFColourR = value.R;
-                GIFColourG = value.G;
-                GIFColourB = value.B;
-            }
+            get { return Color.FromArgb(GIFColourR, GIFColourG, GIFColourB); }
+            set { GIFColourR = value.R; GIFColourG = value.G; GIFColourB = value.B; }
         }
 
         public static string DefaultMap = "";
@@ -58,7 +55,6 @@ namespace ToolCache.General {
                         case "Name": GameName = variableProperty; break;
                         case "TilesEnabled": TilesEnabled = (variableProperty == "True"); break;
                         case "Tilesize": TileSize = int.Parse(variableProperty); break;
-                        case "CharacterDisabled": CharacterDisabled = (variableProperty == "True"); break;
                         case "FPS": GameFPS = int.Parse(variableProperty); break;
                         case "PerspectiveSkew": PerspectiveSkew = float.Parse(variableProperty); break;
                         case "PressedWX": VariablePressedWorldX = variableProperty; break;
@@ -69,6 +65,9 @@ namespace ToolCache.General {
                         case "GIFBackgroundR": GIFColourR = byte.Parse(variableProperty); break;
                         case "GIFBackgroundG": GIFColourG = byte.Parse(variableProperty); break;
                         case "GIFBackgroundB": GIFColourB = byte.Parse(variableProperty); break;
+                        case "PlayersTotal": PlayerTotal = byte.Parse(variableProperty); break;
+                        case "PlayersCritters": PlayerCritters = byte.Parse(variableProperty); break;
+                        case "TurnLength": PlayerTurnLength = short.Parse(variableProperty); break;
                         default:
                             MessageBox.Show("Unknown variable '" + variableName + "' in global settings");
                             break;
@@ -82,7 +81,6 @@ namespace ToolCache.General {
             lines.Add("Name=" + GameName);
             lines.Add("TilesEnabled=" + TilesEnabled.ToString());
             lines.Add("Tilesize=" + TileSize);
-            lines.Add("CharacterDisabled=" + CharacterDisabled.ToString());
             lines.Add("FPS=" + GameFPS.ToString());
             lines.Add("PerspectiveSkew=" + PerspectiveSkew.ToString());
 
@@ -96,6 +94,10 @@ namespace ToolCache.General {
             lines.Add("GIFBackgroundR=" + GIFColourR.ToString());
             lines.Add("GIFBackgroundG=" + GIFColourG.ToString());
             lines.Add("GIFBackgroundB=" + GIFColourB.ToString());
+
+            lines.Add("PlayersTotal=" + PlayerTotal);
+            lines.Add("PlayersCritters=" + PlayerCritters);
+            lines.Add("TurnLength=" + PlayerTurnLength);
 
             File.WriteAllLines(DATABASE + FILENAME, lines);
         }

@@ -17,12 +17,13 @@ package Game.Map.Portals {
 			if (Global.DisablePortals) return;
 			
 			var j:int = 0;
-			var MyRect:Rect = WorldData.ME.MyRect;
+			var MyRect:Rect = null; //WorldData.ME.MyRect;
+			//TODO: Figure this out for new system as well
 			
 			if (MyRect == null) return;
 			
 			//Check to see if this object can portal
-			if (CurrentMap.Portals != null) {
+			/*if (CurrentMap.Portals != null) {
 				j = CurrentMap.Portals.length;
 				while (--j > -1) {
 					if (CurrentMap.Portals[j].Entry.intersects(MyRect)) {
@@ -45,7 +46,7 @@ package Game.Map.Portals {
 						break;
 					}
 				}
-			}
+			}*/
 		}
 		
 	}

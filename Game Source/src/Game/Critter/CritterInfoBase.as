@@ -55,7 +55,15 @@ package Game.Critter {
 			}
 		}
 		
-		public function CreateCritter(map:MapData, x:int, y:int):BaseCritter {
+		/**
+		 * Creates a critter on the specified map
+		 * @param	map	The map to attach this too, will almost always be WorldData.CurrentMap
+		 * @param	x	The X position that this critter will be placed at
+		 * @param	y	The Y position that this critter will be placed at
+		 * @param	isSimulated	Is this a simulation object or a player specific object?
+		 * @return	The critter that was created
+		 */
+		public function CreateCritter(map:MapData, x:int, y:int, isSimulated:Boolean = true, _id:int = -1):BaseCritter {
 			Main.I.Log("CritterInfoBase cannot accurately create a critter!");
 			return null;
 		}

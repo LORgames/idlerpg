@@ -46,8 +46,6 @@ package {
 			Global.FPS = b.readShort();
 			
 			Global.PerspectiveSkew = b.readFloat();
-			
-			Global.HasCharacter = (forBools & 0x2) == 0x0;
 			Global.HasTiles = (forBools & 0x1) == 0x1;
 			
 			Main.I.stage.frameRate = Global.FPS;
@@ -56,6 +54,10 @@ package {
 			Global.GV_WY = b.readShort();
 			Global.GV_LX = b.readShort();
 			Global.GV_LY = b.readShort();
+			
+			Global.TotalPlayers = b.readByte();
+			Global.CrittersPerPlayer = b.readByte();
+			Global.TurnLength = b.readShort();
 			
 			Global.DefaultMap = BinaryLoader.GetString(b);
 			

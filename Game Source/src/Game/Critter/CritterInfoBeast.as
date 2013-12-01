@@ -65,11 +65,16 @@ package Game.Critter
 			AnimationsPerRow = SpriteSheetWidth / SpriteWidth;
 		}
 		
-		override public function CreateCritter(map:MapData, x:int, y:int):BaseCritter {
+		override public function CreateCritter(map:MapData, x:int, y:int, isSimulated:Boolean = true, _id:int = -1):BaseCritter {
 			var p:CritterBeast = new CritterBeast(this, map, x, y);
 			p.Update(0);
 			
-			map.Critters.push(p);
+			var ID:int = _id;
+			if (ID == -1) {
+				map.GetCritterID(isSimulated);
+			}
+			
+			map.Critters[ID] = p;
 			
 			return p;
 		}

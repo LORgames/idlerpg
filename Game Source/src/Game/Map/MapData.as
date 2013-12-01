@@ -57,6 +57,8 @@ package Game.Map {
 		private var _script:Script;
 		public var MyScript:ScriptInstance;
 		
+		public var NextBlankForPlayer:Vector.<int>;
+		
 		public function MapData() {
 			
 		}
@@ -65,6 +67,8 @@ package Game.Map {
 			Name = mapname;
 			this.ExpectedAtPortalID = portalID;
 			if (portalID != -1) firstload = true;
+			
+			NextBlankForPlayer = new Vector.<int>(Global.TotalPlayers+1, true);
 			
 			BinaryLoader.Load("Data/Map_" + mapname + ".bin", ParseData);
 		}
@@ -168,7 +172,8 @@ package Game.Map {
 			
 			MusicPlayer.PlaySong(Music);
 			
-			if (firstload && Global.HasCharacter) {
+			//TODO: Port this over to the newest system
+			/*if (firstload && Global.HasCharacter) {
 				firstload = false;
 				if (Portals.length > 0) {
 					Critters.push(WorldData.ME);
@@ -176,7 +181,7 @@ package Game.Map {
 				} else {
 					WorldData.ME.ShiftMaps(this, 281);
 				}
-			}
+			}*/
 			
 			Main.I.Resized();
 		}
@@ -275,7 +280,6 @@ package Game.Map {
 					Critters[i] = null;
 				}
 			}
-			Critters = null;
 			
 			i = Spawns.length;
 			while (--i > -1) {
@@ -298,7 +302,6 @@ package Game.Map {
 					Effects[i] = null;
 				}
 			}
-			Effects = null;
 			
 			i = ScriptRegions.length;
 			while (--i > -1) {
@@ -309,6 +312,8 @@ package Game.Map {
 			
 			MyScript.CleanUp();
 			_script.CleanUp();
+			
+			NextBlankForPlayer = null;
 			
 			Dying = false;
 		}
@@ -326,7 +331,7 @@ package Game.Map {
 			var i:int = Critters.indexOf(baseCritter);
 			
 			if (i > -1) {
-				Critters.splice(i, 1);
+				Critters[i] = null;
 			}
 			
 			baseCritter.CurrentMap = null;
@@ -350,7 +355,7 @@ package Game.Map {
 			var i:int = Effects.indexOf(effectInstance);
 			
 			if (i > -1) {
-				Effects.splice(i, 1);
+				Effects[i] = null;
 			}
 		}
 		
@@ -369,6 +374,16 @@ package Game.Map {
 				Camera.Z = 1;
 				Camera.Y = 0;
 				Camera.X = 0;
+			}
+		}
+		
+		public function GetCritterID(isSimulated:Boolean):int {
+			if (isSimulated) {
+				NextBlankForPlayer[0]++;
+				return NextBlankForPlayer[0];
+			} else {
+				NextBlankForPlayer[Global.CurrentPlayerID]++;
+				return NextBlankForPlayer[Global.CurrentPlayerID];
 			}
 		}
 	}

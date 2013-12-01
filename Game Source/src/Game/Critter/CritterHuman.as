@@ -64,7 +64,6 @@ package Game.Critter {
 		}
 		
 		public function toString():String {
-			if (this == WorldData.ME) return "[Critter:PLAYER]";
 			return "[Critter:Humanoid]";
 		}
 		

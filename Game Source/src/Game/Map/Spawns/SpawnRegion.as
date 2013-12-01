@@ -59,7 +59,7 @@ package Game.Map.Spawns {
 			var randX:int = Area[randArea].X + Math.random() * Area[randArea].W;
 			var randY:int = Area[randArea].Y + Math.random() * Area[randArea].H;
 			
-			var newCritter:BaseCritter = CritterManager.I.CritterInfo[critterID].CreateCritter(Map, randX, randY);
+			var newCritter:BaseCritter = CritterManager.I.CritterInfo[critterID].CreateCritter(Map, randX, randY, true);
 			newCritter.SetOwner(this);
 			
 			Critters.push(newCritter);

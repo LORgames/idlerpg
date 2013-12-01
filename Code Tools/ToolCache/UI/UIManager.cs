@@ -16,7 +16,8 @@ namespace ToolCache.UI {
         public static List<UIPanel> Panels = new List<UIPanel>();
         public static BindingList<UILibrary> Libraries = new BindingList<UILibrary>();
 
-        public static BindingList<FontFamily> Fonts = new BindingList<FontFamily>();
+        public static List<FontFamily> Fonts = new List<FontFamily>();
+        public static BindingList<String> FontNames = new BindingList<String>();
 
         public static void Initialize() {
             InstallFonts();
@@ -43,11 +44,13 @@ namespace ToolCache.UI {
             try {
                 f = new FontFamily(p);
                 Fonts.Add(f);
-            } catch (Exception ex) {
+            } catch (Exception) {
                 System.Windows.Forms.MessageBox.Show("Cannot find specified font \"" + p + "\". Defaulting to generic font.");
                 f = new FontFamily(GenericFontFamilies.Serif);
                 Fonts.Add(f);
             }
+
+            FontNames.Add(p);
         }
 
         internal static void ReadDatabase() {

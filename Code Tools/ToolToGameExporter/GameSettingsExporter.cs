@@ -15,7 +15,6 @@ namespace ToolToGameExporter {
 
             byte forBools = 0;
             forBools |= (byte)(GlobalSettings.TilesEnabled?1:0);
-            forBools |= (byte)(GlobalSettings.CharacterDisabled?2:0);
 
             f.AddString(GlobalSettings.GameName);
             f.AddByte(forBools);
@@ -28,6 +27,10 @@ namespace ToolToGameExporter {
             f.AddShort((short)(GlobalSettings.VariablePressedWorldY == "" ? 0 : Variables.GlobalVariables[GlobalSettings.VariablePressedWorldY].Index));
             f.AddShort((short)(GlobalSettings.VariablePressedLocalX == "" ? 0 : Variables.GlobalVariables[GlobalSettings.VariablePressedLocalX].Index));
             f.AddShort((short)(GlobalSettings.VariablePressedLocalY == "" ? 0 : Variables.GlobalVariables[GlobalSettings.VariablePressedLocalY].Index));
+
+            f.AddByte(GlobalSettings.PlayerTotal);
+            f.AddByte(GlobalSettings.PlayerCritters);
+            f.AddShort(GlobalSettings.PlayerTurnLength);
 
             f.AddString(GlobalSettings.DefaultMap);
 

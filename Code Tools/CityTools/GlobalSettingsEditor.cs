@@ -24,7 +24,6 @@ namespace CityTools {
             txtGameName.Text = GlobalSettings.GameName;
             chkEnableTiles.Checked = GlobalSettings.TilesEnabled;
             nudTileSize.Value = GlobalSettings.TileSize;
-            chkDisableCharacter.Checked = GlobalSettings.CharacterDisabled;
             numTargetFPS.Value = GlobalSettings.GameFPS;
             numPerspectiveSkew.Value = (decimal)GlobalSettings.PerspectiveSkew;
 
@@ -54,6 +53,10 @@ namespace CityTools {
             cbVariableWY.SelectedText = GlobalSettings.VariablePressedWorldY;
             cbVariableLX.SelectedText = GlobalSettings.VariablePressedLocalX;
             cbVariableLY.SelectedText = GlobalSettings.VariablePressedLocalY;
+
+            numPlayers.Value = GlobalSettings.PlayerTotal;
+            numCritters.Value = GlobalSettings.PlayerCritters;
+            numTurnSize.Value = GlobalSettings.PlayerTurnLength;
             
             isUpdating = false;
         }
@@ -68,7 +71,6 @@ namespace CityTools {
                 GlobalSettings.GameName = txtGameName.Text;
                 GlobalSettings.TilesEnabled = chkEnableTiles.Checked;
                 GlobalSettings.TileSize = (int)nudTileSize.Value;
-                GlobalSettings.CharacterDisabled = chkDisableCharacter.Checked;
                 GlobalSettings.GameFPS = (int)numTargetFPS.Value;
                 GlobalSettings.PerspectiveSkew = (float)numPerspectiveSkew.Value;
 
@@ -76,6 +78,10 @@ namespace CityTools {
                 GlobalSettings.VariablePressedWorldY = cbVariableWY.SelectedItem==null?"":cbVariableWY.SelectedItem.ToString();
                 GlobalSettings.VariablePressedLocalX = cbVariableLX.SelectedItem==null?"":cbVariableLX.SelectedItem.ToString();
                 GlobalSettings.VariablePressedLocalY = cbVariableLY.SelectedItem==null?"":cbVariableLY.SelectedItem.ToString();
+
+                GlobalSettings.PlayerTotal = (byte)numPlayers.Value;
+                GlobalSettings.PlayerCritters = (byte)numCritters.Value;
+                GlobalSettings.PlayerTurnLength = (short)numTurnSize.Value;
 
                 GlobalSettings.DefaultMap = cbDefaultMap.SelectedItem.ToString();
 
@@ -108,6 +114,7 @@ namespace CityTools {
                 GlobalSettings.GIFColour = colorPicker.Color;
                 pbGIFBackground.Invalidate();
             }
+            Edited(null, null);
         }
     }
 }

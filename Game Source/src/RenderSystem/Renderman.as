@@ -133,8 +133,8 @@ package RenderSystem {
 			if (Global.LoadingTotal > 0) return;
 			if (WorldData.CurrentMap == null) return;
 			
-			var MyX:int = WorldData.ME==null?0:WorldData.ME.X;
-			var MyY:int = WorldData.ME==null?0:WorldData.ME.Y;
+			var MyX:int = 0; //TODO: Figure this out with new camera systems. WorldData.ME == null?0:WorldData.ME.X;
+			var MyY:int = 0; //TODO: Figure this out with new camera systems. WorldData.ME == null?0:WorldData.ME.Y;
 			
 			if (WorldData.CurrentMap.SizeX <= map.fullRect.width) {
 				Camera.X = (map.fullRect.width - WorldData.CurrentMap.SizeX) / 2;

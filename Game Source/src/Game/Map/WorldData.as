@@ -18,17 +18,9 @@ package Game.Map {
 		private static var RequestedMapLoad:String = "";
 		
 		public static var TileSheet:BitmapData;
-		
-		public static var ME:CritterHuman;
 		public static var CurrentMap:MapData = new MapData();
 		
 		public static function Initialize(loadReq:String):void {
-			if (Global.HasCharacter) {
-				ME = new CritterHuman(0, 0);
-				ME.Persistent = true;
-				ME.MovementSpeed = 150;
-			}
-			
 			RequestedMapLoad = loadReq;
 			
 			BinaryLoader.Load("Data/MapInfo.bin", ParseWorldFile);

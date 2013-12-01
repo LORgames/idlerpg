@@ -641,7 +641,7 @@ package Scripting {
 						p0.D = EventScript.readShort(); p0.X = GetNumberFromVariable(EventScript, info, inputParam); p0.Y = GetNumberFromVariable(EventScript, info, inputParam);
 						CalculateOffset(Position, p0, p1);
 						
-						var critter:BaseCritter = CritterManager.I.CritterInfo[p0.D].CreateCritter(WorldData.CurrentMap, p1.X, p1.Y);
+						var critter:BaseCritter = CritterManager.I.CritterInfo[p0.D].CreateCritter(WorldData.CurrentMap, p1.X, p1.Y, !NetSync);
 						
 						if(EventScript.readShort() == 0 && info.CurrentTarget.GetFaction() >= 0) { // Get owner faction?
 							critter.SetFaction(info.CurrentTarget.GetFaction());

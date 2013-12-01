@@ -115,13 +115,11 @@ package RenderSystem {
 				xPos = WorldData.CurrentMap.Critters.length;
 				
 				while (--xPos > -1) {
-					if(WorldData.CurrentMap.Critters[xPos] != WorldData.ME) {
-						var objC:Rect = WorldData.CurrentMap.Critters[xPos].MyRect;
-						if (objC == null) continue;
-						
-						DebugLayer.graphics.lineStyle(1, Factions.GetFactionColour(WorldData.CurrentMap.Critters[xPos].GetFaction()));
-						DebugLayer.graphics.drawRect(objC.X, objC.Y, objC.W, objC.H);
-					}
+					var objC:Rect = WorldData.CurrentMap.Critters[xPos].MyRect;
+					if (objC == null) continue;
+					
+					DebugLayer.graphics.lineStyle(1, Factions.GetFactionColour(WorldData.CurrentMap.Critters[xPos].GetFaction()));
+					DebugLayer.graphics.drawRect(objC.X, objC.Y, objC.W, objC.H);
 				}
 				
 				//Draw all the spawn regions

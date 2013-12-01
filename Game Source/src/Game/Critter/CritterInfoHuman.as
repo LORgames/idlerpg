@@ -29,14 +29,19 @@ package Game.Critter {
 			weapon = b.readShort();
 		}
 		
-		override public function CreateCritter(map:MapData, x:int, y:int):BaseCritter {
+		override public function CreateCritter(map:MapData, x:int, y:int, isSimulated:Boolean = true, _id:int = -1):BaseCritter {
 			var p:CritterHuman = new CritterHuman(x, y);
+			
+			var ID:int = _id;
+			if (ID == -1) {
+				map.GetCritterID(isSimulated);
+			}
 			
 			p.Equipment.Equip(shadow, legs, body, face, headgear, weapon);
 			p.SetFaction(Factions[0]);
 			
 			p.CurrentMap = map;
-			map.Critters.push(p);
+			map.Critters[ID] = p;
 			
 			p.Update(0);
 			

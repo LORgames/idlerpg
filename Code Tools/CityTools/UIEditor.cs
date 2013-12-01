@@ -58,8 +58,7 @@ namespace CityTools {
             cbValue.DataSource = variables;
             cbUILayerLibrary.DataSource = UIManager.Libraries;
 
-            cbTextFontFamily.DataSource = UIManager.Fonts;
-            cbTextFontFamily.DisplayMember = "Name";
+            cbTextFontFamily.DataSource = UIManager.FontNames;
 
             if(listUIPanels.Items.Count > 0) listUIPanels.SelectedIndex = 0;
         }
