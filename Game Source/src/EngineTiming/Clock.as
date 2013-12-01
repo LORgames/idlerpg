@@ -19,7 +19,6 @@ package EngineTiming {
 		public var FifteenSecond:Vector.<IFifteenSecondUpdate> = new Vector.<IFifteenSecondUpdate>();
 		
 		private var Sec_01_Count:Number = 0;
-		private var Sec_15_Count:Number = 0;
 		
 		private var ExpectedFrameRate:Number = 0;
 		private var Stopped:Boolean = false;
@@ -66,7 +65,6 @@ package EngineTiming {
 				var i:int;
 				
 				Sec_01_Count += dt;
-				Sec_15_Count += dt;
 				
 				WorldData.CurrentMap.Update(dt);
 				TweenManager.Update(dt);
@@ -80,7 +78,9 @@ package EngineTiming {
 				if (WorldData.CurrentMap != null) {
 					i = WorldData.CurrentMap.Critters.length;
 					while (--i > -1) {
-						WorldData.CurrentMap.Critters[i].PostUpdate();
+						if (WorldData.CurrentMap.Critters[i] != null) {
+							WorldData.CurrentMap.Critters[i].PostUpdate();
+						}
 					}
 				}
 				
@@ -91,15 +91,6 @@ package EngineTiming {
 					i = OneSecond.length;
 					while (--i > -1) {
 						OneSecond[i].UpdateOneSecond();
-					}
-				}
-				
-				if (Sec_15_Count > 15) {
-					Sec_15_Count -= 15;
-					
-					i = FifteenSecond.length;
-					while (--i > -1) {
-						FifteenSecond[i].UpdateFifteenSecond();
 					}
 				}
 			}

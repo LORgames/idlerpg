@@ -1,8 +1,10 @@
 package Scripting {
 	import EngineTiming.ICleanUp;
-	import flash.display.Screen;
-	import flash.geom.Vector3D;
 	import Game.Equipment.EquipmentItem;
+	
+	CONFIG::air {
+		import flash.display.Screen;
+	}
 	/**
 	 * ...
 	 * @author Paul

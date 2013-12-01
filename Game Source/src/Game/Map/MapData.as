@@ -269,9 +269,13 @@ package Game.Map {
 			Portals = null;
 			
 			i = Critters.length;
-			while (Critters.length > 0) {
-				Critters.pop().CleanUp();
+			while (--i > -1) {
+				if (Critters[i] != null) {
+					Critters[i].CleanUp();
+					Critters[i] = null;
+				}
 			}
+			Critters = null;
 			
 			i = Spawns.length;
 			while (--i > -1) {
@@ -289,8 +293,12 @@ package Game.Map {
 			
 			i = Effects.length;
 			while (--i > -1) {
-				Effects[i].CleanUp();
+				if(Effects[i] != null) {
+					Effects[i].CleanUp();
+					Effects[i] = null;
+				}
 			}
+			Effects = null;
 			
 			i = ScriptRegions.length;
 			while (--i > -1) {

@@ -1,7 +1,4 @@
-package Storage.SaveAdv 
-{
-	import flash.filesystem.StorageVolumeInfo;
-	import Storage.SaveInfo;
+package Storage.SaveAdv {
 	/**
 	 * ...
 	 * @author Paul
@@ -10,5 +7,4 @@ package Storage.SaveAdv
 		function Save(key:String):void;
 		function Load(key:String):void;
 	}
-
 }

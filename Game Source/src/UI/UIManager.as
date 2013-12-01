@@ -2,7 +2,6 @@ package UI {
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
-	import flash.security.XMLSignatureEnvelopedTransformer;
 	import flash.utils.ByteArray;
 	import Loaders.BinaryLoader;
 	import Loaders.ImageLoader;

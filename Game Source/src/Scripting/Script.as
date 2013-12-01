@@ -794,8 +794,10 @@ package Scripting {
 						p0.Y = GetNumberFromVariable(EventScript, info, inputParam);
 						
 						if (p0.X == 0) { //LAN
-							Global.Network = new SocketHost();
-							Global.Network.Connect("", p0.Y, Main.I);
+							CONFIG::air {
+								Global.Network = new SocketHost();
+								Global.Network.Connect("", p0.Y, Main.I);
+							}
 						} else {
 							Main.I.Log("Unknown network type!");
 						} break;

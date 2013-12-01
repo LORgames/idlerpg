@@ -1,7 +1,4 @@
 package QDMF {
-	import adobe.utils.CustomActions;
-	import flash.geom.Vector3D;
-	import flash.html.script.Package;
 	/**
 	 * Quick and Dirty Multiplayer Framework High-Level Network Interface
 	 * @author Paul
