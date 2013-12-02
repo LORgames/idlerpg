@@ -226,6 +226,8 @@ package Game.Map {
 			if(type != ScriptTypes.NotCritter) {
 				_tt = Critters.length;
 				while (--_tt > -1) {
+					if (Critters[_tt] == null) continue;
+					
 					if (type == ScriptTypes.NotMe) {
  						if (Critters[_tt] == scanner) {
 							continue;

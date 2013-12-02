@@ -71,7 +71,7 @@ package Game.Critter
 			
 			var ID:int = _id;
 			if (ID == -1) {
-				map.GetCritterID(isSimulated);
+				ID = map.GetCritterID(isSimulated);
 			}
 			
 			map.Critters[ID] = p;

@@ -391,6 +391,7 @@ package Game.Critter {
 						
 						while (--totalCritters > -1) {
 							critter = CurrentMap.Critters[totalCritters];
+							if (critter == null) continue;
 							
 							if (critter != this) {
 								if (critter.MyRect == null) continue;
