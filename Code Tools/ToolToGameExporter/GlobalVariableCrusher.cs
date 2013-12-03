@@ -35,17 +35,31 @@ namespace ToolToGameExporter {
             List<ScriptVariable> ls = Variables.GlobalVariables.Values.ToList();
             ls.Sort((a, b) => a.Index.CompareTo(b.Index));
 
+            f.AddShort((short)Variables.DatabaseIDForVariables);
             f.AddShort((short)Variables.HighestRequiredVariableIndex());
 
-            int j = 0;
-            for (int i = 0; i < Variables.HighestRequiredVariableIndex(); i++) {
+            List<int> IndicesToSave = new List<int>();
+            int i = 0; int j = 0;
+            for (i = 0; i < Variables.HighestRequiredVariableIndex(); i++) {
                 if (ls.Count > j && ls[j].Index == i) {
                     f.AddShort(ls[j].InitialValue);
+
+                    if (ls[j].Saveable) {
+                        IndicesToSave.Add(ls[j].Index);
+                    }
+
                     j++;
                 } else {
                     f.AddShort(0);
                 }
             }
+
+            f.AddShort((short)IndicesToSave.Count);
+
+            for(i = 0; i < IndicesToSave.Count; i++) {
+                f.AddShort((short)IndicesToSave[i]);
+            }
+
 
             f.Encode(Global.EXPORT_DIRECTORY + "/Variables.bin");
         }

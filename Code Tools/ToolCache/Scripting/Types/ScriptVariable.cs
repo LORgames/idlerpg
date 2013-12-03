@@ -10,6 +10,8 @@ namespace ToolCache.Scripting.Types {
         public int Index;
         public short InitialValue;
 
+        public bool Saveable = false;
+
         public ListViewItem lvi;
         public short TotalReferences;
 

@@ -17,6 +17,8 @@ namespace ToolCache.Scripting.Extensions {
         public static DictionaryEx<string, string> StringTable = new DictionaryEx<string, string>();
         public static DictionaryEx<string, ScriptFunction> FunctionTable = new DictionaryEx<string, ScriptFunction>();
 
+        public static int DatabaseIDForVariables = 0;
+
         private static int nexthighestindex = 1;
 
         public static void Initialize() {
@@ -38,17 +40,28 @@ namespace ToolCache.Scripting.Extensions {
             if (File.Exists(Settings.Database + "GlobalVariables.csv")) {
                 string[] lines = File.ReadAllLines(Settings.Database + "GlobalVariables.csv");
 
+                if (lines.Length > 0 && lines[0].IndexOf("#VERSION ") == 0) {
+                    int.TryParse(lines[0].Substring(9), out DatabaseIDForVariables);
+                    System.Diagnostics.Debug.WriteLine("Variable DatabaseID=" + DatabaseIDForVariables);
+                }
+
                 foreach (String line in lines) {
+                    if (line[0] == '#') continue;
+                    
                     ScriptVariable s = new ScriptVariable();
                     string[] lineBits = line.Trim().Split(',');
 
-                    if (lineBits.Length != 3) {
+                    if (lineBits.Length != 3 && lineBits.Length != 4) {
                         continue;
                     }
 
                     s.Name = lineBits[0];
                     int.TryParse(lineBits[1], out s.Index);
                     short.TryParse(lineBits[2], out s.InitialValue);
+
+                    byte b = 0;
+                    if (lineBits.Length == 4) byte.TryParse(lineBits[3], out b);
+                    if (b == 1) s.Saveable = true;
 
                     AddVariableToDatabase(s);
                 }
@@ -91,7 +104,6 @@ namespace ToolCache.Scripting.Extensions {
         }
 
         public static void SaveDatabase() {
-            VerifyStats();
             SaveVariables();
             SaveStrings();
             SaveFunctions();
@@ -103,8 +115,10 @@ namespace ToolCache.Scripting.Extensions {
 
             List<string> rows = new List<string>();
 
+            rows.Add("#VERSION " + DatabaseIDForVariables);
+
             for (int i = 0; i < keys.Count; i++) {
-                rows.Add(keys[i] + "," + GlobalVariables[keys[i]].Index + "," + GlobalVariables[keys[i]].InitialValue);
+                rows.Add(keys[i] + "," + GlobalVariables[keys[i]].Index + "," + GlobalVariables[keys[i]].InitialValue + "," + (GlobalVariables[keys[i]].Saveable?1:0));
             }
 
             File.WriteAllLines(Settings.Database + "GlobalVariables.csv", rows);
@@ -141,6 +155,7 @@ namespace ToolCache.Scripting.Extensions {
         public static void AddVariableToDatabase(ScriptVariable s) {
             if (s.lvi == null) {
                 s.lvi = new System.Windows.Forms.ListViewItem();
+                s.lvi.Checked = s.Saveable;
                 s.lvi.Text = s.Name;
                 s.lvi.Tag = s;
                 s.lvi.SubItems.Add(s.InitialValue.ToString());
@@ -157,6 +172,33 @@ namespace ToolCache.Scripting.Extensions {
             GlobalVariables.Add(s.Name, s);
         }
 
+        public static void RepackVariables() {
+            //Performs 2 passes, first pass moves all the variables requiring saving to the top, second pass repacks everything else after that
+            List<string> keys = GlobalVariables.Keys.ToList<string>();
+            keys.Sort();
+
+            int newIndex = 1;
+
+            //Pass 1
+            for (int i = 0; i < keys.Count; i++) {
+                if(GlobalVariables[keys[i]].Saveable) {
+                    GlobalVariables[keys[i]].Index = newIndex;
+                    newIndex++;
+                }
+            }
+
+            //Pass 2
+            for (int i = 0; i < keys.Count; i++) {
+                if (!GlobalVariables[keys[i]].Saveable) {
+                    GlobalVariables[keys[i]].Index = newIndex;
+                    newIndex++;
+                }
+            }
+
+            DatabaseIDForVariables++;
+            SaveVariables();
+        }
+
         public static void UpdatedVariable(string key) {
             //TODO: this
         }
@@ -171,17 +213,6 @@ namespace ToolCache.Scripting.Extensions {
 
         public static int HighestRequiredVariableIndex() {
             return nexthighestindex;
-        }
-
-        public static void VerifyStats() {
-            foreach (Critter c in CritterManager.Critters.Values) {
-                AddNewVariable("Stat_Deaths_" + c.Name);
-                AddNewVariable("Stat_GroupDeaths_" + c.NodeGroup);
-            }
-
-            foreach (String groupName in Factions.FactionNames()) {
-                AddNewVariable("Stat_GroupDeaths_" + groupName);
-            }
         }
 
         public static void AddNewVariable(string variableName, short initialValue = 0) {

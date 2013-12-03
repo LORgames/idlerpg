@@ -11,35 +11,17 @@ package Storage {
 		public static var I:ISaveData;
 		public static var CurrentSave:SaveInfo;
 		
-		public static var Saves:Vector.<SaveInfo> = new Vector.<SaveInfo>(); 
-		
 		public static function Initialize():void {
-			//CONFIG::air {
-				//if (Global.IsEditor) {
-				//	I = new EditorSaving();
-				//} else {
-				//	I = new AIRDatabaseSaver();
-				//}
-			//}
+			CONFIG::air {
+				I = new AIRDatabaseSaver();
+			}
 			
-			//if (!CONFIG::air) {
+			if (!CONFIG::air) {
 				I = new SharedObjectSaver();
-			//}
-			
-			//if (Saves.length > 0) {
-			//	CurrentSave = Saves[0];
-			//}
+			}
 		}
 		
 		static public function Load(key:String):void {
-			//for (var i:int = Saves.length - 1; i > -1; --i) {
-			//	Main.I.Log("SaveKEY: " + Saves[i].key);
-			//	if (Saves[i].key == key) {
-			//		CurrentSave = Saves[i];
-			//		return;
-			//	}
-			//}
-			
 			I.Load(key);
 		}
 		

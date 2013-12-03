@@ -16,6 +16,7 @@ namespace ToolCache.Critters {
         TargetLowestHP = 256,   // Targets the unit with the lowest HP
         BlindBehind = 512,      // Targets the unit with the lowest HP
         Unsupportable = 1024,   // Targets the unit with the lowest HP
+        DisableTurning = 2048,  // Unit can't turn around
     }
 
     public class AITypesHelper {

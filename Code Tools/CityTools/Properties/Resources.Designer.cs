@@ -102,6 +102,13 @@ namespace CityTools.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap arrow_switch {
+            get {
+                object obj = ResourceManager.GetObject("arrow_switch", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap attach {
             get {
                 object obj = ResourceManager.GetObject("attach", resourceCulture);

@@ -163,6 +163,10 @@ package Game.Critter {
 			var mx:Number = xSpeed < 0 ? -xSpeed : xSpeed;
 			var my:Number = ySpeed < 0 ? -ySpeed : ySpeed;
 			
+			if ((MyAIType & AITypes.DisableTurning) == AITypes.DisableTurning) {
+				return direction;
+			}
+			
 			//if (mx > my) {
 				if (xSpeed < 0) {
 					return 0;

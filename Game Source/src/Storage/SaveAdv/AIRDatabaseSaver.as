@@ -19,7 +19,5 @@ package Storage.SaveAdv
 		public function Load(key:String):void {
 			
 		}
-		
 	}
-
 }

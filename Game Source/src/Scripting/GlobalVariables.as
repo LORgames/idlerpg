@@ -11,6 +11,9 @@ package Scripting {
 		public static var Strings:Vector.<String>;
 		public static var Functions:Script;
 		
+		public static var DataID:int = 0;
+		//public static var 
+		
 		public function GlobalVariables() {
 			BinaryLoader.Load("Data\\Variables.bin", LoadedVariables);
 			BinaryLoader.Load("Data\\Strings.bin", LoadedStrings);
@@ -18,6 +21,7 @@ package Scripting {
 		}
 		
 		public function LoadedVariables(b:ByteArray):void {
+			DataID = b.readShort();
 			Variables = new Vector.<int>(b.readShort(), true);
 			
 			for (var i:int = 0; i < Variables.length; i++) {

@@ -35,7 +35,6 @@ namespace CityTools {
             addedHandler3 = new EventHandler(new EventHandler(Function_ItemAdded));
             removedHandler3 = new EventHandler(Function_ItemRemoved);
 
-            Variables.VerifyStats();
             Variables.GlobalVariables.ItemAdded += addedHandler;
             Variables.GlobalVariables.ItemRemoved += removedHandler;
             Variables.StringTable.ItemAdded += addedHandler2;
@@ -343,6 +342,19 @@ namespace CityTools {
 
         private void toolStripButton1_Click(object sender, EventArgs e) {
 
+        }
+
+        private void listVariables_ItemChecked(object sender, ItemCheckedEventArgs e) {
+            if (e.Item.Tag is ScriptVariable) {
+                System.Diagnostics.Debug.WriteLine("VARIABLE=" + (e.Item.Tag as ScriptVariable).Name + " Saveable=" + e.Item.Checked);
+                (e.Item.Tag as ScriptVariable).Saveable = e.Item.Checked;
+            }
+        }
+
+        private void btnVarRepack_Click(object sender, EventArgs e) {
+            if (MessageBox.Show("This will delete the saves for all players! Are you sure you want to repack?", "Repack?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.Yes) {
+                Variables.RepackVariables();
+            }
         }
     }
 }
