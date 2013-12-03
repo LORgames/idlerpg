@@ -22,6 +22,7 @@ package Storage.SaveAdv
 		
 		public function Save(key:String):void {
 			mySo.data.gvars = GlobalVariables.Variables;
+			mySo.data.id = GlobalVariables.DataID;
 			
 			var flushStatus:String = null;
 			try {
@@ -33,6 +34,11 @@ package Storage.SaveAdv
 		
 		public function Load(key:String):void {
 			var old:Vector.<int> = mySo.data.gvars;
+			var id:int = mySo.data.id;
+			
+			if (id != GlobalVariables.DataID) {
+				return;
+			}
 			
 			if(old != null) {
 				for (var i:int = 0; i < old.length; i++) {

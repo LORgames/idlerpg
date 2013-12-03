@@ -10,6 +10,7 @@ package Scripting {
 		public static var Variables:Vector.<int>;
 		public static var Strings:Vector.<String>;
 		public static var Functions:Script;
+		public static var Indices:Vector.<int>;
 		
 		public static var DataID:int = 0;
 		//public static var 
@@ -26,6 +27,12 @@ package Scripting {
 			
 			for (var i:int = 0; i < Variables.length; i++) {
 				Variables[i] = b.readShort();
+			}
+			
+			Indices = new Vector.<int>(b.readShort(), true);
+			
+			for (var i:int = 0; i < Indices.length; i++) {
+				Indices[i] = b.readShort();
 			}
 			
 			SaveManager.Load("");
