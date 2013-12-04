@@ -57,7 +57,10 @@ namespace CityTools {
             numPlayers.Value = GlobalSettings.PlayerTotal;
             numCritters.Value = GlobalSettings.PlayerCritters;
             numTurnSize.Value = GlobalSettings.PlayerTurnLength;
-            
+
+            numMusicVolume.Value = GlobalSettings.MusicVolume;
+            numSoundVolume.Value = GlobalSettings.SoundVolume;
+
             isUpdating = false;
         }
 
@@ -82,6 +85,9 @@ namespace CityTools {
                 GlobalSettings.PlayerTotal = (byte)numPlayers.Value;
                 GlobalSettings.PlayerCritters = (byte)numCritters.Value;
                 GlobalSettings.PlayerTurnLength = (short)numTurnSize.Value;
+
+                GlobalSettings.VariableMusicVolume = cbVariableMusicVolume.SelectedItem == null ? "" : cbVariableWX.SelectedItem.ToString();
+                GlobalSettings.VariableSoundVolume = cbVariableSoundVolume.SelectedItem == null ? "" : cbVariableWX.SelectedItem.ToString();
 
                 GlobalSettings.DefaultMap = cbDefaultMap.SelectedItem.ToString();
 

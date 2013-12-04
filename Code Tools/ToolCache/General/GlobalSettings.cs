@@ -30,6 +30,9 @@ namespace ToolCache.General {
         public static byte PlayerCritters = 32;     //Maximum critters per player
         public static short PlayerTurnLength = 200; //Turn length minimum in milliseconds
 
+        public static string VariableMusicVolume = 100;
+        public static string VariableSoundVolume = 100;
+
         public static Color GIFColour {
             get { return Color.FromArgb(GIFColourR, GIFColourG, GIFColourB); }
             set { GIFColourR = value.R; GIFColourG = value.G; GIFColourB = value.B; }
@@ -68,6 +71,8 @@ namespace ToolCache.General {
                         case "PlayersTotal": PlayerTotal = byte.Parse(variableProperty); break;
                         case "PlayersCritters": PlayerCritters = byte.Parse(variableProperty); break;
                         case "TurnLength": PlayerTurnLength = short.Parse(variableProperty); break;
+                        case "MusicVolume": VariableMusicVolume = variableProperty; break;
+                        case "SoundVolume": VariableSoundVolume = variableProperty; break;
                         default:
                             MessageBox.Show("Unknown variable '" + variableName + "' in global settings");
                             break;
@@ -98,6 +103,9 @@ namespace ToolCache.General {
             lines.Add("PlayersTotal=" + PlayerTotal);
             lines.Add("PlayersCritters=" + PlayerCritters);
             lines.Add("TurnLength=" + PlayerTurnLength);
+
+            lines.Add("MusicVolume=" + VariableMusicVolume);
+            lines.Add("SoundVolume=" + VariableSoundVolume);
 
             File.WriteAllLines(DATABASE + FILENAME, lines);
         }
