@@ -37,7 +37,7 @@ package SoundSystem {
 		}
 		
 		public static function PlayFromGroup(gid:int = 0):void {
-			Play((Math.random() * (groups[gid + 1] - groups[gid])) + groups[gid]);
+			Play((Rndm.random() * (groups[gid + 1] - groups[gid])) + groups[gid]);
 		}
 		
 		public static function Play(id:int = 0):void {

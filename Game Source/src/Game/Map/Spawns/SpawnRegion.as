@@ -37,7 +37,7 @@ package Game.Map.Spawns {
 			this.Critters = new Vector.<BaseCritter>();
 			
 			if (MaxSpawn > 0) {
-				UsedTimeout = Math.random() * Timeout;
+				UsedTimeout = Rndm.random() * Timeout;
 				Clock.I.OneSecond.push(this);
 			}
 		}
@@ -55,9 +55,9 @@ package Game.Map.Spawns {
 			if (Area.length == 0) return;
 			
 			var critterID:int = GetNextCritterID();
-			var randArea:int = Math.random() * (Area.length);
-			var randX:int = Area[randArea].X + Math.random() * Area[randArea].W;
-			var randY:int = Area[randArea].Y + Math.random() * Area[randArea].H;
+			var randArea:int = Rndm.random() * (Area.length);
+			var randX:int = Area[randArea].X + Rndm.random() * Area[randArea].W;
+			var randY:int = Area[randArea].Y + Rndm.random() * Area[randArea].H;
 			
 			var newCritter:BaseCritter = CritterManager.I.CritterInfo[critterID].CreateCritter(Map, randX, randY, true);
 			newCritter.SetOwner(this);
@@ -70,7 +70,7 @@ package Game.Map.Spawns {
 		 * @return Returns the CritterID of the monster to spawn
 		 */
 		private function GetNextCritterID():int {
-			var x:int = Math.random() * SpawnID.length;
+			var x:int = Rndm.random() * SpawnID.length;
 			return SpawnID[x];
 		}
 		

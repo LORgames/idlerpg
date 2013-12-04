@@ -5,6 +5,7 @@ package EngineTiming {
 	import flash.utils.getTimer;
 	import Game.Map.WorldData;
 	import Game.Tweening.TweenManager;
+	import QDMF.Logic.Syncronizer;
 	import Scripting.Script;
 	import UI.FPSCounter;
 	/**
@@ -20,12 +21,14 @@ package EngineTiming {
 		
 		private var Sec_01_Count:Number = 0;
 		
-		private var ExpectedFrameRate:Number = 0;
 		private var Stopped:Boolean = false;
 		
 		public static var FPSTF:FPSCounter;
         private var last:uint = getTimer();
         private var ticks:uint = 0;
+		private var edt:Number = 0; //Effective dt;
+		private const dt:Number = 0.0167; //Update at 60FPS
+		private var summedTime:int = 0;
 		
 		public static var CleanUpList:Vector.<ICleanUp> = new Vector.<ICleanUp>();
 		
@@ -35,7 +38,7 @@ package EngineTiming {
 		
 		public function Start(s:Stage):void {
 			s.addEventListener(Event.ENTER_FRAME, Tick);
-			ExpectedFrameRate = s.frameRate;
+			//dt = 0.6 / s.frameRate;
 		}
 		
 		public function Remove(x:IUpdatable):void {
@@ -47,50 +50,58 @@ package EngineTiming {
 		public function Tick(e:Event):void {
 			if (Stopped) return;
 			
+			var now:uint = getTimer();
+			var delta:uint = now - last;
+			last = now;
+			
 			if (FPSTF != null) {
 				ticks++;
-				var now:uint = getTimer();
-				var delta:uint = now - last;
-				if (delta >= 1000) {
+				summedTime += delta;
+				if (summedTime >= 1000) {
 					//Main.I.Log(ticks / delta * 1000+" ticks:"+ticks+" delta:"+delta);
-					var fps:Number = ticks / delta * 1000;
+					var fps:Number = 1000 * ticks / summedTime;
 					FPSTF.UpdateInfo(fps.toFixed(1));
 					ticks = 0;
-					last = now;
+					summedTime = 0;
 				}
 			}
 			
 			if (Global.LoadingTotal == 0) {
-				var dt:Number = 1.0 / ExpectedFrameRate;
 				var i:int;
+				edt += (delta / 1000);
 				
-				Sec_01_Count += dt;
-				
-				WorldData.CurrentMap.Update(dt);
-				TweenManager.Update(dt);
-				
-				//Update what we need to update
-				i = Updatables.length;
-				while (--i > -1) {
-					Updatables[i].Update(dt);
-				}
-				
-				if (WorldData.CurrentMap != null) {
-					i = WorldData.CurrentMap.Critters.length;
+				while (edt >= dt) {
+					edt -= dt;
+					
+					Syncronizer.Update(dt);
+					Sec_01_Count += dt;
+					
+					WorldData.CurrentMap.Update(dt);
+					TweenManager.Update(dt);
+					
+					//Update what we need to update
+					i = Updatables.length;
 					while (--i > -1) {
-						if (WorldData.CurrentMap.Critters[i] != null) {
-							WorldData.CurrentMap.Critters[i].PostUpdate();
+						Updatables[i].Update(dt);
+					}
+					
+					if (WorldData.CurrentMap != null) {
+						i = WorldData.CurrentMap.Critters.length;
+						while (--i > -1) {
+							if (WorldData.CurrentMap.Critters[i] != null) {
+								WorldData.CurrentMap.Critters[i].PostUpdate();
+							}
 						}
 					}
-				}
-				
-				if (Sec_01_Count > 1) {
-					Sec_01_Count -= 1;
-					Script.ProcessUpdate();
 					
-					i = OneSecond.length;
-					while (--i > -1) {
-						OneSecond[i].UpdateOneSecond();
+					if (Sec_01_Count > 1) {
+						Sec_01_Count -= 1;
+						Script.ProcessUpdate();
+						
+						i = OneSecond.length;
+						while (--i > -1) {
+							OneSecond[i].UpdateOneSecond();
+						}
 					}
 				}
 			}

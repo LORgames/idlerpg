@@ -12,6 +12,7 @@ package {
 	import Loaders.BinaryLoader;
 	import Loaders.ImageLoader;
 	import Game.Map.WorldData;
+	import QDMF.Logic.Syncronizer;
 	import Scripting.GlobalVariables;
 	import Scripting.NetworkScriptExec;
 	import Scripting.Script;
@@ -54,10 +55,17 @@ package {
 			Global.GV_WY = b.readShort();
 			Global.GV_LX = b.readShort();
 			Global.GV_LY = b.readShort();
+			Global.GV_MusicVolume = b.readShort();
+			Global.GV_SoundVolume = b.readShort();
 			
 			Global.TotalPlayers = b.readByte();
 			Global.CrittersPerPlayer = b.readByte();
 			Global.TurnLength = b.readShort();
+			
+			Global.EffectsPerPlayer = Global.CrittersPerPlayer;
+			Global.SIMULATION_LIMIT_CRITTER = 255 - (Global.CrittersPerPlayer * Global.TotalPlayers);
+			Global.SIMULATION_LIMIT_EFFECTS = 255 - (Global.EffectsPerPlayer * Global.TotalPlayers);
+			Global.MatchmakingAddress = BinaryLoader.GetString(b);
 			
 			Global.DefaultMap = BinaryLoader.GetString(b);
 			
@@ -80,6 +88,7 @@ package {
 			new Factions();
 			EffectsPlayer.Initialize();
 			new DataManager();
+			new Syncronizer();
 			
 			Clock.I.Start(Main.I.stage);
 		}

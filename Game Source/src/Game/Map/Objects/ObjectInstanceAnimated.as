@@ -25,8 +25,8 @@ package Game.Map.Objects {
 		public var CopyRect:Rectangle = new Rectangle();
 		public var IsLooping:Boolean = true;
 		
-		public function ObjectInstanceAnimated() {
-			super();
+		public function ObjectInstanceAnimated(_REFID:int) {
+			super(_REFID);
 			Renderman.DirtyObjects.push(this);
 		}
 		

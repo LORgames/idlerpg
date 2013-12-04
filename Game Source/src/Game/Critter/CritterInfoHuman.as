@@ -30,12 +30,12 @@ package Game.Critter {
 		}
 		
 		override public function CreateCritter(map:MapData, x:int, y:int, isSimulated:Boolean = true, _id:int = -1):BaseCritter {
-			var p:CritterHuman = new CritterHuman(x, y);
-			
 			var ID:int = _id;
 			if (ID == -1) {
 				map.GetCritterID(isSimulated);
 			}
+			
+			var p:CritterHuman = new CritterHuman(x, y, ID);
 			
 			p.Equipment.Equip(shadow, legs, body, face, headgear, weapon);
 			p.SetFaction(Factions[0]);

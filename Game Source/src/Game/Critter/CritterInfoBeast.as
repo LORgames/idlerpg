@@ -66,16 +66,16 @@ package Game.Critter
 		}
 		
 		override public function CreateCritter(map:MapData, x:int, y:int, isSimulated:Boolean = true, _id:int = -1):BaseCritter {
-			var p:CritterBeast = new CritterBeast(this, map, x, y);
-			p.Update(0);
-			
 			var ID:int = _id;
+			
 			if (ID == -1) {
 				ID = map.GetCritterID(isSimulated);
 			}
 			
-			map.Critters[ID] = p;
+			var p:CritterBeast = new CritterBeast(this, map, x, y, ID);
+			p.Update(0);
 			
+			map.Critters[ID] = p;
 			return p;
 		}
 		

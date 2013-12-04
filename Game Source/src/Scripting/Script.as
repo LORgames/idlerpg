@@ -21,6 +21,7 @@ package Scripting {
 	import Interfaces.IMapObject;
 	import QDMF.Connectors.SocketClient;
 	import QDMF.Connectors.SocketHost;
+	import QDMF.Logic.Helper.QDMFCritter;
 	import QDMF.PacketFactory;
 	import SoundSystem.EffectsPlayer;
 	import Strings.StringEx;
@@ -208,7 +209,7 @@ package Scripting {
 					case 0x7002: isNOTblock = true; break; //NOT
 					case 0x7003: //Random chance
 						param0 = GetNumberFromVariable(eventScript, info, inputParam);
-						currentUnprocessedValue = Math.random() * 100 < param0;
+						currentUnprocessedValue = Rndm.random() * 100 < param0;
 						break;
 					case 0x7004: //Is the script owner alive
 						if (info.CurrentTarget is BaseCritter) {
@@ -494,9 +495,9 @@ package Scripting {
 					if (p == q) {
 						return p;
 					} else if (p < q) {
-						return Math.random() * (q - p) + p;
+						return Rndm.random() * (q - p) + p;
 					} else {
-						return Math.random() * (p - q) + q;
+						return Rndm.random() * (p - q) + q;
 					}
 				default:
 					Main.I.Log("Unknown Math Command: " + functionID);
@@ -640,16 +641,19 @@ package Scripting {
 					case 0x1002: //Spawn Critter
 						p0.D = EventScript.readShort(); p0.X = GetNumberFromVariable(EventScript, info, inputParam); p0.Y = GetNumberFromVariable(EventScript, info, inputParam);
 						CalculateOffset(Position, p0, p1);
+						p1.D = EventScript.readShort();
 						
-						var critter:BaseCritter = CritterManager.I.CritterInfo[p0.D].CreateCritter(WorldData.CurrentMap, p1.X, p1.Y, !NetSync);
-						
-						if(EventScript.readShort() == 0 && info.CurrentTarget.GetFaction() >= 0) { // Get owner faction?
-							critter.SetFaction(info.CurrentTarget.GetFaction());
+						if(!NetSync) {
+							var critter:BaseCritter = CritterManager.I.CritterInfo[p0.D].CreateCritter(WorldData.CurrentMap, p1.X, p1.Y, !NetSync);
+							
+							if(p1.D == 0 && info.CurrentTarget.GetFaction() >= 0) { // Get owner faction?
+								critter.SetFaction(info.CurrentTarget.GetFaction());
+							}
+							
+							critter.SetOwner(info.CurrentTarget);
+						} else {
+							QDMFCritter.Register(p0.D, p1.X, p1.Y, p1.D==0?info.CurrentTarget.GetFaction():-1, info.CurrentTarget);
 						}
-						
-						critter.SetOwner(info.CurrentTarget);
-						
-						if (NetSync > 0 && Global.Network != null) PacketFactory.N(Vector.<int>([0x1002, p0.D, 0xBFFF, p1.X, 0xBFFF, p1.Y, 0x1]));
 						
 						break;
 					case 0x1003: //Flat Damage
@@ -673,15 +677,13 @@ package Scripting {
 						p0.X = GetNumberFromVariable(EventScript, info, inputParam); p0.Y = GetNumberFromVariable(EventScript, info, inputParam);
 						CalculateOffset(Position, p0, p1);
 						
-						new EffectInstance(effectInfo, p1.X, p1.Y, Position.D);
-						
-						if (NetSync > 0 && Global.Network != null) PacketFactory.N(Vector.<int>([0x1008, p0.D, 0xBFFF, p1.X, 0xBFFF, p1.Y]));
+						new EffectInstance(effectInfo, p1.X, p1.Y, Position.D, NetSync);
 						
 						break;
 					case 0x1009: //EffectSpawnDirectional
 						effectInfo = EffectManager.I.Effects[EventScript.readShort()];
 						p0.X = Position.X + GetNumberFromVariable(EventScript, info, inputParam); p0.Y = Position.Y + GetNumberFromVariable(EventScript, info, inputParam);
-						new EffectInstance(effectInfo, p0.X, p0.Y, EventScript.readShort()); break;
+						new EffectInstance(effectInfo, p0.X, p0.Y, EventScript.readShort(), NetSync); break;
 					case 0x100A: //EffectSpawnDirectionalRelative
 						effectInfo = EffectManager.I.Effects[EventScript.readShort()];
 						
@@ -751,7 +753,7 @@ package Scripting {
 								} break;
 						}
 						
-						new EffectInstance(effectInfo, p0.X, p0.Y, tD);
+						new EffectInstance(effectInfo, p0.X, p0.Y, tD, NetSync);
 		
 						break;
 					case 0x100B: //SpawnObject
@@ -763,9 +765,9 @@ package Scripting {
 						var o:ObjectInstance;
 						
 						if (ObjectTemplate.Objects[id].IndividualAnimations) {
-							o = new ObjectInstanceAnimated();
+							o = new ObjectInstanceAnimated(WorldData.CurrentMap.Objects.length);
 						} else {
-							o = new ObjectInstance();
+							o = new ObjectInstance(WorldData.CurrentMap.Objects.length);
 						}
 						
 						o.SetInformation(WorldData.CurrentMap, id, p1.X, p1.Y);
@@ -866,6 +868,9 @@ package Scripting {
 						p0.Y = GetNumberFromVariable(EventScript, info, inputParam); 	//Final Value
 						fParam = GetNumberFromVariable(EventScript, info, inputParam);
 						TweenManager.StartTweenBetween(objX, objName, p0.X, p0.Y, fParam);
+						break;
+					case 0x101C: //Enter matchmaking
+						Main.I.Log("SCRIPTINFO: Cannot enter matchmaking just yet!");
 						break;
 					case 0x4001: //Equip item on the target
 						if (info.CurrentTarget is CritterHuman) {

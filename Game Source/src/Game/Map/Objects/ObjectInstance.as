@@ -22,11 +22,13 @@ package Game.Map.Objects {
 		public var Map:MapData;
 		public var MyScript:ScriptInstance;
 		
-		protected var FullBase:Rect
+		protected var FullBase:Rect;
+		protected var REFID:int;
 		
-		public function ObjectInstance() {
+		public function ObjectInstance(_REFID:int) {
 			Main.OrderedLayer.addChild(this);
 			FullBase = new Rect(true, this);
+			REFID = _REFID;
 		}
 		
 		public function SetInformation(map:MapData, id:int, _x:int, _y:int):void {
@@ -188,6 +190,8 @@ package Game.Map.Objects {
 			return 0;
 		}
 		
+		public function GetID():int {
+			return REFID;
+		}
 	}
-
 }

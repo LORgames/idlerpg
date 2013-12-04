@@ -11,7 +11,9 @@ package Game.Critter {
 		public var Info:CritterInfoBeast;
 		public var Animation:CritterAnimationSet;
 		
-		public function CritterBeast(MyInfo:CritterInfoBeast, map:MapData, x:int, y:int) {
+		public function CritterBeast(MyInfo:CritterInfoBeast, map:MapData, x:int, y:int, REFID:int) {
+			super(REFID);
+			
 			Info = MyInfo;
 			
 			Animation = new CritterAnimationSet(this);
@@ -104,6 +106,7 @@ package Game.Critter {
 		}
 		
 		override public function CleanUp():void {
+			if (Info == null) return;
 			if (Persistent) return;
 			super.CleanUp();
 			

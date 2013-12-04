@@ -27,10 +27,13 @@ namespace ToolToGameExporter {
             f.AddShort((short)(GlobalSettings.VariablePressedWorldY == "" ? 0 : Variables.GlobalVariables[GlobalSettings.VariablePressedWorldY].Index));
             f.AddShort((short)(GlobalSettings.VariablePressedLocalX == "" ? 0 : Variables.GlobalVariables[GlobalSettings.VariablePressedLocalX].Index));
             f.AddShort((short)(GlobalSettings.VariablePressedLocalY == "" ? 0 : Variables.GlobalVariables[GlobalSettings.VariablePressedLocalY].Index));
+            f.AddShort((short)(GlobalSettings.VariableMusicVolume == "" ? 0 : Variables.GlobalVariables[GlobalSettings.VariableMusicVolume].Index));
+            f.AddShort((short)(GlobalSettings.VariableSoundVolume == "" ? 0 : Variables.GlobalVariables[GlobalSettings.VariableSoundVolume].Index));
 
             f.AddByte(GlobalSettings.PlayerTotal);
             f.AddByte(GlobalSettings.PlayerCritters);
             f.AddShort(GlobalSettings.PlayerTurnLength);
+            f.AddString(GlobalSettings.MatchmakingServer);
 
             f.AddString(GlobalSettings.DefaultMap);
 

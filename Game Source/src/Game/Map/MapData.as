@@ -7,8 +7,6 @@ package Game.Map {
 	import Game.Critter.BaseCritter;
 	import Game.Critter.Factions;
 	import Game.Effects.EffectInstance;
-	import Interfaces.IMapObject;
-	import Loaders.BinaryLoader;
 	import Game.Map.Objects.ObjectInstance;
 	import Game.Map.Objects.ObjectInstanceAnimated;
 	import Game.Map.Objects.ObjectTemplate;
@@ -17,11 +15,12 @@ package Game.Map {
 	import Game.Map.Spawns.SpawnRegion;
 	import Game.Map.Tiles.TileHelper;
 	import Game.Map.Tiles.TileInstance;
+	import Loaders.BinaryLoader;
+	import RenderSystem.Camera;
 	import Scripting.IScriptTarget;
 	import Scripting.Script;
 	import Scripting.ScriptInstance;
 	import Scripting.ScriptTypes;
-	import RenderSystem.Camera;
 	import SoundSystem.MusicPlayer;
 	/**
 	 * ...
@@ -57,7 +56,8 @@ package Game.Map {
 		private var _script:Script;
 		public var MyScript:ScriptInstance;
 		
-		public var NextBlankForPlayer:Vector.<int>;
+		public var NextBlankCritterForPlayer:Vector.<int>;
+		public var NextBlankEffectForPlayer:Vector.<int>;
 		
 		public function MapData() {
 			
@@ -68,7 +68,13 @@ package Game.Map {
 			this.ExpectedAtPortalID = portalID;
 			if (portalID != -1) firstload = true;
 			
-			NextBlankForPlayer = new Vector.<int>(Global.TotalPlayers+1, true);
+			NextBlankCritterForPlayer = new Vector.<int>(Global.TotalPlayers+1, true);
+			NextBlankEffectForPlayer = new Vector.<int>(Global.TotalPlayers+1, true);
+			
+			for (var i:int = 1; i < Global.TotalPlayers+1; i++) {
+				NextBlankCritterForPlayer[i] = Global.SIMULATION_LIMIT_CRITTER + (i-1) * Global.CrittersPerPlayer;
+				NextBlankEffectForPlayer[i] = Global.SIMULATION_LIMIT_EFFECTS + (i-1) * Global.EffectsPerPlayer;
+			}
 			
 			BinaryLoader.Load("Data/Map_" + mapname + ".bin", ParseData);
 		}
@@ -138,9 +144,9 @@ package Game.Map {
 				var o:ObjectInstance;
 				
 				if (ObjectTemplate.Objects[id].IndividualAnimations) {
-					o = new ObjectInstanceAnimated();
+					o = new ObjectInstanceAnimated(i);
 				} else {
-					o = new ObjectInstance();
+					o = new ObjectInstance(i);
 				}
 				
 				o.SetInformation(this, id, _x, _y);
@@ -315,18 +321,13 @@ package Game.Map {
 			MyScript.CleanUp();
 			_script.CleanUp();
 			
-			NextBlankForPlayer = null;
+			NextBlankCritterForPlayer = null;
 			
 			Dying = false;
 		}
 		
 		public function Update(dt:Number):void {
 			PortalHelper.CheckForPortalling(this);
-		}
-		
-		public function CritterPush(baseCritter:BaseCritter):void {
-			Critters.push(baseCritter);
-			baseCritter.CurrentMap = this;
 		}
 		
 		public function CritterPop(baseCritter:BaseCritter):void {
@@ -380,13 +381,63 @@ package Game.Map {
 		}
 		
 		public function GetCritterID(isSimulated:Boolean):int {
-			if (isSimulated) {
-				NextBlankForPlayer[0]++;
-				return NextBlankForPlayer[0];
-			} else {
-				NextBlankForPlayer[Global.CurrentPlayerID]++;
-				return NextBlankForPlayer[Global.CurrentPlayerID];
+			var pID:int = 0;
+			
+			if (!isSimulated) {
+				pID = Global.CurrentPlayerID;
 			}
+			
+			var i:int = NextBlankCritterForPlayer[pID];
+			while (Critters[NextBlankCritterForPlayer[pID]] != null) {
+				NextBlankCritterForPlayer[pID] = NextBlankCritterForPlayer[pID] + 1;
+				
+				if (NextBlankCritterForPlayer[pID] == Global.SIMULATION_LIMIT_CRITTER + Global.CrittersPerPlayer * pID) {
+					if(pID == 0) {
+						NextBlankCritterForPlayer[pID] = 0;
+					} else {
+						NextBlankCritterForPlayer[pID] = Global.SIMULATION_LIMIT_CRITTER + Global.CrittersPerPlayer * (pID - 1);
+					}
+				}
+				
+				if (NextBlankCritterForPlayer[pID] == i) {
+					return -1;
+				}
+			}
+			
+			return NextBlankCritterForPlayer[pID];
+		}
+		
+		public function GetEffectID(isSimulated:Boolean):int {
+			var pID:int = 0;
+			
+			if (!isSimulated) {
+				pID = Global.CurrentPlayerID;
+			}
+			
+			var i:int = NextBlankEffectForPlayer[pID];
+			while (Effects[NextBlankEffectForPlayer[pID]] != null) {
+				NextBlankEffectForPlayer[pID] = NextBlankEffectForPlayer[pID] + 1;
+				
+				if (NextBlankEffectForPlayer[pID] == Global.SIMULATION_LIMIT_EFFECTS + Global.EffectsPerPlayer * pID) {
+					if(pID == 0) {
+						NextBlankEffectForPlayer[pID] = 0;
+					} else {
+						NextBlankEffectForPlayer[pID] = Global.SIMULATION_LIMIT_EFFECTS + Global.EffectsPerPlayer * (pID - 1);
+					}
+				}
+				
+				if (NextBlankEffectForPlayer[pID] == i) {
+					return -1;
+				}
+			}
+			
+			return NextBlankEffectForPlayer[pID];
+		}
+		
+		public function EffectPush(effectInstance:EffectInstance, isSimulated:Boolean):int {
+			var id:int = GetEffectID(isSimulated);
+			Effects[id] = effectInstance;
+			return id;
 		}
 	}
 

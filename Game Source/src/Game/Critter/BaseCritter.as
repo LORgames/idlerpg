@@ -47,6 +47,7 @@ package Game.Critter {
 		public var moveSpeedY:int = 0;
 		public var PrimaryFaction:int = 0;
 		
+		protected var ID:int = 0;
 		public var teamID:int = 0;
 		
 		public var MovementSpeed:int = 125;
@@ -65,8 +66,9 @@ package Game.Critter {
 		public var MyRect:Rect;
 		
 		public var MyScript:ScriptInstance;
-		private var ActiveScriptRegions:Vector.<ScriptRegion> = new Vector.<ScriptRegion>();
 		public var ActiveBuffs:Vector.<CritterBuff> = new Vector.<CritterBuff>();
+		
+		private var ActiveScriptRegions:Vector.<ScriptRegion> = new Vector.<ScriptRegion>();
 		
 		//Critter information
 		public var MyAIType:int;
@@ -75,7 +77,7 @@ package Game.Critter {
 		public var MaximumHP:int = 1000;
 		public var CurrentDefence:int = 0;
 		
-		public function BaseCritter() {
+		public function BaseCritter(ID:int) {
 			MyRect = new Rect(false, this, 0, 0, 0, 0);
 			Clock.I.Updatables.push(this);
 			tf = Drawer.GetTextField();
@@ -132,7 +134,8 @@ package Game.Critter {
 				CurrentMap.CritterPop(this);
 			}
 			
-			newMap.CritterPush(this);
+			//TODO: Stuff
+			//newMap.CritterPush(this);
 			
 			this.X = (location % newMap.TileSizeX) * Global.TileSize;
 			this.Y = (location / newMap.TileSizeX) * Global.TileSize;
@@ -143,7 +146,8 @@ package Game.Critter {
 				CurrentMap.CritterPop(this);
 			}
 			
-			newMap.CritterPush(this);
+			//TODO: Stuff
+			//newMap.CritterPush(this);
 			
 			this.X = portal.Entry.X;
 			this.Y = portal.Entry.Y;
@@ -501,9 +505,11 @@ package Game.Critter {
 				MyScript = null;
 			}
 			
-			tf.text = "";
-			tf.parent.removeChild(tf);
-			tf = null;
+			if(tf != null) {
+				tf.text = "";
+				tf.parent.removeChild(tf);
+				tf = null;
+			}
 			
 			for (var i:int = 0 ; i < ActiveBuffs.length; i++) {
 				ActiveBuffs[i].CleanUp(false);
@@ -613,6 +619,10 @@ package Game.Critter {
 					ActiveBuffs.splice(i, 1);
 				}
 			}
+		}
+		
+		public function GetID():int {
+			return ID;
 		}
 	}
 }

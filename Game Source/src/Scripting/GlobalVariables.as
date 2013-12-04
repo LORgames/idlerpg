@@ -25,13 +25,14 @@ package Scripting {
 			DataID = b.readShort();
 			Variables = new Vector.<int>(b.readShort(), true);
 			
-			for (var i:int = 0; i < Variables.length; i++) {
+			var i:int;
+			for (i = 0; i < Variables.length; i++) {
 				Variables[i] = b.readShort();
 			}
 			
 			Indices = new Vector.<int>(b.readShort(), true);
 			
-			for (var i:int = 0; i < Indices.length; i++) {
+			for (i = 0; i < Indices.length; i++) {
 				Indices[i] = b.readShort();
 			}
 			

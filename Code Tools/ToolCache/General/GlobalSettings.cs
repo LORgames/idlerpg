@@ -22,6 +22,9 @@ namespace ToolCache.General {
         public static string VariablePressedLocalX = "";
         public static string VariablePressedLocalY = "";
 
+        public static string VariableMusicVolume = "";
+        public static string VariableSoundVolume = "";
+
         private static byte GIFColourR = 255;
         private static byte GIFColourG = 255;
         private static byte GIFColourB = 255;
@@ -30,8 +33,7 @@ namespace ToolCache.General {
         public static byte PlayerCritters = 32;     //Maximum critters per player
         public static short PlayerTurnLength = 200; //Turn length minimum in milliseconds
 
-        public static string VariableMusicVolume = 100;
-        public static string VariableSoundVolume = 100;
+        public static string MatchmakingServer = "";
 
         public static Color GIFColour {
             get { return Color.FromArgb(GIFColourR, GIFColourG, GIFColourB); }
@@ -71,6 +73,7 @@ namespace ToolCache.General {
                         case "PlayersTotal": PlayerTotal = byte.Parse(variableProperty); break;
                         case "PlayersCritters": PlayerCritters = byte.Parse(variableProperty); break;
                         case "TurnLength": PlayerTurnLength = short.Parse(variableProperty); break;
+                        case "MatchmakingServer": MatchmakingServer = variableProperty; break;
                         case "MusicVolume": VariableMusicVolume = variableProperty; break;
                         case "SoundVolume": VariableSoundVolume = variableProperty; break;
                         default:
@@ -103,6 +106,8 @@ namespace ToolCache.General {
             lines.Add("PlayersTotal=" + PlayerTotal);
             lines.Add("PlayersCritters=" + PlayerCritters);
             lines.Add("TurnLength=" + PlayerTurnLength);
+
+            lines.Add("MatchmakingServer=" + MatchmakingServer);
 
             lines.Add("MusicVolume=" + VariableMusicVolume);
             lines.Add("SoundVolume=" + VariableSoundVolume);

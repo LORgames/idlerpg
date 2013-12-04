@@ -70,6 +70,12 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0x101A, new Param[] { Param.Buff }));
             All.Add("tweenchild",
                 new ValidCommand(0x101B, new Param[] { Param.String, Param.String, Param.Integer, Param.Integer, Param.Number }));
+            All.Add("joinmatchmaking",
+                new ValidCommand(0x101C, new Param[] { Param.Void }));
+            All.Add("forceupdatesound",
+                new ValidCommand(0x101D, new Param[] { Param.Void }));
+            All.Add("forceupdateplayerid",
+                new ValidCommand(0x101E, new Param[] { Param.Void }));
 
             //Quest and Inventory Commands
             All.Add("saydialogue",

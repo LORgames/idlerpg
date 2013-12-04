@@ -10,23 +10,26 @@ package Storage {
 	public class SaveManager {
 		public static var I:ISaveData;
 		public static var CurrentSave:SaveInfo;
+		private static var _LOADED:Boolean = false;
 		
 		public static function Initialize():void {
-			CONFIG::air {
-				I = new AIRDatabaseSaver();
-			}
-			
-			if (!CONFIG::air) {
+			//CONFIG::air {
+			//	I = new AIRDatabaseSaver();
+			//}
+			//
+			//if (!CONFIG::air) {
 				I = new SharedObjectSaver();
-			}
+			//}
 		}
 		
 		static public function Load(key:String):void {
 			I.Load(key);
+			_LOADED = true;
 		}
 		
 		static public function Save(key:String):void {
-			I.Save(key)
+			if (!_LOADED) return; //Don't try saving without loading: wipes saves
+			I.Save(key);
 		}
 	}
 }

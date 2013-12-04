@@ -44,8 +44,9 @@ package Game.Effects {
 		public var IsLooping:Boolean = true;
 		
 		private var MyLife:int = 0;
+		protected var ID:int;
 		
-		public function EffectInstance(_info:EffectInfo, _x:int, _y:int, _d:int) {
+		public function EffectInstance(_info:EffectInfo, _x:int, _y:int, _d:int, isSimulated:Boolean) {
  			this.Info = _info;
 			
 			OffsetX = Info.X;
@@ -71,7 +72,7 @@ package Game.Effects {
 			Clock.I.Updatables.push(this);
 			
 			MyScript = new ScriptInstance(Info.MyScript, this);
-			WorldData.CurrentMap.Effects.push(this);
+			ID = WorldData.CurrentMap.EffectPush(this, isSimulated);
 			
 			MyLife = Info.Life;
 			
@@ -249,6 +250,10 @@ package Game.Effects {
 			if (Info != null) return "[EffectInstance Type=" + Info.Name + " X=" +X + " Y=" + Y + "]";
 			
 			return "[EffectInstance NULL]";
+		}
+		
+		public function GetID():int {
+			return ID;
 		}
 		
 	}

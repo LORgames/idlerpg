@@ -11,7 +11,9 @@ package Game.Critter {
 	public class CritterHuman extends BaseCritter {
 		public var Equipment:EquipmentSet;
 		
-		public function CritterHuman(x:int, y:int) {
+		public function CritterHuman(x:int, y:int, REFID:int) {
+			super(REFID);
+			
 			Equipment = new EquipmentSet(this);
 			
 			Main.OrderedLayer.addChild(Equipment);

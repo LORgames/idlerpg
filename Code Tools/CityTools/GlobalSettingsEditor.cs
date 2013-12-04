@@ -33,11 +33,15 @@ namespace CityTools {
                 cbVariableWY.Items.Add(s);
                 cbVariableLX.Items.Add(s);
                 cbVariableLY.Items.Add(s);
+                cbVariableMusicVolume.Items.Add(s);
+                cbVariableSoundVolume.Items.Add(s);
 
                 if (GlobalSettings.VariablePressedWorldX == s) cbVariableWX.SelectedIndex = i;
                 if (GlobalSettings.VariablePressedWorldY == s) cbVariableWY.SelectedIndex = i;
                 if (GlobalSettings.VariablePressedLocalX == s) cbVariableLX.SelectedIndex = i;
                 if (GlobalSettings.VariablePressedLocalY == s) cbVariableLY.SelectedIndex = i;
+                if (GlobalSettings.VariableMusicVolume == s) cbVariableMusicVolume.SelectedIndex = i;
+                if (GlobalSettings.VariableSoundVolume == s) cbVariableSoundVolume.SelectedIndex = i;
 
                 i++;
             }
@@ -53,13 +57,14 @@ namespace CityTools {
             cbVariableWY.SelectedText = GlobalSettings.VariablePressedWorldY;
             cbVariableLX.SelectedText = GlobalSettings.VariablePressedLocalX;
             cbVariableLY.SelectedText = GlobalSettings.VariablePressedLocalY;
+            cbVariableMusicVolume.SelectedText = GlobalSettings.VariableMusicVolume;
+            cbVariableSoundVolume.SelectedText = GlobalSettings.VariableSoundVolume;
+
 
             numPlayers.Value = GlobalSettings.PlayerTotal;
             numCritters.Value = GlobalSettings.PlayerCritters;
             numTurnSize.Value = GlobalSettings.PlayerTurnLength;
-
-            numMusicVolume.Value = GlobalSettings.MusicVolume;
-            numSoundVolume.Value = GlobalSettings.SoundVolume;
+            txtQuickMatchServer.Text = GlobalSettings.MatchmakingServer;
 
             isUpdating = false;
         }
@@ -85,6 +90,7 @@ namespace CityTools {
                 GlobalSettings.PlayerTotal = (byte)numPlayers.Value;
                 GlobalSettings.PlayerCritters = (byte)numCritters.Value;
                 GlobalSettings.PlayerTurnLength = (short)numTurnSize.Value;
+                GlobalSettings.MatchmakingServer = txtQuickMatchServer.Text;
 
                 GlobalSettings.VariableMusicVolume = cbVariableMusicVolume.SelectedItem == null ? "" : cbVariableWX.SelectedItem.ToString();
                 GlobalSettings.VariableSoundVolume = cbVariableSoundVolume.SelectedItem == null ? "" : cbVariableWX.SelectedItem.ToString();

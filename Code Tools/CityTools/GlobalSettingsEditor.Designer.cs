@@ -62,10 +62,12 @@
             this.numTurnSize = new System.Windows.Forms.NumericUpDown();
             this.colorPicker = new System.Windows.Forms.ColorDialog();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.cbVariableSoundVolume = new System.Windows.Forms.ComboBox();
+            this.cbVariableMusicVolume = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
-            this.cbVariableMusicVolume = new System.Windows.Forms.ComboBox();
-            this.cbVariableSoundVolume = new System.Windows.Forms.ComboBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.txtQuickMatchServer = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudTileSize)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numTargetFPS)).BeginInit();
@@ -504,8 +506,7 @@
             this.tableLayoutPanel3.ColumnCount = 2;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel3.Controls.Add(this.cbVariableSoundVolume, 1, 7);
-            this.tableLayoutPanel3.Controls.Add(this.cbVariableMusicVolume, 1, 6);
+            this.tableLayoutPanel3.Controls.Add(this.label17, 0, 5);
             this.tableLayoutPanel3.Controls.Add(this.label12, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.pbGIFBackground, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.label14, 0, 2);
@@ -514,27 +515,54 @@
             this.tableLayoutPanel3.Controls.Add(this.numCritters, 1, 3);
             this.tableLayoutPanel3.Controls.Add(this.label15, 0, 4);
             this.tableLayoutPanel3.Controls.Add(this.numTurnSize, 1, 4);
-            this.tableLayoutPanel3.Controls.Add(this.label4, 0, 6);
-            this.tableLayoutPanel3.Controls.Add(this.label16, 0, 7);
+            this.tableLayoutPanel3.Controls.Add(this.label16, 0, 8);
+            this.tableLayoutPanel3.Controls.Add(this.label4, 0, 7);
+            this.tableLayoutPanel3.Controls.Add(this.cbVariableSoundVolume, 1, 8);
+            this.tableLayoutPanel3.Controls.Add(this.cbVariableMusicVolume, 1, 7);
+            this.tableLayoutPanel3.Controls.Add(this.txtQuickMatchServer, 1, 5);
             this.tableLayoutPanel3.Location = new System.Drawing.Point(312, 13);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 8;
+            this.tableLayoutPanel3.RowCount = 9;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(304, 199);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(304, 232);
             this.tableLayoutPanel3.TabIndex = 9;
+            // 
+            // cbVariableSoundVolume
+            // 
+            this.cbVariableSoundVolume.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbVariableSoundVolume.FormattingEnabled = true;
+            this.cbVariableSoundVolume.Location = new System.Drawing.Point(125, 208);
+            this.cbVariableSoundVolume.Name = "cbVariableSoundVolume";
+            this.cbVariableSoundVolume.Size = new System.Drawing.Size(176, 21);
+            this.cbVariableSoundVolume.Sorted = true;
+            this.cbVariableSoundVolume.TabIndex = 18;
+            this.cbVariableSoundVolume.SelectedIndexChanged += new System.EventHandler(this.Edited);
+            // 
+            // cbVariableMusicVolume
+            // 
+            this.cbVariableMusicVolume.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbVariableMusicVolume.FormattingEnabled = true;
+            this.cbVariableMusicVolume.Location = new System.Drawing.Point(125, 181);
+            this.cbVariableMusicVolume.Name = "cbVariableMusicVolume";
+            this.cbVariableMusicVolume.Size = new System.Drawing.Size(176, 21);
+            this.cbVariableMusicVolume.Sorted = true;
+            this.cbVariableMusicVolume.TabIndex = 18;
+            this.cbVariableMusicVolume.SelectedIndexChanged += new System.EventHandler(this.Edited);
             // 
             // label4
             // 
             this.label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(3, 152);
+            this.label4.Location = new System.Drawing.Point(3, 185);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(92, 13);
             this.label4.TabIndex = 31;
@@ -544,33 +572,29 @@
             // 
             this.label16.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(3, 179);
+            this.label16.Location = new System.Drawing.Point(3, 212);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(95, 13);
             this.label16.TabIndex = 32;
             this.label16.Text = "Sound Volume Var";
             // 
-            // cbVariableMusicVolume
+            // label17
             // 
-            this.cbVariableMusicVolume.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbVariableMusicVolume.FormattingEnabled = true;
-            this.cbVariableMusicVolume.Location = new System.Drawing.Point(125, 148);
-            this.cbVariableMusicVolume.Name = "cbVariableMusicVolume";
-            this.cbVariableMusicVolume.Size = new System.Drawing.Size(176, 21);
-            this.cbVariableMusicVolume.Sorted = true;
-            this.cbVariableMusicVolume.TabIndex = 18;
-            this.cbVariableMusicVolume.SelectedIndexChanged += new System.EventHandler(this.Edited);
+            this.label17.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(3, 131);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(102, 13);
+            this.label17.TabIndex = 33;
+            this.label17.Text = "Quick Match Server";
             // 
-            // cbVariableSoundVolume
+            // txtQuickMatchServer
             // 
-            this.cbVariableSoundVolume.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbVariableSoundVolume.FormattingEnabled = true;
-            this.cbVariableSoundVolume.Location = new System.Drawing.Point(125, 175);
-            this.cbVariableSoundVolume.Name = "cbVariableSoundVolume";
-            this.cbVariableSoundVolume.Size = new System.Drawing.Size(176, 21);
-            this.cbVariableSoundVolume.Sorted = true;
-            this.cbVariableSoundVolume.TabIndex = 18;
-            this.cbVariableSoundVolume.SelectedIndexChanged += new System.EventHandler(this.Edited);
+            this.txtQuickMatchServer.Location = new System.Drawing.Point(125, 128);
+            this.txtQuickMatchServer.Name = "txtQuickMatchServer";
+            this.txtQuickMatchServer.Size = new System.Drawing.Size(176, 20);
+            this.txtQuickMatchServer.TabIndex = 34;
+            this.txtQuickMatchServer.TextChanged += new System.EventHandler(this.Edited);
             // 
             // GlobalSettingsEditor
             // 
@@ -645,5 +669,7 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.ComboBox cbVariableSoundVolume;
         private System.Windows.Forms.ComboBox cbVariableMusicVolume;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.TextBox txtQuickMatchServer;
     }
 }
