@@ -92,8 +92,8 @@ namespace CityTools {
                 GlobalSettings.PlayerTurnLength = (short)numTurnSize.Value;
                 GlobalSettings.MatchmakingServer = txtQuickMatchServer.Text;
 
-                GlobalSettings.VariableMusicVolume = cbVariableMusicVolume.SelectedItem == null ? "" : cbVariableWX.SelectedItem.ToString();
-                GlobalSettings.VariableSoundVolume = cbVariableSoundVolume.SelectedItem == null ? "" : cbVariableWX.SelectedItem.ToString();
+                GlobalSettings.VariableMusicVolume = cbVariableMusicVolume.SelectedItem == null ? "" : cbVariableMusicVolume.SelectedItem.ToString();
+                GlobalSettings.VariableSoundVolume = cbVariableSoundVolume.SelectedItem == null ? "" : cbVariableSoundVolume.SelectedItem.ToString();
 
                 GlobalSettings.DefaultMap = cbDefaultMap.SelectedItem.ToString();
 
