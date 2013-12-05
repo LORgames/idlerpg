@@ -47,6 +47,10 @@ package SoundSystem {
 			sound.play(80);
 		}
 		
+		public static function UpdateVolume():void {
+			//TODO: All the sounds need to be stored.
+		}
+		
 	}
 
 }

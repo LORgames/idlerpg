@@ -370,25 +370,28 @@ package Game.Critter {
 					X = prevX;
 					Y = prevY;
 					
+					//TODO: Actually push it into the map, don't just push it back where it was...
 					MyRect.X = X - MyRect.W / 2;
 					MyRect.Y = Y - MyRect.H / 2;
 				} else {
 					//They didn't leave the map? Lets try solid objects
-					while (--i > -1) {
-						//Look for collision in the tile.
-						var rs:Vector.<Rect> = tiles[i].SolidRectangles;
-						j = rs.length;
-						
-						while (--j > -1) {
-							if (rs[j].intersects(MyRect)) {
-								MyRect.CalculatePenetration(rs[j], collisionPenetration);
-								collisionTotal++;
+					if(Global.HasTiles) {
+						while (--i > -1) {
+							//Look for collision in the tile.
+							var rs:Vector.<Rect> = tiles[i].SolidRectangles;
+							j = rs.length;
+							
+							while (--j > -1) {
+								if (rs[j].intersects(MyRect)) {
+									MyRect.CalculatePenetration(rs[j], collisionPenetration);
+									collisionTotal++;
+								}
 							}
-						}
-						
-						//No collision so lets update the movement speed
-						if (Global.HasTiles && TileTemplate.Tiles[tiles[i].TileID].movementCost > CurrentMovementCost) {
-							CurrentMovementCost = TileTemplate.Tiles[tiles[i].TileID].movementCost;
+							
+							//No collision so lets update the movement speed
+							if (TileTemplate.Tiles[tiles[i].TileID].movementCost > CurrentMovementCost) {
+								CurrentMovementCost = TileTemplate.Tiles[tiles[i].TileID].movementCost;
+							}
 						}
 					}
 					
@@ -549,7 +552,7 @@ package Game.Critter {
 				CurrentHP -= amount;
 			} else { //ATTACK
 				var preCalc:int = amount - CurrentDefence;
-				if (preCalc < 0) preCalc = 1;
+				if (preCalc < 0) preCalc = amount>0?1:0;
 				preCalc += pierce;
 				
 				//Flat damage

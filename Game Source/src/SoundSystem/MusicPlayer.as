@@ -4,6 +4,7 @@ package SoundSystem
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
 	import flash.net.URLRequest;
+	import Scripting.GlobalVariables;
 	/**
 	 * ...
 	 * @author Paul
@@ -35,6 +36,12 @@ package SoundSystem
 			currentlyPlayingID = id;
 			
 			FinishedPlaying();
+		}
+		
+		public static function UpdateVolume():void {
+			if (channel) {
+				channel.soundTransform.volume = GlobalVariables.Variables[Global.GV_MusicVolume] / 100.0;
+			}
 		}
 		
 		private static function FinishedPlaying(e:Event=null):void {

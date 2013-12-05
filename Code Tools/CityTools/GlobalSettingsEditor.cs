@@ -35,6 +35,7 @@ namespace CityTools {
                 cbVariableLY.Items.Add(s);
                 cbVariableMusicVolume.Items.Add(s);
                 cbVariableSoundVolume.Items.Add(s);
+                cbVariablePlayerID.Items.Add(s);
 
                 if (GlobalSettings.VariablePressedWorldX == s) cbVariableWX.SelectedIndex = i;
                 if (GlobalSettings.VariablePressedWorldY == s) cbVariableWY.SelectedIndex = i;
@@ -42,6 +43,7 @@ namespace CityTools {
                 if (GlobalSettings.VariablePressedLocalY == s) cbVariableLY.SelectedIndex = i;
                 if (GlobalSettings.VariableMusicVolume == s) cbVariableMusicVolume.SelectedIndex = i;
                 if (GlobalSettings.VariableSoundVolume == s) cbVariableSoundVolume.SelectedIndex = i;
+                if (GlobalSettings.VariablePlayerID == s) cbVariablePlayerID.SelectedIndex = i;
 
                 i++;
             }
@@ -65,6 +67,7 @@ namespace CityTools {
             numCritters.Value = GlobalSettings.PlayerCritters;
             numTurnSize.Value = GlobalSettings.PlayerTurnLength;
             txtQuickMatchServer.Text = GlobalSettings.MatchmakingServer;
+            cbVariablePlayerID.SelectedText = GlobalSettings.VariablePlayerID;
 
             isUpdating = false;
         }
@@ -91,6 +94,7 @@ namespace CityTools {
                 GlobalSettings.PlayerCritters = (byte)numCritters.Value;
                 GlobalSettings.PlayerTurnLength = (short)numTurnSize.Value;
                 GlobalSettings.MatchmakingServer = txtQuickMatchServer.Text;
+                GlobalSettings.VariablePlayerID = cbVariablePlayerID.SelectedItem == null ? "" : cbVariablePlayerID.SelectedItem.ToString();
 
                 GlobalSettings.VariableMusicVolume = cbVariableMusicVolume.SelectedItem == null ? "" : cbVariableMusicVolume.SelectedItem.ToString();
                 GlobalSettings.VariableSoundVolume = cbVariableSoundVolume.SelectedItem == null ? "" : cbVariableSoundVolume.SelectedItem.ToString();

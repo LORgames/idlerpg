@@ -60,7 +60,7 @@ package EngineTiming {
 				if (summedTime >= 1000) {
 					//Main.I.Log(ticks / delta * 1000+" ticks:"+ticks+" delta:"+delta);
 					var fps:Number = 1000 * ticks / summedTime;
-					FPSTF.UpdateInfo(fps.toFixed(1));
+					FPSTF.UpdateInfo(fps.toFixed(1), Syncronizer.Ping);
 					ticks = 0;
 					summedTime = 0;
 				}
@@ -134,6 +134,10 @@ package EngineTiming {
 		
 		static public function Stop():void {
 			Clock.I.Stopped = true;
+		}
+		
+		static public function Resume():void {
+			Clock.I.Stopped = false;
 		}
 	}
 

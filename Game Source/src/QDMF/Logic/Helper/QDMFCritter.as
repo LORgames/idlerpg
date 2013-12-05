@@ -37,7 +37,7 @@ package QDMF.Logic.Helper {
 			}
 			
 			var retVal:TurnStep = new TurnStep(Global.CurrentPlayerID, TurnStep.CRITTER, TurnStep.CREATE, slotID, bytes, Math.random()*int.MAX_VALUE);
-			Syncronizer.RegisterStep(retVal);
+			Syncronizer.RegisterLocalStep(retVal);
 		}
 	}
 }

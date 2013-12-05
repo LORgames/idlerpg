@@ -3,8 +3,11 @@ package Scripting {
 	import CollisionSystem.PointX;
 	import flash.utils.ByteArray;
 	import QDMF.IPacketProcessor;
+	import QDMF.Logic.Helper.PingHelper;
+	import QDMF.Logic.TurnStep;
 	import QDMF.Packet;
 	import QDMF.PacketController;
+	import QDMF.PacketTypes;
 	/**
 	 * ...
 	 * @author Paul
@@ -30,13 +33,33 @@ package Scripting {
 		/* INTERFACE QDMF.IPacketProcessor */
 		
 		public function ProcessPacket(p:Packet):Boolean {
-			if (p.type == 7) {
+			if (p.type == PacketTypes.SCRIPT) {
 				Main.I.Log("RECV IMPORTANT PACKET!");
 				
 				tb.clear();
 				p.bytes.readBytes(tb, 0);
 				s.Run(0, scriptinstance, null);
 				
+				return true;
+			} else if(p.type == PacketTypes.TURNSTEP) {
+				TurnStep.UnpackAndRegister(p.bytes);
+				return true;
+			} else if (p.type == PacketTypes.CONTROL) {
+				return true;
+			} else if (p.type == PacketTypes.PING_REPLY || p.type == PacketTypes.PING) {
+				var plrID:int = p.bytes.readByte();
+				var pingID:int = p.bytes.readInt();
+				
+				if (p.type == PacketTypes.PING) {
+					var pr:Packet = new Packet(PacketTypes.PING_REPLY); // Ping Reply
+					pr.bytes.writeByte(plrID);
+					pr.bytes.writeInt(pingID);
+					Global.Network.SendPacket(pr);
+				} else {
+					if(plrID == Global.CurrentPlayerID) {
+						PingHelper.PingReply(pingID);
+					}
+				}
 				return true;
 			}
 			

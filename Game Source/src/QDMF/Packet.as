@@ -29,7 +29,7 @@ package QDMF {
 		public static function UnpackFromInput(input:IDataInput):void {
 			var expectedLength:int = 0;
 			var p:Packet = new Packet(-1);
-
+			
 			if(input.bytesAvailable > 1) {
 				expectedLength = input.readShort();
 				

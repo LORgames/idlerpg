@@ -68,7 +68,6 @@ package CollisionSystem {
 				p.x = xr;
 			}
 			
-			
 			if ((yr < 0 && p.y > 0) || (yr > 0 && p.y < 0)) {
 				p.y = 0;
 			} else {

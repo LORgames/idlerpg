@@ -24,6 +24,7 @@ package Scripting {
 	import QDMF.Logic.Helper.QDMFCritter;
 	import QDMF.PacketFactory;
 	import SoundSystem.EffectsPlayer;
+	import SoundSystem.MusicPlayer;
 	import Strings.StringEx;
 	import UI.UIElement;
 	import UI.UILayer;
@@ -278,8 +279,9 @@ package Scripting {
 						
 						break;
 					case 0x700B: //Has Target
-						//TODO: this
-						break;
+						if (info.CurrentTarget is BaseCritter) {
+							currentUnprocessedValue = ((info.CurrentTarget as BaseCritter).CurrentTarget != null)
+						} break;
 					case 0x700C: //Has Buff
 						//TODO: this
 						break;
@@ -871,6 +873,10 @@ package Scripting {
 						break;
 					case 0x101C: //Enter matchmaking
 						Main.I.Log("SCRIPTINFO: Cannot enter matchmaking just yet!");
+						break;
+					case 0x101D: //Force update sound volume
+						EffectsPlayer.UpdateVolume();
+						MusicPlayer.UpdateVolume();
 						break;
 					case 0x4001: //Equip item on the target
 						if (info.CurrentTarget is CritterHuman) {

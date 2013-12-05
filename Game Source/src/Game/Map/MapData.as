@@ -388,8 +388,22 @@ package Game.Map {
 			}
 			
 			var i:int = NextBlankCritterForPlayer[pID];
+			IncrementPlayerBlank(pID);
+			
 			while (Critters[NextBlankCritterForPlayer[pID]] != null) {
-				NextBlankCritterForPlayer[pID] = NextBlankCritterForPlayer[pID] + 1;
+				IncrementPlayerBlank(pID);
+				
+				if (NextBlankCritterForPlayer[pID] == i) {
+					trace("Uhoh! We hit the critter limit for playerID=" + pID);
+					return -1;
+				}
+			}
+			
+			return NextBlankCritterForPlayer[pID];
+		}
+		
+		private function IncrementPlayerBlank(pID:int):void {
+			NextBlankCritterForPlayer[pID] = NextBlankCritterForPlayer[pID] + 1;
 				
 				if (NextBlankCritterForPlayer[pID] == Global.SIMULATION_LIMIT_CRITTER + Global.CrittersPerPlayer * pID) {
 					if(pID == 0) {
@@ -398,13 +412,6 @@ package Game.Map {
 						NextBlankCritterForPlayer[pID] = Global.SIMULATION_LIMIT_CRITTER + Global.CrittersPerPlayer * (pID - 1);
 					}
 				}
-				
-				if (NextBlankCritterForPlayer[pID] == i) {
-					return -1;
-				}
-			}
-			
-			return NextBlankCritterForPlayer[pID];
 		}
 		
 		public function GetEffectID(isSimulated:Boolean):int {

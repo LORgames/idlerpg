@@ -48,6 +48,8 @@ package QDMF.Logic {
 		}
 		
 		public function Execute():void {
+			Rndm.seed = RandomSeed;
+			
 			if (Type == CRITTER && Action == CREATE) CreateCritter();
 			else if (Type == EFFECTS && Action == CREATE) CreateEffects();
 			else
@@ -77,7 +79,7 @@ package QDMF.Logic {
 		}
 		
 		private function CreateEffects():void {
-			
+			//TODO: this
 		}
 		
 		private function GetObject(ownertype:int, ownerID:int):IScriptTarget {
@@ -90,6 +92,39 @@ package QDMF.Logic {
 			}
 			
 			return null;
+		}
+		
+		public function Pack(turnID:int):ByteArray {
+			var b:ByteArray = new ByteArray();
+			
+			b.writeShort(turnID);
+			b.writeByte(PlayerID);
+			b.writeByte(Type);
+			b.writeByte(Action);
+			b.writeByte(TypeID);
+			b.writeInt(RandomSeed);
+			b.writeShort(Data.length);
+			b.writeBytes(Data);
+			
+			return b;
+		}
+		
+		public static function UnpackAndRegister(b:ByteArray):void {
+			var turnID:int = b.readShort();
+			
+			var playerID:int = b.readByte();
+			var type:int = b.readByte();
+			var action:int = b.readByte();
+			var typeid:int = b.readByte();
+			var seed:int = b.readInt();
+			var additionaldatalength:int = b.readShort();
+			
+			var additionaldata:ByteArray = new ByteArray();
+			b.readBytes(additionaldata, 0, additionaldatalength);
+			
+			var t:TurnStep = new TurnStep(playerID, type, action, typeid, additionaldata, seed);
+			
+			Syncronizer.RegisterRemoteStep(turnID, t);
 		}
 	}
 }

@@ -34,6 +34,7 @@ namespace ToolCache.General {
         public static short PlayerTurnLength = 200; //Turn length minimum in milliseconds
 
         public static string MatchmakingServer = "";
+        public static string VariablePlayerID = "";
 
         public static Color GIFColour {
             get { return Color.FromArgb(GIFColourR, GIFColourG, GIFColourB); }
@@ -74,6 +75,7 @@ namespace ToolCache.General {
                         case "PlayersCritters": PlayerCritters = byte.Parse(variableProperty); break;
                         case "TurnLength": PlayerTurnLength = short.Parse(variableProperty); break;
                         case "MatchmakingServer": MatchmakingServer = variableProperty; break;
+                        case "PlayerIDVar": VariablePlayerID = variableProperty; break;
                         case "MusicVolume": VariableMusicVolume = variableProperty; break;
                         case "SoundVolume": VariableSoundVolume = variableProperty; break;
                         default:
@@ -108,6 +110,7 @@ namespace ToolCache.General {
             lines.Add("TurnLength=" + PlayerTurnLength);
 
             lines.Add("MatchmakingServer=" + MatchmakingServer);
+            lines.Add("PlayerIDVar=" + VariablePlayerID);
 
             lines.Add("MusicVolume=" + VariableMusicVolume);
             lines.Add("SoundVolume=" + VariableSoundVolume);

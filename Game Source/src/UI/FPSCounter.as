@@ -27,8 +27,12 @@ package UI {
 			Clock.FPSTF = this;
 		}
 		
-		public function UpdateInfo(newFPS:String):void {
-			text = "FPS:" + newFPS + "|DPI=" + Capabilities.screenDPI;
+		public function UpdateInfo(newFPS:String, ping:int = 0):void {
+			if(ping != 0) {
+				text = "FPS:" + newFPS + "|PING=" + ping;
+			} else {
+				text = "FPS:" + newFPS;
+			}
 		}
 		
 	}
