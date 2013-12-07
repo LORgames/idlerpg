@@ -39,6 +39,8 @@ package {
 		static public var GV_MusicVolume:int;				//Variable ID for Music Volume
 		static public var GV_SoundVolume:int;				//Variable ID for Sound Volume
 		
+		static public var GV_PlayerID:int;					//Variable ID for Script Player ID
+		
 		public static var DefaultMap:String = "";			//The name of the default map
 		
 		public static var HasLeftRight:Boolean = true;		//Can critters and effects have left and right states?

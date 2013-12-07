@@ -112,10 +112,10 @@ package QDMF.Logic {
 		public static function UnpackAndRegister(b:ByteArray):void {
 			var turnID:int = b.readShort();
 			
-			var playerID:int = b.readByte();
-			var type:int = b.readByte();
-			var action:int = b.readByte();
-			var typeid:int = b.readByte();
+			var playerID:int = b.readUnsignedByte();
+			var type:int = b.readUnsignedByte();
+			var action:int = b.readUnsignedByte();
+			var typeid:int = b.readUnsignedByte();
 			var seed:int = b.readInt();
 			var additionaldatalength:int = b.readShort();
 			

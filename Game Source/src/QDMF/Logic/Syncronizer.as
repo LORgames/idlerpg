@@ -87,5 +87,10 @@ package QDMF.Logic {
 		static public function Update(dt:Number):void {
 			if (I != null) I.Update(dt);
 		}
+		
+		static public function Reset():void {
+			I.CurrentTurn = 0;
+			I.MSSinceLastTurn = 0;
+		}
 	}
 }

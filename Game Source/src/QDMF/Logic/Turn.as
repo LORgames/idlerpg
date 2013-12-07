@@ -12,10 +12,6 @@ package QDMF.Logic {
 			PlayerTurns = new Vector.<TurnStep>();
 		}
 		
-		public function RegisterStep(playerID:int, step:TurnStep):void {
-			PlayerTurns[playerID]
-		}
-		
 		public function Execute():void {
 			while(PlayerTurns.length > 0) {
 				var step:TurnStep = PlayerTurns.pop();

@@ -19,6 +19,7 @@ package Scripting {
 	import Game.Map.Objects.ObjectTemplate;
 	import Game.Map.WorldData;
 	import Interfaces.IMapObject;
+	import QDMF.Connectors.MatchMakingClient;
 	import QDMF.Connectors.SocketClient;
 	import QDMF.Connectors.SocketHost;
 	import QDMF.Logic.Helper.QDMFCritter;
@@ -813,8 +814,11 @@ package Scripting {
 						Main.I.Log("Hostname = " + s + ":" + p0.Y);
 						
 						if(p0.X == 0) { //LAN
-							Global.Network = new SocketClient();
-							Global.Network.Connect(s, p0.Y, Main.I);
+							//Global.Network = new SocketClient();
+							//Global.Network.Connect(s, p0.Y, Main.I);
+							
+							Global.Network = new MatchMakingClient();
+							Global.Network.Connect(Global.MatchmakingAddress, 5000, Main.I);
 						} else {
 							Main.I.Log("Unknown network type!");
 						} break;

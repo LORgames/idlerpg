@@ -4,10 +4,12 @@ package Scripting {
 	import flash.utils.ByteArray;
 	import QDMF.IPacketProcessor;
 	import QDMF.Logic.Helper.PingHelper;
+	import QDMF.Logic.Syncronizer;
 	import QDMF.Logic.TurnStep;
 	import QDMF.Packet;
 	import QDMF.PacketController;
 	import QDMF.PacketTypes;
+	import QDMF.SocketTriggers;
 	/**
 	 * ...
 	 * @author Paul
@@ -45,6 +47,33 @@ package Scripting {
 				TurnStep.UnpackAndRegister(p.bytes);
 				return true;
 			} else if (p.type == PacketTypes.CONTROL) {
+				var controlType:int = p.bytes.readShort();
+				var controlInfo:int = p.bytes.readShort();
+				
+				if (controlType == 0) { // Set Player ID
+					trace("I got assigned player ID=" + controlInfo);
+					Global.CurrentPlayerID = controlInfo;
+					if (Global.GV_PlayerID != 0) {
+						GlobalVariables.Variables[Global.GV_PlayerID] = controlInfo;
+					}
+				} else if (controlType == 1) { // Matching controls
+					if (controlInfo == 1) { // Match Joined
+						trace("Found a match :)");
+						Syncronizer.Reset();
+						Script.FireTrigger(SocketTriggers.SOCKET_CONNECT);
+					}
+				} else if (controlType == 2) { // Device Information
+					if (controlType == 0) { // Current Time
+						if (Global.Network) {
+							var pr:Packet = new Packet(PacketTypes.SERVER);
+							pr.bytes.writeShort(0);
+							pr.bytes.writeFloat(new Date().time);
+							
+							Global.Network.SendPacket(pr);
+						}
+					}
+				}
+				
 				return true;
 			} else if (p.type == PacketTypes.PING_REPLY || p.type == PacketTypes.PING) {
 				var plrID:int = p.bytes.readByte();

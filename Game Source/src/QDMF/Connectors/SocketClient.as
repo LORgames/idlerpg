@@ -6,6 +6,7 @@ package QDMF.Connectors
 	import flash.events.ProgressEvent;
 	import flash.events.SecurityErrorEvent;
 	import flash.net.Socket;
+	import flash.system.Security;
 	import flash.utils.ByteArray;
 	import Scripting.Script;
 	import QDMF.IHLNetwork;
@@ -33,6 +34,7 @@ package QDMF.Connectors
 		
 		public function Connect(Hostname:String, Port:int, Logger:ILogger):void {
 			this.Logger = Logger;
+			Security.loadPolicyFile("xmlsocket://"+Hostname+":5187");
 			Client.connect(Hostname, Port);
 		}
 		
