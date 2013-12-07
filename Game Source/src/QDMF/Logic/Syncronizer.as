@@ -14,8 +14,8 @@ package QDMF.Logic {
 		public var CurrentTurn:int = 0;		//id for the current turn
 		public var TurnTime:Number = 0.25; 	//seconds between turns
 		
-		private const CACHED_TURNS:int = 3;		//How many turns do we cache in the system.
-		private const LOCAL_WITH_AHEAD:int = 1;	//How many turns in the future are things issued?
+		private static const CACHED_TURNS:int = 7;		//How many turns do we cache in the system.
+		private static const LOCAL_WITH_AHEAD:int = 4;	//How many turns in the future are things issued?
 		
 		public static var Ping:int = 0;
 		public var UpcomingTurns:Vector.<Turn> = new Vector.<Turn>(CACHED_TURNS, true);
@@ -60,10 +60,10 @@ package QDMF.Logic {
 		 */
 		static public function RegisterLocalStep(step:TurnStep):void {
 			step.Data.position = 0;
-			I.UpcomingTurns[2].AddStep(step);
+			I.UpcomingTurns[LOCAL_WITH_AHEAD-1].AddStep(step);
 			
 			if (Global.Network) {
-				var b:ByteArray = step.Pack(I.CurrentTurn + 3);
+				var b:ByteArray = step.Pack(I.CurrentTurn + LOCAL_WITH_AHEAD);
 				var p:Packet = new Packet(PacketTypes.TURNSTEP);
 				p.bytes.writeBytes(b);
 				Global.Network.SendPacket(p);
@@ -77,7 +77,7 @@ package QDMF.Logic {
 		 */
 		static public function RegisterRemoteStep(turnID:int, step:TurnStep):void {
 			if (turnID <= I.CurrentTurn) {
-				trace("CATASTROPHIC DESYNC!");
+				Main.I.Log("CATASTROPHIC DESYNC! MY-TURN="+I.CurrentTurn+" THIER-TURN="+turnID+" TIME=" + new Date().toString());
 			} else {
 				var _turn:int = turnID - I.CurrentTurn - 1;
 				I.UpcomingTurns[_turn].AddStep(step);

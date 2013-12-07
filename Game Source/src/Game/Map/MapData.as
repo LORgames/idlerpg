@@ -394,7 +394,7 @@ package Game.Map {
 				IncrementPlayerBlank(pID);
 				
 				if (NextBlankCritterForPlayer[pID] == i) {
-					trace("Uhoh! We hit the critter limit for playerID=" + pID);
+					Main.I.Log("Uhoh! We hit the critter limit for playerID=" + pID);
 					return -1;
 				}
 			}

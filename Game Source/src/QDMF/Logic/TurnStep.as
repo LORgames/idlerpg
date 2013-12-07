@@ -74,8 +74,6 @@ package QDMF.Logic {
 			}
 			
 			critter.SetOwner(object);
-			
-			trace("\tSpawned Critter ID=" + TypeID);
 		}
 		
 		private function CreateEffects():void {

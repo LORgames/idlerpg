@@ -14,7 +14,6 @@ package QDMF.Logic.Helper {
 	public class QDMFCritter {
 		public static function Register(CritterID:int, xPos:int, yPos:int, faction:int, owner:Object):void {
 			var slotID:int = WorldData.CurrentMap.GetCritterID(false);
-			trace("NEXT CRITTER=" + slotID);
 			
 			var bytes:ByteArray = new ByteArray();
 			bytes.writeShort(CritterID);
