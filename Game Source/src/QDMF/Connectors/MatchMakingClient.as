@@ -82,7 +82,7 @@ package QDMF.Connectors {
 		}
 		
 		private function SecurityErrorHandler(event:SecurityErrorEvent):void {
-			Logger.Log("MatchMaking: A Security issue has been detected!");
+			Logger.Log("MatchMaking: A Security issue has been detected! " + event.text);
 			Script.FireTrigger(SocketTriggers.SOCKET_ERROR);
 		}
 		
