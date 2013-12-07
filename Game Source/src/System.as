@@ -66,6 +66,7 @@ package {
 			Global.SIMULATION_LIMIT_CRITTER = 255 - (Global.CrittersPerPlayer * Global.TotalPlayers);
 			Global.SIMULATION_LIMIT_EFFECTS = 255 - (Global.EffectsPerPlayer * Global.TotalPlayers);
 			Global.MatchmakingAddress = BinaryLoader.GetString(b);
+			Global.GV_PlayerID = b.readShort();
 			
 			Global.DefaultMap = BinaryLoader.GetString(b);
 			

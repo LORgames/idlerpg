@@ -814,11 +814,8 @@ package Scripting {
 						Main.I.Log("Hostname = " + s + ":" + p0.Y);
 						
 						if(p0.X == 0) { //LAN
-							//Global.Network = new SocketClient();
-							//Global.Network.Connect(s, p0.Y, Main.I);
-							
-							Global.Network = new MatchMakingClient();
-							Global.Network.Connect(Global.MatchmakingAddress, 5000, Main.I);
+							Global.Network = new SocketClient();
+							Global.Network.Connect(s, p0.Y, Main.I);
 						} else {
 							Main.I.Log("Unknown network type!");
 						} break;
@@ -876,7 +873,8 @@ package Scripting {
 						TweenManager.StartTweenBetween(objX, objName, p0.X, p0.Y, fParam);
 						break;
 					case 0x101C: //Enter matchmaking
-						Main.I.Log("SCRIPTINFO: Cannot enter matchmaking just yet!");
+						Global.Network = new MatchMakingClient();
+						Global.Network.Connect(Global.MatchmakingAddress, 5000, Main.I);
 						break;
 					case 0x101D: //Force update sound volume
 						EffectsPlayer.UpdateVolume();

@@ -34,6 +34,7 @@ namespace ToolToGameExporter {
             f.AddByte(GlobalSettings.PlayerCritters);
             f.AddShort(GlobalSettings.PlayerTurnLength);
             f.AddString(GlobalSettings.MatchmakingServer);
+            f.AddShort((short)(GlobalSettings.VariablePlayerID == "" ? 0 : Variables.GlobalVariables[GlobalSettings.VariablePlayerID].Index));
 
             f.AddString(GlobalSettings.DefaultMap);
 

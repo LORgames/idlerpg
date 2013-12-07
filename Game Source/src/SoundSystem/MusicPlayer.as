@@ -3,6 +3,7 @@ package SoundSystem
 	import flash.events.Event;
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
+	import flash.media.SoundTransform;
 	import flash.net.URLRequest;
 	import Scripting.GlobalVariables;
 	/**
@@ -40,14 +41,17 @@ package SoundSystem
 		
 		public static function UpdateVolume():void {
 			if (channel) {
-				channel.soundTransform.volume = GlobalVariables.Variables[Global.GV_MusicVolume] / 100.0;
+				var st:SoundTransform = channel.soundTransform;
+				st.volume = GlobalVariables.Variables[Global.GV_MusicVolume] / 100.0;
+				channel.soundTransform = st;
 			}
 		}
 		
 		private static function FinishedPlaying(e:Event=null):void {
 			if(channel) channel.removeEventListener(Event.SOUND_COMPLETE, FinishedPlaying);
 			
-			channel = snd.play(80);
+			channel = snd.play(80, 0, new SoundTransform(0));
+			UpdateVolume();
 			
 			if(channel != null) channel.addEventListener(Event.SOUND_COMPLETE, FinishedPlaying);
 		}
