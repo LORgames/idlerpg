@@ -80,6 +80,10 @@ package UI
 		}
 		
 		/* INTERFACE Scripting.IScriptTarget */
+		public function GetScript():ScriptInstance {
+			return MyScript;
+		}
+		
 		public function UpdatePointX(position:PointX):void {
 			position.X = x;
 			position.Y = y;

@@ -18,6 +18,7 @@ package QDMF.Connectors {
 	public class MatchMakingClient implements IHLNetwork {
 		private var Client:Socket;
 		private var Logger:ILogger;
+		private var nextFlush:ByteArray = new ByteArray();
 		
 		public function MatchMakingClient() {
 			Client = new Socket();
@@ -41,22 +42,24 @@ package QDMF.Connectors {
 			return (Client != null && Client.connected);
 		}
 		
-		public function SendPacket(packet:Packet):Boolean {
-			if (Client != null) {
+		public function SendPacket(packet:Packet):void {
+			nextFlush.writeShort(packet.bytes.length);
+			nextFlush.writeBytes(packet.bytes);
+		}
+		
+		public function SendPacketInstant(packet:Packet):void {
+			if (Client != null && nextFlush.length > 0) {
 				try {
+					Logger.Log("Sending " + packet.bytes.bytesAvailable + "bytes. [INSTANT]");
 					Client.writeShort(packet.bytes.length);
 					Client.writeBytes(packet.bytes);
 					Client.flush();
-					
-					return true;
 				} catch (error:Error) {
 					Logger.Log("MatchMaking: An unexpected error occurred: " + error.message);
 				}
 			}
-			
-			return false;
 		}
-
+		
 		private function CloseHandler(event:Event):void {
 			Logger.Log("MatchMaking: Disconnected.");
 			
@@ -95,6 +98,19 @@ package QDMF.Connectors {
 		public function Close():void {
 			if (IsConnected()) {
 				Client.close();
+			}
+		}
+		
+		public function Flush():void {
+			if (Client != null && nextFlush.length > 0) {
+				try {
+					Logger.Log("Sending " + nextFlush.bytesAvailable + "bytes. [BUFFERED]");
+					Client.writeBytes(nextFlush);
+					Client.flush();
+					nextFlush.clear();
+				} catch (error:Error) {
+					Logger.Log("MatchMaking: An unexpected error occurred: " + error.message);
+				}
 			}
 		}
 	}

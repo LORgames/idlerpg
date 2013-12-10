@@ -35,7 +35,7 @@ package Game.Critter {
 				map.GetCritterID(isSimulated);
 			}
 			
-			var p:CritterHuman = new CritterHuman(x, y, ID);
+			var p:CritterHuman = new CritterHuman(x, y, ID, this);
 			
 			p.Equipment.Equip(shadow, legs, body, face, headgear, weapon);
 			p.SetFaction(Factions[0]);

@@ -52,6 +52,10 @@ package Game.Critter
 		}
 		
 		/* INTERFACE Scripting.IScriptTarget */
+		public function GetScript():ScriptInstance {
+			return myScript;
+		}
+		
 		public function UpdatePointX(position:PointX):void {
 			critter.UpdatePointX(position);
 		}

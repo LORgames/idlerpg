@@ -9,6 +9,7 @@ package Game.Map.Spawns {
 	import Game.Map.MapData;
 	import Scripting.IScriptTarget;
 	import Interfaces.IMapObject;
+	import Scripting.ScriptInstance;
 	/**
 	 * ...
 	 * @author Paul
@@ -151,6 +152,9 @@ package Game.Map.Spawns {
 		}
 		
 		/* INTERFACE Scripting.IScriptTarget */
+		public function GetScript():ScriptInstance {
+			return null;
+		}
 		
 		public function AlertMinionDeath(minion:BaseCritter):void {
 			var i:int = Critters.indexOf(minion);

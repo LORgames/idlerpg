@@ -240,10 +240,6 @@ package Game.Map {
 						}
 					}
 					
-					if ((Critters[_tt].MyAIType & AITypes.Untargetable) > 1) {
-						continue;
-					}
-					
 					if (type == ScriptTypes.Enemy && !Factions.IsEnemies(primaryfaction, Critters[_tt].GetFaction())) {
 						continue;
 					}
@@ -363,6 +359,7 @@ package Game.Map {
 		}
 		
 		/* INTERFACE Scripting.IScriptTarget */
+		public function GetScript():ScriptInstance { return MyScript; }
 		public function UpdatePointX(position:PointX):void { position.X = 0; position.Y = 0; position.D = 1; }
 		public function AlertMinionDeath(baseCritter:BaseCritter):void {}
 		public function ChangeState(stateID:int, isLooping:Boolean):void {}
@@ -439,12 +436,6 @@ package Game.Map {
 			}
 			
 			return NextBlankEffectForPlayer[pID];
-		}
-		
-		public function EffectPush(effectInstance:EffectInstance, isSimulated:Boolean):int {
-			var id:int = GetEffectID(isSimulated);
-			Effects[id] = effectInstance;
-			return id;
 		}
 	}
 

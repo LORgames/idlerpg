@@ -79,18 +79,25 @@ package EngineTiming {
 					WorldData.CurrentMap.Update(dt);
 					TweenManager.Update(dt);
 					
+					//Preupdate critters
+					i = WorldData.CurrentMap.Critters.length;
+					while (--i > -1) {
+						if (WorldData.CurrentMap.Critters[i] != null) {
+							WorldData.CurrentMap.Critters[i].PreUpdate(dt);
+						}
+					}
+					
 					//Update what we need to update
 					i = Updatables.length;
 					while (--i > -1) {
 						Updatables[i].Update(dt);
 					}
 					
-					if (WorldData.CurrentMap != null) {
-						i = WorldData.CurrentMap.Critters.length;
-						while (--i > -1) {
-							if (WorldData.CurrentMap.Critters[i] != null) {
-								WorldData.CurrentMap.Critters[i].PostUpdate();
-							}
+					//Post update critters
+					i = WorldData.CurrentMap.Critters.length;
+					while (--i > -1) {
+						if (WorldData.CurrentMap.Critters[i] != null) {
+							WorldData.CurrentMap.Critters[i].PostUpdate();
 						}
 					}
 					
@@ -103,14 +110,23 @@ package EngineTiming {
 							OneSecond[i].UpdateOneSecond();
 						}
 					}
+					
+					Main.I.Renderer.Update(dt);
+					
+					while (CleanUpList.length > 0) {
+						var x:ICleanUp = CleanUpList.pop();
+						x.CleanUp();
+					}
+					
+					Global.PrevLoadingTotal = Global.LoadingTotal;
 				}
 			}
 			
-			Main.I.Renderer.Render(dt);
+			Main.I.Renderer.Render();
 			
 			while (CleanUpList.length > 0) {
-				var x:ICleanUp = CleanUpList.pop();
-				x.CleanUp();
+				var x2:ICleanUp = CleanUpList.pop();
+				x2.CleanUp();
 			}
 			
 			Global.PrevLoadingTotal = Global.LoadingTotal;
@@ -138,6 +154,14 @@ package EngineTiming {
 		
 		static public function Resume():void {
 			Clock.I.Stopped = false;
+		}
+		
+		public function Reset():void {
+			Sec_01_Count = 0;
+			last = getTimer();
+			ticks = 0;
+			edt = 0; //Effective dt;
+			summedTime = 0;
 		}
 	}
 

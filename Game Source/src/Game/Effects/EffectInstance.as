@@ -46,8 +46,13 @@ package Game.Effects {
 		private var MyLife:int = 0;
 		protected var ID:int;
 		
-		public function EffectInstance(_info:EffectInfo, _x:int, _y:int, _d:int, isSimulated:Boolean) {
- 			this.Info = _info;
+		public function EffectInstance(_info:EffectInfo, _x:int, _y:int, _d:int, isSimulated:Boolean, _id:int = -1) {
+ 			ID = _id;
+			if (ID == -1) {
+				ID = WorldData.CurrentMap.GetEffectID(false);
+			}
+			
+			this.Info = _info;
 			
 			OffsetX = Info.X;
 			OffsetY = Info.Y;
@@ -72,7 +77,7 @@ package Game.Effects {
 			Clock.I.Updatables.push(this);
 			
 			MyScript = new ScriptInstance(Info.MyScript, this);
-			ID = WorldData.CurrentMap.EffectPush(this, isSimulated);
+			WorldData.CurrentMap.Effects[ID] = this;
 			
 			MyLife = Info.Life;
 			
@@ -208,18 +213,14 @@ package Game.Effects {
 		}
 		
 		/* INTERFACE Scripting.IScriptTarget */
+		public function GetScript():ScriptInstance {
+			return MyScript;
+		}
+		
 		public function ScriptAttack(isPercent:Boolean, amount:int, pierce:int, attacker:IScriptTarget):void { if (MyScript == null) return; MyScript.Run(Script.Attacked); }
 		public function AlertMinionDeath(baseCritter:BaseCritter):void { MyScript.Run(Script.MinionDied); }
-		
-		public function UpdatePointX(position:PointX):void {
-			position.X = X;
-			position.Y = Y;
-			position.D = Direction;
-		}
-		
-		public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void {
-			PlaybackSpeed = newAnimationSpeed;
-		}
+		public function UpdatePointX(position:PointX):void { position.X = X; position.Y = Y; position.D = Direction; }
+		public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void { PlaybackSpeed = newAnimationSpeed; }
 		
 		public function ChangeState(animationIndex:int, loop:Boolean):void {
 			CurrentState = animationIndex;
@@ -239,8 +240,6 @@ package Game.Effects {
 		public function GetCurrentState():int {
 			return CurrentState;
 		}
-		
-		/* INTERFACE Scripting.IScriptTarget */
 		
 		public function GetFaction():int {
 			return 0;

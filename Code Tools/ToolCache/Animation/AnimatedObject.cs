@@ -12,6 +12,7 @@ namespace ToolCache.Animation {
     public class AnimatedObject {
         private static Random r = new Random();
         private static double totalTime = 0.0;
+        private static DateTime previous = DateTime.Now;
 
         public byte TotalFrames = 0;
         public float PlaybackSpeed = 0.2f;
@@ -21,6 +22,7 @@ namespace ToolCache.Animation {
         private Point p = new Point(-1, -1); //Center point
 
         public Point Center {
+            
             get {
                 if (Frames.Count == 0)
                     return p;
@@ -62,6 +64,8 @@ namespace ToolCache.Animation {
         public void Draw(Graphics gfx, int xPos, int yPos, float scale = 1.0f, float alpha = 1.0f) {
             if (Frames.Count == 0) return;
 
+            if (DateTime.Now > previous) { Update(); }
+
             int frameID = Paused?0:(int)(totalTime / PlaybackSpeed);
 
             Image im = ImageCache.RequestImage(Frames[frameID % Frames.Count]);
@@ -90,8 +94,10 @@ namespace ToolCache.Animation {
             Draw(gfx, (int)xPos, (int)yPos, scale, alpha);
         }
 
-        public static void Update(double dt) {
-            totalTime += dt;
+        public static void Update() {
+            double ms = (DateTime.Now - previous).TotalSeconds;
+            previous = DateTime.Now;
+            totalTime += ms;
         }
 
         internal AnimatedObject Clone() {

@@ -23,6 +23,7 @@ package Scripting {
 	import QDMF.Connectors.SocketClient;
 	import QDMF.Connectors.SocketHost;
 	import QDMF.Logic.Helper.QDMFCritter;
+	import QDMF.Logic.Helper.QDMFEffect;
 	import QDMF.PacketFactory;
 	import SoundSystem.EffectsPlayer;
 	import SoundSystem.MusicPlayer;
@@ -224,8 +225,7 @@ package Scripting {
 							currentUnprocessedValue = (info.CurrentTarget as CritterHuman).Equipment.IsEquipped(eventScript.readUnsignedShort(), eventScript.readUnsignedShort());
 						} else {
 							Main.I.Log("Unknown invoker for if equipped");
-						}
-						break;
+						} break;
 					case 0x7006: //Is an animation playing
 						currentUnprocessedValue = (info.Invoker.GetCurrentState() == eventScript.readUnsignedShort()); break;
 					case 0x7007: //What direction am I facing
@@ -287,15 +287,30 @@ package Scripting {
 						//TODO: this
 						break;
 					case 0x700D: //Is In Group
+						param0 = eventScript.readShort();
+						
 						if (info.CurrentTarget is BaseCritter) {
-							currentUnprocessedValue = ((info.CurrentTarget as BaseCritter).HasFaction(eventScript.readShort()));
+							currentUnprocessedValue = ((info.CurrentTarget as BaseCritter).HasFaction(param0));
 						} else {
-							Main.I.Log("Unknown target for 0x700D Target=" + info.CurrentTarget + " Faction=" + eventScript.readShort());
+							currentUnprocessedValue = false;
+							Main.I.Log("Unknown target for 0x700D Target=" + info.CurrentTarget + " Faction=" + param0);
+						} break;
+					case 0x700E: //Attacker Type
+						param0 = eventScript.readShort();
+						
+						if (inputParam != null) {
+							if (inputParam is BaseCritter) {
+								currentUnprocessedValue = (inputParam as BaseCritter).HasFaction(param0);
+							} else if (inputParam is Array && (inputParam as Array).length > 0 && (inputParam as Array)[0] is BaseCritter) {
+								currentUnprocessedValue = ((inputParam as Array)[0] as BaseCritter).HasFaction(param0);
+							}
 						} break;
 					case 0x7FFF: //AI Event, Trigger Event etc
 						var whatAIEvent:int = GetNumberFromVariable(eventScript, info, inputParam);
 						if (inputParam is int) {
 							currentUnprocessedValue = ((inputParam as int) == whatAIEvent);
+						} else if(inputParam is Array && (inputParam as Array)[0] is int){
+							currentUnprocessedValue = ((inputParam as Array)[0] == whatAIEvent);
 						} break;
 					default:
 						Main.I.Log("@0x" + command.toString(16) + ": Unknown Conditional.");
@@ -416,7 +431,7 @@ package Scripting {
 				var target:IScriptTarget = Objects[obji];
 				info.AttachTarget(target);
 				
-				Main.I.Log("MAP LOOP Pos=" + eventScript.position + " LoopAt=" + startIndex + " Invoker=" + info.Invoker + " CurrentTarget=" + info.CurrentTarget);
+				//Main.I.Log("MAP LOOP Pos=" + eventScript.position + " LoopAt=" + startIndex + " Invoker=" + info.Invoker + " CurrentTarget=" + info.CurrentTarget);
 				
 				var _continue:Boolean = (ProcessBlock(eventScript, info, eventID, param) == 0);
 				
@@ -643,8 +658,14 @@ package Scripting {
 						EffectsPlayer.Play(EventScript.readUnsignedShort()); break;
 					case 0x1002: //Spawn Critter
 						p0.D = EventScript.readShort(); p0.X = GetNumberFromVariable(EventScript, info, inputParam); p0.Y = GetNumberFromVariable(EventScript, info, inputParam);
-						CalculateOffset(Position, p0, p1);
 						p1.D = EventScript.readShort();
+						
+						if (EventScript.readShort() == 0) { //spawn in world coords
+							p1.X = p0.X;
+							p1.Y = p0.Y;
+						} else { //spawn in local coords
+							CalculateOffset(Position, p0, p1);
+						}
 						
 						if(!NetSync) {
 							var critter:BaseCritter = CritterManager.I.CritterInfo[p0.D].CreateCritter(WorldData.CurrentMap, p1.X, p1.Y, !NetSync);
@@ -680,7 +701,11 @@ package Scripting {
 						p0.X = GetNumberFromVariable(EventScript, info, inputParam); p0.Y = GetNumberFromVariable(EventScript, info, inputParam);
 						CalculateOffset(Position, p0, p1);
 						
-						new EffectInstance(effectInfo, p1.X, p1.Y, Position.D, NetSync);
+						if(!NetSync) {
+							new EffectInstance(effectInfo, p1.X, p1.Y, Position.D, NetSync);
+						} else {
+							QDMFEffect.Register(p0.D, p1.X, p1.Y, Position.D);
+						}
 						
 						break;
 					case 0x1009: //EffectSpawnDirectional
@@ -881,6 +906,15 @@ package Scripting {
 						EffectsPlayer.UpdateVolume();
 						MusicPlayer.UpdateVolume();
 						break;
+					case 0x101E: //TriggerLocal
+						p0.X = GetNumberFromVariable(EventScript, info, inputParam);
+						info.Invoker.UpdatePointX(p1);
+						info.CurrentTarget.GetScript().Run(Script.OnTrigger, null, new Array(p0.X, info.Invoker, p1.X, p1.Y));
+						break;
+					case 0x101F: // Drop AITarget
+						if (info.CurrentTarget is BaseCritter) {
+							(info.CurrentTarget as BaseCritter).CurrentTarget = null;
+						} break;
 					case 0x4001: //Equip item on the target
 						if (info.CurrentTarget is CritterHuman) {
 							(info.CurrentTarget as CritterHuman).Equipment.EquipSlot(EventScript.readShort(), EventScript.readShort());
@@ -1053,7 +1087,7 @@ package Scripting {
 							GetNumberFromVariable(EventScript, info, inputParam); //Just pop it off
 							EventScript.readShort(); //Pop them off as well
 						} break;
-					case 0xCFFF: //Main.I.Log
+					case 0xCFFF: //Main.I.Log // Debug Trace
 						Main.I.Log("[" + info.Invoker + "] " + StringEx.BuildFromCore(GetWonkyString(EventScript)).GetBuilt()); break;
 					case 0xF001: //Up a netsync level
 						NetSync--; break;
@@ -1105,8 +1139,6 @@ package Scripting {
 		//This updates all the triggers when a trigger is fired
 		internal static var TriggerListeners:Vector.<ScriptInstance> = new Vector.<ScriptInstance>();
 		public static function FireTrigger(triggerID:int):void {
-			Main.I.Log("SCRIPT TRIGGER: " + triggerID);
-			
 			//TODO: Make this actually work properly! (more details follow)
 			//It should be able to support multiple triggers firing at the same time
 			//Some kind of stack system would be ideal.

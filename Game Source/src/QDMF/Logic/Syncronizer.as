@@ -35,6 +35,10 @@ package QDMF.Logic {
 			MSSinceLastTurn += dt;
 			
 			if (MSSinceLastTurn > TurnTime) {
+				if (Global.Network) {
+					Global.Network.Flush();
+				}
+				
 				MSSinceLastTurn -= TurnTime;
 				CurrentTurn = CurrentTurn + 1;
 				

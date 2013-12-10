@@ -11,8 +11,8 @@ package Game.Critter {
 	public class CritterHuman extends BaseCritter {
 		public var Equipment:EquipmentSet;
 		
-		public function CritterHuman(x:int, y:int, REFID:int) {
-			super(REFID);
+		public function CritterHuman(x:int, y:int, REFID:int, info:CritterInfoBase) {
+			super(REFID, info);
 			
 			Equipment = new EquipmentSet(this);
 			
@@ -66,7 +66,7 @@ package Game.Critter {
 		}
 		
 		public function toString():String {
-			return "[Critter:Humanoid]";
+			return "[Critter>Humanoid>" + Info.Name+ " Faction=" + PrimaryFaction + "]";
 		}
 		
 		public override function CleanUp():void {

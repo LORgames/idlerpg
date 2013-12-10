@@ -28,7 +28,7 @@ package Game.Critter {
 		
         public var AICommands:Script;
 		
-		public var Factions:Vector.<int>;
+		public var MyFactions:Vector.<int>;
         public var Loot:Vector.<LootDrop>;
 		
 		public function CritterInfoBase() {}
@@ -49,9 +49,9 @@ package Game.Critter {
 			
 			AICommands = Script.ReadScript(b);
 			
-			Factions = new Vector.<int>(b.readByte());
-			for (var i:int = 0; i < Factions.length; i++) {
-				Factions[i] = b.readByte();
+			MyFactions = new Vector.<int>(b.readByte());
+			for (var i:int = 0; i < MyFactions.length; i++) {
+				MyFactions[i] = b.readByte();
 			}
 		}
 		

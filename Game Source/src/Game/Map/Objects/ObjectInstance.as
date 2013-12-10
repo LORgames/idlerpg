@@ -164,6 +164,10 @@ package Game.Map.Objects {
 		}
 		
 		/* INTERFACE Scripting.IScriptTarget */
+		public function GetScript():ScriptInstance {
+			return MyScript;
+		}
+		
 		public function ChangeState(stateID:int, isLooping:Boolean):void {
 			if(isLooping) {
 				Template.ChangeState(stateID);

@@ -1,4 +1,5 @@
 package Scripting {
+	import EngineTiming.Clock;
 	import Game.Critter.BaseCritter;
 	import CollisionSystem.PointX;
 	import flash.utils.ByteArray;
@@ -15,7 +16,6 @@ package Scripting {
 	 * @author Paul
 	 */
 	public class NetworkScriptExec implements IPacketProcessor, IScriptTarget {
-		
 		private var scriptinstance:ScriptInstance;
 		private var tb:ByteArray = new ByteArray();
 		private var s:Script;
@@ -35,6 +35,8 @@ package Scripting {
 		/* INTERFACE QDMF.IPacketProcessor */
 		
 		public function ProcessPacket(p:Packet):Boolean {
+			var pr:Packet;
+			
 			if (p.type == PacketTypes.SCRIPT) {
 				Main.I.Log("RECV IMPORTANT PACKET!");
 				
@@ -60,12 +62,13 @@ package Scripting {
 					if (controlInfo == 1) { // Match Joined
 						trace("Found a match :)");
 						Syncronizer.Reset();
+						Clock.I.Reset();
 						Script.FireTrigger(SocketTriggers.SOCKET_CONNECT);
 					}
 				} else if (controlType == 2) { // Device Information
 					if (controlType == 0) { // Current Time
 						if (Global.Network) {
-							var pr:Packet = new Packet(PacketTypes.SERVER);
+							pr = new Packet(PacketTypes.SERVER);
 							pr.bytes.writeShort(0);
 							pr.bytes.writeFloat(new Date().time);
 							
@@ -80,7 +83,7 @@ package Scripting {
 				var pingID:int = p.bytes.readInt();
 				
 				if (p.type == PacketTypes.PING) {
-					var pr:Packet = new Packet(PacketTypes.PING_REPLY); // Ping Reply
+					pr = new Packet(PacketTypes.PING_REPLY); // Ping Reply
 					pr.bytes.writeByte(plrID);
 					pr.bytes.writeInt(pingID);
 					Global.Network.SendPacket(pr);
@@ -96,33 +99,13 @@ package Scripting {
 		}
 		
 		/* INTERFACE Scripting.IScriptTarget */
-		
-		public function UpdatePointX(position:PointX):void {
-			position.D = 1;
-			position.X = 0;
-			position.Y = 0;
-		}
-		
-		public function AlertMinionDeath(baseCritter:BaseCritter):void {
-			
-		}
-		
-		public function ChangeState(stateID:int, isLooping:Boolean):void {
-			
-		}
-		
-		public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void {
-			
-		}
-		
-		public function GetCurrentState():int {
-			return 0;
-		}
-		
-		public function GetFaction():int {
-			return 0;
-		}
-		
+		public function GetScript():ScriptInstance { return scriptinstance; }
+		public function UpdatePointX(position:PointX):void { position.D = 1; position.X = 0; position.Y = 0; }
+		public function AlertMinionDeath(baseCritter:BaseCritter):void {}
+		public function ChangeState(stateID:int, isLooping:Boolean):void {}
+		public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void {}
+		public function GetCurrentState():int { return 0; }
+		public function GetFaction():int { return 0; }
 	}
 
 }

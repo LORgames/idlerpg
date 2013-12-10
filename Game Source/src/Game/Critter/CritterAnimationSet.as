@@ -4,6 +4,7 @@ package Game.Critter
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.geom.Rectangle;
+	import flash.media.Microphone;
 	import Scripting.Script;
 	import RenderSystem.IObjectLayer;
 	import RenderSystem.IAnimated;
@@ -37,7 +38,7 @@ package Game.Critter
 			
 			Owner = owner;
 			currentDirection = 3;
-			ChangeCritterInfo(Owner.Info);
+			ChangeCritterInfo(Owner.BeastInfo);
 		}
 		
 		public function ChangeCritterInfo(Info:CritterInfoBeast):void {
@@ -78,8 +79,8 @@ package Game.Critter
 		}
 		
 		private function UpdateFrameEnds():void {
-			StartFrame = Owner.Info.AnimationFrameCounts[currentAnimationID*4+currentDirection]
-			EndFrame = Owner.Info.AnimationFrameCounts[currentAnimationID*4+currentDirection+1];
+			StartFrame = Owner.BeastInfo.AnimationFrameCounts[currentAnimationID*4+currentDirection]
+			EndFrame = Owner.BeastInfo.AnimationFrameCounts[currentAnimationID*4+currentDirection+1];
 			CurrentFrame = StartFrame;
 			
 			FrameDT = CurrentPlaybackSpeed;
@@ -101,10 +102,14 @@ package Game.Critter
 			myBitmapData.copyPixels(sprites, FrameRect, Global.ZeroPoint);
 		}
 		
+		public function SetPlaybackSpeed(speed:Number):void {
+			CurrentPlaybackSpeed = speed;
+		}
+		
 		public function UpdateAnimation(dt:Number):void {
 			FrameDT += dt;
 			
-			if (FrameDT > CurrentPlaybackSpeed) {
+			while (FrameDT >= CurrentPlaybackSpeed) {
 				FrameDT -= CurrentPlaybackSpeed;
 				CurrentFrame++;
 				

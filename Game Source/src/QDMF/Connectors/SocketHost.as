@@ -22,6 +22,7 @@ CONFIG::air {
 			private var HostSocket:ServerSocket;
 			private var Client:Socket;
 			private var Logger:ILogger;
+			private var nextFlush:ByteArray = new ByteArray();
 			
 			public function SocketHost() {
 				HostSocket = new ServerSocket();
@@ -67,21 +68,23 @@ CONFIG::air {
 			public function IsConnected():Boolean {
 				return (Client != null && Client.connected);
 			}
+		
+			public function SendPacket(packet:Packet):void {
+				nextFlush.writeShort(packet.bytes.length);
+				nextFlush.writeBytes(packet.bytes);
+			}
 			
-			public function SendPacket(packet:Packet):Boolean {
-				if (Client != null) {
+			public function SendPacketInstant(packet:Packet):void {
+				if (Client != null && nextFlush.length > 0) {
 					try {
+						Logger.Log("Sending " + packet.bytes.bytesAvailable + "bytes. [INSTANT]");
 						Client.writeShort(packet.bytes.length);
 						Client.writeBytes(packet.bytes);
 						Client.flush();
-						
-						return true;
 					} catch (error:Error) {
-						Logger.Log("An unexpected error occurred: " + error.message);
+						Logger.Log("MatchMaking: An unexpected error occurred: " + error.message);
 					}
 				}
-				
-				return false;
 			}
 			
 			public function Close():void {
@@ -92,6 +95,18 @@ CONFIG::air {
 				if (HostSocket != null) {
 					HostSocket.close();
 					HostSocket = null;
+				}
+			}
+		
+			public function Flush():void {
+				if (Client != null && nextFlush.length > 0) {
+					try {
+						Client.writeBytes(nextFlush);
+						Client.flush();
+						nextFlush.clear();
+					} catch (error:Error) {
+						Logger.Log("MatchMaking: An unexpected error occurred: " + error.message);
+					}
 				}
 			}
 		}

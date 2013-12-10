@@ -75,10 +75,7 @@ package RenderSystem {
 			MapText.y = (Main.I.stage.stageHeight - MapText.height) / 2;
 		}
 		
-		public function Render(dt:Number):void {
-			//Sort the children
-			i = Main.OrderedLayer.numChildren;
-			
+		public function Update(dt:Number):void {
 			//Sort out all the dirty objects
 			while (DirtyObjects.length > 0) {
 				var obj:IObjectLayer = DirtyObjects.pop();
@@ -94,9 +91,20 @@ package RenderSystem {
 						while (TrySwap(i++)) { }
 					}
 				} catch (e:Error) {
-					Main.I.Log("DIRTY Object NULL CAUGHT Obj="+obj);
+					//Should be a trace rather than a log. Needs to be culled in release because its really really expensive when this screws up.
+					trace("DIRTY Object NULL CAUGHT Obj="+obj);
 				}
 			}
+			
+			var i:int = AnimatedObjects.length;
+			while (--i > -1) {
+				AnimatedObjects[i].UpdateAnimation(dt);
+			}
+		}
+		
+		public function Render():void {
+			//Sort the children
+			i = Main.OrderedLayer.numChildren;
 			
 			//Update the fading
 			if (fading) {
@@ -165,7 +173,7 @@ package RenderSystem {
 			
 			var i:int = AnimatedObjects.length;
 			while (--i > -1) {
-				AnimatedObjects[i].UpdateAnimation(dt);
+				AnimatedObjects[i].UpdateAnimation(0.0);
 			}
 		}
 		

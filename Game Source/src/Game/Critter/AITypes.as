@@ -16,5 +16,6 @@ package Game.Critter {
 		public static const BlindBehind:int = 512;			// Picks the lowest health unit of the units in range to target
 		public static const Unsupportable:int = 1024;		// Picks the lowest health unit of the units in range to target
 		public static const DisableTurning:int = 2048;		// Unit can't turn around
+		public static const Ghost:int = 4096;				// Unit ignores collision detection
 	}
 }

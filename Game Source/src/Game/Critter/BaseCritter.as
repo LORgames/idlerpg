@@ -37,8 +37,6 @@ package Game.Critter {
 		private var ReportedDeath:Boolean = false;
 		public var Owner:IScriptTarget;
 		
-		public var tf:TextField;
-		
 		//Current state information
 		public var isMoving:Boolean = false;
 		public var virginMoveSpeedX:Number = 0;
@@ -56,7 +54,6 @@ package Game.Critter {
 		public var CurrentTarget:IScriptTarget;
 		
 		public var CurrentMovementCost:Number = 1;
-		
 		public var CurrentMap:MapData;
 		
 		public var X:Number = 0; public var Y:Number = 0;
@@ -64,26 +61,28 @@ package Game.Critter {
 		public var direction:int = 3;
 		
 		public var MyRect:Rect;
-		
 		public var MyScript:ScriptInstance;
-		public var ActiveBuffs:Vector.<CritterBuff> = new Vector.<CritterBuff>();
 		
+		public var ActiveBuffs:Vector.<CritterBuff> = new Vector.<CritterBuff>();
 		private var ActiveScriptRegions:Vector.<ScriptRegion> = new Vector.<ScriptRegion>();
 		
 		//Critter information
+		public var Info:CritterInfoBase;
 		public var MyAIType:int;
 		
 		public var CurrentHP:int = 1000;
 		public var MaximumHP:int = 1000;
 		public var CurrentDefence:int = 0;
 		
-		public function BaseCritter(ID:int) {
+		public function BaseCritter(ID:int, myInfo:CritterInfoBase) {
+			Info = myInfo;
 			MyRect = new Rect(false, this, 0, 0, 0, 0);
 			Clock.I.Updatables.push(this);
-			tf = Drawer.GetTextField();
 		}
 		
 		protected function CheckScriptRegions():void {
+			//TODO: get rid of the vector allocation here!
+			
 			var sci:int = CurrentMap.ScriptRegions.length;
 			var sai:int;
 			var sr:ScriptRegion;
@@ -186,25 +185,15 @@ package Game.Critter {
 			//}
 		}
 		
+		public function PreUpdate(dt:Number):void {
+			ProcessAI(dt);
+		}
+		
 		public function Update(dt:Number):void {
 			if (CurrentMap == null) return;
 			
-			//Will need these later :)
-			var j:int;
-			
-			//// AI  AI  AI  AI ///////////////////////////////////////////////////////// AI
-			ProcessAI(dt);
-			
-			////////////////////////////////////////////////////////////////////////////////
-			
 			//Store these in case
 			prevX = X; prevY = Y;
-			
-			CONFIG::debug {
-				tf.text = CurrentHP + " / " + MaximumHP;
-				tf.x = (X + Camera.X) * Camera.Z - tf.width/2;
-				tf.y = (Y + Camera.Y) * Camera.Z - 60;
-			}
 			
 			//Process the things
 			X += moveSpeedX * dt / CurrentMovementCost;
@@ -354,6 +343,8 @@ package Game.Critter {
 		}
 		
 		private function CheckCollisions():void {
+			if ((MyAIType & AITypes.Ghost) > 0) return;
+			
 			//Now do a quick tile check to see if we hit anything
 			var tiles:Vector.<TileInstance> = TileHelper.GetTiles(MyRect, CurrentMap);
 			var i:int = tiles.length; var j:int;
@@ -406,7 +397,9 @@ package Game.Critter {
 							
 							if (critter != this) {
 								if (critter.MyRect == null) continue;
-								if ((MyAIType & AITypes.Untargetable) > 1 && (critter.MyAIType & AITypes.Untargetable) > 1) continue;
+								if ((MyAIType & AITypes.Untargetable) > 0 && (critter.MyAIType & AITypes.Untargetable) > 0) continue;
+								if ((critter.MyAIType & AITypes.Ghost) > 0) continue;
+								
 								if (MyRect.intersects(critter.MyRect)) {
 									MyRect.CalculatePenetration(critter.MyRect, collisionPenetration);
 									collisionTotal++;
@@ -508,22 +501,21 @@ package Game.Critter {
 				MyScript = null;
 			}
 			
-			if(tf != null) {
-				tf.text = "";
-				tf.parent.removeChild(tf);
-				tf = null;
-			}
-			
 			for (var i:int = 0 ; i < ActiveBuffs.length; i++) {
 				ActiveBuffs[i].CleanUp(false);
 			}
 			ActiveBuffs.length = 0;
 			ActiveBuffs = null;
 			
+			Info = null;
+			
 			Clock.I.Remove(this);
 		}
 		
 		/* INTERFACE Scripting.IScriptTarget */
+		public function GetScript():ScriptInstance {
+			return MyScript;
+		}
 		
 		public function AlertMinionDeath(minion:BaseCritter):void {
 			if (CurrentHP > 0) {
@@ -574,6 +566,14 @@ package Game.Critter {
 		
 		public function HasFaction(factionID:int):Boolean {
 			if (factionID == PrimaryFaction) return true;
+			
+			var f:Vector.<int> = Info.MyFactions;
+			var i:int = f.length;
+			while(--i > -1) {
+				if (f[i] == factionID) {
+					return true;
+				}
+			}
 			
 			return false;
 		}

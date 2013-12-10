@@ -74,7 +74,7 @@ package UI {
 					Panels[i].Elements[j].MyScript = new ScriptInstance(Panels[i].Elements[j]._script, Panels[i].Elements[j], true);
 					
 					//Does the element have Press or PressAndDrag support.
-					if (Panels[i].Elements[j]._script.HasEvent(Script.Attack) || Panels[i].Elements[j]._script.HasEvent(Script.Use)) {
+					if (Panels[i].Elements[j]._script.HasEvent(Script.Attack) || Panels[i].Elements[j]._script.HasEvent(Script.Use) || Panels[i].Elements[j]._script.HasEvent(Script.OnEnter)) {
 						Panels[i].Elements[j].SupportsTouch = true;
 						Panels[i].HasTouchElements = true;
 					}
@@ -222,6 +222,60 @@ package UI {
 			
 		}
 		
+		public function AlertDoublePress(x:Number, y:Number):void {
+			var wx:int = (x - Camera.X) / Camera.Z;
+			var wy:int = (y - Camera.Y) / Camera.Z;
+			
+			if (GlobalVariables.Variables == null) return;
+			GlobalVariables.Variables[Global.GV_WX] = wx;
+			GlobalVariables.Variables[Global.GV_WY] = wy;
+			
+			if (Panels == null) return;
+			var i:int = Panels.length;
+			var j:int;
+			
+			//Trying UI first
+			while (--i > -1) {
+				if (!Panels[i].visible || !Panels[i].HasTouchElements) {
+					continue;
+				}
+				
+				j = Panels[i].Elements.length;
+				
+				while (--j > -1) {
+					if (!Panels[i].Elements[j].SupportsTouch) {
+						continue;
+					}
+					
+					if (Panels[i].Elements[j].Contains(x, y)) {
+						GlobalVariables.Variables[Global.GV_LX] = wx - Panels[i].Elements[j].x;
+						GlobalVariables.Variables[Global.GV_LY] = wy - Panels[i].Elements[j].y;
+						
+						Panels[i].Elements[j].MyScript.Run(Script.AnimationEnded); //Double touch
+						return;
+					}
+				}
+			}
+			
+			//Try script regions as well, much more complicated though.
+			if (WorldData.CurrentMap.ScriptRegions == null) return;
+			i = WorldData.CurrentMap.ScriptRegions.length;
+			
+			while (--i > -1) {
+				var s:ScriptRegion = WorldData.CurrentMap.ScriptRegions[i];
+				if (!s.SupportsPress) {
+					continue;
+				}
+				
+				j = s.Area.length;
+				
+				while(--j > -1) {
+					if (s.Area[j].ContainsPoint(wx, wy)) {
+						s.MyScript.Run(Script.AnimationEnded); //Press
+						return;
+					}
+				}
+			}
+		}
 	}
-
 }

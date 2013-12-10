@@ -23,7 +23,7 @@ namespace ToolCache.Scripting.Types {
             All.Add("soundplay",
                 new ValidCommand(0x1001, new Param[] { Param.SoundEffectName}));
             All.Add("spawn",
-                new ValidCommand(0x1002, new Param[] { Param.CritterName, Param.Integer | Param.Optional, Param.Integer | Param.Optional, Param.Boolean | Param.Optional }));
+                new ValidCommand(0x1002, new Param[] { Param.CritterName, Param.Integer | Param.Optional, Param.Integer | Param.Optional, Param.Boolean | Param.Optional, Param.Boolean | Param.Optional })); //Critter, X, Y, Use My Faction, Spawn World Coords (true) or Relative Coords (false)
             All.Add("damage",
                 new ValidCommand(0x1003, new Param[] { Param.Integer, Param.Integer | Param.Optional }));
             All.Add("knockback",
@@ -74,6 +74,10 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0x101C, new Param[] { Param.Void }));
             All.Add("forceupdatesound",
                 new ValidCommand(0x101D, new Param[] { Param.Void }));
+            All.Add("triggerlocal",
+                new ValidCommand(0x101E, new Param[] { Param.Integer }));
+            All.Add("aitargetdrop",
+                new ValidCommand(0x101F, new Param[] { Param.Void }));
 
             //Quest and Inventory Commands
             All.Add("saydialogue",
@@ -174,6 +178,7 @@ namespace ToolCache.Scripting.Types {
             IfFunctions.Add("hastarget",new ValidCommand(0x700B, new Param[] { Param.Void }));
             IfFunctions.Add("hasbuff",  new ValidCommand(0x700C, new Param[] { Param.Buff }));
             IfFunctions.Add("hastype",  new ValidCommand(0x700D, new Param[] { Param.FactionName }));
+            IfFunctions.Add("attackeristype", new ValidCommand(0x700E, new Param[] { Param.FactionName }));
             IfFunctions.Add("aieventis",new ValidCommand(0x7FFF, new Param[] { Param.AIEventType }));
             IfFunctions.Add("triggeris",new ValidCommand(0x7FFF, new Param[] { Param.Integer }));
 

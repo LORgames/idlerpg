@@ -6,6 +6,7 @@ package Scripting {
 	 * @author Paul
 	 */
 	public interface IScriptTarget {
+		function GetScript():ScriptInstance;
 		function UpdatePointX(position:PointX):void;
 		function AlertMinionDeath(baseCritter:BaseCritter):void;
 		

@@ -8,20 +8,20 @@ package Game.Critter {
 	 * @author Paul
 	 */
 	public class CritterBeast extends BaseCritter {
-		public var Info:CritterInfoBeast;
+		public var BeastInfo:CritterInfoBeast;
 		public var Animation:CritterAnimationSet;
 		
 		public function CritterBeast(MyInfo:CritterInfoBeast, map:MapData, x:int, y:int, REFID:int) {
-			super(REFID);
+			super(REFID, MyInfo);
 			
-			Info = MyInfo;
+			BeastInfo = MyInfo;
 			
 			Animation = new CritterAnimationSet(this);
 			Animation.ChangeState(0, true);
 			Main.OrderedLayer.addChild(Animation);
 			
 			CurrentMap = map;
-			PrimaryFaction = MyInfo.Factions[0];
+			PrimaryFaction = MyInfo.MyFactions[0];
 			
 			X = x;
 			Y = y;
@@ -37,9 +37,9 @@ package Game.Critter {
 			SetAlertRangeSqrd(MyInfo.AlertRange * MyInfo.AlertRange);
 			AttackRange = MyInfo.AttackRange * MyInfo.AttackRange;
 			
-			MyScript = new ScriptInstance(Info.AICommands, this, false);
+			MyScript = new ScriptInstance(BeastInfo.AICommands, this, false);
 			MyScript.Run(Script.Initialize);
-			MyAIType = Info.AIType;
+			MyAIType = BeastInfo.AIType;
 		}
 		
 		public override function Update(dt:Number):void {
@@ -52,12 +52,12 @@ package Game.Critter {
 			}
 			
 			if (direction < 2) { //Left or right
-				Animation.x = int(this.X) - Animation.width / 2 + (direction==0?-Info.CollisionOffsetX:Info.CollisionOffsetX);
+				Animation.x = int(this.X) - Animation.width / 2 + (direction==0?-BeastInfo.CollisionOffsetX:BeastInfo.CollisionOffsetX);
 			} else {
 				Animation.x = int(this.X) - Animation.width / 2;
 			}
 			
-			Animation.y = int(this.Y) - Animation.height + MyRect.H / 2 + Info.CollisionOffsetY;
+			Animation.y = int(this.Y) - Animation.height + MyRect.H / 2 + BeastInfo.CollisionOffsetY;
 			
 			Renderman.DirtyObjects.push(Animation);
 		}
@@ -90,6 +90,7 @@ package Game.Critter {
 		}
 		
 		override public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void {
+			Animation.SetPlaybackSpeed(newAnimationSpeed);
 			Animation.UpdateAnimation(newAnimationSpeed);
 		}
 		
@@ -98,15 +99,15 @@ package Game.Critter {
 		}
 		
 		public function toString():String {
-			if(Info != null) {
-				return "[Critter:" + Info.Name + " Faction=" + PrimaryFaction + "]";
+			if(BeastInfo != null) {
+				return "[Critter>Beast>" + BeastInfo.Name + " Faction=" + PrimaryFaction + "]";
 			} else {
-				return "[Critter: DELETED Faction=" + PrimaryFaction + "]";
+				return "[Critter>DELETED]";
 			}
 		}
 		
 		override public function CleanUp():void {
-			if (Info == null) return;
+			if (BeastInfo == null) return;
 			if (Persistent) return;
 			super.CleanUp();
 			
@@ -115,7 +116,7 @@ package Game.Critter {
 				Animation = null;
 			}
 			
-			Info = null;
+			BeastInfo = null;
 		}
 	}
 }

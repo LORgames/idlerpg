@@ -2,6 +2,8 @@ package QDMF.Logic {
 	import flash.utils.ByteArray;
 	import Game.Critter.BaseCritter;
 	import Game.Critter.CritterManager;
+	import Game.Effects.EffectInstance;
+	import Game.Effects.EffectManager;
 	import Game.Map.WorldData;
 	import Scripting.IScriptTarget;
 	/**
@@ -35,6 +37,7 @@ package QDMF.Logic {
 			Data = additionaldata;
 			RandomSeed = seed;
 			TypeID = typeid;
+			Type = type;
 		}
 		
 		public function CleanUp():void {
@@ -43,6 +46,7 @@ package QDMF.Logic {
 			if (Data) Data.clear();
 			Data = null;
 			TypeID = 0;
+			Type = 0;
 			
 			RandomSeed = 0;
 		}
@@ -50,10 +54,13 @@ package QDMF.Logic {
 		public function Execute():void {
 			Rndm.seed = RandomSeed;
 			
-			if (Type == CRITTER && Action == CREATE) CreateCritter();
-			else if (Type == EFFECTS && Action == CREATE) CreateEffects();
-			else
+			if (Type == CRITTER && Action == CREATE) {
+				CreateCritter();
+			} else if (Type == EFFECTS && Action == CREATE) {
+				CreateEffects();
+			} else {
 				throw new Error("Uh oh spagettio!");
+			}
 		}
 		
 		private function CreateCritter():void {
@@ -77,7 +84,12 @@ package QDMF.Logic {
 		}
 		
 		private function CreateEffects():void {
-			//TODO: this
+			var id:int = Data.readShort();
+			var xpos:int = Data.readShort();
+			var ypos:int = Data.readShort();
+			var dir:int = Data.readShort();
+			
+			var effect:EffectInstance = new EffectInstance(EffectManager.I.Effects[id], xpos, ypos, dir, false, TypeID);
 		}
 		
 		private function GetObject(ownertype:int, ownerID:int):IScriptTarget {

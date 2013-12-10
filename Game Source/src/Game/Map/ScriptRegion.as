@@ -53,6 +53,10 @@ package Game.Map {
 		}
 		
 		/* INTERFACE Scripting.IScriptTarget */
+		public function GetScript():ScriptInstance {
+			return MyScript;
+		}
+		
 		public function UpdatePointX(position:PointX):void {
 			position.X = 0;
 			position.Y = 0;

@@ -94,7 +94,9 @@ package RenderSystem {
 				DebugLayer.graphics.lineStyle(1, 0xFF00FF);
 				
 				while (--xPos > -1) {
-					WorldData.CurrentMap.Critters[xPos].DrawDebugRect(DebugLayer.graphics);
+					if(WorldData.CurrentMap.Critters[xPos] != null) {
+						WorldData.CurrentMap.Critters[xPos].DrawDebugRect(DebugLayer.graphics);
+					}
 				}
 				
 				//Draw all the objects
@@ -115,6 +117,7 @@ package RenderSystem {
 				xPos = WorldData.CurrentMap.Critters.length;
 				
 				while (--xPos > -1) {
+					if (WorldData.CurrentMap.Critters[xPos] == null) continue;
 					var objC:Rect = WorldData.CurrentMap.Critters[xPos].MyRect;
 					if (objC == null) continue;
 					
@@ -153,6 +156,7 @@ package RenderSystem {
 				xPos = WorldData.CurrentMap.Effects.length;
 				
 				while (--xPos > -1) {
+					if (WorldData.CurrentMap.Effects[xPos] == null) continue;
 					var objE:EffectInstance = WorldData.CurrentMap.Effects[xPos];
 					DebugLayer.graphics.drawRect(objE.MyRect.X, objE.MyRect.Y, objE.MyRect.W, objE.MyRect.H);
 				}

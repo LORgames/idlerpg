@@ -18,6 +18,7 @@ namespace ToolCache.Scripting.Types {
         OnEnter = 0x04,
         MinionDied = 0x05,
         AnimationEnded = 0x06,
+        DoublePress = 0x06,
         OnExit = 0x06,
         StartMoving = 0x07,
         EndMoving = 0x08,
