@@ -35,8 +35,6 @@ def ProcessSocketClosed(sock):
 
         print "\tAlerting (%s, %s) that game ended abruptly!" % othersock.getpeername()
         ProcessSocketClosed(othersock)
-    else:
-        print "\tNot in match... thats good."
         
 def PrepareMessages():
     #set player 1 message
@@ -135,7 +133,7 @@ if __name__ == "__main__":
                         if sock.getpeername() in MATCHES:
                             MATCHES[sock.getpeername()].send(data)
                         else:
-                            print "Not sure, but", sock.getpeername(), "appears to be trying to send data to the server?"
+                            print "Not sure, but", sock.getpeername(), "appears to be trying to send data to the server? Message=", data
                         ##sock.send('OK ... ' + data)
                     else:
                         #Throw exception so that the socket is cleaned up :)
