@@ -117,8 +117,6 @@ package EngineTiming {
 						var x:ICleanUp = CleanUpList.pop();
 						x.CleanUp();
 					}
-					
-					Global.PrevLoadingTotal = Global.LoadingTotal;
 				}
 			}
 			

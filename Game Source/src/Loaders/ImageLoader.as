@@ -78,6 +78,8 @@ package Loaders {
 				UnusedObjects.push(b);
 			}
 			
+			Main.I.Renderer.FadeToBlack();
+			
 			var l:RequestReply = UnusedObjects.pop();
 			l.Filename = filename;
 			l.SuccessCallback = success;

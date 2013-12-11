@@ -19,13 +19,6 @@ package RenderSystem {
 		
 		private static var AnimatedObjects:Vector.<IAnimated> = new Vector.<IAnimated>();
 		public static var DirtyObjects:Vector.<IObjectLayer> = new Vector.<IObjectLayer>();
-		
-		private var fadeAlpha:int = 255;
-		private var fading:Boolean = false;
-		private var fadeToBlack:Boolean = false;
-		private var fadeCallback:Function = null;
-		public var MapText:TextField;
-		
 		private var loadScreen:LoadScreen;
 		
 		public function Renderman() {
@@ -39,29 +32,24 @@ package RenderSystem {
 			Main.I.addChild(loadScreen);
 			
 			Main.I.addChild(map.DebugLayer);
-			
-			MapText = Fonts.GetTextField(60, 3);
-			Main.I.addChild(MapText);
 		}
 		
-		public function FadeToBlack(callbackIfRequired:Function = null, message:String = ""):void {
-			fadeToBlack = true;
-			fading = true;
-			fadeCallback = callbackIfRequired;
+		public function FadeToBlack(callbackIfRequired:Function = null):void {
+			if (callbackIfRequired) {
+				callbackIfRequired();
+			}
 			
-			MapText.text = message;
-			MapText.x = (Main.I.stage.stageWidth - MapText.width) / 2;
-			MapText.y = (Main.I.stage.stageHeight - MapText.height) / 2;
+			loadScreen.RealAlpha = 255;
+			loadScreen.Draw();
 		}
 		
 		public function FadeToWorld(callbackIfRequired:Function = null):void {
-			fadeToBlack = false;
-			fading = true;
-			fadeCallback = callbackIfRequired;
-		}
-		
-		public function IsFading():Boolean {
-			return fading;
+			if (callbackIfRequired) {
+				callbackIfRequired();
+			}
+			
+			loadScreen.RealAlpha = 0;
+			loadScreen.Draw();
 		}
 		
 		public function Resized():void {
@@ -70,9 +58,6 @@ package RenderSystem {
 			
 			Main.OrderedLayer.scaleX = Camera.Z;
 			Main.OrderedLayer.scaleY = Camera.Z;
-			
-			MapText.x = (Main.I.stage.stageWidth - MapText.width) / 2;
-			MapText.y = (Main.I.stage.stageHeight - MapText.height) / 2;
 		}
 		
 		public function Update(dt:Number):void {
@@ -107,35 +92,8 @@ package RenderSystem {
 			i = Main.OrderedLayer.numChildren;
 			
 			//Update the fading
-			if (fading) {
-				if (fadeToBlack) {
-					fadeAlpha += 13;
-					if (fadeAlpha >= 255) {
-						fadeAlpha = 255;
-						fading = false;
-					}
-				} else {
-					fadeAlpha -= 13;
-					if (fadeAlpha <= 0) {
-						fadeAlpha = 0;
-						fading = false;
-					}
-				}
-				
-				if (!fading) {
-					if (fadeCallback != null) {
-						fadeCallback();
-						fadeCallback = null;
-					}
-				}
-				
-				MapText.alpha = fadeAlpha / 255.0;
-				loadScreen.RealAlpha = fadeAlpha;
-				loadScreen.Draw();
-			} else if(Global.PrevLoadingTotal > 0 && Global.FadeOnLoad) {
-				if (Global.LoadingTotal == 0) {
-					FadeToWorld();
-				}
+			if(Global.PrevLoadingTotal > 0 && Global.LoadingTotal == 0) {
+				FadeToWorld();
 			}
 			
 			if (Global.LoadingTotal > 0) return;

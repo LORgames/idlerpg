@@ -813,7 +813,6 @@ package Scripting {
 						break;
 					case 0x1010: //Change map
 						var mapID:int = EventScript.readShort();
-						Main.I.Renderer.FadeToBlack(null, WorldData.Maps[mapID]);
 						WorldData.CurrentMap.CleanUp();
 						WorldData.CurrentMap.LoadMap(WorldData.Maps[mapID]);
 						

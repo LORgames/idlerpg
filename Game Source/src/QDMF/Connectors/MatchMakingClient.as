@@ -47,7 +47,7 @@ package QDMF.Connectors {
 			nextFlush.writeBytes(packet.bytes);
 		}
 		
-		public function SendPacketInstant(packet:Packet):void {
+		public function SendPacketImmediate(packet:Packet):void {
 			if (Client != null && nextFlush.length > 0) {
 				try {
 					Logger.Log("Sending " + packet.bytes.bytesAvailable + "bytes. [INSTANT]");
@@ -75,6 +75,18 @@ package QDMF.Connectors {
 		
 		private function ConnectHandler(event:Event):void {
 			Logger.Log("MatchMaking: Connected to server.");
+			
+			Client.writeByte("P".charCodeAt(0));
+			Client.writeByte("L".charCodeAt(0));
+			Client.writeByte("E".charCodeAt(0));
+			Client.writeByte("A".charCodeAt(0));
+			Client.writeByte("S".charCodeAt(0));
+			Client.writeByte("3".charCodeAt(0));
+			Client.writeByte("_".charCodeAt(0));
+			Client.writeByte("M".charCodeAt(0));
+			Client.writeByte("M".charCodeAt(0));
+			Client.flush();
+			
 			//We don't fire the connected trigger here because the server may or may not have found us a match yet.
 			//We will wait until we get told a player ID
 		}

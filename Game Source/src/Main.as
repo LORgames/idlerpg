@@ -114,7 +114,6 @@ package {
 			
 			//Set up some other things
 			Renderer = new Renderman();
-			Renderer.FadeToBlack(null, "Loading...");
 			new System();
 			
 			stage.addEventListener(Event.RESIZE, Resized);

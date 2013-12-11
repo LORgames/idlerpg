@@ -26,7 +26,7 @@ package QDMF.Logic.Helper {
 			p.bytes.writeByte(Global.CurrentPlayerID);
 			p.bytes.writeInt(CurrentPingID);
 			
-			Global.Network.SendPacket(p);
+			Global.Network.SendPacketImmediate(p);
 		}
 		
 		public static function PingReply(id:int):void {

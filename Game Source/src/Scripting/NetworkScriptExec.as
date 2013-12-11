@@ -86,7 +86,7 @@ package Scripting {
 					pr = new Packet(PacketTypes.PING_REPLY); // Ping Reply
 					pr.bytes.writeByte(plrID);
 					pr.bytes.writeInt(pingID);
-					Global.Network.SendPacket(pr);
+					Global.Network.SendPacketImmediate(pr);
 				} else {
 					if(plrID == Global.CurrentPlayerID) {
 						PingHelper.PingReply(pingID);

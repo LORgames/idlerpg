@@ -23,7 +23,7 @@ package QDMF {
 		 * Send a packet IMMEDIATELY over the network. This can easily screw up the buffered network so should only be used for time critical messages (e.g. pinging)
 		 * @param	packet	The packet to send
 		 */
-		function SendPacketInstant(packet:Packet):void;
+		function SendPacketImmediate(packet:Packet):void;
 		
 		/**
 		 * Is the network even active?

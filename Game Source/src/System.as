@@ -38,8 +38,6 @@ package {
 		}
 		
 		private function ParseSettings(b:ByteArray):void {
-			Main.I.Renderer.FadeToBlack(null, Global.DefaultMap);
-			
 			//Load in the data from the Settings file
 			Global.GameName = BinaryLoader.GetString(b);
 			var forBools:int = b.readByte();
@@ -95,7 +93,7 @@ package {
 		}
 		
 		private function NoSettings(message:String):void {
-			Main.I.Renderer.FadeToBlack(null, "No Settings!");
+			//TODO: Show a message when no settings are available.
 		}
 		
 	}
