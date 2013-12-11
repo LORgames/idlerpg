@@ -27,6 +27,8 @@
             this.lblID = new System.Windows.Forms.Label();
             this.btnDown = new System.Windows.Forms.Button();
             this.btnUp = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.lblSize = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbExample)).BeginInit();
             this.SuspendLayout();
             // 
@@ -42,16 +44,18 @@
             // 
             // lblID
             // 
+            this.lblID.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblID.AutoSize = true;
             this.lblID.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblID.Location = new System.Drawing.Point(27, 131);
             this.lblID.Name = "lblID";
-            this.lblID.Size = new System.Drawing.Size(16, 16);
+            this.lblID.Size = new System.Drawing.Size(55, 16);
             this.lblID.TabIndex = 1;
-            this.lblID.Text = "0";
+            this.lblID.Text = "(Index)";
             // 
             // btnDown
             // 
+            this.btnDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnDown.Location = new System.Drawing.Point(3, 128);
             this.btnDown.Name = "btnDown";
             this.btnDown.Size = new System.Drawing.Size(18, 23);
@@ -62,6 +66,7 @@
             // 
             // btnUp
             // 
+            this.btnUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnUp.Location = new System.Drawing.Point(125, 128);
             this.btnUp.Name = "btnUp";
             this.btnUp.Size = new System.Drawing.Size(18, 23);
@@ -70,10 +75,32 @@
             this.btnUp.UseVisualStyleBackColor = true;
             this.btnUp.Click += new System.EventHandler(this.btnUp_Click);
             // 
+            // btnDelete
+            // 
+            this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDelete.Image = global::CityTools.Properties.Resources.delete;
+            this.btnDelete.Location = new System.Drawing.Point(118, 3);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(25, 24);
+            this.btnDelete.TabIndex = 4;
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
+            // lblSize
+            // 
+            this.lblSize.AutoSize = true;
+            this.lblSize.Location = new System.Drawing.Point(3, 3);
+            this.lblSize.Name = "lblSize";
+            this.lblSize.Size = new System.Drawing.Size(33, 13);
+            this.lblSize.TabIndex = 5;
+            this.lblSize.Text = "(Size)";
+            // 
             // UILibraryElement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lblSize);
+            this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnUp);
             this.Controls.Add(this.btnDown);
             this.Controls.Add(this.lblID);
@@ -92,6 +119,8 @@
         internal System.Windows.Forms.Label lblID;
         private System.Windows.Forms.Button btnDown;
         private System.Windows.Forms.Button btnUp;
+        private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Label lblSize;
 
     }
 }
