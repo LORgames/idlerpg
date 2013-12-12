@@ -681,8 +681,10 @@ package Scripting {
 						
 						break;
 					case 0x1003: //Flat Damage
-						if(info.CurrentTarget is IMapObject) {
-							(info.CurrentTarget as IMapObject).ScriptAttack(false, GetNumberFromVariable(EventScript, info, inputParam), GetNumberFromVariable(EventScript, info, inputParam), info.Invoker); break;
+						if (info.CurrentTarget is IMapObject) {
+							p0.X = GetNumberFromVariable(EventScript, info, inputParam);
+							p0.Y = GetNumberFromVariable(EventScript, info, inputParam);
+							(info.CurrentTarget as IMapObject).ScriptAttack(false, p0.X, p0.Y, info.Invoker); break;
 						} else {
 							GetNumberFromVariable(EventScript, info, inputParam);
 							GetNumberFromVariable(EventScript, info, inputParam);

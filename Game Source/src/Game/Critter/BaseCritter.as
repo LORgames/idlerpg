@@ -72,7 +72,9 @@ package Game.Critter {
 		
 		public var CurrentHP:int = 1000;
 		public var MaximumHP:int = 1000;
+		
 		public var CurrentDefence:int = 0;
+		public var BonusAttack:int = 0;
 		
 		public function BaseCritter(ID:int, myInfo:CritterInfoBase) {
 			Info = myInfo;
