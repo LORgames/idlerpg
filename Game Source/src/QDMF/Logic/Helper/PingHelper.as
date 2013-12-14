@@ -32,6 +32,7 @@ package QDMF.Logic.Helper {
 		public static function PingReply(id:int):void {
 			if (id != CurrentPingID) return;
 			Syncronizer.Ping = getTimer() - ActivePingTime;
+			ActivePingTime = 0;
 		}
 	}
 }
