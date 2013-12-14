@@ -15,11 +15,14 @@ namespace ToolCache.Scripting.Extensions {
 
         public static DictionaryEx<string, ScriptVariable> GlobalVariables = new DictionaryEx<string, ScriptVariable>();
         public static DictionaryEx<string, string> StringTable = new DictionaryEx<string, string>();
+        public static DictionaryEx<string, StringVariable> StringVariables = new DictionaryEx<string, StringVariable>();
         public static DictionaryEx<string, ScriptFunction> FunctionTable = new DictionaryEx<string, ScriptFunction>();
 
         public static int DatabaseIDForVariables = 0;
+        public static int DatabaseIDForStrings = 0;
 
-        private static int nexthighestindex = 1;
+        private static int nexthighestindexint = 1;
+        private static int nexthighestindexstring = 1;
 
         public static void Initialize() {
             GlobalVariables.Clear();
@@ -32,6 +35,7 @@ namespace ToolCache.Scripting.Extensions {
         private static void LoadDatabase() {
             LoadGlobalVariables();
             LoadStringTable();
+            LoadStringVariables();
             LoadFunctions();
         }
 
@@ -85,6 +89,39 @@ namespace ToolCache.Scripting.Extensions {
             }
         }
 
+        private static void LoadStringVariables() {
+            //Load the variables from the variable CSV
+            if (File.Exists(Settings.Database + "StringVariables.csv")) {
+                string[] lines = File.ReadAllLines(Settings.Database + "StringVariables.csv");
+
+                if (lines.Length > 0 && lines[0].IndexOf("#VERSION ") == 0) {
+                    int.TryParse(lines[0].Substring(9), out DatabaseIDForVariables);
+                    System.Diagnostics.Debug.WriteLine("String Variable DatabaseID=" + DatabaseIDForStrings);
+                }
+
+                foreach (String line in lines) {
+                    if (line[0] == '#') continue;
+
+                    StringVariable s = new StringVariable();
+                    string[] lineBits = line.Trim().Split(',');
+
+                    if (lineBits.Length != 3 && lineBits.Length != 4) {
+                        continue;
+                    }
+
+                    s.Name = lineBits[0];
+                    int.TryParse(lineBits[1], out s.Index);
+                    s.InitialValue = lineBits[2];
+
+                    byte b = 0;
+                    if (lineBits.Length == 4) byte.TryParse(lineBits[3], out b);
+                    if (b == 1) s.Saveable = true;
+
+                    AddStringVariableToDatabase(s);
+                }
+            }
+        }
+
         private static void LoadFunctions() {
             IStorage f = StorageHelper.LoadStorage(DATABASE_FILENAME, StorageTypes.UTF);
 
@@ -107,6 +144,7 @@ namespace ToolCache.Scripting.Extensions {
             SaveVariables();
             SaveStrings();
             SaveFunctions();
+            SaveStringVariables();
         }
 
         private static void SaveVariables() {
@@ -137,6 +175,21 @@ namespace ToolCache.Scripting.Extensions {
             File.WriteAllLines(Settings.Database + "StringTable.csv", rows);
         }
 
+        private static void SaveStringVariables() {
+            List<string> keys = StringVariables.Keys.ToList<string>();
+            keys.Sort();
+
+            List<string> rows = new List<string>();
+
+            rows.Add("#VERSION " + DatabaseIDForStrings);
+
+            for (int i = 0; i < keys.Count; i++) {
+                rows.Add(keys[i] + "," + StringVariables[keys[i]].Index + "," + StringVariables[keys[i]].InitialValue + "," + (StringVariables[keys[i]].Saveable ? 1 : 0));
+            }
+
+            File.WriteAllLines(Settings.Database + "StringVariables.csv", rows);
+        }
+
         private static void SaveFunctions() {
             IStorage f = StorageHelper.WriteStorage(StorageTypes.UTF);
 
@@ -162,14 +215,34 @@ namespace ToolCache.Scripting.Extensions {
             }
 
             if (s.Index == 0) {
-                s.Index = nexthighestindex;
+                s.Index = nexthighestindexint;
             }
 
-            if (s.Index >= nexthighestindex) {
-                nexthighestindex = s.Index + 1;
+            if (s.Index >= nexthighestindexint) {
+                nexthighestindexint = s.Index + 1;
             }
 
             GlobalVariables.Add(s.Name, s);
+        }
+
+        public static void AddStringVariableToDatabase(StringVariable s) {
+            if (s.lvi == null) {
+                s.lvi = new System.Windows.Forms.ListViewItem();
+                s.lvi.Checked = s.Saveable;
+                s.lvi.Text = s.Name;
+                s.lvi.Tag = s;
+                s.lvi.SubItems.Add(s.InitialValue);
+            }
+
+            if (s.Index == 0) {
+                s.Index = nexthighestindexstring;
+            }
+
+            if (s.Index >= nexthighestindexstring) {
+                nexthighestindexstring = s.Index + 1;
+            }
+
+            StringVariables.Add(s.Name, s);
         }
 
         public static void RepackVariables() {
@@ -212,7 +285,7 @@ namespace ToolCache.Scripting.Extensions {
         }
 
         public static int HighestRequiredVariableIndex() {
-            return nexthighestindex;
+            return nexthighestindexint;
         }
 
         public static void AddNewVariable(string variableName, short initialValue = 0) {

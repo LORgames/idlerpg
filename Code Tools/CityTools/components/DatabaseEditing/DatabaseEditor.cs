@@ -40,16 +40,6 @@ namespace CityTools.Components.DatabaseEditing {
             }
         }
 
-        protected override void Dispose(bool disposing) {
-            DBLibraryManager.WriteDatabase();
-
-            if (disposing && (components != null)) {
-                components.Dispose();
-            }
-
-            base.Dispose(disposing);
-        }
-
         private void listDatabases_SelectedIndexChanged(object sender, EventArgs e) {
             if (listDatabases.SelectedItem != null) {
                 CurrentDatabase = (DBLibrary)listDatabases.SelectedItem;

@@ -15,8 +15,6 @@ using CityTools.Components;
 
 namespace CityTools {
     public partial class GlobalVariableEditor : Form {
-        EventHandler addedHandler;
-        EventHandler removedHandler;
         EventHandler addedHandler2;
         EventHandler removedHandler2;
         EventHandler addedHandler3;
@@ -28,23 +26,15 @@ namespace CityTools {
             lstLibraries.DataSource = UIManager.Libraries;
             lstLibraries.DisplayMember = Name;
 
-            addedHandler = new EventHandler(new EventHandler(Variables_ItemAdded));
-            removedHandler = new EventHandler(Variables_ItemRemoved);
             addedHandler2 = new EventHandler(new EventHandler(String_ItemAdded));
             removedHandler2 = new EventHandler(String_ItemRemoved);
             addedHandler3 = new EventHandler(new EventHandler(Function_ItemAdded));
             removedHandler3 = new EventHandler(Function_ItemRemoved);
 
-            Variables.GlobalVariables.ItemAdded += addedHandler;
-            Variables.GlobalVariables.ItemRemoved += removedHandler;
             Variables.StringTable.ItemAdded += addedHandler2;
             Variables.StringTable.ItemRemoved += removedHandler2;
             Variables.FunctionTable.ItemAdded += addedHandler3;
             Variables.FunctionTable.ItemRemoved += removedHandler3;
-
-            foreach (ScriptVariable sv in Variables.GlobalVariables.Values) {
-                listVariables.Items.Add(sv.lvi);
-            }
 
             foreach (String key in Variables.StringTable.Keys) {
                 AddString(key);
@@ -55,14 +45,8 @@ namespace CityTools {
             }
         }
         private void GlobalVariableEditor_FormClosing(object sender, FormClosingEventArgs e) {
-            foreach (ListViewItem lvi in listVariables.Items) {
-                listVariables.Items.Remove(lvi);
-            }
-
             SaveFunctionIfRequired();
 
-            Variables.GlobalVariables.ItemAdded -= addedHandler;
-            Variables.GlobalVariables.ItemRemoved -= removedHandler;
             Variables.StringTable.ItemAdded -= addedHandler2;
             Variables.StringTable.ItemRemoved -= removedHandler2;
             Variables.FunctionTable.ItemAdded -= addedHandler3;
@@ -70,29 +54,6 @@ namespace CityTools {
 
             Variables.SaveDatabase();
             UIManager.WriteDatabase();
-        }
-
-        void Variables_ItemAdded(object sender, EventArgs e) {
-            if (Variables.GlobalVariables.ContainsKey(sender.ToString())) {
-                listVariables.Items.Add(Variables.GlobalVariables[sender.ToString()].lvi);
-            }
-        }
-
-        void Variables_ItemRemoved(object sender, EventArgs e) {
-            List<ListViewItem> lvis = new List<ListViewItem>();
-
-            foreach (ListViewItem lvi in listVariables.Items) {
-                if (lvi.Text == sender.ToString()) {
-                    lvis.Add(lvi);
-                }
-            }
-
-            foreach (ListViewItem lvi in lvis) {
-                listVariables.Items.Remove(lvi);
-            }
-
-            lvis.Clear();
-            lvis = null;
         }
 
         void String_ItemAdded(object sender, EventArgs e) {
@@ -133,23 +94,6 @@ namespace CityTools {
             }
         }
 
-        private void txtNewVariable_KeyDown(object sender, KeyEventArgs e) {
-            if (e.KeyCode == Keys.Enter) {
-                string newVariable = Variables.FixVariableName(txtNewVariable.Text.Trim());
-
-                ScriptVariable s = new ScriptVariable();
-                s.Name = newVariable;
-                s.InitialValue = 0;
-                s.Index = 0;
-
-                if (s.Name.Length > 0) {
-                    Variables.AddVariableToDatabase(s);
-                }
-
-                txtNewVariable.Text = "";
-            }
-        }
-
         private void txtNewFunctionName_KeyDown(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Enter) {
                 string newFunction = txtNewFunctionName.Text.Trim();
@@ -164,21 +108,6 @@ namespace CityTools {
 
                 txtNewFunctionName.Text = "";
             }
-        }
-
-        private void btnVarDeleteSelected_Click(object sender, EventArgs e) {
-            List<String> keys = new List<string>();
-
-            foreach (ListViewItem lvi in listVariables.SelectedItems) {
-                keys.Add(lvi.Text);
-            }
-
-            foreach (String key in keys) {
-                Variables.GlobalVariables.Remove(key);
-            }
-
-            keys.Clear();
-            keys = null;
         }
 
         private void txtNewStringName_KeyDown(object sender, KeyEventArgs e) {
@@ -221,19 +150,6 @@ namespace CityTools {
             if (e.SubItem == 1) {
                 listString.StartEditing(txtHiddenStringEditing, e.Item, e.SubItem);
             }
-        }
-
-        private void listVariables_SubItemClicked(object sender, Components.SubItemEventArgs e) {
-            if (e.SubItem == 1) {
-                listVariables.StartEditing(numIntegerChanger, e.Item, e.SubItem);
-            }
-        }
-
-        private void listVariables_SubItemEndEditing(object sender, Components.SubItemEndEditingEventArgs e) {
-            ScriptVariable s = (ScriptVariable)e.Item.Tag;
-
-            s.InitialValue = (short)numIntegerChanger.Value;
-            e.DisplayText = numIntegerChanger.Value.ToString();
         }
 
         private ScriptFunction currentFunction;
@@ -337,23 +253,6 @@ namespace CityTools {
 
                 toDelete.Clear();
                 toDelete = null;
-            }
-        }
-
-        private void toolStripButton1_Click(object sender, EventArgs e) {
-
-        }
-
-        private void listVariables_ItemChecked(object sender, ItemCheckedEventArgs e) {
-            if (e.Item.Tag is ScriptVariable) {
-                System.Diagnostics.Debug.WriteLine("VARIABLE=" + (e.Item.Tag as ScriptVariable).Name + " Saveable=" + e.Item.Checked);
-                (e.Item.Tag as ScriptVariable).Saveable = e.Item.Checked;
-            }
-        }
-
-        private void btnVarRepack_Click(object sender, EventArgs e) {
-            if (MessageBox.Show("This will delete the saves for all players! Are you sure you want to repack?", "Repack?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.Yes) {
-                Variables.RepackVariables();
             }
         }
     }

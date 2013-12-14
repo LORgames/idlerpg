@@ -79,11 +79,23 @@
     <Compile Include="CacheInterfaces\ToolsInterface.cs" />
     <Compile Include="Components\BufferedPaint\BufferedPainter.cs" />
     <Compile Include="Components\BufferedPaint\Interop.cs" />
+    <Compile Include="Components\DatabaseEditing\StringVariableEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\DatabaseEditing\StringVariableEditor.Designer.cs">
+      <DependentUpon>StringVariableEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Components\DatabaseEditing\DatabaseEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Components\DatabaseEditing\DatabaseEditor.Designer.cs">
       <DependentUpon>DatabaseEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\DatabaseEditing\IntegerVariableEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\DatabaseEditing\IntegerVariableEditor.Designer.cs">
+      <DependentUpon>IntegerVariableEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\FindAndReplaceDialog.cs">
       <SubType>Form</SubType>
@@ -282,8 +294,14 @@
     <EmbeddedResource Include="BuffsEditor.resx">
       <DependentUpon>BuffsEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Components\DatabaseEditing\StringVariableEditor.resx">
+      <DependentUpon>StringVariableEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Components\DatabaseEditing\DatabaseEditor.resx">
       <DependentUpon>DatabaseEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\DatabaseEditing\IntegerVariableEditor.resx">
+      <DependentUpon>IntegerVariableEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\FindAndReplaceDialog.resx">
       <DependentUpon>FindAndReplaceDialog.cs</DependentUpon>
