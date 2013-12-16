@@ -17,6 +17,8 @@ namespace CityTools.Components.DatabaseEditing {
         public IntegerVariableEditor() {
             InitializeComponent();
             
+            txtNewVariable.KeyDown += new KeyEventHandler(txtNewVariable_KeyDown);
+
             addedHandler = new EventHandler(new EventHandler(Variables_ItemAdded));
             removedHandler = new EventHandler(Variables_ItemRemoved);
             Variables.GlobalVariables.ItemAdded += addedHandler;
@@ -121,10 +123,6 @@ namespace CityTools.Components.DatabaseEditing {
             if (MessageBox.Show("This will delete the saves for all players! Are you sure you want to repack?", "Repack?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.Yes) {
                 Variables.RepackVariables();
             }
-        }
-
-        private void toolStripStatusLabel1_Click(object sender, EventArgs e) {
-
         }
     }
 }

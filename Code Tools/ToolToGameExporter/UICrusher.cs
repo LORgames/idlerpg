@@ -69,7 +69,7 @@ namespace ToolToGameExporter {
                             UITextLayer l2 = (UITextLayer)l;
 
                             try {
-                                f.AddString(l2.PrepareString(true));
+                                f.AddString(StringMagic.PrepareString(l2.Message, true));
                             } catch(Exception ex) {
                                 Processor.Errors.Add(new ProcessingError("Bad String", p.Name + ">" + e.Name + ">" + l2.Name, ex.Message));
                             }

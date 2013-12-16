@@ -17,6 +17,8 @@ namespace CityTools.Components.DatabaseEditing {
         public StringVariableEditor() {
             InitializeComponent();
             
+            txtNewVariable.KeyDown += new KeyEventHandler(txtNewVariable_KeyDown);
+
             addedHandler = new EventHandler(new EventHandler(Variables_ItemAdded));
             removedHandler = new EventHandler(Variables_ItemRemoved);
             Variables.StringVariables.ItemAdded += addedHandler;

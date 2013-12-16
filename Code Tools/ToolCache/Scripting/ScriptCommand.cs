@@ -296,11 +296,7 @@ namespace ToolCache.Scripting {
                             } else if(strM.Success) {
                                 AdditionalBytecode.Add(0x1); //Encoded String
 
-                                //TODO: Move that function elsewhere so don't waste so much memory!
-                                UITextLayer x = new UITextLayer();
-                                x.Message = strM.Groups[1].Value;
-                                
-                                Byte[] encoded = Encoding.UTF8.GetBytes(x.PrepareString(true));
+                                Byte[] encoded = Encoding.UTF8.GetBytes(StringMagic.PrepareString(strM.Groups[1].Value, true));
                                 AdditionalBytecode.Add((ushort)encoded.Length);
 
                                 for(int z = 0; z < encoded.Length; z = z+2) {

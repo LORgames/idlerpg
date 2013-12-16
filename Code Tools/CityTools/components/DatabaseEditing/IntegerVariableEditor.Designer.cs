@@ -17,7 +17,7 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.txtNewVariable = new System.Windows.Forms.ToolStripTextBox();
             this.btnDelete = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.btnVarRepack = new System.Windows.Forms.ToolStripStatusLabel();
             this.numIntegerChanger = new System.Windows.Forms.NumericUpDown();
             this.listVariables = new CityTools.Components.ListViewEx();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -31,7 +31,7 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSplitButton1,
             this.btnDelete,
-            this.toolStripStatusLabel1});
+            this.btnVarRepack});
             this.statusStrip1.Location = new System.Drawing.Point(0, 397);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(677, 22);
@@ -68,12 +68,13 @@
             this.btnDelete.Text = "Delete";
             this.btnDelete.Click += new System.EventHandler(this.btnVarDeleteSelected_Click);
             // 
-            // toolStripStatusLabel1
+            // btnVarRepack
             // 
-            this.toolStripStatusLabel1.Image = global::CityTools.Properties.Resources.arrow_switch;
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(61, 17);
-            this.toolStripStatusLabel1.Text = "Repack";
+            this.btnVarRepack.Image = global::CityTools.Properties.Resources.arrow_switch;
+            this.btnVarRepack.Name = "btnVarRepack";
+            this.btnVarRepack.Size = new System.Drawing.Size(61, 17);
+            this.btnVarRepack.Text = "Repack";
+            this.btnVarRepack.Click += new System.EventHandler(this.btnVarRepack_Click);
             // 
             // numIntegerChanger
             // 
@@ -115,7 +116,7 @@
             this.listVariables.SubItemEndEditing += new CityTools.Components.SubItemEndEditingEventHandler(this.listVariables_SubItemEndEditing);
             this.listVariables.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.listVariables_ItemChecked);
             // 
-            // Name
+            // columnHeader1
             // 
             this.columnHeader1.Text = "Variable Name";
             this.columnHeader1.Width = 200;
@@ -150,7 +151,7 @@
         private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripTextBox txtNewVariable;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel btnVarRepack;
         private System.Windows.Forms.ToolStripStatusLabel btnDelete;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;

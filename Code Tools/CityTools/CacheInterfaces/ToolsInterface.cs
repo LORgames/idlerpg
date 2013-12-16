@@ -73,6 +73,7 @@ namespace CityTools.CacheInterfaces {
         private static void OpenTileEditor() {
             TileEditor t = new TileEditor();
             t.ShowDialog(MainWindow.instance);
+            t.Dispose();
             TileInterface.ForceUpdate();
         }
 
@@ -80,58 +81,69 @@ namespace CityTools.CacheInterfaces {
             ObjectEditor t = new ObjectEditor();
             t.OnSave += new ObjectEditor.SaveEventHandler(MainWindow.instance.ObjectTemplateSaved);
             t.ShowDialog(MainWindow.instance);
+            t.Dispose();
             ObjectInterface.ReloadAll();
         }
 
         private static void OpenElementEditor() {
             ElementEditor t = new ElementEditor();
             t.ShowDialog(MainWindow.instance);
+            t.Dispose();
         }
 
         private static void OpenEquipmentEditor() {
             EquipmentEditor t = new EquipmentEditor();
             t.ShowDialog(MainWindow.instance);
+            t.Dispose();
         }
 
         private static void OpenItemEditor() {
             ItemEditor t = new ItemEditor();
             t.ShowDialog(MainWindow.instance);
+            t.Dispose();
         }
 
         private static void OpenCritterEditor() {
             CritterEditor t = new CritterEditor();
             t.ShowDialog(MainWindow.instance);
+            t.Dispose();
         }
 
         private static void OpenSoundEditor() {
             SoundEditor t = new SoundEditor();
             t.ShowDialog(MainWindow.instance);
             SoundInterface.PopulateList();
+            t.Dispose();
         }
 
         internal static void OpenWorldEditor() {
             WorldEditor t = new WorldEditor();
             t.ShowDialog(MainWindow.instance);
+            t.Dispose();
         }
 
         private static void OpenTileMerger() {
             TileMergeDialog t = new TileMergeDialog();
             t.ShowDialog(MainWindow.instance);
+            t.Dispose();
         }
 
         private static void OpenShadowEditor() {
             ShadowCreator t = new ShadowCreator();
             t.ShowDialog();
+            t.Dispose();
         }
 
         private static void OpenUIEditor() {
             UIEditor t = new UIEditor();
             t.ShowDialog();
+            t.Dispose();
         }
 
         private static void OpenEffectEditor() {
             EffectEditor t = new EffectEditor();
             t.ShowDialog();
+            t.Dispose();
         }
 
         private static void OpenSaveEditor() {
@@ -142,22 +154,26 @@ namespace CityTools.CacheInterfaces {
         private static void OpenPortraitEditor() {
             PortraitEditor t = new PortraitEditor();
             t.ShowDialog();
+            t.Dispose();
         }
 
         private static void OpenGlobalSettingsEditor() {
             GlobalSettingsEditor t = new GlobalSettingsEditor();
             t.ShowDialog(MainWindow.instance);
+            t.Dispose();
         }
 
         private static void OpenFactionEditor() {
             FactionEditor t = new FactionEditor();
             t.ShowDialog(MainWindow.instance);
             SpawnRegionInterface.UpdateSpawnRegionFactions();
+            t.Dispose();
         }
 
         private static void OpenBuffEditor() {
             BuffsEditor t = new BuffsEditor();
             t.ShowDialog(MainWindow.instance);
+            t.Dispose();
         }
 
         private static void ExportAndRun() {

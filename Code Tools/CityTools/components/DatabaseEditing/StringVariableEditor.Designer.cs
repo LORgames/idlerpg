@@ -103,6 +103,7 @@
             this.txtStringChanger.Name = "txtStringChanger";
             this.txtStringChanger.Size = new System.Drawing.Size(180, 20);
             this.txtStringChanger.TabIndex = 2;
+            this.txtStringChanger.Visible = false;
             // 
             // StringVariableEditor
             // 

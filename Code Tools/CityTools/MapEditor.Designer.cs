@@ -32,12 +32,48 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.main_splitter = new System.Windows.Forms.SplitContainer();
             this.mapViewPanel_c = new System.Windows.Forms.Panel();
+            this.mapViewPanel = new System.Windows.Forms.PictureBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.btnGlobalSettingsEditor = new System.Windows.Forms.ToolStripButton();
             this.cbMapPieces = new System.Windows.Forms.ToolStripComboBox();
+            this.btnNewPiece = new System.Windows.Forms.ToolStripButton();
+            this.btnDeletePiece = new System.Windows.Forms.ToolStripButton();
+            this.btnDuplicate = new System.Windows.Forms.ToolStripButton();
+            this.btnSavePiece = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btnOtherToolsMenu = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btnCritterEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnShadowTool = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnFactionEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnEffectEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnEquipmentEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnItemEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnObjectEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnPortraitEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSaveEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSoundEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnTileEditorTool = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnTileMerger = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnUIEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnWorldEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnBuffEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnOpenAdvanced = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnExport = new System.Windows.Forms.ToolStripSplitButton();
+            this.ckbExportDebugRender = new System.Windows.Forms.ToolStripMenuItem();
+            this.ckbExportShowFPS = new System.Windows.Forms.ToolStripMenuItem();
+            this.ckbExportMusicEnabled = new System.Windows.Forms.ToolStripMenuItem();
+            this.cbExportSave = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnViewMenu = new System.Windows.Forms.ToolStripDropDownButton();
+            this.mnuShowGrids = new System.Windows.Forms.ToolStripMenuItem();
+            this.ckbShowTileGrid = new System.Windows.Forms.ToolStripMenuItem();
+            this.ckbShowObjectBases = new System.Windows.Forms.ToolStripMenuItem();
+            this.ckbShowTileBases = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ckbViewportEnabled = new System.Windows.Forms.ToolStripMenuItem();
+            this.txtViewportWidth = new System.Windows.Forms.ToolStripTextBox();
+            this.txtViewportHeight = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.lblHighlightedCell = new System.Windows.Forms.ToolStripLabel();
             this.toolpanel_splitter = new System.Windows.Forms.SplitContainer();
@@ -67,6 +103,7 @@
             this.tabPalette = new System.Windows.Forms.TabPage();
             this.listObjects = new System.Windows.Forms.ListView();
             this.tabMapRegions = new System.Windows.Forms.TabPage();
+            this.btnDeleteSelectedCritters = new System.Windows.Forms.Button();
             this.cbSpawnRegionFaction = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.scriptScriptRegion = new CityTools.Components.ScriptBox();
@@ -76,6 +113,8 @@
             this.txtScriptRegionName = new System.Windows.Forms.TextBox();
             this.ckbDrawScriptRegions = new System.Windows.Forms.CheckBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.btnScriptRegionDelete = new System.Windows.Forms.Button();
+            this.btnScriptRegionAdd = new System.Windows.Forms.Button();
             this.listScriptRegions = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnNormalizeSpawnRegion = new System.Windows.Forms.Button();
@@ -96,65 +135,29 @@
             this.txtSpawnName = new System.Windows.Forms.TextBox();
             this.ckbDrawSpawns = new System.Windows.Forms.CheckBox();
             this.label14 = new System.Windows.Forms.Label();
+            this.btnSpawnDelete = new System.Windows.Forms.Button();
+            this.btnSpawnAdd = new System.Windows.Forms.Button();
             this.listSpawns = new System.Windows.Forms.ListBox();
             this.label11 = new System.Windows.Forms.Label();
             this.btnPortalEntry = new System.Windows.Forms.Button();
             this.txtPortalName = new System.Windows.Forms.TextBox();
             this.ckbDrawPortals = new System.Windows.Forms.CheckBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.btnPortalDelete = new System.Windows.Forms.Button();
+            this.btnPortalAdd = new System.Windows.Forms.Button();
             this.listPortals = new System.Windows.Forms.ListBox();
             this.tabMapScript = new System.Windows.Forms.TabPage();
             this.scriptMap = new CityTools.Components.ScriptBox();
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.timerRedrawAll = new System.Windows.Forms.Timer(this.components);
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.mapViewPanel = new System.Windows.Forms.PictureBox();
-            this.btnGlobalSettingsEditor = new System.Windows.Forms.ToolStripButton();
-            this.btnNewPiece = new System.Windows.Forms.ToolStripButton();
-            this.btnDeletePiece = new System.Windows.Forms.ToolStripButton();
-            this.btnDuplicate = new System.Windows.Forms.ToolStripButton();
-            this.btnSavePiece = new System.Windows.Forms.ToolStripButton();
-            this.btnCritterEditor = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnShadowTool = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnFactionEditor = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnEffectEditor = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnEquipmentEditor = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnItemEditor = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnObjectEditor = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnPortraitEditor = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnSaveEditor = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnSoundEditor = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnTileEditorTool = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnTileMerger = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnUIEditor = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnWorldEditor = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnBuffEditor = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnExport = new System.Windows.Forms.ToolStripSplitButton();
-            this.ckbExportDebugRender = new System.Windows.Forms.ToolStripMenuItem();
-            this.ckbExportShowFPS = new System.Windows.Forms.ToolStripMenuItem();
-            this.ckbExportMusicEnabled = new System.Windows.Forms.ToolStripMenuItem();
-            this.cbExportSave = new System.Windows.Forms.ToolStripComboBox();
-            this.btnViewMenu = new System.Windows.Forms.ToolStripDropDownButton();
-            this.mnuShowGrids = new System.Windows.Forms.ToolStripMenuItem();
-            this.ckbShowTileGrid = new System.Windows.Forms.ToolStripMenuItem();
-            this.ckbShowObjectBases = new System.Windows.Forms.ToolStripMenuItem();
-            this.ckbShowTileBases = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ckbViewportEnabled = new System.Windows.Forms.ToolStripMenuItem();
-            this.txtViewportWidth = new System.Windows.Forms.ToolStripTextBox();
-            this.txtViewportHeight = new System.Windows.Forms.ToolStripTextBox();
-            this.btnDeleteSelectedCritters = new System.Windows.Forms.Button();
-            this.btnScriptRegionDelete = new System.Windows.Forms.Button();
-            this.btnScriptRegionAdd = new System.Windows.Forms.Button();
-            this.btnSpawnDelete = new System.Windows.Forms.Button();
-            this.btnSpawnAdd = new System.Windows.Forms.Button();
-            this.btnPortalDelete = new System.Windows.Forms.Button();
-            this.btnPortalAdd = new System.Windows.Forms.Button();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.main_splitter)).BeginInit();
             this.main_splitter.Panel1.SuspendLayout();
             this.main_splitter.Panel2.SuspendLayout();
             this.main_splitter.SuspendLayout();
             this.mapViewPanel_c.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mapViewPanel)).BeginInit();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.toolpanel_splitter)).BeginInit();
             this.toolpanel_splitter.Panel2.SuspendLayout();
@@ -171,7 +174,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numSpawnTimer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSpawnMax)).BeginInit();
             this.tabMapScript.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mapViewPanel)).BeginInit();
             this.SuspendLayout();
             // 
             // main_splitter
@@ -203,10 +205,26 @@
             this.mapViewPanel_c.Size = new System.Drawing.Size(605, 811);
             this.mapViewPanel_c.TabIndex = 0;
             // 
+            // mapViewPanel
+            // 
+            this.mapViewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mapViewPanel.Location = new System.Drawing.Point(0, 25);
+            this.mapViewPanel.Name = "mapViewPanel";
+            this.mapViewPanel.Size = new System.Drawing.Size(605, 786);
+            this.mapViewPanel.TabIndex = 0;
+            this.mapViewPanel.TabStop = false;
+            this.mapViewPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.mapViewPanel_Paint);
+            this.mapViewPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.drawPanel_MouseDown);
+            this.mapViewPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.drawPanel_MouseMove);
+            this.mapViewPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.drawPanel_MouseUp);
+            this.mapViewPanel.Resize += new System.EventHandler(this.mapViewPanel_Resize);
+            // 
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnGlobalSettingsEditor,
+            this.btnOpenAdvanced,
+            this.toolStripSeparator5,
             this.cbMapPieces,
             this.btnNewPiece,
             this.btnDeletePiece,
@@ -226,10 +244,59 @@
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // btnGlobalSettingsEditor
+            // 
+            this.btnGlobalSettingsEditor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnGlobalSettingsEditor.Image = global::CityTools.Properties.Resources.cog;
+            this.btnGlobalSettingsEditor.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnGlobalSettingsEditor.Name = "btnGlobalSettingsEditor";
+            this.btnGlobalSettingsEditor.Size = new System.Drawing.Size(23, 22);
+            this.btnGlobalSettingsEditor.Text = "Settings (G)";
+            // 
             // cbMapPieces
             // 
             this.cbMapPieces.Name = "cbMapPieces";
             this.cbMapPieces.Size = new System.Drawing.Size(121, 25);
+            // 
+            // btnNewPiece
+            // 
+            this.btnNewPiece.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnNewPiece.Image = ((System.Drawing.Image)(resources.GetObject("btnNewPiece.Image")));
+            this.btnNewPiece.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnNewPiece.Name = "btnNewPiece";
+            this.btnNewPiece.Size = new System.Drawing.Size(23, 22);
+            this.btnNewPiece.Text = "New Map Piece";
+            this.btnNewPiece.Click += new System.EventHandler(this.newPieceBtn_Click);
+            // 
+            // btnDeletePiece
+            // 
+            this.btnDeletePiece.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnDeletePiece.Image = ((System.Drawing.Image)(resources.GetObject("btnDeletePiece.Image")));
+            this.btnDeletePiece.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnDeletePiece.Name = "btnDeletePiece";
+            this.btnDeletePiece.Size = new System.Drawing.Size(23, 22);
+            this.btnDeletePiece.Text = "Delete Piece";
+            this.btnDeletePiece.Click += new System.EventHandler(this.deleteBtn_Click);
+            // 
+            // btnDuplicate
+            // 
+            this.btnDuplicate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnDuplicate.Image = ((System.Drawing.Image)(resources.GetObject("btnDuplicate.Image")));
+            this.btnDuplicate.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnDuplicate.Name = "btnDuplicate";
+            this.btnDuplicate.Size = new System.Drawing.Size(23, 22);
+            this.btnDuplicate.Text = "Duplicate Piece";
+            this.btnDuplicate.Click += new System.EventHandler(this.duplicateBtn_Click);
+            // 
+            // btnSavePiece
+            // 
+            this.btnSavePiece.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnSavePiece.Image = ((System.Drawing.Image)(resources.GetObject("btnSavePiece.Image")));
+            this.btnSavePiece.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSavePiece.Name = "btnSavePiece";
+            this.btnSavePiece.Size = new System.Drawing.Size(23, 22);
+            this.btnSavePiece.Text = "Save Map Piece";
+            this.btnSavePiece.Click += new System.EventHandler(this.savePieceClick);
             // 
             // toolStripSeparator1
             // 
@@ -258,15 +325,256 @@
             this.btnOtherToolsMenu.Size = new System.Drawing.Size(82, 22);
             this.btnOtherToolsMenu.Text = "Other Tools";
             // 
+            // btnCritterEditor
+            // 
+            this.btnCritterEditor.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnShadowTool,
+            this.btnFactionEditor});
+            this.btnCritterEditor.Image = global::CityTools.Properties.Resources.Monster;
+            this.btnCritterEditor.Name = "btnCritterEditor";
+            this.btnCritterEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnCritterEditor.Text = "Critter Editor (C)";
+            // 
+            // btnShadowTool
+            // 
+            this.btnShadowTool.Name = "btnShadowTool";
+            this.btnShadowTool.Size = new System.Drawing.Size(167, 22);
+            this.btnShadowTool.Text = "Shadow Tool";
+            // 
+            // btnFactionEditor
+            // 
+            this.btnFactionEditor.Name = "btnFactionEditor";
+            this.btnFactionEditor.Size = new System.Drawing.Size(167, 22);
+            this.btnFactionEditor.Text = "Faction Editor (Q)";
+            // 
+            // btnEffectEditor
+            // 
+            this.btnEffectEditor.Image = global::CityTools.Properties.Resources.bomb;
+            this.btnEffectEditor.Name = "btnEffectEditor";
+            this.btnEffectEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnEffectEditor.Text = "Effect Editor (F)";
+            // 
+            // btnEquipmentEditor
+            // 
+            this.btnEquipmentEditor.Image = global::CityTools.Properties.Resources.mouse;
+            this.btnEquipmentEditor.Name = "btnEquipmentEditor";
+            this.btnEquipmentEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnEquipmentEditor.Text = "Equipment Editor (E)";
+            // 
+            // btnItemEditor
+            // 
+            this.btnItemEditor.Image = global::CityTools.Properties.Resources.bell;
+            this.btnItemEditor.Name = "btnItemEditor";
+            this.btnItemEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnItemEditor.Text = "Item Editor (I)";
+            // 
+            // btnObjectEditor
+            // 
+            this.btnObjectEditor.Image = global::CityTools.Properties.Resources.attach;
+            this.btnObjectEditor.Name = "btnObjectEditor";
+            this.btnObjectEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnObjectEditor.Text = "Object Template Editor (O)";
+            // 
+            // btnPortraitEditor
+            // 
+            this.btnPortraitEditor.Image = global::CityTools.Properties.Resources.Humanoid;
+            this.btnPortraitEditor.Name = "btnPortraitEditor";
+            this.btnPortraitEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnPortraitEditor.Text = "Portrait Editor (P)";
+            // 
+            // btnSaveEditor
+            // 
+            this.btnSaveEditor.Image = global::CityTools.Properties.Resources.disk;
+            this.btnSaveEditor.Name = "btnSaveEditor";
+            this.btnSaveEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnSaveEditor.Text = "Save File Editor (V)";
+            // 
+            // btnSoundEditor
+            // 
+            this.btnSoundEditor.Image = global::CityTools.Properties.Resources.music;
+            this.btnSoundEditor.Name = "btnSoundEditor";
+            this.btnSoundEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnSoundEditor.Text = "Sound Editor (Z)";
+            // 
+            // btnTileEditorTool
+            // 
+            this.btnTileEditorTool.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnTileMerger});
+            this.btnTileEditorTool.Image = global::CityTools.Properties.Resources.application_double;
+            this.btnTileEditorTool.Name = "btnTileEditorTool";
+            this.btnTileEditorTool.Size = new System.Drawing.Size(216, 22);
+            this.btnTileEditorTool.Text = "Tile Editor (T)";
+            // 
+            // btnTileMerger
+            // 
+            this.btnTileMerger.Name = "btnTileMerger";
+            this.btnTileMerger.Size = new System.Drawing.Size(134, 22);
+            this.btnTileMerger.Text = "Tile Merger";
+            // 
+            // btnUIEditor
+            // 
+            this.btnUIEditor.Image = global::CityTools.Properties.Resources.application_view_gallery;
+            this.btnUIEditor.Name = "btnUIEditor";
+            this.btnUIEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnUIEditor.Text = "UI Editor (U)";
+            // 
+            // btnWorldEditor
+            // 
+            this.btnWorldEditor.Image = global::CityTools.Properties.Resources.world;
+            this.btnWorldEditor.Name = "btnWorldEditor";
+            this.btnWorldEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnWorldEditor.Text = "World Editor (X)";
+            // 
+            // btnBuffEditor
+            // 
+            this.btnBuffEditor.Image = global::CityTools.Properties.Resources.attach1;
+            this.btnBuffEditor.Name = "btnBuffEditor";
+            this.btnBuffEditor.Size = new System.Drawing.Size(216, 22);
+            this.btnBuffEditor.Text = "Buff Editor (B)";
+            // 
+            // btnOpenAdvanced
+            // 
+            this.btnOpenAdvanced.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnOpenAdvanced.Image = global::CityTools.Properties.Resources.text_list_numbers;
+            this.btnOpenAdvanced.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOpenAdvanced.Name = "btnOpenAdvanced";
+            this.btnOpenAdvanced.Size = new System.Drawing.Size(23, 22);
+            this.btnOpenAdvanced.Text = "Advanced Data Panel";
+            this.btnOpenAdvanced.Click += new System.EventHandler(this.btnOpenAdvanced_Click);
+            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
+            // btnExport
+            // 
+            this.btnExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ckbExportDebugRender,
+            this.ckbExportShowFPS,
+            this.ckbExportMusicEnabled,
+            this.cbExportSave});
+            this.btnExport.Image = global::CityTools.Properties.Resources.bug;
+            this.btnExport.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(84, 22);
+            this.btnExport.Text = "Test (F5)";
+            // 
+            // ckbExportDebugRender
+            // 
+            this.ckbExportDebugRender.CheckOnClick = true;
+            this.ckbExportDebugRender.Name = "ckbExportDebugRender";
+            this.ckbExportDebugRender.Size = new System.Drawing.Size(181, 22);
+            this.ckbExportDebugRender.Text = "Debug Render";
+            this.ckbExportDebugRender.ToolTipText = "Draw Debug Rectangles?";
+            // 
+            // ckbExportShowFPS
+            // 
+            this.ckbExportShowFPS.Checked = true;
+            this.ckbExportShowFPS.CheckOnClick = true;
+            this.ckbExportShowFPS.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ckbExportShowFPS.Name = "ckbExportShowFPS";
+            this.ckbExportShowFPS.Size = new System.Drawing.Size(181, 22);
+            this.ckbExportShowFPS.Text = "Show FPS";
+            this.ckbExportShowFPS.ToolTipText = "Show an FPS Display in the Top Left corner?";
+            // 
+            // ckbExportMusicEnabled
+            // 
+            this.ckbExportMusicEnabled.Checked = true;
+            this.ckbExportMusicEnabled.CheckOnClick = true;
+            this.ckbExportMusicEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ckbExportMusicEnabled.Name = "ckbExportMusicEnabled";
+            this.ckbExportMusicEnabled.Size = new System.Drawing.Size(181, 22);
+            this.ckbExportMusicEnabled.Text = "Music Enabled";
+            // 
+            // cbExportSave
+            // 
+            this.cbExportSave.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbExportSave.Items.AddRange(new object[] {
+            "No Save"});
+            this.cbExportSave.Name = "cbExportSave";
+            this.cbExportSave.Size = new System.Drawing.Size(121, 23);
+            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnViewMenu
+            // 
+            this.btnViewMenu.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btnViewMenu.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnViewMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuShowGrids,
+            this.viewportToolStripMenuItem});
+            this.btnViewMenu.Image = ((System.Drawing.Image)(resources.GetObject("btnViewMenu.Image")));
+            this.btnViewMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnViewMenu.Name = "btnViewMenu";
+            this.btnViewMenu.Size = new System.Drawing.Size(45, 22);
+            this.btnViewMenu.Text = "View";
+            // 
+            // mnuShowGrids
+            // 
+            this.mnuShowGrids.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ckbShowTileGrid,
+            this.ckbShowObjectBases,
+            this.ckbShowTileBases});
+            this.mnuShowGrids.Name = "mnuShowGrids";
+            this.mnuShowGrids.Size = new System.Drawing.Size(121, 22);
+            this.mnuShowGrids.Text = "Grids";
+            // 
+            // ckbShowTileGrid
+            // 
+            this.ckbShowTileGrid.CheckOnClick = true;
+            this.ckbShowTileGrid.Name = "ckbShowTileGrid";
+            this.ckbShowTileGrid.Size = new System.Drawing.Size(190, 22);
+            this.ckbShowTileGrid.Text = "Show Outlines (1)";
+            // 
+            // ckbShowObjectBases
+            // 
+            this.ckbShowObjectBases.CheckOnClick = true;
+            this.ckbShowObjectBases.Name = "ckbShowObjectBases";
+            this.ckbShowObjectBases.Size = new System.Drawing.Size(190, 22);
+            this.ckbShowObjectBases.Text = "Show Object Bases (2)";
+            // 
+            // ckbShowTileBases
+            // 
+            this.ckbShowTileBases.CheckOnClick = true;
+            this.ckbShowTileBases.Name = "ckbShowTileBases";
+            this.ckbShowTileBases.Size = new System.Drawing.Size(190, 22);
+            this.ckbShowTileBases.Text = "Show Tile Bases (3)";
+            // 
+            // viewportToolStripMenuItem
+            // 
+            this.viewportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ckbViewportEnabled,
+            this.txtViewportWidth,
+            this.txtViewportHeight});
+            this.viewportToolStripMenuItem.Name = "viewportToolStripMenuItem";
+            this.viewportToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.viewportToolStripMenuItem.Text = "Viewport";
+            // 
+            // ckbViewportEnabled
+            // 
+            this.ckbViewportEnabled.CheckOnClick = true;
+            this.ckbViewportEnabled.Name = "ckbViewportEnabled";
+            this.ckbViewportEnabled.Size = new System.Drawing.Size(160, 22);
+            this.ckbViewportEnabled.Text = "Enabled";
+            // 
+            // txtViewportWidth
+            // 
+            this.txtViewportWidth.AutoToolTip = true;
+            this.txtViewportWidth.Name = "txtViewportWidth";
+            this.txtViewportWidth.Size = new System.Drawing.Size(100, 23);
+            this.txtViewportWidth.Text = "800";
+            this.txtViewportWidth.ToolTipText = "Viewport Width";
+            // 
+            // txtViewportHeight
+            // 
+            this.txtViewportHeight.Name = "txtViewportHeight";
+            this.txtViewportHeight.Size = new System.Drawing.Size(100, 23);
+            this.txtViewportHeight.Text = "600";
+            this.txtViewportHeight.ToolTipText = "Viewport Height";
             // 
             // toolStripSeparator4
             // 
@@ -637,6 +945,16 @@
             this.tabMapRegions.Text = "Regions";
             this.tabMapRegions.UseVisualStyleBackColor = true;
             // 
+            // btnDeleteSelectedCritters
+            // 
+            this.btnDeleteSelectedCritters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDeleteSelectedCritters.Image = global::CityTools.Properties.Resources.delete;
+            this.btnDeleteSelectedCritters.Location = new System.Drawing.Point(262, 297);
+            this.btnDeleteSelectedCritters.Name = "btnDeleteSelectedCritters";
+            this.btnDeleteSelectedCritters.Size = new System.Drawing.Size(23, 23);
+            this.btnDeleteSelectedCritters.TabIndex = 89;
+            this.btnDeleteSelectedCritters.UseVisualStyleBackColor = true;
+            // 
             // cbSpawnRegionFaction
             // 
             this.cbSpawnRegionFaction.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
@@ -724,6 +1042,26 @@
             this.label8.Size = new System.Drawing.Size(76, 13);
             this.label8.TabIndex = 76;
             this.label8.Text = "Script Regions";
+            // 
+            // btnScriptRegionDelete
+            // 
+            this.btnScriptRegionDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnScriptRegionDelete.Image = global::CityTools.Properties.Resources.delete;
+            this.btnScriptRegionDelete.Location = new System.Drawing.Point(262, 470);
+            this.btnScriptRegionDelete.Name = "btnScriptRegionDelete";
+            this.btnScriptRegionDelete.Size = new System.Drawing.Size(23, 23);
+            this.btnScriptRegionDelete.TabIndex = 78;
+            this.btnScriptRegionDelete.UseVisualStyleBackColor = true;
+            // 
+            // btnScriptRegionAdd
+            // 
+            this.btnScriptRegionAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnScriptRegionAdd.Image = global::CityTools.Properties.Resources.add;
+            this.btnScriptRegionAdd.Location = new System.Drawing.Point(234, 470);
+            this.btnScriptRegionAdd.Name = "btnScriptRegionAdd";
+            this.btnScriptRegionAdd.Size = new System.Drawing.Size(23, 23);
+            this.btnScriptRegionAdd.TabIndex = 77;
+            this.btnScriptRegionAdd.UseVisualStyleBackColor = true;
             // 
             // listScriptRegions
             // 
@@ -950,6 +1288,26 @@
             this.label14.TabIndex = 56;
             this.label14.Text = "Spawns";
             // 
+            // btnSpawnDelete
+            // 
+            this.btnSpawnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSpawnDelete.Image = global::CityTools.Properties.Resources.delete;
+            this.btnSpawnDelete.Location = new System.Drawing.Point(264, 143);
+            this.btnSpawnDelete.Name = "btnSpawnDelete";
+            this.btnSpawnDelete.Size = new System.Drawing.Size(23, 23);
+            this.btnSpawnDelete.TabIndex = 58;
+            this.btnSpawnDelete.UseVisualStyleBackColor = true;
+            // 
+            // btnSpawnAdd
+            // 
+            this.btnSpawnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSpawnAdd.Image = global::CityTools.Properties.Resources.add;
+            this.btnSpawnAdd.Location = new System.Drawing.Point(235, 143);
+            this.btnSpawnAdd.Name = "btnSpawnAdd";
+            this.btnSpawnAdd.Size = new System.Drawing.Size(23, 23);
+            this.btnSpawnAdd.TabIndex = 57;
+            this.btnSpawnAdd.UseVisualStyleBackColor = true;
+            // 
             // listSpawns
             // 
             this.listSpawns.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
@@ -1009,6 +1367,26 @@
             this.label10.TabIndex = 30;
             this.label10.Text = "Portals";
             // 
+            // btnPortalDelete
+            // 
+            this.btnPortalDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPortalDelete.Image = global::CityTools.Properties.Resources.delete;
+            this.btnPortalDelete.Location = new System.Drawing.Point(263, 22);
+            this.btnPortalDelete.Name = "btnPortalDelete";
+            this.btnPortalDelete.Size = new System.Drawing.Size(23, 23);
+            this.btnPortalDelete.TabIndex = 32;
+            this.btnPortalDelete.UseVisualStyleBackColor = true;
+            // 
+            // btnPortalAdd
+            // 
+            this.btnPortalAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPortalAdd.Image = global::CityTools.Properties.Resources.add;
+            this.btnPortalAdd.Location = new System.Drawing.Point(234, 22);
+            this.btnPortalAdd.Name = "btnPortalAdd";
+            this.btnPortalAdd.Size = new System.Drawing.Size(23, 23);
+            this.btnPortalAdd.TabIndex = 31;
+            this.btnPortalAdd.UseVisualStyleBackColor = true;
+            // 
             // listPortals
             // 
             this.listPortals.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
@@ -1057,369 +1435,10 @@
             this.colorDialog.FullOpen = true;
             this.colorDialog.SolidColorOnly = true;
             // 
-            // mapViewPanel
+            // toolStripSeparator5
             // 
-            this.mapViewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mapViewPanel.Location = new System.Drawing.Point(0, 25);
-            this.mapViewPanel.Name = "mapViewPanel";
-            this.mapViewPanel.Size = new System.Drawing.Size(605, 786);
-            this.mapViewPanel.TabIndex = 0;
-            this.mapViewPanel.TabStop = false;
-            this.mapViewPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.mapViewPanel_Paint);
-            this.mapViewPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.drawPanel_MouseDown);
-            this.mapViewPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.drawPanel_MouseMove);
-            this.mapViewPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.drawPanel_MouseUp);
-            this.mapViewPanel.Resize += new System.EventHandler(this.mapViewPanel_Resize);
-            // 
-            // btnGlobalSettingsEditor
-            // 
-            this.btnGlobalSettingsEditor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnGlobalSettingsEditor.Image = global::CityTools.Properties.Resources.cog;
-            this.btnGlobalSettingsEditor.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnGlobalSettingsEditor.Name = "btnGlobalSettingsEditor";
-            this.btnGlobalSettingsEditor.Size = new System.Drawing.Size(23, 22);
-            this.btnGlobalSettingsEditor.Text = "Settings (G)";
-            // 
-            // btnNewPiece
-            // 
-            this.btnNewPiece.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnNewPiece.Image = ((System.Drawing.Image)(resources.GetObject("btnNewPiece.Image")));
-            this.btnNewPiece.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnNewPiece.Name = "btnNewPiece";
-            this.btnNewPiece.Size = new System.Drawing.Size(23, 22);
-            this.btnNewPiece.Text = "New Map Piece";
-            this.btnNewPiece.Click += new System.EventHandler(this.newPieceBtn_Click);
-            // 
-            // btnDeletePiece
-            // 
-            this.btnDeletePiece.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnDeletePiece.Image = ((System.Drawing.Image)(resources.GetObject("btnDeletePiece.Image")));
-            this.btnDeletePiece.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnDeletePiece.Name = "btnDeletePiece";
-            this.btnDeletePiece.Size = new System.Drawing.Size(23, 22);
-            this.btnDeletePiece.Text = "Delete Piece";
-            this.btnDeletePiece.Click += new System.EventHandler(this.deleteBtn_Click);
-            // 
-            // btnDuplicate
-            // 
-            this.btnDuplicate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnDuplicate.Image = ((System.Drawing.Image)(resources.GetObject("btnDuplicate.Image")));
-            this.btnDuplicate.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnDuplicate.Name = "btnDuplicate";
-            this.btnDuplicate.Size = new System.Drawing.Size(23, 22);
-            this.btnDuplicate.Text = "Duplicate Piece";
-            this.btnDuplicate.Click += new System.EventHandler(this.duplicateBtn_Click);
-            // 
-            // btnSavePiece
-            // 
-            this.btnSavePiece.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnSavePiece.Image = ((System.Drawing.Image)(resources.GetObject("btnSavePiece.Image")));
-            this.btnSavePiece.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSavePiece.Name = "btnSavePiece";
-            this.btnSavePiece.Size = new System.Drawing.Size(23, 22);
-            this.btnSavePiece.Text = "Save Map Piece";
-            this.btnSavePiece.Click += new System.EventHandler(this.savePieceClick);
-            // 
-            // btnCritterEditor
-            // 
-            this.btnCritterEditor.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnShadowTool,
-            this.btnFactionEditor});
-            this.btnCritterEditor.Image = global::CityTools.Properties.Resources.Monster;
-            this.btnCritterEditor.Name = "btnCritterEditor";
-            this.btnCritterEditor.Size = new System.Drawing.Size(216, 22);
-            this.btnCritterEditor.Text = "Critter Editor (C)";
-            // 
-            // btnShadowTool
-            // 
-            this.btnShadowTool.Name = "btnShadowTool";
-            this.btnShadowTool.Size = new System.Drawing.Size(167, 22);
-            this.btnShadowTool.Text = "Shadow Tool";
-            // 
-            // btnFactionEditor
-            // 
-            this.btnFactionEditor.Name = "btnFactionEditor";
-            this.btnFactionEditor.Size = new System.Drawing.Size(167, 22);
-            this.btnFactionEditor.Text = "Faction Editor (Q)";
-            // 
-            // btnEffectEditor
-            // 
-            this.btnEffectEditor.Image = global::CityTools.Properties.Resources.bomb;
-            this.btnEffectEditor.Name = "btnEffectEditor";
-            this.btnEffectEditor.Size = new System.Drawing.Size(216, 22);
-            this.btnEffectEditor.Text = "Effect Editor (F)";
-            // 
-            // btnEquipmentEditor
-            // 
-            this.btnEquipmentEditor.Image = global::CityTools.Properties.Resources.mouse;
-            this.btnEquipmentEditor.Name = "btnEquipmentEditor";
-            this.btnEquipmentEditor.Size = new System.Drawing.Size(216, 22);
-            this.btnEquipmentEditor.Text = "Equipment Editor (E)";
-            // 
-            // btnItemEditor
-            // 
-            this.btnItemEditor.Image = global::CityTools.Properties.Resources.bell;
-            this.btnItemEditor.Name = "btnItemEditor";
-            this.btnItemEditor.Size = new System.Drawing.Size(216, 22);
-            this.btnItemEditor.Text = "Item Editor (I)";
-            // 
-            // btnObjectEditor
-            // 
-            this.btnObjectEditor.Image = global::CityTools.Properties.Resources.attach;
-            this.btnObjectEditor.Name = "btnObjectEditor";
-            this.btnObjectEditor.Size = new System.Drawing.Size(216, 22);
-            this.btnObjectEditor.Text = "Object Template Editor (O)";
-            // 
-            // btnPortraitEditor
-            // 
-            this.btnPortraitEditor.Image = global::CityTools.Properties.Resources.Humanoid;
-            this.btnPortraitEditor.Name = "btnPortraitEditor";
-            this.btnPortraitEditor.Size = new System.Drawing.Size(216, 22);
-            this.btnPortraitEditor.Text = "Portrait Editor (P)";
-            // 
-            // btnSaveEditor
-            // 
-            this.btnSaveEditor.Image = global::CityTools.Properties.Resources.disk;
-            this.btnSaveEditor.Name = "btnSaveEditor";
-            this.btnSaveEditor.Size = new System.Drawing.Size(216, 22);
-            this.btnSaveEditor.Text = "Save File Editor (V)";
-            // 
-            // btnSoundEditor
-            // 
-            this.btnSoundEditor.Image = global::CityTools.Properties.Resources.music;
-            this.btnSoundEditor.Name = "btnSoundEditor";
-            this.btnSoundEditor.Size = new System.Drawing.Size(216, 22);
-            this.btnSoundEditor.Text = "Sound Editor (Z)";
-            // 
-            // btnTileEditorTool
-            // 
-            this.btnTileEditorTool.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnTileMerger});
-            this.btnTileEditorTool.Image = global::CityTools.Properties.Resources.application_double;
-            this.btnTileEditorTool.Name = "btnTileEditorTool";
-            this.btnTileEditorTool.Size = new System.Drawing.Size(216, 22);
-            this.btnTileEditorTool.Text = "Tile Editor (T)";
-            // 
-            // btnTileMerger
-            // 
-            this.btnTileMerger.Name = "btnTileMerger";
-            this.btnTileMerger.Size = new System.Drawing.Size(134, 22);
-            this.btnTileMerger.Text = "Tile Merger";
-            // 
-            // btnUIEditor
-            // 
-            this.btnUIEditor.Image = global::CityTools.Properties.Resources.application_view_gallery;
-            this.btnUIEditor.Name = "btnUIEditor";
-            this.btnUIEditor.Size = new System.Drawing.Size(216, 22);
-            this.btnUIEditor.Text = "UI Editor (U)";
-            // 
-            // btnWorldEditor
-            // 
-            this.btnWorldEditor.Image = global::CityTools.Properties.Resources.world;
-            this.btnWorldEditor.Name = "btnWorldEditor";
-            this.btnWorldEditor.Size = new System.Drawing.Size(216, 22);
-            this.btnWorldEditor.Text = "World Editor (X)";
-            // 
-            // btnBuffEditor
-            // 
-            this.btnBuffEditor.Image = global::CityTools.Properties.Resources.attach1;
-            this.btnBuffEditor.Name = "btnBuffEditor";
-            this.btnBuffEditor.Size = new System.Drawing.Size(216, 22);
-            this.btnBuffEditor.Text = "Buff Editor (B)";
-            // 
-            // btnExport
-            // 
-            this.btnExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ckbExportDebugRender,
-            this.ckbExportShowFPS,
-            this.ckbExportMusicEnabled,
-            this.cbExportSave});
-            this.btnExport.Image = global::CityTools.Properties.Resources.bug;
-            this.btnExport.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(84, 22);
-            this.btnExport.Text = "Test (F5)";
-            // 
-            // ckbExportDebugRender
-            // 
-            this.ckbExportDebugRender.CheckOnClick = true;
-            this.ckbExportDebugRender.Name = "ckbExportDebugRender";
-            this.ckbExportDebugRender.Size = new System.Drawing.Size(181, 22);
-            this.ckbExportDebugRender.Text = "Debug Render";
-            this.ckbExportDebugRender.ToolTipText = "Draw Debug Rectangles?";
-            // 
-            // ckbExportShowFPS
-            // 
-            this.ckbExportShowFPS.Checked = true;
-            this.ckbExportShowFPS.CheckOnClick = true;
-            this.ckbExportShowFPS.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ckbExportShowFPS.Name = "ckbExportShowFPS";
-            this.ckbExportShowFPS.Size = new System.Drawing.Size(181, 22);
-            this.ckbExportShowFPS.Text = "Show FPS";
-            this.ckbExportShowFPS.ToolTipText = "Show an FPS Display in the Top Left corner?";
-            // 
-            // ckbExportMusicEnabled
-            // 
-            this.ckbExportMusicEnabled.Checked = true;
-            this.ckbExportMusicEnabled.CheckOnClick = true;
-            this.ckbExportMusicEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ckbExportMusicEnabled.Name = "ckbExportMusicEnabled";
-            this.ckbExportMusicEnabled.Size = new System.Drawing.Size(181, 22);
-            this.ckbExportMusicEnabled.Text = "Music Enabled";
-            // 
-            // cbExportSave
-            // 
-            this.cbExportSave.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbExportSave.Items.AddRange(new object[] {
-            "No Save"});
-            this.cbExportSave.Name = "cbExportSave";
-            this.cbExportSave.Size = new System.Drawing.Size(121, 23);
-            // 
-            // btnViewMenu
-            // 
-            this.btnViewMenu.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.btnViewMenu.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnViewMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuShowGrids,
-            this.viewportToolStripMenuItem});
-            this.btnViewMenu.Image = ((System.Drawing.Image)(resources.GetObject("btnViewMenu.Image")));
-            this.btnViewMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnViewMenu.Name = "btnViewMenu";
-            this.btnViewMenu.Size = new System.Drawing.Size(45, 22);
-            this.btnViewMenu.Text = "View";
-            // 
-            // mnuShowGrids
-            // 
-            this.mnuShowGrids.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ckbShowTileGrid,
-            this.ckbShowObjectBases,
-            this.ckbShowTileBases});
-            this.mnuShowGrids.Name = "mnuShowGrids";
-            this.mnuShowGrids.Size = new System.Drawing.Size(121, 22);
-            this.mnuShowGrids.Text = "Grids";
-            // 
-            // ckbShowTileGrid
-            // 
-            this.ckbShowTileGrid.CheckOnClick = true;
-            this.ckbShowTileGrid.Name = "ckbShowTileGrid";
-            this.ckbShowTileGrid.Size = new System.Drawing.Size(190, 22);
-            this.ckbShowTileGrid.Text = "Show Outlines (1)";
-            // 
-            // ckbShowObjectBases
-            // 
-            this.ckbShowObjectBases.CheckOnClick = true;
-            this.ckbShowObjectBases.Name = "ckbShowObjectBases";
-            this.ckbShowObjectBases.Size = new System.Drawing.Size(190, 22);
-            this.ckbShowObjectBases.Text = "Show Object Bases (2)";
-            // 
-            // ckbShowTileBases
-            // 
-            this.ckbShowTileBases.CheckOnClick = true;
-            this.ckbShowTileBases.Name = "ckbShowTileBases";
-            this.ckbShowTileBases.Size = new System.Drawing.Size(190, 22);
-            this.ckbShowTileBases.Text = "Show Tile Bases (3)";
-            // 
-            // viewportToolStripMenuItem
-            // 
-            this.viewportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ckbViewportEnabled,
-            this.txtViewportWidth,
-            this.txtViewportHeight});
-            this.viewportToolStripMenuItem.Name = "viewportToolStripMenuItem";
-            this.viewportToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
-            this.viewportToolStripMenuItem.Text = "Viewport";
-            // 
-            // ckbViewportEnabled
-            // 
-            this.ckbViewportEnabled.CheckOnClick = true;
-            this.ckbViewportEnabled.Name = "ckbViewportEnabled";
-            this.ckbViewportEnabled.Size = new System.Drawing.Size(160, 22);
-            this.ckbViewportEnabled.Text = "Enabled";
-            // 
-            // txtViewportWidth
-            // 
-            this.txtViewportWidth.AutoToolTip = true;
-            this.txtViewportWidth.Name = "txtViewportWidth";
-            this.txtViewportWidth.Size = new System.Drawing.Size(100, 23);
-            this.txtViewportWidth.Text = "800";
-            this.txtViewportWidth.ToolTipText = "Viewport Width";
-            // 
-            // txtViewportHeight
-            // 
-            this.txtViewportHeight.Name = "txtViewportHeight";
-            this.txtViewportHeight.Size = new System.Drawing.Size(100, 23);
-            this.txtViewportHeight.Text = "600";
-            this.txtViewportHeight.ToolTipText = "Viewport Height";
-            // 
-            // btnDeleteSelectedCritters
-            // 
-            this.btnDeleteSelectedCritters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDeleteSelectedCritters.Image = global::CityTools.Properties.Resources.delete;
-            this.btnDeleteSelectedCritters.Location = new System.Drawing.Point(262, 297);
-            this.btnDeleteSelectedCritters.Name = "btnDeleteSelectedCritters";
-            this.btnDeleteSelectedCritters.Size = new System.Drawing.Size(23, 23);
-            this.btnDeleteSelectedCritters.TabIndex = 89;
-            this.btnDeleteSelectedCritters.UseVisualStyleBackColor = true;
-            // 
-            // btnScriptRegionDelete
-            // 
-            this.btnScriptRegionDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnScriptRegionDelete.Image = global::CityTools.Properties.Resources.delete;
-            this.btnScriptRegionDelete.Location = new System.Drawing.Point(262, 470);
-            this.btnScriptRegionDelete.Name = "btnScriptRegionDelete";
-            this.btnScriptRegionDelete.Size = new System.Drawing.Size(23, 23);
-            this.btnScriptRegionDelete.TabIndex = 78;
-            this.btnScriptRegionDelete.UseVisualStyleBackColor = true;
-            // 
-            // btnScriptRegionAdd
-            // 
-            this.btnScriptRegionAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnScriptRegionAdd.Image = global::CityTools.Properties.Resources.add;
-            this.btnScriptRegionAdd.Location = new System.Drawing.Point(234, 470);
-            this.btnScriptRegionAdd.Name = "btnScriptRegionAdd";
-            this.btnScriptRegionAdd.Size = new System.Drawing.Size(23, 23);
-            this.btnScriptRegionAdd.TabIndex = 77;
-            this.btnScriptRegionAdd.UseVisualStyleBackColor = true;
-            // 
-            // btnSpawnDelete
-            // 
-            this.btnSpawnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSpawnDelete.Image = global::CityTools.Properties.Resources.delete;
-            this.btnSpawnDelete.Location = new System.Drawing.Point(264, 143);
-            this.btnSpawnDelete.Name = "btnSpawnDelete";
-            this.btnSpawnDelete.Size = new System.Drawing.Size(23, 23);
-            this.btnSpawnDelete.TabIndex = 58;
-            this.btnSpawnDelete.UseVisualStyleBackColor = true;
-            // 
-            // btnSpawnAdd
-            // 
-            this.btnSpawnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSpawnAdd.Image = global::CityTools.Properties.Resources.add;
-            this.btnSpawnAdd.Location = new System.Drawing.Point(235, 143);
-            this.btnSpawnAdd.Name = "btnSpawnAdd";
-            this.btnSpawnAdd.Size = new System.Drawing.Size(23, 23);
-            this.btnSpawnAdd.TabIndex = 57;
-            this.btnSpawnAdd.UseVisualStyleBackColor = true;
-            // 
-            // btnPortalDelete
-            // 
-            this.btnPortalDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPortalDelete.Image = global::CityTools.Properties.Resources.delete;
-            this.btnPortalDelete.Location = new System.Drawing.Point(263, 22);
-            this.btnPortalDelete.Name = "btnPortalDelete";
-            this.btnPortalDelete.Size = new System.Drawing.Size(23, 23);
-            this.btnPortalDelete.TabIndex = 32;
-            this.btnPortalDelete.UseVisualStyleBackColor = true;
-            // 
-            // btnPortalAdd
-            // 
-            this.btnPortalAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPortalAdd.Image = global::CityTools.Properties.Resources.add;
-            this.btnPortalAdd.Location = new System.Drawing.Point(234, 22);
-            this.btnPortalAdd.Name = "btnPortalAdd";
-            this.btnPortalAdd.Size = new System.Drawing.Size(23, 23);
-            this.btnPortalAdd.TabIndex = 31;
-            this.btnPortalAdd.UseVisualStyleBackColor = true;
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
             // 
             // MainWindow
             // 
@@ -1438,6 +1457,7 @@
             this.main_splitter.ResumeLayout(false);
             this.mapViewPanel_c.ResumeLayout(false);
             this.mapViewPanel_c.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mapViewPanel)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.toolpanel_splitter.Panel2.ResumeLayout(false);
@@ -1458,7 +1478,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numSpawnTimer)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSpawnMax)).EndInit();
             this.tabMapScript.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.mapViewPanel)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1585,6 +1604,8 @@
         private System.Windows.Forms.Label label9;
         internal System.Windows.Forms.Button btnDeleteSelectedCritters;
         internal System.Windows.Forms.ToolStripMenuItem btnBuffEditor;
+        private System.Windows.Forms.ToolStripButton btnOpenAdvanced;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
     }
 }
 

@@ -414,5 +414,11 @@ namespace CityTools {
         private void scriptMap_BeforeParse(object sender, ScriptInfoArgs e) {
             ExportCrushers.CurrentMap = MapPieceCache.CurrentPiece;
         }
+
+        private void btnOpenAdvanced_Click(object sender, EventArgs e) {
+            GlobalVariableEditor gve = new GlobalVariableEditor();
+            gve.ShowDialog();
+            gve.Dispose();
+        }
     }
 }
