@@ -7,6 +7,7 @@ package Storage.SaveAdv {
 	import Scripting.GlobalVariables;
 	import Scripting.Script;
 	import Storage.SaveInfo;
+	import Strings.StringComponentDB;
 	/**
 	 * ...
 	 * @author Paul
@@ -21,15 +22,23 @@ package Storage.SaveAdv {
 		/* INTERFACE Storage.SaveAdv.ISaveData */
 		
 		public function Save(key:String):void {
+			var i:int;
+			
 			mySo.data.id = GlobalVariables.DataID;
 			
 			var f:ByteArray = new ByteArray();
 			mySo.data.saveData = f;
 			
-			f.writeShort(GlobalVariables.Indices.length);
-			for (var i:int = 0; i < GlobalVariables.Indices.length; i++) {
-				f.writeShort(GlobalVariables.Indices[i]);
-				f.writeInt(GlobalVariables.Variables[GlobalVariables.Indices[i]]);
+			f.writeShort(GlobalVariables.IntegerIndices.length);
+			for (i = 0; i < GlobalVariables.IntegerIndices.length; i++) {
+				f.writeShort(GlobalVariables.IntegerIndices[i]);
+				f.writeInt(GlobalVariables.IntegerVariables[GlobalVariables.IntegerIndices[i]]);
+			}
+			
+			f.writeShort(GlobalVariables.StringIndices.length);
+			for (i = 0; i < GlobalVariables.StringIndices.length; i++) {
+				f.writeShort(GlobalVariables.StringIndices[i]);
+				f.writeUTF(GlobalVariables.StringVariables[GlobalVariables.StringIndices[i]]);
 			}
 			
 			var flushStatus:String = null;
@@ -50,14 +59,32 @@ package Storage.SaveAdv {
 				return;
 			}
 			
+			var i:int;
+			var totalElements:int;
+			var index:int;
+			var valueS:String;
+			var valueI:int;
+			
 			if (old != null) {
-				var totalElements:int = old.readShort();
-				for (var i:int = 0; i < totalElements; i++) {
-					var index:int = old.readShort();
-					var value:int = old.readInt();
+				totalElements = old.readShort();
+				for (i = 0; i < totalElements; i++) {
+					index = old.readShort();
+					valueI = old.readInt();
 					
-					if (GlobalVariables.Indices.indexOf(index) > -1) {
-						GlobalVariables.Variables[index] = value;
+					if (GlobalVariables.IntegerIndices.indexOf(index) > -1) {
+						GlobalVariables.IntegerVariables[index] = valueI;
+					}
+				}
+				
+				if (old.position == old.length) return;
+				
+				totalElements = old.readShort();
+				for (i = 0; i < totalElements; i++) {
+					index = old.readShort();
+					valueS = old.readUTF();
+					
+					if (GlobalVariables.StringIndices.indexOf(index) > -1) {
+						GlobalVariables.StringVariables[index] = valueS;
 					}
 				}
 			}

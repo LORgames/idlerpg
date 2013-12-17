@@ -35,7 +35,7 @@ namespace ToolCache.UI {
             AddFont("Verdana");
             AddFont("Calibri");
             AddFont("Bangers");
-            AddFont("Comic Sans MS");//AddFont("Jing Jing"); //SHOULD be JingJing
+            AddFont("Jing Jing"); //SHOULD be JingJing
             AddFont("Visitor TT1 BRK");
         }
 

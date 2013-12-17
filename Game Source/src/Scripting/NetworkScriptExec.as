@@ -56,7 +56,7 @@ package Scripting {
 					trace("I got assigned player ID=" + controlInfo);
 					Global.CurrentPlayerID = controlInfo;
 					if (Global.GV_PlayerID != 0) {
-						GlobalVariables.Variables[Global.GV_PlayerID] = controlInfo;
+						GlobalVariables.IntegerVariables[Global.GV_PlayerID] = controlInfo;
 					}
 				} else if (controlType == 1) { // Matching controls
 					if (controlInfo == 1) { // Match Joined

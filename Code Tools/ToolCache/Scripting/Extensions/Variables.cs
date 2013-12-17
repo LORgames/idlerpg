@@ -288,6 +288,10 @@ namespace ToolCache.Scripting.Extensions {
             return nexthighestindexint;
         }
 
+        public static int HighestRequiredStringVariableIndex() {
+            return nexthighestindexstring;
+        }
+
         public static void AddNewVariable(string variableName, short initialValue = 0) {
             variableName = FixVariableName(variableName);
 

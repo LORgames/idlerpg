@@ -5,11 +5,13 @@ package UI {
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.display.StageQuality;
+	import flash.events.Event;
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
 	import flash.text.AntiAliasType;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
+	import flash.text.TextFieldType;
 	import flash.text.TextFormat;
 	import Scripting.GlobalVariables;
 	import Strings.StringEx;
@@ -31,12 +33,15 @@ package UI {
 		public var FontFamily:int = 0;
 		public var WordWrap:Boolean = false;
 		
+		public var EditMode:int = 0;
+		public var StringID:int = 0;
+		
 		public function UILayerText() {
 			
 		}
 		
 		public function PrepareTF():void {
-			tf = Fonts.GetTextField(FontSize, 3, Colour);
+			tf = Fonts.GetTextField(FontSize, FontFamily, Colour);
 			
 			if (WordWrap) {
 				tf.multiline = true;
@@ -46,6 +51,25 @@ package UI {
 			
 			RequiresRedraw = true;
 			tf.text = Message.GetBuilt();
+			
+			if (EditMode != 0) {
+				StringID = parseInt(tf.text);
+				
+				if (this.parent) {
+					this.parent.addChildAt(tf, this.parent.getChildIndex(this));
+					this.parent.removeChild(this);
+					tf.selectable = true;
+					tf.type = TextFieldType.INPUT;
+					tf.text = GlobalVariables.StringVariables[StringID];
+					tf.addEventListener(Event.CHANGE, Changed, false, 0, true);
+				}
+			}
+		}
+		
+		private function Changed(e:Event):void {
+			if (EditMode > 0 && StringID != 0) {
+				GlobalVariables.StringVariables[StringID] = tf.text;
+			}
 		}
 		
 		public override function Draw(w:int, h:int, ui:UIManager):void {
@@ -107,10 +131,15 @@ package UI {
 			}
 			
 			///////////////////////////////////////////// Redraw if required
-			Main.I.stage.quality = StageQuality.BEST;
-			this.bitmapData = new BitmapData(tf.width*1.02, tf.height, true, 0x0);
-			Main.I.stage.quality = StageQuality.LOW;
-			this.bitmapData.draw(tf);
+			if(EditMode == 0) {
+				Main.I.stage.quality = StageQuality.BEST;
+				this.bitmapData = new BitmapData(tf.width*1.02, tf.height, true, 0x0);
+				Main.I.stage.quality = StageQuality.LOW;
+				this.bitmapData.draw(tf);
+			} else {
+				tf.x = this.x;
+				tf.y = this.y;
+			}
 		}
 	}
 }

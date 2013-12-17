@@ -21,7 +21,7 @@ namespace ToolToGameExporter {
             RealignedItemIndexes.Clear();
             RemappedItemNameToID.Clear();
 
-            ExportCrushers.RemappedObjectIDs = RemappedItemNameToID;
+            ExportCrushers.MappedObjectIDs = RemappedItemNameToID;
 
             short highestIndex = 0;
 

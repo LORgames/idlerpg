@@ -19,7 +19,7 @@ namespace ToolToGameExporter {
             RemappedCritterIDs.Clear();
             NameToRemappedIDs.Clear();
 
-            ExportCrushers.RemappedCritterIDs = NameToRemappedIDs;
+            ExportCrushers.MappedCritterIDs = NameToRemappedIDs;
 
             short nextID = 0;
 

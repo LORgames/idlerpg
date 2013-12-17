@@ -22,7 +22,7 @@ package UI {
 		public override function Draw(w:int, h:int, ui:UIManager):void {
 			///////////////////////////////////////////// Update the position
 			var thisArea:Rect = new Rect(false, null, 0, 0, SizeX, SizeY);
-			var displayValue:Number = GlobalVariables.Variables[GlobalVariable]/100.0;
+			var displayValue:Number = GlobalVariables.IntegerVariables[GlobalVariable]/100.0;
 			
 			pw = w;
 			ph = h;

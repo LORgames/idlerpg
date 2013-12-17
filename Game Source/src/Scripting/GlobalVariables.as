@@ -7,36 +7,61 @@ package Scripting {
 	 * @author Paul
 	 */
 	public class GlobalVariables {
-		public static var Variables:Vector.<int>;
+		public static var IntegerVariables:Vector.<int>;
 		public static var Strings:Vector.<String>;
+		public static var StringVariables:Vector.<String>;
 		public static var Functions:Script;
-		public static var Indices:Vector.<int>;
+		
+		public static var IntegerIndices:Vector.<int>;
+		public static var StringIndices:Vector.<int>;
 		
 		public static var DataID:int = 0;
-		//public static var 
+		public static var StringDataID:int = 0;
+		
+		public static var LoadTotal:int = 0;
+		private static const LOAD_SAVE_AMT:int = 2;
 		
 		public function GlobalVariables() {
-			BinaryLoader.Load("Data\\Variables.bin", LoadedVariables);
-			BinaryLoader.Load("Data\\Strings.bin", LoadedStrings);
-			BinaryLoader.Load("Data\\Functions.bin", LoadedFunctions);
+			BinaryLoader.Load("Data/Variables.bin", LoadedVariables);
+			BinaryLoader.Load("Data/StringVariables.bin", LoadedStringVariables);
+			BinaryLoader.Load("Data/Strings.bin", LoadedStrings);
+			BinaryLoader.Load("Data/Functions.bin", LoadedFunctions);
 		}
 		
 		public function LoadedVariables(b:ByteArray):void {
 			DataID = b.readShort();
-			Variables = new Vector.<int>(b.readShort(), true);
+			IntegerVariables = new Vector.<int>(b.readShort(), true);
 			
 			var i:int;
-			for (i = 0; i < Variables.length; i++) {
-				Variables[i] = b.readShort();
+			for (i = 0; i < IntegerVariables.length; i++) {
+				IntegerVariables[i] = b.readShort();
 			}
 			
-			Indices = new Vector.<int>(b.readShort(), true);
+			IntegerIndices = new Vector.<int>(b.readShort(), true);
 			
-			for (i = 0; i < Indices.length; i++) {
-				Indices[i] = b.readShort();
+			for (i = 0; i < IntegerIndices.length; i++) {
+				IntegerIndices[i] = b.readShort();
 			}
 			
-			SaveManager.Load("");
+			LoadTotal++; if (LoadTotal == LOAD_SAVE_AMT) SaveManager.Load("");
+		}
+		
+		public function LoadedStringVariables(b:ByteArray):void {
+			StringDataID = b.readShort();
+			StringVariables = new Vector.<String>(b.readShort(), true);
+			
+			var i:int;
+			for (i = 0; i < StringVariables.length; i++) {
+				StringVariables[i] = BinaryLoader.GetString(b);
+			}
+			
+			StringIndices = new Vector.<int>(b.readShort(), true);
+			
+			for (i = 0; i < StringIndices.length; i++) {
+				StringIndices[i] = b.readShort();
+			}
+			
+			LoadTotal++; if (LoadTotal == LOAD_SAVE_AMT) SaveManager.Load("");
 		}
 		
 		public function LoadedStrings(b:ByteArray):void {

@@ -9,6 +9,7 @@ using ToolToGameExporter.Helpers;
 using ToolCache.Scripting;
 using ToolCache.Scripting.Types;
 using ToolCache.Storage;
+using ToolCache.Scripting.Extensions;
 
 namespace ToolToGameExporter {
     public class UICrusher {
@@ -68,10 +69,18 @@ namespace ToolToGameExporter {
                         } else if (l is UITextLayer) {
                             UITextLayer l2 = (UITextLayer)l;
 
-                            try {
-                                f.AddString(StringMagic.PrepareString(l2.Message, true));
-                            } catch(Exception ex) {
-                                Processor.Errors.Add(new ProcessingError("Bad String", p.Name + ">" + e.Name + ">" + l2.Name, ex.Message));
+                            if (l2.InputType > 0) {
+                                if (Variables.StringVariables.ContainsKey(l2.Message)) {
+                                    f.AddString(Variables.StringVariables[l2.Message].Index.ToString());
+                                } else {
+                                    Processor.Errors.Add(new ProcessingError("No Variable", p.Name + ">" + e.Name + ">" + l2.Name, "An input box MUST be tied to a String Variable. '" + l2.Message + "' is not a string variable."));
+                                }
+                            } else {
+                                try {
+                                    f.AddString(StringMagic.PrepareString(l2.Message, true));
+                                } catch (Exception ex) {
+                                    Processor.Errors.Add(new ProcessingError("Bad String", p.Name + ">" + e.Name + ">" + l2.Name, ex.Message));
+                                }
                             }
 
                             f.AddInt(l2.Colour.ToArgb());
@@ -79,6 +88,7 @@ namespace ToolToGameExporter {
                             f.AddByte((byte)l2.FontSize);
                             f.AddByte((byte)l2.FontFamily);
                             f.AddByte((byte)(l2.WordWrap ? 1 : 0));
+                            f.AddByte((byte)l2.InputType);
                         } else if (l is UILibraryLayer) {
                             UILibraryLayer l2 = (UILibraryLayer)l;
 

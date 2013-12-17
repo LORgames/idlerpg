@@ -11,9 +11,10 @@ using ToolCache.Storage;
 namespace ToolToGameExporter {
     internal class GlobalVariableCrusher {
         public static Dictionary<string, short> RemappedFunctionNames = new Dictionary<string, short>();
+        public static Dictionary<string, short> MappedStringTable = new Dictionary<string, short>();
         
         internal static void Precrush() {
-            ExportCrushers.RemappedFunctionIDs = RemappedFunctionNames;
+            ExportCrushers.MappedFunctionIDs = RemappedFunctionNames;
             RemappedFunctionNames.Clear();
 
             List<ScriptFunction> ls = Variables.FunctionTable.Values.ToList<ScriptFunction>();
@@ -21,8 +22,17 @@ namespace ToolToGameExporter {
                 RemappedFunctionNames.Add(ls[i].Name, (short)i);
             }
 
+            ExportCrushers.MappedStringTable = MappedStringTable;
+            MappedStringTable.Clear();
+
+            List<String> stk = Variables.StringTable.Keys.ToList<string>();
+            for (int i = 0; i < stk.Count; i++) {
+                MappedStringTable.Add(stk[i], (short)i);
+            }
+
             ExportVariables();
             ExportStrings();
+            ExportStringVariables();
         }
 
         public static void Go() {
@@ -62,6 +72,41 @@ namespace ToolToGameExporter {
 
 
             f.Encode(Global.EXPORT_DIRECTORY + "/Variables.bin");
+        }
+
+        private static void ExportStringVariables() {
+            BinaryIO f = new BinaryIO();
+
+            List<StringVariable> ls = Variables.StringVariables.Values.ToList();
+            ls.Sort((a, b) => a.Index.CompareTo(b.Index));
+
+            f.AddShort((short)Variables.DatabaseIDForStrings);
+            f.AddShort((short)Variables.HighestRequiredStringVariableIndex());
+
+            List<int> IndicesToSave = new List<int>();
+            int i = 0; int j = 0;
+            for (i = 0; i < Variables.HighestRequiredStringVariableIndex(); i++) {
+                if (ls.Count > j && ls[j].Index == i) {
+                    f.AddString(ls[j].InitialValue);
+
+                    if (ls[j].Saveable) {
+                        IndicesToSave.Add(ls[j].Index);
+                    }
+
+                    j++;
+                } else {
+                    f.AddString("");
+                }
+            }
+
+            f.AddShort((short)IndicesToSave.Count);
+
+            for (i = 0; i < IndicesToSave.Count; i++) {
+                f.AddShort((short)IndicesToSave[i]);
+            }
+
+
+            f.Encode(Global.EXPORT_DIRECTORY + "/StringVariables.bin");
         }
 
         private static void ExportStrings() {

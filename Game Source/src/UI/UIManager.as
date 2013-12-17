@@ -110,6 +110,7 @@ package UI {
 							(Panels[i].Elements[j].Layers[k] as UILayerText).FontSize = b.readByte();
 							(Panels[i].Elements[j].Layers[k] as UILayerText).FontFamily = b.readByte();
 							(Panels[i].Elements[j].Layers[k] as UILayerText).WordWrap = b.readByte() == 1;
+							(Panels[i].Elements[j].Layers[k] as UILayerText).EditMode = b.readByte();
 							
 							(Panels[i].Elements[j].Layers[k] as UILayerText).PrepareTF();
 						} else if (layerType == 2) {
@@ -160,9 +161,9 @@ package UI {
 			var wx:int = (x - Camera.X) / Camera.Z;
 			var wy:int = (y - Camera.Y) / Camera.Z;
 			
-			if (GlobalVariables.Variables == null) return;
-			GlobalVariables.Variables[Global.GV_WX] = wx;
-			GlobalVariables.Variables[Global.GV_WY] = wy;
+			if (GlobalVariables.IntegerVariables == null) return;
+			GlobalVariables.IntegerVariables[Global.GV_WX] = wx;
+			GlobalVariables.IntegerVariables[Global.GV_WY] = wy;
 			
 			if (Panels == null) return;
 			var i:int = Panels.length;
@@ -182,8 +183,8 @@ package UI {
 					}
 					
 					if (Panels[i].Elements[j].Contains(x, y)) {
-						GlobalVariables.Variables[Global.GV_LX] = wx - Panels[i].Elements[j].x;
-						GlobalVariables.Variables[Global.GV_LY] = wy - Panels[i].Elements[j].y;
+						GlobalVariables.IntegerVariables[Global.GV_LX] = wx - Panels[i].Elements[j].x;
+						GlobalVariables.IntegerVariables[Global.GV_LY] = wy - Panels[i].Elements[j].y;
 						
 						if(!dragged) {
 							Panels[i].Elements[j].MyScript.Run(Script.Pressed);
@@ -226,9 +227,9 @@ package UI {
 			var wx:int = (x - Camera.X) / Camera.Z;
 			var wy:int = (y - Camera.Y) / Camera.Z;
 			
-			if (GlobalVariables.Variables == null) return;
-			GlobalVariables.Variables[Global.GV_WX] = wx;
-			GlobalVariables.Variables[Global.GV_WY] = wy;
+			if (GlobalVariables.IntegerVariables == null) return;
+			GlobalVariables.IntegerVariables[Global.GV_WX] = wx;
+			GlobalVariables.IntegerVariables[Global.GV_WY] = wy;
 			
 			if (Panels == null) return;
 			var i:int = Panels.length;
@@ -248,8 +249,8 @@ package UI {
 					}
 					
 					if (Panels[i].Elements[j].Contains(x, y)) {
-						GlobalVariables.Variables[Global.GV_LX] = wx - Panels[i].Elements[j].x;
-						GlobalVariables.Variables[Global.GV_LY] = wy - Panels[i].Elements[j].y;
+						GlobalVariables.IntegerVariables[Global.GV_LX] = wx - Panels[i].Elements[j].x;
+						GlobalVariables.IntegerVariables[Global.GV_LY] = wy - Panels[i].Elements[j].y;
 						
 						Panels[i].Elements[j].MyScript.Run(Script.AnimationEnded); //Double touch
 						return;

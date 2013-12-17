@@ -7,38 +7,42 @@ using ToolCache.Map;
 namespace ToolCache.General {
     public class ExportCrushers {
         public static MapPiece CurrentMap;
-        public static Dictionary<string, short> RemappedEquipmentIDs;
-        public static Dictionary<string, short> RemappedEffectIDs;
-        public static Dictionary<string, short> RemappedObjectIDs;
+        public static Dictionary<string, short> MappedEquipmentIDs;
+        public static Dictionary<string, short> MappedEffectIDs;
+        public static Dictionary<string, short> MappedObjectIDs;
 
         public static Dictionary<string, short> MusicConversions = new Dictionary<string, short>();
         public static Dictionary<string, short> AmbienceConversions = new Dictionary<string, short>();
-        public static Dictionary<string, short> RemappedSoundEffectIDs;
-        public static Dictionary<string, short> RemappedSoundEffectGroups;
+        public static Dictionary<string, short> MappedSoundEffectIDs;
+        public static Dictionary<string, short> MappedSoundEffectGroups;
 
-        public static Dictionary<string, short> RemappedCritterIDs;
-        public static Dictionary<string, short> RemappedMapIDs;
-        public static Dictionary<string, short> RemappedFunctionIDs;
-        public static Dictionary<string, short> RemappedDatabaseNames;
-        public static Dictionary<string, short> RemappedBuffIDs;
+        public static Dictionary<string, short> MappedCritterIDs;
+        public static Dictionary<string, short> MappedMapIDs;
+        public static Dictionary<string, short> MappedFunctionIDs;
+        public static Dictionary<string, short> MappedDatabaseNames;
+        public static Dictionary<string, short> MappedBuffIDs;
+
+        public static Dictionary<string, short> MappedStringTable;
 
         public static void BlankAll() {
             CurrentMap = null;
 
-            RemappedEquipmentIDs = null;
-            RemappedEffectIDs = null;
-            RemappedObjectIDs = null;
+            MappedEquipmentIDs = null;
+            MappedEffectIDs = null;
+            MappedObjectIDs = null;
             
             MusicConversions = null;
             AmbienceConversions = null;
-            RemappedSoundEffectIDs = null;
-            RemappedSoundEffectGroups = null;
+            MappedSoundEffectIDs = null;
+            MappedSoundEffectGroups = null;
 
-            RemappedCritterIDs = null;
-            RemappedMapIDs = null;
-            RemappedFunctionIDs = null;
-            RemappedDatabaseNames = null;
-            RemappedBuffIDs = null;
+            MappedCritterIDs = null;
+            MappedMapIDs = null;
+            MappedFunctionIDs = null;
+            MappedDatabaseNames = null;
+            MappedBuffIDs = null;
+
+            MappedStringTable = null;
         }
     }
 }

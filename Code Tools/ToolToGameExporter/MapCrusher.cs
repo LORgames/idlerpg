@@ -16,7 +16,7 @@ namespace ToolToGameExporter {
         public static Dictionary<string, short> RemappedMapIDs = new Dictionary<string, short>();
         
         public static void Precrush() {
-            ExportCrushers.RemappedMapIDs = RemappedMapIDs;
+            ExportCrushers.MappedMapIDs = RemappedMapIDs;
             RemappedMapIDs.Clear();
 
             short x = 0;

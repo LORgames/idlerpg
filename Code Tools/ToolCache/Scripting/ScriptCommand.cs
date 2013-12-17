@@ -290,9 +290,17 @@ namespace ToolCache.Scripting {
                         case Param.String:
                             Match strM = Regex.Match(paramBits[i], "\"([A-Za-z 0-9\\.\\(\\)!@#\\$%\\^&\\*<>'{}_\\-]*)\"");
 
-                            if (Variables.StringTable.ContainsKey(paramBits[i])) {
+                            if (Variables.StringVariables.ContainsKey(paramBits[i])) {
+                                AdditionalBytecode.Add(0x2); //Variable String
+                                AdditionalBytecode.Add((ushort)Variables.StringVariables[paramBits[i]].Index);
+                            } else if (Variables.StringTable.ContainsKey(paramBits[i])) {
                                 AdditionalBytecode.Add(0x0); //Static String
-                                info.Errors.Add("Cannot correctly use StringTable yet!" + ErrorEnding());
+
+                                if (ExportCrushers.MappedStringTable != null && ExportCrushers.MappedStringTable.ContainsKey(paramBits[i])) {
+                                    AdditionalBytecode.Add((ushort)ExportCrushers.MappedStringTable[paramBits[i]]);
+                                } else {
+                                    info.Errors.Add("String table kind of broke!!" + ErrorEnding());
+                                }
                             } else if(strM.Success) {
                                 AdditionalBytecode.Add(0x1); //Encoded String
 
@@ -318,8 +326,8 @@ namespace ToolCache.Scripting {
                                 default: info.Errors.Add("Invalid direction: '" + paramBits[i] + "'. Expected one of the following: 'Left', 'Right', 'Up', 'Down'" + ErrorEnding()); break;
                             } break;
                         case Param.CritterName:
-                            if (ExportCrushers.RemappedCritterIDs != null && ExportCrushers.RemappedCritterIDs.ContainsKey(paramBits[i])) {
-                                AdditionalBytecode.Add((ushort)ExportCrushers.RemappedCritterIDs[paramBits[i]]);
+                            if (ExportCrushers.MappedCritterIDs != null && ExportCrushers.MappedCritterIDs.ContainsKey(paramBits[i])) {
+                                AdditionalBytecode.Add((ushort)ExportCrushers.MappedCritterIDs[paramBits[i]]);
                             } else if (!CritterManager.HasCritter(paramBits[i])) {
                                 info.Errors.Add("Cannot find Critter: " + paramBits[i] + ErrorEnding());
                             } break;
@@ -329,9 +337,9 @@ namespace ToolCache.Scripting {
                                 break;
                             }
 
-                            if (ExportCrushers.RemappedEffectIDs != null) {
-                                if (ExportCrushers.RemappedEffectIDs.ContainsKey(paramBits[i])) {
-                                    AdditionalBytecode.Add((ushort)ExportCrushers.RemappedEffectIDs[paramBits[i]]);
+                            if (ExportCrushers.MappedEffectIDs != null) {
+                                if (ExportCrushers.MappedEffectIDs.ContainsKey(paramBits[i])) {
+                                    AdditionalBytecode.Add((ushort)ExportCrushers.MappedEffectIDs[paramBits[i]]);
                                 } else {
                                     info.Errors.Add("Cannot find an effect called: " + paramBits[i] + ".\nEffects without animations are skipped when exporting make sure the effect has an animation as well as checking spelling." + ErrorEnding());
                                 }
@@ -342,9 +350,9 @@ namespace ToolCache.Scripting {
                                 break;
                             }
 
-                            if (ExportCrushers.RemappedObjectIDs != null) {
-                                if (ExportCrushers.RemappedObjectIDs.ContainsKey(paramBits[i])) {
-                                    AdditionalBytecode.Add((ushort)ExportCrushers.RemappedObjectIDs[paramBits[i]]);
+                            if (ExportCrushers.MappedObjectIDs != null) {
+                                if (ExportCrushers.MappedObjectIDs.ContainsKey(paramBits[i])) {
+                                    AdditionalBytecode.Add((ushort)ExportCrushers.MappedObjectIDs[paramBits[i]]);
                                 } else {
                                     info.Errors.Add("Cannot find an object called: " + paramBits[i] + "." + ErrorEnding());
                                 }
@@ -356,17 +364,17 @@ namespace ToolCache.Scripting {
                             if (!EquipmentManager.Equipment.ContainsKey(Parameters)) {
                                 info.Errors.Add("Cannot find equipment item: '" + paramBits[i] + "'" + ErrorEnding());
                             } else {
-                                if (ExportCrushers.RemappedEquipmentIDs != null) {
+                                if (ExportCrushers.MappedEquipmentIDs != null) {
                                     AdditionalBytecode.Add((ushort)EquipmentManager.Equipment[paramBits[i]].Type);
-                                    AdditionalBytecode.Add((ushort)ExportCrushers.RemappedEquipmentIDs[paramBits[i]]);
+                                    AdditionalBytecode.Add((ushort)ExportCrushers.MappedEquipmentIDs[paramBits[i]]);
                                 }
                             } break;
                         case Param.SoundEffectName:
                             if (!SoundDatabase.HasEffect(paramBits[i])) {
                                 info.Errors.Add("Cannot find sound effect: '" + paramBits[i] + "'" + ErrorEnding());
                             } else {
-                                if (ExportCrushers.RemappedSoundEffectIDs != null) {
-                                    AdditionalBytecode.Add((ushort)ExportCrushers.RemappedSoundEffectIDs[paramBits[i]]);
+                                if (ExportCrushers.MappedSoundEffectIDs != null) {
+                                    AdditionalBytecode.Add((ushort)ExportCrushers.MappedSoundEffectIDs[paramBits[i]]);
                                 }
                             } break;
                         case Param.SoundEffectGroup:
@@ -374,8 +382,8 @@ namespace ToolCache.Scripting {
                                 info.Errors.Add("Cannot find sound effect group: '" + paramBits[i] + "'" + ErrorEnding());
                             } else if (SoundDatabase.EffectGroups[paramBits[i]].Count == 0) {
                                 info.Errors.Add("Sound effect group '" + paramBits[i] + "' has no sound effects in it!" + ErrorEnding());
-                            } else if (ExportCrushers.RemappedSoundEffectGroups != null) {
-                                AdditionalBytecode.Add((ushort)ExportCrushers.RemappedSoundEffectGroups[paramBits[i]]);
+                            } else if (ExportCrushers.MappedSoundEffectGroups != null) {
+                                AdditionalBytecode.Add((ushort)ExportCrushers.MappedSoundEffectGroups[paramBits[i]]);
                             } break;
                         case Param.MusicName:
                             info.Errors.Add("Cannot Param.MusicName yet!" + ErrorEnding());
@@ -470,8 +478,8 @@ namespace ToolCache.Scripting {
                             } break;
                         case Param.MapName:
                             if (MapPieceCache.GetMapByName(paramBits[i]) != null) {
-                                if (ExportCrushers.RemappedMapIDs != null) {
-                                    AdditionalBytecode.Add((ushort)ExportCrushers.RemappedMapIDs[paramBits[i]]);
+                                if (ExportCrushers.MappedMapIDs != null) {
+                                    AdditionalBytecode.Add((ushort)ExportCrushers.MappedMapIDs[paramBits[i]]);
                                 }
                             } else {
                                 info.Errors.Add("Cannot find a map called '" + paramBits[i] + "', capitalization matters with map names! " + ErrorEnding());
@@ -503,17 +511,17 @@ namespace ToolCache.Scripting {
                             } break;
                         case Param.Function:
                             if (Variables.FunctionTable.ContainsKey(paramBits[i])) {
-                                if (ExportCrushers.RemappedFunctionIDs != null) {
-                                    AdditionalBytecode.Add((ushort)ExportCrushers.RemappedFunctionIDs[paramBits[i]]);
+                                if (ExportCrushers.MappedFunctionIDs != null) {
+                                    AdditionalBytecode.Add((ushort)ExportCrushers.MappedFunctionIDs[paramBits[i]]);
                                 }
                             } else {
                                 info.Errors.Add("Cannot find a function called '" + paramBits[i] + "' perhaps the capitalization is wrong. It matters with functions!" + ErrorEnding());
                             } break;
                         case Param.Buff:
                             if (BuffManager.HasBuff(paramBits[i])) {
-                                if (ExportCrushers.RemappedBuffIDs != null) {
-                                    if (ExportCrushers.RemappedBuffIDs.ContainsKey(paramBits[i])) {
-                                        AdditionalBytecode.Add((ushort)ExportCrushers.RemappedBuffIDs[paramBits[i]]);
+                                if (ExportCrushers.MappedBuffIDs != null) {
+                                    if (ExportCrushers.MappedBuffIDs.ContainsKey(paramBits[i])) {
+                                        AdditionalBytecode.Add((ushort)ExportCrushers.MappedBuffIDs[paramBits[i]]);
                                     } else {
                                         info.Errors.Add("Buff '" + paramBits[i] + "' was not exported correctly?" + ErrorEnding());
                                     }
@@ -573,9 +581,9 @@ namespace ToolCache.Scripting {
                 if (lib == null) {
                     info.Errors.Add("Cannot find a database named '" + database + "'" + ErrorEnding());
                 } else {
-                    if (ExportCrushers.RemappedDatabaseNames != null) {
-                        if (ExportCrushers.RemappedDatabaseNames.ContainsKey(database)) {
-                            AdditionalBytecode.Add((ushort)ExportCrushers.RemappedDatabaseNames[database]);
+                    if (ExportCrushers.MappedDatabaseNames != null) {
+                        if (ExportCrushers.MappedDatabaseNames.ContainsKey(database)) {
+                            AdditionalBytecode.Add((ushort)ExportCrushers.MappedDatabaseNames[database]);
                         } else {
                             info.Errors.Add("The database was not compiled for exporting. Perhaps it is empty?" + ErrorEnding());
                         }

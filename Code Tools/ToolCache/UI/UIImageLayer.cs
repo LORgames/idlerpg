@@ -85,6 +85,8 @@ namespace ToolCache.UI {
                 if (MyType == UILayerType.Stretch || MyType == UILayerType.StretchToValueX || MyType == UILayerType.StretchToValueY || MyType == UILayerType.StretchToValueXNeg || MyType == UILayerType.StretchToValueYNeg) {
                     gfx.DrawImage(im, thisArea);
                 } else if (MyType == UILayerType.Static) {
+                    if (thisArea.Height > im.Height) thisArea.Height = im.Height;
+                    if (thisArea.Width > im.Width) thisArea.Width = im.Width;
                     gfx.DrawImageUnscaledAndClipped(im, thisArea);
                 } else if (MyType == UILayerType.Tile) {
                     int xPos = 0;

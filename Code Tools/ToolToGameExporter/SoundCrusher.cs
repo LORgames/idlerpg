@@ -23,8 +23,8 @@ namespace ToolToGameExporter {
 
             ExportCrushers.MusicConversions = MusicConversions;
             ExportCrushers.AmbienceConversions = AmbienceConversions;
-            ExportCrushers.RemappedSoundEffectIDs = EffectConversions;
-            ExportCrushers.RemappedSoundEffectGroups = GroupConversions;
+            ExportCrushers.MappedSoundEffectIDs = EffectConversions;
+            ExportCrushers.MappedSoundEffectGroups = GroupConversions;
 
             CrushList(SoundDatabase.Music, MusicConversions, "Sound/Music", "Music_");
             CrushList(SoundDatabase.Ambience, AmbienceConversions, "Sound/Ambience", "Ambience_");

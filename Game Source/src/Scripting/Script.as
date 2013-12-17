@@ -12,13 +12,13 @@ package Scripting {
 	import Game.Effects.EffectInstance;
 	import Game.Effects.EffectManager;
 	import Game.Equipment.EquipmentItem;
-	import Game.Tweening.TweenManager;
-	import Loaders.BinaryLoader;
 	import Game.Map.Objects.ObjectInstance;
 	import Game.Map.Objects.ObjectInstanceAnimated;
 	import Game.Map.Objects.ObjectTemplate;
 	import Game.Map.WorldData;
+	import Game.Tweening.TweenManager;
 	import Interfaces.IMapObject;
+	import Loaders.BinaryLoader;
 	import QDMF.Connectors.MatchMakingClient;
 	import QDMF.Connectors.SocketClient;
 	import QDMF.Connectors.SocketHost;
@@ -166,7 +166,7 @@ package Scripting {
 			if (SaveVarType == 0xBFFD) { //Local variable
 				info.Variables[SaveVarID] = runningTally;
 			} else if (SaveVarType == 0xBFFE) { //Global variable
-				GlobalVariables.Variables[SaveVarID] = runningTally;
+				GlobalVariables.IntegerVariables[SaveVarID] = runningTally;
 			}
 		}
 		
@@ -261,7 +261,7 @@ package Scripting {
 						if (param0 == 0xBFFD) { //Local
 							param2 = info.Variables[param1];
 						} else if (param0 == 0xBFFE) { //Global
-							param2 = GlobalVariables.Variables[param1];
+							param2 = GlobalVariables.IntegerVariables[param1];
 						}
 						
 						if (param2 >= cost) {
@@ -270,7 +270,7 @@ package Scripting {
 							if (param0 == 0xBFFD) { //Local
 								info.Variables[param1] = param2;
 							} else if (param0 == 0xBFFE) { //Global
-								GlobalVariables.Variables[param1] = param2;
+								GlobalVariables.IntegerVariables[param1] = param2;
 							}
 							
 							currentUnprocessedValue = true;
@@ -305,6 +305,11 @@ package Scripting {
 								currentUnprocessedValue = ((inputParam as Array)[0] as BaseCritter).HasFaction(param0);
 							}
 						} break;
+					case 0x700F: //String compare: are 2 strings equal
+						var s0:String = GetWonkyString(eventScript);
+						var s1:String = GetWonkyString(eventScript);
+						currentUnprocessedValue = (s0 == s1);
+						break;
 					case 0x7FFF: //AI Event, Trigger Event etc
 						var whatAIEvent:int = GetNumberFromVariable(eventScript, info, inputParam);
 						if (inputParam is int) {
@@ -456,7 +461,7 @@ package Scripting {
 			} else if (varType == 0xBFFD) { //Local variable
 				return info.Variables[varID];
 			} else if (varType == 0xBFFE) { //Global variable
-				return GlobalVariables.Variables[varID];
+				return GlobalVariables.IntegerVariables[varID];
 			} else if (varType == 0xBFFF) { //Static value
 				return varID;
 			} else if (varType == 0xBFFB) { //FLOATING POINT
@@ -862,7 +867,7 @@ package Scripting {
 						p0.X = EventScript.readUnsignedShort(); //SHOULD BE 0xBFFE
 						p0.Y = EventScript.readUnsignedShort(); //SHOULD BE < 1000
 						trace("NETSYNCVAR: VAR=" + p0.Y + " INVOKER=" + info.Invoker);
-						if (p0.X == 0xBFFE && Global.Network != null) PacketFactory.N(Vector.<int>([0xB000, 0xBFFE, p0.Y, 0xBFFF, GlobalVariables.Variables[p0.Y], 0xBF01]));
+						if (p0.X == 0xBFFE && Global.Network != null) PacketFactory.N(Vector.<int>([0xB000, 0xBFFE, p0.Y, 0xBFFF, GlobalVariables.IntegerVariables[p0.Y], 0xBF01]));
 						break;
 					case 0x1017: //Param Set ADVANCED PROGRAMMING COMMAND
 						objName = GetWonkyString(EventScript);
@@ -1120,10 +1125,14 @@ package Scripting {
 			
 			if (stringType == 0) { 
 				s = GlobalVariables.Strings[eventScript.readUnsignedShort()];
-			} else {
+			} else if(stringType == 1) {
 				s = BinaryLoader.GetString(eventScript);
 				//Encoded so that everything is always 2 bytes :)
 				if(eventScript.position%2 == 1) eventScript.position++;
+			} else if (stringType == 2) {
+				s = GlobalVariables.StringVariables[eventScript.readUnsignedShort()];
+			} else {
+				s = "<STRINGERROR>";
 			}
 			
 			return s;

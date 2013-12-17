@@ -55,11 +55,25 @@ namespace ToolCache.General {
                                     builder = builder + PrepareString(Variables.StringTable[mc[i].Groups[1].Value.Substring(1)]);
                                 } else {
                                     //TODO: Compress into strings :)
-                                    if(ExportCrushers.
-                                    builder = builder + "{" + Variables.StringTable[mc[i].Groups[1].Value.Substring(1)]
+                                    if (ExportCrushers.MappedStringTable != null) {
+                                        builder = builder + "{@" + ExportCrushers.MappedStringTable[mc[i].Groups[1].Value.Substring(1)] + "}";
+                                    } else {
+                                        throw new Exception("String Table is not mapped!");
+                                    }
                                 }
                             } else {
-                                builder = builder + "<UNKNOWN STRING>";
+                                builder = builder + "<UNKNOWN STRING CONSTANT>";
+                            }
+                        } else if (mc[i].Groups[2].Value == "!") { //String Variable entry
+                            if (Variables.StringVariables.ContainsKey(mc[i].Groups[1].Value.Substring(1))) {
+                                if (!rawID) {
+                                    builder = builder + PrepareString(Variables.StringVariables[mc[i].Groups[1].Value.Substring(1)].InitialValue);
+                                } else {
+                                    //TODO: Compress into strings :)
+                                    builder = builder + "{!" + Variables.StringVariables[mc[i].Groups[1].Value.Substring(1)].Index + "}";
+                                }
+                            } else {
+                                builder = builder + "<UNKNOWN STRING VARIABLE>";
                             }
                         }
                     }
@@ -99,9 +113,9 @@ namespace ToolCache.General {
                     throw new Exception("Cannot find a database named '" + database + "'");
                 }
 
-                if (isRaw && ExportCrushers.RemappedDatabaseNames != null) {
-                    if (ExportCrushers.RemappedDatabaseNames.ContainsKey(database)) {
-                        retString += ExportCrushers.RemappedDatabaseNames[database] + ":";
+                if (isRaw && ExportCrushers.MappedDatabaseNames != null) {
+                    if (ExportCrushers.MappedDatabaseNames.ContainsKey(database)) {
+                        retString += ExportCrushers.MappedDatabaseNames[database] + ":";
                     } else {
                         throw new Exception("The database was not compiled for exporting. Perhaps it is empty?");
                     }

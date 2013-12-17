@@ -1,6 +1,7 @@
 package Strings 
 {
 	import InputSystems.IInputSystem;
+	import Scripting.GlobalVariables;
 	/**
 	 * ...
 	 * @author Paul
@@ -12,7 +13,7 @@ package Strings
 		public static function BuildFromCore(open:String):StringEx {
 			var s:StringEx = new StringEx();
 			
-			var myPattern:RegExp = /{([0-9:a|b]+)}/ig;  
+			var myPattern:RegExp = /{((!|@)?[0-9:a|b]+)}/ig;  
 			var result:Object = myPattern.exec(open);
 			
 			var lastEnd:int = 0;
@@ -25,18 +26,26 @@ package Strings
 						s.AddComponent(new StringComponentString(open.substr(lastEnd, result.index - lastEnd)));
 					}
 					
-					var stringBits:Array = (result[1]).split(":");
-					
-					if(stringBits.length == 1) {
-						s.AddComponent(new StringComponentGV(parseInt(stringBits[0]), 0));
-					} else if(stringBits.length == 2) {
-						s.AddComponent(new StringComponentGV(parseInt(stringBits[0]), parseInt(stringBits[1])));
-					} else if(stringBits.length == 3) {
-						s.AddComponent(new StringComponentDB(parseInt(stringBits[0]), stringBits[1], stringBits[2], 0));
-					} else if(stringBits.length == 4) {
-						s.AddComponent(new StringComponentDB(parseInt(stringBits[0]), stringBits[1], stringBits[2], parseInt(stringBits[3])));
+					if(!result[2]) {
+						var stringBits:Array = (result[1]).split(":");
+						
+						if(stringBits.length == 1) {
+							s.AddComponent(new StringComponentGV(parseInt(stringBits[0]), 0));
+						} else if(stringBits.length == 2) {
+							s.AddComponent(new StringComponentGV(parseInt(stringBits[0]), parseInt(stringBits[1])));
+						} else if(stringBits.length == 3) {
+							s.AddComponent(new StringComponentDB(parseInt(stringBits[0]), stringBits[1], stringBits[2], 0));
+						} else if(stringBits.length == 4) {
+							s.AddComponent(new StringComponentDB(parseInt(stringBits[0]), stringBits[1], stringBits[2], parseInt(stringBits[3])));
+						} else {
+							throw new Error("Critical fault in the String system!");
+						}
 					} else {
-						throw new Error("Critical fault in the String system!");
+						if (result[2] == '@') { //String Table
+							s.AddComponent(new StringComponentString(GlobalVariables.Strings[parseInt((result[1] as String).substr(1))]));
+						} else if (result[2] == '!') { //String Variable
+							s.AddComponent(new StringComponentVS(parseInt((result[1] as String).substr(1))));
+						}
 					}
 					
 					lastEnd = result.index + result[0].length;

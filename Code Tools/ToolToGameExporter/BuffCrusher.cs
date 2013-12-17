@@ -21,7 +21,7 @@ namespace ToolToGameExporter {
                 System.Diagnostics.Debug.WriteLine("Mapped " + BuffManager.Buffs[i].Name + " to " + i);
             }
 
-            ExportCrushers.RemappedBuffIDs = RemappedBuffIDs;
+            ExportCrushers.MappedBuffIDs = RemappedBuffIDs;
         }
 
         public static void Go() {

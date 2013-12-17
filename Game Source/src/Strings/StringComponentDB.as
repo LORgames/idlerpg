@@ -40,13 +40,13 @@ package Strings {
 		}
 		
 		public function Build():String {
-			_OC = (colVR?GlobalVariables.Variables[colID]:colID);
-			_OR = (rowVR?GlobalVariables.Variables[rowID]:rowID);
+			_OC = (colVR?GlobalVariables.IntegerVariables[colID]:colID);
+			_OR = (rowVR?GlobalVariables.IntegerVariables[rowID]:rowID);
 			return DataManager.I.GetCellAsString(dbID, _OC, _OR);
 		}
 		
 		public function RequiresRebuild():Boolean {
-			return (_OC != (colVR?GlobalVariables.Variables[colID]:colID) || _OR != (rowVR?GlobalVariables.Variables[rowID]:rowID));
+			return (_OC != (colVR?GlobalVariables.IntegerVariables[colID]:colID) || _OR != (rowVR?GlobalVariables.IntegerVariables[rowID]:rowID));
 		}
 	}
 }

@@ -16,7 +16,7 @@ package Strings {
 		}
 		
 		public function Build():String {
-			previousAmount = GlobalVariables.Variables[myID];
+			previousAmount = GlobalVariables.IntegerVariables[myID];
 			if(padding == 0) {
 				return previousAmount.toString();
 			} else {
@@ -25,7 +25,7 @@ package Strings {
 		}
 		
 		public function RequiresRebuild():Boolean {
-			return (previousAmount != GlobalVariables.Variables[myID]);
+			return (previousAmount != GlobalVariables.IntegerVariables[myID]);
 		}
 	}
 }
