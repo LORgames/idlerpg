@@ -866,7 +866,7 @@ package Scripting {
 					case 0x1015: //NetSyncVar
 						p0.X = EventScript.readUnsignedShort(); //SHOULD BE 0xBFFE
 						p0.Y = EventScript.readUnsignedShort(); //SHOULD BE < 1000
-						trace("NETSYNCVAR: VAR=" + p0.Y + " INVOKER=" + info.Invoker);
+						Main.I.Log("NETSYNCVAR: VAR=" + p0.Y + " INVOKER=" + info.Invoker);
 						if (p0.X == 0xBFFE && Global.Network != null) PacketFactory.N(Vector.<int>([0xB000, 0xBFFE, p0.Y, 0xBFFF, GlobalVariables.IntegerVariables[p0.Y], 0xBF01]));
 						break;
 					case 0x1017: //Param Set ADVANCED PROGRAMMING COMMAND

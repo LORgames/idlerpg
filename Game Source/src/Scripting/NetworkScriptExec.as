@@ -53,14 +53,12 @@ package Scripting {
 				var controlInfo:int = p.bytes.readShort();
 				
 				if (controlType == 0) { // Set Player ID
-					trace("I got assigned player ID=" + controlInfo);
 					Global.CurrentPlayerID = controlInfo;
 					if (Global.GV_PlayerID != 0) {
 						GlobalVariables.IntegerVariables[Global.GV_PlayerID] = controlInfo;
 					}
 				} else if (controlType == 1) { // Matching controls
 					if (controlInfo == 1) { // Match Joined
-						trace("Found a match :)");
 						Syncronizer.Reset();
 						Clock.I.Reset();
 						Script.FireTrigger(SocketTriggers.SOCKET_CONNECT);
