@@ -8,9 +8,7 @@ import datetime
 
 RECV_BUFFER = 4096      # Advisable to keep it as an exponent of 2
 MMAKE_PORT = 5000       # The matchmaking server port
-SECPL_PORT = 5187       # The flash policy server port
 
-SECURITYCK_LIST = []    # list of socket clients WAITING FOR POLICY
 CONNECTION_LIST = []    # list of socket clients ALREADY VERIFIED
 IN_QUEUE = []           # list of all the sockets in queue
 MATCHES = {}            # dictionary linking sockets to each other
@@ -26,6 +24,9 @@ def ProcessSocketClosed(sock):
     print "[GAMING] Client (%s, %s) disconnected!"  % _addr
     sock.close()
     CONNECTION_LIST.remove(sock)
+
+    if sock in IN_QUEUE:
+        IN_QUEUE.remove(sock)
 
     if _addr in MATCHES:
         othersock = MATCHES[_addr]
@@ -76,17 +77,10 @@ if __name__ == "__main__":
     server_socket.bind(("0.0.0.0", MMAKE_PORT))
     server_socket.listen(10)
 
-    policy_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    policy_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) # this has no effect, why ?
-    policy_socket.bind(("0.0.0.0", SECPL_PORT))
-    policy_socket.listen(10)
- 
     # Add server socket to the list of readable connections
     CONNECTION_LIST.append(server_socket)
-    CONNECTION_LIST.append(policy_socket)
  
     print "Matchmaking Server started on port " + str(MMAKE_PORT)
-    print "Security Policy Server started on port " + str(SECPL_PORT)
  
     while 1:
         # Get the list sockets which are ready to be read through select
@@ -98,28 +92,7 @@ if __name__ == "__main__":
                 # Handle the case in which there is a new connection recieved through server_socket
                 sockfd, addr = server_socket.accept()
                 CONNECTION_LIST.append(sockfd)
-                print "[GAMING] Client (%s, %s) connected" % addr
-
-                if len(IN_QUEUE) > 0:
-                    match = IN_QUEUE.pop()
-                    MATCHES[sockfd.getpeername()] = match
-                    MATCHES[match.getpeername()] = sockfd
-                    
-                    print "\tPaired", sockfd.getpeername(), "with", match.getpeername()
-
-                    match.send(Pack(MESSAGE_SET_PLAYER1))
-                    sockfd.send(Pack(MESSAGE_SET_PLAYER2))
-                    match.send(Pack(MESSAGE_NFO_FNDGAME))
-                    sockfd.send(Pack(MESSAGE_NFO_FNDGAME))
-                else:
-                    IN_QUEUE.append(sockfd)
-                    print "\tNo one is waiting just yet..."
-
-            #A client is connecting to make sure this server is safe
-            elif sock == policy_socket:
-                sockfd, addr = policy_socket.accept()
-                SECURITYCK_LIST.append(sockfd)
-                print "[POLICY] Client (%s, %s) connected" % addr
+                print "[GAMING] Client (%s, %s) connected (put them in joined)" % addr
                 
             #Some incoming message from a client
             else:
@@ -133,43 +106,35 @@ if __name__ == "__main__":
                         if sock.getpeername() in MATCHES:
                             MATCHES[sock.getpeername()].send(data)
                         else:
-                            print "Not sure, but", sock.getpeername(), "appears to be trying to send data to the server? Message=", data
+                            if len(data) >= 22 and data[0:22] == "<policy-file-request/>":
+                                print "[POLICY] Sent policy to (%s, %s)" % sock.getpeername()
+                                sock.send("<cross-domain-policy><allow-access-from domain=\"*\" to-ports=\"5000\" /></cross-domain-policy>\x00");
+                            elif len(data) >= 9 and data[0:9] == "PLEAS3_MM":
+                                IN_QUEUE.append(sock)
+                                print "[GAMING] Client (%s, %s) requested matchmaking queue." % sock.getpeername()
+                            else:
+                                print "Not sure, but", sock.getpeername(), "appears to be trying to send data to the server? Message=", data
                         ##sock.send('OK ... ' + data)
                     else:
-                        #Throw exception so that the socket is cleaned up :)
-                        raise Exception()
+                        ProcessSocketClosed(sock)
                 
                 # client disconnected, so remove from socket list
                 except Exception, e:
-                    print "[EXCEPT] "+`e`
+                    print "[EXCEPT] "+str(e)
                     ProcessSocketClosed(sock)
                     continue
+        
+        while len(IN_QUEUE) > 1:
+            match0 = IN_QUEUE.pop()
+            match1 = IN_QUEUE.pop()
+            MATCHES[match0.getpeername()] = match1
+            MATCHES[match1.getpeername()] = match0
+            
+            print "\tPaired", match0.getpeername(), "with", match1.getpeername()
 
-        #now do basically the same thing for the security sockets
-        if len(SECURITYCK_LIST) > 0:
-            policy_sockets,write_blank,error_blank = select.select(SECURITYCK_LIST,[],[])
-
-            for sock in policy_sockets:
-                # Data recieved from client, process it
-                try:
-                    #In Windows, sometimes when a TCP program closes abruptly,
-                    # a "Connection reset by peer" exception will be thrown
-                    data = sock.recv(RECV_BUFFER)
-                    # echo back the client message
-                    if data:
-                        sock.send("<cross-domain-policy><allow-access-from domain=\"*\" to-ports=\"5000\" /></cross-domain-policy>\x00");
-                        sock.flush()
-                        raise Exception()
-                    else:
-                        #Throw exception so that the socket is cleaned up :)
-                        raise Exception()
-                
-                # client disconnected, so remove from socket list
-                except Exception, e:
-                    print "[POLICY] Client (%s, %s) disconnected! ("+`e`+")"  % sock.getpeername()
-                    sock.close()
-                    SECURITYCK_LIST.remove(sock)
-                    continue
+            match0.send(Pack(MESSAGE_SET_PLAYER1))
+            match1.send(Pack(MESSAGE_SET_PLAYER2))
+            match0.send(Pack(MESSAGE_NFO_FNDGAME))
+            match1.send(Pack(MESSAGE_NFO_FNDGAME))
          
     server_socket.close()
-    policy_socket.close()
