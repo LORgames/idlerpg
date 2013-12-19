@@ -54,12 +54,8 @@ namespace ToolCache.DataLibrary {
             return dbl;
         }
 
-        public static void DeleteLibrary(string name) {
-            for (int i = Libraries.Count; i > -1; --i) {
-                if (Libraries[i].Name == name) {
-                    Libraries.RemoveAt(i);
-                }
-            }
+        public static void DeleteLibrary(DBLibrary lib) {
+            Libraries.Remove(lib);
         }
 
         public static DBLibrary[] GetLibraries() {

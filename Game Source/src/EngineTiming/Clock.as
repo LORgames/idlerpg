@@ -1,4 +1,5 @@
 package EngineTiming {
+	import Debug.Drawer;
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.text.TextField;
@@ -15,12 +16,7 @@ package EngineTiming {
 	public class Clock {
 		public static var I:Clock = new Clock();
 		
-		public var Updatables:Vector.<IUpdatable> = new Vector.<IUpdatable>();
-		public var OneSecond:Vector.<IOneSecondUpdate> = new Vector.<IOneSecondUpdate>();
-		public var FifteenSecond:Vector.<IFifteenSecondUpdate> = new Vector.<IFifteenSecondUpdate>();
-		
-		private var Sec_01_Count:Number = 0;
-		
+		private var Updatables:Vector.<IUpdatable> = new Vector.<IUpdatable>();
 		private var Stopped:Boolean = false;
 		
 		public static var FPSTF:FPSCounter;
@@ -74,8 +70,6 @@ package EngineTiming {
 					edt -= dt;
 					
 					Syncronizer.Update(dt);
-					Sec_01_Count += dt;
-					
 					WorldData.CurrentMap.Update(dt);
 					TweenManager.Update(dt);
 					
@@ -101,16 +95,7 @@ package EngineTiming {
 						}
 					}
 					
-					if (Sec_01_Count > 1) {
-						Sec_01_Count -= 1;
-						Script.ProcessUpdate();
-						
-						i = OneSecond.length;
-						while (--i > -1) {
-							OneSecond[i].UpdateOneSecond();
-						}
-					}
-					
+					Script.ProcessUpdate(dt);
 					Main.I.Renderer.Update(dt);
 					
 					while (CleanUpList.length > 0) {
@@ -130,22 +115,6 @@ package EngineTiming {
 			Global.PrevLoadingTotal = Global.LoadingTotal;
 		}
 		
-		public function Remove1(item:IOneSecondUpdate):void {
-			var i:int = OneSecond.indexOf(item);
-			
-			if (i > -1) {
-				OneSecond.splice(i, 1);
-			}
-		}
-		
-		public function Remove15(item:IFifteenSecondUpdate):void {
-			var i:int = FifteenSecond.indexOf(item);
-			
-			if (i > -1) {
-				FifteenSecond.splice(i, 1);
-			}
-		}
-		
 		static public function Stop():void {
 			Clock.I.Stopped = true;
 		}
@@ -155,11 +124,14 @@ package EngineTiming {
 		}
 		
 		public function Reset():void {
-			Sec_01_Count = 0;
 			last = getTimer();
 			ticks = 0;
 			edt = 0; //Effective dt;
 			summedTime = 0;
+		}
+		
+		public function RegisterUpdatable(obj:IUpdatable):void {
+			Updatables.push(obj);
 		}
 	}
 

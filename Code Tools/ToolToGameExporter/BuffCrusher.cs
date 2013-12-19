@@ -7,6 +7,7 @@ using ToolCache.General;
 using ToolCache.Scripting;
 using ToolCache.Storage;
 using ToolCache.Scripting.Types;
+using ToolCache.UI;
 
 namespace ToolToGameExporter {
     public class BuffCrusher {
@@ -28,6 +29,7 @@ namespace ToolToGameExporter {
             BinaryIO f = new BinaryIO();
 
             f.AddShort((short)BuffManager.Buffs.Count);
+            f.AddShort((short)ExportCrushers.MappedUILibraryNames["Buff Icons"]);
 
             for(int i = 0; i < BuffManager.Buffs.Count; i++) {
                 Buff b = BuffManager.Buffs[i];

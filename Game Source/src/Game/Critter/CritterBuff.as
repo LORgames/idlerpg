@@ -30,7 +30,7 @@ package Game.Critter
 			duration = info.duration;
 			
 			if (duration > 0) {
-				Clock.I.Updatables.push(this);
+				Clock.I.RegisterUpdatable(this);
 			}
 		}
 		
@@ -84,7 +84,14 @@ package Game.Critter
 		
 		/* INTERFACE EngineTiming.IUpdatable */
 		
+		public var fractionalSeconds:Number = 0;
 		public function Update(dt:Number):void {
+			fractionalSeconds += dt;
+			if (fractionalSeconds > 1) {
+				fractionalSeconds -= 1;
+				myScript.Run(Script.Update, critter);
+			}
+			
 			if (duration > 0) {
 				duration -= dt;
 				if (duration < 0) {

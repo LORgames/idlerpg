@@ -1,6 +1,10 @@
 ﻿namespace CityTools.Components.DatabaseEditing {
     partial class DatabaseEditor {
         #region Component Designer generated code
+        /// <summary> 
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
 
         /// <summary> 
         /// Required method for Designer support - do not modify 
@@ -11,7 +15,7 @@
             this.toolStripSplitButton4 = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.txtNewDatabaseName = new System.Windows.Forms.ToolStripTextBox();
-            this.btnDeleteDatabases = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btnDelete = new System.Windows.Forms.ToolStripStatusLabel();
             this.listDatabases = new System.Windows.Forms.ListBox();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
@@ -33,7 +37,7 @@
             // 
             this.statusStripDatabases.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSplitButton4,
-            this.btnDeleteDatabases});
+            this.btnDelete});
             this.statusStripDatabases.Location = new System.Drawing.Point(0, 504);
             this.statusStripDatabases.Name = "statusStripDatabases";
             this.statusStripDatabases.Size = new System.Drawing.Size(712, 22);
@@ -62,13 +66,13 @@
             this.txtNewDatabaseName.Name = "txtNewDatabaseName";
             this.txtNewDatabaseName.Size = new System.Drawing.Size(100, 23);
             // 
-            // btnDeleteDatabases
+            // btnDelete
             // 
-            this.btnDeleteDatabases.Image = global::CityTools.Properties.Resources.delete;
-            this.btnDeleteDatabases.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnDeleteDatabases.Name = "btnDeleteDatabases";
-            this.btnDeleteDatabases.Size = new System.Drawing.Size(116, 20);
-            this.btnDeleteDatabases.Text = "Delete Selected";
+            this.btnDelete.Image = global::CityTools.Properties.Resources.delete;
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(103, 17);
+            this.btnDelete.Text = "Delete Selected";
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // listDatabases
             // 
@@ -191,7 +195,6 @@
             this.lvLibrary.UseCompatibleStateImageBehavior = false;
             this.lvLibrary.View = System.Windows.Forms.View.Details;
             this.lvLibrary.SubItemClicked += new CityTools.Components.SubItemEventHandler(this.lvLibrary_SubItemClicked);
-            this.lvLibrary.SubItemBeginEditing += new CityTools.Components.SubItemEventHandler(this.lvLibrary_SubItemBeginEditing);
             this.lvLibrary.SubItemEndEditing += new CityTools.Components.SubItemEndEditingEventHandler(this.lvLibrary_SubItemEndEditing);
             // 
             // DatabaseEditor
@@ -223,7 +226,6 @@
         private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton4;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
         private System.Windows.Forms.ToolStripTextBox txtNewDatabaseName;
-        private System.Windows.Forms.ToolStripDropDownButton btnDeleteDatabases;
         private System.Windows.Forms.ListBox listDatabases;
         private System.Windows.Forms.ToolStrip toolStrip;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
@@ -236,5 +238,6 @@
         private System.Windows.Forms.NumericUpDown numHidden;
         private System.Windows.Forms.TextBox txtHidden;
         private System.Windows.Forms.ComboBox cbHidden;
+        private System.Windows.Forms.ToolStripStatusLabel btnDelete;
     }
 }

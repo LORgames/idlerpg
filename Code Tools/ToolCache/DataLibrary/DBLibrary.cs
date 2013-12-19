@@ -26,6 +26,8 @@ namespace ToolCache.DataLibrary {
                 string cName = f.GetString();
                 byte paramType = f.GetByte(); //128 is highest param type and thats 'optional' in any case
                 AddColumn(cName, (Param)paramType);
+
+                System.Diagnostics.Debug.WriteLine(Name + ">" + cName + " Type=" + (Param)paramType);
             }
 
             short totalRows = f.GetShort();

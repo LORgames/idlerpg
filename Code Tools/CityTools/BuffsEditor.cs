@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using ToolCache.Critters;
+using ToolCache.UI;
 
 namespace CityTools {
     public partial class BuffsEditor : Form {
@@ -66,6 +67,7 @@ namespace CityTools {
             ckbIsDebuff.Checked = false;
             numDuration.Value = 0;
             scriptBox1.Script = "";
+            pbIconDisplay.Load("");
         }
 
         private void UpdateCurrentFromForm() {
@@ -74,6 +76,7 @@ namespace CityTools {
             CurrentBuff.Name = txtName.Text;
             CurrentBuff.IconID = (short)numIconID.Value;
             CurrentBuff.isDebuff = ckbIsDebuff.Checked;
+            CurrentBuff.showsIcon = ckbShowIcon.Checked;
             CurrentBuff.Duration = (float)numDuration.Value;
             CurrentBuff.Script = scriptBox1.Script;
             hasChanged = false;
@@ -86,8 +89,11 @@ namespace CityTools {
             txtName.Text = CurrentBuff.Name;
             numIconID.Value = CurrentBuff.IconID;
             ckbIsDebuff.Checked = CurrentBuff.isDebuff;
+            ckbShowIcon.Checked = CurrentBuff.showsIcon;
             numDuration.Value = (decimal)CurrentBuff.Duration;
             scriptBox1.Script = CurrentBuff.Script;
+
+            RedrawIcon();
 
             hasChanged = false;
         }
@@ -100,6 +106,21 @@ namespace CityTools {
         private void ValueChanged(object sender, EventArgs e) {
             if (isChanging) return;
             hasChanged = true;
+
+            if (sender == numIconID || sender == ckbShowIcon) {
+                RedrawIcon();
+            }
+        }
+
+        private void RedrawIcon() {
+            if (ckbShowIcon.Checked) {
+                int x = (int)numIconID.Value;
+                if (UIManager.GetLibrary("Buff Icons") != null && UIManager.GetLibrary("Buff Icons").Images.Count > x && x > -1) {
+                    pbIconDisplay.Load(UIManager.GetLibrary("Buff Icons").Images[x]);
+                }
+            } else {
+                pbIconDisplay.Image = null;
+            }
         }
     }
 }

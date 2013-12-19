@@ -21,6 +21,7 @@ namespace ToolCache.General {
         public static Dictionary<string, short> MappedFunctionIDs;
         public static Dictionary<string, short> MappedDatabaseNames;
         public static Dictionary<string, short> MappedBuffIDs;
+        public static Dictionary<string, short> MappedUILibraryNames;
 
         public static Dictionary<string, short> MappedStringTable;
 

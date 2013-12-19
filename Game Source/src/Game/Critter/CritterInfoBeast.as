@@ -20,6 +20,7 @@ package Game.Critter
 		public var CollisionHeight:int;
 		public var CollisionOffsetX:int;
 		public var CollisionOffsetY:int;
+		public var HeadHeight:int;
 		
 		public var AnimationFrameCounts:Vector.<int>;
 		public var AnimationsPerRow:int = 0;
@@ -41,6 +42,7 @@ package Game.Critter
 			CollisionHeight = b.readShort();
 			CollisionOffsetX = b.readShort();
 			CollisionOffsetY = b.readShort();
+			HeadHeight = b.readShort();
 			
 			TotalAnimationStates = b.readByte();
 			

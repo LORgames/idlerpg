@@ -12,16 +12,17 @@ package Debug {
 	public class Drawer implements IUpdatable {
 		public static var DrawingObjects:Vector.<Sprite> = new Vector.<Sprite>();
 		private static var NotReady:Boolean = true;
-		private static var Empty:Sprite = new Sprite();
 		
 		public static function Initialize():void {
 			if(Global.DebugRender) {
-				Clock.I.Updatables.push(new Drawer());
+				Clock.I.RegisterUpdatable(new Drawer());
 				NotReady = false;
 			}
 		}
 		
 		public static function AddDebugRect(r:Rect, c:int = -1):void {
+			if (!Global.DebugRender) return;
+			
 			var s:Sprite = GetSprite();
 			
 			if (c != -1) {
@@ -32,10 +33,14 @@ package Debug {
 		}
 		
 		public static function AddDebugCircle(x:Number, y:Number, r:Number, c:int = -1):void {
+			if (!Global.DebugRender) return;
+			
 			GetSprite().graphics.drawEllipse(x-r, y-r*0.85, r*2, r*2*0.85);
 		}
 		
 		public static function AddLine(x1:int, y1:int, x2:int, y2:int, c:int = -1):void {
+			if (!Global.DebugRender) return;
+			
 			var s:Sprite = GetSprite();
 			
 			if (c != -1) {
@@ -47,10 +52,7 @@ package Debug {
 		}
 		
 		private static function GetSprite():Sprite {
-			if (!Global.DebugRender) {
-				Empty.graphics.clear();
-				return Empty;
-			}
+			if (!Global.DebugRender) return null;
 			
 			if (NotReady) Initialize();
 			

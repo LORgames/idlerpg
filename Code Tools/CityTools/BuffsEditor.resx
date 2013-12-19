@@ -124,17 +124,17 @@
   <data name="btnDuplicate.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJASURBVDhPrVLhT1JxFHVr68/gk1vbKxGj3AobYxSho4zJ
-        U0sxTSATNUDFZ6CPESQgCoklqfXCyAwxlxbO3CgTrIzpIput/8HvurmdHiyLmY25dbff9tvOuefec3Zz
-        cv5nGeJql25RZfuXZvWE3FUZLN0fN8Q0PlfCAudKNxoXrnr3ilyZkPuMkWYYXt1A6bD0D06GyEO6JQ3j
-        StCY+hFEaCMAW7wT6tnK0RSWelXjcqYt0oSRNR+GVj3QTtZD0i9M4zmGmNrUslif9CTsmPw+hucbj2FZ
-        NKIuXJFUhkjq8tNLpvKALKmfaYB/1Yt7iT7cnG6AyCVICu2nqPSmLQtKjiF6HRMbDMa/PUTti3LstXDR
-        L8HgZze8K07I7p6DwCHg/OZoWIGWNyoE10cxtv4ANSES7HqHdwmpv8x3Ft5PDrg/2nHeLYKA5mcIzCg5
-        2te1CHz149GX+zDONaOMKenbFZB6RX3qZzXo/WCDI26F+M4Z8DsyBFJhVIcvbLqXb2N4bYD12Y+maRVK
-        fOL5Yo9w/lqwCj0xGj1xC/QvtSigeJskyQaYWWzSiopB4TY1p8PAiivt1TTfBiqiS0+1LXWh7kkVTjby
-        tnmteYp9b0UxIsllw2IImthpnW2Gc9manqwNq0GYiR0+xWUK9ERu1uOVuoVFZUMy2Je6YX1vRnGvmPXM
-        LcramEkopAu36HedMEc7wDdytw7UnCKf7j6BrrcduBVtR77+6F93kVWwsJOH4+15yNcRONZ05OACWSf8
-        IvwE4i4oQ6ldJ6AAAAAASUVORK5CYII=
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJDSURBVDhPrZJhT1JRGMfv1ubH8JVbGyViFFthY8widJQ5
+        QS3UNIFMlAAVMNTLDBIRlMSS1LphZISUS0tHbpQpVsR0kY3Wd/C9bm7/Lnd3RbMWbf228+I8v3Oe5zzP
+        DvFfMcbVLv2Kys5u91EXqnTVBit+741rGp8racNgog+ty5e8bPgHF0OVPtNiO4wvrqJiQvrTK8KKA/pV
+        DeVKknj6LYhwOgB7vBvqhdqpjMss5Uwl1bnYhslNH8Y3RqCdbYZkWMR4urLaqltpTo0kHZj9Oo0n6Qew
+        rZjQFKlJ1YcVlguPzlurA7KUYb4F/g0vbic9uDbXArFLmBI5jluYV+iW6/ONsSsIpSnMfLmHxmfVYEQW
+        5/wSjH10w5sYhOzWaQidwnxWEYSGTqB7pUJwawrTW3fREFaAfl4eqzNt5sl8p+D94IT7vQNn3GIISX5W
+        gvn6fO3LRgQ++3H/0x2YltpRRZV7WE1IvWKP+nEDht7Z4Yz3o/TmSfDNWQkyw6iLnN12r9/AxOYo3ecw
+        2uZUKPeVRstGRNHLQSUG1kgMxG0wPNei2MLbVijoAWZDT1peMybatSzpMZpwMb1ao52wLOqZqvbVXjQ9
+        VOJYK2+X11EoZ6/9inxSUkAPi+KQnL2OhXYMrvczlbURNTg9nD2+hUsVGzgF7PE/I3WLSqrGZXCs9qH/
+        bQ/KhkrpnrklrM4NASnYId90oydmBt/E3WHDuXOi7yh6X5txPdaFIsOhff/irwi6eTjSVYgiPQeH2w7+
+        e4LcIIjv4i4oQ5Q66ecAAAAASUVORK5CYII=
 </value>
   </data>
   <metadata name="backgroundWorker1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">

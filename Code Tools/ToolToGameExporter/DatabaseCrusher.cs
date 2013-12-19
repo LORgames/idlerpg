@@ -20,7 +20,6 @@ namespace ToolToGameExporter {
 
             for (i = 0; i < libs.Length; i++) {
                 DatabaseIDs.Add(libs[i].Name, i);
-                i++;
             }
         }
 

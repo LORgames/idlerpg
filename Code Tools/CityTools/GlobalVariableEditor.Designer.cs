@@ -25,28 +25,22 @@
         private void InitializeComponent() {
             this.tabGroupVariableTypes = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.integerEditor1 = new CityTools.Components.DatabaseEditing.IntegerVariableEditor();
-            this.stringEditor1 = new Components.DatabaseEditing.StringVariableEditor();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.txtHiddenStringEditing = new System.Windows.Forms.TextBox();
-            this.listString = new CityTools.Components.ListViewEx();
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.statusStrip2 = new System.Windows.Forms.StatusStrip();
             this.btnDelete = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.txtNewStringName = new System.Windows.Forms.ToolStripTextBox();
             this.btnDeleteStrings = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
             this.txtFunctionName = new System.Windows.Forms.TextBox();
-            this.scriptFunction = new CityTools.Components.ScriptBox();
             this.listFunctions = new System.Windows.Forms.ListBox();
             this.statusStripFunctions = new System.Windows.Forms.StatusStrip();
             this.toolStripSplitButton2 = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.txtNewFunctionName = new System.Windows.Forms.ToolStripTextBox();
-            this.btnDeleteFunction = new System.Windows.Forms.ToolStripDropDownButton();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.pnlUILibrary = new System.Windows.Forms.FlowLayoutPanel();
             this.lstLibraries = new System.Windows.Forms.ListBox();
@@ -56,8 +50,6 @@
             this.txtNewLibraryName = new System.Windows.Forms.ToolStripTextBox();
             this.btnDeleteLibraries = new System.Windows.Forms.ToolStripDropDownButton();
             this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.databaseEditor1 = new CityTools.Components.DatabaseEditing.DatabaseEditor();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnVarAddVariable = new System.Windows.Forms.ToolStripSplitButton();
@@ -65,10 +57,19 @@
             this.txtNewVariable = new System.Windows.Forms.ToolStripTextBox();
             this.btnVarDeleteSelected = new System.Windows.Forms.ToolStripDropDownButton();
             this.btnVarRepack = new System.Windows.Forms.ToolStripStatusLabel();
+            this.btnDeleteFunction = new System.Windows.Forms.ToolStripStatusLabel();
+            this.integerEditor1 = new CityTools.Components.DatabaseEditing.IntegerVariableEditor();
+            this.listString = new CityTools.Components.ListViewEx();
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.stringEditor1 = new CityTools.Components.DatabaseEditing.StringVariableEditor();
+            this.scriptFunction = new CityTools.Components.ScriptBox();
+            this.databaseEditor1 = new CityTools.Components.DatabaseEditing.DatabaseEditor();
             this.tabGroupVariableTypes.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.statusStrip2.SuspendLayout();
+            this.tabPage6.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.statusStripFunctions.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -103,22 +104,6 @@
             this.tabPage1.Text = "Integer Variables";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // integerEditor1
-            // 
-            this.integerEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.integerEditor1.Location = new System.Drawing.Point(3, 3);
-            this.integerEditor1.Name = "integerEditor1";
-            this.integerEditor1.Size = new System.Drawing.Size(729, 403);
-            this.integerEditor1.TabIndex = 0;
-            // 
-            // stringEditor1
-            // 
-            this.stringEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.stringEditor1.Location = new System.Drawing.Point(3, 3);
-            this.stringEditor1.Name = "stringEditor1";
-            this.stringEditor1.Size = new System.Drawing.Size(729, 403);
-            this.stringEditor1.TabIndex = 0;
-            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.txtHiddenStringEditing);
@@ -140,36 +125,6 @@
             this.txtHiddenStringEditing.TabIndex = 4;
             this.txtHiddenStringEditing.TabStop = false;
             this.txtHiddenStringEditing.Visible = false;
-            // 
-            // listString
-            // 
-            this.listString.AllowColumnReorder = true;
-            this.listString.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader2,
-            this.columnHeader4});
-            this.listString.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listString.DoubleClickActivation = false;
-            this.listString.FullRowSelect = true;
-            this.listString.GridLines = true;
-            this.listString.Location = new System.Drawing.Point(3, 3);
-            this.listString.Name = "listString";
-            this.listString.Size = new System.Drawing.Size(729, 381);
-            this.listString.Sorting = System.Windows.Forms.SortOrder.Ascending;
-            this.listString.TabIndex = 0;
-            this.listString.UseCompatibleStateImageBehavior = false;
-            this.listString.View = System.Windows.Forms.View.Details;
-            this.listString.SubItemClicked += new CityTools.Components.SubItemEventHandler(this.listString_SubItemClicked);
-            this.listString.SubItemEndEditing += new CityTools.Components.SubItemEndEditingEventHandler(this.listString_SubItemEndEditing);
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Name";
-            this.columnHeader2.Width = 144;
-            // 
-            // columnHeader4
-            // 
-            this.columnHeader4.Text = "Value";
-            this.columnHeader4.Width = 581;
             // 
             // statusStrip2
             // 
@@ -214,6 +169,16 @@
             this.btnDeleteStrings.Text = "Delete Selected";
             this.btnDeleteStrings.Click += new System.EventHandler(this.btnDeleteStrings_Click);
             // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.stringEditor1);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Size = new System.Drawing.Size(735, 409);
+            this.tabPage6.TabIndex = 5;
+            this.tabPage6.Text = "String Variables";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.label1);
@@ -244,19 +209,6 @@
             this.txtFunctionName.Name = "txtFunctionName";
             this.txtFunctionName.Size = new System.Drawing.Size(189, 20);
             this.txtFunctionName.TabIndex = 2;
-            // 
-            // scriptFunction
-            // 
-            this.scriptFunction.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.scriptFunction.Enabled = false;
-            this.scriptFunction.Location = new System.Drawing.Point(189, 29);
-            this.scriptFunction.Name = "scriptFunction";
-            this.scriptFunction.Script = "";
-            this.scriptFunction.ScriptType = ToolCache.Scripting.Types.ScriptTypes.Function;
-            this.scriptFunction.Size = new System.Drawing.Size(546, 358);
-            this.scriptFunction.TabIndex = 1;
             // 
             // listFunctions
             // 
@@ -302,14 +254,6 @@
             this.txtNewFunctionName.Name = "txtNewFunctionName";
             this.txtNewFunctionName.Size = new System.Drawing.Size(100, 23);
             this.txtNewFunctionName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtNewFunctionName_KeyDown);
-            // 
-            // btnDeleteFunction
-            // 
-            this.btnDeleteFunction.Image = global::CityTools.Properties.Resources.delete;
-            this.btnDeleteFunction.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnDeleteFunction.Name = "btnDeleteFunction";
-            this.btnDeleteFunction.Size = new System.Drawing.Size(116, 20);
-            this.btnDeleteFunction.Text = "Delete Selected";
             // 
             // tabPage4
             // 
@@ -399,25 +343,6 @@
             this.tabPage5.Text = "Databases";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
-            // databaseEditor1
-            // 
-            this.databaseEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.databaseEditor1.Location = new System.Drawing.Point(3, 3);
-            this.databaseEditor1.Name = "databaseEditor1";
-            this.databaseEditor1.Size = new System.Drawing.Size(729, 403);
-            this.databaseEditor1.TabIndex = 0;
-            // 
-            // tabPage6
-            // 
-            this.tabPage6.Controls.Add(this.stringEditor1);
-            this.tabPage6.Location = new System.Drawing.Point(4, 22);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(735, 409);
-            this.tabPage6.TabIndex = 5;
-            this.tabPage6.Text = "String Variables";
-            this.tabPage6.UseVisualStyleBackColor = true;
-            // 
             // columnHeader1
             // 
             this.columnHeader1.Text = "Name";
@@ -466,6 +391,81 @@
             this.btnVarRepack.Size = new System.Drawing.Size(61, 17);
             this.btnVarRepack.Text = "Repack";
             // 
+            // btnDeleteFunction
+            // 
+            this.btnDeleteFunction.Image = global::CityTools.Properties.Resources.delete;
+            this.btnDeleteFunction.Name = "btnDeleteFunction";
+            this.btnDeleteFunction.Size = new System.Drawing.Size(103, 17);
+            this.btnDeleteFunction.Text = "Delete Selected";
+            this.btnDeleteFunction.Click += new System.EventHandler(this.btnDeleteFunction_Click);
+            // 
+            // integerEditor1
+            // 
+            this.integerEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.integerEditor1.Location = new System.Drawing.Point(3, 3);
+            this.integerEditor1.Name = "integerEditor1";
+            this.integerEditor1.Size = new System.Drawing.Size(729, 403);
+            this.integerEditor1.TabIndex = 0;
+            // 
+            // listString
+            // 
+            this.listString.AllowColumnReorder = true;
+            this.listString.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader2,
+            this.columnHeader4});
+            this.listString.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listString.DoubleClickActivation = false;
+            this.listString.FullRowSelect = true;
+            this.listString.GridLines = true;
+            this.listString.Location = new System.Drawing.Point(3, 3);
+            this.listString.Name = "listString";
+            this.listString.Size = new System.Drawing.Size(729, 381);
+            this.listString.Sorting = System.Windows.Forms.SortOrder.Ascending;
+            this.listString.TabIndex = 0;
+            this.listString.UseCompatibleStateImageBehavior = false;
+            this.listString.View = System.Windows.Forms.View.Details;
+            this.listString.SubItemClicked += new CityTools.Components.SubItemEventHandler(this.listString_SubItemClicked);
+            this.listString.SubItemEndEditing += new CityTools.Components.SubItemEndEditingEventHandler(this.listString_SubItemEndEditing);
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Name";
+            this.columnHeader2.Width = 144;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Value";
+            this.columnHeader4.Width = 581;
+            // 
+            // stringEditor1
+            // 
+            this.stringEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.stringEditor1.Location = new System.Drawing.Point(0, 0);
+            this.stringEditor1.Name = "stringEditor1";
+            this.stringEditor1.Size = new System.Drawing.Size(735, 409);
+            this.stringEditor1.TabIndex = 0;
+            // 
+            // scriptFunction
+            // 
+            this.scriptFunction.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.scriptFunction.Enabled = false;
+            this.scriptFunction.Location = new System.Drawing.Point(189, 29);
+            this.scriptFunction.Name = "scriptFunction";
+            this.scriptFunction.Script = "";
+            this.scriptFunction.ScriptType = ToolCache.Scripting.Types.ScriptTypes.Function;
+            this.scriptFunction.Size = new System.Drawing.Size(546, 358);
+            this.scriptFunction.TabIndex = 1;
+            // 
+            // databaseEditor1
+            // 
+            this.databaseEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.databaseEditor1.Location = new System.Drawing.Point(3, 3);
+            this.databaseEditor1.Name = "databaseEditor1";
+            this.databaseEditor1.Size = new System.Drawing.Size(729, 403);
+            this.databaseEditor1.TabIndex = 0;
+            // 
             // GlobalVariableEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -481,6 +481,7 @@
             this.tabPage2.PerformLayout();
             this.statusStrip2.ResumeLayout(false);
             this.statusStrip2.PerformLayout();
+            this.tabPage6.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             this.statusStripFunctions.ResumeLayout(false);
@@ -523,7 +524,6 @@
         private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton2;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripTextBox txtNewFunctionName;
-        private System.Windows.Forms.ToolStripDropDownButton btnDeleteFunction;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.ListBox lstLibraries;
         private System.Windows.Forms.StatusStrip statusStripUILibraries;
@@ -538,5 +538,6 @@
         private System.Windows.Forms.TabPage tabPage6;
         private Components.DatabaseEditing.IntegerVariableEditor integerEditor1;
         private Components.DatabaseEditing.StringVariableEditor stringEditor1;
+        private System.Windows.Forms.ToolStripStatusLabel btnDeleteFunction;
     }
 }

@@ -13,11 +13,13 @@ using ToolCache.Scripting.Extensions;
 
 namespace ToolToGameExporter {
     public class UICrusher {
-        private static List<string> RemappedLibraryNames = new List<string>();
+        private static Dictionary<string, short> RemappedLibraryNames = new Dictionary<string, short>();
+
+        internal static void Precrush() {
+            CrushLibraries();
+        }
 
         internal static void Go() {
-            CrushLibraries();
-
             List<Image> images = new List<Image>();
             List<String> imageNames = new List<string>();
 
@@ -92,8 +94,8 @@ namespace ToolToGameExporter {
                         } else if (l is UILibraryLayer) {
                             UILibraryLayer l2 = (UILibraryLayer)l;
 
-                            if (RemappedLibraryNames.IndexOf(l2.LibraryName) > -1) {
-                                f.AddShort((short)RemappedLibraryNames.IndexOf(l2.LibraryName));
+                            if (RemappedLibraryNames.ContainsKey(l2.LibraryName)) {
+                                f.AddShort((short)RemappedLibraryNames[l2.LibraryName]);
                                 f.AddShort((short)l2.DefaultIndex);
                             } else {
                                 Processor.Errors.Add(new ProcessingError("UI Layer", p.Name + ">" + e.Name + ">" + l.Name + ">" + l2.LibraryName, "Cannot find that library!"));
@@ -130,21 +132,22 @@ namespace ToolToGameExporter {
 
         private static void CrushLibraries() {
             RemappedLibraryNames.Clear();
+            ExportCrushers.MappedUILibraryNames = RemappedLibraryNames;
 
             BinaryIO f = new BinaryIO();
             
-            int i = UIManager.Libraries.Count;
+            int TotalLibraries = UIManager.Libraries.Count;
             int j = 0;
             UILibrary uil;
             List<Image> images = new List<Image>();
 
-            f.AddShort((short)i);
+            f.AddShort((short)TotalLibraries);
 
-            while (--i > -1) {
+            for(short i = 0; i < TotalLibraries; i++) {
                 images.Clear();
 
                 uil = UIManager.Libraries[i];
-                RemappedLibraryNames.Add(uil.Name);
+                RemappedLibraryNames.Add(uil.Name, i);
 
                 f.AddShort((short)uil.Images.Count);
 

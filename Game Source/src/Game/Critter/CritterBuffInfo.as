@@ -1,4 +1,5 @@
 package Game.Critter {
+	import flash.display.BitmapData;
 	import flash.utils.ByteArray;
 	import Loaders.BinaryLoader;
 	import Scripting.Script;
@@ -18,6 +19,8 @@ package Game.Critter {
 		
 		public var _Script:Script;
 		
+		private var _icon:BitmapData;
+		
 		public function CritterBuffInfo(b:ByteArray) {
 			ID = CritterManager.I.CritterBuffs.length;
 			
@@ -30,6 +33,13 @@ package Game.Critter {
 			duration = b.readFloat();
 			
 			_Script = Script.ReadScript(b);
+		}
+		
+		public function Icon():BitmapData {
+			if (_icon) return _icon;
+			
+			_icon = Main.I.hud.Libraries[CritterManager.I.DatabaseID].ImageCutouts[iconID];
+			return _icon;
 		}
 	}
 }

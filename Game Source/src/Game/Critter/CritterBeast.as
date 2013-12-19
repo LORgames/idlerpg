@@ -52,12 +52,15 @@ package Game.Critter {
 			}
 			
 			if (direction < 2) { //Left or right
-				Animation.x = int(this.X) - Animation.width / 2 + (direction==0?-BeastInfo.CollisionOffsetX:BeastInfo.CollisionOffsetX);
+				Animation.x = int(X) - BeastInfo.SpriteWidth / 2 + (direction==0?-BeastInfo.CollisionOffsetX:BeastInfo.CollisionOffsetX);
 			} else {
-				Animation.x = int(this.X) - Animation.width / 2;
+				Animation.x = int(X) - BeastInfo.SpriteWidth / 2;
 			}
 			
-			Animation.y = int(this.Y) - Animation.height + MyRect.H / 2 + BeastInfo.CollisionOffsetY;
+			Animation.y = int(Y) - BeastInfo.SpriteHeight + MyRect.H / 2 + BeastInfo.CollisionOffsetY;
+			
+			miniPanel.x = (int(X) - 32) - Animation.x;
+			miniPanel.y = (int(Y) - BeastInfo.HeadHeight - 16) - Animation.y;
 			
 			Renderman.DirtyObjects.push(Animation);
 		}

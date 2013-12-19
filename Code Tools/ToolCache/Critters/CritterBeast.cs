@@ -16,6 +16,8 @@ namespace ToolCache.Critters {
         public short rectOffsetX = 0;
         public short rectOffsetY = 0;
 
+        public short headHeight = 0;
+
         public CritterBeast() {
             CritterType = CritterTypes.NonHumanoid;
         }
@@ -33,6 +35,8 @@ namespace ToolCache.Critters {
             c.rectHeight = f.GetShort();
             c.rectOffsetX = f.GetShort();
             c.rectOffsetY = f.GetShort();
+
+            c.headHeight = f.GetShort();
 
             //Now load more complex information (there will probably be a lot of this kind of stuff
             short totalAnimations = f.GetByte();
@@ -56,6 +60,8 @@ namespace ToolCache.Critters {
             f.AddShort(rectHeight);
             f.AddShort(rectOffsetX);
             f.AddShort(rectOffsetY);
+
+            f.AddShort(headHeight);
 
             if (Animations.Count == 0) {
                 Animations.Add("Default", new CritterAnimationSet());

@@ -35,7 +35,7 @@ package Game.Critter {
 		}
 		
 		public static function GetFactionColour(faction:int):int {
-			return (0xFF << (faction * 8));
+			return (0xFFF << (faction * 8));
 		}
 	}
 }

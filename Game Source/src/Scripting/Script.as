@@ -700,6 +700,21 @@ package Scripting {
 						} else {
 							GetNumberFromVariable(EventScript, info, inputParam);
 						} break;
+					case 0x1006: //Spawn Critter with Faction
+						p0.D = EventScript.readShort();
+						p1.X = GetNumberFromVariable(EventScript, info, inputParam); //World X
+						p1.Y = GetNumberFromVariable(EventScript, info, inputParam); //World Y
+						p1.D = EventScript.readShort(); //Faction ID
+						
+						if(!NetSync) {
+							var critter2:BaseCritter = CritterManager.I.CritterInfo[p0.D].CreateCritter(WorldData.CurrentMap, p1.X, p1.Y, !NetSync);
+							critter2.SetFaction(p1.D);
+							critter2.SetOwner(info.CurrentTarget);
+						} else {
+							QDMFCritter.Register(p0.D, p1.X, p1.Y, p1.D, info.CurrentTarget);
+						}
+						
+						break;
 					case 0x1007: //Destroy
 						if (info.CurrentTarget is ICleanUp) { Clock.CleanUpList.push(info.CurrentTarget); } break;
 					case 0x1008: //EffectSpawn
@@ -854,8 +869,7 @@ package Scripting {
 						if (Global.Network != null) {
 							Global.Network.Close();
 							Global.Network = null;
-						}
-						break;
+						} break;
 					case 0x1014: //Spawn Enabled
 						p0.X = EventScript.readShort();
 						p0.Y = EventScript.readShort();
@@ -1140,9 +1154,16 @@ package Scripting {
 		
 		//This updates the scripts if they have Update OR Clock methods
 		internal static var UpdateScripts:Vector.<ScriptInstance> = new Vector.<ScriptInstance>();
-		public static function ProcessUpdate():void {
-			for (var i:int = 0; i < UpdateScripts.length; i++) {
-				UpdateScripts[i].Run(Script.Update);
+		internal static var FractionalUpdates:Number = 0.0;
+		public static function ProcessUpdate(dt:Number):void {
+			FractionalUpdates += dt;
+			
+			if(FractionalUpdates >= 1) {
+				for (var i:int = 0; i < UpdateScripts.length; i++) {
+					UpdateScripts[i].Run(Script.Update);
+				}
+				
+				FractionalUpdates -= 1;
 			}
 		}
 		
@@ -1152,6 +1173,7 @@ package Scripting {
 			//TODO: Make this actually work properly! (more details follow)
 			//It should be able to support multiple triggers firing at the same time
 			//Some kind of stack system would be ideal.
+			Main.I.Log("Firing trigger: " + triggerID);
 			for (var i:int = 0; i < TriggerListeners.length; i++) {
 				TriggerListeners[i].Run(Script.OnTrigger, null, triggerID);
 			}

@@ -34,7 +34,6 @@ package QDMF.Connectors {
 		
 		public function Connect(Hostname:String, Port:int, Logger:ILogger):void {
 			this.Logger = Logger;
-			Security.loadPolicyFile("xmlsocket://"+Hostname+":5187");
 			Client.connect(Hostname, 5000);
 		}
 		

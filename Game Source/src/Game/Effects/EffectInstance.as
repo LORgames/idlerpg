@@ -74,7 +74,7 @@ package Game.Effects {
 			this.PlaybackSpeed = 0.2;
 			ChangeState(0, true);
 			
-			Clock.I.Updatables.push(this);
+			Clock.I.RegisterUpdatable(this);
 			
 			MyScript = new ScriptInstance(Info.MyScript, this);
 			WorldData.CurrentMap.Effects[ID] = this;

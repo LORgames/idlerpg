@@ -3,6 +3,7 @@ package Game.Critter
 	import CollisionSystem.Rect;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.Sprite;
 	import flash.geom.Rectangle;
 	import flash.media.Microphone;
 	import Scripting.Script;
@@ -13,7 +14,7 @@ package Game.Critter
 	 * ...
 	 * @author Paul
 	 */
-	public class CritterAnimationSet extends Bitmap implements IObjectLayer, IAnimated {
+	public class CritterAnimationSet extends Sprite implements IObjectLayer, IAnimated {
 		private var Owner:CritterBeast;
 		private var MyCritter:CritterInfoBeast;
 		
@@ -60,7 +61,9 @@ package Game.Critter
 			}
 			
 			myBitmapData = new BitmapData(Info.SpriteWidth, Info.SpriteHeight, true, Global.DebugRender?0x0000FF00:0xFF000000);
-			this.bitmapData = myBitmapData;
+			this.addChild(new Bitmap(myBitmapData));
+			
+			this.addChild(Owner.miniPanel);
 			
 			CurrentPlaybackSpeed = MyCritter.PlaybackSpeed;
 			
@@ -96,8 +99,8 @@ package Game.Critter
 			
 			if (CurrentFrame < StartFrame || CurrentFrame >= EndFrame) CurrentFrame = StartFrame;
 			
-			FrameRect.x = (CurrentFrame % MyCritter.AnimationsPerRow) * width;
-			FrameRect.y = (CurrentFrame / MyCritter.AnimationsPerRow) * height;
+			FrameRect.x = (CurrentFrame % MyCritter.AnimationsPerRow) * myBitmapData.width;
+			FrameRect.y = (CurrentFrame / MyCritter.AnimationsPerRow) * myBitmapData.height;
 			
 			myBitmapData.copyPixels(sprites, FrameRect, Global.ZeroPoint);
 		}
@@ -122,8 +125,8 @@ package Game.Critter
 					}
 				}
 				
-				FrameRect.x = (CurrentFrame % MyCritter.AnimationsPerRow) * width;
-				FrameRect.y = int(CurrentFrame / MyCritter.AnimationsPerRow) * height;
+				FrameRect.x = (CurrentFrame % MyCritter.AnimationsPerRow) * myBitmapData.width;
+				FrameRect.y = int(CurrentFrame / MyCritter.AnimationsPerRow) * myBitmapData.height;
 				
 				myBitmapData.copyPixels(sprites, FrameRect, Global.ZeroPoint);
 			}

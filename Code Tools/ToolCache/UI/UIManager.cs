@@ -148,7 +148,7 @@ namespace ToolCache.UI {
             return -1;
         }
 
-        internal static UILibrary GetLibrary(string LibraryName) {
+        public static UILibrary GetLibrary(string LibraryName) {
             int i = Libraries.Count;
 
             if (LibraryName == "") return null;

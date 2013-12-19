@@ -78,11 +78,11 @@ namespace CityTools {
         }
 
         void Function_ItemAdded(object sender, EventArgs e) {
-            listFunctions.Items.Add(sender);
+            listFunctions.Items.Add(Variables.FunctionTable[sender.ToString()]);
         }
 
         void Function_ItemRemoved(object sender, EventArgs e) {
-            listFunctions.Items.Remove(sender);
+            listFunctions.Items.Remove(Variables.FunctionTable[sender.ToString()]);
         }
 
         private void AddString(string key) {
@@ -249,6 +249,23 @@ namespace CityTools {
 
                 for (int i = 0; i < toDelete.Count; i++) {
                     UIManager.Libraries.Remove(toDelete[i]);
+                }
+
+                toDelete.Clear();
+                toDelete = null;
+            }
+        }
+
+        private void btnDeleteFunction_Click(object sender, EventArgs e) {
+            if (listFunctions.SelectedItems.Count > 0) {
+                List<ScriptFunction> toDelete = new List<ScriptFunction>();
+
+                for (int i = 0; i < listFunctions.SelectedItems.Count; i++) {
+                    toDelete.Add(listFunctions.SelectedItems[i] as ScriptFunction);
+                }
+
+                for (int i = 0; i < toDelete.Count; i++) {
+                    Variables.FunctionTable.Remove(toDelete[i].Name);
                 }
 
                 toDelete.Clear();

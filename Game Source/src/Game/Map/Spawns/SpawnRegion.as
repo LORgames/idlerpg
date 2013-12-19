@@ -2,7 +2,7 @@ package Game.Map.Spawns {
 	import CollisionSystem.PointX;
 	import CollisionSystem.Rect;
 	import EngineTiming.Clock;
-	import EngineTiming.IOneSecondUpdate;
+	import EngineTiming.IUpdatable;
 	import flash.utils.ByteArray;
 	import Game.Critter.BaseCritter;
 	import Game.Critter.CritterManager;
@@ -14,7 +14,7 @@ package Game.Map.Spawns {
 	 * ...
 	 * @author Paul
 	 */
-	public class SpawnRegion implements IOneSecondUpdate, IScriptTarget {
+	public class SpawnRegion implements IUpdatable, IScriptTarget {
 		public var Map:MapData;
 		public var Area:Vector.<Rect>;
 		
@@ -28,6 +28,8 @@ package Game.Map.Spawns {
 		private var UsedTimeout:int;
 		private var Enabled:Boolean = true;
 		
+		private var FractionalSeconds:Number = 0;
+		
 		public var Critters:Vector.<BaseCritter>;
 
 		public function SpawnRegion(map:MapData, MaxSpawn:int, SpawnAtLoad:int, Timeout:int) {
@@ -39,7 +41,7 @@ package Game.Map.Spawns {
 			
 			if (MaxSpawn > 0) {
 				UsedTimeout = Rndm.random() * Timeout;
-				Clock.I.OneSecond.push(this);
+				Clock.I.RegisterUpdatable(this);
 			}
 		}
 		
@@ -100,7 +102,7 @@ package Game.Map.Spawns {
 			}
 			Critters = null;
 			
-			Clock.I.Remove1(this);
+			Clock.I.Remove(this);
 		}
 		
 		////////////////////////////////////////
@@ -137,17 +139,23 @@ package Game.Map.Spawns {
 		
 		/* INTERFACE EngineTiming.IOneSecondUpdate */
 		
-		public function UpdateOneSecond():void {
+		public function Update(dt:Number):void {
 			if (!Enabled) return;
 			
-			UsedTimeout++;
+			FractionalSeconds += dt;
 			
-			if (UsedTimeout >= Timeout) {
-				UsedTimeout = 0;
+			if(FractionalSeconds >= 1) {
+				UsedTimeout++;
 				
-				if (MaxSpawn > Critters.length) {
-					Spawn();
+				if (UsedTimeout >= Timeout) {
+					UsedTimeout = 0;
+					
+					if (MaxSpawn > Critters.length) {
+						Spawn();
+					}
 				}
+				
+				FractionalSeconds -= 1;
 			}
 		}
 		

@@ -30,6 +30,8 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0x1004, new Param[] { Param.Integer }));
             All.Add("damagepercent",
                 new ValidCommand(0x1005, new Param[] { Param.Integer }));
+            All.Add("spawnfaction",
+                new ValidCommand(0x1006, new Param[] { Param.CritterName, Param.Integer, Param.Integer, Param.FactionName })); //Critter, WorldX, WorldY, Faction
             All.Add("destroy",
                 new ValidCommand(0x1007, new Param[] { Param.Void }));
             All.Add("effectspawn",

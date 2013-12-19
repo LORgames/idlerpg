@@ -249,6 +249,7 @@ namespace CityTools {
                 numBeastRectHeight.Value = (decimal)beast.rectHeight;
                 numBeastOffsetX.Value = (decimal)beast.rectOffsetX;
                 numBeastOffsetY.Value = (decimal)beast.rectOffsetY;
+                numBeastHeadHeight.Value = (decimal)beast.headHeight;
 
                 cbBeastState.Items.Clear();
 
@@ -354,6 +355,7 @@ namespace CityTools {
                 beast.rectHeight = (short)numBeastRectHeight.Value;
                 beast.rectOffsetX = (short)numBeastOffsetX.Value;
                 beast.rectOffsetY = (short)numBeastOffsetY.Value;
+                beast.headHeight = (short)numBeastHeadHeight.Value;
             }
 
             if (_isNewCritter) {
@@ -403,9 +405,7 @@ namespace CityTools {
 
         private void pbPreviewDisplay_Paint(object sender, PaintEventArgs e) {
             e.Graphics.Clear(Color.Beige);
-
-            e.Graphics.DrawString("Preview: Final FPS -WILL- Differ", new Font("Verdana", 10), Brushes.Black, Point.Empty);
-
+            e.Graphics.DrawString("Preview: Final FPS Will Differ", new Font("Verdana", 10), Brushes.Black, Point.Empty);
 
             if (critter is CritterHuman) {
                 PersonDrawer.Draw(e.Graphics, new Point(e.ClipRectangle.Width / 2, e.ClipRectangle.Height - 20), Direction.Down,
@@ -428,6 +428,7 @@ namespace CityTools {
 
                         float xPos = e.ClipRectangle.Width/2 - anim.Center.X;
                         float yPos = e.ClipRectangle.Height - 20 - (anim.Center.Y*2);
+                        float hPos = e.ClipRectangle.Height - 20 - (int)numBeastHeadHeight.Value - (int)numBeastOffsetY.Value;
 
                         if (direction == Direction.Left) {
                             xPos -= (int)numBeastOffsetX.Value;
@@ -441,6 +442,9 @@ namespace CityTools {
 
                         e.Graphics.DrawRectangle(Pens.Blue, e.ClipRectangle.Width / 2 - (int)numAttackRange.Value, e.ClipRectangle.Height - 20 - ((int)numBeastRectHeight.Value/2) - (int)((float)numAttackRange.Value * GlobalSettings.PerspectiveSkew) - (int)numBeastOffsetY.Value, (int)numAttackRange.Value * 2, (int)((float)numAttackRange.Value * 2 * GlobalSettings.PerspectiveSkew));
                         e.Graphics.DrawRectangle(Pens.Green, e.ClipRectangle.Width / 2 - (int)numRange.Value, e.ClipRectangle.Height - 20 - ((int)numBeastRectHeight.Value/2) - (int)((float)numRange.Value * GlobalSettings.PerspectiveSkew) - (int)numBeastOffsetY.Value, (int)numRange.Value * 2, (int)((float)numRange.Value * 2 * GlobalSettings.PerspectiveSkew));
+
+                        if((critter.AIType & (int)AITypes.HidePanel) == 0) //Don't draw the panel if the AIType hides the panel
+                            e.Graphics.FillRectangle(Brushes.YellowGreen, e.ClipRectangle.Width/2 - 32, hPos-16, 64, 16);
                     }
                 }
             }

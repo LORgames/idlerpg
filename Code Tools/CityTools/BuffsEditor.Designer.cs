@@ -41,8 +41,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.scriptBox1 = new CityTools.Components.ScriptBox();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.toolsMainTools.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -260,6 +260,7 @@
             this.scriptBox1.ScriptType = ToolCache.Scripting.Types.ScriptTypes.Buff;
             this.scriptBox1.Size = new System.Drawing.Size(577, 379);
             this.scriptBox1.TabIndex = 0;
+            this.scriptBox1.ScriptUpdated += new System.EventHandler<System.EventArgs>(this.ValueChanged);
             // 
             // BuffsEditor
             // 

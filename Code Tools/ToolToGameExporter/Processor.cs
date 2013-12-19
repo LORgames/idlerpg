@@ -67,6 +67,8 @@ namespace ToolToGameExporter {
                 BuffCrusher.Precrush();
                 UpdateEPF(epf, "Counting Coins...", 9);
                 DatabaseCrusher.Precrush();
+                UpdateEPF(epf, "UI precrush...", 10);
+                UICrusher.Precrush();
 
                 //Tier 0  Crushing. No Dependancies.
                 UpdateEPF(epf, "Amplyfying Sounds...", 10);

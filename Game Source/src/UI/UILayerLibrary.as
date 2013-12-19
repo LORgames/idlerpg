@@ -68,7 +68,7 @@ package UI {
 		
 		public function Play(time:Number, playReverse:Boolean):void {
 			if (!isPlaying) {
-				Clock.I.Updatables.push(this);
+				Clock.I.RegisterUpdatable(this);
 				isPlaying = true;
 			}
 			

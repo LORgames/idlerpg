@@ -37,6 +37,8 @@ namespace CityTools {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabInfo = new System.Windows.Forms.TabPage();
             this.pnlBeast = new System.Windows.Forms.Panel();
+            this.label24 = new System.Windows.Forms.Label();
+            this.numBeastHeadHeight = new System.Windows.Forms.NumericUpDown();
             this.label23 = new System.Windows.Forms.Label();
             this.numBeastOffsetX = new System.Windows.Forms.NumericUpDown();
             this.label21 = new System.Windows.Forms.Label();
@@ -120,6 +122,7 @@ namespace CityTools {
             this.tabControl1.SuspendLayout();
             this.tabInfo.SuspendLayout();
             this.pnlBeast.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numBeastHeadHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBeastOffsetX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBeastOffsetY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBeastRectHeight)).BeginInit();
@@ -200,7 +203,7 @@ namespace CityTools {
             // 
             this.btnCreateHumanoidCritter.Image = ((System.Drawing.Image)(resources.GetObject("btnCreateHumanoidCritter.Image")));
             this.btnCreateHumanoidCritter.Name = "btnCreateHumanoidCritter";
-            this.btnCreateHumanoidCritter.Size = new System.Drawing.Size(124, 22);
+            this.btnCreateHumanoidCritter.Size = new System.Drawing.Size(131, 22);
             this.btnCreateHumanoidCritter.Text = "Humanoid";
             this.btnCreateHumanoidCritter.Click += new System.EventHandler(this.btnCreateHumanoidCritter_Click);
             // 
@@ -208,7 +211,7 @@ namespace CityTools {
             // 
             this.btnCreateBeastCritter.Image = ((System.Drawing.Image)(resources.GetObject("btnCreateBeastCritter.Image")));
             this.btnCreateBeastCritter.Name = "btnCreateBeastCritter";
-            this.btnCreateBeastCritter.Size = new System.Drawing.Size(124, 22);
+            this.btnCreateBeastCritter.Size = new System.Drawing.Size(131, 22);
             this.btnCreateBeastCritter.Text = "Beast Man";
             this.btnCreateBeastCritter.Click += new System.EventHandler(this.btnCreateBeastCritter_Click);
             // 
@@ -281,6 +284,8 @@ namespace CityTools {
             // pnlBeast
             // 
             this.pnlBeast.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.pnlBeast.Controls.Add(this.label24);
+            this.pnlBeast.Controls.Add(this.numBeastHeadHeight);
             this.pnlBeast.Controls.Add(this.label23);
             this.pnlBeast.Controls.Add(this.numBeastOffsetX);
             this.pnlBeast.Controls.Add(this.label21);
@@ -301,9 +306,36 @@ namespace CityTools {
             this.pnlBeast.Controls.Add(this.ccBeastAnimations);
             this.pnlBeast.Location = new System.Drawing.Point(197, 268);
             this.pnlBeast.Name = "pnlBeast";
-            this.pnlBeast.Size = new System.Drawing.Size(226, 270);
+            this.pnlBeast.Size = new System.Drawing.Size(226, 286);
             this.pnlBeast.TabIndex = 16;
             this.pnlBeast.Visible = false;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(0, 196);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(43, 13);
+            this.label24.TabIndex = 33;
+            this.label24.Text = "HeadY:";
+            // 
+            // numBeastHeadHeight
+            // 
+            this.numBeastHeadHeight.Location = new System.Drawing.Point(47, 193);
+            this.numBeastHeadHeight.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numBeastHeadHeight.Minimum = new decimal(new int[] {
+            200,
+            0,
+            0,
+            -2147483648});
+            this.numBeastHeadHeight.Name = "numBeastHeadHeight";
+            this.numBeastHeadHeight.Size = new System.Drawing.Size(62, 20);
+            this.numBeastHeadHeight.TabIndex = 32;
+            this.numBeastHeadHeight.ValueChanged += new System.EventHandler(this.ValueChanged);
             // 
             // label23
             // 
@@ -406,11 +438,11 @@ namespace CityTools {
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(50, 197);
+            this.label18.Location = new System.Drawing.Point(120, 195);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(79, 13);
+            this.label18.Size = new System.Drawing.Size(30, 13);
             this.label18.TabIndex = 23;
-            this.label18.Text = "Animation FPS:";
+            this.label18.Text = "FPS:";
             // 
             // numBeastFPS
             // 
@@ -420,7 +452,7 @@ namespace CityTools {
             0,
             0,
             131072});
-            this.numBeastFPS.Location = new System.Drawing.Point(135, 193);
+            this.numBeastFPS.Location = new System.Drawing.Point(159, 193);
             this.numBeastFPS.Maximum = new decimal(new int[] {
             2,
             0,
@@ -432,7 +464,7 @@ namespace CityTools {
             0,
             131072});
             this.numBeastFPS.Name = "numBeastFPS";
-            this.numBeastFPS.Size = new System.Drawing.Size(86, 20);
+            this.numBeastFPS.Size = new System.Drawing.Size(62, 20);
             this.numBeastFPS.TabIndex = 22;
             this.numBeastFPS.Value = new decimal(new int[] {
             2,
@@ -865,9 +897,9 @@ namespace CityTools {
             // 
             // pbPreviewDisplay
             // 
-            this.pbPreviewDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbPreviewDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.pbPreviewDisplay.Location = new System.Drawing.Point(197, 6);
             this.pbPreviewDisplay.Name = "pbPreviewDisplay";
             this.pbPreviewDisplay.Size = new System.Drawing.Size(317, 259);
@@ -1208,6 +1240,7 @@ namespace CityTools {
             this.tabInfo.PerformLayout();
             this.pnlBeast.ResumeLayout(false);
             this.pnlBeast.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numBeastHeadHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBeastOffsetX)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBeastOffsetY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBeastRectHeight)).EndInit();
@@ -1321,5 +1354,7 @@ namespace CityTools {
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.NumericUpDown numBeastOffsetX;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.NumericUpDown numBeastHeadHeight;
     }
 }

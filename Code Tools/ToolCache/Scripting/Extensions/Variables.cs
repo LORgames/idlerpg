@@ -8,6 +8,7 @@ using ToolCache.Critters;
 using System.Text.RegularExpressions;
 using ToolCache.Scripting.Types;
 using ToolCache.Storage;
+using System.Windows.Forms;
 
 namespace ToolCache.Scripting.Extensions {
     public class Variables {
@@ -46,7 +47,6 @@ namespace ToolCache.Scripting.Extensions {
 
                 if (lines.Length > 0 && lines[0].IndexOf("#VERSION ") == 0) {
                     int.TryParse(lines[0].Substring(9), out DatabaseIDForVariables);
-                    System.Diagnostics.Debug.WriteLine("Variable DatabaseID=" + DatabaseIDForVariables);
                 }
 
                 foreach (String line in lines) {
@@ -278,9 +278,17 @@ namespace ToolCache.Scripting.Extensions {
 
         public static void UpdatedFunction(ScriptFunction function) {
             if (function.OldName != function.Name) {
-                //if(function.
-                //FunctionTable.Remove(function.OldName);
-                //FunctionTable.Add(function.Name);
+                if (FunctionTable.ContainsKey(function.Name)) {
+                    MessageBox.Show("A function with that name already exists!");
+                    function.Name = function.OldName;
+                } else {
+                    if (FunctionTable.ContainsKey(function.OldName)) {
+                        FunctionTable.Remove(function.OldName);
+                    }
+
+                    FunctionTable.Add(function.Name, function);
+                    function.OldName = function.Name;
+                }
             }
         }
 

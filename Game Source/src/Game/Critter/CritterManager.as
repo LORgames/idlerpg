@@ -1,5 +1,6 @@
 package Game.Critter {
 	import adobe.utils.CustomActions;
+	import flash.display.BitmapData;
 	import flash.utils.ByteArray;
 	import Loaders.BinaryLoader;
 	/**
@@ -11,6 +12,7 @@ package Game.Critter {
 		
 		public var CritterInfo:Vector.<CritterInfoBase>;
 		public var CritterBuffs:Vector.<CritterBuffInfo>;
+		public var DatabaseID:int = 1;
 		
 		public function CritterManager() {
 			I = this;
@@ -38,6 +40,7 @@ package Game.Critter {
 			var buffsCount:int = b.readShort();
 			
 			CritterBuffs = new Vector.<CritterBuffInfo>(buffsCount, true);
+			DatabaseID = b.readShort();
 			
 			for (var i:int = 0; i < buffsCount; i++) {
 				CritterBuffs[i] = new CritterBuffInfo(b);

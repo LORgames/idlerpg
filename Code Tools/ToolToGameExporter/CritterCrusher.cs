@@ -96,6 +96,7 @@ namespace ToolToGameExporter {
                         f.AddShort(cb.rectHeight);
                         f.AddShort(cb.rectOffsetX);
                         f.AddShort(cb.rectOffsetY);
+                        f.AddShort(cb.headHeight);
 
                         f.AddByte((byte)Animations.Count);
 

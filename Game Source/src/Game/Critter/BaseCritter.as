@@ -6,8 +6,12 @@ package Game.Critter {
 	import EngineTiming.Clock;
 	import EngineTiming.ICleanUp;
 	import EngineTiming.IUpdatable;
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.Graphics;
+	import flash.geom.Matrix;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import flash.text.TextField;
 	import Game.Map.MapData;
 	import Game.Map.Portals.Portal;
@@ -76,10 +80,19 @@ package Game.Critter {
 		public var CurrentDefence:int = 0;
 		public var BonusAttack:int = 0;
 		
+		public var miniPanel:Bitmap;
+		protected var _debuffBMPD:BitmapData;
+		private static var FULLRECT:Rectangle = new Rectangle(16, 14, 32, 2);
+		private static var HPRECT0:Rectangle = new Rectangle(16, 15, 32, 1);
+		private static var HPRECT1:Rectangle = new Rectangle(16, 14, 32, 1);
+		
 		public function BaseCritter(ID:int, myInfo:CritterInfoBase) {
 			Info = myInfo;
 			MyRect = new Rect(false, this, 0, 0, 0, 0);
-			Clock.I.Updatables.push(this);
+			Clock.I.RegisterUpdatable(this);
+			
+			_debuffBMPD = new BitmapData(64, 20, true, 0x00FFFFFF);
+			miniPanel = new Bitmap(_debuffBMPD);
 		}
 		
 		protected function CheckScriptRegions():void {
@@ -207,6 +220,7 @@ package Game.Critter {
 			
 			CheckCollisions();
 			CheckScriptRegions();
+			UpdateBuffPanel();
 		}
 		
 		public function PostUpdate():void {
@@ -425,6 +439,30 @@ package Game.Critter {
 			}
 		}
 		
+		public function UpdateBuffPanel():void {
+			if ((MyAIType & AITypes.HidePanel) > 0) return;
+			
+			//Clear the panel
+			_debuffBMPD.fillRect(_debuffBMPD.rect, 0x00FFFFFF);
+			
+			//Draw Buffs
+			var buffIcon:int = 0;
+			for (var i:int = 0; i < ActiveBuffs.length; i++) {
+				trace("Total buffs: " + ActiveBuffs.length);
+				if (ActiveBuffs[i].info.showIcon) {
+					buffIcon++;
+					_debuffBMPD.draw(ActiveBuffs[i].info.Icon(), new Matrix(1, 0, 0, 1, (buffIcon % 4) * 16, 0));
+				}
+			}
+			
+			//Draw health
+			HPRECT0.width = 32 * CurrentHP / MaximumHP;
+			HPRECT1.width = HPRECT0.width;
+			_debuffBMPD.fillRect(FULLRECT, 0xFF000000);
+			_debuffBMPD.fillRect(HPRECT0, 0xFF000000 | Factions.GetFactionColour(PrimaryFaction));
+			_debuffBMPD.fillRect(HPRECT1, (0xFF000000 | Factions.GetFactionColour(PrimaryFaction)) / 3 * 2);
+		}
+		
 		public function RequestMove(xSpeed:Number, ySpeed:Number, move:Boolean = true):void {
 			virginMoveSpeedX = xSpeed;
 			virginMoveSpeedY = ySpeed;
@@ -510,6 +548,12 @@ package Game.Critter {
 			ActiveBuffs = null;
 			
 			Info = null;
+			
+			if (miniPanel) miniPanel = null;
+			if (_debuffBMPD) {
+				_debuffBMPD.dispose();
+				_debuffBMPD = null;
+			}
 			
 			Clock.I.Remove(this);
 		}
