@@ -278,5 +278,14 @@ namespace CityTools {
             //pictureBox1.Invalidate();
             EffectEdited = true;
         }
+
+        private void btnDeleteSelected_Click(object sender, EventArgs e) {
+            if (treeView.SelectedNode != null) {
+                if (treeView.SelectedNode.Tag is Effect) {
+                    EffectManager.RemoveEffect(treeView.SelectedNode.Tag as Effect);
+                    treeView.Nodes.Remove(treeView.SelectedNode);
+                }
+            }
+        }
     }
 }

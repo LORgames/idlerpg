@@ -86,5 +86,9 @@ namespace ToolCache.Effects {
             e.OldName = e.Name;
         }
 
+        public static void RemoveEffect(Effect e) {
+            EffectsInGroups[e.Group].Remove(e);
+            Effects.Remove(e.Name);
+        }
     }
 }

@@ -497,6 +497,10 @@ package Game.Critter {
 			}
 		}
 		
+		public function FixMovementSpeed():void {
+			RequestMove(moveSpeedX, moveSpeedY, true);
+		}
+		
 		public function RequestBasicAttack():void {
 			//Gets handed down to the child classes.
 		}
@@ -639,6 +643,10 @@ package Game.Critter {
 				var b:CritterBuff = CritterManager.I.GetBuff();
 				b.ApplyToCritter(buffID, this);
 				ActiveBuffs.push(b);
+				
+				FixMovementSpeed();
+			} else {
+				Main.I.Log("Non-stackable buffs are not currently allowed!");
 			}
 		}
 		
@@ -660,6 +668,8 @@ package Game.Critter {
 			if (i > -1) {
 				ActiveBuffs.splice(i, 1);
 			}
+			
+			FixMovementSpeed();
 		}
 		
 		public function RemoveBuffByID(buffID:int):void {

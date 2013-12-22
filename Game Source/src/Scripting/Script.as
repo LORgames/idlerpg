@@ -78,7 +78,7 @@ package Scripting {
 		public static const AOE:int = 0x9001;
 		public static const MYAREA:int = 0x9003;
 		public static const MAP:int = 0x9004;
-		public static const FACTIONMAP:int = 0x9004;
+		public static const FACTIONMAP:int = 0x9005;
 		
 		//Script information
 		internal var EventScripts:Vector.<ByteArray>;
@@ -397,6 +397,8 @@ package Scripting {
 						
 						break;
 					case MAP:
+						dim0 = eventScript.readShort();
+						
 						if(eType != Script.CRITTER) {
 							WorldData.CurrentMap.GetObjectsInArea(null, Objects, eType, info.CurrentTarget);
 						} else {
@@ -405,11 +407,13 @@ package Scripting {
 							}
 						} break;
 					case FACTIONMAP:
-						dim0 = GetNumberFromVariable(eventScript, info, param);
+						dim0 = eventScript.readShort(); //GetNumberFromVariable(eventScript, info, param);
+						trace("Finding all 0x" + eType.toString(16) + " for team " + dim0);
 						if(eType != Script.CRITTER) {
 							//We have a serious problem.
 						} else {
 							for (i = 0; i < WorldData.CurrentMap.Critters.length; i++) {
+								if (WorldData.CurrentMap.Critters[i] == null) continue;
 								if(WorldData.CurrentMap.Critters[i].GetFaction() == dim0) {
 									Objects.push(WorldData.CurrentMap.Critters[i]);
 								}
@@ -419,7 +423,7 @@ package Scripting {
 						//something :)
 						break;
 					default:
-						Main.I.Log("Unknown ArrayType.");
+						Main.I.Log("Unknown ArrayType. Type=" + arrayType);
 						break;
 				}
 				

@@ -57,6 +57,7 @@ namespace CityTools {
             this.tabScripts = new System.Windows.Forms.TabPage();
             this.scriptEffect = new CityTools.Components.ScriptBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.btnDeleteSelected = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -87,7 +88,8 @@ namespace CityTools {
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1});
+            this.toolStripButton1,
+            this.btnDeleteSelected});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(222, 25);
@@ -446,6 +448,16 @@ namespace CityTools {
             this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // btnDeleteSelected
+            // 
+            this.btnDeleteSelected.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnDeleteSelected.Image = global::CityTools.Properties.Resources.delete;
+            this.btnDeleteSelected.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnDeleteSelected.Name = "btnDeleteSelected";
+            this.btnDeleteSelected.Size = new System.Drawing.Size(23, 22);
+            this.btnDeleteSelected.Text = "Delete";
+            this.btnDeleteSelected.Click += new System.EventHandler(this.btnDeleteSelected_Click);
+            // 
             // EffectEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -512,5 +524,6 @@ namespace CityTools {
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabInfo;
         private System.Windows.Forms.TabPage tabScripts;
+        private System.Windows.Forms.ToolStripButton btnDeleteSelected;
     }
 }
