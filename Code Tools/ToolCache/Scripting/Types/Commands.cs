@@ -119,7 +119,7 @@ namespace ToolCache.Scripting.Types {
             All.Add("offsetset",
                 new ValidCommand(0x500A, new Param[] { Param.Integer, Param.Integer }));
             All.Add("withnearest",
-                new ValidCommand(0x5008, new Param[] { Param.ScriptTarget }, true, new ushort[] { 0x5009 }));
+                new ValidCommand(0x5008, new Param[] { Param.ObjectType }, true, new ushort[] { 0x5009 }));
 
             //Animation Commands
             All.Add("animationplay",

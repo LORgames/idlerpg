@@ -529,6 +529,14 @@ namespace ToolCache.Scripting {
                             } else {
                                 info.Errors.Add("There isn't a buff called '" + paramBits[i] + "'." + ErrorEnding());
                             } break;
+                        case Param.ObjectType:
+                            InternalTypes scriptType;
+                            if (!Enum.TryParse<InternalTypes>(paramBits[i], out scriptType)) {
+                                info.Errors.Add(paramBits[i] + " is not a valid scripting type!" + ErrorEnding());
+                            } else {
+                                AdditionalBytecode.Add((ushort)scriptType);
+                            }
+                            break;
                         default:
                             info.Errors.Add("Unknown Param type: " + thisParamType + ErrorEnding()); break;
                     }
