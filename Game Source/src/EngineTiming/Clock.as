@@ -62,7 +62,7 @@ package EngineTiming {
 				}
 			}
 			
-			if (Global.LoadingTotal == 0) {
+			if (Global.LoadingTotal == 0 || true) {
 				var i:int;
 				edt += (delta / 1000);
 				

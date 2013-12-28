@@ -75,6 +75,11 @@ package Strings
 			return Prebuilt;
 		}
 		
+		public function ClearComponents():void {
+			Components.length = 0;
+			Prebuilt = "";
+		}
+		
 		private function RebuildIfRequired():void {
 			var i:int = Components.length;
 			var b:Boolean = false;

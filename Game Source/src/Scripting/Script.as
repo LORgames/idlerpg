@@ -1,4 +1,5 @@
 package Scripting {
+	import adobe.utils.CustomActions;
 	import CollisionSystem.PointX;
 	import CollisionSystem.Rect;
 	import Debug.Drawer;
@@ -8,6 +9,7 @@ package Scripting {
 	import Game.Critter.BaseCritter;
 	import Game.Critter.CritterHuman;
 	import Game.Critter.CritterManager;
+	import Game.Critter.Factions;
 	import Game.Effects.EffectInfo;
 	import Game.Effects.EffectInstance;
 	import Game.Effects.EffectManager;
@@ -24,7 +26,9 @@ package Scripting {
 	import QDMF.Connectors.SocketHost;
 	import QDMF.Logic.Helper.QDMFCritter;
 	import QDMF.Logic.Helper.QDMFEffect;
+	import QDMF.Packet;
 	import QDMF.PacketFactory;
+	import QDMF.PacketTypes;
 	import SoundSystem.EffectsPlayer;
 	import SoundSystem.MusicPlayer;
 	import Strings.StringEx;
@@ -641,6 +645,7 @@ package Scripting {
 			var bParam:Boolean;
 			var objName:String;
 			var fParam:Number;
+			var i:int;
 			
 			var deep:int = 0;
 			
@@ -939,6 +944,40 @@ package Scripting {
 						if (info.CurrentTarget is BaseCritter) {
 							(info.CurrentTarget as BaseCritter).CurrentTarget = null;
 						} break;
+					case 0x1020: //SetString
+						p0.D = EventScript.readShort(); //String type
+						if (p0.D != 0x2) {	//Make sure we're trying to write a variable string and not a static one
+							//Serious problem detected.
+							EventScript.position -= 2;		//Rewind the script execution
+							GetWonkyString(EventScript);	//Read String
+							GetWonkyString(EventScript);	//Read String
+							trace("SETSTRING: Critical Error!");
+						} else {
+							p0.X = EventScript.readShort(); //String ID
+							objName = GetWonkyString(EventScript);	//New String Value
+							
+							trace("SetString ID=" + p0.X + " Str=" + objName);
+							GlobalVariables.StringVariables[p0.X] = objName;
+						} break;
+					case 0x1021: //NetSyncString
+						p0.D = EventScript.readShort(); //String type
+						if (p0.D != 0x2) {	//Make sure we're trying to write a variable string and not a static one
+							EventScript.position -= 2; GetWonkyString(EventScript);	//Serious error in script, Rewind Script Execution and Read String
+							trace("NETSYNCSTRING: Critical Error!");
+						} else {
+							p0.X = EventScript.readShort(); //String ID
+							if (Global.Network != null) {
+								objName = GlobalVariables.StringVariables[p0.X];
+								var pack:Packet = new Packet(PacketTypes.SCRIPT);
+								pack.bytes.writeShort(0x1020); pack.bytes.writeShort(p0.D); pack.bytes.writeShort(p0.X); pack.bytes.writeShort(0x1); pack.bytes.writeUTF(objName); if (pack.bytes.length % 2 == 1) pack.bytes.writeByte(0x0); pack.bytes.writeShort(0xFFFF);
+								Global.Network.SendPacket(pack); pack.bytes.clear();
+								
+								trace("NETSYNCSTRING ID=" + p0.X + " STR=" + objName);
+							}
+						} break;
+					case 0x1022: //NetTrigger
+						trace("NetTrigger");
+						PacketFactory.N(Vector.<int>([0x100D, 0xBFFF, GetNumberFromVariable(EventScript, info, inputParam)])); break;
 					case 0x4001: //Equip item on the target
 						if (info.CurrentTarget is CritterHuman) {
 							(info.CurrentTarget as CritterHuman).Equipment.EquipSlot(EventScript.readShort(), EventScript.readShort());
@@ -1018,6 +1057,31 @@ package Scripting {
 						} info.CurrentTarget.UpdatePointX(Position); break;
 					case 0x5009: //PopTarget()
 						info.PopTarget(); info.CurrentTarget.UpdatePointX(Position); break;
+					case 0x500B: //WithNearest
+						p0.X = EventScript.readUnsignedShort();
+						p0.Y = GetNumberFromVariable(EventScript, info, inputParam);
+						var objects:Vector.<IScriptTarget> = new Vector.<IScriptTarget>();
+						if (p0.Y == 0) { //Infinite range
+							if (p0.X != CRITTER && p0.X != ALLY && p0.X != ENEMY) {
+								Main.I.Log("WithNearest currently only works with 'Critter', 'Ally' and 'Enemy' types!");
+								//TODO: Add Object and other types :)
+							} else {
+								var cv:Vector.<BaseCritter> = WorldData.CurrentMap.Critters;
+								p0.D = info.CurrentTarget.GetFaction();
+								if (p0.X == CRITTER) for (i = 0; i < cv.length; i++) { if (cv[i] == null) continue; objects.push(cv[i]); }
+								if (p0.X == ALLY) for (i = 0; i < cv.length; i++) { if (cv[i] == null) continue;if(Factions.IsFriends(p0.D, cv[i].PrimaryFaction)) objects.push(cv[i]); }
+								if (p0.X == ENEMY) for (i = 0; i < cv.length; i++) { if (cv[i] == null) continue; if (Factions.IsEnemies(p0.D, cv[i].PrimaryFaction)) objects.push(cv[i]); }
+							}
+						} else {
+							WorldData.CurrentMap.GetObjectsInArea(Rect.GetRectFromPointWithRadius(Position, p0.Y), objects, p0.X, info.CurrentTarget);
+						}
+						
+						var target:IScriptTarget = MathsEx.GetClosestObjectInVector(Position, objects);
+						if(target != null) {
+							info.AttachTarget(target); info.CurrentTarget.UpdatePointX(Position);
+						} else {
+							ReadUntilBalancedClose(EventScript);
+						} break;
 					case 0x6000: //Play Animation
 						info.Invoker.ChangeState(EventScript.readShort(), false); break;
 					case 0x6001: //Loop Animation
@@ -1063,7 +1127,7 @@ package Scripting {
 						p0.X = EventScript.readShort(); //Function ID
 						GlobalVariables.Functions.Run(p0.X, info, inputParam);
 						break;
-					case 0xC002: //Hide Panel
+					case 0xC002: //Hide Panel || UIPanelVisible
 						p0.D = EventScript.readUnsignedShort();
 						p0.X = EventScript.readShort();
 						(Main.I.hud.Panels[p0.D] as UIPanel).visible = (p0.X == 1);
@@ -1094,7 +1158,7 @@ package Scripting {
 						uiL = uiE.Layers[EventScript.readShort()];
 						
 						if (uiL is UILayerLibrary) {
-							(uiL as UILayerLibrary).ID = GetNumberFromVariable(EventScript, info, inputParam);
+							(uiL as UILayerLibrary).SetID(GetNumberFromVariable(EventScript, info, inputParam));
 							uiE.Draw(Main.I.stage.stageWidth, Main.I.stage.stageHeight, Main.I.hud);
 						} else {
 							GetNumberFromVariable(EventScript, info, inputParam);//Just pop it off

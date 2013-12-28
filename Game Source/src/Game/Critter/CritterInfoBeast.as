@@ -65,6 +65,8 @@ package Game.Critter
 			SpriteHeight = b.readUnsignedShort();
 			
 			AnimationsPerRow = SpriteSheetWidth / SpriteWidth;
+			
+			GetSprites();
 		}
 		
 		override public function CreateCritter(map:MapData, x:int, y:int, isSimulated:Boolean = true, _id:int = -1):BaseCritter {

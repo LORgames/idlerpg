@@ -47,9 +47,8 @@ package QDMF.Connectors {
 		}
 		
 		public function SendPacketImmediate(packet:Packet):void {
-			if (Client != null && nextFlush.length > 0) {
+			if (Client != null) {
 				try {
-					Logger.Log("Sending " + packet.bytes.bytesAvailable + "bytes. [INSTANT]");
 					Client.writeShort(packet.bytes.length);
 					Client.writeBytes(packet.bytes);
 					Client.flush();
@@ -115,7 +114,7 @@ package QDMF.Connectors {
 		public function Flush():void {
 			if (Client != null && nextFlush.length > 0) {
 				try {
-					Logger.Log("Sending " + nextFlush.bytesAvailable + "bytes. [BUFFERED]");
+					Logger.Log("Sending " + nextFlush.length + " bytes. [BUFFERED]");
 					Client.writeBytes(nextFlush);
 					Client.flush();
 					nextFlush.clear();

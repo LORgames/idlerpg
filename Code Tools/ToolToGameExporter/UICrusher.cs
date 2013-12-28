@@ -48,7 +48,7 @@ namespace ToolToGameExporter {
                     f.AddByte((byte)e.Layers.Count);
 
                     foreach (UILayer l in e.Layers) {
-                        f.AddByte((byte)((l is UIImageLayer) ? 0 : (l is UITextLayer) ? 1 : 2));
+                        f.AddByte((byte)((l is UILayerImage) ? 0 : (l is UILayerText) ? 1 : 2));
                         f.AddByte((byte)l.AnchorPoint);
                         f.AddShort(l.OffsetX);
                         f.AddShort(l.OffsetY);
@@ -57,8 +57,8 @@ namespace ToolToGameExporter {
 
                         f.AddByte((byte)l.MyType);
 
-                        if (l is UIImageLayer) {
-                            UIImageLayer l2 = (UIImageLayer)l;
+                        if (l is UILayerImage) {
+                            UILayerImage l2 = (UILayerImage)l;
                             f.AddShort((short)l2.GlobalVariable);
 
                             if (imageNames.Contains(l2.ImageFilename)) {
@@ -68,8 +68,8 @@ namespace ToolToGameExporter {
                                 images.Add(ImageCache.RequestImage(l2.ImageFilename));
                                 imageNames.Add(l2.ImageFilename);
                             }
-                        } else if (l is UITextLayer) {
-                            UITextLayer l2 = (UITextLayer)l;
+                        } else if (l is UILayerText) {
+                            UILayerText l2 = (UILayerText)l;
 
                             if (l2.InputType > 0) {
                                 if (Variables.StringVariables.ContainsKey(l2.Message)) {
@@ -91,8 +91,8 @@ namespace ToolToGameExporter {
                             f.AddByte((byte)l2.FontFamily);
                             f.AddByte((byte)(l2.WordWrap ? 1 : 0));
                             f.AddByte((byte)l2.InputType);
-                        } else if (l is UILibraryLayer) {
-                            UILibraryLayer l2 = (UILibraryLayer)l;
+                        } else if (l is UILayerLibrary) {
+                            UILayerLibrary l2 = (UILayerLibrary)l;
 
                             if (RemappedLibraryNames.ContainsKey(l2.LibraryName)) {
                                 f.AddShort((short)RemappedLibraryNames[l2.LibraryName]);

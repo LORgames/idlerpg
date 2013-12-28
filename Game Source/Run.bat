@@ -13,11 +13,7 @@ set INTERPRETER=-interpreter
 ::goto ios-test
 
 :desktop-run
-echo.
 echo Starting AIR Debug Launcher.
-echo.
-echo (hint: edit 'Run.bat' to test on device or change screen size)
-echo.
 ::adl "%APP_XML%" "%APP_DIR%" -- debug=Yes+showfps=Yes
 adl "%APP_XML%" "%APP_DIR%"
 
@@ -73,7 +69,7 @@ goto android-package
 echo.
 echo Packaging and Installing application for testing on Android (%DEBUG_IP%)
 echo.
-set TARGET=
+set TARGET=-captive-runtime
 set OPTIONS=
 goto android-package
 

@@ -16,7 +16,7 @@ package UI {
 	public class UILayerLibrary extends UILayer implements IUpdatable {
 		///VARIABLES
         public var Library:UILibrary;
-		public var ID:int = 0;
+		private var ID:int = 0;
 		
 		private var _playUp:Boolean = true;
 		private var _playTick:Number = 0;
@@ -64,6 +64,11 @@ package UI {
 				//TODO: Cannot draw 'tile' types easily?
 				RequiresRedraw = false;
 			}
+		}
+		
+		public function SetID(newID:Number):void {
+			if (isPlaying) StopPlaying();
+			ID = newID;
 		}
 		
 		public function Play(time:Number, playReverse:Boolean):void {

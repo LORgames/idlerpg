@@ -29,8 +29,6 @@ package RenderSystem {
 			Main.I.addChild(map);
 			Main.I.addChild(Main.OrderedLayer);
 			
-			Main.I.addChild(loadScreen);
-			
 			Main.I.addChild(map.DebugLayer);
 		}
 		
@@ -96,7 +94,7 @@ package RenderSystem {
 				FadeToWorld();
 			}
 			
-			if (Global.LoadingTotal > 0) return;
+			if (Global.LoadingTotal > 0) { loadScreen.Draw(); return; }
 			if (WorldData.CurrentMap == null) return;
 			
 			var MyX:int = 0; //TODO: Figure this out with new camera systems. WorldData.ME == null?0:WorldData.ME.X;
@@ -161,6 +159,11 @@ package RenderSystem {
 			} else {
 				Main.I.Log(animation + " is not in the queue");
 			}
+		}
+		
+		public function Attach():void {
+			if (loadScreen.parent != null) loadScreen.parent.removeChild(loadScreen);
+			Main.I.addChild(loadScreen);
 		}
 	}
 }

@@ -10,7 +10,7 @@ using ToolCache.General;
 using ToolCache.Storage;
 
 namespace ToolCache.UI {
-    public class UITextLayer : UILayer {
+    public class UILayerText : UILayer {
         public string Message = "";
 
         public UIAnchorPoint Align = UIAnchorPoint.TopLeft;

@@ -171,8 +171,8 @@ namespace CityTools {
                 pnlTextStuff.Visible = false;
                 pnlUILayerLibrary.Visible = false;
 
-                if (CurrentLayer is UIImageLayer) {
-                    UIImageLayer CurrentLayerIM = (UIImageLayer)CurrentLayer;
+                if (CurrentLayer is UILayerImage) {
+                    UILayerImage CurrentLayerIM = (UILayerImage)CurrentLayer;
 
                     for (int i = 0; i < cbValue.Items.Count; i++) {
                         if (((ScriptVariable)cbValue.Items[i]).Index == CurrentLayerIM.GlobalVariable) {
@@ -188,8 +188,8 @@ namespace CityTools {
                     } else {
                         pbLayerImage.Image = null;
                     }
-                } else if (CurrentLayer is UITextLayer) {
-                    UITextLayer CurrentLayerTX = (UITextLayer)CurrentLayer;
+                } else if (CurrentLayer is UILayerText) {
+                    UILayerText CurrentLayerTX = (UILayerText)CurrentLayer;
                     txtTextMessage.Text = CurrentLayerTX.Message;
 
                     cbTextAlign.SelectedIndex = (int)CurrentLayerTX.Align;
@@ -201,8 +201,8 @@ namespace CityTools {
                     pbTextColour.Invalidate();
 
                     pnlTextStuff.Visible = true;
-                } else if (CurrentLayer is UILibraryLayer) {
-                    UILibraryLayer CurrentLayerLI = (UILibraryLayer)CurrentLayer;
+                } else if (CurrentLayer is UILayerLibrary) {
+                    UILayerLibrary CurrentLayerLI = (UILayerLibrary)CurrentLayer;
 
                     if (CurrentLayerLI.LibraryName == "" && UIManager.Libraries.Count > 0) {
                         CurrentLayerLI.LibraryName = UIManager.Libraries[0].Name;
@@ -233,18 +233,18 @@ namespace CityTools {
                 CurrentLayer.MyType = (UILayerType)cbLayerType.SelectedIndex;
                 CurrentLayer.Name = txtLayerName.Text;
 
-                if (CurrentLayer is UIImageLayer) {
-                    (CurrentLayer as UIImageLayer).GlobalVariable = ((ScriptVariable)cbValue.SelectedItem).Index;
-                } else if (CurrentLayer is UITextLayer) {
-                    (CurrentLayer as UITextLayer).Message = txtTextMessage.Text;
-                    (CurrentLayer as UITextLayer).Align = (UIAnchorPoint)cbTextAlign.SelectedIndex; ;
-                    (CurrentLayer as UITextLayer).FontFamily = cbTextFontFamily.SelectedIndex;
-                    (CurrentLayer as UITextLayer).FontSize = (int)numTextSize.Value;
-                    (CurrentLayer as UITextLayer).WordWrap = ckbTextWordWrap.Checked;
-                    (CurrentLayer as UITextLayer).InputType = (byte)cbTextInputType.SelectedIndex;
-                } else if (CurrentLayer is UILibraryLayer) {
-                    (CurrentLayer as UILibraryLayer).LibraryName = cbUILayerLibrary.Text;
-                    (CurrentLayer as UILibraryLayer).DefaultIndex = (int)numUILayerLibraryIndex.Value;
+                if (CurrentLayer is UILayerImage) {
+                    (CurrentLayer as UILayerImage).GlobalVariable = ((ScriptVariable)cbValue.SelectedItem).Index;
+                } else if (CurrentLayer is UILayerText) {
+                    (CurrentLayer as UILayerText).Message = txtTextMessage.Text;
+                    (CurrentLayer as UILayerText).Align = (UIAnchorPoint)cbTextAlign.SelectedIndex; ;
+                    (CurrentLayer as UILayerText).FontFamily = cbTextFontFamily.SelectedIndex;
+                    (CurrentLayer as UILayerText).FontSize = (int)numTextSize.Value;
+                    (CurrentLayer as UILayerText).WordWrap = ckbTextWordWrap.Checked;
+                    (CurrentLayer as UILayerText).InputType = (byte)cbTextInputType.SelectedIndex;
+                } else if (CurrentLayer is UILayerLibrary) {
+                    (CurrentLayer as UILayerLibrary).LibraryName = cbUILayerLibrary.Text;
+                    (CurrentLayer as UILayerLibrary).DefaultIndex = (int)numUILayerLibraryIndex.Value;
                 } else {
                     throw new Exception("Unknown Layer Type!");
                 }
@@ -310,7 +310,7 @@ namespace CityTools {
 
         private void btnUILayerAdd_Click(object sender, EventArgs e) {
             if (CurrentElement != null) {
-                UIImageLayer newLayer = new UIImageLayer();
+                UILayerImage newLayer = new UILayerImage();
                 CurrentElement.Layers.Add(newLayer);
                 listUILayers.Items.Add(newLayer);
                 SaveElement();
@@ -320,7 +320,7 @@ namespace CityTools {
 
         private void btnUILayerAddText_Click(object sender, EventArgs e) {
             if (CurrentElement != null) {
-                UITextLayer newLayer = new UITextLayer();
+                UILayerText newLayer = new UILayerText();
                 CurrentElement.Layers.Add(newLayer);
                 listUILayers.Items.Add(newLayer);
 
@@ -330,7 +330,7 @@ namespace CityTools {
 
         private void btnUILayerAddDatabase_Click(object sender, EventArgs e) {
             if (CurrentElement != null) {
-                UILibraryLayer newLayer = new UILibraryLayer();
+                UILayerLibrary newLayer = new UILayerLibrary();
                 CurrentElement.Layers.Add(newLayer);
                 listUILayers.Items.Add(newLayer);
                 SaveElement();
@@ -351,23 +351,23 @@ namespace CityTools {
         }
 
         private void btnLayerChangeImage_Click(object sender, EventArgs e) {
-            if (!(CurrentLayer is UIImageLayer)) return;
+            if (!(CurrentLayer is UILayerImage)) return;
             string dir = Directory.GetCurrentDirectory();
 
             if(CurrentLayer != null) {
                 if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
                     Directory.SetCurrentDirectory(dir);
 
-                    (CurrentLayer as UIImageLayer).ImageFilename = ".\\UI\\" + Path.GetFileName(openFileDialog1.FileName);
-                    (CurrentLayer as UIImageLayer).ImageFilename = Path.GetFullPath((CurrentLayer as UIImageLayer).ImageFilename);
+                    (CurrentLayer as UILayerImage).ImageFilename = ".\\UI\\" + Path.GetFileName(openFileDialog1.FileName);
+                    (CurrentLayer as UILayerImage).ImageFilename = Path.GetFullPath((CurrentLayer as UILayerImage).ImageFilename);
                     string tFN = Path.GetFullPath(openFileDialog1.FileName);
 
-                    if (tFN != (CurrentLayer as UIImageLayer).ImageFilename) {
-                        File.Copy(tFN, (CurrentLayer as UIImageLayer).ImageFilename, true);
+                    if (tFN != (CurrentLayer as UILayerImage).ImageFilename) {
+                        File.Copy(tFN, (CurrentLayer as UILayerImage).ImageFilename, true);
                     }
 
-                    ImageCache.ForceCache((CurrentLayer as UIImageLayer).ImageFilename);
-                    pbLayerImage.Image = ImageCache.RequestImage((CurrentLayer as UIImageLayer).ImageFilename);
+                    ImageCache.ForceCache((CurrentLayer as UILayerImage).ImageFilename);
+                    pbLayerImage.Image = ImageCache.RequestImage((CurrentLayer as UILayerImage).ImageFilename);
 
                     SaveLayer();
                 } else {
@@ -499,17 +499,17 @@ namespace CityTools {
         }
 
         private void pbTextColour_Click(object sender, EventArgs e) {
-            if (CurrentLayer is UITextLayer) {
-                colorDialog1.Color = ((UITextLayer)CurrentLayer).Colour;
+            if (CurrentLayer is UILayerText) {
+                colorDialog1.Color = ((UILayerText)CurrentLayer).Colour;
                 colorDialog1.ShowDialog();
-                ((UITextLayer)CurrentLayer).Colour = colorDialog1.Color;
+                ((UILayerText)CurrentLayer).Colour = colorDialog1.Color;
                 pbTextColour.Invalidate();
             }
         }
 
         private void pbTextColour_Paint(object sender, PaintEventArgs e) {
-            if (CurrentLayer is UITextLayer) {
-                Color x = ((UITextLayer)CurrentLayer).Colour;
+            if (CurrentLayer is UILayerText) {
+                Color x = ((UILayerText)CurrentLayer).Colour;
 
                 e.Graphics.Clear(x);
             }

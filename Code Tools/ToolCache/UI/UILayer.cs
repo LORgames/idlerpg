@@ -29,11 +29,11 @@ namespace ToolCache.UI {
             UILayer ul;
 
             if (type == 0) {
-                ul = new UIImageLayer();
+                ul = new UILayerImage();
             } else if (type == 1) {
-                ul = new UITextLayer();
+                ul = new UILayerText();
             } else if (type == 2) {
-                ul = new UILibraryLayer();
+                ul = new UILayerLibrary();
             } else {
                 throw new Exception("Cannot find that type of layer!");
             }
@@ -55,9 +55,9 @@ namespace ToolCache.UI {
         }
 
         internal virtual void WriteToBinaryIO(IStorage f) {
-            if (this is UIImageLayer) f.AddByte(0); //0 for UIImageLayer
-            else if (this is UITextLayer) f.AddByte(1); //1 for UITextLayer
-            else if (this is UILibraryLayer) f.AddByte(2); //2 for UILibraryLayer
+            if (this is UILayerImage) f.AddByte(0); //0 for UIImageLayer
+            else if (this is UILayerText) f.AddByte(1); //1 for UITextLayer
+            else if (this is UILayerLibrary) f.AddByte(2); //2 for UILibraryLayer
             else throw new Exception("Unknown Layer Type!");
             
             f.AddString(Name);

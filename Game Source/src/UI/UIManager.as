@@ -115,7 +115,7 @@ package UI {
 							(Panels[i].Elements[j].Layers[k] as UILayerText).PrepareTF();
 						} else if (layerType == 2) {
 							(Panels[i].Elements[j].Layers[k] as UILayerLibrary).Library = Libraries[b.readShort()];
-							(Panels[i].Elements[j].Layers[k] as UILayerLibrary).ID = b.readShort();
+							(Panels[i].Elements[j].Layers[k] as UILayerLibrary).SetID(b.readShort());
 						}
 					}
 				}

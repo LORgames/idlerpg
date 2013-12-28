@@ -258,6 +258,7 @@ package Game.Map {
 		}
 		
 		public function CleanUp():void {
+			if (Dying) return; //Already dying somehow- serious problem actually
 			Dying = true;
 			
 			var i:int = 0;
@@ -268,7 +269,6 @@ package Game.Map {
 				Objects[i] = null;
 			}
 			Objects = null;
-			
 			
 			i = Portals.length;
 			while (--i > -1) {

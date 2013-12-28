@@ -8,28 +8,32 @@ using System.IO;
 using ToolCache.Storage;
 
 namespace ToolCache.UI {
-    public class UIImageLayer : UILayer {
+    public class UILayerLibrary : UILayer {
 
-        public string ImageFilename = "";
-        public int GlobalVariable = 0;
+        public string LibraryName = "";
+        public int DefaultIndex = 0;
 
         protected override void ReadFromBinaryIOX(IStorage f) {
-            base.ReadFromBinaryIOX(f);
-            GlobalVariable = f.GetInt();
-            ImageFilename = f.GetString();
+            //LIBRARIES WILL ALWAYS BE NULL AT THIS POINT, LIBRARIES ARE LOADED AFTER LAYERS.
 
-            ImageFilename = "UI\\" + Path.GetFileName(ImageFilename);
+            base.ReadFromBinaryIOX(f);
+            LibraryName = f.GetString();
+            DefaultIndex = f.GetInt();
         }
 
         internal override void WriteToBinaryIO(IStorage f) {
             base.WriteToBinaryIO(f);
 
-            f.AddInt(GlobalVariable);
-            f.AddString(Path.GetFileName(ImageFilename));
+            f.AddString(LibraryName);
+            f.AddInt(DefaultIndex);
         }
 
         internal override void Draw(System.Drawing.Graphics gfx, System.Drawing.Rectangle canvasArea, UIElement owner, float displayValue, bool drawRect) {
-            if (this.ImageFilename != "") {
+            UILibrary lib = UIManager.GetLibrary(LibraryName);
+
+            if (lib != null) {
+                if (lib.Images.Count <= DefaultIndex) return;
+
                 Rectangle thisArea = new Rectangle(0, 0, SizeX, SizeY);
 
                 if (MyType == UILayerType.StretchToValueX || MyType == UILayerType.StretchToValueXNeg) {
@@ -78,15 +82,14 @@ namespace ToolCache.UI {
                 if (MyType == UILayerType.StretchToValueXNeg) thisArea.X += (int)((1 - displayValue) * SizeX);
                 if (MyType == UILayerType.StretchToValueYNeg) thisArea.Y += (int)((1 - displayValue) * SizeY);
 
-                if (!File.Exists(ImageFilename)) return;
-                Image im = ImageCache.RequestImage(ImageFilename);
+                if (!File.Exists(lib.Images[DefaultIndex])) return;
+
+                Image im = ImageCache.RequestImage(lib.Images[DefaultIndex]);
                 if (im == null) return;
 
                 if (MyType == UILayerType.Stretch || MyType == UILayerType.StretchToValueX || MyType == UILayerType.StretchToValueY || MyType == UILayerType.StretchToValueXNeg || MyType == UILayerType.StretchToValueYNeg) {
                     gfx.DrawImage(im, thisArea);
                 } else if (MyType == UILayerType.Static) {
-                    if (thisArea.Height > im.Height) thisArea.Height = im.Height;
-                    if (thisArea.Width > im.Width) thisArea.Width = im.Width;
                     gfx.DrawImageUnscaledAndClipped(im, thisArea);
                 } else if (MyType == UILayerType.Tile) {
                     int xPos = 0;
@@ -125,7 +128,7 @@ namespace ToolCache.UI {
         }
 
         public override string ToString() {
-            return base.ToString() + " [I]";
+            return base.ToString() + " [L]";
         }
     }
 }

@@ -14,6 +14,7 @@ package UI {
 	import flash.text.TextFieldType;
 	import flash.text.TextFormat;
 	import Scripting.GlobalVariables;
+	import Strings.StringComponentVS;
 	import Strings.StringEx;
 	import UI.Fonts;
 	/**
@@ -56,6 +57,9 @@ package UI {
 				StringID = parseInt(tf.text);
 				
 				if (this.parent) {
+					Message.ClearComponents();
+					Message.AddComponent(new StringComponentVS(StringID));
+					
 					this.parent.addChildAt(tf, this.parent.getChildIndex(this));
 					this.parent.removeChild(this);
 					tf.selectable = true;

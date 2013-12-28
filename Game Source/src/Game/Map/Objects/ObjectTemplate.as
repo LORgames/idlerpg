@@ -65,7 +65,8 @@ package Game.Map.Objects {
 			Instances--;
 			
 			if (Instances == 0) {
-				if (SpriteAtlas != null) {
+				//TODO: This shouldn't have to be done like this
+				/*if (SpriteAtlas != null) {
 					SpriteAtlas.dispose();
 					SpriteAtlas = null;
 				}
@@ -75,7 +76,7 @@ package Game.Map.Objects {
 				if (isAddedToAnimatedList) {
 					Renderman.AnimatedObjectsRemove(this);
 					isAddedToAnimatedList = false;
-				}
+				}*/
 			}
 		}
 		
@@ -186,6 +187,7 @@ package Game.Map.Objects {
 				obj.IndividualAnimations = (extraData & 0x2) == 0x2;
 				
 				obj.MyScript = Script.ReadScript(b);
+				obj.GetBitmap();
 				
 				Objects[i] = obj;
 			}

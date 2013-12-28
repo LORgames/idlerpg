@@ -121,6 +121,8 @@ package {
 			hud = new UIManager();
 			this.addChild(hud);
 			
+			Renderer.Attach();
+			
 			//var c:CaveLight = new CaveLight();
 			//this.addChild(c);
 			//c.Reset();

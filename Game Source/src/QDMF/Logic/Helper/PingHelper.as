@@ -12,6 +12,7 @@ package QDMF.Logic.Helper {
 		private static var ActivePingTime:int = 0;
 		
 		public static function DoPing():void {
+			if (Global.Network == null) return;
 			if (ActivePingTime != 0) return;
 			
 			CurrentPingID++;
@@ -32,6 +33,10 @@ package QDMF.Logic.Helper {
 		public static function PingReply(id:int):void {
 			if (id != CurrentPingID) return;
 			Syncronizer.Ping = getTimer() - ActivePingTime;
+			ActivePingTime = 0;
+		}
+		
+		static public function Reset():void {
 			ActivePingTime = 0;
 		}
 	}

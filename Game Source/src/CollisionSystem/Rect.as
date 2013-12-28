@@ -87,5 +87,12 @@ package CollisionSystem {
 			
 			return true;
 		}
+		
+		//Some helper functions
+		public static function GetRectFromPointWithRadius(p:PointX, r:int, isStatic:Boolean = true, owner:IMapObject = null):Rect {
+			var x:int = p.X - r;
+			var y:int = p.Y - r;
+			return new Rect(isStatic, owner, x, y, r * 2, r * 2);
+		}
 	}
 }

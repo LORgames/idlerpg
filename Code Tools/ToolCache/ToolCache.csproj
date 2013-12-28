@@ -122,15 +122,15 @@
     <Compile Include="Scripting\Types\Commands.cs" />
     <Compile Include="Sound\SoundData.cs" />
     <Compile Include="Sound\SoundDatabase.cs" />
-    <Compile Include="UI\UILibraryLayer.cs" />
+    <Compile Include="UI\UILayerLibrary.cs" />
     <Compile Include="UI\UIElement.cs" />
-    <Compile Include="UI\UIImageLayer.cs" />
+    <Compile Include="UI\UILayerImage.cs" />
     <Compile Include="UI\UILayer.cs" />
     <Compile Include="UI\UILibrary.cs" />
     <Compile Include="UI\UIManager.cs" />
     <Compile Include="UI\UIPanel.cs" />
     <Compile Include="Map\Regions\Portal.cs" />
-    <Compile Include="UI\UITextLayer.cs" />
+    <Compile Include="UI\UILayerText.cs" />
     <Compile Include="UI\UITypes.cs" />
   </ItemGroup>
   <ItemGroup>

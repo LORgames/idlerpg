@@ -38,12 +38,8 @@ package Scripting {
 			var pr:Packet;
 			
 			if (p.type == PacketTypes.SCRIPT) {
-				Main.I.Log("RECV IMPORTANT PACKET!");
-				
-				tb.clear();
-				p.bytes.readBytes(tb, 0);
+				tb.clear(); p.bytes.readBytes(tb, 0);
 				s.Run(0, scriptinstance, null);
-				
 				return true;
 			} else if(p.type == PacketTypes.TURNSTEP) {
 				TurnStep.UnpackAndRegister(p.bytes);
@@ -57,6 +53,8 @@ package Scripting {
 					if (Global.GV_PlayerID != 0) {
 						GlobalVariables.IntegerVariables[Global.GV_PlayerID] = controlInfo;
 					}
+					PingHelper.Reset();
+					Main.I.Log("RECV New Player ID");
 				} else if (controlType == 1) { // Matching controls
 					if (controlInfo == 1) { // Match Joined
 						Syncronizer.Reset();

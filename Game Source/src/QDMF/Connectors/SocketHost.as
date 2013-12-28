@@ -75,9 +75,8 @@ CONFIG::air {
 			}
 			
 			public function SendPacketImmediate(packet:Packet):void {
-				if (Client != null && nextFlush.length > 0) {
+				if (Client != null) {
 					try {
-						Logger.Log("Sending " + packet.bytes.bytesAvailable + "bytes. [INSTANT]");
 						Client.writeShort(packet.bytes.length);
 						Client.writeBytes(packet.bytes);
 						Client.flush();

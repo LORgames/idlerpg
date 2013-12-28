@@ -80,6 +80,12 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0x101E, new Param[] { Param.Integer }));
             All.Add("aitargetdrop",
                 new ValidCommand(0x101F, new Param[] { Param.Void }));
+            All.Add("setstring",
+                new ValidCommand(0x1020, new Param[] { Param.String, Param.String }));
+            All.Add("netsyncstring",
+                new ValidCommand(0x1021, new Param[] { Param.String }));
+            All.Add("nettrigger",
+                new ValidCommand(0x1022, new Param[] { Param.Integer }));
 
             //Quest and Inventory Commands
             All.Add("saydialogue",
@@ -119,7 +125,7 @@ namespace ToolCache.Scripting.Types {
             All.Add("offsetset",
                 new ValidCommand(0x500A, new Param[] { Param.Integer, Param.Integer }));
             All.Add("withnearest",
-                new ValidCommand(0x5008, new Param[] { Param.ObjectType }, true, new ushort[] { 0x5009 }));
+                new ValidCommand(0x500B, new Param[] { Param.ObjectType, Param.Integer|Param.Optional }, true, new ushort[] { 0x5009 })); //Enemy/Ally etc, Maximum range
 
             //Animation Commands
             All.Add("animationplay",
