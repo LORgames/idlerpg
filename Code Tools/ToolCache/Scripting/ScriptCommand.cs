@@ -62,7 +62,7 @@ namespace ToolCache.Scripting {
 
             if (Trimmed.Length > 2) {
                 if (Indent == 0) {
-                    Match m = Regex.Match(Trimmed, "var\\s("+VARIABLE_REGEX+")\\s?=\\s?([0-9]+)");
+                    Match m = Regex.Match(Trimmed, "(var|int|float)\\s("+VARIABLE_REGEX+")\\s?=\\s?([0-9]+(\\.[0-9]+)?)");
 
                     if (m.Success) {
                         //Process this as a variable
@@ -83,15 +83,27 @@ namespace ToolCache.Scripting {
         }
 
         private void ProcessVariable(ScriptInfo info, Match match) {
-            string variablename = match.Groups[1].Value;
-            short variableValue = short.Parse(match.Groups[2].Value);
+            string variablename = match.Groups[2].Value;
 
-            ScriptVariable s = new ScriptVariable();
-            s.Name = variablename;
-            s.InitialValue = variableValue;
-            s.Index = (short)info.Variables.Count;
+            if (match.Groups[1].Value == "var" || match.Groups[1].Value == "int") {
+                short variableValue = short.Parse(match.Groups[3].Value);
 
-            info.Variables.Add(variablename, s);
+                ScriptVariable s = new ScriptVariable();
+                s.Name = variablename;
+                s.InitialValue = variableValue;
+                s.Index = (short)info.IntegerVariables.Count;
+
+                info.IntegerVariables.Add(variablename, s);
+            } else {
+                float variableValue = float.Parse(match.Groups[3].Value);
+
+                FloatVariable s = new FloatVariable();
+                s.Name = variablename;
+                s.InitialValue = variableValue;
+                s.Index = (short)info.FloatingVariables.Count;
+
+                info.FloatingVariables.Add(variablename, s);
+            }
         }
 
         public void ProcessEvent(ScriptInfo info) {
@@ -166,7 +178,7 @@ namespace ToolCache.Scripting {
                             CommandID = 0xB000;
 
                             if (!WriteVariableIfExists(m.Groups[1].Value, info, false)) {
-                                info.Errors.Add("No variable called: " + m.Groups[1].Value+ ErrorEnding());
+                                info.Errors.Add("No variable called: " + m.Groups[1].Value + ErrorEnding());
                             }
 
                             string mathblock = m.Groups[2].Value.Trim();
@@ -189,17 +201,17 @@ namespace ToolCache.Scripting {
                             //Now we process the bits :D
                             foreach(string mathBit in mathblockBits) {
                                 switch (mathBit) {
-                                    case "+": AdditionalBytecode.Add(0xB001); break;
-                                    case "-": AdditionalBytecode.Add(0xB002); break;
-                                    case "*": AdditionalBytecode.Add(0xB003); break;
-                                    case "/": AdditionalBytecode.Add(0xB004); break;
-                                    case "%": AdditionalBytecode.Add(0xB005); break;
-                                    case "|": AdditionalBytecode.Add(0xB006); break;
-                                    case "&": AdditionalBytecode.Add(0xB007); break;
-                                    case "^": AdditionalBytecode.Add(0xB008); break;
-                                    case "~": AdditionalBytecode.Add(0xB009); break;
-                                    case "{": AdditionalBytecode.Add(0xB00A); break;
-                                    case "}": AdditionalBytecode.Add(0xB00B); break;
+                                    case "+": AdditionalBytecode.Add(0xB001); break;    //Add
+                                    case "-": AdditionalBytecode.Add(0xB002); break;    //Subtract
+                                    case "*": AdditionalBytecode.Add(0xB003); break;    //Multiply
+                                    case "/": AdditionalBytecode.Add(0xB004); break;    //Divide
+                                    case "%": AdditionalBytecode.Add(0xB005); break;    //Modulo
+                                    case "|": AdditionalBytecode.Add(0xB006); break;    //Bitwise OR
+                                    case "&": AdditionalBytecode.Add(0xB007); break;    //Bitwise AND
+                                    case "^": AdditionalBytecode.Add(0xB008); break;    //Bitwise XOR
+                                    case "~": AdditionalBytecode.Add(0xB009); break;    //Bitwise NOT
+                                    case "{": AdditionalBytecode.Add(0xB00A); break;    //Bitwise SHIFT LEFT
+                                    case "}": AdditionalBytecode.Add(0xB00B); break;    //Bitwise SHIFT RIGHT
                                     default:
                                         if (!WriteVariableIfExists(mathBit, info)) {
                                             //Hopefully we have a math command :)
@@ -257,23 +269,9 @@ namespace ToolCache.Scripting {
 
                     switch (thisParamType) {
                         case Param.Void: break; //Obviously void does nothing
-                        case Param.Number:
-                            if (!float.TryParse(paramBits[i], out fparam)) {
-                                info.Errors.Add("Cannot convert " + paramBits[i] + " into a number!" + ErrorEnding());
-                            } else {
-                                this.AdditionalBytecode.Add((ushort)0xBFFB); //Static float point indicator
-                                byte[] floatBytes = BitConverter.GetBytes(fparam);
-                                if (BitConverter.IsLittleEndian) { Array.Reverse(floatBytes); }
-
-                                sparam = (short)((floatBytes[0] << 8) | floatBytes[1]);
-                                AdditionalBytecode.Add((ushort)sparam);
-
-                                sparam = (short)((floatBytes[2] << 8) | floatBytes[3]);
-                                AdditionalBytecode.Add((ushort)sparam);
-                            } break;
-                        case Param.Integer:
+                        case Param.Number: case Param.Integer:
                             if (!WriteVariableIfExists(paramBits[i], info)) {
-                                info.Errors.Add("Cannot convert '" + paramBits[i] + "' into an integer!" + ErrorEnding());
+                                info.Errors.Add("Cannot convert '" + paramBits[i] + "' into an number!" + ErrorEnding());
                             } break;
                         case Param.Angle:
                             if (!short.TryParse(paramBits[i], out sparam)) {
@@ -662,22 +660,35 @@ namespace ToolCache.Scripting {
         }
 
         private bool WriteVariableIfExists(string mathBit, ScriptInfo info, bool allowShorts = true) {
-            short sparam;
+            short sparam; float fparam;
 
             if (allowShorts && short.TryParse(mathBit, out sparam)) {
                 AdditionalBytecode.Add(0xBFFF);
                 AdditionalBytecode.Add((ushort)sparam);
                 return true;
-            } else if (info.Variables.ContainsKey(mathBit)) {
+            } else if (info.IntegerVariables.ContainsKey(mathBit)) {
                 AdditionalBytecode.Add(0xBFFD);
-                AdditionalBytecode.Add((ushort)info.Variables[mathBit].Index);
+                AdditionalBytecode.Add((ushort)info.IntegerVariables[mathBit].Index);
                 return true;
             } else if (Variables.GlobalVariables.ContainsKey(mathBit)) {
                 AdditionalBytecode.Add(0xBFFE);
                 AdditionalBytecode.Add((ushort)Variables.GlobalVariables[mathBit].Index);
                 return true;
-            }
+            } else if (info.FloatingVariables.ContainsKey(mathBit)) {
+                AdditionalBytecode.Add(0xBFFA);
+                AdditionalBytecode.Add((ushort)info.FloatingVariables[mathBit].Index);
+                return true;
+            } else if (float.TryParse(mathBit, out fparam)) {
+                AdditionalBytecode.Add(0xBFFB);
+                byte[] floatBytes = BitConverter.GetBytes(fparam);
+                if (BitConverter.IsLittleEndian) { Array.Reverse(floatBytes); }
 
+                sparam = (short)((floatBytes[0] << 8) | floatBytes[1]); AdditionalBytecode.Add((ushort)sparam);
+                sparam = (short)((floatBytes[2] << 8) | floatBytes[3]); AdditionalBytecode.Add((ushort)sparam);
+
+                return true;
+            }
+            
             return false;
         }
 
@@ -852,7 +863,7 @@ namespace ToolCache.Scripting {
         /// <param name="Info">The current info object</param>
         /// <returns>True if the variable exists, false otherwise</returns>
         private bool VariableExists(string p, ScriptInfo Info) {
-            return (Info.Variables.ContainsKey(p) || Variables.GlobalVariables.ContainsKey(p));
+            return (Info.IntegerVariables.ContainsKey(p) || Variables.GlobalVariables.ContainsKey(p));
         }
 
         /// <summary>
@@ -920,10 +931,7 @@ namespace ToolCache.Scripting {
                 Info.Commands[i2].ExpectedIndent++;
                 i2++;
             }
-
             return i2;
         }
-
-
     }
 }

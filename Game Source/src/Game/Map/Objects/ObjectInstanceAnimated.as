@@ -113,6 +113,8 @@ package Game.Map.Objects {
 			PlaybackSpeed = newAnimationSpeed;
 		}
 		
+		override public function GetAnimationSpeed():Number { return PlaybackSpeed; }
+		
 		override public function ChangeState(stateID:int, isLooping:Boolean):void {
 			CurrentState = stateID;
 			PlaybackSpeed = Template.PlaybackSpeed[stateID];

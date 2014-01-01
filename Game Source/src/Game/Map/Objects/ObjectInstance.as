@@ -183,6 +183,8 @@ package Game.Map.Objects {
 			Template.PlaybackSpeed[0] = newAnimationSpeed;
 		}
 		
+		public function GetAnimationSpeed():Number { return Template.PlaybackSpeed[0]; }
+		
 		public function GetCurrentState():int {
 			//TODO: maybe this?
 			return 0;// Template.CurrentAnimation;

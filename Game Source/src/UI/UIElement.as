@@ -80,34 +80,14 @@ package UI
 		}
 		
 		/* INTERFACE Scripting.IScriptTarget */
-		public function GetScript():ScriptInstance {
-			return MyScript;
-		}
-		
-		public function UpdatePointX(position:PointX):void {
-			position.X = x;
-			position.Y = y;
-		}
-		
-		public function AlertMinionDeath(baseCritter:BaseCritter):void {
-			//how even?
-		}
-		
-		public function ChangeState(stateID:int, isLooping:Boolean):void {
-			//ok?
-		}
-		
-		public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void {
-			//Cool cool
-		}
-		
-		public function GetCurrentState():int {
-			return 0;
-		}
-		
-		public function GetFaction():int {
-			return 0;
-		}
+		public function GetScript():ScriptInstance { return MyScript; }
+		public function UpdatePointX(position:PointX):void { position.X = x; position.Y = y;  }
+		public function AlertMinionDeath(baseCritter:BaseCritter):void { /* how even? */ }
+		public function ChangeState(stateID:int, isLooping:Boolean):void { /* ok? */ }
+		public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void { /* Cool cool */ }
+		public function GetAnimationSpeed():Number { return 0; }
+		public function GetCurrentState():int { return 0; }
+		public function GetFaction():int { return 0; }
 	}
 
 }

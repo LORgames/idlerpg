@@ -364,6 +364,7 @@ package Game.Map {
 		public function AlertMinionDeath(baseCritter:BaseCritter):void {}
 		public function ChangeState(stateID:int, isLooping:Boolean):void {}
 		public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void {}
+		public function GetAnimationSpeed():Number { return 0; }
 		public function GetCurrentState():int { return -1; }
 		public function GetFaction():int { return -1; }
 		

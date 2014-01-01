@@ -10,7 +10,8 @@ package Scripting {
 	 * @author Paul
 	 */
 	public class ScriptInstance implements ICleanUp {
-		public var Variables:Vector.<int>;
+		public var IntegerVariables:Vector.<int>;
+		public var FloatVariables:Vector.<Number>;
 		private var TargetStack:Vector.<IScriptTarget>
 		
 		public var Invoker:IScriptTarget;
@@ -22,7 +23,8 @@ package Scripting {
 			if (script == null) return;
 			
 			MyScript = script;
-			Variables = script.InitialVariables.concat();
+			IntegerVariables = script.IntegerVariables.concat();
+			FloatVariables = script.FloatVariables.concat();
 			
 			this.Invoker = invoker;
 			this.CurrentTarget = Invoker;

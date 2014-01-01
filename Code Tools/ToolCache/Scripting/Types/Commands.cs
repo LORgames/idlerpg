@@ -144,6 +144,8 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0x8006, new Param[] { Param.Function }));
 
             //UI Commands
+            All.Add("uielementvisible",
+                new ValidCommand(0xC001, new Param[] { Param.UIElement, Param.Boolean }));
             All.Add("uipanelvisible",
                 new ValidCommand(0xC002, new Param[] { Param.UIPanel, Param.Boolean }));
             All.Add("uilayerredraw",
@@ -164,15 +166,16 @@ namespace ToolCache.Scripting.Types {
             ////////////////////////////////////////////////// MATH FUNCTIONS
             /////////////////////////////////////////////////////////////////////////
 
-            MathFunctions.Add("sin",    new ValidCommand(0x00, new Param[] { Param.Integer }));
-            MathFunctions.Add("cos",    new ValidCommand(0x01, new Param[] { Param.Integer }));
-            MathFunctions.Add("tan",    new ValidCommand(0x02, new Param[] { Param.Integer }));
+            MathFunctions.Add("sin",    new ValidCommand(0x00, new Param[] { Param.Number }));
+            MathFunctions.Add("cos", new ValidCommand(0x01, new Param[] { Param.Number }));
+            MathFunctions.Add("tan", new ValidCommand(0x02, new Param[] { Param.Number }));
             MathFunctions.Add("invoker",new ValidCommand(0x03, new Param[] { Param.String }));
             MathFunctions.Add("target", new ValidCommand(0x04, new Param[] { Param.String }));
-            MathFunctions.Add("pow",    new ValidCommand(0x05, new Param[] { Param.Integer, Param.Integer }));
+            MathFunctions.Add("pow", new ValidCommand(0x05, new Param[] { Param.Number, Param.Number }));
             MathFunctions.Add("param",  new ValidCommand(0x06, new Param[] { Param.Integer }));
-            MathFunctions.Add("random", new ValidCommand(0x07, new Param[] { Param.Integer, Param.Integer | Param.Optional }));
-
+            MathFunctions.Add("random", new ValidCommand(0x07, new Param[] { Param.Number, Param.Number | Param.Optional }));
+            MathFunctions.Add("getanimationspeed", new ValidCommand(0x08, new Param[] { Param.Void }));
+            
             /////////////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////// IF FUNCTIONS
             /////////////////////////////////////////////////////////////////////////

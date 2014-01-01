@@ -97,6 +97,10 @@ package Game.Critter {
 			Animation.UpdateAnimation(newAnimationSpeed);
 		}
 		
+		override public function GetAnimationSpeed():Number {
+			return Animation.GetPlaybackSpeed();
+		}
+		
 		override public function RequestBasicAttack():void {
 			if (!ControlsLocked) MyScript.Run(Script.Attack);
 		}

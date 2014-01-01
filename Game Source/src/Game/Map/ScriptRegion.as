@@ -57,31 +57,13 @@ package Game.Map {
 			return MyScript;
 		}
 		
-		public function UpdatePointX(position:PointX):void {
-			position.X = 0;
-			position.Y = 0;
-			position.D = 1;
-		}
-		
-		public function AlertMinionDeath(baseCritter:BaseCritter):void {
-			MyScript.Run(Script.MinionDied);
-		}
-		
-		public function ChangeState(stateID:int, isLooping:Boolean):void {
-			//Do nothing
-		}
-		
-		public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void {
-			//Do nothing
-		}
-		
-		public function GetCurrentState():int {
-			return 0;
-		}
-		
-		public function GetFaction():int {
-			return 0;
-		}
+		public function UpdatePointX(position:PointX):void { position.X = 0; position.Y = 0; position.D = 1; }
+		public function AlertMinionDeath(baseCritter:BaseCritter):void { MyScript.Run(Script.MinionDied); }
+		public function ChangeState(stateID:int, isLooping:Boolean):void { /* Do nothing */ }
+		public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void { /* Do nothing */ }
+		public function GetAnimationSpeed():Number { return 0; }
+		public function GetCurrentState():int { return 0; }
+		public function GetFaction():int { return 0; }
 		
 		public function CleanUp():void {
 			Map = null;

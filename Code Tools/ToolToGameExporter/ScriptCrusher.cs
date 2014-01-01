@@ -38,14 +38,26 @@ namespace ToolToGameExporter {
             ///////////////////////////////////////////////////////////////////////////////////
 
             if (info.ScriptType != ScriptTypes.Function) {
-                List<ScriptVariable> Vars = info.Variables.Values.ToList();
-                Vars.Sort((x, y) => x.Index.CompareTo(y.Index));
+                //INTEGER VARIABLE
+                List<ScriptVariable> iVars = info.IntegerVariables.Values.ToList();
+                iVars.Sort((x, y) => x.Index.CompareTo(y.Index));
 
-                int variableID = Vars.Count;
+                int variableID = iVars.Count;
                 f.AddShort((short)variableID);
 
                 while (--variableID > -1) {
-                    f.AddShort(Vars[variableID].InitialValue);
+                    f.AddShort(iVars[variableID].InitialValue);
+                }
+
+                //FLOATING POINT VARIABLES
+                List<FloatVariable> fVars = info.FloatingVariables.Values.ToList();
+                fVars.Sort((x, y) => x.Index.CompareTo(y.Index));
+
+                variableID = fVars.Count;
+                f.AddShort((short)variableID);
+
+                while (--variableID > -1) {
+                    f.AddFloat(fVars[variableID].InitialValue);
                 }
             }
 
@@ -130,18 +142,6 @@ namespace ToolToGameExporter {
             foreach (ushort s in command.AdditionalBytecode) {
                 f.AddUnsignedShort(s);
             }
-
-            /*switch (command.CommandID) {
-                case 0x1001: //PlaySound
-                    f.AddShort(SoundCrusher.EffectConversions[command.Parameters]); break;
-                case 0x4001: //Equip
-                    f.AddShort((short)Array.IndexOf(EquipmentCrusher.equipmenttypes, EquipmentManager.Equipment[command.Parameters].Type));
-                    f.AddShort(EquipmentCrusher.MappedEquipmentIDs[command.Parameters]); break;
-                case 0x6000: //PlayAnimation
-                    f.AddShort((short)info.AnimationNames.IndexOf(command.Parameters)); break;
-                case 0x6001: //LoopAnimation
-                    f.AddShort((short)info.AnimationNames.IndexOf(command.Parameters)); break;
-            }*/
         }
 
         /// <summary>

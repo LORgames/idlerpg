@@ -96,6 +96,8 @@ package Game.Equipment {
 			if (Layer2) Layer2.PlaybackSpeed = newAnimationSpeed;
 		}
 		
+		public function GetAnimationSpeed():Number { return Layer.PlaybackSpeed; }
+		
 		public function ChangeState(newState:int, loop:Boolean):void {
 			currentState = newState;
 			Layer.SetState(newState, loop);

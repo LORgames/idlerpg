@@ -94,7 +94,11 @@ package Scripting {
 				}
 			}
 			
-			Functions = new Script(functions, new Vector.<int>(0, true));
+			var _a:Vector.<int> = new Vector.<int>(0, true);
+			var _b:Vector.<Number> = new Vector.<Number>(0, true);
+			Functions = new Script(functions, _a, _b);
+			_a = null;
+			_b = null;
 			
 			if (b.position != b.length) {
 				throw new Error("DID NOT FINISH READING THE SCRIPT!");

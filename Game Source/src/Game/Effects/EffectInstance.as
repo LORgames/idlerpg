@@ -221,6 +221,7 @@ package Game.Effects {
 		public function AlertMinionDeath(baseCritter:BaseCritter):void { MyScript.Run(Script.MinionDied); }
 		public function UpdatePointX(position:PointX):void { position.X = X; position.Y = Y; position.D = Direction; }
 		public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void { PlaybackSpeed = newAnimationSpeed; }
+		public function GetAnimationSpeed():Number { return PlaybackSpeed; }
 		
 		public function ChangeState(animationIndex:int, loop:Boolean):void {
 			CurrentState = animationIndex;

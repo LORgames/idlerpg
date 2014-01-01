@@ -1,4 +1,5 @@
 package Scripting {
+	import adobe.utils.CustomActions;
 	import EngineTiming.Clock;
 	import Game.Critter.BaseCritter;
 	import CollisionSystem.PointX;
@@ -20,6 +21,9 @@ package Scripting {
 		private var tb:ByteArray = new ByteArray();
 		private var s:Script;
 		
+		public static var _vectorInt:Vector.<int> = new Vector.<int>(0, true);
+		public static var _vectorFlp:Vector.<Number> = new Vector.<Number>(0, true);
+		
 		public static function Launch():void {
 			new NetworkScriptExec();
 		}
@@ -27,7 +31,7 @@ package Scripting {
 		public function NetworkScriptExec() {
 			PacketController.RegisterAsListener(this);
 			
-			s = new Script(Vector.<ByteArray>([tb]), new Vector.<int>());
+			s = new Script(Vector.<ByteArray>([tb]), _vectorInt, _vectorFlp);
 			scriptinstance = new ScriptInstance(null, this);
 			scriptinstance.CurrentTarget = this;
 		}
@@ -99,7 +103,8 @@ package Scripting {
 		public function UpdatePointX(position:PointX):void { position.D = 1; position.X = 0; position.Y = 0; }
 		public function AlertMinionDeath(baseCritter:BaseCritter):void {}
 		public function ChangeState(stateID:int, isLooping:Boolean):void {}
-		public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void {}
+		public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void { }
+		public function GetAnimationSpeed():Number { return 0; }
 		public function GetCurrentState():int { return 0; }
 		public function GetFaction():int { return 0; }
 	}

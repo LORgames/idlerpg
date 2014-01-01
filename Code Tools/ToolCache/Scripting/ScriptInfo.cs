@@ -18,7 +18,8 @@ namespace ToolCache.Scripting {
         public int EventCount = 0;
         public ScriptTypes ScriptType = ScriptTypes.Unknown;
 
-        public Dictionary<String, ScriptVariable> Variables = new Dictionary<string, ScriptVariable>();
+        public Dictionary<String, ScriptVariable> IntegerVariables = new Dictionary<string, ScriptVariable>();
+        public Dictionary<String, FloatVariable> FloatingVariables = new Dictionary<string, FloatVariable>();
         public List<string> AnimationNames = new List<string>();
 
         public ScriptInfo(string Name, ScriptTypes ScriptType) {

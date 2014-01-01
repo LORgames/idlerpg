@@ -151,5 +151,9 @@ package Game.Critter
 				myBitmapData = null;
 			}
 		}
+		
+		public function GetPlaybackSpeed():Number {
+			return CurrentPlaybackSpeed;
+		}
 	}
 }

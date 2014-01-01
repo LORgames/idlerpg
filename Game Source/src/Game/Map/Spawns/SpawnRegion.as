@@ -137,8 +137,6 @@ package Game.Map.Spawns {
             return s;
         }
 		
-		/* INTERFACE EngineTiming.IOneSecondUpdate */
-		
 		public function Update(dt:Number):void {
 			if (!Enabled) return;
 			
@@ -159,11 +157,11 @@ package Game.Map.Spawns {
 			}
 		}
 		
-		/* INTERFACE Scripting.IScriptTarget */
-		public function GetScript():ScriptInstance {
-			return null;
+		public function SetEnabled(b:Boolean):void {
+			Enabled = b;
 		}
 		
+		/* INTERFACE Scripting.IScriptTarget */
 		public function AlertMinionDeath(minion:BaseCritter):void {
 			var i:int = Critters.indexOf(minion);
 			
@@ -174,34 +172,13 @@ package Game.Map.Spawns {
 			}
 		}
 		
-		public function UpdatePointX(position:PointX):void {
-			//Does nothing obviously...
-		}
-		
-		public function ChangeState(stateID:int, isLooping:Boolean):void {
-			//Does nothing obviously...
-		}
-		
-		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IScriptTarget):void {
-			//Can't even attack a spawn region so thats a little bit silly...
-		}
-		
-		public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void {
-			//Don't see what this could possibly do here either...
-		}
-		
-		public function GetCurrentState():int {
-			return 0;
-		}
-		
-		/* INTERFACE Scripting.IScriptTarget */
-		
-		public function GetFaction():int {
-			return 0;
-		}
-		
-		public function SetEnabled(b:Boolean):void {
-			Enabled = b;
-		}
+		public function UpdatePointX(position:PointX):void { /* Does nothing obviously... */ }
+		public function ChangeState(stateID:int, isLooping:Boolean):void { /* Does nothing obviously... */ }
+		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IScriptTarget):void { /* Can't even attack a spawn region so thats a little bit silly... */ }
+		public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void { /* Don't see what this could possibly do here either... */ }
+		public function GetAnimationSpeed():Number { return 0; }
+		public function GetScript():ScriptInstance { return null; }
+		public function GetCurrentState():int { return 0; }
+		public function GetFaction():int { return 0; }
 	}
 }

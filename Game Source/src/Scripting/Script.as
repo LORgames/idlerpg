@@ -86,12 +86,14 @@ package Scripting {
 		
 		//Script information
 		internal var EventScripts:Vector.<ByteArray>;
-		internal var InitialVariables:Vector.<int>;
+		internal var IntegerVariables:Vector.<int>;
+		internal var FloatVariables:Vector.<Number>;
 		internal var NetSync:int = 0;
 		
-		public function Script(commandBlock:Vector.<ByteArray>, initalVariables:Vector.<int>) {
+		public function Script(commandBlock:Vector.<ByteArray>, integerVariables:Vector.<int>, floatVariables:Vector.<Number>) {
 			EventScripts = commandBlock;
-			InitialVariables = initalVariables.concat();
+			IntegerVariables = integerVariables.concat();
+			FloatVariables = floatVariables.concat();
 		}
 		
 		internal function Run(eventID:uint, info:ScriptInstance, param:Object):void {
@@ -168,7 +170,7 @@ package Scripting {
 			}
 			
 			if (SaveVarType == 0xBFFD) { //Local variable
-				info.Variables[SaveVarID] = runningTally;
+				info.IntegerVariables[SaveVarID] = runningTally;
 			} else if (SaveVarType == 0xBFFE) { //Global variable
 				GlobalVariables.IntegerVariables[SaveVarID] = runningTally;
 			}
@@ -263,16 +265,18 @@ package Scripting {
 						var cost:int = GetNumberFromVariable(eventScript, info, inputParam);
 						
 						if (param0 == 0xBFFD) { //Local
-							param2 = info.Variables[param1];
+							param2 = info.IntegerVariables[param1];
 						} else if (param0 == 0xBFFE) { //Global
 							param2 = GlobalVariables.IntegerVariables[param1];
+						} else {
+							Main.I.Log("SCRIPT 0x700A: Unknown variable type!");
 						}
 						
 						if (param2 >= cost) {
 							param2 -= cost;
 							
 							if (param0 == 0xBFFD) { //Local
-								info.Variables[param1] = param2;
+								info.IntegerVariables[param1] = param2;
 							} else if (param0 == 0xBFFE) { //Global
 								GlobalVariables.IntegerVariables[param1] = param2;
 							}
@@ -467,23 +471,25 @@ package Scripting {
 			if (varType == 0xBFFC) { //Math function
 				return ProcessMathFunction(varID, eventScript, info, inputParam);
 			} else if (varType == 0xBFFD) { //Local variable
-				return info.Variables[varID];
+				return info.IntegerVariables[varID];
 			} else if (varType == 0xBFFE) { //Global variable
 				return GlobalVariables.IntegerVariables[varID];
 			} else if (varType == 0xBFFF) { //Static value
 				return varID;
-			} else if (varType == 0xBFFB) { //FLOATING POINT
+			} else if (varType == 0xBFFB) { //FLOATING POINT CONST
 				eventScript.position -= 2;
 				return eventScript.readFloat();
+			} else if (varType == 0xBFFA) { //FLOATING POINT VARIABLE
+				return info.FloatVariables[varID];
 			}
 			
 			return 0; //No idea what else it should be
 		}
 		
-		private function ProcessMathFunction(functionID:int, eventScript:ByteArray, info:ScriptInstance, inputParam:Object):int {
-			var p:int = 0;
-			var q:int = 0;
-			var r:int = 0;
+		private function ProcessMathFunction(functionID:int, eventScript:ByteArray, info:ScriptInstance, inputParam:Object):Number {
+			var p:Number = 0;
+			var q:Number = 0;
+			var r:Number = 0;
 			
 			switch(functionID) {
 				case 0x00: //Sin
@@ -530,6 +536,8 @@ package Scripting {
 					} else {
 						return Rndm.random() * (p - q) + q;
 					}
+				case 0x08:
+					return info.CurrentTarget.GetAnimationSpeed();
 				default:
 					Main.I.Log("Unknown Math Command: " + functionID);
 					return 0;
@@ -549,11 +557,20 @@ package Scripting {
 			
 			var commandBlock:Vector.<ByteArray> = new Vector.<ByteArray>(TOTAL_EVENT_TYPES);
 			
+			//INTEGER VARIABLES
 			var totalVariables:int = b.readShort();
-			var initialVariables:Vector.<int> = new Vector.<int>(totalVariables, true);
+			var integerVariables:Vector.<int> = new Vector.<int>(totalVariables, true);
 			
 			while (--totalVariables > -1) {
-				initialVariables[totalVariables] = b.readShort();
+				integerVariables[totalVariables] = b.readShort();
+			}
+			
+			//FLOAT VARIABLES
+			totalVariables = b.readShort();
+			var floatVariables:Vector.<Number> = new Vector.<Number>(totalVariables, true);
+			
+			while (--totalVariables > -1) {
+				floatVariables[totalVariables] = b.readShort();
 			}
 			
 			while (command != 0xFFFF) { //While not end of file
@@ -581,8 +598,8 @@ package Scripting {
 				}
 			}
 			
-			return new Script(commandBlock, initialVariables);
-			initialVariables = null;
+			return new Script(commandBlock, integerVariables, floatVariables);
+			integerVariables = null;
 		}
 		
 		static private function WriteUntilBalancedCloseBlock(b:ByteArray, activeScript:ByteArray):void {
@@ -695,7 +712,11 @@ package Scripting {
 						
 						break;
 					case 0x1003: //Flat Damage
-						if (info.CurrentTarget is IMapObject) {
+						if (info.Invoker is BaseCritter && info.CurrentTarget is IMapObject) {
+							p0.X = GetNumberFromVariable(EventScript, info, inputParam) + (info.Invoker as BaseCritter).BonusAttack;
+							p0.Y = GetNumberFromVariable(EventScript, info, inputParam);
+							(info.CurrentTarget as IMapObject).ScriptAttack(false, p0.X, p0.Y, info.Invoker); break;
+						} else if (info.CurrentTarget is IMapObject) {
 							p0.X = GetNumberFromVariable(EventScript, info, inputParam);
 							p0.Y = GetNumberFromVariable(EventScript, info, inputParam);
 							(info.CurrentTarget as IMapObject).ScriptAttack(false, p0.X, p0.Y, info.Invoker); break;
@@ -1127,11 +1148,16 @@ package Scripting {
 						p0.X = EventScript.readShort(); //Function ID
 						GlobalVariables.Functions.Run(p0.X, info, inputParam);
 						break;
+					case 0xC001: //Hide Element || UIElementVisible
+						p0.D = EventScript.readUnsignedShort();
+						p0.X = EventScript.readUnsignedShort();
+						p0.Y = EventScript.readShort();
+						(Main.I.hud.Panels[p0.D] as UIPanel).Elements[p0.X].visible = (p0.Y == 1);
+						break;
 					case 0xC002: //Hide Panel || UIPanelVisible
 						p0.D = EventScript.readUnsignedShort();
 						p0.X = EventScript.readShort();
 						(Main.I.hud.Panels[p0.D] as UIPanel).visible = (p0.X == 1);
-						if (NetSync > 0 && Global.Network != null) PacketFactory.N(Vector.<int>([0xC002, p0.D, p0.X]));
 						break;
 					case 0xC003: //Redraw Panel
 						Main.I.hud.Panels[EventScript.readShort()].Elements[EventScript.readShort()].Draw(Main.I.stage.stageWidth, Main.I.stage.stageHeight, Main.I.hud); break;
@@ -1260,7 +1286,8 @@ package Scripting {
 			}
 			EventScripts = null;
 			
-			InitialVariables = null;
+			IntegerVariables = null;
+			FloatVariables = null;
 		}
 	}
 

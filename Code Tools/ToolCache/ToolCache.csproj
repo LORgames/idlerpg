@@ -67,6 +67,7 @@
     <Compile Include="Equipment\EquipmentItem.cs" />
     <Compile Include="Equipment\EquipmentManager.cs" />
     <Compile Include="General\StringMagic.cs" />
+    <Compile Include="Scripting\Types\FloatVariable.cs" />
     <Compile Include="Scripting\Types\StringVariable.cs" />
     <Compile Include="Storage\BinaryIO.cs" />
     <Compile Include="Storage\IStorage.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="Scripting\Types\Commands.cs" />
     <Compile Include="Sound\SoundData.cs" />
     <Compile Include="Sound\SoundDatabase.cs" />
+    <Compile Include="UI\UILayerRoller.cs" />
     <Compile Include="UI\UILayerLibrary.cs" />
     <Compile Include="UI\UIElement.cs" />
     <Compile Include="UI\UILayerImage.cs" />

@@ -73,6 +73,10 @@ package Game.Critter
 			critter.UpdatePlaybackSpeed(newAnimationSpeed);
 		}
 		
+		public function GetAnimationSpeed():Number {
+			return critter.GetAnimationSpeed();
+		}
+		
 		public function GetCurrentState():int {
 			Main.I.Log("Buff trying to get state. NP HARD. Returning Critter state. " + info.name);
 			return critter.GetCurrentState();

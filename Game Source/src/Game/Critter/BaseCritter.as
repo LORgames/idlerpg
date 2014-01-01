@@ -586,6 +586,7 @@ package Game.Critter {
 		public function ChangeState(stateID:int, isLooping:Boolean):void { /* Possibly needs to be handed on to children. */ }
 		public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void { /* Definately needs to be handed down to children. */ }
 		public function GetCurrentState():int { /* Needs to be handed down */ return 0; }
+		public function GetAnimationSpeed():Number { return 0; }
 		
 		public function ScriptAttack(isPercent:Boolean, amount:int, pierce:int, attacker:IScriptTarget):void {
 			if (MyScript != null) {
