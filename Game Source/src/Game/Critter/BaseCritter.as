@@ -446,13 +446,23 @@ package Game.Critter {
 			_debuffBMPD.fillRect(_debuffBMPD.rect, 0x00FFFFFF);
 			
 			//Draw Buffs
-			var buffIcon:int = 0;
+			var shownBuffs:Vector.<int> = new Vector.<int>();
+			var maxShownBuffs:int = 4;
 			for (var i:int = 0; i < ActiveBuffs.length; i++) {
 				trace("Total buffs: " + ActiveBuffs.length);
 				if (ActiveBuffs[i].info.showIcon) {
-					buffIcon++;
-					_debuffBMPD.draw(ActiveBuffs[i].info.Icon(), new Matrix(1, 0, 0, 1, (buffIcon % 4) * 16, 0));
+					shownBuffs.push(i);
+					if (shownBuffs.length >= maxShownBuffs) {
+						break;
+					}
 				}
+			}
+			
+			var iconWidth:int = 16;
+			for (var i:int = 0; i < shownBuffs.length; i++) {
+				var pos:int = ((iconWidth * 2) - ((shownBuffs.length * iconWidth) / 2)) + (iconWidth * i);
+				_debuffBMPD.draw(ActiveBuffs[shownBuffs[i]].info.Icon(), new Matrix(1, 0, 0, 1, pos, 0));
+				//(i % shownBuffs.length) * iconWidth
 			}
 			
 			//Draw health
