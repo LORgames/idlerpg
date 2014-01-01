@@ -103,7 +103,7 @@ namespace CityTools {
 
                 listUIElements.Items.Clear();
                 foreach (UIElement element in CurrentPanel.Elements) {
-                    listUIElements.Items.Add(element);
+                    listUIElements.Items.Add(element, true);
                 }
                 PanelSwitching = false;
             } else {
@@ -399,8 +399,10 @@ namespace CityTools {
             }
 
             if (CurrentPanel != null) {
-                foreach (UIElement element in CurrentPanel.Elements) {
-                    element.Draw(e.Graphics, e.ClipRectangle, percent, ckbDrawDebug.Checked);
+                foreach (Object obj in listUIElements.CheckedItems) {
+                    if (obj is UIElement) {
+                        (obj as UIElement).Draw(e.Graphics, e.ClipRectangle, percent, ckbDrawDebug.Checked);
+                    }
                 }
             }
         }
@@ -568,6 +570,10 @@ namespace CityTools {
             }
 
             senderComboBox.DropDownWidth = width;
+        }
+
+        private void listUIElements_ItemCheck(object sender, ItemCheckEventArgs e) {
+            pbExample.Invalidate();
         }
     }
 }

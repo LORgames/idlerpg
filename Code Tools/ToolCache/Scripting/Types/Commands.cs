@@ -86,6 +86,8 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0x1021, new Param[] { Param.String }));
             All.Add("nettrigger",
                 new ValidCommand(0x1022, new Param[] { Param.Integer }));
+            All.Add("clockrunning",
+                new ValidCommand(0x1023, new Param[] { Param.Boolean }));
 
             //Quest and Inventory Commands
             All.Add("saydialogue",
@@ -152,7 +154,7 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0xC003, new Param[] { Param.UIElement }));
             All.Add("uitextchange",
                 new ValidCommand(0xC004, new Param[] { Param.UILayer, Param.String }));
-            All.Add("uioffsets",
+            All.Add("uilayeroffsets",
                 new ValidCommand(0xC005, new Param[] { Param.UILayer, Param.Integer, Param.Integer }));
             All.Add("uisetlibraryid",
                 new ValidCommand(0xC006, new Param[] { Param.UILayer, Param.Integer }));
@@ -160,6 +162,10 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0xC007, new Param[] { Param.UILayer, Param.Number, Param.Boolean | Param.Optional }));
             All.Add("uielementoffsets",
                 new ValidCommand(0xC008, new Param[] { Param.UIElement, Param.Integer, Param.Integer }));
+            All.Add("uielementsize",
+                new ValidCommand(0xC009, new Param[] { Param.UIElement, Param.Integer, Param.Integer }));
+            All.Add("uilayersize",
+                new ValidCommand(0xC00A, new Param[] { Param.UILayer, Param.Integer, Param.Integer }));
 
             All.Add("trace",
                 new ValidCommand(0xCFFF, new Param[] { Param.String }));

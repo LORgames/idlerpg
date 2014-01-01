@@ -24,7 +24,7 @@
         /// </summary>
         private void InitializeComponent() {
             this.pbExample = new System.Windows.Forms.PictureBox();
-            this.listUIElements = new System.Windows.Forms.ListBox();
+            this.listUIElements = new System.Windows.Forms.CheckedListBox();
             this.btnNewUIElement = new System.Windows.Forms.Button();
             this.btnDeleteSelectedUIElements = new System.Windows.Forms.Button();
             this.pnlUIElement = new System.Windows.Forms.Panel();
@@ -48,11 +48,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtUIName = new System.Windows.Forms.TextBox();
             this.pnlUILayer = new System.Windows.Forms.Panel();
-            this.pnlUILayerLibrary = new System.Windows.Forms.Panel();
-            this.label18 = new System.Windows.Forms.Label();
-            this.numUILayerLibraryIndex = new System.Windows.Forms.NumericUpDown();
-            this.cbUILayerLibrary = new System.Windows.Forms.ComboBox();
-            this.label17 = new System.Windows.Forms.Label();
             this.pnlImageStuff = new System.Windows.Forms.Panel();
             this.cbValue = new System.Windows.Forms.ComboBox();
             this.lblValue = new System.Windows.Forms.Label();
@@ -83,6 +78,11 @@
             this.label5 = new System.Windows.Forms.Label();
             this.numLayerHeight = new System.Windows.Forms.NumericUpDown();
             this.numLayerWidth = new System.Windows.Forms.NumericUpDown();
+            this.pnlUILayerLibrary = new System.Windows.Forms.Panel();
+            this.label18 = new System.Windows.Forms.Label();
+            this.numUILayerLibraryIndex = new System.Windows.Forms.NumericUpDown();
+            this.cbUILayerLibrary = new System.Windows.Forms.ComboBox();
+            this.label17 = new System.Windows.Forms.Label();
             this.tbPercent = new System.Windows.Forms.TrackBar();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.listUIPanels = new System.Windows.Forms.CheckedListBox();
@@ -105,8 +105,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numUIElementOffsetY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUIElementOffsetX)).BeginInit();
             this.pnlUILayer.SuspendLayout();
-            this.pnlUILayerLibrary.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numUILayerLibraryIndex)).BeginInit();
             this.pnlImageStuff.SuspendLayout();
             this.pnlTextStuff.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbTextColour)).BeginInit();
@@ -116,6 +114,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numLayerOffsetX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLayerHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLayerWidth)).BeginInit();
+            this.pnlUILayerLibrary.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numUILayerLibraryIndex)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbPercent)).BeginInit();
             this.pnlUIPanel.SuspendLayout();
             this.SuspendLayout();
@@ -136,8 +136,9 @@
             this.listUIElements.FormattingEnabled = true;
             this.listUIElements.Location = new System.Drawing.Point(95, 29);
             this.listUIElements.Name = "listUIElements";
-            this.listUIElements.Size = new System.Drawing.Size(243, 43);
+            this.listUIElements.Size = new System.Drawing.Size(243, 49);
             this.listUIElements.TabIndex = 1;
+            this.listUIElements.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.listUIElements_ItemCheck);
             this.listUIElements.SelectedIndexChanged += new System.EventHandler(this.listUIElements_SelectedIndexChanged);
             // 
             // btnNewUIElement
@@ -219,11 +220,11 @@
             // 
             // scriptUI
             // 
-            this.scriptUI.Location = new System.Drawing.Point(3, 130);
+            this.scriptUI.Location = new System.Drawing.Point(3, 133);
             this.scriptUI.Name = "scriptUI";
             this.scriptUI.Script = "";
             this.scriptUI.ScriptType = ToolCache.Scripting.Types.ScriptTypes.UIElement;
-            this.scriptUI.Size = new System.Drawing.Size(337, 139);
+            this.scriptUI.Size = new System.Drawing.Size(337, 136);
             this.scriptUI.TabIndex = 16;
             this.scriptUI.ScriptUpdated += new System.EventHandler<System.EventArgs>(this.UIElementValueChanged);
             // 
@@ -440,54 +441,6 @@
             this.pnlUILayer.Name = "pnlUILayer";
             this.pnlUILayer.Size = new System.Drawing.Size(349, 200);
             this.pnlUILayer.TabIndex = 5;
-            // 
-            // pnlUILayerLibrary
-            // 
-            this.pnlUILayerLibrary.Controls.Add(this.label18);
-            this.pnlUILayerLibrary.Controls.Add(this.numUILayerLibraryIndex);
-            this.pnlUILayerLibrary.Controls.Add(this.cbUILayerLibrary);
-            this.pnlUILayerLibrary.Controls.Add(this.label17);
-            this.pnlUILayerLibrary.Location = new System.Drawing.Point(3, 136);
-            this.pnlUILayerLibrary.Name = "pnlUILayerLibrary";
-            this.pnlUILayerLibrary.Size = new System.Drawing.Size(155, 61);
-            this.pnlUILayerLibrary.TabIndex = 21;
-            this.pnlUILayerLibrary.Visible = false;
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(-8, 31);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(52, 13);
-            this.label18.TabIndex = 22;
-            this.label18.Text = "DefaultID";
-            // 
-            // numUILayerLibraryIndex
-            // 
-            this.numUILayerLibraryIndex.Location = new System.Drawing.Point(50, 29);
-            this.numUILayerLibraryIndex.Name = "numUILayerLibraryIndex";
-            this.numUILayerLibraryIndex.Size = new System.Drawing.Size(98, 20);
-            this.numUILayerLibraryIndex.TabIndex = 21;
-            this.numUILayerLibraryIndex.ValueChanged += new System.EventHandler(this.UILayerValueChanged);
-            // 
-            // cbUILayerLibrary
-            // 
-            this.cbUILayerLibrary.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbUILayerLibrary.FormattingEnabled = true;
-            this.cbUILayerLibrary.Location = new System.Drawing.Point(50, 2);
-            this.cbUILayerLibrary.Name = "cbUILayerLibrary";
-            this.cbUILayerLibrary.Size = new System.Drawing.Size(98, 21);
-            this.cbUILayerLibrary.TabIndex = 20;
-            this.cbUILayerLibrary.SelectedIndexChanged += new System.EventHandler(this.UILayerValueChanged);
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(10, 5);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(34, 13);
-            this.label17.TabIndex = 19;
-            this.label17.Text = "Value";
             // 
             // pnlImageStuff
             // 
@@ -846,6 +799,54 @@
             this.numLayerWidth.TabIndex = 0;
             this.numLayerWidth.ValueChanged += new System.EventHandler(this.UILayerValueChanged);
             // 
+            // pnlUILayerLibrary
+            // 
+            this.pnlUILayerLibrary.Controls.Add(this.label18);
+            this.pnlUILayerLibrary.Controls.Add(this.numUILayerLibraryIndex);
+            this.pnlUILayerLibrary.Controls.Add(this.cbUILayerLibrary);
+            this.pnlUILayerLibrary.Controls.Add(this.label17);
+            this.pnlUILayerLibrary.Location = new System.Drawing.Point(3, 136);
+            this.pnlUILayerLibrary.Name = "pnlUILayerLibrary";
+            this.pnlUILayerLibrary.Size = new System.Drawing.Size(155, 61);
+            this.pnlUILayerLibrary.TabIndex = 21;
+            this.pnlUILayerLibrary.Visible = false;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(-8, 31);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(52, 13);
+            this.label18.TabIndex = 22;
+            this.label18.Text = "DefaultID";
+            // 
+            // numUILayerLibraryIndex
+            // 
+            this.numUILayerLibraryIndex.Location = new System.Drawing.Point(50, 29);
+            this.numUILayerLibraryIndex.Name = "numUILayerLibraryIndex";
+            this.numUILayerLibraryIndex.Size = new System.Drawing.Size(98, 20);
+            this.numUILayerLibraryIndex.TabIndex = 21;
+            this.numUILayerLibraryIndex.ValueChanged += new System.EventHandler(this.UILayerValueChanged);
+            // 
+            // cbUILayerLibrary
+            // 
+            this.cbUILayerLibrary.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbUILayerLibrary.FormattingEnabled = true;
+            this.cbUILayerLibrary.Location = new System.Drawing.Point(50, 2);
+            this.cbUILayerLibrary.Name = "cbUILayerLibrary";
+            this.cbUILayerLibrary.Size = new System.Drawing.Size(98, 21);
+            this.cbUILayerLibrary.TabIndex = 20;
+            this.cbUILayerLibrary.SelectedIndexChanged += new System.EventHandler(this.UILayerValueChanged);
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(10, 5);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(34, 13);
+            this.label17.TabIndex = 19;
+            this.label17.Text = "Value";
+            // 
             // tbPercent
             // 
             this.tbPercent.LargeChange = 10;
@@ -906,9 +907,9 @@
             this.pnlUIPanel.Controls.Add(this.btnNewUIElement);
             this.pnlUIPanel.Controls.Add(this.btnDeleteSelectedUIElements);
             this.pnlUIPanel.Enabled = false;
-            this.pnlUIPanel.Location = new System.Drawing.Point(12, 82);
+            this.pnlUIPanel.Location = new System.Drawing.Point(12, 79);
             this.pnlUIPanel.Name = "pnlUIPanel";
-            this.pnlUIPanel.Size = new System.Drawing.Size(345, 79);
+            this.pnlUIPanel.Size = new System.Drawing.Size(345, 82);
             this.pnlUIPanel.TabIndex = 15;
             // 
             // ckbEnabled
@@ -953,7 +954,7 @@
             // 
             // ckbDrawDebug
             // 
-            this.ckbDrawDebug.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ckbDrawDebug.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ckbDrawDebug.AutoSize = true;
             this.ckbDrawDebug.Location = new System.Drawing.Point(1272, 631);
             this.ckbDrawDebug.Name = "ckbDrawDebug";
@@ -1025,9 +1026,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numUIElementOffsetX)).EndInit();
             this.pnlUILayer.ResumeLayout(false);
             this.pnlUILayer.PerformLayout();
-            this.pnlUILayerLibrary.ResumeLayout(false);
-            this.pnlUILayerLibrary.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numUILayerLibraryIndex)).EndInit();
             this.pnlImageStuff.ResumeLayout(false);
             this.pnlImageStuff.PerformLayout();
             this.pnlTextStuff.ResumeLayout(false);
@@ -1039,6 +1037,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.numLayerOffsetX)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLayerHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLayerWidth)).EndInit();
+            this.pnlUILayerLibrary.ResumeLayout(false);
+            this.pnlUILayerLibrary.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numUILayerLibraryIndex)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbPercent)).EndInit();
             this.pnlUIPanel.ResumeLayout(false);
             this.pnlUIPanel.PerformLayout();
@@ -1050,7 +1051,7 @@
         #endregion
 
         private System.Windows.Forms.PictureBox pbExample;
-        private System.Windows.Forms.ListBox listUIElements;
+        private System.Windows.Forms.CheckedListBox listUIElements;
         private System.Windows.Forms.Button btnNewUIElement;
         private System.Windows.Forms.Button btnDeleteSelectedUIElements;
         private System.Windows.Forms.Panel pnlUIElement;
