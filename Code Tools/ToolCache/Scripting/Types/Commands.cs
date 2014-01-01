@@ -158,6 +158,8 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0xC006, new Param[] { Param.UILayer, Param.Integer }));
             All.Add("uilayerplay",
                 new ValidCommand(0xC007, new Param[] { Param.UILayer, Param.Number, Param.Boolean | Param.Optional }));
+            All.Add("uielementoffsets",
+                new ValidCommand(0xC008, new Param[] { Param.UIElement, Param.Integer, Param.Integer }));
 
             All.Add("trace",
                 new ValidCommand(0xCFFF, new Param[] { Param.String }));

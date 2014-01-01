@@ -1198,6 +1198,14 @@ package Scripting {
 							GetNumberFromVariable(EventScript, info, inputParam); //Just pop it off
 							EventScript.readShort(); //Pop them off as well
 						} break;
+					case 0xC008: //Change offsets for UIElement
+						uiE = Main.I.hud.Panels[EventScript.readShort()].Elements[EventScript.readShort()];
+						
+						uiE.OffsetX = GetNumberFromVariable(EventScript, info, inputParam) + 1;
+						uiE.OffsetY = GetNumberFromVariable(EventScript, info, inputParam) + 1;
+						uiE.Draw(Main.I.stage.stageWidth, Main.I.stage.stageHeight, Main.I.hud);
+						
+						break;
 					case 0xCFFF: //Main.I.Log // Debug Trace
 						Main.I.Log("[" + info.Invoker + "] " + StringEx.BuildFromCore(GetWonkyString(EventScript)).GetBuilt()); break;
 					case 0xF001: //Up a netsync level
