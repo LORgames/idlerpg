@@ -154,7 +154,7 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0xC003, new Param[] { Param.UIElement }));
             All.Add("uitextchange",
                 new ValidCommand(0xC004, new Param[] { Param.UILayer, Param.String }));
-            All.Add("uilayeroffset",
+            All.Add("uilayeroffsets",
                 new ValidCommand(0xC005, new Param[] { Param.UILayer, Param.Integer, Param.Integer }));
             All.Add("uisetlibraryid",
                 new ValidCommand(0xC006, new Param[] { Param.UILayer, Param.Integer }));
