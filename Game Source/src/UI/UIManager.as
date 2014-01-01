@@ -71,7 +71,7 @@ package UI {
 					Panels[i].Elements[j].SizeX = b.readShort();
 					Panels[i].Elements[j].SizeY = b.readShort();
 					Panels[i].Elements[j]._script = Script.ReadScript(b);
-					Panels[i].Elements[j].MyScript = new ScriptInstance(Panels[i].Elements[j]._script, Panels[i].Elements[j], true);
+					Panels[i].Elements[j].MyScript = new ScriptInstance(Panels[i].Elements[j]._script, Panels[i].Elements[j], false);
 					
 					//Does the element have Press or PressAndDrag support.
 					if (Panels[i].Elements[j]._script.HasEvent(Script.Attack) || Panels[i].Elements[j]._script.HasEvent(Script.Use) || Panels[i].Elements[j]._script.HasEvent(Script.OnEnter)) {
@@ -118,6 +118,8 @@ package UI {
 							(Panels[i].Elements[j].Layers[k] as UILayerLibrary).SetID(b.readShort());
 						}
 					}
+					
+					Panels[i].Elements[j].MyScript.Run(Script.Initialize);
 				}
 				
 				//Run element spawn scripts

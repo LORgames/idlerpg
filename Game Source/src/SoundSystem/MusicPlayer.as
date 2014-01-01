@@ -42,7 +42,7 @@ package SoundSystem
 		public static function UpdateVolume():void {
 			if (channel) {
 				var st:SoundTransform = channel.soundTransform;
-				st.volume = GlobalVariables.IntegerVariables[Global.GV_MusicVolume] / 100.0;
+				st.volume = GlobalVariables.IntegerVariables[Global.GV_Mute] == 1 ? 0 : GlobalVariables.IntegerVariables[Global.GV_MusicVolume] / 100.0;
 				channel.soundTransform = st;
 			}
 		}

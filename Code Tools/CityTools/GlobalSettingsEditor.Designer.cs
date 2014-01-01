@@ -62,14 +62,16 @@
             this.numTurnSize = new System.Windows.Forms.NumericUpDown();
             this.colorPicker = new System.Windows.Forms.ColorDialog();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.cbVariablePlayerID = new System.Windows.Forms.ComboBox();
+            this.label18 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.cbVariableSoundVolume = new System.Windows.Forms.ComboBox();
             this.cbVariableMusicVolume = new System.Windows.Forms.ComboBox();
             this.txtQuickMatchServer = new System.Windows.Forms.TextBox();
-            this.label18 = new System.Windows.Forms.Label();
-            this.cbVariablePlayerID = new System.Windows.Forms.ComboBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.cbVariableMute = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudTileSize)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numTargetFPS)).BeginInit();
@@ -355,9 +357,9 @@
             this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel2.Controls.Add(this.btnSave, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnCancel, 1, 0);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(454, 281);
+            this.tableLayoutPanel2.Controls.Add(this.btnSave, 0, 0);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(139, 262);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -509,6 +511,9 @@
             this.tableLayoutPanel3.ColumnCount = 2;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel3.Controls.Add(this.cbVariableMute, 1, 7);
+            this.tableLayoutPanel3.Controls.Add(this.label19, 0, 7);
+            this.tableLayoutPanel3.Controls.Add(this.tableLayoutPanel2, 1, 10);
             this.tableLayoutPanel3.Controls.Add(this.cbVariablePlayerID, 1, 6);
             this.tableLayoutPanel3.Controls.Add(this.label18, 0, 6);
             this.tableLayoutPanel3.Controls.Add(this.label17, 0, 5);
@@ -527,7 +532,7 @@
             this.tableLayoutPanel3.Controls.Add(this.txtQuickMatchServer, 1, 5);
             this.tableLayoutPanel3.Location = new System.Drawing.Point(312, 13);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 10;
+            this.tableLayoutPanel3.RowCount = 11;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -538,9 +543,31 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(304, 259);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(304, 294);
             this.tableLayoutPanel3.TabIndex = 9;
+            // 
+            // cbVariablePlayerID
+            // 
+            this.cbVariablePlayerID.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbVariablePlayerID.FormattingEnabled = true;
+            this.cbVariablePlayerID.Location = new System.Drawing.Point(125, 154);
+            this.cbVariablePlayerID.Name = "cbVariablePlayerID";
+            this.cbVariablePlayerID.Size = new System.Drawing.Size(176, 21);
+            this.cbVariablePlayerID.Sorted = true;
+            this.cbVariablePlayerID.TabIndex = 19;
+            this.cbVariablePlayerID.SelectedIndexChanged += new System.EventHandler(this.Edited);
+            // 
+            // label18
+            // 
+            this.label18.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(3, 158);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(69, 13);
+            this.label18.TabIndex = 32;
+            this.label18.Text = "Player ID Var";
             // 
             // label17
             // 
@@ -602,26 +629,26 @@
             this.txtQuickMatchServer.TabIndex = 34;
             this.txtQuickMatchServer.TextChanged += new System.EventHandler(this.Edited);
             // 
-            // label18
+            // label19
             // 
-            this.label18.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(3, 158);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(69, 13);
-            this.label18.TabIndex = 32;
-            this.label18.Text = "Player ID Var";
+            this.label19.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(3, 185);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(50, 13);
+            this.label19.TabIndex = 32;
+            this.label19.Text = "Mute Var";
             // 
-            // cbVariablePlayerID
+            // cbVariableMute
             // 
-            this.cbVariablePlayerID.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbVariablePlayerID.FormattingEnabled = true;
-            this.cbVariablePlayerID.Location = new System.Drawing.Point(125, 154);
-            this.cbVariablePlayerID.Name = "cbVariablePlayerID";
-            this.cbVariablePlayerID.Size = new System.Drawing.Size(176, 21);
-            this.cbVariablePlayerID.Sorted = true;
-            this.cbVariablePlayerID.TabIndex = 19;
-            this.cbVariablePlayerID.SelectedIndexChanged += new System.EventHandler(this.Edited);
+            this.cbVariableMute.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbVariableMute.FormattingEnabled = true;
+            this.cbVariableMute.Location = new System.Drawing.Point(125, 181);
+            this.cbVariableMute.Name = "cbVariableMute";
+            this.cbVariableMute.Size = new System.Drawing.Size(176, 21);
+            this.cbVariableMute.Sorted = true;
+            this.cbVariableMute.TabIndex = 19;
+            this.cbVariableMute.SelectedIndexChanged += new System.EventHandler(this.Edited);
             // 
             // GlobalSettingsEditor
             // 
@@ -634,7 +661,6 @@
             this.ClientSize = new System.Drawing.Size(626, 314);
             this.Controls.Add(this.tableLayoutPanel3);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Controls.Add(this.tableLayoutPanel2);
             this.Name = "GlobalSettingsEditor";
             this.Padding = new System.Windows.Forms.Padding(10);
             this.Text = "Global Settings";
@@ -700,5 +726,7 @@
         private System.Windows.Forms.TextBox txtQuickMatchServer;
         private System.Windows.Forms.ComboBox cbVariablePlayerID;
         private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.ComboBox cbVariableMute;
+        private System.Windows.Forms.Label label19;
     }
 }

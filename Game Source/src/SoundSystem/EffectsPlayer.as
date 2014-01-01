@@ -49,6 +49,7 @@ package SoundSystem {
 		
 		public static function UpdateVolume():void {
 			//TODO: All the sounds need to be stored.
+			// Make sure mute is included!
 		}
 		
 	}

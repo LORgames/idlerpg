@@ -33,6 +33,7 @@ namespace CityTools {
                 cbVariableWY.Items.Add(s);
                 cbVariableLX.Items.Add(s);
                 cbVariableLY.Items.Add(s);
+                cbVariableMute.Items.Add(s);
                 cbVariableMusicVolume.Items.Add(s);
                 cbVariableSoundVolume.Items.Add(s);
                 cbVariablePlayerID.Items.Add(s);
@@ -41,6 +42,7 @@ namespace CityTools {
                 if (GlobalSettings.VariablePressedWorldY == s) cbVariableWY.SelectedIndex = i;
                 if (GlobalSettings.VariablePressedLocalX == s) cbVariableLX.SelectedIndex = i;
                 if (GlobalSettings.VariablePressedLocalY == s) cbVariableLY.SelectedIndex = i;
+                if (GlobalSettings.VariableMute == s) cbVariableMute.SelectedIndex = i;
                 if (GlobalSettings.VariableMusicVolume == s) cbVariableMusicVolume.SelectedIndex = i;
                 if (GlobalSettings.VariableSoundVolume == s) cbVariableSoundVolume.SelectedIndex = i;
                 if (GlobalSettings.VariablePlayerID == s) cbVariablePlayerID.SelectedIndex = i;
@@ -59,6 +61,7 @@ namespace CityTools {
             cbVariableWY.SelectedText = GlobalSettings.VariablePressedWorldY;
             cbVariableLX.SelectedText = GlobalSettings.VariablePressedLocalX;
             cbVariableLY.SelectedText = GlobalSettings.VariablePressedLocalY;
+            cbVariableMute.SelectedText = GlobalSettings.VariableMute;
             cbVariableMusicVolume.SelectedText = GlobalSettings.VariableMusicVolume;
             cbVariableSoundVolume.SelectedText = GlobalSettings.VariableSoundVolume;
 
@@ -96,6 +99,7 @@ namespace CityTools {
                 GlobalSettings.MatchmakingServer = txtQuickMatchServer.Text;
                 GlobalSettings.VariablePlayerID = cbVariablePlayerID.SelectedItem == null ? "" : cbVariablePlayerID.SelectedItem.ToString();
 
+                GlobalSettings.VariableMute = cbVariableMute.SelectedItem == null ? "" : cbVariableMute.SelectedItem.ToString();
                 GlobalSettings.VariableMusicVolume = cbVariableMusicVolume.SelectedItem == null ? "" : cbVariableMusicVolume.SelectedItem.ToString();
                 GlobalSettings.VariableSoundVolume = cbVariableSoundVolume.SelectedItem == null ? "" : cbVariableSoundVolume.SelectedItem.ToString();
 

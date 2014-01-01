@@ -53,6 +53,7 @@ package {
 			Global.GV_WY = b.readShort();
 			Global.GV_LX = b.readShort();
 			Global.GV_LY = b.readShort();
+			Global.GV_Mute = b.readShort();
 			Global.GV_MusicVolume = b.readShort();
 			Global.GV_SoundVolume = b.readShort();
 			

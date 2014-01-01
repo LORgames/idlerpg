@@ -49,13 +49,19 @@ namespace ToolToGameExporter {
             f.AddShort((short)Variables.HighestRequiredVariableIndex());
 
             List<int> IndicesToSave = new List<int>();
+            List<String> _tVarsToSave = new List<string>();
             int i = 0; int j = 0;
             for (i = 0; i < Variables.HighestRequiredVariableIndex(); i++) {
-                if (ls.Count > j && ls[j].Index == i) {
+                System.Diagnostics.Debug.WriteLine("J=" + j + ", I=" + i + ", ls.Count=" + ls.Count + ", ls[j].Index=" + ls[j].Index);
+
+                if (ls.Count >= j && ls[j].Index == i) {
+                    System.Diagnostics.Debug.WriteLine("\tFound Var. Name=" + ls[j].Name);
+
                     f.AddShort(ls[j].InitialValue);
 
                     if (ls[j].Saveable) {
                         IndicesToSave.Add(ls[j].Index);
+                        _tVarsToSave.Add(ls[j].Name);
                     }
 
                     j++;

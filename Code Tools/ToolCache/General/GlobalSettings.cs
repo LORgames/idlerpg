@@ -22,6 +22,7 @@ namespace ToolCache.General {
         public static string VariablePressedLocalX = "";
         public static string VariablePressedLocalY = "";
 
+        public static string VariableMute = "";
         public static string VariableMusicVolume = "";
         public static string VariableSoundVolume = "";
 
@@ -76,6 +77,7 @@ namespace ToolCache.General {
                         case "TurnLength": PlayerTurnLength = short.Parse(variableProperty); break;
                         case "MatchmakingServer": MatchmakingServer = variableProperty; break;
                         case "PlayerIDVar": VariablePlayerID = variableProperty; break;
+                        case "Mute": VariableMute = variableProperty; break;
                         case "MusicVolume": VariableMusicVolume = variableProperty; break;
                         case "SoundVolume": VariableSoundVolume = variableProperty; break;
                         default:
@@ -112,6 +114,7 @@ namespace ToolCache.General {
             lines.Add("MatchmakingServer=" + MatchmakingServer);
             lines.Add("PlayerIDVar=" + VariablePlayerID);
 
+            lines.Add("Mute=" + VariableMute);
             lines.Add("MusicVolume=" + VariableMusicVolume);
             lines.Add("SoundVolume=" + VariableSoundVolume);
 

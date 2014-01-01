@@ -36,6 +36,7 @@ package {
 		public static var GV_LX:int = 0;					//Variable ID for Local X position
 		public static var GV_LY:int = 0;					//Variable ID for Local Y position
 		
+		static public var GV_Mute:int;						//Variable ID for Mute
 		static public var GV_MusicVolume:int;				//Variable ID for Music Volume
 		static public var GV_SoundVolume:int;				//Variable ID for Sound Volume
 		

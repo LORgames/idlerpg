@@ -27,6 +27,7 @@ namespace ToolToGameExporter {
             f.AddShort((short)(GlobalSettings.VariablePressedWorldY == "" ? 0 : Variables.GlobalVariables[GlobalSettings.VariablePressedWorldY].Index));
             f.AddShort((short)(GlobalSettings.VariablePressedLocalX == "" ? 0 : Variables.GlobalVariables[GlobalSettings.VariablePressedLocalX].Index));
             f.AddShort((short)(GlobalSettings.VariablePressedLocalY == "" ? 0 : Variables.GlobalVariables[GlobalSettings.VariablePressedLocalY].Index));
+            f.AddShort((short)(GlobalSettings.VariableMute == "" ? 0 : Variables.GlobalVariables[GlobalSettings.VariableMute].Index));
             f.AddShort((short)(GlobalSettings.VariableMusicVolume == "" ? 0 : Variables.GlobalVariables[GlobalSettings.VariableMusicVolume].Index));
             f.AddShort((short)(GlobalSettings.VariableSoundVolume == "" ? 0 : Variables.GlobalVariables[GlobalSettings.VariableSoundVolume].Index));
 
