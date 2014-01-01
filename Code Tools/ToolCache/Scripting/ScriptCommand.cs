@@ -170,7 +170,7 @@ namespace ToolCache.Scripting {
 
                         //Might be a variable line or something :)
                         m = Regex.Match(Trimmed, "(" + VARIABLE_REGEX + ")\\s?=(.+)");
-                        Regex mathcomreg = new Regex("([A-Za-z0-9]+)\\((.+)\\)");
+                        Regex mathcomreg = new Regex("([A-Za-z0-9]+)\\((.+)?\\)");
 
                         if (m.Success) {
                             #region PROCESS MATH BLOCK
@@ -863,7 +863,7 @@ namespace ToolCache.Scripting {
         /// <param name="Info">The current info object</param>
         /// <returns>True if the variable exists, false otherwise</returns>
         private bool VariableExists(string p, ScriptInfo Info) {
-            return (Info.IntegerVariables.ContainsKey(p) || Variables.GlobalVariables.ContainsKey(p));
+            return (Info.IntegerVariables.ContainsKey(p) || Variables.GlobalVariables.ContainsKey(p) || Info.FloatingVariables.ContainsKey(p));
         }
 
         /// <summary>
