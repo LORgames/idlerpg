@@ -110,6 +110,8 @@ package Game.Critter
 		}
 		
 		public function UpdateAnimation(dt:Number):void {
+			if (CurrentPlaybackSpeed == 0) return;
+			
 			FrameDT += dt;
 			
 			while (FrameDT >= CurrentPlaybackSpeed) {

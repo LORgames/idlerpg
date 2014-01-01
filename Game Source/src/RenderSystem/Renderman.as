@@ -75,7 +75,7 @@ package RenderSystem {
 					}
 				} catch (e:Error) {
 					//Should be a trace rather than a log. Needs to be culled in release because its really really expensive when this screws up.
-					trace("DIRTY Object NULL CAUGHT Obj="+obj);
+					Main.I.Log("DIRTY Object NULL CAUGHT Obj="+obj);
 				}
 			}
 			

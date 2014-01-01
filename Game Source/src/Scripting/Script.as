@@ -121,8 +121,8 @@ package Scripting {
 			var SaveVarType:int = eventScript.readUnsignedShort();
 			var SaveVarID:int = eventScript.readShort();
 			
-			var runningTally:int = 0;
-			var nextValue:int = 0;
+			var runningTally:Number = 0;
+			var nextValue:Number = 0;
 			var currentOperation:int = 0xB001; //Set operation to ADDITION
 			
 			var nextVarType:int;
@@ -149,17 +149,17 @@ package Scripting {
 						case 0xB005: //Modulus
 							runningTally %= nextValue; break;
 						case 0xB006: //Binary OR
-							runningTally |= nextValue; break;
+							runningTally = int(runningTally) | int(nextValue); break;
 						case 0xB007: //Binary AND
-							runningTally &= nextValue; break;
+							runningTally = int(runningTally) & int(nextValue); break;
 						case 0xB008: //Binary XOR
-							runningTally ^= nextValue; break;
+							runningTally = int(runningTally) ^ int(nextValue); break;
 						case 0xB009: //Binary NOT
-							runningTally = ~nextValue; break;
+							runningTally = ~int(nextValue); break;
 						case 0xB00A: //Binary Left Shift
-							runningTally = runningTally << nextValue; break;
+							runningTally = int(runningTally) << int(nextValue); break;
 						case 0xB00B: //Binary Right Shift
-							runningTally = runningTally >> nextValue; break;
+							runningTally = int(runningTally) >> int(nextValue); break;
 						default:
 							Main.I.Log("Unknown math operation!");
 							break;
@@ -173,6 +173,8 @@ package Scripting {
 				info.IntegerVariables[SaveVarID] = runningTally;
 			} else if (SaveVarType == 0xBFFE) { //Global variable
 				GlobalVariables.IntegerVariables[SaveVarID] = runningTally;
+			} else if (SaveVarType == 0xBFFA) { //Float Variable
+				info.FloatVariables[SaveVarID ] = runningTally;
 			}
 		}
 		
@@ -416,7 +418,7 @@ package Scripting {
 						} break;
 					case FACTIONMAP:
 						dim0 = eventScript.readShort(); //GetNumberFromVariable(eventScript, info, param);
-						trace("Finding all 0x" + eType.toString(16) + " for team " + dim0);
+						//trace("Finding all 0x" + eType.toString(16) + " for team " + dim0);
 						if(eType != Script.CRITTER) {
 							//We have a serious problem.
 						} else {
@@ -972,19 +974,17 @@ package Scripting {
 							EventScript.position -= 2;		//Rewind the script execution
 							GetWonkyString(EventScript);	//Read String
 							GetWonkyString(EventScript);	//Read String
-							trace("SETSTRING: Critical Error!");
+							Main.I.Log("SETSTRING: Critical Error!");
 						} else {
 							p0.X = EventScript.readShort(); //String ID
 							objName = GetWonkyString(EventScript);	//New String Value
-							
-							trace("SetString ID=" + p0.X + " Str=" + objName);
 							GlobalVariables.StringVariables[p0.X] = objName;
 						} break;
 					case 0x1021: //NetSyncString
 						p0.D = EventScript.readShort(); //String type
 						if (p0.D != 0x2) {	//Make sure we're trying to write a variable string and not a static one
 							EventScript.position -= 2; GetWonkyString(EventScript);	//Serious error in script, Rewind Script Execution and Read String
-							trace("NETSYNCSTRING: Critical Error!");
+							Main.I.Log("NETSYNCSTRING: Critical Error!");
 						} else {
 							p0.X = EventScript.readShort(); //String ID
 							if (Global.Network != null) {
@@ -992,12 +992,9 @@ package Scripting {
 								var pack:Packet = new Packet(PacketTypes.SCRIPT);
 								pack.bytes.writeShort(0x1020); pack.bytes.writeShort(p0.D); pack.bytes.writeShort(p0.X); pack.bytes.writeShort(0x1); pack.bytes.writeUTF(objName); if (pack.bytes.length % 2 == 1) pack.bytes.writeByte(0x0); pack.bytes.writeShort(0xFFFF);
 								Global.Network.SendPacket(pack); pack.bytes.clear();
-								
-								trace("NETSYNCSTRING ID=" + p0.X + " STR=" + objName);
 							}
 						} break;
 					case 0x1022: //NetTrigger
-						trace("NetTrigger");
 						PacketFactory.N(Vector.<int>([0x100D, 0xBFFF, GetNumberFromVariable(EventScript, info, inputParam)])); break;
 					case 0x4001: //Equip item on the target
 						if (info.CurrentTarget is CritterHuman) {

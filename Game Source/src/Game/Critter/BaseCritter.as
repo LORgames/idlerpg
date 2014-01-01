@@ -441,6 +441,7 @@ package Game.Critter {
 		
 		public function UpdateBuffPanel():void {
 			if ((MyAIType & AITypes.HidePanel) > 0) return;
+			var i:int;
 			
 			//Clear the panel
 			_debuffBMPD.fillRect(_debuffBMPD.rect, 0x00FFFFFF);
@@ -448,8 +449,7 @@ package Game.Critter {
 			//Draw Buffs
 			var shownBuffs:Vector.<int> = new Vector.<int>();
 			var maxShownBuffs:int = 4;
-			for (var i:int = 0; i < ActiveBuffs.length; i++) {
-				trace("Total buffs: " + ActiveBuffs.length);
+			for (i = 0; i < ActiveBuffs.length; i++) {
 				if (ActiveBuffs[i].info.showIcon) {
 					shownBuffs.push(i);
 					if (shownBuffs.length >= maxShownBuffs) {
@@ -459,7 +459,7 @@ package Game.Critter {
 			}
 			
 			var iconWidth:int = 16;
-			for (var i:int = 0; i < shownBuffs.length; i++) {
+			for (i = 0; i < shownBuffs.length; i++) {
 				var pos:int = ((iconWidth * 2) - ((shownBuffs.length * iconWidth) / 2)) + (iconWidth * i);
 				_debuffBMPD.draw(ActiveBuffs[shownBuffs[i]].info.Icon(), new Matrix(1, 0, 0, 1, pos, 0));
 				//(i % shownBuffs.length) * iconWidth

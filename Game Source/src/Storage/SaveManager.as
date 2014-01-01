@@ -1,4 +1,6 @@
 package Storage {
+	import SoundSystem.EffectsPlayer;
+	import SoundSystem.MusicPlayer;
 	import Storage.SaveAdv.EditorSaving;
 	import Storage.SaveAdv.AIRDatabaseSaver;
 	import Storage.SaveAdv.ISaveData;
@@ -25,6 +27,9 @@ package Storage {
 		static public function Load(key:String):void {
 			I.Load(key);
 			_LOADED = true;
+			
+			EffectsPlayer.UpdateVolume();
+			MusicPlayer.UpdateVolume();
 		}
 		
 		static public function Save(key:String):void {
