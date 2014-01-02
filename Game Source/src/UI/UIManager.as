@@ -247,7 +247,7 @@ package UI {
 				j = Panels[i].Elements.length;
 				
 				while (--j > -1) {
-					if (!Panels[i].Elements[j].SupportsTouch) {
+					if (!Panels[i].Elements[j].visible || !Panels[i].Elements[j].SupportsTouch) {
 						continue;
 					}
 					

@@ -744,9 +744,7 @@ package Scripting {
 							critter2.SetOwner(info.CurrentTarget);
 						} else {
 							QDMFCritter.Register(p0.D, p1.X, p1.Y, p1.D, info.CurrentTarget);
-						}
-						
-						break;
+						} break;
 					case 0x1007: //Destroy
 						if (info.CurrentTarget is ICleanUp) { Clock.CleanUpList.push(info.CurrentTarget); } break;
 					case 0x1008: //EffectSpawn

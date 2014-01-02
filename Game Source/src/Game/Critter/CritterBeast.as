@@ -40,6 +40,8 @@ package Game.Critter {
 			MyScript = new ScriptInstance(BeastInfo.AICommands, this, false);
 			MyScript.Run(Script.Initialize);
 			MyAIType = BeastInfo.AIType;
+			
+			CheckScriptRegions();
 		}
 		
 		public override function Update(dt:Number):void {
