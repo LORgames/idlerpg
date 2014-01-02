@@ -197,6 +197,7 @@ namespace CityTools {
                     numTextSize.Value = CurrentLayerTX.FontSize;
                     ckbTextWordWrap.Checked = CurrentLayerTX.WordWrap;
                     cbTextInputType.SelectedIndex = CurrentLayerTX.InputType;
+                    cbTextJustify.SelectedIndex = CurrentLayerTX.Justification;
 
                     pbTextColour.Invalidate();
 
@@ -242,6 +243,7 @@ namespace CityTools {
                     (CurrentLayer as UILayerText).FontSize = (int)numTextSize.Value;
                     (CurrentLayer as UILayerText).WordWrap = ckbTextWordWrap.Checked;
                     (CurrentLayer as UILayerText).InputType = (byte)cbTextInputType.SelectedIndex;
+                    (CurrentLayer as UILayerText).Justification = (byte)cbTextJustify.SelectedIndex;
                 } else if (CurrentLayer is UILayerLibrary) {
                     (CurrentLayer as UILayerLibrary).LibraryName = cbUILayerLibrary.Text;
                     (CurrentLayer as UILayerLibrary).DefaultIndex = (int)numUILayerLibraryIndex.Value;

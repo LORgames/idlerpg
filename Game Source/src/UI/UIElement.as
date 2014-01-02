@@ -31,36 +31,22 @@ package UI
 		public function Draw(w:int, h:int, ui:UIManager):void {
             //Calculate X
             switch (AnchorPoint) {
-                case UIAnchorPoint.BottomLeft:
-                case UIAnchorPoint.MiddleLeft:
-                case UIAnchorPoint.TopLeft:
-                    this.x = OffsetX;
-                    break;
-                case UIAnchorPoint.BottomRight:
-                case UIAnchorPoint.MiddleRight:
-                case UIAnchorPoint.TopRight:
-                    this.x = w - SizeX - OffsetX;
-                    break;
+                case UIAnchorPoint.BottomLeft: case UIAnchorPoint.MiddleLeft: case UIAnchorPoint.TopLeft:
+                    this.x = OffsetX; break;
+                case UIAnchorPoint.BottomRight: case UIAnchorPoint.MiddleRight: case UIAnchorPoint.TopRight:
+                    this.x = w - SizeX + OffsetX; break;
                 default:
-                    this.x = (w - SizeX) / 2 + OffsetX;
-                    break;
+                    this.x = (w - SizeX) / 2 + OffsetX; break;
             }
             
             //Calculate Y
             switch (AnchorPoint) {
-                case UIAnchorPoint.BottomLeft:
-                case UIAnchorPoint.BottomCenter:
-                case UIAnchorPoint.BottomRight:
-                    this.y = h - SizeY - OffsetY;
-                    break;
-                case UIAnchorPoint.TopLeft:
-                case UIAnchorPoint.TopCenter:
-                case UIAnchorPoint.TopRight:
-                    this.y = OffsetY;
-                    break;
+                case UIAnchorPoint.BottomLeft: case UIAnchorPoint.BottomCenter: case UIAnchorPoint.BottomRight:
+                    this.y = h - SizeY + OffsetY; break;
+                case UIAnchorPoint.TopLeft: case UIAnchorPoint.TopCenter: case UIAnchorPoint.TopRight:
+                    this.y = OffsetY; break;
                 default:
-                    this.y = (h - SizeY) / 2 + OffsetY;
-                    break;
+                    this.y = (h - SizeY) / 2 + OffsetY; break;
             }
 			
 			//Draw Layers

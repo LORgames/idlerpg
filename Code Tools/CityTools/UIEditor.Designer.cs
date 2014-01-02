@@ -98,6 +98,8 @@
             this.btnMoveSelectedPanelDown = new System.Windows.Forms.Button();
             this.btnMoveSelectedPanelUp = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.label19 = new System.Windows.Forms.Label();
+            this.cbTextJustify = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbExample)).BeginInit();
             this.pnlUIElement.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUIElementSizeY)).BeginInit();
@@ -424,6 +426,7 @@
             this.pnlUILayer.Controls.Add(this.pnlTextStuff);
             this.pnlUILayer.Controls.Add(this.pbLayerImage);
             this.pnlUILayer.Controls.Add(this.label10);
+            this.pnlUILayer.Controls.Add(this.pnlUILayerLibrary);
             this.pnlUILayer.Controls.Add(this.txtLayerName);
             this.pnlUILayer.Controls.Add(this.label8);
             this.pnlUILayer.Controls.Add(this.cbLayerType);
@@ -435,7 +438,6 @@
             this.pnlUILayer.Controls.Add(this.label5);
             this.pnlUILayer.Controls.Add(this.numLayerHeight);
             this.pnlUILayer.Controls.Add(this.numLayerWidth);
-            this.pnlUILayer.Controls.Add(this.pnlUILayerLibrary);
             this.pnlUILayer.Enabled = false;
             this.pnlUILayer.Location = new System.Drawing.Point(12, 448);
             this.pnlUILayer.Name = "pnlUILayer";
@@ -447,7 +449,7 @@
             this.pnlImageStuff.Controls.Add(this.cbValue);
             this.pnlImageStuff.Controls.Add(this.lblValue);
             this.pnlImageStuff.Controls.Add(this.btnLayerChangeImage);
-            this.pnlImageStuff.Location = new System.Drawing.Point(6, 138);
+            this.pnlImageStuff.Location = new System.Drawing.Point(5, 133);
             this.pnlImageStuff.Name = "pnlImageStuff";
             this.pnlImageStuff.Size = new System.Drawing.Size(148, 61);
             this.pnlImageStuff.TabIndex = 19;
@@ -485,6 +487,8 @@
             // 
             // pnlTextStuff
             // 
+            this.pnlTextStuff.Controls.Add(this.label19);
+            this.pnlTextStuff.Controls.Add(this.cbTextJustify);
             this.pnlTextStuff.Controls.Add(this.cbTextInputType);
             this.pnlTextStuff.Controls.Add(this.label16);
             this.pnlTextStuff.Controls.Add(this.pbTextColour);
@@ -513,9 +517,9 @@
             "Go",
             "Next",
             "Search"});
-            this.cbTextInputType.Location = new System.Drawing.Point(51, 137);
+            this.cbTextInputType.Location = new System.Drawing.Point(104, 165);
             this.cbTextInputType.Name = "cbTextInputType";
-            this.cbTextInputType.Size = new System.Drawing.Size(108, 21);
+            this.cbTextInputType.Size = new System.Drawing.Size(55, 21);
             this.cbTextInputType.TabIndex = 31;
             this.cbTextInputType.SelectedIndexChanged += new System.EventHandler(this.UILayerValueChanged);
             // 
@@ -533,7 +537,7 @@
             this.pbTextColour.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pbTextColour.Location = new System.Drawing.Point(51, 166);
             this.pbTextColour.Name = "pbTextColour";
-            this.pbTextColour.Size = new System.Drawing.Size(108, 20);
+            this.pbTextColour.Size = new System.Drawing.Size(49, 20);
             this.pbTextColour.TabIndex = 29;
             this.pbTextColour.TabStop = false;
             this.pbTextColour.Click += new System.EventHandler(this.pbTextColour_Click);
@@ -805,7 +809,7 @@
             this.pnlUILayerLibrary.Controls.Add(this.numUILayerLibraryIndex);
             this.pnlUILayerLibrary.Controls.Add(this.cbUILayerLibrary);
             this.pnlUILayerLibrary.Controls.Add(this.label17);
-            this.pnlUILayerLibrary.Location = new System.Drawing.Point(3, 136);
+            this.pnlUILayerLibrary.Location = new System.Drawing.Point(3, 137);
             this.pnlUILayerLibrary.Name = "pnlUILayerLibrary";
             this.pnlUILayerLibrary.Size = new System.Drawing.Size(155, 61);
             this.pnlUILayerLibrary.TabIndex = 21;
@@ -996,6 +1000,29 @@
             this.btnMoveSelectedPanelUp.UseVisualStyleBackColor = true;
             this.btnMoveSelectedPanelUp.Click += new System.EventHandler(this.btnMoveSelectedPanelUp_Click);
             // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(9, 139);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(36, 13);
+            this.label19.TabIndex = 33;
+            this.label19.Text = "Justify";
+            // 
+            // cbTextJustify
+            // 
+            this.cbTextJustify.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbTextJustify.FormattingEnabled = true;
+            this.cbTextJustify.Items.AddRange(new object[] {
+            "Left",
+            "Center",
+            "Right"});
+            this.cbTextJustify.Location = new System.Drawing.Point(51, 137);
+            this.cbTextJustify.Name = "cbTextJustify";
+            this.cbTextJustify.Size = new System.Drawing.Size(108, 21);
+            this.cbTextJustify.TabIndex = 32;
+            this.cbTextJustify.SelectedIndexChanged += new System.EventHandler(this.UILayerValueChanged);
+            // 
             // UIEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1125,5 +1152,7 @@
         private System.Windows.Forms.ComboBox cbUILayerLibrary;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.ComboBox cbTextInputType;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.ComboBox cbTextJustify;
     }
 }

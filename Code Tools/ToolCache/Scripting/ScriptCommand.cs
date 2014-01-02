@@ -119,7 +119,7 @@ namespace ToolCache.Scripting {
         }
 
         public void ProcessAction(ScriptInfo info) {
-            string validRegex = "([A-Za-z]+)\\(([A-Z,a-z0-9_~\\-\\.\\(\\)\\s>\"!@#\\$%\\^&\\*\\(\\){}]*)\\)";
+            string validRegex = "([A-Za-z]+)\\(([A-Z,a-z0-9_~\\-\\.\\(\\)\\s>\"!@#\\$%\\^&\\*'\\(\\){}]*)\\)";
             Match match = Regex.Match(Trimmed, validRegex);
 
             if (match.Success && match.Index == 0) {
@@ -500,6 +500,25 @@ namespace ToolCache.Scripting {
                                 }
                             } else {
                                 info.Errors.Add("Only Map Scripts can control spawn regions!" + ErrorEnding());
+                            } break;
+                        case Param.ScriptRegion:
+                            if (info.ScriptType == ScriptTypes.Map && ExportCrushers.CurrentMap != null) {
+                                int z = -1;
+
+                                for (int y = 0; y < ExportCrushers.CurrentMap.ScriptRegions.Count; y++) {
+                                    if (ExportCrushers.CurrentMap.ScriptRegions[y].Name == paramBits[i]) {
+                                        z = y;
+                                        break;
+                                    }
+                                }
+
+                                if (z > -1) {
+                                    AdditionalBytecode.Add((ushort)z);
+                                } else {
+                                    info.Errors.Add("Cannot find a script region called " + paramBits[i] + ErrorEnding());
+                                }
+                            } else {
+                                info.Errors.Add("Only Map Scripts can control script regions!" + ErrorEnding());
                             } break;
                         case Param.NetworkType:
                             if (Commands.NetworkTypes.ContainsKey(paramBits[i].ToLower())) {

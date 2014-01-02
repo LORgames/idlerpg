@@ -62,36 +62,22 @@ namespace ToolCache.UI {
 
             //Calculate X
             switch (AnchorPoint) {
-                case UIAnchorPoint.BottomLeft:
-                case UIAnchorPoint.MiddleLeft:
-                case UIAnchorPoint.TopLeft:
-                    thisArea.X = OffsetX;
-                    break;
-                case UIAnchorPoint.BottomRight:
-                case UIAnchorPoint.MiddleRight:
-                case UIAnchorPoint.TopRight:
-                    thisArea.X = canvasArea.Width - SizeX - OffsetX;
-                    break;
+                case UIAnchorPoint.BottomLeft: case UIAnchorPoint.MiddleLeft: case UIAnchorPoint.TopLeft:
+                    thisArea.X = OffsetX; break;
+                case UIAnchorPoint.BottomRight: case UIAnchorPoint.MiddleRight: case UIAnchorPoint.TopRight:
+                    thisArea.X = canvasArea.Width - SizeX + OffsetX; break;
                 default:
-                    thisArea.X = (canvasArea.Width - SizeX) / 2 + OffsetX;
-                    break;
+                    thisArea.X = (canvasArea.Width - SizeX) / 2 + OffsetX; break;
             }
             
             //Calculate Y
             switch (AnchorPoint) {
-                case UIAnchorPoint.BottomLeft:
-                case UIAnchorPoint.BottomCenter:
-                case UIAnchorPoint.BottomRight:
-                    thisArea.Y = canvasArea.Height - SizeY - OffsetY;
-                    break;
-                case UIAnchorPoint.TopLeft:
-                case UIAnchorPoint.TopCenter:
-                case UIAnchorPoint.TopRight:
-                    thisArea.Y = OffsetY;
-                    break;
+                case UIAnchorPoint.BottomLeft: case UIAnchorPoint.BottomCenter: case UIAnchorPoint.BottomRight:
+                    thisArea.Y = canvasArea.Height - SizeY + OffsetY; break;
+                case UIAnchorPoint.TopLeft: case UIAnchorPoint.TopCenter: case UIAnchorPoint.TopRight:
+                    thisArea.Y = OffsetY; break;
                 default:
-                    thisArea.Y = (canvasArea.Height - SizeY) / 2 + OffsetY;
-                    break;
+                    thisArea.Y = (canvasArea.Height - SizeY) / 2 + OffsetY; break;
             }
 
             foreach (UILayer layer in Layers) {

@@ -111,6 +111,7 @@ package UI {
 							(Panels[i].Elements[j].Layers[k] as UILayerText).FontFamily = b.readByte();
 							(Panels[i].Elements[j].Layers[k] as UILayerText).WordWrap = b.readByte() == 1;
 							(Panels[i].Elements[j].Layers[k] as UILayerText).EditMode = b.readByte();
+							(Panels[i].Elements[j].Layers[k] as UILayerText).Justify = b.readByte();
 							
 							(Panels[i].Elements[j].Layers[k] as UILayerText).PrepareTF();
 						} else if (layerType == 2) {

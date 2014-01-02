@@ -35,6 +35,7 @@ namespace ToolCache.Scripting.Types {
         Function,
         Buff,
         ObjectType,         //Critter, Enemy, Ally, NotMe etc
+        ScriptRegion,       //A map script region
         Optional = 128 //Optional is a flag, eg: Number|Optional
     }
 }

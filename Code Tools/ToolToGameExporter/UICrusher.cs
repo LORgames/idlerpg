@@ -91,6 +91,7 @@ namespace ToolToGameExporter {
                             f.AddByte((byte)l2.FontFamily);
                             f.AddByte((byte)(l2.WordWrap ? 1 : 0));
                             f.AddByte((byte)l2.InputType);
+                            f.AddByte((byte)l2.Justification);
                         } else if (l is UILayerLibrary) {
                             UILayerLibrary l2 = (UILayerLibrary)l;
 

@@ -3,6 +3,7 @@ package UI {
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
 	/**
 	 * ...
 	 * @author Paul
@@ -17,13 +18,16 @@ package UI {
 		
 		public function Fonts() { };
 		
-		public static function GetTextField(fontSize:int, fontNumber:int, colour:int = 0xFFFFFF):TextField {
+		public static function GetTextField(fontSize:int, fontNumber:int, colour:int = 0xFFFFFF, justify:int = 0):TextField {
 			var tf:TextField = new TextField();
 			tf.embedFonts = true;
 			tf.antiAliasType = AntiAliasType.ADVANCED;
 			tf.autoSize = TextFieldAutoSize.LEFT;
 			tf.selectable = false;
-			tf.defaultTextFormat = new TextFormat("_FONT_"+fontNumber, fontSize, colour);
+			
+			if(justify == 0) tf.defaultTextFormat = new TextFormat("_FONT_"+fontNumber, fontSize, colour, null, null, null, null, null, TextFormatAlign.LEFT);
+			if(justify == 1) tf.defaultTextFormat = new TextFormat("_FONT_"+fontNumber, fontSize, colour, null, null, null, null, null, TextFormatAlign.CENTER);
+			if(justify == 2) tf.defaultTextFormat = new TextFormat("_FONT_"+fontNumber, fontSize, colour, null, null, null, null, null, TextFormatAlign.RIGHT);
 			
 			tf.text = "";
 			

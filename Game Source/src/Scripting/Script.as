@@ -997,12 +997,12 @@ package Scripting {
 					case 0x1022: //NetTrigger
 						PacketFactory.N(Vector.<int>([0x100D, 0xBFFF, GetNumberFromVariable(EventScript, info, inputParam)])); break;
 					case 0x1023: //Clock Running
+						p0.D = EventScript.readShort();	if (p0.D == 1) { Clock.Resume(); } else { Clock.Stop(); } break;
+					case 0x1024: //Spawn Region Resize
 						p0.D = EventScript.readShort();
-						if (p0.D == 1) {
-							
-						} else {
-							
-						}
+						WorldData.CurrentMap.ScriptRegions[p0.D].Area[0].X = GetNumberFromVariable(EventScript, info, inputParam); WorldData.CurrentMap.ScriptRegions[p0.D].Area[0].Y = GetNumberFromVariable(EventScript, info, inputParam);
+						WorldData.CurrentMap.ScriptRegions[p0.D].Area[0].W = GetNumberFromVariable(EventScript, info, inputParam); WorldData.CurrentMap.ScriptRegions[p0.D].Area[0].H = GetNumberFromVariable(EventScript, info, inputParam);
+						break;
 					case 0x4001: //Equip item on the target
 						if (info.CurrentTarget is CritterHuman) {
 							(info.CurrentTarget as CritterHuman).Equipment.EquipSlot(EventScript.readShort(), EventScript.readShort());
@@ -1208,16 +1208,16 @@ package Scripting {
 					case 0xC008: //Change offsets for UIElement
 						uiE = Main.I.hud.Panels[EventScript.readShort()].Elements[EventScript.readShort()];
 						
-						uiE.OffsetX = GetNumberFromVariable(EventScript, info, inputParam) + 1;
-						uiE.OffsetY = GetNumberFromVariable(EventScript, info, inputParam) + 1;
+						uiE.OffsetX = GetNumberFromVariable(EventScript, info, inputParam);
+						uiE.OffsetY = GetNumberFromVariable(EventScript, info, inputParam);
 						uiE.Draw(Main.I.stage.stageWidth, Main.I.stage.stageHeight, Main.I.hud);
 						
 						break;
 					case 0xC009: //Resize UIElement
 						uiE = Main.I.hud.Panels[EventScript.readShort()].Elements[EventScript.readShort()];
 						
-						uiE.SizeX = GetNumberFromVariable(EventScript, info, inputParam) + 1;
-						uiE.SizeY = GetNumberFromVariable(EventScript, info, inputParam) + 1;
+						uiE.SizeX = GetNumberFromVariable(EventScript, info, inputParam);
+						uiE.SizeY = GetNumberFromVariable(EventScript, info, inputParam);
 						uiE.Draw(Main.I.stage.stageWidth, Main.I.stage.stageHeight, Main.I.hud);
 						
 						break;
@@ -1225,11 +1225,13 @@ package Scripting {
 						uiE = Main.I.hud.Panels[EventScript.readShort()].Elements[EventScript.readShort()];
 						uiL = uiE.Layers[EventScript.readShort()];
 						
-						uiL.SizeX = GetNumberFromVariable(EventScript, info, inputParam) + 1;
-						uiL.SizeY = GetNumberFromVariable(EventScript, info, inputParam) + 1;
+						uiL.SizeX = GetNumberFromVariable(EventScript, info, inputParam);
+						uiL.SizeY = GetNumberFromVariable(EventScript, info, inputParam);
 						uiE.Draw(Main.I.stage.stageWidth, Main.I.stage.stageHeight, Main.I.hud);
 						
 						break;
+					case 0xC00B: //Press UIElement
+						uiE = Main.I.hud.Panels[EventScript.readShort()].Elements[EventScript.readShort()]; uiE.MyScript.Run(Script.Pressed); break;
 					case 0xCFFF: //Main.I.Log // Debug Trace
 						Main.I.Log("[" + info.Invoker + "] " + StringEx.BuildFromCore(GetWonkyString(EventScript)).GetBuilt()); break;
 					case 0xF001: //Up a netsync level

@@ -33,6 +33,7 @@ package UI {
 		public var FontSize:int = 0;
 		public var FontFamily:int = 0;
 		public var WordWrap:Boolean = false;
+		public var Justify:int = 0;
 		
 		public var EditMode:int = 0;
 		public var StringID:int = 0;
@@ -42,7 +43,7 @@ package UI {
 		}
 		
 		public function PrepareTF():void {
-			tf = Fonts.GetTextField(FontSize, FontFamily, Colour);
+			tf = Fonts.GetTextField(FontSize, FontFamily, Colour, Justify);
 			
 			if (WordWrap) {
 				tf.multiline = true;
@@ -80,50 +81,38 @@ package UI {
 			if (tf == null) return;
 			
 			var newMessage:String = Message.GetBuilt();
-			if (!RequiresRedraw && tf.text == newMessage) return;
-			
-			RequiresRedraw = false;
-			tf.text = newMessage;
+			if (tf.text != newMessage) {
+				tf.text = newMessage;
+				RequiresRedraw = true;
+			}
 			
 			///////////////////////////////////////////// Update the position
-			var thisArea:Rect = new Rect(false, null, 0, 0, tf.width, tf.height);
-			
 			//Calculate X
 			switch (AnchorPoint) {
 				case UIAnchorPoint.BottomLeft: case UIAnchorPoint.MiddleLeft: case UIAnchorPoint.TopLeft:
 					this.x = OffsetX; break;
 				case UIAnchorPoint.BottomRight: case UIAnchorPoint.MiddleRight: case UIAnchorPoint.TopRight:
-					this.x = w - SizeX - OffsetX; break;
+					this.x = w + OffsetX; break;
 				default:
-					this.x = (w - SizeX) / 2 + OffsetX; break;
+					this.x = w / 2 + OffsetX; break;
 			}
 			
 			//Calculate Y
 			switch (AnchorPoint) {
-				case UIAnchorPoint.BottomLeft:case UIAnchorPoint.BottomCenter:case UIAnchorPoint.BottomRight: //Bottom
-					this.y = h - SizeY - OffsetY; break;
 				case UIAnchorPoint.TopLeft: case UIAnchorPoint.TopCenter: case UIAnchorPoint.TopRight: //Top
 					this.y = OffsetY; break;
+				case UIAnchorPoint.BottomLeft:case UIAnchorPoint.BottomCenter:case UIAnchorPoint.BottomRight: //Bottom
+					this.y = h + OffsetY; break;
 				default:
-					this.y = (h-SizeY)/2 + OffsetY; break;
+					this.y = h / 2 + OffsetY; break;
 			}
 			
 			//Calculate X
 			switch (Align) {
 				case UIAnchorPoint.BottomCenter: case UIAnchorPoint.MiddleCenter: case UIAnchorPoint.TopCenter:
-					if (WordWrap) {
-						tf.autoSize = TextFieldAutoSize.CENTER;
-					} else {
-						this.x -= tf.width / 2;
-					}
-					break;
+					this.x -= tf.width / 2; break;
 				case UIAnchorPoint.BottomRight: case UIAnchorPoint.MiddleRight: case UIAnchorPoint.TopRight:
-					if (WordWrap) {
-						tf.autoSize = TextFieldAutoSize.RIGHT;
-					} else {
-						this.x -= tf.width;
-					}
-					break;
+					this.x -= tf.width; break;
 			}
 			
 			//Calculate Y
@@ -135,15 +124,18 @@ package UI {
 			}
 			
 			///////////////////////////////////////////// Redraw if required
-			if(EditMode == 0) {
-				Main.I.stage.quality = StageQuality.BEST;
-				this.bitmapData = new BitmapData(tf.width*1.02, tf.height, true, 0x0);
-				Main.I.stage.quality = StageQuality.LOW;
-				this.bitmapData.draw(tf);
-			} else {
-				tf.x = this.x;
-				tf.y = this.y;
+			if(RequiresRedraw) {
+				if(EditMode == 0) {
+					Main.I.stage.quality = StageQuality.BEST;
+					this.bitmapData = new BitmapData(tf.width*1.02, tf.height, true, 0x80FFFFFF);
+					Main.I.stage.quality = StageQuality.LOW;
+					this.bitmapData.draw(tf);
+				} else {
+					tf.x = this.x;
+					tf.y = this.y;
+				}
 			}
+			RequiresRedraw = false;
 		}
 	}
 }

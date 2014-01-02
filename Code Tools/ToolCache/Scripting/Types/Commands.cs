@@ -88,6 +88,8 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0x1022, new Param[] { Param.Integer }));
             All.Add("clockrunning",
                 new ValidCommand(0x1023, new Param[] { Param.Boolean }));
+            All.Add("scriptregionresize",
+                new ValidCommand(0x1024, new Param[] { Param.ScriptRegion, Param.Integer, Param.Integer, Param.Integer, Param.Integer }));
 
             //Quest and Inventory Commands
             All.Add("saydialogue",
@@ -166,6 +168,8 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0xC009, new Param[] { Param.UIElement, Param.Integer, Param.Integer }));
             All.Add("uilayersize",
                 new ValidCommand(0xC00A, new Param[] { Param.UILayer, Param.Integer, Param.Integer }));
+            All.Add("uielementpress",
+                new ValidCommand(0xC00B, new Param[] { Param.UIElement }));
 
             All.Add("trace",
                 new ValidCommand(0xCFFF, new Param[] { Param.String }));
