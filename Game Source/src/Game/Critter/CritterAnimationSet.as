@@ -87,6 +87,11 @@ package Game.Critter
 			CurrentFrame = StartFrame;
 			
 			FrameDT = CurrentPlaybackSpeed;
+			
+			FrameRect.x = (CurrentFrame % MyCritter.AnimationsPerRow) * myBitmapData.width;
+			FrameRect.y = int(CurrentFrame / MyCritter.AnimationsPerRow) * myBitmapData.height;
+			
+			myBitmapData.copyPixels(sprites, FrameRect, Global.ZeroPoint);
 		}
 		
 		public function GetTrueY():int {

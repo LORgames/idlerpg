@@ -36,6 +36,8 @@ namespace ToolCache.UI {
                 ul = new UILayerLibrary();
             } else if (type == 3) {
                 ul = new UILayerRoller();
+            } else if (type == 4) {
+                ul = new UILayerBlackout();
             } else {
                 throw new Exception("Cannot find that type of layer!");
             }
@@ -57,10 +59,11 @@ namespace ToolCache.UI {
         }
 
         internal virtual void WriteToBinaryIO(IStorage f) {
-            if (this is UILayerImage) f.AddByte(0); //0 for UILayerImage
-            else if (this is UILayerText) f.AddByte(1); //1 for UILayerText
-            else if (this is UILayerLibrary) f.AddByte(2); //2 for UILayerLibrary
-            else if (this is UILayerLibrary) f.AddByte(3); //3 for UILayerRoller
+            if (this is UILayerImage) f.AddByte(0);         //0 for UILayerImage
+            else if (this is UILayerText) f.AddByte(1);     //1 for UILayerText
+            else if (this is UILayerLibrary) f.AddByte(2);  //2 for UILayerLibrary
+            else if (this is UILayerRoller) f.AddByte(3);   //3 for UILayerRoller
+            else if (this is UILayerBlackout) f.AddByte(4); //4 for UILayerBlackout
             else throw new Exception("Unknown Layer Type!");
             
             f.AddString(Name);

@@ -123,6 +123,7 @@
     <Compile Include="Scripting\Types\Commands.cs" />
     <Compile Include="Sound\SoundData.cs" />
     <Compile Include="Sound\SoundDatabase.cs" />
+    <Compile Include="UI\UILayerBlackout.cs" />
     <Compile Include="UI\UILayerRoller.cs" />
     <Compile Include="UI\UILayerLibrary.cs" />
     <Compile Include="UI\UIElement.cs" />

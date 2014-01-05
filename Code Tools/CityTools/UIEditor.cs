@@ -170,6 +170,7 @@ namespace CityTools {
                 pnlImageStuff.Visible = false;
                 pnlTextStuff.Visible = false;
                 pnlUILayerLibrary.Visible = false;
+                pnlBlackout.Visible = false;
 
                 if (CurrentLayer is UILayerImage) {
                     UILayerImage CurrentLayerIM = (UILayerImage)CurrentLayer;
@@ -213,6 +214,13 @@ namespace CityTools {
                     numUILayerLibraryIndex.Value = CurrentLayerLI.DefaultIndex;
 
                     pnlUILayerLibrary.Visible = true;
+                } else if (CurrentLayer is UILayerBlackout) {
+                    UILayerBlackout CurrentLayerBO = (UILayerBlackout)CurrentLayer;
+                    numBlkoutAlpha.Value = ((CurrentLayerBO.Colour >> 24) & 0xFF);
+                    numBlkoutRed.Value = ((CurrentLayerBO.Colour >> 16) & 0xFF);
+                    numBlkoutGreen.Value = ((CurrentLayerBO.Colour >> 8) & 0xFF);
+                    numBlkoutBlue.Value = ((CurrentLayerBO.Colour) & 0xFF);
+                    pnlBlackout.Visible = true;
                 } else {
                     throw new Exception("Unknown Layer TYPE!");
                 }
@@ -247,6 +255,14 @@ namespace CityTools {
                 } else if (CurrentLayer is UILayerLibrary) {
                     (CurrentLayer as UILayerLibrary).LibraryName = cbUILayerLibrary.Text;
                     (CurrentLayer as UILayerLibrary).DefaultIndex = (int)numUILayerLibraryIndex.Value;
+                } else if (CurrentLayer is UILayerBlackout) {
+                    int newColour = 0;
+                    newColour |= ((int)numBlkoutAlpha.Value) << 24;
+                    newColour |= ((int)numBlkoutRed.Value) << 16;
+                    newColour |= ((int)numBlkoutGreen.Value) << 8;
+                    newColour |= ((int)numBlkoutBlue.Value) << 0;
+                    (CurrentLayer as UILayerBlackout).Colour = newColour;
+                    (CurrentLayer as UILayerBlackout).CreateBrush();
                 } else {
                     throw new Exception("Unknown Layer Type!");
                 }
@@ -339,6 +355,24 @@ namespace CityTools {
             }
         }
 
+        private void btnUILayerAddRoller_Click(object sender, EventArgs e) {
+            if (CurrentElement != null) {
+                UILayerRoller newLayer = new UILayerRoller();
+                CurrentElement.Layers.Add(newLayer);
+                listUILayers.Items.Add(newLayer);
+                SaveElement();
+            }
+        }
+
+        private void btnUILayerAddBlackout_Click(object sender, EventArgs e) {
+            if (CurrentElement != null) {
+                UILayerBlackout newLayer = new UILayerBlackout();
+                CurrentElement.Layers.Add(newLayer);
+                listUILayers.Items.Add(newLayer);
+                SaveElement();
+            }
+        }
+
         private void btnUILayerDelete_Click(object sender, EventArgs e) {
             if (CurrentElement != null) {
                 int x = listUILayers.SelectedItems.Count;
@@ -422,8 +456,10 @@ namespace CityTools {
                     CurrentElement.Layers.RemoveAt(nDex0);
                     CurrentElement.Layers.Insert(nDex1, CurrentLayer);
 
+                    UILayer _tmp = (listUILayers.Items[nDex0] as UILayer);
                     listUILayers.Items.RemoveAt(nDex0);
-                    listUILayers.Items.Insert(nDex1, CurrentLayer);
+                    listUILayers.Items.Insert(nDex1, _tmp);
+                    listUILayers.SelectedIndex = nDex1;
                 }
 
                 pbExample.Invalidate();
@@ -447,8 +483,10 @@ namespace CityTools {
                     CurrentPanel.Elements.RemoveAt(nDex0);
                     CurrentPanel.Elements.Insert(nDex1, CurrentElement);
 
+                    UIElement _tmp = (listUIElements.Items[nDex0] as UIElement);
                     listUIElements.Items.RemoveAt(nDex0);
-                    listUIElements.Items.Insert(nDex1, CurrentElement);
+                    listUIElements.Items.Insert(nDex1, _tmp);
+                    listUIElements.SelectedIndex = nDex1;
                 }
 
                 pbExample.Invalidate();
@@ -534,6 +572,7 @@ namespace CityTools {
 
                     listUIPanels.Items.RemoveAt(nDex0);
                     listUIPanels.Items.Insert(nDex1, CurrentPanel);
+                    listUIPanels.SelectedIndex = nDex1;
                 }
 
                 pbExample.Invalidate();

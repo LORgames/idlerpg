@@ -125,9 +125,10 @@ package UI {
 			
 			///////////////////////////////////////////// Redraw if required
 			if(RequiresRedraw) {
-				if(EditMode == 0) {
+				if (EditMode == 0) {
+					if (this.bitmapData) this.bitmapData.dispose();
 					Main.I.stage.quality = StageQuality.BEST;
-					this.bitmapData = new BitmapData(tf.width*1.02, tf.height, true, 0x80FFFFFF);
+					this.bitmapData = new BitmapData(tf.width*1.02, tf.height, true, 0x00FFFFFF);
 					Main.I.stage.quality = StageQuality.LOW;
 					this.bitmapData.draw(tf);
 				} else {
