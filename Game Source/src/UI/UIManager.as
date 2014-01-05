@@ -37,13 +37,11 @@ package UI {
 			}
 			
 			ImageLoader.Load("Data/UIAtlas.png", LoadedAtlas);
-			//Not counting up or down the Global.LoadingTotal because it would be -1 and +1
 		}
 		
 		public function LoadedAtlas(b:BitmapData):void {
 			TextureAtlas = b.clone();
 			BinaryLoader.Load("Data/UI.bin", ParseUI);
-			//Not counting up or down the Global.LoadingTotal because it would be -1 and +1
 		}
 		
 		public function ParseUI(b:ByteArray):void {
@@ -89,6 +87,8 @@ package UI {
 						if (layerType == 0) Panels[i].Elements[j].Layers[k] = new UILayerImage();
 						if (layerType == 1) Panels[i].Elements[j].Layers[k] = new UILayerText();
 						if (layerType == 2) Panels[i].Elements[j].Layers[k] = new UILayerLibrary(Panels[i].Elements[j]);
+						if (layerType == 3) Panels[i].Elements[j].Layers[k] = new UILayer(); //TODO: Roller
+						if (layerType == 4) Panels[i].Elements[j].Layers[k] = new UILayerBlackout();
 						Panels[i].Elements[j].addChild(Panels[i].Elements[j].Layers[k]);
 						
 						Panels[i].Elements[j].Layers[k].AnchorPoint = b.readByte();
@@ -117,6 +117,16 @@ package UI {
 						} else if (layerType == 2) {
 							(Panels[i].Elements[j].Layers[k] as UILayerLibrary).Library = Libraries[b.readShort()];
 							(Panels[i].Elements[j].Layers[k] as UILayerLibrary).SetID(b.readShort());
+						} else if (layerType == 3) {
+							//TODO:Roller magic here
+						} else if (layerType == 4) {
+							(Panels[i].Elements[j].Layers[k] as UILayerBlackout).Colour = b.readInt();
+							(Panels[i].Elements[j].Layers[k] as UILayerBlackout).Prepare();
+							
+							//Blackout panels definately block out everything
+							Panels[i].Elements[j].SupportsTouch = true;
+							Panels[i].Elements[j].Blocking = true;
+							Panels[i].HasTouchElements = true;
 						}
 					}
 					

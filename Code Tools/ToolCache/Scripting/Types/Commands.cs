@@ -170,6 +170,10 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0xC00A, new Param[] { Param.UILayer, Param.Integer, Param.Integer }));
             All.Add("uielementpress",
                 new ValidCommand(0xC00B, new Param[] { Param.UIElement }));
+            All.Add("uielementsetrect", //X,Y,W,H
+                new ValidCommand(0xC00C, new Param[] { Param.UIElement, Param.Integer, Param.Integer, Param.Integer, Param.Integer }));
+            All.Add("uilayersetrect", //X,Y,W,H
+                new ValidCommand(0xC00D, new Param[] { Param.UILayer, Param.Integer, Param.Integer, Param.Integer, Param.Integer }));
 
             All.Add("trace",
                 new ValidCommand(0xCFFF, new Param[] { Param.String }));

@@ -22,7 +22,8 @@ package UI
         public var _script:Script;
         public var MyScript:ScriptInstance;
 		
-		public var SupportsTouch:Boolean = false;
+		public var Blocking:Boolean = false;		//Does this block all touches?
+		public var SupportsTouch:Boolean = false;	//Does this support touches?
 		
 		public function UIElement() {
 			
@@ -57,6 +58,8 @@ package UI
         }
 		
 		public function Contains(x:int, y:int):Boolean {
+			if (Blocking) return true;
+			
 			if (x < this.x) return false;
 			if (y < this.y) return false;
 			if (x > this.x + SizeX) return false;

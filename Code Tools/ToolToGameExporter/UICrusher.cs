@@ -29,9 +29,9 @@ namespace ToolToGameExporter {
             f.AddByte((byte)UIManager.Panels.Count);
 
             foreach (UIPanel p in UIManager.Panels) {
-                f.AddByte((byte)(p.Enabled?1:0));
+                f.AddByte((byte)(p.Enabled ? 1 : 0));
 
-                if (p.Elements.Count > 255) Processor.Errors.Add(new ProcessingError("UI Exporter", p.Name+":Elements", "Cannot export more than 255 UIElements for a single UIPanel."));
+                if (p.Elements.Count > 255) Processor.Errors.Add(new ProcessingError("UI Exporter", p.Name + ":Elements", "Cannot export more than 255 UIElements for a single UIPanel."));
                 f.AddByte((byte)p.Elements.Count);
 
                 foreach (UIElement e in p.Elements) {
@@ -48,7 +48,7 @@ namespace ToolToGameExporter {
                     f.AddByte((byte)e.Layers.Count);
 
                     foreach (UILayer l in e.Layers) {
-                        f.AddByte((byte)((l is UILayerImage) ? 0 : (l is UILayerText) ? 1 : 2));
+                        f.AddByte((byte)((l is UILayerImage) ? 0 : (l is UILayerText) ? 1 : (l is UILayerLibrary) ? 2 : (l is UILayerRoller) ? 3 : (l is UILayerBlackout) ? 4 : 255));
                         f.AddByte((byte)l.AnchorPoint);
                         f.AddShort(l.OffsetX);
                         f.AddShort(l.OffsetY);
@@ -101,6 +101,8 @@ namespace ToolToGameExporter {
                             } else {
                                 Processor.Errors.Add(new ProcessingError("UI Layer", p.Name + ">" + e.Name + ">" + l.Name + ">" + l2.LibraryName, "Cannot find that library!"));
                             }
+                        } else if (l is UILayerBlackout) {
+                            f.AddInt(((UILayerBlackout)l).Colour);
                         } else {
                             Processor.Errors.Add(new ProcessingError("UI Layer", p.Name + ">" + e.Name + ">" + l.Name, "Unknown layer type!"));
                         }
@@ -136,7 +138,7 @@ namespace ToolToGameExporter {
             ExportCrushers.MappedUILibraryNames = RemappedLibraryNames;
 
             BinaryIO f = new BinaryIO();
-            
+
             int TotalLibraries = UIManager.Libraries.Count;
             int j = 0;
             UILibrary uil;
@@ -144,7 +146,7 @@ namespace ToolToGameExporter {
 
             f.AddShort((short)TotalLibraries);
 
-            for(short i = 0; i < TotalLibraries; i++) {
+            for (short i = 0; i < TotalLibraries; i++) {
                 images.Clear();
 
                 uil = UIManager.Libraries[i];
@@ -167,9 +169,9 @@ namespace ToolToGameExporter {
                 }
 
                 if (atlas == null) {
-                    Processor.Errors.Add(new ProcessingError("UI Library Exporter", "Atlas", "Could not generate a sprite atlas for the UI library "+uil.Name+"!"));
+                    Processor.Errors.Add(new ProcessingError("UI Library Exporter", "Atlas", "Could not generate a sprite atlas for the UI library " + uil.Name + "!"));
                 } else {
-                    atlas.Save(Global.EXPORT_DIRECTORY + "/UILibrary_"+(RemappedLibraryNames.Count-1)+".png");
+                    atlas.Save(Global.EXPORT_DIRECTORY + "/UILibrary_" + (RemappedLibraryNames.Count - 1) + ".png");
                 }
             }
 

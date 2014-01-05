@@ -1230,6 +1230,23 @@ package Scripting {
 						break;
 					case 0xC00B: //Press UIElement
 						uiE = Main.I.hud.Panels[EventScript.readShort()].Elements[EventScript.readShort()]; uiE.MyScript.Run(Script.Pressed); break;
+					case 0xC00C: //Set size and position of UIElement || uielementsetrect
+						uiE = Main.I.hud.Panels[EventScript.readShort()].Elements[EventScript.readShort()];
+						uiE.OffsetX = GetNumberFromVariable(EventScript, info, inputParam);
+						uiE.OffsetY = GetNumberFromVariable(EventScript, info, inputParam);
+						uiE.SizeX = GetNumberFromVariable(EventScript, info, inputParam);
+						uiE.SizeY = GetNumberFromVariable(EventScript, info, inputParam);
+						uiE.Draw(Main.I.stage.stageWidth, Main.I.stage.stageHeight, Main.I.hud);
+						break;
+					case 0xC00D: //Set size and position of UILayer || uilayersetrect
+						uiE = Main.I.hud.Panels[EventScript.readShort()].Elements[EventScript.readShort()];
+						uiL = uiE.Layers[EventScript.readShort()];
+						uiL.OffsetX = GetNumberFromVariable(EventScript, info, inputParam);
+						uiL.OffsetY = GetNumberFromVariable(EventScript, info, inputParam);
+						uiL.SizeX = GetNumberFromVariable(EventScript, info, inputParam);
+						uiL.SizeY = GetNumberFromVariable(EventScript, info, inputParam);
+						uiE.Draw(Main.I.stage.stageWidth, Main.I.stage.stageHeight, Main.I.hud);
+						break;
 					case 0xCFFF: //Main.I.Log // Debug Trace
 						Main.I.Log("[" + info.Invoker + "] " + StringEx.BuildFromCore(GetWonkyString(EventScript)).GetBuilt()); break;
 					case 0xF001: //Up a netsync level
