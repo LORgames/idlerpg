@@ -14,7 +14,7 @@ package QDMF.Logic {
 		public var CurrentTurn:int = 0;		//id for the current turn
 		public var TurnTime:Number = 0.25; 	//seconds between turns
 		
-		private static const CACHED_TURNS:int = 7;		//How many turns do we cache in the system.
+		private static const CACHED_TURNS:int = 10;		//How many turns do we cache in the system.
 		private static const LOCAL_WITH_AHEAD:int = 4;	//How many turns in the future are things issued?
 		
 		public static var Ping:int = 0;

@@ -17,6 +17,7 @@ package Scripting {
 	import Game.Map.Objects.ObjectInstance;
 	import Game.Map.Objects.ObjectInstanceAnimated;
 	import Game.Map.Objects.ObjectTemplate;
+	import Game.Map.ScriptRegion;
 	import Game.Map.WorldData;
 	import Game.Tweening.TweenManager;
 	import Interfaces.IMapObject;
@@ -29,6 +30,7 @@ package Scripting {
 	import QDMF.Packet;
 	import QDMF.PacketFactory;
 	import QDMF.PacketTypes;
+	import RenderSystem.Renderman;
 	import SoundSystem.EffectsPlayer;
 	import SoundSystem.MusicPlayer;
 	import Strings.StringEx;
@@ -430,7 +432,9 @@ package Scripting {
 							}
 						} break;
 					case MYAREA:
-						//something :)
+						if (info.CurrentTarget is ScriptRegion) {
+							WorldData.CurrentMap.GetObjectsInArea((info.CurrentTarget as ScriptRegion).Area[0], Objects, eType, info.CurrentTarget);
+						}
 						break;
 					default:
 						Main.I.Log("Unknown ArrayType. Type=" + arrayType);
@@ -852,6 +856,7 @@ package Scripting {
 						
 						o.SetInformation(WorldData.CurrentMap, id, p1.X, p1.Y);
 						WorldData.CurrentMap.Objects.push(o);
+						Renderman.DirtyObjects.push(o);
 						
 						if (NetSync > 0 && Global.Network != null) PacketFactory.N(Vector.<int>([0x100B, id, 0xBFFF, p1.X, 0xBFFF, p1.Y]));
 						
@@ -997,7 +1002,7 @@ package Scripting {
 					case 0x1023: //Clock Running
 						p0.D = EventScript.readShort();	if (p0.D == 1) { Clock.Resume(); } else { Clock.Stop(); } break;
 					case 0x1024: //Spawn Region Resize
-						p0.D = EventScript.readShort();
+						p0.D = (WorldData.CurrentMap.ScriptRegions.length-1-EventScript.readShort());
 						WorldData.CurrentMap.ScriptRegions[p0.D].Area[0].X = GetNumberFromVariable(EventScript, info, inputParam); WorldData.CurrentMap.ScriptRegions[p0.D].Area[0].Y = GetNumberFromVariable(EventScript, info, inputParam);
 						WorldData.CurrentMap.ScriptRegions[p0.D].Area[0].W = GetNumberFromVariable(EventScript, info, inputParam); WorldData.CurrentMap.ScriptRegions[p0.D].Area[0].H = GetNumberFromVariable(EventScript, info, inputParam);
 						break;

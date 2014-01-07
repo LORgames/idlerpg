@@ -120,6 +120,8 @@ package Game.Critter
 			FrameDT += dt;
 			
 			while (FrameDT >= CurrentPlaybackSpeed) {
+				if (CurrentPlaybackSpeed == 0) return; // Just in case we do a script change and infinite loop: happened too many times
+				
 				FrameDT -= CurrentPlaybackSpeed;
 				CurrentFrame++;
 				

@@ -109,11 +109,21 @@ namespace ToolToGameExporter {
                 DatabaseCrusher.Go();
 
                 UpdateEPF(epf, "Pushing Information...", 100);
+                Thread.Sleep(100); //Helps with blocking IO issues
+
                 if (Directory.Exists(p)) {
                     Directory.Delete(p, true);
                 }
-                
-                Directory.Move(Global.EXPORT_DIRECTORY, p);
+
+                try {
+                    Directory.Move(Global.EXPORT_DIRECTORY, p);
+                } catch (Exception e) {
+#if DEBUG
+                    Errors.Add(new ProcessingError("FileSystem", "Copy", "Error:"+e.ToString()));
+#else
+                    throw e;
+#endif
+                }
 
                 UpdateEPF(epf, "Complete", 100);
                 

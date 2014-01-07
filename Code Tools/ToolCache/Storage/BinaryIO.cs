@@ -31,7 +31,7 @@ namespace ToolCache.Storage {
             }
         }
 
-        public byte[] EncodedBytes() {
+        private byte[] EncodedBytes() {
             return out_data.ToArray();
         }
 

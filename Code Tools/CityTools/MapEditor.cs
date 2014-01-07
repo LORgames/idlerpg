@@ -220,10 +220,14 @@ namespace CityTools {
             }
 
             Point tilePos = Point.Empty;
-            tilePos.X = (int)((Camera.Offset.X + e.X / Camera.ZoomLevel) / TileTemplate.PIXELS);  // Doesn't work in negative tilePos
-            tilePos.Y = (int)((Camera.Offset.Y + e.Y / Camera.ZoomLevel) / TileTemplate.PIXELS);  // Doesn't work in negative tilePos
+            Point worldPos = Point.Empty;
+            worldPos.X = (int)(Camera.Offset.X + e.X / Camera.ZoomLevel);
+            worldPos.Y = (int)(Camera.Offset.Y + e.Y / Camera.ZoomLevel);
 
-            lblHighlightedCell.Text = "(" + tilePos.X + "," + tilePos.Y + ")";
+            tilePos.X = (int)(worldPos.X / TileTemplate.PIXELS);  // Doesn't work in negative tilePos
+            tilePos.Y = (int)(worldPos.Y / TileTemplate.PIXELS);  // Doesn't work in negative tilePos
+
+            lblHighlightedCell.Text = String.Format("({0},{1})({2},{3})", tilePos.X, tilePos.Y, worldPos.X, worldPos.Y);
             
             if(paintMode == PaintMode.Objects) {
                 ScenicPlacementHelper.UpdateMouse(e, input_buffer);

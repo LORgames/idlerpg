@@ -219,6 +219,7 @@
             // 
             // numDuration
             // 
+            this.numDuration.DecimalPlaces = 2;
             this.numDuration.Location = new System.Drawing.Point(446, 6);
             this.numDuration.Name = "numDuration";
             this.numDuration.Size = new System.Drawing.Size(77, 20);

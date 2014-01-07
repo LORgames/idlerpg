@@ -67,7 +67,7 @@ namespace CityTools {
             if (CurrentPanel != null) {
                 UIElement newElement = new UIElement();
                 CurrentPanel.Elements.Add(newElement);
-                listUIElements.Items.Add(newElement);
+                listUIElements.Items.Add(newElement, true);
                 listUIElements.SelectedItem = newElement;
                 SavePanel();
             }
@@ -484,9 +484,11 @@ namespace CityTools {
                     CurrentPanel.Elements.Insert(nDex1, CurrentElement);
 
                     UIElement _tmp = (listUIElements.Items[nDex0] as UIElement);
+                    bool isChecked = listUIElements.GetItemChecked(nDex0);
                     listUIElements.Items.RemoveAt(nDex0);
                     listUIElements.Items.Insert(nDex1, _tmp);
                     listUIElements.SelectedIndex = nDex1;
+                    listUIElements.SetItemChecked(nDex1, isChecked);
                 }
 
                 pbExample.Invalidate();
