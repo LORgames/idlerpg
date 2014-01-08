@@ -11,6 +11,8 @@ using ToolCache.SaveSystem;
 
 namespace CityTools.CacheInterfaces {
     public class ToolsInterface {
+        private static GlobalVariableEditor gve = new GlobalVariableEditor();
+
         public static void Initialize() {
             MainWindow.instance.btnExport.ButtonClick += new EventHandler(btnExport_Click);
             MainWindow.instance.btnCritterEditor.Click += new EventHandler(btnCritterEditor_Click);

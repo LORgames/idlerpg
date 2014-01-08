@@ -18,6 +18,7 @@ using ToolCache.DataLibrary;
 namespace ToolCache.Scripting {
     public class ScriptCommand {
         public const string VARIABLE_REGEX = "[A-Za-z][A-Za-z0-9_]*";
+        public Regex CSV_REGEX = new Regex("(?:^|,)\\s?(\"(?:[^\"]+|\"\")*\"|[^,]*)");
 
         public string Trimmed = "";
 
@@ -119,7 +120,7 @@ namespace ToolCache.Scripting {
         }
 
         public void ProcessAction(ScriptInfo info) {
-            string validRegex = "([A-Za-z]+)\\(([A-Z,a-z0-9_~\\-\\.\\(\\)\\s>\"!@#\\$%\\^&\\*'\\(\\){}]*)\\)";
+            string validRegex = "([A-Za-z]+)\\((.*)\\)";
             Match match = Regex.Match(Trimmed, validRegex);
 
             if (match.Success && match.Index == 0) {
@@ -127,7 +128,7 @@ namespace ToolCache.Scripting {
                 Parameters = match.Groups[2].Value;
 
                 if (!Commands.All.ContainsKey(Action)) {
-                    info.Errors.Add("Cannot find any actions called: " + Action+ ErrorEnding()+ ErrorEnding());
+                    info.Errors.Add("Cannot find any actions called: " + Action + ErrorEnding());
                 } else {
                     vc = Commands.All[Action];
                     CommandID = vc.CommandID;
@@ -250,10 +251,17 @@ namespace ToolCache.Scripting {
         private void ProcessParams(ScriptInfo info, ValidCommand vcp, string ParamString) {
             short sparam;
             float fparam;
-            string[] paramBits = ParamString.Split(',');
 
-            if (paramBits.Length >= vcp.MinimumParams && paramBits.Length <= vcp.MaximumParams) {
-                for (int i = 0; i < paramBits.Length; i++) {
+            //Break the params into more logical blocks
+            List<string> paramBits = new List<string>();
+            MatchCollection matches = CSV_REGEX.Matches(ParamString);
+
+            for (int i = 0; i < matches.Count; i++) {
+                paramBits.Add(matches[i].Groups[1].Value.Trim());
+            }
+
+            if (paramBits.Count >= vcp.MinimumParams && paramBits.Count <= vcp.MaximumParams) {
+                for (int i = 0; i < paramBits.Count; i++) {
                     Param thisParamType = vcp.ExpectedParameters[i];
                     paramBits[i] = paramBits[i].Trim();
 
@@ -286,7 +294,7 @@ namespace ToolCache.Scripting {
                             AdditionalBytecode.Add((ushort)(isTrue ? 1 : 0));
                             break;
                         case Param.String:
-                            Match strM = Regex.Match(paramBits[i], "\"([A-Za-z 0-9\\.\\(\\)!@#\\$%\\^&\\*<>'{}_\\-]*)\"");
+                            Match strM = Regex.Match(paramBits[i], "\"(.*)\"");
 
                             if (Variables.StringVariables.ContainsKey(paramBits[i])) {
                                 AdditionalBytecode.Add(0x2); //Variable String
@@ -559,7 +567,7 @@ namespace ToolCache.Scripting {
                     }
                 }
 
-                for (int i = paramBits.Length; i < vcp.ExpectedParameters.Length; i++) {
+                for (int i = paramBits.Count; i < vcp.ExpectedParameters.Length; i++) {
                     Param thisParamType = vcp.ExpectedParameters[i];
 
                     if ((thisParamType & Param.Optional) == Param.Optional) {
@@ -570,9 +578,9 @@ namespace ToolCache.Scripting {
                 }
             } else {
                 if (vcp.MinimumParams == vcp.MaximumParams) {
-                    info.Errors.Add(Action + " expects " + vcp.MinimumParams + " parameters but got " + paramBits.Length + ErrorEnding());
+                    info.Errors.Add(Action + " expects " + vcp.MinimumParams + " parameters but got " + paramBits.Count + ErrorEnding());
                 } else {
-                    info.Errors.Add(Action + " expects between " + vcp.MinimumParams + " and " + vcp.MaximumParams + " parameters but got " + paramBits.Length + ErrorEnding());
+                    info.Errors.Add(Action + " expects between " + vcp.MinimumParams + " and " + vcp.MaximumParams + " parameters but got " + paramBits.Count + ErrorEnding());
                 }
             }
 

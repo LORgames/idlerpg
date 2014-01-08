@@ -1252,6 +1252,12 @@ package Scripting {
 						uiL.SizeY = GetNumberFromVariable(EventScript, info, inputParam);
 						uiE.Draw(Main.I.stage.stageWidth, Main.I.stage.stageHeight, Main.I.hud);
 						break;
+					case 0xC00E: //UILayer Loop Between
+						uiE = Main.I.hud.Panels[EventScript.readShort()].Elements[EventScript.readShort()];
+						uiL = uiE.Layers[EventScript.readShort()];
+						p0.D = GetNumberFromVariable(EventScript, info, inputParam); p0.X = GetNumberFromVariable(EventScript, info, inputParam);
+						fParam = GetNumberFromVariable(EventScript, info, inputParam);
+						if (uiL is UILayerLibrary) (uiL as UILayerLibrary).Play(fParam, false, p0.D, p0.X, true); break;
 					case 0xCFFF: //Main.I.Log // Debug Trace
 						Main.I.Log("[" + info.Invoker + "] " + StringEx.BuildFromCore(GetWonkyString(EventScript)).GetBuilt()); break;
 					case 0xF001: //Up a netsync level

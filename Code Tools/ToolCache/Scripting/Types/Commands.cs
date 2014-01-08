@@ -174,6 +174,8 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0xC00C, new Param[] { Param.UIElement, Param.Integer, Param.Integer, Param.Integer, Param.Integer }));
             All.Add("uilayersetrect", //X,Y,W,H
                 new ValidCommand(0xC00D, new Param[] { Param.UILayer, Param.Integer, Param.Integer, Param.Integer, Param.Integer }));
+            All.Add("uilayerloopbetween",
+                new ValidCommand(0xC00E, new Param[] { Param.UILayer, Param.Integer, Param.Integer, Param.Number }));
 
             All.Add("trace",
                 new ValidCommand(0xCFFF, new Param[] { Param.String }));

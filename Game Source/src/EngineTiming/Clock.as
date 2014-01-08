@@ -44,11 +44,11 @@ package EngineTiming {
 		}
 		
 		public function Tick(e:Event):void {
-			if (Stopped) return;
-			
 			var now:uint = getTimer();
 			var delta:uint = now - last;
 			last = now;
+			
+			if (Stopped) return;
 			
 			if (FPSTF != null) {
 				ticks++;
