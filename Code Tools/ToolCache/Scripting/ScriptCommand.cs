@@ -689,23 +689,23 @@ namespace ToolCache.Scripting {
         private bool WriteVariableIfExists(string mathBit, ScriptInfo info, bool allowShorts = true) {
             short sparam; float fparam;
 
-            if (allowShorts && short.TryParse(mathBit, out sparam)) {
+            if (allowShorts && short.TryParse(mathBit, out sparam)) { //Const Short
                 AdditionalBytecode.Add(0xBFFF);
                 AdditionalBytecode.Add((ushort)sparam);
                 return true;
-            } else if (info.IntegerVariables.ContainsKey(mathBit)) {
+            } else if (info.IntegerVariables.ContainsKey(mathBit)) { //Local Short Variable
                 AdditionalBytecode.Add(0xBFFD);
                 AdditionalBytecode.Add((ushort)info.IntegerVariables[mathBit].Index);
                 return true;
-            } else if (Variables.GlobalVariables.ContainsKey(mathBit)) {
+            } else if (Variables.GlobalVariables.ContainsKey(mathBit)) { //Global Short Variable
                 AdditionalBytecode.Add(0xBFFE);
                 AdditionalBytecode.Add((ushort)Variables.GlobalVariables[mathBit].Index);
                 return true;
-            } else if (info.FloatingVariables.ContainsKey(mathBit)) {
+            } else if (info.FloatingVariables.ContainsKey(mathBit)) { //Local Float Variable (index)
                 AdditionalBytecode.Add(0xBFFA);
                 AdditionalBytecode.Add((ushort)info.FloatingVariables[mathBit].Index);
                 return true;
-            } else if (float.TryParse(mathBit, out fparam)) {
+            } else if (float.TryParse(mathBit, out fparam)) {   //Const Float (embed)
                 AdditionalBytecode.Add(0xBFFB);
                 byte[] floatBytes = BitConverter.GetBytes(fparam);
                 if (BitConverter.IsLittleEndian) { Array.Reverse(floatBytes); }
@@ -714,6 +714,9 @@ namespace ToolCache.Scripting {
                 sparam = (short)((floatBytes[2] << 8) | floatBytes[3]); AdditionalBytecode.Add((ushort)sparam);
 
                 return true;
+            } else {
+                //Regex r = new Regex("([A-Za-z0-9_]+)>([A-Za-z0-9_]+)>([A-Za-z0-9_])");
+                //r.Match(
             }
             
             return false;

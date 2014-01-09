@@ -211,6 +211,7 @@ namespace ToolCache.Scripting.Types {
             IfFunctions.Add("hastype",  new ValidCommand(0x700D, new Param[] { Param.FactionName }));
             IfFunctions.Add("attackeristype", new ValidCommand(0x700E, new Param[] { Param.FactionName }));
             IfFunctions.Add("stringsequal", new ValidCommand(0x700F, new Param[] { Param.String, Param.String }));
+            IfFunctions.Add("hasaitype", new ValidCommand(0x7010, new Param[] { Param.AIType }));
             IfFunctions.Add("aieventis",new ValidCommand(0x7FFF, new Param[] { Param.AIEventType }));
             IfFunctions.Add("triggeris",new ValidCommand(0x7FFF, new Param[] { Param.Integer }));
 

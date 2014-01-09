@@ -21,7 +21,7 @@ package {
 		
 		//Debug information
 		public static var DebugRender:Boolean = false;		//Should we draw debug rectangles for AI and positioning?
-		static public var DebugFPS:Boolean = true;			//Should I display the FPS on screen?
+		static public var DebugFPS:Boolean = false;			//Should I display the FPS on screen?
 		static public var IsEditor:Boolean = true;			//Are we running in the editor?
 		
 		//Settings

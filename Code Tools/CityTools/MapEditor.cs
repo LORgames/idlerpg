@@ -420,9 +420,7 @@ namespace CityTools {
         }
 
         private void btnOpenAdvanced_Click(object sender, EventArgs e) {
-            GlobalVariableEditor gve = new GlobalVariableEditor();
-            gve.ShowDialog();
-            gve.Dispose();
+            CacheInterfaces.ToolsInterface.OpenVariableEditor();
         }
     }
 }

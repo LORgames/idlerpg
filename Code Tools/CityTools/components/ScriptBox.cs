@@ -80,9 +80,7 @@ namespace CityTools.Components {
         }
 
         private void btnGlobalVariables_Click(object sender, EventArgs e) {
-            GlobalVariableEditor gve = new GlobalVariableEditor();
-            gve.ShowDialog();
-            gve.Dispose();
+            CacheInterfaces.ToolsInterface.OpenVariableEditor();
         }
 
         private void txtScript_SelectionChanged(object sender, EventArgs e) {

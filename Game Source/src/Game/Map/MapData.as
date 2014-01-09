@@ -1,6 +1,7 @@
 package Game.Map {
 	import CollisionSystem.PointX;
 	import CollisionSystem.Rect;
+	import EngineTiming.Clock;
 	import EngineTiming.IUpdatable;
 	import flash.utils.ByteArray;
 	import Game.Critter.AITypes;
@@ -76,6 +77,7 @@ package Game.Map {
 				NextBlankEffectForPlayer[i] = Global.SIMULATION_LIMIT_EFFECTS + (i-1) * Global.EffectsPerPlayer;
 			}
 			
+			Clock.Resume();
 			BinaryLoader.Load("Data/Map_" + mapname + ".bin", ParseData);
 		}
 		

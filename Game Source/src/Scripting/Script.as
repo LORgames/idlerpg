@@ -10,6 +10,7 @@ package Scripting {
 	import Game.Critter.CritterHuman;
 	import Game.Critter.CritterManager;
 	import Game.Critter.Factions;
+	import Game.Data.DataManager;
 	import Game.Effects.EffectInfo;
 	import Game.Effects.EffectInstance;
 	import Game.Effects.EffectManager;
@@ -322,6 +323,12 @@ package Scripting {
 						var s1:String = GetWonkyString(eventScript);
 						currentUnprocessedValue = (s0 == s1);
 						break;
+					case 0x7010: //Has AIType
+						param0 = eventScript.readShort();
+						currentUnprocessedValue = false;
+						if (info.CurrentTarget is BaseCritter) {
+							currentUnprocessedValue = (((info.CurrentTarget as BaseCritter).MyAIType) & param0) == param0;
+						} break;
 					case 0x7FFF: //AI Event, Trigger Event etc
 						var whatAIEvent:int = GetNumberFromVariable(eventScript, info, inputParam);
 						if (inputParam is int) {
@@ -487,6 +494,11 @@ package Scripting {
 				return eventScript.readFloat();
 			} else if (varType == 0xBFFA) { //FLOATING POINT VARIABLE
 				return info.FloatVariables[varID];
+			} else if (varType == 0xBFF9) { //Database lookup
+				var _0:int = GetNumberFromVariable(eventScript, info, inputParam);
+				var _1:int = GetNumberFromVariable(eventScript, info, inputParam);
+				var _2:int = GetNumberFromVariable(eventScript, info, inputParam);
+				return DataManager.I.GetIntegerFromCell(_0, _1, _2);
 			}
 			
 			return 0; //No idea what else it should be

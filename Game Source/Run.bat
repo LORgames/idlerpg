@@ -15,7 +15,7 @@ set INTERPRETER=-interpreter
 :desktop-run
 echo Starting AIR Debug Launcher.
 ::adl "%APP_XML%" "%APP_DIR%" -- debug=Yes+showfps=Yes
-adl "%APP_XML%" "%APP_DIR%"
+adl "%APP_XML%" "%APP_DIR%" -- showfps=Yes
 
 if errorlevel 1 goto end
 goto end

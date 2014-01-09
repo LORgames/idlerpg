@@ -17,17 +17,23 @@ package RenderSystem {
 		public var RealAlpha:uint = 255;
 		public var tf:TextField;
 		
+		private var oX:int = 0;
+		private var oY:int = 0;
+		
 		public function LoadScreen() {
 			tf = Fonts.GetTextField(30, 3);
 			RealAlpha = 0;
 			
 			this.addChild(new BGImage() as Bitmap);
 			this.addChild(tf);
+			
+			oX = this.getChildAt(0).width;
+			oY = this.getChildAt(0).height;
 		}
 		
 		public function Resized():void {
-			this.getChildAt(0).scaleX = Main.I.stage.stageWidth / this.getChildAt(0).width;
-			this.getChildAt(0).scaleY = Main.I.stage.stageHeight / this.getChildAt(0).height;
+			this.getChildAt(0).scaleX = Main.I.stage.stageWidth / oX;
+			this.getChildAt(0).scaleY = Main.I.stage.stageHeight / oY;
 			
 			Draw();
 		}

@@ -11,12 +11,11 @@ using ToolCache.SaveSystem;
 
 namespace CityTools.CacheInterfaces {
     public class ToolsInterface {
-        private static GlobalVariableEditor gve = new GlobalVariableEditor();
+        private static GlobalVariableEditor gve;
 
         public static void Initialize() {
             MainWindow.instance.btnExport.ButtonClick += new EventHandler(btnExport_Click);
             MainWindow.instance.btnCritterEditor.Click += new EventHandler(btnCritterEditor_Click);
-            //MainWindow.instance.btnElementalEditor.Click += new EventHandler(btnElementalEditor_Click);
             MainWindow.instance.btnEquipmentEditor.Click += new EventHandler(btnEquipmentEditor_Click);
             MainWindow.instance.btnItemEditor.Click += new EventHandler(btnItemEditor_Click);
             MainWindow.instance.btnObjectEditor.Click += new EventHandler(btnObjectEditor_Click);
@@ -87,12 +86,6 @@ namespace CityTools.CacheInterfaces {
             ObjectInterface.ReloadAll();
         }
 
-        private static void OpenElementEditor() {
-            ElementEditor t = new ElementEditor();
-            t.ShowDialog(MainWindow.instance);
-            t.Dispose();
-        }
-
         private static void OpenEquipmentEditor() {
             EquipmentEditor t = new EquipmentEditor();
             t.ShowDialog(MainWindow.instance);
@@ -138,8 +131,7 @@ namespace CityTools.CacheInterfaces {
 
         private static void OpenUIEditor() {
             UIEditor t = new UIEditor();
-            t.ShowDialog();
-            t.Dispose();
+            t.Show(MainWindow.instance);
         }
 
         private static void OpenEffectEditor() {
@@ -161,8 +153,7 @@ namespace CityTools.CacheInterfaces {
 
         private static void OpenGlobalSettingsEditor() {
             GlobalSettingsEditor t = new GlobalSettingsEditor();
-            t.ShowDialog(MainWindow.instance);
-            t.Dispose();
+            t.Show(MainWindow.instance);
         }
 
         private static void OpenFactionEditor() {
@@ -174,8 +165,18 @@ namespace CityTools.CacheInterfaces {
 
         private static void OpenBuffEditor() {
             BuffsEditor t = new BuffsEditor();
-            t.ShowDialog(MainWindow.instance);
-            t.Dispose();
+            t.Show(MainWindow.instance);
+        }
+
+        public static void OpenVariableEditor() {
+            if (gve == null) gve = new GlobalVariableEditor();
+
+            if (!gve.Visible) {
+                gve.Show(MainWindow.instance);
+                gve = null;
+            } else {
+                gve.Focus();
+            }
         }
 
         private static void ExportAndRun() {
@@ -225,10 +226,6 @@ namespace CityTools.CacheInterfaces {
 
         private static void btnObjectEditor_Click(object sender, EventArgs e) {
             OpenTemplateEditor();
-        }
-
-        private static void btnElementalEditor_Click(object sender, EventArgs e) {
-            OpenElementEditor();
         }
 
         private static void btnItemEditor_Click(object sender, EventArgs e) {

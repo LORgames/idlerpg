@@ -170,12 +170,6 @@
     <Compile Include="EffectEditor.Designer.cs">
       <DependentUpon>EffectEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="ElementEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ElementEditor.Designer.cs">
-      <DependentUpon>ElementEditor.cs</DependentUpon>
-    </Compile>
     <Compile Include="EquipmentEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -336,9 +330,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EffectEditor.resx">
       <DependentUpon>EffectEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ElementEditor.resx">
-      <DependentUpon>ElementEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EquipmentEditor.resx">
       <DependentUpon>EquipmentEditor.cs</DependentUpon>
