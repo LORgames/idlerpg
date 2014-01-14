@@ -391,8 +391,12 @@ package Game.Critter {
 							while (--j > -1) {
 								if (rs[j].intersects(MyRect)) {
 									MyRect.CalculatePenetration(rs[j], collisionPenetration);
-									collisionTotal++;
+									break;
 								}
+							}
+							
+							if (collisionPenetration.x != 0 || collisionPenetration.y != 0) {
+								break;
 							}
 							
 							//No collision so lets update the movement speed
@@ -403,7 +407,7 @@ package Game.Critter {
 					}
 					
 					//Scan against critters
-					if (collisionPenetration.x == 0 || collisionPenetration.y == 0) {
+					if (collisionPenetration.x == 0 && collisionPenetration.y == 0) {
 						var totalCritters:int = CurrentMap.Critters.length;
 						var critter:BaseCritter;
 						
@@ -418,7 +422,7 @@ package Game.Critter {
 								
 								if (MyRect.intersects(critter.MyRect)) {
 									MyRect.CalculatePenetration(critter.MyRect, collisionPenetration);
-									collisionTotal++;
+									break;
 								}
 							}
 						}
@@ -426,7 +430,7 @@ package Game.Critter {
 					
 					if (collisionPenetration.x != 0 || collisionPenetration.y != 0) {
 						//Undo the changes
-						if((Math.abs(collisionPenetration.x) < Math.abs(collisionPenetration.y)  && collisionPenetration.x != 0) || collisionPenetration.y == 0) {
+						if((Math.abs(collisionPenetration.x) < Math.abs(collisionPenetration.y) && collisionPenetration.x != 0) || collisionPenetration.y == 0) {
 							X += collisionPenetration.x;
 						} else {
 							Y += collisionPenetration.y;

@@ -38,7 +38,7 @@ package CollisionSystem {
 		}
 		
 		public function CalculatePenetration(b:Rect, p:Point):void {
-			/*if (X <= b.X && b.X < X + W) {
+			if (X <= b.X && b.X < X + W) {
 				p.x = -(X + W - b.X);
 			}
 			
@@ -52,9 +52,9 @@ package CollisionSystem {
 			
 			if (b.Y <= Y && Y < b.Y + b.H) {
 				p.y = (b.Y + b.H - Y);
-			}*/
+			}
 			
-			var x0:int = -(X + W - b.X);
+			/*var x0:int = -(X + W - b.X);
 			var x1:int = (b.X + b.W - X);
 			var y0:int = -(Y + H - b.Y);
 			var y1:int = (b.Y + b.H - Y);
@@ -71,8 +71,8 @@ package CollisionSystem {
 			if ((yr < 0 && p.y > 0) || (yr > 0 && p.y < 0)) {
 				p.y = 0;
 			} else {
-				p.y += yr;
-			}
+				p.y = yr;
+			}*/
 		}
 		
 		public function toString():String {

@@ -92,9 +92,9 @@ package QDMF.Logic {
 			if (I != null) I.Update(dt);
 		}
 		
-		static public function Reset():void {
+		static public function Reset(_offset:Number = 0):void {
 			I.CurrentTurn = 0;
-			I.MSSinceLastTurn = 0;
+			I.MSSinceLastTurn = _offset;
 		}
 	}
 }

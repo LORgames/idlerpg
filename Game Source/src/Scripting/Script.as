@@ -1022,8 +1022,11 @@ package Scripting {
 						break;
 					case 0x1025: //NetSyncStart Resets the clock based on half network speed
 						p0.D = EventScript.readShort(); //1=Remote, 0=Local
-						pack = new Packet(PacketTypes.CONTROL); pack.bytes.writeShort(2); pack.bytes.writeShort(1); Global.Network.SendPacketImmediate(pack);
-						Clock.I.Reset(-Syncronizer.Ping / 2000.0); Clock.Resume(); break;
+						if(Global.Network) {
+							pack = new Packet(PacketTypes.CONTROL); pack.bytes.writeShort(2); pack.bytes.writeShort(1); Global.Network.SendPacketImmediate(pack);
+							fParam = -Syncronizer.Ping / 1000.0;
+						} else { fParam = 0.0; }
+						Clock.I.Reset(fParam); Syncronizer.Reset(fParam); break;
 					case 0x4001: //Equip item on the target
 						if (info.CurrentTarget is CritterHuman) {
 							(info.CurrentTarget as CritterHuman).Equipment.EquipSlot(EventScript.readShort(), EventScript.readShort());
