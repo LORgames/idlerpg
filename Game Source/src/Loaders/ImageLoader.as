@@ -68,6 +68,8 @@ package Loaders {
 			currentInfo = null;
 			Global.LoadingTotal--;
 			
+			if (Global.LoadingTotal == 0) Main.I.Renderer.FadeToWorld();
+			
 			ProcessNext();
 		}
 		

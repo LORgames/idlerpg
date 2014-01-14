@@ -41,7 +41,6 @@ package Loaders {
 		}
 		
 		private static function Event_LoadingCompleted(e:Event):void {
-			Global.LoadingTotal--;
 			currentInfo.SuccessCallback(loader.data);
 			CurrentLoadingEnded();
 		}
@@ -69,7 +68,10 @@ package Loaders {
 			UnusedObjects.push(currentInfo);
 			currentInfo = null;
 			
+			Global.LoadingTotal--;
 			ProcessNext();
+			
+			if (Global.LoadingTotal == 0) Main.I.Renderer.FadeToWorld();
 		}
 		
 		public static function Load(filename:String, success:Function, error:Function = null, progress:Function = null):void {

@@ -5,6 +5,7 @@ package Scripting {
 	import Debug.Drawer;
 	import EngineTiming.Clock;
 	import EngineTiming.ICleanUp;
+	import flash.html.script.Package;
 	import flash.utils.ByteArray;
 	import Game.Critter.BaseCritter;
 	import Game.Critter.CritterHuman;
@@ -28,6 +29,7 @@ package Scripting {
 	import QDMF.Connectors.SocketHost;
 	import QDMF.Logic.Helper.QDMFCritter;
 	import QDMF.Logic.Helper.QDMFEffect;
+	import QDMF.Logic.Syncronizer;
 	import QDMF.Packet;
 	import QDMF.PacketFactory;
 	import QDMF.PacketTypes;
@@ -1018,6 +1020,10 @@ package Scripting {
 						WorldData.CurrentMap.ScriptRegions[p0.D].Area[0].X = GetNumberFromVariable(EventScript, info, inputParam); WorldData.CurrentMap.ScriptRegions[p0.D].Area[0].Y = GetNumberFromVariable(EventScript, info, inputParam);
 						WorldData.CurrentMap.ScriptRegions[p0.D].Area[0].W = GetNumberFromVariable(EventScript, info, inputParam); WorldData.CurrentMap.ScriptRegions[p0.D].Area[0].H = GetNumberFromVariable(EventScript, info, inputParam);
 						break;
+					case 0x1025: //NetSyncStart Resets the clock based on half network speed
+						p0.D = EventScript.readShort(); //1=Remote, 0=Local
+						pack = new Packet(PacketTypes.CONTROL); pack.bytes.writeShort(2); pack.bytes.writeShort(1); Global.Network.SendPacketImmediate(pack);
+						Clock.I.Reset(-Syncronizer.Ping / 2000.0); Clock.Resume(); break;
 					case 0x4001: //Equip item on the target
 						if (info.CurrentTarget is CritterHuman) {
 							(info.CurrentTarget as CritterHuman).Equipment.EquipSlot(EventScript.readShort(), EventScript.readShort());

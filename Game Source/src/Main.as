@@ -22,6 +22,10 @@ package {
 		import flash.display.NativeWindow;
 		import flash.display.Screen;
 		import flash.events.InvokeEvent;
+		
+		import flash.filesystem.File;
+		import flash.filesystem.FileStream;
+		import flash.filesystem.FileMode;
 	}
 	
 	/**
@@ -158,6 +162,15 @@ package {
 		
 		public function Log(message:String):void {
 			trace(message);
+			CONFIG::desktop {
+				CONFIG::release {
+					var file:File = File.applicationStorageDirectory.resolvePath("debug.log");
+					var fs:FileStream = new FileStream();
+					fs.open(file, FileMode.APPEND);
+					fs.writeUTFBytes("[" + (new Date()) + "] " + message + "\n");
+					fs.close();
+				}
+			}
 		}
 		
 		public function HardwareKeyDown(event:KeyboardEvent):void {

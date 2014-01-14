@@ -1,5 +1,6 @@
 package QDMF 
 {
+	import EngineTiming.Clock;
 	/**
 	 * ...
 	 * @author Paul
@@ -8,7 +9,7 @@ package QDMF
 		private static var p:Packet = new Packet(PacketTypes.SCRIPT);
 		
 		public static function N(x:Vector.<int>):void {
-			//var p:Packet = new Packet(Packet.TYPE_SCRIPT);
+			if (!Global.Network) return;
 			
 			for (var i:int = 0; i < x.length; i++) {
 				p.bytes.writeShort(x[i]);
@@ -16,7 +17,11 @@ package QDMF
 			
 			p.bytes.writeShort(0xFFFF);
 			
-			Global.Network.SendPacket(p);
+			if(Clock.isRunning()) {
+				Global.Network.SendPacket(p);
+			} else {
+				Global.Network.SendPacketImmediate(p);
+			}
 			p.bytes.clear();
 			p.bytes.writeShort(PacketTypes.SCRIPT);
 		}

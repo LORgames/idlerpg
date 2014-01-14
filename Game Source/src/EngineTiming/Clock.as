@@ -62,46 +62,44 @@ package EngineTiming {
 				}
 			}
 			
-			if (Global.LoadingTotal == 0 || true) {
-				var i:int;
-				edt += (delta / 1000);
+			var i:int;
+			edt += (delta / 1000);
+			
+			while (edt >= dt) {
+				edt -= dt;
 				
-				while (edt >= dt) {
-					edt -= dt;
-					
-					Syncronizer.Update(dt);
-					WorldData.CurrentMap.Update(dt);
-					TweenManager.Update(dt);
-					
-					//Preupdate critters
-					i = WorldData.CurrentMap.Critters.length;
-					while (--i > -1) {
-						if (WorldData.CurrentMap.Critters[i] != null) {
-							WorldData.CurrentMap.Critters[i].PreUpdate(dt);
-						}
+				Syncronizer.Update(dt);
+				WorldData.CurrentMap.Update(dt);
+				TweenManager.Update(dt);
+				
+				//Preupdate critters
+				i = WorldData.CurrentMap.Critters.length;
+				while (--i > -1) {
+					if (WorldData.CurrentMap.Critters[i] != null) {
+						WorldData.CurrentMap.Critters[i].PreUpdate(dt);
 					}
-					
-					//Update what we need to update
-					i = Updatables.length;
-					while (--i > -1) {
-						Updatables[i].Update(dt);
+				}
+				
+				//Update what we need to update
+				i = Updatables.length;
+				while (--i > -1) {
+					Updatables[i].Update(dt);
+				}
+				
+				//Post update critters
+				i = WorldData.CurrentMap.Critters.length;
+				while (--i > -1) {
+					if (WorldData.CurrentMap.Critters[i] != null) {
+						WorldData.CurrentMap.Critters[i].PostUpdate();
 					}
-					
-					//Post update critters
-					i = WorldData.CurrentMap.Critters.length;
-					while (--i > -1) {
-						if (WorldData.CurrentMap.Critters[i] != null) {
-							WorldData.CurrentMap.Critters[i].PostUpdate();
-						}
-					}
-					
-					Script.ProcessUpdate(dt);
-					Main.I.Renderer.Update(dt);
-					
-					while (CleanUpList.length > 0) {
-						var x:ICleanUp = CleanUpList.pop();
-						x.CleanUp();
-					}
+				}
+				
+				Script.ProcessUpdate(dt);
+				Main.I.Renderer.Update(dt);
+				
+				while (CleanUpList.length > 0) {
+					var x:ICleanUp = CleanUpList.pop();
+					x.CleanUp();
 				}
 			}
 			
@@ -123,10 +121,14 @@ package EngineTiming {
 			Clock.I.Stopped = false;
 		}
 		
-		public function Reset():void {
+		static public function isRunning():Boolean {
+			return !Clock.I.Stopped;
+		}
+		
+		public function Reset(_offset:Number = 0):void {
 			last = getTimer();
 			ticks = 0;
-			edt = 0; //Effective dt;
+			edt = _offset; //Effective dt;
 			summedTime = 0;
 		}
 		

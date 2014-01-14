@@ -39,7 +39,7 @@ package UI {
 			FixPosition();
 			
 			///////////////////////////////////////////// Redraw if required
-			//if (!RequiresRedraw) return;
+			if (!RequiresRedraw) return;
 			
 			var bmpd:BitmapData = Library.ImageCutouts[ID];
 			var m:Matrix = new Matrix();
@@ -73,6 +73,7 @@ package UI {
 		public function SetID(newID:Number):void {
 			if (isPlaying) StopPlaying();
 			ID = newID;
+			RequiresRedraw = true;
 		}
 		
 		public function Play(time:Number, playReverse:Boolean, _start:int = -1, _end:int = -1, loop:Boolean = false):void {

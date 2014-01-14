@@ -90,6 +90,8 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0x1023, new Param[] { Param.Boolean }));
             All.Add("scriptregionresize",
                 new ValidCommand(0x1024, new Param[] { Param.ScriptRegion, Param.Integer, Param.Integer, Param.Integer, Param.Integer }));
+            All.Add("netsyncstart",
+                new ValidCommand(0x1025, new Param[] { Param.Boolean | Param.Optional }));
 
             //Quest and Inventory Commands
             All.Add("saydialogue",

@@ -42,6 +42,7 @@ package Scripting {
 			var pr:Packet;
 			
 			if (p.type == PacketTypes.SCRIPT) {
+				Main.I.Log("Executing Network Script");
 				tb.clear(); p.bytes.readBytes(tb, 0);
 				s.Run(0, scriptinstance, null);
 				return true;
@@ -66,7 +67,7 @@ package Scripting {
 						Script.FireTrigger(SocketTriggers.SOCKET_CONNECT);
 					}
 				} else if (controlType == 2) { // Device Information
-					if (controlType == 0) { // Current Time
+					if (controlInfo == 0) { // Current Time
 						if (Global.Network) {
 							pr = new Packet(PacketTypes.SERVER);
 							pr.bytes.writeShort(0);
@@ -74,6 +75,9 @@ package Scripting {
 							
 							Global.Network.SendPacket(pr);
 						}
+					} else if (controlInfo == 1) {
+						Syncronizer.Reset();
+						Clock.I.Reset();
 					}
 				}
 				
