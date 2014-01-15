@@ -12,10 +12,10 @@ package QDMF.Logic {
 	 */
 	public class Syncronizer implements IUpdatable {
 		public var CurrentTurn:int = 0;		//id for the current turn
-		public var TurnTime:Number = 0.25; 	//seconds between turns
+		public var TurnTime:Number = 0.20; 	//seconds between turns
 		
 		private static const CACHED_TURNS:int = 10;		//How many turns do we cache in the system.
-		private static const LOCAL_WITH_AHEAD:int = 4;	//How many turns in the future are things issued?
+		private static const LOCAL_WITH_AHEAD:int = 5;	//How many turns in the future are things issued?
 		
 		public static var Ping:int = 0;
 		public var UpcomingTurns:Vector.<Turn> = new Vector.<Turn>(CACHED_TURNS, true);
@@ -50,10 +50,9 @@ package QDMF.Logic {
 				}
 				
 				UpcomingTurns[CACHED_TURNS - 1] = _currentTurn;
+				_currentTurn.isComplete = false;
 				
-				if (CurrentTurn % CACHED_TURNS == 0) {
-					PingHelper.DoPing();
-				}
+				PingHelper.DoPing();
 			}
 		}
 		

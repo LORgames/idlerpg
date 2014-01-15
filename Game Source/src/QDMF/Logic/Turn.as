@@ -5,8 +5,8 @@ package QDMF.Logic {
 	 * @author ...
 	 */
 	public class Turn {
-		
-		public var PlayerTurns:Vector.<TurnStep>;
+		public var PlayerTurns:Vector.<TurnStep>;	
+		public var isComplete:Boolean = false;		//Has the commands from all players been received
 		
 		public function Turn() {
 			PlayerTurns = new Vector.<TurnStep>();
@@ -21,6 +21,7 @@ package QDMF.Logic {
 		
 		public function AddStep(step:TurnStep):void {
 			PlayerTurns.push(step);
+			isComplete = true;
 		}
 	}
 }

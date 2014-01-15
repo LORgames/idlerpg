@@ -40,8 +40,9 @@ package QDMF.Logic.Helper {
 			_TotalPings++;
 			
 			Syncronizer.Ping = _TotalPingTime/_TotalPings;// getTimer() - ActivePingTime;
-			
 			ActivePingTime = 0;
+			
+			DoPing(); //This way it acts like a heartbeat
 		}
 		
 		static public function Reset():void {
