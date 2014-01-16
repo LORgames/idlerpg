@@ -168,6 +168,8 @@ package Game.Map.Objects {
 			return MyScript;
 		}
 		
+		public function GetTypeID():int { return ID; }
+		
 		public function ChangeState(stateID:int, isLooping:Boolean):void {
 			if(isLooping) {
 				Template.ChangeState(stateID);

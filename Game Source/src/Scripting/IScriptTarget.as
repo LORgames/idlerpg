@@ -7,6 +7,8 @@ package Scripting {
 	 */
 	public interface IScriptTarget {
 		function GetScript():ScriptInstance;
+		function GetTypeID():int;
+		
 		function UpdatePointX(position:PointX):void;
 		function AlertMinionDeath(baseCritter:BaseCritter):void;
 		

@@ -52,6 +52,8 @@ package Game.Critter
 		}
 		
 		/* INTERFACE Scripting.IScriptTarget */
+		public function GetTypeID():int { return info.ID; }
+		
 		public function GetScript():ScriptInstance {
 			return myScript;
 		}

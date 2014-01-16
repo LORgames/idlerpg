@@ -172,6 +172,7 @@ package Game.Map.Spawns {
 			}
 		}
 		
+		public function GetTypeID():int { return 0; }
 		public function UpdatePointX(position:PointX):void { /* Does nothing obviously... */ }
 		public function ChangeState(stateID:int, isLooping:Boolean):void { /* Does nothing obviously... */ }
 		public function ScriptAttack(isPercent:Boolean, isDOT:Boolean, amount:int, attacker:IScriptTarget):void { /* Can't even attack a spawn region so thats a little bit silly... */ }

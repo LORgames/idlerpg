@@ -13,6 +13,7 @@ package QDMF
 		public static const LOADMESSAGE:int = 4;
 		public static const SCRIPT:int = 7;
 		public static const SERVER:int = 8;
+		public static const ENDTURN:int = 9;
 	}
 
 }

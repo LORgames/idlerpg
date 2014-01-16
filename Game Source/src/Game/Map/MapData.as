@@ -362,6 +362,7 @@ package Game.Map {
 		
 		/* INTERFACE Scripting.IScriptTarget */
 		public function GetScript():ScriptInstance { return MyScript; }
+		public function GetTypeID():int { return 0; }
 		public function UpdatePointX(position:PointX):void { position.X = 0; position.Y = 0; position.D = 1; }
 		public function AlertMinionDeath(baseCritter:BaseCritter):void { MyScript.Run(Script.MinionDied); }
 		public function ChangeState(stateID:int, isLooping:Boolean):void {}

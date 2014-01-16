@@ -6,6 +6,7 @@ CONFIG::air {
 		import flash.events.ProgressEvent;
 		import flash.net.Socket;
 		import flash.utils.ByteArray;
+		import QDMF.Logic.Syncronizer;
 		import Scripting.Script;
 		import QDMF.IHLNetwork;
 		import QDMF.Packet;
@@ -45,7 +46,6 @@ CONFIG::air {
 				Client.addEventListener(Event.CLOSE, CloseHandler);
 				
 				Logger.Log("Connection from " + Client.remoteAddress + ":" + Client.remotePort);
-				
 				Script.FireTrigger(SocketTriggers.SOCKET_CONNECT);
 			}
 
@@ -57,6 +57,7 @@ CONFIG::air {
 				Client = null;
 				
 				Script.FireTrigger(SocketTriggers.SOCKET_DISCONNECT);
+				Syncronizer.Reset();
 			}
 			
 			private function SocketDataHandler(event:ProgressEvent):void {

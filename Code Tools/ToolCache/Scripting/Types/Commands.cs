@@ -35,7 +35,7 @@ namespace ToolCache.Scripting.Types {
             All.Add("destroy",
                 new ValidCommand(0x1007, new Param[] { Param.Void }));
             All.Add("effectspawn",
-                new ValidCommand(0x1008, new Param[] { Param.EffectName, Param.Integer | Param.Optional, Param.Integer | Param.Optional }));
+                new ValidCommand(0x1008, new Param[] { Param.EffectName, Param.Integer | Param.Optional, Param.Integer | Param.Optional, Param.Boolean | Param.Optional })); // EffectID, X, Y, isRelative?1=Yes,0=No
             All.Add("effectspawndirectional",
                 new ValidCommand(0x1009, new Param[] { Param.EffectName, Param.Integer | Param.Optional, Param.Integer | Param.Optional, Param.Direction | Param.Optional }));
             All.Add("effectspawndirectionalrelative",
@@ -195,6 +195,7 @@ namespace ToolCache.Scripting.Types {
             MathFunctions.Add("param",  new ValidCommand(0x06, new Param[] { Param.Integer }));
             MathFunctions.Add("random", new ValidCommand(0x07, new Param[] { Param.Number, Param.Number | Param.Optional }));
             MathFunctions.Add("getanimationspeed", new ValidCommand(0x08, new Param[] { Param.Void }));
+            MathFunctions.Add("gettypeid", new ValidCommand(0x09, new Param[] { Param.Void }));
             
             /////////////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////// IF FUNCTIONS
@@ -236,6 +237,7 @@ namespace ToolCache.Scripting.Types {
             DefaultValues.Add(Param.Integer, new ushort[] { 0xBFFF, 0 });
             DefaultValues.Add(Param.Angle, new ushort[] { 0xBFFF, 0 });
             DefaultValues.Add(Param.Boolean, new ushort[] { 1 });
+            DefaultValues.Add(Param.CritterName, new ushort[] { 0xBFFF, 0 });
 
             Array types = Enum.GetValues(typeof(Param));
 

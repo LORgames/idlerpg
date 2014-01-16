@@ -113,6 +113,7 @@ package Game.Equipment {
 		}
 		
 		/* INTERFACE Scripting.IScriptTarget */
+		public function GetTypeID():int { return Info.ID; }
 		
 		public function GetFaction():int {
 			return Owner.Owner.GetFaction();

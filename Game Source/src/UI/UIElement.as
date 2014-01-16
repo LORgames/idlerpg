@@ -70,6 +70,7 @@ package UI
 		
 		/* INTERFACE Scripting.IScriptTarget */
 		public function GetScript():ScriptInstance { return MyScript; }
+		public function GetTypeID():int { return 0; }
 		public function UpdatePointX(position:PointX):void { position.X = x; position.Y = y;  }
 		public function AlertMinionDeath(baseCritter:BaseCritter):void { /* how even? */ }
 		public function ChangeState(stateID:int, isLooping:Boolean):void { /* ok? */ }

@@ -1,11 +1,9 @@
 package Scripting {
-	import adobe.utils.CustomActions;
 	import CollisionSystem.PointX;
 	import CollisionSystem.Rect;
 	import Debug.Drawer;
 	import EngineTiming.Clock;
 	import EngineTiming.ICleanUp;
-	import flash.html.script.Package;
 	import flash.utils.ByteArray;
 	import Game.Critter.BaseCritter;
 	import Game.Critter.CritterHuman;
@@ -556,8 +554,10 @@ package Scripting {
 					} else {
 						return Rndm.random() * (p - q) + q;
 					}
-				case 0x08:
+				case 0x08: //Get Animation Speed
 					return info.CurrentTarget.GetAnimationSpeed();
+				case 0x09: //Get ID
+					return info.CurrentTarget.GetTypeID();
 				default:
 					Main.I.Log("Unknown Math Command: " + functionID);
 					return 0;
@@ -708,7 +708,7 @@ package Scripting {
 					case 0x1001: //Play sound effect
 						EffectsPlayer.Play(EventScript.readUnsignedShort()); break;
 					case 0x1002: //Spawn Critter
-						p0.D = EventScript.readShort(); p0.X = GetNumberFromVariable(EventScript, info, inputParam); p0.Y = GetNumberFromVariable(EventScript, info, inputParam);
+						p0.D = GetNumberFromVariable(EventScript, info, inputParam); p0.X = GetNumberFromVariable(EventScript, info, inputParam); p0.Y = GetNumberFromVariable(EventScript, info, inputParam);
 						p1.D = EventScript.readShort();
 						
 						if (EventScript.readShort() == 0) { //spawn in world coords
@@ -751,7 +751,7 @@ package Scripting {
 							GetNumberFromVariable(EventScript, info, inputParam);
 						} break;
 					case 0x1006: //Spawn Critter with Faction
-						p0.D = EventScript.readShort();
+						p0.D = GetNumberFromVariable(EventScript, info, inputParam); //Critter
 						p1.X = GetNumberFromVariable(EventScript, info, inputParam); //World X
 						p1.Y = GetNumberFromVariable(EventScript, info, inputParam); //World Y
 						p1.D = EventScript.readShort(); //Faction ID
@@ -769,7 +769,13 @@ package Scripting {
 						p0.D = EventScript.readShort();
 						effectInfo = EffectManager.I.Effects[p0.D];
 						p0.X = GetNumberFromVariable(EventScript, info, inputParam); p0.Y = GetNumberFromVariable(EventScript, info, inputParam);
-						CalculateOffset(Position, p0, p1);
+						p1.X = EventScript.readShort();
+						
+						if(p1.X == 1) {
+							CalculateOffset(Position, p0, p1);
+						} else {
+							p1.X = p0.X; p1.Y = p0.Y;
+						}
 						
 						if(!NetSync) {
 							new EffectInstance(effectInfo, p1.X, p1.Y, Position.D, NetSync);
@@ -880,8 +886,7 @@ package Scripting {
 					case 0x100E: //Play a sound from an effect group
 						EffectsPlayer.PlayFromGroup(EventScript.readShort()); break;
 					case 0x100F: //Network sync... somehow?
-						NetSync++;
-						break;
+						NetSync++; break;
 					case 0x1010: //Change map
 						var mapID:int = EventScript.readShort();
 						WorldData.CurrentMap.CleanUp();

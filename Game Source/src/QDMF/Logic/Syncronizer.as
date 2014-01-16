@@ -1,5 +1,6 @@
 package QDMF.Logic {
 	import adobe.utils.CustomActions;
+	import EngineTiming.Clock;
 	import EngineTiming.IUpdatable;
 	import flash.utils.ByteArray;
 	import QDMF.Logic.Helper.PingHelper;
@@ -25,23 +26,46 @@ package QDMF.Logic {
 		
 		public function Syncronizer() {
 			I = this;
+			var i:int;
 			
-			for (var i:int = 0; i < CACHED_TURNS; i++) {
+			for (i = 0; i < CACHED_TURNS; i++) {
 				UpcomingTurns[i] = new Turn();
+			}
+			
+			for (i = 0; i < LOCAL_WITH_AHEAD; i++) {
+				UpcomingTurns[i].isComplete = true;
 			}
 		}
 		
+		private var _pauseUntilNetwork:Boolean = false;
 		public function Update(dt:Number):void {
 			MSSinceLastTurn += dt;
 			
 			if (MSSinceLastTurn > TurnTime) {
+				if (!UpcomingTurns[0].isComplete) {
+					_pauseUntilNetwork = true;
+					Clock.Stop();
+					Main.I.Log("Have not received completion message for TurnID=" + (CurrentTurn + 1));
+					return;
+				}
+				
+				if (_pauseUntilNetwork) {
+					_pauseUntilNetwork = false;
+					Clock.Resume();
+				}
+				
 				if (Global.Network) {
+					var p:Packet = new Packet(PacketTypes.ENDTURN);
+					p.bytes.writeShort(Global.CurrentPlayerID);
+					p.bytes.writeShort(I.CurrentTurn + LOCAL_WITH_AHEAD);
+					Global.Network.SendPacket(p);
 					Global.Network.Flush();
 				}
 				
 				MSSinceLastTurn -= TurnTime;
 				CurrentTurn = CurrentTurn + 1;
 				
+				UpcomingTurns[LOCAL_WITH_AHEAD - 1].CompletedBy(Global.CurrentPlayerID);
 				var _currentTurn:Turn = UpcomingTurns[0];
 				_currentTurn.Execute();
 				
@@ -50,7 +74,7 @@ package QDMF.Logic {
 				}
 				
 				UpcomingTurns[CACHED_TURNS - 1] = _currentTurn;
-				_currentTurn.isComplete = false;
+				_currentTurn.ResetReady();
 				
 				PingHelper.DoPing();
 			}
@@ -82,6 +106,7 @@ package QDMF.Logic {
 			if (turnID <= I.CurrentTurn) {
 				Main.I.Log("CATASTROPHIC DESYNC! MY-TURN="+I.CurrentTurn+" THIER-TURN="+turnID+" TIME=" + new Date().toString());
 			} else {
+				Main.I.Log("Received some info for turnid=" + turnID + " from player=" + step.PlayerID);
 				var _turn:int = turnID - I.CurrentTurn - 1;
 				I.UpcomingTurns[_turn].AddStep(step);
 			}
@@ -94,6 +119,19 @@ package QDMF.Logic {
 		static public function Reset(_offset:Number = 0):void {
 			I.CurrentTurn = 0;
 			I.MSSinceLastTurn = _offset;
+			
+			for (var i:int = 0; i < LOCAL_WITH_AHEAD-1; i++) {
+				I.UpcomingTurns[i].CompletedBy(1); //TODO: This really isn't the best solution.
+				I.UpcomingTurns[i].CompletedBy(2);
+			}
+		}
+		
+		static public function MarkTurnEnded(playerID:int, turnID:int):void {
+			Main.I.Log("Marking turnID=" + turnID + " ended for player=" + playerID); 
+			
+			var _turn:int = turnID - I.CurrentTurn - 1;
+			I.UpcomingTurns[_turn].CompletedBy(playerID);
+			Update(0);
 		}
 	}
 }

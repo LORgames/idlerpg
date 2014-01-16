@@ -8,6 +8,7 @@ package QDMF.Connectors
 	import flash.net.Socket;
 	import flash.system.Security;
 	import flash.utils.ByteArray;
+	import QDMF.Logic.Syncronizer;
 	import Scripting.Script;
 	import QDMF.IHLNetwork;
 	import QDMF.Packet;
@@ -71,6 +72,7 @@ package QDMF.Connectors
 			Client = null;
 			
 			Script.FireTrigger(SocketTriggers.SOCKET_DISCONNECT);
+			Syncronizer.Reset();
 		}
 		
 		private function ConnectHandler(event:Event):void {

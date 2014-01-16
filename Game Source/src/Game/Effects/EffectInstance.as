@@ -213,12 +213,10 @@ package Game.Effects {
 		}
 		
 		/* INTERFACE Scripting.IScriptTarget */
-		public function GetScript():ScriptInstance {
-			return MyScript;
-		}
-		
+		public function GetScript():ScriptInstance { return MyScript; }
+		public function GetTypeID():int { return Info.ID; }
 		public function ScriptAttack(isPercent:Boolean, amount:int, pierce:int, attacker:IScriptTarget):void { if (MyScript == null) return; MyScript.Run(Script.Attacked); }
-		public function AlertMinionDeath(baseCritter:BaseCritter):void { MyScript.Run(Script.MinionDied); }
+		public function AlertMinionDeath(baseCritter:BaseCritter):void { if (MyScript!=null) MyScript.Run(Script.MinionDied); }
 		public function UpdatePointX(position:PointX):void { position.X = X; position.Y = Y; position.D = Direction; }
 		public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void { PlaybackSpeed = newAnimationSpeed; }
 		public function GetAnimationSpeed():Number { return PlaybackSpeed; }
@@ -248,7 +246,6 @@ package Game.Effects {
 		
 		override public function toString():String {
 			if (Info != null) return "[EffectInstance Type=" + Info.Name + " X=" +X + " Y=" + Y + "]";
-			
 			return "[EffectInstance NULL]";
 		}
 		

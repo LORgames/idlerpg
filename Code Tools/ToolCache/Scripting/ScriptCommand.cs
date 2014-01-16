@@ -333,9 +333,12 @@ namespace ToolCache.Scripting {
                             } break;
                         case Param.CritterName:
                             if (ExportCrushers.MappedCritterIDs != null && ExportCrushers.MappedCritterIDs.ContainsKey(paramBits[i])) {
+                                AdditionalBytecode.Add(0xBFFF);
                                 AdditionalBytecode.Add((ushort)ExportCrushers.MappedCritterIDs[paramBits[i]]);
                             } else if (!CritterManager.HasCritter(paramBits[i])) {
-                                info.Errors.Add("Cannot find Critter: " + paramBits[i] + ErrorEnding());
+                                if (!WriteVariableIfExists(paramBits[i], info, false)) {
+                                    info.Errors.Add("Cannot find Critter: " + paramBits[i] + ErrorEnding());
+                                }
                             } break;
                         case Param.EffectName:
                             if (!EffectManager.Effects.ContainsKey(paramBits[i])) {

@@ -581,16 +581,9 @@ package Game.Critter {
 		}
 		
 		/* INTERFACE Scripting.IScriptTarget */
-		public function GetScript():ScriptInstance {
-			return MyScript;
-		}
-		
-		public function AlertMinionDeath(minion:BaseCritter):void {
-			if (CurrentHP > 0) {
-				MyScript.Run(Script.MinionDied);
-			}
-		}
-		
+		public function GetScript():ScriptInstance { return MyScript; }
+		public function GetTypeID():int { return Info.ID; }
+		public function AlertMinionDeath(minion:BaseCritter):void { if (CurrentHP > 0) { MyScript.Run(Script.MinionDied); } }
 		public function ChangeState(stateID:int, isLooping:Boolean):void { /* Possibly needs to be handed on to children. */ }
 		public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void { /* Definately needs to be handed down to children. */ }
 		public function GetCurrentState():int { /* Needs to be handed down */ return 0; }
@@ -605,7 +598,6 @@ package Game.Critter {
 				}
 			}
 			
-			//TODO: This should do something else :)
 			if (isPercent) {
 				CurrentHP -= CurrentHP * (amount / 100);
 			} else if(amount < 0) { //HEAL!

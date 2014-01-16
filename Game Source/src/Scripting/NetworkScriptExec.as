@@ -97,6 +97,10 @@ package Scripting {
 					}
 				}
 				return true;
+			} else if (p.type == PacketTypes.ENDTURN) {
+				var playerID:int = p.bytes.readUnsignedShort();
+				var turnID:int = p.bytes.readUnsignedShort();
+				Syncronizer.MarkTurnEnded(playerID, turnID);
 			}
 			
 			return false;
@@ -104,6 +108,7 @@ package Scripting {
 		
 		/* INTERFACE Scripting.IScriptTarget */
 		public function GetScript():ScriptInstance { return scriptinstance; }
+		public function GetTypeID():int { return 0; }
 		public function UpdatePointX(position:PointX):void { position.D = 1; position.X = 0; position.Y = 0; }
 		public function AlertMinionDeath(baseCritter:BaseCritter):void {}
 		public function ChangeState(stateID:int, isLooping:Boolean):void {}
