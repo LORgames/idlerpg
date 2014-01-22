@@ -17,6 +17,7 @@ package UI {
 		public function Draw(w:int, h:int, ui:UIManager):void {
 			var i:int = Elements.length;
             while (--i > -1) {
+				if (Elements[i] == null) continue;
 				Elements[i].Draw(w, h, ui);
 			}
         }

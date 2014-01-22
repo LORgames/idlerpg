@@ -290,7 +290,7 @@ namespace ToolCache.Scripting {
                                 this.AdditionalBytecode.Add((ushort)sparam);
                             } break;
                         case Param.Boolean:
-                            bool isTrue = (Array.IndexOf(Commands.ValidBooleanNames, paramBits[i]) != -1);
+                            bool isTrue = (Array.IndexOf(Commands.ValidBooleanNames, paramBits[i].ToLower()) != -1);
                             AdditionalBytecode.Add((ushort)(isTrue ? 1 : 0));
                             break;
                         case Param.String:
@@ -310,15 +310,19 @@ namespace ToolCache.Scripting {
                             } else if(strM.Success) {
                                 AdditionalBytecode.Add(0x1); //Encoded String
 
-                                Byte[] encoded = Encoding.UTF8.GetBytes(StringMagic.PrepareString(strM.Groups[1].Value, true));
-                                AdditionalBytecode.Add((ushort)encoded.Length);
+                                try {
+                                    Byte[] encoded = Encoding.UTF8.GetBytes(StringMagic.PrepareString(strM.Groups[1].Value, true));
+                                    AdditionalBytecode.Add((ushort)encoded.Length);
+                                    
+                                    for(int z = 0; z < encoded.Length; z = z+2) {
+                                        int z0 = encoded[z + 0];
+                                        int z1 = encoded.Length == z+1 ? 0 : encoded[z + 1];
 
-                                for(int z = 0; z < encoded.Length; z = z+2) {
-                                    int z0 = encoded[z + 0];
-                                    int z1 = encoded.Length == z+1 ? 0 : encoded[z + 1];
-
-                                    ushort y = (ushort)((z0 << 8) | z1);
-                                    AdditionalBytecode.Add(y);
+                                        ushort y = (ushort)((z0 << 8) | z1);
+                                        AdditionalBytecode.Add(y);
+                                    }
+                                } catch (Exception e) {
+                                    info.Errors.Add(e.Message + ErrorEnding());
                                 }
                             } else {
                                 info.Errors.Add("String does not suit the requirements for encoding! (or could not find that string?)" + ErrorEnding());

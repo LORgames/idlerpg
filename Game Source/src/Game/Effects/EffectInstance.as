@@ -49,7 +49,7 @@ package Game.Effects {
 		public function EffectInstance(_info:EffectInfo, _x:int, _y:int, _d:int, isSimulated:Boolean, _id:int = -1) {
  			ID = _id;
 			if (ID == -1) {
-				ID = WorldData.CurrentMap.GetEffectID(false);
+				ID = WorldData.CurrentMap.GetEffectID(isSimulated);
 			}
 			
 			this.Info = _info;
@@ -163,7 +163,8 @@ package Game.Effects {
 			Renderman.DirtyObjects.push(this);
 			
 			if (!WorldData.CurrentMap.Boundaries.ContainsPoint(X, Y)) {
-				Clock.CleanUpList.push(this);
+				//Clock.CleanUpList.push(this);
+				MyScript.Run(Script.EndMoving);
 			} else {
 				//Do some world scans?
 				var objects:Vector.<IScriptTarget> = new Vector.<IScriptTarget>();

@@ -1,14 +1,19 @@
 package SoundSystem {
 	import adobe.utils.CustomActions;
 	import flash.media.Sound;
+	import flash.media.SoundChannel;
+	import flash.media.SoundTransform;
 	import flash.net.URLRequest;
 	import flash.utils.ByteArray;
 	import Loaders.BinaryLoader;
+	import Scripting.GlobalVariables;
 	/**
 	 * ...
 	 * @author Paul
 	 */
 	public class EffectsPlayer {
+		private static const MAX_SOUNDS:int = 32;
+		private static var effects:Vector.<SoundChannel> = new Vector.<SoundChannel>(MAX_SOUNDS, true);
 		
 		private static var groups:Vector.<int> = new Vector.<int>();
 		private static var numbers:Vector.<int> = new Vector.<int>();
@@ -36,22 +41,45 @@ package SoundSystem {
 			}
 		}
 		
-		public static function PlayFromGroup(gid:int = 0):void {
-			Play((Rndm.random() * (groups[gid + 1] - groups[gid])) + groups[gid]);
+		public static function PlayFromGroup(gid:int = 0):int {
+			return Play((Rndm.random() * (groups[gid + 1] - groups[gid])) + groups[gid]);
 		}
 		
-		public static function Play(id:int = 0):void {
-			var req:URLRequest = new URLRequest("Data/Effects_" + id + ".mp3");
+		public static function Play(id:int = 0):int {
+			var rid:int = GetEmptySoundSlot();
 			
-			var sound:Sound = new Sound(req);
-			sound.play(80);
+			if(rid != -1) {
+				var req:URLRequest = new URLRequest("Data/Effects_" + id + ".mp3");
+				
+				var sound:Sound = new Sound(req);
+				effects[rid] = sound.play(80);
+				
+				var st:SoundTransform = effects[rid].soundTransform;
+				st.volume = GlobalVariables.IntegerVariables[Global.GV_Mute] == 1 ? 0 : GlobalVariables[Global.GV_SoundVolume] / 100.0;
+				effects[rid].soundTransform = st;
+			}
+			
+			return rid;
+		}
+		
+		private static function GetEmptySoundSlot():int {
+			for (var i:int = 0; i < MAX_SOUNDS; i++) {
+				if (effects[i] == null) return i;
+			}
+			
+			return -1;
 		}
 		
 		public static function UpdateVolume():void {
 			//TODO: All the sounds need to be stored.
 			// Make sure mute is included!
+			for (var i:int = 0; i < MAX_SOUNDS; i++) {
+				if (effects[i] == null) continue;
+				
+				var st:SoundTransform = effects[i].soundTransform;
+				st.volume = GlobalVariables.IntegerVariables[Global.GV_Mute] == 1 ? 0 : GlobalVariables[Global.GV_SoundVolume] / 100.0;
+				effects[i].soundTransform = st;
+			}
 		}
-		
 	}
-
 }

@@ -106,6 +106,11 @@ package Scripting {
 			return false;
 		}
 		
+		public function Disconnect():void {
+			Script.FireTrigger(SocketTriggers.SOCKET_DISCONNECT);
+			Syncronizer.Reset();
+		}
+		
 		/* INTERFACE Scripting.IScriptTarget */
 		public function GetScript():ScriptInstance { return scriptinstance; }
 		public function GetTypeID():int { return 0; }

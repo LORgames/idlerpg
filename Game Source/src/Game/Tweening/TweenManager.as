@@ -9,21 +9,18 @@ package Game.Tweening {
 		private static var _ActiveTweens:Vector.<Tween> = new Vector.<Tween>();
 		
 		public static function StartTweenBetween(obj:Object, param:String, startValue:int, endValue:int, time:Number):void {
-			//TODO: This
 			var temp:Tween = GetInactiveTween();
 			temp.Assign(obj, param, startValue, endValue, time);
 			_ActiveTweens.push(temp);
 		}
 		
 		public static function StartTweenTo(obj:Object, param:String, endValue:int, time:Number):void {
-			//TODO: This
 			var temp:Tween = GetInactiveTween();
 			temp.Assign(obj, param, obj[param], endValue, time);
 			_ActiveTweens.push(temp);
 		}
 		
 		public static function Update(dt:Number):void {
-			//TODO: This
 			// Iterate over all active tweens and update
 			for (var i:int = 0; i < _ActiveTweens.length; i++) {
 				_ActiveTweens[i].Update(dt);

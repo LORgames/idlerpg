@@ -16,7 +16,7 @@ namespace ToolCache.Scripting.Types {
         public static Dictionary<string, ushort> ScriptTargets = new Dictionary<string, ushort>();
         public static Dictionary<string, ushort> NetworkTypes = new Dictionary<string, ushort>();
 
-        public static readonly string[] ValidBooleanNames = { "on", "true", "1" };
+        public static readonly string[] ValidBooleanNames = { "on", "true", "1", "yes", "y", "t" };
 
         public static void Initialize() {
             //General Commands :)
@@ -132,6 +132,8 @@ namespace ToolCache.Scripting.Types {
                 new ValidCommand(0x500A, new Param[] { Param.Integer, Param.Integer }));
             All.Add("withnearest",
                 new ValidCommand(0x500B, new Param[] { Param.ObjectType, Param.Integer|Param.Optional }, true, new ushort[] { 0x5009 })); //Enemy/Ally etc, Maximum range
+            All.Add("withnearestnottype",
+                new ValidCommand(0x500C, new Param[] { Param.ObjectType, Param.FactionName, Param.Integer | Param.Optional }, true, new ushort[] { 0x5009 })); //Enemy/Ally etc, Type(eg. spellimmune), Maximum range
 
             //Animation Commands
             All.Add("animationplay",

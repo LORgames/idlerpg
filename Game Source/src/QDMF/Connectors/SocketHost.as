@@ -7,6 +7,7 @@ CONFIG::air {
 		import flash.net.Socket;
 		import flash.utils.ByteArray;
 		import QDMF.Logic.Syncronizer;
+		import QDMF.PacketController;
 		import Scripting.Script;
 		import QDMF.IHLNetwork;
 		import QDMF.Packet;
@@ -56,8 +57,7 @@ CONFIG::air {
 				Client.removeEventListener(Event.CLOSE, CloseHandler);
 				Client = null;
 				
-				Script.FireTrigger(SocketTriggers.SOCKET_DISCONNECT);
-				Syncronizer.Reset();
+				PacketController.Disconnected();
 			}
 			
 			private function SocketDataHandler(event:ProgressEvent):void {
@@ -95,6 +95,7 @@ CONFIG::air {
 				if (HostSocket != null) {
 					HostSocket.close();
 					HostSocket = null;
+					CloseHandler(null);
 				}
 			}
 		

@@ -17,5 +17,11 @@ package QDMF {
 				}
 			}
 		}
+		
+		public static function Disconnected():void {
+			for (var i:int = 0; i < Listeners.length; i++) {
+				Listeners[i].Disconnect();
+			}
+		}
 	}
 }

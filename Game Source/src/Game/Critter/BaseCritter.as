@@ -469,10 +469,6 @@ package Game.Critter {
 				//(i % shownBuffs.length) * iconWidth
 			}
 			
-			if (shownBuffs.length > 0) {
-				trace("Drawing " + shownBuffs.length + " buff icons!");
-			}
-			
 			//Draw health
 			HPRECT0.width = 32 * CurrentHP / MaximumHP;
 			HPRECT1.width = HPRECT0.width;

@@ -10,6 +10,7 @@ package QDMF {
 		 * @return	True if this packet was processed, false otherwise.
 		 */
 		function ProcessPacket(p:Packet):Boolean;
+		function Disconnect():void;
 	}
 
 }

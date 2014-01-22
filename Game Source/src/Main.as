@@ -155,7 +155,6 @@ package {
 			
 			Renderer.Resized();
 			hud.Resized();
-			
 		}
 		
 		/* INTERFACE Debug.ILogger */

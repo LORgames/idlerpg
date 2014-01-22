@@ -22,6 +22,7 @@ package UI {
 		public var TextureAtlas:BitmapData;
 		
 		public var Libraries:Vector.<UILibrary>;
+		private var FinishedLoading:Boolean = false;
 		
 		public function UIManager() {
 			BinaryLoader.Load("Data/UILibrary.bin", ParseLibraries);
@@ -154,11 +155,14 @@ package UI {
 				ImageCutouts[l] = bmpd;
 			}
 			
+			FinishedLoading = true;
 			if (Global.DebugFPS) this.addChild(new FPSCounter());
 			Resized();
 		}
 		
 		public function Resized():void {
+			if (!FinishedLoading) return;
+			
 			if(Panels != null) {
 				var i:int = Panels.length;
 				var w:int = Main.I.stage.stageWidth;
@@ -196,8 +200,8 @@ package UI {
 					}
 					
 					if (Panels[i].Elements[j].Contains(x, y)) {
-						GlobalVariables.IntegerVariables[Global.GV_LX] = wx - Panels[i].Elements[j].x;
-						GlobalVariables.IntegerVariables[Global.GV_LY] = wy - Panels[i].Elements[j].y;
+						GlobalVariables.IntegerVariables[Global.GV_LX] = x - Panels[i].Elements[j].x;
+						GlobalVariables.IntegerVariables[Global.GV_LY] = x - Panels[i].Elements[j].y;
 						
 						if(!dragged) {
 							Panels[i].Elements[j].MyScript.Run(Script.Pressed);

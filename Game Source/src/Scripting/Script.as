@@ -427,7 +427,7 @@ package Scripting {
 						} break;
 					case FACTIONMAP:
 						dim0 = eventScript.readShort(); //GetNumberFromVariable(eventScript, info, param);
-						//trace("Finding all 0x" + eType.toString(16) + " for team " + dim0);
+						//Main.I.Log("Finding all 0x" + eType.toString(16) + " for team " + dim0);
 						if(eType != Script.CRITTER) {
 							//We have a serious problem.
 						} else {
@@ -683,6 +683,7 @@ package Scripting {
 			var objName:String;
 			var fParam:Number;
 			var i:int;
+			var objects:Vector.<IScriptTarget>;
 			
 			var deep:int = 0;
 			
@@ -778,7 +779,7 @@ package Scripting {
 						}
 						
 						if(!NetSync) {
-							new EffectInstance(effectInfo, p1.X, p1.Y, Position.D, NetSync);
+							new EffectInstance(effectInfo, p1.X, p1.Y, Position.D, true);
 						} else {
 							QDMFEffect.Register(p0.D, p1.X, p1.Y, Position.D);
 						}
@@ -1114,7 +1115,7 @@ package Scripting {
 					case 0x500B: //WithNearest
 						p0.X = EventScript.readUnsignedShort();
 						p0.Y = GetNumberFromVariable(EventScript, info, inputParam);
-						var objects:Vector.<IScriptTarget> = new Vector.<IScriptTarget>();
+						objects = new Vector.<IScriptTarget>();
 						if (p0.Y == 0) { //Infinite range
 							if (p0.X != CRITTER && p0.X != ALLY && p0.X != ENEMY) {
 								Main.I.Log("WithNearest currently only works with 'Critter', 'Ally' and 'Enemy' types!");
@@ -1125,6 +1126,32 @@ package Scripting {
 								if (p0.X == CRITTER) for (i = 0; i < cv.length; i++) { if (cv[i] == null) continue; objects.push(cv[i]); }
 								if (p0.X == ALLY) for (i = 0; i < cv.length; i++) { if (cv[i] == null) continue;if(Factions.IsFriends(p0.D, cv[i].PrimaryFaction)) objects.push(cv[i]); }
 								if (p0.X == ENEMY) for (i = 0; i < cv.length; i++) { if (cv[i] == null) continue; if (Factions.IsEnemies(p0.D, cv[i].PrimaryFaction)) objects.push(cv[i]); }
+							}
+						} else {
+							WorldData.CurrentMap.GetObjectsInArea(Rect.GetRectFromPointWithRadius(Position, p0.Y), objects, p0.X, info.CurrentTarget);
+						}
+						
+						var target:IScriptTarget = MathsEx.GetClosestObjectInVector(Position, objects);
+						if(target != null) {
+							info.AttachTarget(target); info.CurrentTarget.UpdatePointX(Position);
+						} else {
+							ReadUntilBalancedClose(EventScript);
+						} break;
+					case 0x500C: //WithNearestNotType
+						p0.X = EventScript.readUnsignedShort();
+						p1.X = EventScript.readUnsignedShort();
+						p0.Y = GetNumberFromVariable(EventScript, info, inputParam);
+						objects = new Vector.<IScriptTarget>();
+						if (p0.Y == 0) { //Infinite range
+							if (p0.X != CRITTER && p0.X != ALLY && p0.X != ENEMY) {
+								Main.I.Log("WithNearestNotType currently only works with 'Critter', 'Ally' and 'Enemy' types!");
+								//TODO: Add Object and other types :)
+							} else {
+								var cv:Vector.<BaseCritter> = WorldData.CurrentMap.Critters;
+								p0.D = info.CurrentTarget.GetFaction();
+								if (p0.X == CRITTER) for (i = 0; i < cv.length; i++) { if (cv[i] == null) continue; if(!cv[i].HasFaction(p1.X)) objects.push(cv[i]); }
+								if (p0.X == ALLY) for (i = 0; i < cv.length; i++) { if (cv[i] == null) continue;if(Factions.IsFriends(p0.D, cv[i].PrimaryFaction) && !cv[i].HasFaction(p1.X)) objects.push(cv[i]); }
+								if (p0.X == ENEMY) for (i = 0; i < cv.length; i++) { if (cv[i] == null) continue; if (Factions.IsEnemies(p0.D, cv[i].PrimaryFaction) && !cv[i].HasFaction(p1.X)) objects.push(cv[i]); }
 							}
 						} else {
 							WorldData.CurrentMap.GetObjectsInArea(Rect.GetRectFromPointWithRadius(Position, p0.Y), objects, p0.X, info.CurrentTarget);
