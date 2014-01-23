@@ -168,7 +168,7 @@ package Game.Map.Spawns {
 			if (i > -1) {
 				Critters.splice(i, 1);
 			} else {
-				Main.I.Log("Being alerted of unexpected critter death!");
+				Global.Out.Log("Being alerted of unexpected critter death!");
 			}
 		}
 		

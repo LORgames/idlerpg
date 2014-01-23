@@ -1,5 +1,4 @@
 package {
-	import Debug.ILogger;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageQuality;
@@ -22,17 +21,13 @@ package {
 		import flash.display.NativeWindow;
 		import flash.display.Screen;
 		import flash.events.InvokeEvent;
-		
-		import flash.filesystem.File;
-		import flash.filesystem.FileStream;
-		import flash.filesystem.FileMode;
 	}
 	
 	/**
 	 * ...
 	 * @author Paul
 	 */
-	public class Main extends Sprite implements ILogger {
+	public class Main extends Sprite {
 		//So can link back to this
 		public static var I:Main;
 		
@@ -110,7 +105,7 @@ package {
 							case "save":
 								SaveManager.Load(arg.substr(6)); break;
 							default:
-								Main.I.Log("Unknown Param: " + arg);
+								Global.Out.Log("Unknown Param: " + arg);
 						}
 					}
 				}
@@ -155,21 +150,6 @@ package {
 			
 			Renderer.Resized();
 			hud.Resized();
-		}
-		
-		/* INTERFACE Debug.ILogger */
-		
-		public function Log(message:String):void {
-			trace(message);
-			CONFIG::desktop {
-				CONFIG::release {
-					var file:File = File.applicationStorageDirectory.resolvePath("debug.log");
-					var fs:FileStream = new FileStream();
-					fs.open(file, FileMode.APPEND);
-					fs.writeUTFBytes("[" + (new Date()) + "] " + message + "\n");
-					fs.close();
-				}
-			}
 		}
 		
 		public function HardwareKeyDown(event:KeyboardEvent):void {

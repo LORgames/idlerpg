@@ -653,7 +653,7 @@ package Game.Critter {
 				
 				FixMovementSpeed();
 			} else {
-				Main.I.Log("Non-stackable buffs are not currently allowed!");
+				Global.Out.Log("Non-stackable buffs are not currently allowed!");
 			}
 		}
 		

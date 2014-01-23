@@ -68,7 +68,7 @@ package Game.Critter
 		
 		public function ChangeState(stateID:int, isLooping:Boolean):void {
 			//critter.ChangeState(stateID, isLooping);
-			Main.I.Log("Buff trying to change state. NP HARD " + info.name);
+			Global.Out.Log("Buff trying to change state. NP HARD " + info.name);
 		}
 		
 		public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void {
@@ -80,7 +80,7 @@ package Game.Critter
 		}
 		
 		public function GetCurrentState():int {
-			Main.I.Log("Buff trying to get state. NP HARD. Returning Critter state. " + info.name);
+			Global.Out.Log("Buff trying to get state. NP HARD. Returning Critter state. " + info.name);
 			return critter.GetCurrentState();
 		}
 		

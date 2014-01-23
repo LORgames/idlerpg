@@ -45,7 +45,7 @@ package QDMF.Logic {
 				if (!UpcomingTurns[0].isComplete) {
 					_pauseUntilNetwork = true;
 					Clock.Stop();
-					Main.I.Log("Have not received completion message for TurnID=" + (CurrentTurn + 1));
+					Global.Out.Log("Have not received completion message for TurnID=" + (CurrentTurn + 1));
 					return;
 				}
 				
@@ -104,9 +104,9 @@ package QDMF.Logic {
 		 */
 		static public function RegisterRemoteStep(turnID:int, step:TurnStep):void {
 			if (turnID <= I.CurrentTurn) {
-				Main.I.Log("CATASTROPHIC DESYNC! MY-TURN="+I.CurrentTurn+" THIER-TURN="+turnID+" TIME=" + new Date().toString());
+				Global.Out.Log("CATASTROPHIC DESYNC! MY-TURN="+I.CurrentTurn+" THIER-TURN="+turnID+" TIME=" + new Date().toString());
 			} else {
-				Main.I.Log("Received some info for turnid=" + turnID + " from player=" + step.PlayerID);
+				Global.Out.Log("Received some info for turnid=" + turnID + " from player=" + step.PlayerID);
 				var _turn:int = turnID - I.CurrentTurn - 1;
 				I.UpcomingTurns[_turn].AddStep(step);
 			}
@@ -127,7 +127,7 @@ package QDMF.Logic {
 		}
 		
 		static public function MarkTurnEnded(playerID:int, turnID:int):void {
-			Main.I.Log("Marking turnID=" + turnID + " ended for player=" + playerID); 
+			Global.Out.Log("Marking turnID=" + turnID + " ended for player=" + playerID); 
 			
 			var _turn:int = turnID - I.CurrentTurn - 1;
 			I.UpcomingTurns[_turn].CompletedBy(playerID);

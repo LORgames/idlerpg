@@ -45,7 +45,7 @@ package Storage.SaveAdv {
 			try {
                 flushStatus = mySo.flush(1024);
             } catch (error:Error) {
-                Main.I.Log("Error...Could not write SharedObject to disk\n");
+                Global.Out.Log("Error...Could not write SharedObject to disk\n");
             }
 		}
 		

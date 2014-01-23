@@ -27,7 +27,7 @@ package Game.Tweening {
 		}
 		
 		public function Update(dt:Number):void {
-			Main.I.Log("TweenUpdate Obj="+obj+" Param=" + param + " V0=" + value0 + " V1=" + value1 + " T=" + countdown + " vShift=" + valueShift + " dt="+dt);
+			Global.Out.Log("TweenUpdate Obj="+obj+" Param=" + param + " V0=" + value0 + " V1=" + value1 + " T=" + countdown + " vShift=" + valueShift + " dt="+dt);
 			
 			countdown -= dt;
 			obj[param] += (int)(valueShift * dt);

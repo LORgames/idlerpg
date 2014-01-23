@@ -1,5 +1,6 @@
 package {
 	import CollisionSystem.Rect;
+	import Debug.DebugLogger;
 	import flash.display.Bitmap;
 	import flash.geom.Point;
 	import QDMF.IHLNetwork;
@@ -23,6 +24,7 @@ package {
 		public static var DebugRender:Boolean = false;		//Should we draw debug rectangles for AI and positioning?
 		static public var DebugFPS:Boolean = false;			//Should I display the FPS on screen?
 		static public var IsEditor:Boolean = true;			//Are we running in the editor?
+		public static var Out:DebugLogger = new DebugLogger(); //The debug logger
 		
 		//Settings
 		public static var GameName:String = "";				//Whats the name of the game

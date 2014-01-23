@@ -49,14 +49,14 @@ package Loaders {
 		}
 		
 		private static function Event_IOError(e:IOErrorEvent):void {
-			Main.I.Log("IO Error: " + e.text);
+			Global.Out.Log("IO Error: " + e.text);
 			currentInfo.FailureCallback(e.text);
 			
 			CurrentLoadingEnded();
 		}
 		
 		private static function Event_SecurityError(e:SecurityErrorEvent):void {
-			Main.I.Log("Security Error: " + e.text);
+			Global.Out.Log("Security Error: " + e.text);
 			currentInfo.FailureCallback(e.text);
 			
 			CurrentLoadingEnded();

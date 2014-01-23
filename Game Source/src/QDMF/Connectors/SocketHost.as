@@ -1,7 +1,6 @@
 CONFIG::air {
 	package QDMF.Connectors {
 		import adobe.utils.CustomActions;
-		import Debug.ILogger;
 		import flash.events.Event;
 		import flash.events.ProgressEvent;
 		import flash.net.Socket;
@@ -23,7 +22,6 @@ CONFIG::air {
 		public class SocketHost implements IHLNetwork {
 			private var HostSocket:ServerSocket;
 			private var Client:Socket;
-			private var Logger:ILogger;
 			private var nextFlush:ByteArray = new ByteArray();
 			
 			public function SocketHost() {
@@ -32,9 +30,7 @@ CONFIG::air {
 			
 			/* INTERFACE QDMF.IHLNetwork */
 			
-			public function Connect(Hostname:String, Port:int, Logger:ILogger):void {
-				this.Logger = Logger;
-				
+			public function Connect(Hostname:String, Port:int):void {
 				//Does nothing :)
 				HostSocket.bind(Port, Hostname);
 				HostSocket.addEventListener(ServerSocketConnectEvent.CONNECT, OnConnect );
@@ -46,12 +42,12 @@ CONFIG::air {
 				Client.addEventListener(ProgressEvent.SOCKET_DATA, SocketDataHandler);
 				Client.addEventListener(Event.CLOSE, CloseHandler);
 				
-				Logger.Log("Connection from " + Client.remoteAddress + ":" + Client.remotePort);
+				Global.Out.Log("Connection from " + Client.remoteAddress + ":" + Client.remotePort);
 				Script.FireTrigger(SocketTriggers.SOCKET_CONNECT);
 			}
 
 			private function CloseHandler(event:Event):void {
-				Logger.Log("Disconnected.");
+				Global.Out.Log("Disconnected.");
 				
 				Client.removeEventListener(ProgressEvent.SOCKET_DATA, SocketDataHandler);
 				Client.removeEventListener(Event.CLOSE, CloseHandler);
@@ -82,7 +78,7 @@ CONFIG::air {
 						Client.writeBytes(packet.bytes);
 						Client.flush();
 					} catch (error:Error) {
-						Logger.Log("MatchMaking: An unexpected error occurred: " + error.message);
+						Global.Out.Log("MatchMaking: An unexpected error occurred: " + error.message);
 					}
 				}
 			}
@@ -106,7 +102,7 @@ CONFIG::air {
 						Client.flush();
 						nextFlush.clear();
 					} catch (error:Error) {
-						Logger.Log("MatchMaking: An unexpected error occurred: " + error.message);
+						Global.Out.Log("MatchMaking: An unexpected error occurred: " + error.message);
 					}
 				}
 			}

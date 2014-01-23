@@ -42,7 +42,7 @@ package Scripting {
 			var pr:Packet;
 			
 			if (p.type == PacketTypes.SCRIPT) {
-				Main.I.Log("Executing Network Script");
+				Global.Out.Log("Executing Network Script");
 				tb.clear(); p.bytes.readBytes(tb, 0);
 				s.Run(0, scriptinstance, null);
 				return true;
@@ -59,7 +59,7 @@ package Scripting {
 						GlobalVariables.IntegerVariables[Global.GV_PlayerID] = controlInfo;
 					}
 					PingHelper.Reset();
-					Main.I.Log("RECV New Player ID");
+					Global.Out.Log("RECV New Player ID");
 				} else if (controlType == 1) { // Matching controls
 					if (controlInfo == 1) { // Match Joined
 						Syncronizer.Reset();

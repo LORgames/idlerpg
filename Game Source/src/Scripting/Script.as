@@ -109,13 +109,13 @@ package Scripting {
 			EventScript.position = 0;
 			NetSync = 0;
 			
-			//Main.I.Log("Running: Invoker=" + info.Invoker + " Event=" + eventID + " CurrentTarget=" + info.CurrentTarget);
+			//Global.Out.Log("Running: Invoker=" + info.Invoker + " Event=" + eventID + " CurrentTarget=" + info.CurrentTarget);
 			ProcessBlock(EventScript, info, eventID, param);
 			
 			if (EventScript.position != EventScript.length) {
-				Main.I.Log("SCRIPT UNFINISHED: [" + info.Invoker + " Event="+eventID+ " ScriptPosition=" + EventScript.position + "/" + EventScript.length);
+				Global.Out.Log("SCRIPT UNFINISHED: [" + info.Invoker + " Event="+eventID+ " ScriptPosition=" + EventScript.position + "/" + EventScript.length);
 				if (EventScript.position + 2 <= EventScript.length) {
-					Main.I.Log("\t\tEOF: 0x" + MathsEx.ZeroPad(EventScript.readUnsignedShort(), 0, 16));
+					Global.Out.Log("\t\tEOF: 0x" + MathsEx.ZeroPad(EventScript.readUnsignedShort(), 0, 16));
 				}
 			}
 		}
@@ -164,7 +164,7 @@ package Scripting {
 						case 0xB00B: //Binary Right Shift
 							runningTally = int(runningTally) >> int(nextValue); break;
 						default:
-							Main.I.Log("Unknown math operation!");
+							Global.Out.Log("Unknown math operation!");
 							break;
 					}
 				} else { //is an operation hopefully
@@ -207,7 +207,7 @@ package Scripting {
 			
 			while (!ended) {
 				command = eventScript.readUnsignedShort();
-				//Main.I.Log("\t0x" + MathsEx.ZeroPad(command, 4, 16) + " IFPARAM");
+				//Global.Out.Log("\t0x" + MathsEx.ZeroPad(command, 4, 16) + " IFPARAM");
 				currentUnprocessedValue = true;
 				
 				switch(command) {
@@ -216,7 +216,7 @@ package Scripting {
 						break;
 					case 0xF0FD:
 						currentUnprocessedValue = CanIf(eventScript, info, position, inputParam);
-						Main.I.Log("\nNested IF:" + currentUnprocessedValue);
+						Global.Out.Log("\nNested IF:" + currentUnprocessedValue);
 						break;
 					case 0x7000: currentOperation = 0; break; //AND
 					case 0x7001: currentOperation = 1; break; //OR
@@ -235,7 +235,7 @@ package Scripting {
 						if (info.CurrentTarget is CritterHuman) {
 							currentUnprocessedValue = (info.CurrentTarget as CritterHuman).Equipment.IsEquipped(eventScript.readUnsignedShort(), eventScript.readUnsignedShort());
 						} else {
-							Main.I.Log("Unknown invoker for if equipped");
+							Global.Out.Log("Unknown invoker for if equipped");
 						} break;
 					case 0x7006: //Is an animation playing
 						currentUnprocessedValue = (info.Invoker.GetCurrentState() == eventScript.readUnsignedShort()); break;
@@ -245,7 +245,7 @@ package Scripting {
 						if (info.CurrentTarget is BaseCritter) {
 							currentUnprocessedValue = ((info.CurrentTarget as BaseCritter).GetFaction() == eventScript.readShort());
 						} else {
-							Main.I.Log("Unknown target for 0x7008 Target=" + info.CurrentTarget + " Faction=" + eventScript.readShort());
+							Global.Out.Log("Unknown target for 0x7008 Target=" + info.CurrentTarget + " Faction=" + eventScript.readShort());
 						} break;
 					case 0x7009: //Math comparison function
 						param1 = GetNumberFromVariable(eventScript, info, inputParam);
@@ -274,7 +274,7 @@ package Scripting {
 						} else if (param0 == 0xBFFE) { //Global
 							param2 = GlobalVariables.IntegerVariables[param1];
 						} else {
-							Main.I.Log("SCRIPT 0x700A: Unknown variable type!");
+							Global.Out.Log("SCRIPT 0x700A: Unknown variable type!");
 						}
 						
 						if (param2 >= cost) {
@@ -306,7 +306,7 @@ package Scripting {
 							currentUnprocessedValue = ((info.CurrentTarget as BaseCritter).HasFaction(param0));
 						} else {
 							currentUnprocessedValue = false;
-							Main.I.Log("Unknown target for 0x700D Target=" + info.CurrentTarget + " Faction=" + param0);
+							Global.Out.Log("Unknown target for 0x700D Target=" + info.CurrentTarget + " Faction=" + param0);
 						} break;
 					case 0x700E: //Attacker Type
 						param0 = eventScript.readShort();
@@ -337,22 +337,22 @@ package Scripting {
 							currentUnprocessedValue = ((inputParam as Array)[0] == whatAIEvent);
 						} break;
 					default:
-						Main.I.Log("@0x" + command.toString(16) + ": Unknown Conditional.");
+						Global.Out.Log("@0x" + command.toString(16) + ": Unknown Conditional.");
 						break;
 				}
 				
 				if (command != 0xF0FE && command != 0x7000 && command != 0x7001 && command != 0x7002) { //if not operation
 					if (isNOTblock) {
-						//Main.I.Log("\tNOT " + currentUnprocessedValue);
+						//Global.Out.Log("\tNOT " + currentUnprocessedValue);
 						currentUnprocessedValue = !currentUnprocessedValue;
 						isNOTblock = false;
 					}
 					
 					if (currentOperation == 0) { //AND
-						//Main.I.Log("\tAND (" + currentCalculatedValue + " && " + currentUnprocessedValue + ") = " +(currentCalculatedValue && currentUnprocessedValue));
+						//Global.Out.Log("\tAND (" + currentCalculatedValue + " && " + currentUnprocessedValue + ") = " +(currentCalculatedValue && currentUnprocessedValue));
 						currentCalculatedValue = (currentCalculatedValue && currentUnprocessedValue);
 					} else if (currentOperation == 1) { //OR
-						//Main.I.Log("\tOR (" + currentCalculatedValue + " || " + currentUnprocessedValue + ") = " + (currentCalculatedValue || currentUnprocessedValue));
+						//Global.Out.Log("\tOR (" + currentCalculatedValue + " || " + currentUnprocessedValue + ") = " + (currentCalculatedValue || currentUnprocessedValue));
 						currentCalculatedValue = (currentCalculatedValue || currentUnprocessedValue);
 					}
 				}
@@ -427,7 +427,7 @@ package Scripting {
 						} break;
 					case FACTIONMAP:
 						dim0 = eventScript.readShort(); //GetNumberFromVariable(eventScript, info, param);
-						//Main.I.Log("Finding all 0x" + eType.toString(16) + " for team " + dim0);
+						//Global.Out.Log("Finding all 0x" + eType.toString(16) + " for team " + dim0);
 						if(eType != Script.CRITTER) {
 							//We have a serious problem.
 						} else {
@@ -444,7 +444,7 @@ package Scripting {
 						}
 						break;
 					default:
-						Main.I.Log("Unknown ArrayType. Type=" + arrayType);
+						Global.Out.Log("Unknown ArrayType. Type=" + arrayType);
 						break;
 				}
 				
@@ -454,14 +454,14 @@ package Scripting {
 			//Now we're in the loop bit :)
 			var startIndex:int = eventScript.position;
 			
-			//Main.I.Log("LOOP Type=" + info.Invoker + " Objects=" + Objects.length);
+			//Global.Out.Log("LOOP Type=" + info.Invoker + " Objects=" + Objects.length);
 			
 			var obji:int = Objects.length;
 			while (--obji > -1) {
 				var target:IScriptTarget = Objects[obji];
 				info.AttachTarget(target);
 				
-				//Main.I.Log("MAP LOOP Pos=" + eventScript.position + " LoopAt=" + startIndex + " Invoker=" + info.Invoker + " CurrentTarget=" + info.CurrentTarget);
+				//Global.Out.Log("MAP LOOP Pos=" + eventScript.position + " LoopAt=" + startIndex + " Invoker=" + info.Invoker + " CurrentTarget=" + info.CurrentTarget);
 				
 				var _continue:Boolean = (ProcessBlock(eventScript, info, eventID, param) == 0);
 				
@@ -523,14 +523,14 @@ package Scripting {
 					try {
 						return int(info.Invoker[GetWonkyString(eventScript)]);
 					} catch (e:Error) {
-						Main.I.Log("Cannot get param from invoker!" + e.message);
+						Global.Out.Log("Cannot get param from invoker!" + e.message);
 						return 0;
 					}
 				case 0x04: //Target
 					try {
 						return int(info.CurrentTarget[GetWonkyString(eventScript)]);
 					} catch (e:Error) {
-						Main.I.Log("Cannot get param from target!" + e.message);
+						Global.Out.Log("Cannot get param from target!" + e.message);
 						return 0;
 					}
 				case 0x05: //Power
@@ -559,7 +559,7 @@ package Scripting {
 				case 0x09: //Get ID
 					return info.CurrentTarget.GetTypeID();
 				default:
-					Main.I.Log("Unknown Math Command: " + functionID);
+					Global.Out.Log("Unknown Math Command: " + functionID);
 					return 0;
 			}
 		}
@@ -683,15 +683,15 @@ package Scripting {
 			var objName:String;
 			var fParam:Number;
 			var i:int;
-			var objects:Vector.<IScriptTarget>;
+			var vTargets:Vector.<IScriptTarget>;
+			var vCritters:Vector.<BaseCritter>;
+			var oTarget:IScriptTarget;
 			
 			var deep:int = 0;
 			
 			var Position:PointX = new PointX();
 			info.CurrentTarget.UpdatePointX(Position);
 			
-			//var tX:int = Position.X;
-			//var tY:int = Position.Y;
 			var p0:PointX = new PointX();
 			var p1:PointX = new PointX();
 			
@@ -700,7 +700,7 @@ package Scripting {
 			
 			while (true) {
 				command = EventScript.readUnsignedShort();
-				//Main.I.Log("\t0x" + MathsEx.ZeroPad(command, 4, 16) + " Deep=" + deep + " CurrentTarget=" + info.CurrentTarget);
+				//Global.Out.Log("\t0x" + MathsEx.ZeroPad(command, 4, 16) + " Deep=" + deep + " CurrentTarget=" + info.CurrentTarget);
 				
 				if (command == 0xFFFF) { break; }
 				if (command == 0xB000) { ProcessMathCommand(EventScript, info, inputParam); continue; }
@@ -902,23 +902,23 @@ package Scripting {
 						if (p0.X == 0) { //LAN
 							CONFIG::air {
 								Global.Network = new SocketHost();
-								Global.Network.Connect("", p0.Y, Main.I);
+								Global.Network.Connect("", p0.Y);
 							}
 						} else {
-							Main.I.Log("Unknown network type!");
+							Global.Out.Log("Unknown network type!");
 						} break;
 					case 0x1012: //NetConnect
 						p0.X = EventScript.readShort();
 						var s:String = GetWonkyString(EventScript);
 						p0.Y = GetNumberFromVariable(EventScript, info, inputParam);
 						
-						Main.I.Log("Hostname = " + s + ":" + p0.Y);
+						Global.Out.Log("Hostname = " + s + ":" + p0.Y);
 						
 						if(p0.X == 0) { //LAN
 							Global.Network = new SocketClient();
-							Global.Network.Connect(s, p0.Y, Main.I);
+							Global.Network.Connect(s, p0.Y);
 						} else {
-							Main.I.Log("Unknown network type!");
+							Global.Out.Log("Unknown network type!");
 						} break;
 					case 0x1013: //NetClose
 						if (Global.Network != null) {
@@ -935,7 +935,7 @@ package Scripting {
 					case 0x1015: //NetSyncVar
 						p0.X = EventScript.readUnsignedShort(); //SHOULD BE 0xBFFE
 						p0.Y = EventScript.readUnsignedShort(); //SHOULD BE < 1000
-						Main.I.Log("NETSYNCVAR: VAR=" + p0.Y + " INVOKER=" + info.Invoker);
+						Global.Out.Log("NETSYNCVAR: VAR=" + p0.Y + " INVOKER=" + info.Invoker);
 						if (p0.X == 0xBFFE && Global.Network != null) PacketFactory.N(Vector.<int>([0xB000, 0xBFFE, p0.Y, 0xBFFF, GlobalVariables.IntegerVariables[p0.Y], 0xBF01]));
 						break;
 					case 0x1017: //Param Set ADVANCED PROGRAMMING COMMAND
@@ -975,7 +975,7 @@ package Scripting {
 						break;
 					case 0x101C: //Enter matchmaking
 						Global.Network = new MatchMakingClient();
-						Global.Network.Connect(Global.MatchmakingAddress, 5000, Main.I);
+						Global.Network.Connect(Global.MatchmakingAddress, 5000);
 						break;
 					case 0x101D: //Force update sound volume
 						EffectsPlayer.UpdateVolume();
@@ -997,7 +997,7 @@ package Scripting {
 							EventScript.position -= 2;		//Rewind the script execution
 							GetWonkyString(EventScript);	//Read String
 							GetWonkyString(EventScript);	//Read String
-							Main.I.Log("SETSTRING: Critical Error!");
+							Global.Out.Log("SETSTRING: Critical Error!");
 						} else {
 							p0.X = EventScript.readShort(); //String ID
 							objName = GetWonkyString(EventScript);	//New String Value
@@ -1007,7 +1007,7 @@ package Scripting {
 						p0.D = EventScript.readShort(); //String type
 						if (p0.D != 0x2) {	//Make sure we're trying to write a variable string and not a static one
 							EventScript.position -= 2; GetWonkyString(EventScript);	//Serious error in script, Rewind Script Execution and Read String
-							Main.I.Log("NETSYNCSTRING: Critical Error!");
+							Global.Out.Log("NETSYNCSTRING: Critical Error!");
 						} else {
 							p0.X = EventScript.readShort(); //String ID
 							if (Global.Network != null) {
@@ -1058,7 +1058,7 @@ package Scripting {
 								c.RequestMove(Math.cos(angle), Math.sin(angle), move);
 							}
 						} else {
-							Main.I.Log("0x5003 WRONG TARGET! " + info.CurrentTarget + " @" + eventID);
+							Global.Out.Log("0x5003 WRONG TARGET! " + info.CurrentTarget + " @" + eventID);
 							GetNumberFromVariable(EventScript, info, inputParam); EventScript.readShort(); //Remove the two shorts
 						} break;
 					case 0x5004: //Set Faction
@@ -1073,7 +1073,7 @@ package Scripting {
 						if (info.CurrentTarget is BaseCritter && ((info.CurrentTarget as BaseCritter).Owner as BaseCritter) != null) {
 							(info.CurrentTarget as BaseCritter).CurrentTarget = ((info.CurrentTarget as BaseCritter).Owner as BaseCritter).CurrentTarget;
 						} else {
-							Main.I.Log("Uh? What target?");
+							Global.Out.Log("Uh? What target?");
 						} break;
 					case 0x5007: //Set AIType param
 						if (info.CurrentTarget is BaseCritter) {
@@ -1115,25 +1115,25 @@ package Scripting {
 					case 0x500B: //WithNearest
 						p0.X = EventScript.readUnsignedShort();
 						p0.Y = GetNumberFromVariable(EventScript, info, inputParam);
-						objects = new Vector.<IScriptTarget>();
+						vTargets = new Vector.<IScriptTarget>();
 						if (p0.Y == 0) { //Infinite range
 							if (p0.X != CRITTER && p0.X != ALLY && p0.X != ENEMY) {
-								Main.I.Log("WithNearest currently only works with 'Critter', 'Ally' and 'Enemy' types!");
+								Global.Out.Log("WithNearest currently only works with 'Critter', 'Ally' and 'Enemy' types!");
 								//TODO: Add Object and other types :)
 							} else {
-								var cv:Vector.<BaseCritter> = WorldData.CurrentMap.Critters;
+								vCritters = WorldData.CurrentMap.Critters;
 								p0.D = info.CurrentTarget.GetFaction();
-								if (p0.X == CRITTER) for (i = 0; i < cv.length; i++) { if (cv[i] == null) continue; objects.push(cv[i]); }
-								if (p0.X == ALLY) for (i = 0; i < cv.length; i++) { if (cv[i] == null) continue;if(Factions.IsFriends(p0.D, cv[i].PrimaryFaction)) objects.push(cv[i]); }
-								if (p0.X == ENEMY) for (i = 0; i < cv.length; i++) { if (cv[i] == null) continue; if (Factions.IsEnemies(p0.D, cv[i].PrimaryFaction)) objects.push(cv[i]); }
+								if (p0.X == CRITTER) for (i = 0; i < vCritters.length; i++) { if (vCritters[i] == null) continue; vTargets.push(vCritters[i]); }
+								if (p0.X == ALLY) for (i = 0; i < vCritters.length; i++) { if (vCritters[i] == null) continue;if(Factions.IsFriends(p0.D, vCritters[i].PrimaryFaction)) vTargets.push(vCritters[i]); }
+								if (p0.X == ENEMY) for (i = 0; i < vCritters.length; i++) { if (vCritters[i] == null) continue; if (Factions.IsEnemies(p0.D, vCritters[i].PrimaryFaction)) vTargets.push(vCritters[i]); }
 							}
 						} else {
-							WorldData.CurrentMap.GetObjectsInArea(Rect.GetRectFromPointWithRadius(Position, p0.Y), objects, p0.X, info.CurrentTarget);
+							WorldData.CurrentMap.GetObjectsInArea(Rect.GetRectFromPointWithRadius(Position, p0.Y), vTargets, p0.X, info.CurrentTarget);
 						}
 						
-						var target:IScriptTarget = MathsEx.GetClosestObjectInVector(Position, objects);
-						if(target != null) {
-							info.AttachTarget(target); info.CurrentTarget.UpdatePointX(Position);
+						oTarget = MathsEx.GetClosestObjectInVector(Position, vTargets);
+						if(oTarget != null) {
+							info.AttachTarget(oTarget); info.CurrentTarget.UpdatePointX(Position);
 						} else {
 							ReadUntilBalancedClose(EventScript);
 						} break;
@@ -1141,25 +1141,25 @@ package Scripting {
 						p0.X = EventScript.readUnsignedShort();
 						p1.X = EventScript.readUnsignedShort();
 						p0.Y = GetNumberFromVariable(EventScript, info, inputParam);
-						objects = new Vector.<IScriptTarget>();
+						vTargets = new Vector.<IScriptTarget>();
 						if (p0.Y == 0) { //Infinite range
 							if (p0.X != CRITTER && p0.X != ALLY && p0.X != ENEMY) {
-								Main.I.Log("WithNearestNotType currently only works with 'Critter', 'Ally' and 'Enemy' types!");
+								Global.Out.Log("WithNearestNotType currently only works with 'Critter', 'Ally' and 'Enemy' types!");
 								//TODO: Add Object and other types :)
 							} else {
-								var cv:Vector.<BaseCritter> = WorldData.CurrentMap.Critters;
+								vCritters = WorldData.CurrentMap.Critters;
 								p0.D = info.CurrentTarget.GetFaction();
-								if (p0.X == CRITTER) for (i = 0; i < cv.length; i++) { if (cv[i] == null) continue; if(!cv[i].HasFaction(p1.X)) objects.push(cv[i]); }
-								if (p0.X == ALLY) for (i = 0; i < cv.length; i++) { if (cv[i] == null) continue;if(Factions.IsFriends(p0.D, cv[i].PrimaryFaction) && !cv[i].HasFaction(p1.X)) objects.push(cv[i]); }
-								if (p0.X == ENEMY) for (i = 0; i < cv.length; i++) { if (cv[i] == null) continue; if (Factions.IsEnemies(p0.D, cv[i].PrimaryFaction) && !cv[i].HasFaction(p1.X)) objects.push(cv[i]); }
+								if (p0.X == CRITTER) for (i = 0; i < vCritters.length; i++) { if (vCritters[i] == null) continue; if(!vCritters[i].HasFaction(p1.X)) vTargets.push(vCritters[i]); }
+								if (p0.X == ALLY) for (i = 0; i < vCritters.length; i++) { if (vCritters[i] == null) continue;if(Factions.IsFriends(p0.D, vCritters[i].PrimaryFaction) && !vCritters[i].HasFaction(p1.X)) vTargets.push(vCritters[i]); }
+								if (p0.X == ENEMY) for (i = 0; i < vCritters.length; i++) { if (vCritters[i] == null) continue; if (Factions.IsEnemies(p0.D, vCritters[i].PrimaryFaction) && !vCritters[i].HasFaction(p1.X)) vTargets.push(vCritters[i]); }
 							}
 						} else {
-							WorldData.CurrentMap.GetObjectsInArea(Rect.GetRectFromPointWithRadius(Position, p0.Y), objects, p0.X, info.CurrentTarget);
+							WorldData.CurrentMap.GetObjectsInArea(Rect.GetRectFromPointWithRadius(Position, p0.Y), vTargets, p0.X, info.CurrentTarget);
 						}
 						
-						var target:IScriptTarget = MathsEx.GetClosestObjectInVector(Position, objects);
-						if(target != null) {
-							info.AttachTarget(target); info.CurrentTarget.UpdatePointX(Position);
+						oTarget = MathsEx.GetClosestObjectInVector(Position, vTargets);
+						if(oTarget != null) {
+							info.AttachTarget(oTarget); info.CurrentTarget.UpdatePointX(Position);
 						} else {
 							ReadUntilBalancedClose(EventScript);
 						} break;
@@ -1311,8 +1311,8 @@ package Scripting {
 						p0.D = GetNumberFromVariable(EventScript, info, inputParam); p0.X = GetNumberFromVariable(EventScript, info, inputParam);
 						fParam = GetNumberFromVariable(EventScript, info, inputParam);
 						if (uiL is UILayerLibrary) (uiL as UILayerLibrary).Play(fParam, false, p0.D, p0.X, true); break;
-					case 0xCFFF: //Main.I.Log // Debug Trace
-						Main.I.Log("[" + info.Invoker + "] " + StringEx.BuildFromCore(GetWonkyString(EventScript)).GetBuilt()); break;
+					case 0xCFFF: //Global.Out.Log // Debug Trace
+						Global.Out.Log("[" + info.Invoker + "] " + StringEx.BuildFromCore(GetWonkyString(EventScript)).GetBuilt()); break;
 					case 0xF001: //Up a netsync level
 						NetSync--; break;
 					default:
@@ -1324,7 +1324,7 @@ package Scripting {
 							}
 							deep--;
 						} else {
-							Main.I.Log("Unknown Command: 0x" + MathsEx.ZeroPad(command, 4, 16) + " ("+command.toString()+") Event="+eventID + " Position="+EventScript.position+" Length="+EventScript.length+" Invoker="+info.Invoker + " CurrentTarget="+info.CurrentTarget);
+							Global.Out.Log("Unknown Command: 0x" + MathsEx.ZeroPad(command, 4, 16) + " ("+command.toString()+") Event="+eventID + " Position="+EventScript.position+" Length="+EventScript.length+" Invoker="+info.Invoker + " CurrentTarget="+info.CurrentTarget);
 						}
 						
 						break;
@@ -1377,7 +1377,7 @@ package Scripting {
 			//TODO: Make this actually work properly! (more details follow)
 			//It should be able to support multiple triggers firing at the same time
 			//Some kind of stack system would be ideal.
-			Main.I.Log("Firing trigger: " + triggerID);
+			Global.Out.Log("Firing trigger: " + triggerID);
 			for (var i:int = 0; i < TriggerListeners.length; i++) {
 				TriggerListeners[i].Run(Script.OnTrigger, null, triggerID);
 			}

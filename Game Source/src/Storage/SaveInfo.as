@@ -23,7 +23,7 @@ package Storage {
 			this.key = key;
 			
 			if (key == "") {
-				Main.I.Log("Cannot have a blank key!");
+				Global.Out.Log("Cannot have a blank key!");
 			}
 		}
 		

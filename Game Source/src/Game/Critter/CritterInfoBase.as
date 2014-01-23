@@ -64,7 +64,7 @@ package Game.Critter {
 		 * @return	The critter that was created
 		 */
 		public function CreateCritter(map:MapData, x:int, y:int, isSimulated:Boolean = true, _id:int = -1):BaseCritter {
-			Main.I.Log("CritterInfoBase cannot accurately create a critter!");
+			Global.Out.Log("CritterInfoBase cannot accurately create a critter!");
 			return null;
 		}
 	}

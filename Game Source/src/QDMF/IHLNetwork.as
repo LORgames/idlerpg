@@ -1,5 +1,4 @@
 package QDMF {
-	import Debug.ILogger;
 	/**
 	 * Quick and Dirty Multiplayer Framework High-Level Network Interface
 	 * @author Paul Fox
@@ -11,7 +10,7 @@ package QDMF {
 		 * @param	Pin	The Port or PIN (for Bluetooth networking) of the remote system.
 		 * @param	Logger	The logger system for this network
 		 */
-		function Connect(Hostname:String, Pin:int, Logger:ILogger):void;
+		function Connect(Hostname:String, Pin:int):void;
 		
 		/**
 		 * Queue the network to send in bulk. Most communications should be done via this method

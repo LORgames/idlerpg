@@ -75,7 +75,7 @@ package RenderSystem {
 					}
 				} catch (e:Error) {
 					//Should be a trace rather than a log. Needs to be culled in release because its really really expensive when this screws up.
-					Main.I.Log("DIRTY Object NULL CAUGHT Obj="+obj);
+					Global.Out.Log("DIRTY Object NULL CAUGHT Obj="+obj);
 				}
 			}
 			
@@ -157,7 +157,7 @@ package RenderSystem {
 			if (i > -1) {
 				AnimatedObjects.splice(i, 1);
 			} else {
-				Main.I.Log(animation + " is not in the queue");
+				Global.Out.Log(animation + " is not in the queue");
 			}
 		}
 		
