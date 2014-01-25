@@ -20,7 +20,7 @@ package Debug {
 		
 		public function Log(message:String):void {
 			if (debugSock != null) {
-				//debugSock.Trace(message);
+				debugSock.Message(message);
 			}
 			
 			trace(message);

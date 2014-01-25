@@ -32,7 +32,6 @@ package {
 		public static var I:Main;
 		
 		public static var OrderedLayer:Sprite = new Sprite();
-		public static var Input:IInputSystem;
 		public var hud:UIManager;
 		
 		//Some other important things

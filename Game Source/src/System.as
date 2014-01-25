@@ -73,13 +73,12 @@ package {
 			WorldData.Initialize(Global.DefaultMap);
 			
 			//Need more logic to adding input system?
-			if (Multitouch.supportsTouchEvents && Multitouch.maxTouchPoints > 1) {
-				// touch or gesture?
-				Main.Input = new TouchInput();
-			} else {
-				Main.Input = new MouseInput();
-				//Main.Input = new KeyboardInput();
+			if (Multitouch.supportsTouchEvents) {
+				new TouchInput();
 			}
+			
+			new MouseInput();
+			new KeyboardInput();
 			
 			new EquipmentManager();
 			new CritterManager();

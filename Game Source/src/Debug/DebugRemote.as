@@ -56,5 +56,9 @@ package Debug {
 		public function Close():void {
 			Client.close();
 		}
+		
+		public function Message(str:String):void {
+			Client.writeUTF(str);
+		}
 	}
 }

@@ -26,7 +26,9 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.outputBox = new System.Windows.Forms.ListBox();
             this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -42,6 +44,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.outputBox);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -60,6 +63,15 @@
             this.tabPage2.Text = "Globals";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // outputBox
+            // 
+            this.outputBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.outputBox.FormattingEnabled = true;
+            this.outputBox.Location = new System.Drawing.Point(3, 3);
+            this.outputBox.Name = "outputBox";
+            this.outputBox.Size = new System.Drawing.Size(462, 430);
+            this.outputBox.TabIndex = 0;
+            // 
             // Debugger
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -69,6 +81,7 @@
             this.Name = "Debugger";
             this.Text = "Debugger";
             this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -78,5 +91,6 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.ListBox outputBox;
     }
 }
