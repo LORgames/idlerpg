@@ -1,5 +1,5 @@
 ﻿namespace CityTools.Components {
-    partial class Debugger {
+    partial class DebugDialog {
         /// <summary>
         /// Required designer variable.
         /// </summary>

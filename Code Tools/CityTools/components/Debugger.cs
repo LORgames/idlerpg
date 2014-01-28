@@ -10,14 +10,14 @@ using System.Net;
 using System.Net.Sockets;
 
 namespace CityTools.Components {
-    public partial class Debugger : Form {
+    public partial class DebugDialog : Form {
         private Socket m_Listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        private Socket s;
 
-
-        public Debugger() {
+        public DebugDialog() {
             InitializeComponent();
 
-            m_Listener.Bind(new IPEndPoint(IPAddress.Loopback, 8888));
+            m_Listener.Bind(new IPEndPoint(IPAddress.Loopback, 12685));
             m_Listener.Listen(16);
             m_Listener.BeginAccept(AcceptCallback, null);
         }
@@ -27,9 +27,12 @@ namespace CityTools.Components {
         }
 
         private void AcceptCallback(IAsyncResult ar) {
-            Socket s = m_Listener.EndAccept(ar);
+            s = m_Listener.EndAccept(ar);
             m_Listener.Close();
-            /* Use s here. */
+        }
+
+        private void HandleComms(object sock) {
+
         }
     }
 }

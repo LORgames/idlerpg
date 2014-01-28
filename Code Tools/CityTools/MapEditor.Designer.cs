@@ -35,6 +35,8 @@
             this.mapViewPanel = new System.Windows.Forms.PictureBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnGlobalSettingsEditor = new System.Windows.Forms.ToolStripButton();
+            this.btnOpenAdvanced = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.cbMapPieces = new System.Windows.Forms.ToolStripComboBox();
             this.btnNewPiece = new System.Windows.Forms.ToolStripButton();
             this.btnDeletePiece = new System.Windows.Forms.ToolStripButton();
@@ -57,7 +59,6 @@
             this.btnUIEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.btnWorldEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.btnBuffEditor = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnOpenAdvanced = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnExport = new System.Windows.Forms.ToolStripSplitButton();
             this.ckbExportDebugRender = new System.Windows.Forms.ToolStripMenuItem();
@@ -151,7 +152,7 @@
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.timerRedrawAll = new System.Windows.Forms.Timer(this.components);
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnDebugWithoutLaunch = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.main_splitter)).BeginInit();
             this.main_splitter.Panel1.SuspendLayout();
             this.main_splitter.Panel2.SuspendLayout();
@@ -252,6 +253,21 @@
             this.btnGlobalSettingsEditor.Name = "btnGlobalSettingsEditor";
             this.btnGlobalSettingsEditor.Size = new System.Drawing.Size(23, 22);
             this.btnGlobalSettingsEditor.Text = "Settings (G)";
+            // 
+            // btnOpenAdvanced
+            // 
+            this.btnOpenAdvanced.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnOpenAdvanced.Image = global::CityTools.Properties.Resources.text_list_numbers;
+            this.btnOpenAdvanced.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOpenAdvanced.Name = "btnOpenAdvanced";
+            this.btnOpenAdvanced.Size = new System.Drawing.Size(23, 22);
+            this.btnOpenAdvanced.Text = "Advanced Data Panel";
+            this.btnOpenAdvanced.Click += new System.EventHandler(this.btnOpenAdvanced_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
             // 
             // cbMapPieces
             // 
@@ -432,16 +448,6 @@
             this.btnBuffEditor.Size = new System.Drawing.Size(216, 22);
             this.btnBuffEditor.Text = "Buff Editor (B)";
             // 
-            // btnOpenAdvanced
-            // 
-            this.btnOpenAdvanced.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnOpenAdvanced.Image = global::CityTools.Properties.Resources.text_list_numbers;
-            this.btnOpenAdvanced.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOpenAdvanced.Name = "btnOpenAdvanced";
-            this.btnOpenAdvanced.Size = new System.Drawing.Size(23, 22);
-            this.btnOpenAdvanced.Text = "Advanced Data Panel";
-            this.btnOpenAdvanced.Click += new System.EventHandler(this.btnOpenAdvanced_Click);
-            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
@@ -453,7 +459,8 @@
             this.ckbExportDebugRender,
             this.ckbExportShowFPS,
             this.ckbExportMusicEnabled,
-            this.cbExportSave});
+            this.cbExportSave,
+            this.btnDebugWithoutLaunch});
             this.btnExport.Image = global::CityTools.Properties.Resources.bug;
             this.btnExport.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnExport.Name = "btnExport";
@@ -1435,10 +1442,11 @@
             this.colorDialog.FullOpen = true;
             this.colorDialog.SolidColorOnly = true;
             // 
-            // toolStripSeparator5
+            // btnDebugWithoutLaunch
             // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+            this.btnDebugWithoutLaunch.Name = "btnDebugWithoutLaunch";
+            this.btnDebugWithoutLaunch.Size = new System.Drawing.Size(181, 22);
+            this.btnDebugWithoutLaunch.Text = "Debug (No Launch)";
             // 
             // MainWindow
             // 
@@ -1606,6 +1614,7 @@
         internal System.Windows.Forms.ToolStripMenuItem btnBuffEditor;
         private System.Windows.Forms.ToolStripButton btnOpenAdvanced;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        internal System.Windows.Forms.ToolStripMenuItem btnDebugWithoutLaunch;
     }
 }
 

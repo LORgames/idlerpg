@@ -37,7 +37,21 @@ package Debug {
 		
 		public function Connect():void {
 			if (debugSock == null) {
+				trace("Debug connection requested");
 				debugSock = new DebugRemote();
+			} else {
+				Disconnect();
+			}
+		}
+		
+		public function Disconnect():void {
+			if (debugSock != null) {
+				if (debugSock.Client == null) {
+					debugSock = null;
+				} else {
+					trace("Debug disconnection requested");
+					debugSock.Close();
+				}
 			}
 		}
 	}

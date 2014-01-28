@@ -31,6 +31,7 @@ namespace CityTools.CacheInterfaces {
             MainWindow.instance.btnGlobalSettingsEditor.Click += new EventHandler(btnGlobalSettingsEditor_Click);
             MainWindow.instance.btnFactionEditor.Click += new EventHandler(btnFactionEditor_Click);
             MainWindow.instance.btnBuffEditor.Click += new EventHandler(btnBuffEditor_Click);
+            MainWindow.instance.btnDebugWithoutLaunch.Click += new EventHandler(btnDebugWithoutLaunch_Click);
         }
 
         public static bool ProcessKeys(Keys keyData) {
@@ -220,6 +221,10 @@ namespace CityTools.CacheInterfaces {
             }
         }
 
+        private static void btnDebug(bool debug, bool runGame) {
+            
+        }
+
         private static void btnTileEditorTool_Click(object sender, EventArgs e) {
             OpenTileEditor();
         }
@@ -286,6 +291,10 @@ namespace CityTools.CacheInterfaces {
 
         static void btnBuffEditor_Click(object sender, EventArgs e) {
             OpenBuffEditor();
+        }
+
+        static void btnDebugWithoutLaunch_Click(object sender, EventArgs e) {
+            
         }
     }
 }

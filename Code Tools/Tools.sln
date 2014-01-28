@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolToGameExporter", "ToolT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolCache", "ToolCache\ToolCache.csproj", "{A685AA27-BC93-44F9-9A10-8196B32DADB0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EngineDebugger", "EngineDebugger\EngineDebugger.csproj", "{2E708306-243F-48C5-8622-ECEF524B4A64}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,16 @@ Global
 		{A685AA27-BC93-44F9-9A10-8196B32DADB0}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{A685AA27-BC93-44F9-9A10-8196B32DADB0}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{A685AA27-BC93-44F9-9A10-8196B32DADB0}.Release|x86.ActiveCfg = Release|Any CPU
+		{2E708306-243F-48C5-8622-ECEF524B4A64}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{2E708306-243F-48C5-8622-ECEF524B4A64}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{2E708306-243F-48C5-8622-ECEF524B4A64}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{2E708306-243F-48C5-8622-ECEF524B4A64}.Debug|x86.ActiveCfg = Debug|x86
+		{2E708306-243F-48C5-8622-ECEF524B4A64}.Debug|x86.Build.0 = Debug|x86
+		{2E708306-243F-48C5-8622-ECEF524B4A64}.Release|Any CPU.ActiveCfg = Release|x86
+		{2E708306-243F-48C5-8622-ECEF524B4A64}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{2E708306-243F-48C5-8622-ECEF524B4A64}.Release|Mixed Platforms.Build.0 = Release|x86
+		{2E708306-243F-48C5-8622-ECEF524B4A64}.Release|x86.ActiveCfg = Release|x86
+		{2E708306-243F-48C5-8622-ECEF524B4A64}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

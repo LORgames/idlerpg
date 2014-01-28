@@ -9,15 +9,23 @@ package Game.Tweening {
 		private static var _ActiveTweens:Vector.<Tween> = new Vector.<Tween>();
 		
 		public static function StartTweenBetween(obj:Object, param:String, startValue:int, endValue:int, time:Number):void {
-			var temp:Tween = GetInactiveTween();
-			temp.Assign(obj, param, startValue, endValue, time);
-			_ActiveTweens.push(temp);
+			try {
+				var temp:Tween = GetInactiveTween();
+				temp.Assign(obj, param, startValue, endValue, time);
+				_ActiveTweens.push(temp);
+			} catch (ex:Error) {
+				Global.Out.Log(ex.message);
+			}
 		}
 		
 		public static function StartTweenTo(obj:Object, param:String, endValue:int, time:Number):void {
-			var temp:Tween = GetInactiveTween();
-			temp.Assign(obj, param, obj[param], endValue, time);
-			_ActiveTweens.push(temp);
+			try {
+				var temp:Tween = GetInactiveTween();
+				temp.Assign(obj, param, obj[param], endValue, time);
+				_ActiveTweens.push(temp);
+			} catch (ex:Error) {
+				Global.Out.Log(ex.message);
+			}
 		}
 		
 		public static function Update(dt:Number):void {

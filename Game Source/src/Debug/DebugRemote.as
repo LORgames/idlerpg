@@ -6,13 +6,14 @@ package Debug {
 	import flash.net.Socket;
 	import flash.system.Security;
 	import flash.utils.ByteArray;
+	import Scripting.GlobalVariables;
 	import Scripting.Script;
 	/**
 	 * ...
 	 * @author Paul
 	 */
 	public class DebugRemote {
-		private var Client:Socket;
+		internal var Client:Socket;
 		
 		public function DebugRemote() {
 			Client = new Socket();
@@ -35,6 +36,8 @@ package Debug {
 			Client.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, SecurityErrorHandler);
 			Client.removeEventListener(ProgressEvent.SOCKET_DATA, SocketDataHandler);
 			Client = null;
+			
+			Global.Out.Disconnect();
 		}
 		
 		private function ConnectHandler(event:Event):void {
@@ -43,22 +46,78 @@ package Debug {
 		
 		private function IOErrorHandler(event:IOErrorEvent):void {
 			Global.Out.Log("RemoteDebugger An unexpected IO Error occured!");
+			Client = null;
+			Global.Out.Disconnect();
 		}
 		
 		private function SecurityErrorHandler(event:SecurityErrorEvent):void {
 			Global.Out.Log("RemoteDebugger A Security issue has been detected!");
+			Client = null;
+			Global.Out.Disconnect();
 		}
 		
 		private function SocketDataHandler(event:ProgressEvent):void {
-			//TODO: This shouldn't happen
+			var expectedLength:int = 0;
+			
+			var p:ByteArray;
+			
+			while(Client.bytesAvailable > 0) {
+				if (Client.bytesAvailable > 1) {
+					expectedLength = Client.readInt();
+					
+					if (Client.bytesAvailable >= expectedLength) {
+						p = new ByteArray();
+						Client.readBytes(p, 0, expectedLength);
+					} else {
+						throw new Error("Cannot read " + expectedLength + "bytes when only " + Client.bytesAvailable + "bytes are available. Silly Networking!");
+					}
+				}
+				
+				if(p != null) {
+					var type:int = p.readShort();
+					Global.Out.Log("RECV MESSAGE: " + type);
+					
+					switch(type) {
+						case 0: //keep alive
+							break;
+						case 2: //Send variables
+							var varBytes:ByteArray = new ByteArray();
+							varBytes.writeInt(2);
+							varBytes.writeInt(GlobalVariables.IntegerVariables.length);
+							for (var i:int = 0; i < GlobalVariables.IntegerVariables.length; i++) {
+								varBytes.writeInt(GlobalVariables.IntegerVariables[i]);
+							}
+							varBytes.writeInt(GlobalVariables.StringVariables.length);
+							for (var i:int = 0; i < GlobalVariables.StringVariables.length; i++) {
+								varBytes.writeUTF(GlobalVariables.StringVariables[i]);
+							}
+							varBytes.position = 0;
+							Client.writeInt(varBytes.length);
+							Client.writeBytes(varBytes);
+							Client.flush();
+							break;
+						default:
+							Global.Out.Log("Unknown request: " + type);
+					}
+				}
+				
+				p = null;
+			}
 		}
 		
 		public function Close():void {
-			Client.close();
+			if(Client) Client.close();
 		}
 		
 		public function Message(str:String):void {
-			Client.writeUTF(str);
+			var b:ByteArray = new ByteArray();
+			b.writeUTF(str);
+			b.position = 0;
+			
+			Client.writeInt(b.length+2); //String bytes + 2 for the header
+			Client.writeShort(1); //Message ID
+			Client.writeBytes(b);
+			Client.flush();
 		}
 	}
 }

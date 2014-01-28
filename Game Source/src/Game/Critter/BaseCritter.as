@@ -595,7 +595,7 @@ package Game.Critter {
 			}
 			
 			if (isPercent) {
-				CurrentHP -= CurrentHP * (amount / 100);
+				CurrentHP -= MaximumHP * (amount / 100);
 			} else if(amount < 0) { //HEAL!
 				//Flat damage
 				CurrentHP -= amount;
