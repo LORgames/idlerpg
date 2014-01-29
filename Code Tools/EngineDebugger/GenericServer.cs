@@ -23,8 +23,9 @@ namespace EngineDebugger {
 
         private static bool SHUTDOWN_REQUIRED = false;
 
-        public NetworkStream clientStream;
+        private NetworkStream _clientStream;
         private DebugForm form;
+        public bool isConnected = false;
 
         public GenericServer(int portNumber, DebugForm _form) {
             this.form = _form;
@@ -39,17 +40,34 @@ namespace EngineDebugger {
             this.listenThread.Start();
         }
 
-        public void SendMessage(NetworkMessage message) {
-            if (clientStream == null) return;
+        public void SendMessage(NetworkMessage message, NetworkStream _client = null, int failAttempts = 5) {
+            if (_client == null && _clientStream == null) return;
+            if (_client == null && _clientStream != null) _client = _clientStream;
 
             try {
-                lock (clientStream) {
-                    if (clientStream.CanWrite) {
-                        byte[] outBytes;
-                        int length;
-                        message.Encode(out outBytes, out length);
+                int totalAttempts = 0;
+                while (true) {
+                    if (_client == null) return;
+                    totalAttempts++;
 
-                        clientStream.Write(outBytes, 0, length);
+                    if (Monitor.TryEnter(semaphore_client, 500)) {
+                        try {
+                            if (_client.CanWrite) {
+                                byte[] outBytes;
+                                int length;
+                                message.Encode(out outBytes, out length);
+
+                                _client.Write(outBytes, 0, length);
+                            }
+                        } finally {
+                            Monitor.Exit(semaphore_client);
+                        }
+
+                        break;
+                    }
+
+                    if (failAttempts > 0 && totalAttempts > failAttempts) {
+                        break;
                     }
                 }
             } catch (Exception ex) {
@@ -96,11 +114,11 @@ namespace EngineDebugger {
                         clientThread.Name = "GenericServer_ClientThread";
                         clientThread.Start(client);
 
+                        Logger.Log(form, "[DEBUGGER] A client connected");
+
                         lock (semaphore_counter) {
                             threadCounter++;
                         }
-
-                        break;
                     }
                 }
 
@@ -115,13 +133,15 @@ namespace EngineDebugger {
 
         private void HandleClientComm(object client) {
             TcpClient tcpClient = (TcpClient)client;
-            clientStream = tcpClient.GetStream();
+            NetworkStream _client = tcpClient.GetStream();
             byte[] messageSize = new byte[4];
 
             int bytesRead;
 
             int errors = 0;
             int timeout_ticks = 0;
+
+            byte[] polRequestHeader = new byte[] { 60, 112, 111, 108 };
 
             while (errors == 0) {
                 if (SHUTDOWN_REQUIRED) {
@@ -132,8 +152,8 @@ namespace EngineDebugger {
 
                 bool hasReading;
 
-                lock (clientStream) {
-                    hasReading = clientStream.DataAvailable;
+                lock (semaphore_client) {
+                    hasReading = _client.DataAvailable;
                 }
 
                 //Nothing to read, so just continue
@@ -158,11 +178,26 @@ namespace EngineDebugger {
                 //Since there is data there, we can reset the timer. :)
                 timeout_ticks = 0;
 
-                lock (clientStream) {
-                    while (clientStream.DataAvailable) {
+                lock (semaphore_client) {
+                    while (_client.DataAvailable) {
                         try {
                             //blocks until a client sends a message
-                            bytesRead = clientStream.Read(messageSize, 0, 4);
+                            bytesRead = _client.Read(messageSize, 0, 4);
+
+                            if (messageSize[0] == polRequestHeader[0] && messageSize[1] == polRequestHeader[1] && messageSize[2] == polRequestHeader[2] && messageSize[3] == polRequestHeader[3]) {
+                                Byte[] encoded = Encoding.UTF8.GetBytes("<?xml version=\"1.0\"?>\n<!DOCTYPE cross-domain-policy SYSTEM \"/xml/dtds/cross-domain-policy.dtd\"><cross-domain-policy><site-control permitted-cross-domain-policies=\"master-only\"/>\n<allow-access-from domain=\"lorgames.com\" to-ports=\"12685\" />\n</cross-domain-policy>");
+                                _client.Write(encoded, 0, encoded.Length);
+                                _client.Flush();
+                                errors++;
+                                break;
+                                Logger.Log(form, "Policy requested. Reply sent.");
+                            } else {
+                                if (_clientStream == null && !isConnected) {
+                                    Logger.Log(form, "A client connected.");
+                                    _clientStream = _client;
+                                    isConnected = true;
+                                }
+                            }
                         } catch {
                             //a socket error has occured
                             errors++;
@@ -182,7 +217,7 @@ namespace EngineDebugger {
 
                         try {
                             while (bytesRead < length) {
-                                bytesRead += clientStream.Read(thisMessage, bytesRead, length-bytesRead);
+                                bytesRead += _client.Read(thisMessage, bytesRead, length - bytesRead);
                             }
                         } catch {
                             //a socket error has occured
@@ -196,22 +231,26 @@ namespace EngineDebugger {
                         }
 
                         NetworkMessage nm = new NetworkMessage(thisMessage);
-                        nm.sockPTR = clientStream;
+                        nm.sockPTR = _client;
 
                         if (nm.Type == MSG.CLOSE) {
                             nm.Dispose();
                             Logger.Log(form, "A client has disconnected. Socket was closed via protocol.");
                             break;
                         } else if (nm.Type != MSG.KEEP_ALIVE) {
-                            NetworkLogic.ProcessMessage(nm, form);
+                            if(Monitor.TryEnter(semaphore_counter)) {
+                                NetworkLogic.ProcessMessage(nm, form);
+                                Monitor.Exit(semaphore_counter);
+                            }
                         }
                     }
                 }
             }
 
-            clientStream.Close();
+            _client.Close();
             tcpClient.Close();
-            clientStream = null;
+            _client = null;
+            isConnected = false;
 
             lock (semaphore_counter) {
                 threadCounter--;

@@ -6,12 +6,13 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace EngineDebugger {
     public partial class DebugForm : Form {
         delegate void SetTextCallback(string text);
 
-        GenericServer gs;
+        internal GenericServer gs;
 
         public DebugForm() {
             InitializeComponent();
@@ -19,8 +20,15 @@ namespace EngineDebugger {
             gs = new GenericServer(12685, this);
 
             this.FormClosed += new FormClosedEventHandler(DebugForm_FormClosed);
+            this.FormClosing += new FormClosingEventHandler(DebugForm_FormClosing);
 
             VariableDebugHelper.BuildForm(this);
+        }
+
+        void DebugForm_FormClosing(object sender, FormClosingEventArgs e) {
+            //e.Cancel = true;
+            tmrUpdateTicker.Stop();
+            //Logger.Log(this, "Cannot close before network is finished.");
         }
 
         void DebugForm_FormClosed(object sender, FormClosedEventArgs e) {
@@ -37,11 +45,9 @@ namespace EngineDebugger {
         }
 
         private void tmrUpdateTicker_Tick(object sender, EventArgs e) {
-            if (tabControl1.SelectedTab == tabPage1) { //Do nothing
-
-            } else if (tabControl1.SelectedTab == tabPage2) { //Update variables
-                RequestVariables();
-            }
+            Thread clientThread = new Thread(new ThreadStart(RequestVariables));
+            clientThread.Name = "DebugForm_VariableRequestThread";
+            clientThread.Start();
         }
 
         private void RequestVariables() {

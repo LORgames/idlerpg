@@ -77,7 +77,7 @@ package Game.Critter {
 				Animation.ChangeDirection(direction);
 			}
 			
-			if (_m != isMoving) {
+			if (_m != isMoving && MyScript != null) {
 				if (isMoving) {
 					MyScript.Run(Script.StartMoving);
 				} else {

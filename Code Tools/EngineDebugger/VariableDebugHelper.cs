@@ -8,8 +8,19 @@ using System.Windows.Forms;
 
 namespace EngineDebugger {
     public class VariableDebugHelper {
-        public static List<int> IntVarValues;
-        public static List<String> StrVarValues;
+        public static List<int> IntVarValues = new List<int>();
+        public static List<String> StrVarValues = new List<string>();
+        private static List<ListViewItem> lvis = new List<ListViewItem>();
+
+        private delegate void UpdateLVISubItem(DebugForm form, ListViewItem lvi, int itemIndex, string newText);
+        private static void ULSI(DebugForm form, ListViewItem lvi, int index, string txt) {
+            if (form.InvokeRequired) {
+                UpdateLVISubItem ulsii = new UpdateLVISubItem(ULSI);
+                form.Invoke(ulsii, new object[] { form, lvi, index, txt });
+            } else {
+                lvi.SubItems[index].Text = txt;
+            }
+        }
 
         public static void BuildForm(DebugForm form) {
             foreach (KeyValuePair<String, ScriptVariable> kvp in Variables.GlobalVariables) {
@@ -20,6 +31,7 @@ namespace EngineDebugger {
                 lvi.SubItems.Add(kvp.Value.InitialValue.ToString());
                 lvi.Tag = kvp.Value;
                 form.lstVariables.Items.Add(lvi);
+                lvis.Add(lvi);
             }
 
             foreach (KeyValuePair<String, StringVariable> kvp in Variables.StringVariables) {
@@ -34,11 +46,15 @@ namespace EngineDebugger {
         }
 
         public static void RebuildForm(DebugForm form) {
-            foreach (ListViewItem lvi in form.lstVariables.Items) {
+            foreach (ListViewItem lvi in lvis) {
                 if (lvi.Tag is ScriptVariable) {
-                    lvi.SubItems[4].Text = IntVarValues[(lvi.Tag as ScriptVariable).Index].ToString();
+                    if ((lvi.Tag as ScriptVariable).Index < IntVarValues.Count) {
+                        ULSI(form, lvi, 4, IntVarValues[(lvi.Tag as ScriptVariable).Index].ToString());
+                    }
                 } else if (lvi.Tag is StringVariable) {
-                    lvi.SubItems[4].Text = StrVarValues[(lvi.Tag as StringVariable).Index];
+                    if (StrVarValues.Count > (lvi.Tag as StringVariable).Index) {
+                        ULSI(form, lvi, 4, StrVarValues[(lvi.Tag as ScriptVariable).Index].ToString());
+                    }
                 }
             }
         }

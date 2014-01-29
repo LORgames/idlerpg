@@ -80,6 +80,7 @@ package QDMF.Connectors {
 		
 		private function ConnectHandler(event:Event):void {
 			Global.Out.Log("MatchMaking: Connected to server.");
+			Syncronizer.Reset();
 			
 			Client.writeByte("P".charCodeAt(0));
 			Client.writeByte("L".charCodeAt(0));
@@ -123,7 +124,6 @@ package QDMF.Connectors {
 		public function Flush():void {
 			if (Client != null && nextFlush.length > 0) {
 				try {
-					Global.Out.Log("Sending " + nextFlush.length + " bytes. [BUFFERED]");
 					Client.writeBytes(nextFlush);
 					Client.flush();
 					nextFlush.clear();

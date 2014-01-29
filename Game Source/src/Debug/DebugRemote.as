@@ -58,7 +58,7 @@ package Debug {
 		
 		private function SocketDataHandler(event:ProgressEvent):void {
 			var expectedLength:int = 0;
-			
+			var i:int;
 			var p:ByteArray;
 			
 			while(Client.bytesAvailable > 0) {
@@ -75,22 +75,21 @@ package Debug {
 				
 				if(p != null) {
 					var type:int = p.readShort();
-					Global.Out.Log("RECV MESSAGE: " + type);
-					
 					switch(type) {
 						case 0: //keep alive
 							break;
 						case 2: //Send variables
 							var varBytes:ByteArray = new ByteArray();
-							varBytes.writeInt(2);
+							varBytes.writeShort(2);
+							
+							//Write Integers
 							varBytes.writeInt(GlobalVariables.IntegerVariables.length);
-							for (var i:int = 0; i < GlobalVariables.IntegerVariables.length; i++) {
-								varBytes.writeInt(GlobalVariables.IntegerVariables[i]);
-							}
+							for (i = 0; i < GlobalVariables.IntegerVariables.length; i++) { varBytes.writeInt(GlobalVariables.IntegerVariables[i]); }
+							
+							//Write Strings
 							varBytes.writeInt(GlobalVariables.StringVariables.length);
-							for (var i:int = 0; i < GlobalVariables.StringVariables.length; i++) {
-								varBytes.writeUTF(GlobalVariables.StringVariables[i]);
-							}
+							for (i = 0; i < GlobalVariables.StringVariables.length; i++) { varBytes.writeUTF(GlobalVariables.StringVariables[i]); }
+							
 							varBytes.position = 0;
 							Client.writeInt(varBytes.length);
 							Client.writeBytes(varBytes);

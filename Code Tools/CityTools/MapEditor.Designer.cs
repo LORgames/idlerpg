@@ -65,6 +65,7 @@
             this.ckbExportShowFPS = new System.Windows.Forms.ToolStripMenuItem();
             this.ckbExportMusicEnabled = new System.Windows.Forms.ToolStripMenuItem();
             this.cbExportSave = new System.Windows.Forms.ToolStripComboBox();
+            this.btnDebugWithoutLaunch = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.btnViewMenu = new System.Windows.Forms.ToolStripDropDownButton();
             this.mnuShowGrids = new System.Windows.Forms.ToolStripMenuItem();
@@ -77,6 +78,9 @@
             this.txtViewportHeight = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.lblHighlightedCell = new System.Windows.Forms.ToolStripLabel();
+            this.timerRefresh = new System.Windows.Forms.Timer(this.components);
+            this.timerRedrawAll = new System.Windows.Forms.Timer(this.components);
+            this.colorDialog = new System.Windows.Forms.ColorDialog();
             this.toolpanel_splitter = new System.Windows.Forms.SplitContainer();
             this.tabFirstLevel = new System.Windows.Forms.TabControl();
             this.tabOptions = new System.Windows.Forms.TabPage();
@@ -149,10 +153,6 @@
             this.listPortals = new System.Windows.Forms.ListBox();
             this.tabMapScript = new System.Windows.Forms.TabPage();
             this.scriptMap = new CityTools.Components.ScriptBox();
-            this.timerRefresh = new System.Windows.Forms.Timer(this.components);
-            this.timerRedrawAll = new System.Windows.Forms.Timer(this.components);
-            this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.btnDebugWithoutLaunch = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.main_splitter)).BeginInit();
             this.main_splitter.Panel1.SuspendLayout();
             this.main_splitter.Panel2.SuspendLayout();
@@ -502,6 +502,12 @@
             this.cbExportSave.Name = "cbExportSave";
             this.cbExportSave.Size = new System.Drawing.Size(121, 23);
             // 
+            // btnDebugWithoutLaunch
+            // 
+            this.btnDebugWithoutLaunch.Name = "btnDebugWithoutLaunch";
+            this.btnDebugWithoutLaunch.Size = new System.Drawing.Size(181, 22);
+            this.btnDebugWithoutLaunch.Text = "Debug (No Launch)";
+            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
@@ -593,6 +599,21 @@
             this.lblHighlightedCell.Name = "lblHighlightedCell";
             this.lblHighlightedCell.Size = new System.Drawing.Size(27, 22);
             this.lblHighlightedCell.Text = "Cell";
+            // 
+            // timerRefresh
+            // 
+            this.timerRefresh.Interval = 50;
+            this.timerRefresh.Tick += new System.EventHandler(this.timerRefresh_Tick);
+            // 
+            // timerRedrawAll
+            // 
+            this.timerRedrawAll.Tick += new System.EventHandler(this.timerRedraw_Tick);
+            // 
+            // colorDialog
+            // 
+            this.colorDialog.AnyColor = true;
+            this.colorDialog.FullOpen = true;
+            this.colorDialog.SolidColorOnly = true;
             // 
             // toolpanel_splitter
             // 
@@ -987,6 +1008,7 @@
             this.scriptScriptRegion.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.scriptScriptRegion.ShowAdvancedButton = false;
             this.scriptScriptRegion.Location = new System.Drawing.Point(3, 587);
             this.scriptScriptRegion.Name = "scriptScriptRegion";
             this.scriptScriptRegion.Script = "";
@@ -1419,6 +1441,7 @@
             // scriptMap
             // 
             this.scriptMap.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scriptMap.ShowAdvancedButton = true;
             this.scriptMap.Location = new System.Drawing.Point(3, 3);
             this.scriptMap.Name = "scriptMap";
             this.scriptMap.Script = "";
@@ -1426,27 +1449,6 @@
             this.scriptMap.Size = new System.Drawing.Size(302, 779);
             this.scriptMap.TabIndex = 0;
             this.scriptMap.BeforeParse += new System.EventHandler<CityTools.Components.ScriptInfoArgs>(this.scriptMap_BeforeParse);
-            // 
-            // timerRefresh
-            // 
-            this.timerRefresh.Interval = 50;
-            this.timerRefresh.Tick += new System.EventHandler(this.timerRefresh_Tick);
-            // 
-            // timerRedrawAll
-            // 
-            this.timerRedrawAll.Tick += new System.EventHandler(this.timerRedraw_Tick);
-            // 
-            // colorDialog
-            // 
-            this.colorDialog.AnyColor = true;
-            this.colorDialog.FullOpen = true;
-            this.colorDialog.SolidColorOnly = true;
-            // 
-            // btnDebugWithoutLaunch
-            // 
-            this.btnDebugWithoutLaunch.Name = "btnDebugWithoutLaunch";
-            this.btnDebugWithoutLaunch.Size = new System.Drawing.Size(181, 22);
-            this.btnDebugWithoutLaunch.Text = "Debug (No Launch)";
             // 
             // MainWindow
             // 

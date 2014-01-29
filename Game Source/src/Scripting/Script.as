@@ -924,6 +924,7 @@ package Scripting {
 						if (Global.Network != null) {
 							Global.Network.Close();
 							Global.Network = null;
+							Syncronizer.Reset();
 						} break;
 					case 0x1014: //Spawn Enabled
 						p0.X = EventScript.readShort();

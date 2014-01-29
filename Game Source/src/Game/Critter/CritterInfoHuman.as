@@ -31,9 +31,8 @@ package Game.Critter {
 		
 		override public function CreateCritter(map:MapData, x:int, y:int, isSimulated:Boolean = true, _id:int = -1):BaseCritter {
 			var ID:int = _id;
-			if (ID == -1) {
-				map.GetCritterID(isSimulated);
-			}
+			if (ID == -1) { map.GetCritterID(isSimulated); }
+			if (ID == -1) { Global.Out.Log("Critter Overflow! Cannot create a new CritterHuman!"); return null; }
 			
 			var p:CritterHuman = new CritterHuman(x, y, ID, this);
 			

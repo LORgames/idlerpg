@@ -47,13 +47,20 @@ package QDMF.Logic {
 				PlayerReady[1] = true;
 			}
 			
-			isComplete = PlayerReady[0] && (Global.Network?PlayerReady[1]:true);
+			if (Global.Network) {
+				isComplete = PlayerReady[0] && PlayerReady[1];
+			} else {
+				isComplete = true;
+			}
 		}
 		
 		public function ResetReady():void {
 			isComplete = false;
 			PlayerReady[0] = false;
 			PlayerReady[1] = false;
+			
+			while(PlayerTurns_1.length > 0) { PlayerTurns_1.pop(); }
+			while(PlayerTurns_2.length > 0) { PlayerTurns_2.pop(); }
 		}
 	}
 }

@@ -72,9 +72,8 @@ package Game.Critter
 		override public function CreateCritter(map:MapData, x:int, y:int, isSimulated:Boolean = true, _id:int = -1):BaseCritter {
 			var ID:int = _id;
 			
-			if (ID == -1) {
-				ID = map.GetCritterID(isSimulated);
-			}
+			if (ID == -1) { ID = map.GetCritterID(isSimulated); }
+			if (ID == -1) { Global.Out.Log("Critter Overflow!"); return null; }
 			
 			var p:CritterBeast = new CritterBeast(this, map, x, y, ID);
 			p.Update(0);

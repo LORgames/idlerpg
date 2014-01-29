@@ -35,11 +35,15 @@ namespace CityTools.Components {
         //Would much rather if text wasn't used, for now it just calls the Script things
         public override string Text { get { return Script; } set { Script = value; } }
 
+        //Script type, a lot less useful at the moment then it used to be
         private ScriptTypes _type = ScriptTypes.Unknown;
         public ScriptTypes ScriptType {
             get { return _type; }
             set { _type = value; }
         }
+
+        //Hide Advanced script button
+        public bool ShowAdvancedButton { get { return btnGlobalVariables.Visible; } set { btnGlobalVariables.Visible = value; } }
 
         public ScriptBox() {
             InitializeComponent();

@@ -97,12 +97,6 @@
     <Compile Include="Components\DatabaseEditing\IntegerVariableEditor.Designer.cs">
       <DependentUpon>IntegerVariableEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Debugger.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Debugger.Designer.cs">
-      <DependentUpon>Debugger.cs</DependentUpon>
-    </Compile>
     <Compile Include="Components\FindAndReplaceDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -302,9 +296,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Components\DatabaseEditing\IntegerVariableEditor.resx">
       <DependentUpon>IntegerVariableEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Debugger.resx">
-      <DependentUpon>Debugger.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\FindAndReplaceDialog.resx">
       <DependentUpon>FindAndReplaceDialog.cs</DependentUpon>

@@ -28,13 +28,13 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.lstMessages = new System.Windows.Forms.ListBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tmrUpdateTicker = new System.Windows.Forms.Timer(this.components);
             this.lstVariables = new System.Windows.Forms.ListView();
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.tmrUpdateTicker = new System.Windows.Forms.Timer(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -68,6 +68,7 @@
             this.lstMessages.FormattingEnabled = true;
             this.lstMessages.Location = new System.Drawing.Point(3, 3);
             this.lstMessages.Name = "lstMessages";
+            this.lstMessages.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.lstMessages.Size = new System.Drawing.Size(592, 469);
             this.lstMessages.TabIndex = 0;
             // 
@@ -81,12 +82,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Variables";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // tmrUpdateTicker
-            // 
-            this.tmrUpdateTicker.Enabled = true;
-            this.tmrUpdateTicker.Interval = 5000;
-            this.tmrUpdateTicker.Tick += new System.EventHandler(this.tmrUpdateTicker_Tick);
             // 
             // lstVariables
             // 
@@ -105,6 +100,15 @@
             this.lstVariables.UseCompatibleStateImageBehavior = false;
             this.lstVariables.View = System.Windows.Forms.View.Details;
             // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "ID";
+            this.columnHeader4.Width = 38;
+            // 
+            // columnHeader5
+            // 
+            this.columnHeader5.Text = "Type";
+            // 
             // columnHeader1
             // 
             this.columnHeader1.Text = "Name";
@@ -120,14 +124,11 @@
             this.columnHeader3.Text = "Current Value";
             this.columnHeader3.Width = 160;
             // 
-            // columnHeader4
+            // tmrUpdateTicker
             // 
-            this.columnHeader4.Text = "ID";
-            this.columnHeader4.Width = 38;
-            // 
-            // columnHeader5
-            // 
-            this.columnHeader5.Text = "Type";
+            this.tmrUpdateTicker.Enabled = true;
+            this.tmrUpdateTicker.Interval = 200;
+            this.tmrUpdateTicker.Tick += new System.EventHandler(this.tmrUpdateTicker_Tick);
             // 
             // DebugForm
             // 

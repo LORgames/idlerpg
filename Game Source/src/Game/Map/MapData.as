@@ -17,6 +17,7 @@ package Game.Map {
 	import Game.Map.Tiles.TileHelper;
 	import Game.Map.Tiles.TileInstance;
 	import Loaders.BinaryLoader;
+	import QDMF.Logic.Syncronizer;
 	import RenderSystem.Camera;
 	import Scripting.IScriptTarget;
 	import Scripting.Script;
@@ -79,6 +80,8 @@ package Game.Map {
 			
 			Clock.Resume();
 			BinaryLoader.Load("Data/Map_" + mapname + ".bin", ParseData);
+			
+			Syncronizer.Reset();
 		}
 		
 		public function ParseData(b:ByteArray):void {
@@ -262,6 +265,8 @@ package Game.Map {
 		public function CleanUp():void {
 			if (Dying) return; //Already dying somehow- serious problem actually
 			Dying = true;
+			
+			MyScript.Run(Script.Died);
 			
 			var i:int = 0;
 			
