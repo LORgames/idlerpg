@@ -229,6 +229,7 @@ namespace ToolCache.Scripting.Types {
             ZoneFunctions.Add("myarea", new ValidCommand(0x9003, new Param[] { Param.Void }));
             ZoneFunctions.Add("map", new ValidCommand(0x9004, new Param[] { Param.Void }));
             ZoneFunctions.Add("factionmap", new ValidCommand(0x9005, new Param[] { Param.FactionName }));
+            ZoneFunctions.Add("maparea", new ValidCommand(0x9006, new Param[] { Param.Integer, Param.Integer, Param.Integer, Param.Integer }));
             
             /////////////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////// DEFAULT VALUES

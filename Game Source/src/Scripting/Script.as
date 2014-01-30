@@ -86,6 +86,7 @@ package Scripting {
 		public static const MYAREA:int = 0x9003;
 		public static const MAP:int = 0x9004;
 		public static const FACTIONMAP:int = 0x9005;
+		public static const MAPAREA:int = 0x9006;
 		
 		//Script information
 		internal var EventScripts:Vector.<ByteArray>;
@@ -438,6 +439,16 @@ package Scripting {
 								}
 							}
 						} break;
+					case MAPAREA:
+						rect.X = GetNumberFromVariable(eventScript, info, param);
+						rect.Y = GetNumberFromVariable(eventScript, info, param);
+						rect.W = GetNumberFromVariable(eventScript, info, param);
+						rect.H = GetNumberFromVariable(eventScript, info, param);
+						
+						WorldData.CurrentMap.GetObjectsInArea(rect, Objects, eType, info.CurrentTarget);
+						Drawer.AddDebugRect(rect);
+						
+						break;
 					case MYAREA:
 						if (info.CurrentTarget is ScriptRegion) {
 							WorldData.CurrentMap.GetObjectsInArea((info.CurrentTarget as ScriptRegion).Area[0], Objects, eType, info.CurrentTarget);

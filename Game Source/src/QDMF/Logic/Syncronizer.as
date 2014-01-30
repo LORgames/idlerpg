@@ -58,7 +58,7 @@ package QDMF.Logic {
 					var p:Packet = new Packet(PacketTypes.ENDTURN);
 					p.bytes.writeShort(Global.CurrentPlayerID);
 					p.bytes.writeShort(I.CurrentTurn + LOCAL_WITH_AHEAD);
-					Global.Out.Log("Marked turn " + (I.CurrentTurn + LOCAL_WITH_AHEAD) + " complete.");
+					//Global.Out.Log("Marked turn " + (I.CurrentTurn + LOCAL_WITH_AHEAD) + " complete.");
 					Global.Network.SendPacket(p);
 					Global.Network.Flush();
 				}
@@ -134,7 +134,7 @@ package QDMF.Logic {
 		}
 		
 		static public function MarkTurnEnded(playerID:int, turnID:int):void {
-			Global.Out.Log("Marking turnID=" + turnID + " ended for player=" + playerID); 
+			//Global.Out.Log("Marking turnID=" + turnID + " ended for player=" + playerID); 
 			
 			var _turn:int = turnID - I.CurrentTurn - 1;
 			I.UpcomingTurns[_turn].CompletedBy(playerID);
