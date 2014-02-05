@@ -1,5 +1,4 @@
-package Game.Critter 
-{
+package Game.Critter {
 	import CollisionSystem.Rect;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;

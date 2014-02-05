@@ -417,12 +417,11 @@ package Scripting {
 						
 						break;
 					case MAP:
-						dim0 = eventScript.readShort();
-						
 						if(eType != Script.CRITTER) {
 							WorldData.CurrentMap.GetObjectsInArea(null, Objects, eType, info.CurrentTarget);
 						} else {
 							for (i = 0; i < WorldData.CurrentMap.Critters.length; i++) {
+								if (WorldData.CurrentMap.Critters[i] == null) continue;
 								Objects.push(WorldData.CurrentMap.Critters[i]);
 							}
 						} break;
