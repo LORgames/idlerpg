@@ -77,7 +77,9 @@ package {
 				new TouchInput();
 			}
 			
-			new MouseInput();
+			if (!CONFIG::mobile) {
+				new MouseInput();
+			}
 			new KeyboardInput();
 			
 			new EquipmentManager();

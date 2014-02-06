@@ -1,4 +1,5 @@
 package {
+	import flash.desktop.SystemIdleMode;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageQuality;
@@ -55,6 +56,10 @@ package {
 				
 				NativeApplication.nativeApplication.addEventListener(InvokeEvent.INVOKE, OnInvoke, false, 0, true);
 				NativeApplication.nativeApplication.addEventListener(KeyboardEvent.KEY_DOWN, HardwareKeyDown, false, 0, true);
+				
+				CONFIG::mobile {
+					NativeApplication.nativeApplication.systemIdleMode = SystemIdleMode.KEEP_AWAKE;
+				}
 			}
 			
 			if(CONFIG::air == false) {
@@ -131,11 +136,8 @@ package {
 		private function OnLostFocus(e:Event):void {
 			SaveManager.Save("");
 			
-			// auto-close if mobile device :)
-			CONFIG::air {
-				if (Multitouch.supportsTouchEvents && Multitouch.maxTouchPoints > 1) {
-					NativeApplication.nativeApplication.exit();
-				}
+			if (Global.Network) {
+				Global.Network.Close();
 			}
 		}
 		
