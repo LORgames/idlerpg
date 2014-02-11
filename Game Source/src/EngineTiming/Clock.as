@@ -7,6 +7,7 @@ package EngineTiming {
 	import Game.Map.WorldData;
 	import Game.Tweening.TweenManager;
 	import QDMF.Logic.Syncronizer;
+	import Scripting.IScriptTarget;
 	import Scripting.Script;
 	import UI.FPSCounter;
 	/**

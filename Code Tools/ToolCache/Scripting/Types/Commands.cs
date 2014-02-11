@@ -198,7 +198,8 @@ namespace ToolCache.Scripting.Types {
             MathFunctions.Add("random", new ValidCommand(0x07, new Param[] { Param.Number, Param.Number | Param.Optional }));
             MathFunctions.Add("getanimationspeed", new ValidCommand(0x08, new Param[] { Param.Void }));
             MathFunctions.Add("gettypeid", new ValidCommand(0x09, new Param[] { Param.Void }));
-            
+            MathFunctions.Add("settimer", new ValidCommand(0x0A, new Param[] { Param.Integer }));
+
             /////////////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////// IF FUNCTIONS
             /////////////////////////////////////////////////////////////////////////
@@ -219,6 +220,7 @@ namespace ToolCache.Scripting.Types {
             IfFunctions.Add("hasaitype", new ValidCommand(0x7010, new Param[] { Param.AIType }));
             IfFunctions.Add("aieventis",new ValidCommand(0x7FFF, new Param[] { Param.AIEventType }));
             IfFunctions.Add("triggeris",new ValidCommand(0x7FFF, new Param[] { Param.Integer }));
+            IfFunctions.Add("timerid", new ValidCommand(0x7FFF, new Param[] { Param.Integer }));
 
             /////////////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////// ZONE FUNCTIONS
