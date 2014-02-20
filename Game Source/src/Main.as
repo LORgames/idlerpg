@@ -1,5 +1,4 @@
 package {
-	import flash.desktop.SystemIdleMode;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageQuality;
@@ -18,6 +17,7 @@ package {
 	import UI.UIManager;
 	
 	CONFIG::air {
+		import flash.desktop.SystemIdleMode;
 		import flash.desktop.NativeApplication;
 		import flash.display.NativeWindow;
 		import flash.display.Screen;

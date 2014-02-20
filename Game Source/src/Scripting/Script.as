@@ -62,7 +62,8 @@ package Scripting {
 		public static const Update:uint = 10;
 		public static const OnTrigger:uint = 11;
 		public static const AIEvent:uint = 12;
-		public static const TOTAL_EVENT_TYPES:uint = 13;
+		public static const TimerEvent:uint = 13;
+		public static const TOTAL_EVENT_TYPES:uint = 14;
 		
 		//SCRIPT TYPES
 		public static const CRITTER:int = 0xA000;
