@@ -136,8 +136,10 @@ package {
 		private function OnLostFocus(e:Event):void {
 			SaveManager.Save("");
 			
-			if (Global.Network) {
-				Global.Network.Close();
+			CONFIG::mobile {
+				if (Global.Network) {
+					Global.Network.Close();
+				}
 			}
 		}
 		

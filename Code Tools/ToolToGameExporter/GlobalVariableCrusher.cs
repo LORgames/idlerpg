@@ -20,6 +20,7 @@ namespace ToolToGameExporter {
             List<ScriptFunction> ls = Variables.FunctionTable.Values.ToList<ScriptFunction>();
             for (int i = 0; i < ls.Count; i++) {
                 RemappedFunctionNames.Add(ls[i].Name, (short)i);
+                System.Diagnostics.Debug.WriteLine("FUNCTION=" + ls[i].Name + " => id." + i);
             }
 
             ExportCrushers.MappedStringTable = MappedStringTable;

@@ -1,9 +1,14 @@
 package Scripting {
 	import adobe.utils.CustomActions;
+	import Debug.DebugLogger;
 	import EngineTiming.Clock;
 	import Game.Critter.BaseCritter;
 	import CollisionSystem.PointX;
 	import flash.utils.ByteArray;
+	import Game.Map.Objects.ObjectInstance;
+	import Game.Map.Objects.ObjectInstanceAnimated;
+	import Game.Map.Objects.ObjectTemplate;
+	import Game.Map.WorldData;
 	import QDMF.IPacketProcessor;
 	import QDMF.Logic.Helper.PingHelper;
 	import QDMF.Logic.Syncronizer;
@@ -12,28 +17,18 @@ package Scripting {
 	import QDMF.PacketController;
 	import QDMF.PacketTypes;
 	import QDMF.SocketTriggers;
+	import RenderSystem.Renderman;
 	/**
 	 * ...
 	 * @author Paul
 	 */
-	public class NetworkScriptExec implements IPacketProcessor, IScriptTarget {
-		private var scriptinstance:ScriptInstance;
-		private var tb:ByteArray = new ByteArray();
-		private var s:Script;
-		
-		public static var _vectorInt:Vector.<int> = new Vector.<int>(0, true);
-		public static var _vectorFlp:Vector.<Number> = new Vector.<Number>(0, true);
-		
+	public class NetworkScriptExec implements IPacketProcessor {
 		public static function Launch():void {
 			new NetworkScriptExec();
 		}
 		
 		public function NetworkScriptExec() {
 			PacketController.RegisterAsListener(this);
-			
-			s = new Script(Vector.<ByteArray>([tb]), _vectorInt, _vectorFlp);
-			scriptinstance = new ScriptInstance(null, this);
-			scriptinstance.CurrentTarget = this;
 		}
 		
 		/* INTERFACE QDMF.IPacketProcessor */
@@ -41,17 +36,14 @@ package Scripting {
 		public function ProcessPacket(p:Packet):Boolean {
 			var pr:Packet;
 			
-			if (p.type == PacketTypes.SCRIPT) {
-				Global.Out.Log("Executing Network Script");
-				tb.clear(); p.bytes.readBytes(tb, 0);
-				s.Run(0, scriptinstance, null);
-				return true;
-			} else if(p.type == PacketTypes.TURNSTEP) {
+			if(p.type == PacketTypes.TURNSTEP) {
 				TurnStep.UnpackAndRegister(p.bytes);
 				return true;
 			} else if (p.type == PacketTypes.CONTROL) {
 				var controlType:int = p.bytes.readShort();
 				var controlInfo:int = p.bytes.readShort();
+				
+				Global.Out.Log("NC:CONTROL TYPE=" + controlType + ", INFO=" + controlInfo);
 				
 				if (controlType == 0) { // Set Player ID
 					Global.CurrentPlayerID = controlInfo;
@@ -79,6 +71,37 @@ package Scripting {
 						Syncronizer.Reset();
 						Clock.I.Reset();
 					}
+				} else if (controlType == 3) { //Change Map
+					WorldData.CurrentMap.CleanUp();
+					WorldData.CurrentMap.LoadMap(WorldData.Maps[controlInfo]);
+				} else if (controlType == 4) { //Change Variable
+					GlobalVariables.IntegerVariables[controlInfo] = p.bytes.readInt();
+					Global.Out.Log("RECV INTEGR=" + controlInfo + " NEW=" + GlobalVariables.IntegerVariables[controlInfo]);
+				} else if (controlType == 5) { //Change String
+					GlobalVariables.StringVariables[controlInfo] = p.bytes.readUTF();
+					Global.Out.Log("RECV STRING=" + controlInfo + " NEW=" + GlobalVariables.StringVariables[controlInfo]);
+				} else if (controlType == 6) { //Spawn Object
+					var o:ObjectInstance;
+					var x:int = p.bytes.readShort();
+					var y:int = p.bytes.readShort();
+					
+					if (ObjectTemplate.Objects[controlInfo].IndividualAnimations) {
+						o = new ObjectInstanceAnimated(WorldData.CurrentMap.Objects.length);
+					} else {
+						o = new ObjectInstance(WorldData.CurrentMap.Objects.length);
+					}
+					
+					o.SetInformation(WorldData.CurrentMap, controlInfo, x, y);
+					WorldData.CurrentMap.Objects.push(o);
+					Renderman.DirtyObjects.push(o);
+				} else if (controlType == 7) { //Net Trigger
+					Global.Out.Log("NC::TRIGGER ID" + controlInfo);
+					Script.FireTrigger(controlInfo);
+				} else if (controlType == 8) { //Reset Clocks
+					Syncronizer.Reset();
+					Clock.I.Reset();
+				} else {
+					Global.Out.Log("NC::CONTROL::UNKNOWN TYPE=" + controlType);
 				}
 				
 				return true;
@@ -101,6 +124,8 @@ package Scripting {
 				var playerID:int = p.bytes.readUnsignedShort();
 				var turnID:int = p.bytes.readUnsignedShort();
 				Syncronizer.MarkTurnEnded(playerID, turnID);
+			} else {
+				Global.Out.Log("NETWORK PACKET ERROR: Unknown type: " + p.type);
 			}
 			
 			return false;
@@ -110,17 +135,6 @@ package Scripting {
 			Script.FireTrigger(SocketTriggers.SOCKET_DISCONNECT);
 			Syncronizer.Reset();
 		}
-		
-		/* INTERFACE Scripting.IScriptTarget */
-		public function GetScript():ScriptInstance { return scriptinstance; }
-		public function GetTypeID():int { return 0; }
-		public function UpdatePointX(position:PointX):void { position.D = 1; position.X = 0; position.Y = 0; }
-		public function AlertMinionDeath(baseCritter:BaseCritter):void {}
-		public function ChangeState(stateID:int, isLooping:Boolean):void {}
-		public function UpdatePlaybackSpeed(newAnimationSpeed:Number):void { }
-		public function GetAnimationSpeed():Number { return 0; }
-		public function GetCurrentState():int { return 0; }
-		public function GetFaction():int { return 0; }
 	}
 
 }

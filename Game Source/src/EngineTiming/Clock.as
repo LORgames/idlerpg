@@ -30,7 +30,7 @@ package EngineTiming {
 		public static var CleanUpList:Vector.<ICleanUp> = new Vector.<ICleanUp>();
 		
 		public function Clock() {
-			
+			ScriptTimer.Initialize();
 		}
 		
 		public function Start(s:Stage):void {
@@ -97,6 +97,7 @@ package EngineTiming {
 				
 				Script.ProcessUpdate(dt);
 				Main.I.Renderer.Update(dt);
+				ScriptTimer.Update(dt);
 				
 				while (CleanUpList.length > 0) {
 					var x:ICleanUp = CleanUpList.pop();

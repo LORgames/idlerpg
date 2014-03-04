@@ -1,5 +1,7 @@
 package Scripting {
+	import adobe.utils.CustomActions;
 	import EngineTiming.ICleanUp;
+	import EngineTiming.ScriptTimer;
 	import Game.Equipment.EquipmentItem;
 	
 	CONFIG::air {
@@ -12,7 +14,9 @@ package Scripting {
 	public class ScriptInstance implements ICleanUp {
 		public var IntegerVariables:Vector.<int>;
 		public var FloatVariables:Vector.<Number>;
-		private var TargetStack:Vector.<IScriptTarget>
+		
+		private var TargetStack:Vector.<IScriptTarget>;
+		private var ActiveTimers:Vector.<int>;
 		
 		public var Invoker:IScriptTarget;
 		public var CurrentTarget:IScriptTarget;
@@ -28,7 +32,9 @@ package Scripting {
 			
 			this.Invoker = invoker;
 			this.CurrentTarget = Invoker;
+			
 			TargetStack = new Vector.<IScriptTarget>();
+			ActiveTimers = new Vector.<int>();
 			
 			if (Invoker is EquipmentItem) {
 				AttachTarget((Invoker as EquipmentItem).Owner.Owner);
@@ -95,8 +101,19 @@ package Scripting {
 				if (i > -1) { Script.TriggerListeners.splice(i, 1); } else { Global.Out.Log("FAILED TO SPLICE! TRIGGER SCRIPT!"); }
 			}
 			
+			while (ActiveTimers.length > 0) {
+				i = ActiveTimers.pop();
+				ScriptTimer.ReleaseTimer(i);
+			}
+			
 			MyScript = null;
 			CurrentTarget = null;
+		}
+		
+		public function AttachTimer(timeMS:Number):int {
+			var timerID:int = ScriptTimer.RequestTimer(this, timeMS);
+			ActiveTimers.push(timerID);
+			return timerID;
 		}
 	}
 }

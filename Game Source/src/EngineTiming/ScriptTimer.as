@@ -1,13 +1,18 @@
 package EngineTiming {
+	import adobe.utils.CustomActions;
 	import flash.utils.getTimer;
 	import Scripting.IScriptTarget;
+	import Scripting.Script;
+	import Scripting.ScriptInstance;
 	/**
 	 * ...
 	 * @author Paul
 	 */
 	public class ScriptTimer {
-		public var EndTime:int = -1; //This should be -1 for unused
-		public var Invoker:IScriptTarget = null; //Who actually owns the timer?
+		private static const TOTAL_TIMERS:int = 256;
+		
+		public var TimeRemaining:Number = -1; //This should be -1 for unused
+		public var Invoker:ScriptInstance = null; //Who actually owns the timer?
 		
 		public function ScriptTimer() {
 			
@@ -15,31 +20,54 @@ package EngineTiming {
 		
 		public function CleanUp():void {
 			Invoker = null;
-			EndTime = -1;
+			TimeRemaining = -1;
 		}
 		
 		//STATIC FUNCTIONS
-		private static var gTimers:Vector.<ScriptTimer> = new Vector.<ScriptTimer>(256, true);
+		private static var gTimers:Vector.<ScriptTimer> = new Vector.<ScriptTimer>(TOTAL_TIMERS, true);
 		private static var nextTimer:int = 0;
-		public static function RequestTimer(invoker:IScriptTarget, time:int):int {
+		
+		public static function Initialize():void {
+			for (var i:int = 0; i < TOTAL_TIMERS; i++) {
+				gTimers[i] = new ScriptTimer();
+			}
+		}
+		
+		public static function RequestTimer(invoker:ScriptInstance, time:int):int {
 			var rID:int = nextTimer;
 			
 			while (gTimers[nextTimer].Invoker != null) {
 				nextTimer++;
-				if (nextTimer > 255) nextTimer = 0;
+				if (nextTimer > TOTAL_TIMERS-1) nextTimer = 0;
 				if (nextTimer == rID) return -1;
 			}
 			
 			//Set the values
-			gTimers[nextTimer].EndTime = getTimer() + time;
+			gTimers[nextTimer].EndTime = time/1000.0;
 			gTimers[nextTimer].Invoker = invoker;
 			
-			var rID:int = nextTimer;
+			rID = nextTimer;
 			
 			nextTimer++;
-			if (nextTimer > 255) nextTimer = 0;
+			if (nextTimer > TOTAL_TIMERS-1) nextTimer = 0;
 			
-			return (nextTimer-1);
+			return rID;
+		}
+		
+		static public function ReleaseTimer(id:int):void {
+			gTimers[id].CleanUp();
+		}
+		
+		public static function Update(dt:Number):void {
+			for (var i:int = 0; i < TOTAL_TIMERS; i++) {
+				if (gTimers[i].TimeRemaining != -1) {
+					gTimers[i].TimeRemaining -= dt;
+					if(gTimers[i].TimeRemaining <= 0) {
+						gTimers[i].Invoker.Run(Script.TimerEvent, null, i);
+						gTimers[i].CleanUp();
+					}
+				}
+			}
 		}
 	}
 }

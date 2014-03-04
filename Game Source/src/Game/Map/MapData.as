@@ -446,6 +446,10 @@ package Game.Map {
 			
 			return NextBlankEffectForPlayer[pID];
 		}
+		
+		public function toString():String {
+			return "[MAP=" + Name + "]";
+		}
 	}
 
 }

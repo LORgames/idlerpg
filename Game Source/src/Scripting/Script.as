@@ -111,7 +111,7 @@ package Scripting {
 			EventScript.position = 0;
 			NetSync = 0;
 			
-			//Global.Out.Log("Running: Invoker=" + info.Invoker + " Event=" + eventID + " CurrentTarget=" + info.CurrentTarget);
+			Global.Out.Log("Running: Invoker=" + info.Invoker + " Event=" + eventID + " CurrentTarget=" + info.CurrentTarget);
 			ProcessBlock(EventScript, info, eventID, param);
 			
 			if (EventScript.position != EventScript.length) {
@@ -569,6 +569,8 @@ package Scripting {
 					return info.CurrentTarget.GetAnimationSpeed();
 				case 0x09: //Get ID
 					return info.CurrentTarget.GetTypeID();
+				case 0x0A: //Get Timer
+					return info.AttachTimer(GetNumberFromVariable(eventScript, info, inputParam));
 				default:
 					Global.Out.Log("Unknown Math Command: " + functionID);
 					return 0;
@@ -711,7 +713,7 @@ package Scripting {
 			
 			while (true) {
 				command = EventScript.readUnsignedShort();
-				//Global.Out.Log("\t0x" + MathsEx.ZeroPad(command, 4, 16) + " Deep=" + deep + " CurrentTarget=" + info.CurrentTarget);
+				Global.Out.Log("\t0x" + MathsEx.ZeroPad(command, 4, 16) + " Deep=" + deep + " CurrentTarget=" + info.CurrentTarget);
 				
 				if (command == 0xFFFF) { break; }
 				if (command == 0xB000) { ProcessMathCommand(EventScript, info, inputParam); continue; }
@@ -890,7 +892,7 @@ package Scripting {
 						WorldData.CurrentMap.Objects.push(o);
 						Renderman.DirtyObjects.push(o);
 						
-						if (NetSync > 0 && Global.Network != null) PacketFactory.N(Vector.<int>([0x100B, id, 0xBFFF, p1.X, 0xBFFF, p1.Y]));
+						if (NetSync > 0) PacketFactory.SpawnObject(id, p1.X, p1.Y);
 						
 						break;
 					case 0x100D: //Fire a trigger
@@ -901,10 +903,10 @@ package Scripting {
 						NetSync++; break;
 					case 0x1010: //Change map
 						var mapID:int = EventScript.readShort();
+						if (NetSync > 0) PacketFactory.ChangeMap(mapID);
+						
 						WorldData.CurrentMap.CleanUp();
 						WorldData.CurrentMap.LoadMap(WorldData.Maps[mapID]);
-						
-						if (NetSync > 0 && Global.Network != null) PacketFactory.N(Vector.<int>([0x1010, mapID]));
 						break;
 					case 0x1011: //NetHost
 						p0.X = EventScript.readShort();
@@ -947,8 +949,8 @@ package Scripting {
 					case 0x1015: //NetSyncVar
 						p0.X = EventScript.readUnsignedShort(); //SHOULD BE 0xBFFE
 						p0.Y = EventScript.readUnsignedShort(); //SHOULD BE < 1000
-						Global.Out.Log("NETSYNCVAR: VAR=" + p0.Y + " INVOKER=" + info.Invoker);
-						if (p0.X == 0xBFFE && Global.Network != null) PacketFactory.N(Vector.<int>([0xB000, 0xBFFE, p0.Y, 0xBFFF, GlobalVariables.IntegerVariables[p0.Y], 0xBF01]));
+						Global.Out.Log("NETSYNCVAR: TYPE=" + p0.X + " VAR=" + p0.Y + " INVOKER=" + info.Invoker);
+						if (Global.Network != null) PacketFactory.SyncVariable(p0.X, p0.Y);
 						break;
 					case 0x1017: //Param Set ADVANCED PROGRAMMING COMMAND
 						objName = GetWonkyString(EventScript);
@@ -1022,15 +1024,10 @@ package Scripting {
 							Global.Out.Log("NETSYNCSTRING: Critical Error!");
 						} else {
 							p0.X = EventScript.readShort(); //String ID
-							if (Global.Network != null) {
-								objName = GlobalVariables.StringVariables[p0.X];
-								var pack:Packet = new Packet(PacketTypes.SCRIPT);
-								pack.bytes.writeShort(0x1020); pack.bytes.writeShort(p0.D); pack.bytes.writeShort(p0.X); pack.bytes.writeShort(0x1); pack.bytes.writeUTF(objName); if (pack.bytes.length % 2 == 1) pack.bytes.writeByte(0x0); pack.bytes.writeShort(0xFFFF);
-								Global.Network.SendPacket(pack); pack.bytes.clear();
-							}
+							PacketFactory.SyncString(p0.X);
 						} break;
 					case 0x1022: //NetTrigger
-						PacketFactory.N(Vector.<int>([0x100D, 0xBFFF, GetNumberFromVariable(EventScript, info, inputParam)])); break;
+						PacketFactory.NetTrigger(GetNumberFromVariable(EventScript, info, inputParam)); break;
 					case 0x1023: //Clock Running
 						p0.D = EventScript.readShort();	if (p0.D == 1) { Clock.Resume(); } else { Clock.Stop(); } break;
 					case 0x1024: //Spawn Region Resize
@@ -1040,11 +1037,15 @@ package Scripting {
 						break;
 					case 0x1025: //NetSyncStart Resets the clock based on half network speed
 						p0.D = EventScript.readShort(); //1=Remote, 0=Local
-						if(Global.Network) {
-							pack = new Packet(PacketTypes.CONTROL); pack.bytes.writeShort(2); pack.bytes.writeShort(1); Global.Network.SendPacketImmediate(pack);
+						if (p0.D == 0) {
+							PacketFactory.UpdateSyncStart();
 							fParam = -Syncronizer.Ping / 1000.0;
-						} else { fParam = 0.0; }
-						Clock.I.Reset(fParam); Syncronizer.Reset(fParam); break;
+						} else {
+							fParam = 0.0;
+						}
+						Clock.I.Reset(fParam);
+						Syncronizer.Reset(fParam);
+						break;
 					case 0x4001: //Equip item on the target
 						if (info.CurrentTarget is CritterHuman) {
 							(info.CurrentTarget as CritterHuman).Equipment.EquipSlot(EventScript.readShort(), EventScript.readShort());
@@ -1218,7 +1219,9 @@ package Scripting {
 						return 2;
 					case 0x8006: //Call a global function
 						p0.X = EventScript.readShort(); //Function ID
+						Global.Out.Log("----START FUNCTION=" + p0.X);
 						GlobalVariables.Functions.Run(p0.X, info, inputParam);
+						Global.Out.Log("----END FUNCTION=" + p0.X);
 						break;
 					case 0xC001: //Hide Element || UIElementVisible
 						p0.D = EventScript.readUnsignedShort();
@@ -1391,6 +1394,7 @@ package Scripting {
 			//Some kind of stack system would be ideal.
 			Global.Out.Log("Firing trigger: " + triggerID);
 			for (var i:int = 0; i < TriggerListeners.length; i++) {
+				Global.Out.Log("----NEXT LISTENER:");
 				TriggerListeners[i].Run(Script.OnTrigger, null, triggerID);
 			}
 		}
