@@ -9,6 +9,7 @@ using ToolCache.Map.Objects;
 using ToolCache.Drawing;
 using ToolCache.Map;
 using ToolCache.Map.Tiles;
+using ToolCache.General;
 
 namespace CityTools.ObjectSystem {
     public class ScenicHelper {
@@ -37,15 +38,15 @@ namespace CityTools.ObjectSystem {
             Point p1a = new Point((int)(Math.Max(p0.X, p1.X) / Camera.ZoomLevel + Camera.ViewArea.Left), (int)(Math.Max(p0.Y, p1.Y) / Camera.ZoomLevel + Camera.ViewArea.Top));
 
             //Figure out which objects are in that bounding box
-            Rectangle selectBox = new Rectangle(p0a.X, p0a.Y, p1a.X - p0a.X, p1a.Y - p0a.Y);
+            RectangleX selectBox = new RectangleX(p0a.X, p0a.Y, p1a.X - p0a.X, p1a.Y - p0a.Y, 0.0f);
 
-            List<TileInstance> tiles = MapPieceCache.CurrentPiece.Tiles.GetTilesFromWorldRectangle(p0a.X, p0a.Y, p1a.X - p0a.X, p1a.Y - p0a.Y);
+            List<TileInstance> tiles = MapPieceCache.CurrentPiece.Tiles.GetTilesFromWorldRectangle(p0a.X, p0a.Y, p1a.X - p0a.X, p1a.Y - p0a.Y, 0.0f);
 
             if (MapPieceCache.CurrentPiece.WorldRectangle.Contains(selectBox)) {
                 foreach (TileInstance tile in tiles) {
                     List<BaseObject> objects = tile.EXOB;
                     for (int k = 0; k < objects.Count; k++) {
-                        foreach (Rectangle r in objects[k].ActualBases) {
+                        foreach (RectangleX r in objects[k].ActualBases) {
                             if (selectBox.IntersectsWith(r)) {
                                 if (!selectedObjects.Contains(objects[k])) {
                                     selectedObjects.Add(objects[k]);
@@ -56,7 +57,7 @@ namespace CityTools.ObjectSystem {
                 }
             } else {
                 foreach (BaseObject obj in MapPieceCache.CurrentPiece.Objects) {
-                    foreach (Rectangle r in obj.ActualBases) {
+                    foreach (RectangleX r in obj.ActualBases) {
                         if (selectBox.IntersectsWith(r)) {
                             selectedObjects.Add(obj);
                         }
@@ -162,18 +163,11 @@ namespace CityTools.ObjectSystem {
                 float y = (obj.Location.Y - Camera.Offset.Y) * Camera.ZoomLevel;
 
                 if (MainWindow.instance.ckbShowObjectBases.Checked) {
-                    foreach (Rectangle b in MapObjectCache.G(obj.ObjectType).Blocks) {
-                        Rectangle r = new Rectangle();
-
-                        r.X = (int)(x + b.X * Camera.ZoomLevel);
-                        r.Y = (int)(y + b.Y * Camera.ZoomLevel);
-                        r.Width = (int)(b.Width * Camera.ZoomLevel);
-                        r.Height = (int)(b.Height * Camera.ZoomLevel);
-
+                    foreach (RectangleX b in MapObjectCache.G(obj.ObjectType).Blocks) {
                         if (!selectedObjects.Contains(obj)) {
-                            buffer.gfx.FillRectangle(Brushes.Magenta, r);
+                            b.DrawFilled(buffer.gfx, Brushes.Magenta, x, y);
                         } else {
-                            buffer.gfx.FillRectangle(Brushes.Yellow, r);
+                            b.DrawFilled(buffer.gfx, Brushes.Yellow, x, y);
                         }
                     }
 

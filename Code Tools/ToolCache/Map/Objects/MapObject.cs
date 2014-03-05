@@ -16,7 +16,7 @@ namespace ToolCache.Map.Objects {
         public string Script = "";
 
         public Dictionary<String, AnimatedObject> Animations = new Dictionary<String, AnimatedObject>();
-        public List<Rectangle> Blocks = new List<Rectangle>();
+        public List<RectangleX> Blocks = new List<RectangleX>();
 
         public int OffsetY = 0;
 
@@ -27,7 +27,7 @@ namespace ToolCache.Map.Objects {
             Animations["Default"] = new AnimatedObject();
         }
 
-        internal static MapObject LoadFromBinaryIO(IStorage f) {
+        internal static MapObject LoadFromBinaryIO(IStorage f, bool hasRotatedPhysics) {
             MapObject m = new MapObject();
 
             m.ObjectID = f.GetShort();
@@ -54,7 +54,13 @@ namespace ToolCache.Map.Objects {
                 int BaseWidth = f.GetShort();
                 int BaseHeight = f.GetShort();
 
-                Rectangle _base = new Rectangle(BaseLeft, BaseTop, BaseWidth, BaseHeight);
+                float Rotation = 0.0f;
+
+                if (hasRotatedPhysics) {
+                    Rotation = f.GetFloat();
+                }
+
+                RectangleX _base = new RectangleX(BaseLeft, BaseTop, BaseWidth, BaseHeight, Rotation);
                 m.Blocks.Add(_base);
             }
 
@@ -89,11 +95,12 @@ namespace ToolCache.Map.Objects {
 
             f.AddByte((byte)Blocks.Count);
 
-            foreach (Rectangle r in Blocks) {
-                f.AddShort((short)r.Left);
-                f.AddShort((short)r.Top);
-                f.AddShort((short)r.Width);
-                f.AddShort((short)r.Height);
+            foreach (RectangleX r in Blocks) {
+                f.AddShort((short)r.X);
+                f.AddShort((short)r.Y);
+                f.AddShort((short)r.W);
+                f.AddShort((short)r.H);
+                f.AddShort((short)r.Rotation);
             }
 
             f.AddByte(GetBooleanData());

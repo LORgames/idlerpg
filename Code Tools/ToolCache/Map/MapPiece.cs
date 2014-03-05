@@ -38,7 +38,7 @@ namespace ToolCache.Map {
         public List<SpawnRegion> Spawns = new List<SpawnRegion>();
         public List<ScriptRegion> ScriptRegions = new List<ScriptRegion>();
 
-        public Rectangle WorldRectangle;
+        public RectangleX WorldRectangle;
         public string Music = "";
 
         public IBackground Background = new SolidBackground(Color.CornflowerBlue);

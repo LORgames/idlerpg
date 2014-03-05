@@ -49,11 +49,22 @@ namespace ToolCache.Map.Objects {
             IStorage f = StorageHelper.LoadStorage(DATABASE_FILENAME, StorageTypes.UTF);
 
             if (f != null) {
-                int totalObjects = f.GetInt();
+                int _index = f.GetInt();
+                int totalObjects;
+
+                bool supportsRotatedPhysics = false;
+
+                if ((_index & 0x7C7C0000) == 0x7C7C0000) {
+                    supportsRotatedPhysics = ((_index & 0x1) > 0);
+
+                    totalObjects = f.GetInt();
+                } else {
+                    totalObjects = _index;
+                }
 
                 //This is where we load the BASIC information
                 for (int i = 0; i < totalObjects; i++) {
-                    MapObject m = MapObject.LoadFromBinaryIO(f);
+                    MapObject m = MapObject.LoadFromBinaryIO(f, supportsRotatedPhysics);
                     AddObject(m);
                 }
 
@@ -63,6 +74,8 @@ namespace ToolCache.Map.Objects {
 
         public static void WriteDatabase() {
             IStorage f = StorageHelper.WriteStorage(StorageTypes.UTF);
+
+            f.AddInt(0x7C7C0000 | 0x1); //Supports rotated objects
 
             f.AddInt(ObjectTypes.Count);
 

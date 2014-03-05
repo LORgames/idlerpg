@@ -81,8 +81,8 @@ namespace ToolToGameExporter {
                 while (--i > -1) {
                     f.AddShort((short)(t.Blocks[i].X));
                     f.AddShort((short)(t.Blocks[i].Y));
-                    f.AddShort((short)(t.Blocks[i].Width));
-                    f.AddShort((short)(t.Blocks[i].Height));
+                    f.AddShort((short)(t.Blocks[i].W));
+                    f.AddShort((short)(t.Blocks[i].H));
                 }
 
                 f.AddByte(t.GetBooleanData());

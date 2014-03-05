@@ -66,6 +66,7 @@
     <Compile Include="Equipment\EquipmentAnimationSet.cs" />
     <Compile Include="Equipment\EquipmentItem.cs" />
     <Compile Include="Equipment\EquipmentManager.cs" />
+    <Compile Include="General\RectangleX.cs" />
     <Compile Include="General\StringMagic.cs" />
     <Compile Include="Scripting\Types\FloatVariable.cs" />
     <Compile Include="Scripting\Types\StringVariable.cs" />

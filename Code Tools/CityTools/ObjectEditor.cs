@@ -170,11 +170,11 @@ namespace CityTools {
                 if (p1.X < 0) p1.X = 0;
                 if (p1.Y < 0) p1.Y = 0;
 
-                Rectangle r = new Rectangle();
+                RectangleX r = new RectangleX();
                 r.X = Math.Min(p0.X, p1.X);
                 r.Y = Math.Min(p0.Y, p1.Y);
-                r.Width = Math.Abs(p1.X - p0.X);
-                r.Height = Math.Abs(p1.Y - p0.Y);
+                r.W = Math.Abs(p1.X - p0.X);
+                r.H = Math.Abs(p1.Y - p0.Y);
 
                 CurrentObject.Blocks.Add(r);
                 Edited();
@@ -202,8 +202,8 @@ namespace CityTools {
             ccAnimation.GetAnimation().Draw(e.Graphics, 0, 0, 1);
 
             if (ckbDrawRectangles.Checked) {
-                foreach (Rectangle r in CurrentObject.Blocks) {
-                    e.Graphics.DrawRectangle(Pens.White, r);
+                foreach (RectangleX r in CurrentObject.Blocks) {
+                    r.Draw(e.Graphics, Pens.White);
                 }
             }
 

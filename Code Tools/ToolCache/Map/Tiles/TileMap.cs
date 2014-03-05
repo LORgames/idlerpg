@@ -40,7 +40,7 @@ namespace ToolCache.Map.Tiles {
                 }
             }
 
-            Map.WorldRectangle = new System.Drawing.Rectangle(0, 0, numTilesX * TileTemplate.PIXELS, numTilesY * TileTemplate.PIXELS);
+            Map.WorldRectangle = new RectangleX(0, 0, numTilesX * TileTemplate.PIXELS, numTilesY * TileTemplate.PIXELS, 0.0f);
         }
 
         public void LoadMapFromFile(IStorage mapFile) {
@@ -55,7 +55,7 @@ namespace ToolCache.Map.Tiles {
                 }
             }
 
-            Map.WorldRectangle = new System.Drawing.Rectangle(0, 0, numTilesX * TileTemplate.PIXELS, numTilesY * TileTemplate.PIXELS);
+            Map.WorldRectangle = new RectangleX(0, 0, numTilesX * TileTemplate.PIXELS, numTilesY * TileTemplate.PIXELS, 0.0f);
         }
 
         public void SaveMap(IStorage mapFile) {
@@ -122,10 +122,10 @@ namespace ToolCache.Map.Tiles {
                 o.Move(offsetX, offsetY);
             }
 
-            Map.WorldRectangle = new System.Drawing.Rectangle(0, 0, numTilesX * TileTemplate.PIXELS, numTilesY * TileTemplate.PIXELS);
+            Map.WorldRectangle = new RectangleX(0, 0, numTilesX * TileTemplate.PIXELS, numTilesY * TileTemplate.PIXELS, 0.0f);
         }
 
-        public List<TileInstance> GetTilesFromWorldRectangle(int x, int y, int w, int h) {
+        public List<TileInstance> GetTilesFromWorldRectangle(int x, int y, int w, int h, float r) {
             List<TileInstance> retList = new List<TileInstance>();
 
             int LX = x / TileTemplate.PIXELS;
